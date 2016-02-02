@@ -1,6 +1,9 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
+Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
+Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
+Imports Microsoft.VisualBasic.LINQ.Framework
 
 Namespace Statements
 
@@ -15,7 +18,7 @@ Namespace Statements
     ''' Select [Object/Object Constrctor] 
     ''' [Distinct] 
     ''' [Order Statement]</remarks>
-    Public Class LINQStatement : Inherits LINQ.Statements.Tokens.Token
+    Public Class LINQStatement : Inherits Token
 
         ''' <summary>
         ''' An object element in the target query collection.(目标待查询集合之中的一个元素)
@@ -61,13 +64,7 @@ Namespace Statements
         ''' <remarks></remarks>
         Friend ILINQProgram As System.Type
 
-        Dim _CompiledCode As String
-
         Public ReadOnly Property CompiledCode As String
-            Get
-                Return _CompiledCode
-            End Get
-        End Property
 
         ''' <summary>
         ''' 获取目标LINQCollection待查询集合中的元素对象的类型标识符，以进行外部模块的动态加载
@@ -98,7 +95,7 @@ Namespace Statements
         End Function
 
         Public Overrides Function ToString() As String
-            Return _OriginalCommand
+            Return _original
         End Function
 
         ''' <summary>
@@ -108,16 +105,20 @@ Namespace Statements
         ''' <param name="StatementText"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function TryParse(StatementText As String, Registry As LINQ.Framework.TypeRegistry) As LINQ.Statements.LINQStatement
-            Dim Statement As LINQ.Statements.LINQStatement = New LINQStatement With {._OriginalCommand = StatementText, ._Tokens = GetTokens(StatementText), .TypeRegistry = Registry}
-            Statement.Collection = New LINQ.Statements.Tokens.ObjectCollection(Statement)
-            Statement.Object = New LINQ.Statements.Tokens.ObjectDeclaration(Statement)
-            Statement.ReadOnlyObjects = Tokens.ReadOnlyObject.Parser.GetReadOnlyObjects(Statement)
-            Statement.ConditionTest = New LINQ.Statements.Tokens.WhereCondition(Statement)
-            Statement.SelectConstruct = New LINQ.Statements.Tokens.SelectConstruct(Statement)
+        Public Shared Function TryParse(StatementText As String, registry As TypeRegistry) As LINQStatement
+            Dim Statement As LINQStatement = New LINQStatement With {
+                ._original = StatementText,
+                ._Tokens = GetTokens(StatementText),
+                .TypeRegistry = registry
+            }
+            Statement.Collection = New ObjectCollection(Statement)
+            Statement.Object = New ObjectDeclaration(Statement)
+            Statement.ReadOnlyObjects = GetReadOnlyObjects(Statement)
+            Statement.ConditionTest = New WhereCondition(Statement)
+            Statement.SelectConstruct = New SelectConstruct(Statement)
             Statement.Statement = Statement
 
-            Using Compiler As DynamicCompiler = New Framework.DynamicCode.VBC.DynamicCompiler(Statement, SDK_PATH.AvaliableSDK) 'Dynamic code compiling.(动态编译代码)
+            Using Compiler As DynamicCompiler = New DynamicCompiler(Statement, SDK_PATH.AvaliableSDK) 'Dynamic code compiling.(动态编译代码)
                 Dim LINQEntityLibFile As String = Statement.Object.RegistryType.AssemblyFullPath '
 
                 If Not String.Equals(FileIO.FileSystem.GetParentPath(LINQEntityLibFile), System.Windows.Forms.Application.StartupPath) Then
@@ -129,9 +130,9 @@ Namespace Statements
                     Call FileIO.FileSystem.CopyFile(Statement.Object.RegistryType.AssemblyFullPath, LINQEntityLibFile)
                 End If
 
-                Dim ReferenceAssemblys As String() = New String() {LINQ.Framework.LQueryFramework.ReferenceAssembly, LINQEntityLibFile}
+                Dim ReferenceAssemblys As String() = New String() {LQueryFramework.ReferenceAssembly, LINQEntityLibFile}
                 Dim CompiledAssembly = Compiler.Compile(ReferenceAssemblys)
-                Statement.ILINQProgram = LINQ.Framework.DynamicCode.DynamicInvoke.GetType(CompiledAssembly, Framework.DynamicCode.VBC.DynamicCompiler.ModuleName).First
+                Statement.ILINQProgram = DynamicInvoke.GetType(CompiledAssembly, Framework.DynamicCode.VBC.DynamicCompiler.ModuleName).First
                 Statement._CompiledCode = Compiler.CompiledCode
             End Using
 

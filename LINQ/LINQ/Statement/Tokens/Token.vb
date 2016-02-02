@@ -1,11 +1,12 @@
 ﻿Namespace Statements.Tokens
 
     Public MustInherit Class Token
-        Friend Statement As LINQ.Statements.LINQStatement
-        Friend _OriginalCommand As String
+
+        Protected Statement As LINQStatement
+        Protected Friend _original As String
 
         Public Overrides Function ToString() As String
-            Return _OriginalCommand
+            Return _original
         End Function
     End Class
 End Namespace

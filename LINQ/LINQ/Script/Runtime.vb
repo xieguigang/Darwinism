@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Framework
+﻿Imports System.Dynamic
+Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
 
 Namespace Script
 
@@ -6,24 +8,10 @@ Namespace Script
     ''' LINQ脚本查询环境
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class I_DynamicsRuntime : Inherits Dynamic.DynamicObject
+    Public Class I_DynamicsRuntime : Inherits DynamicObject
         Implements System.IDisposable
 
         Dim Variables As List(Of Variable) = New List(Of Variable)
-
-        Friend Class Variable
-            Public Property Name As String
-            Public Property Data As Object()
-
-            Public Overrides Function ToString() As String
-                Return Name
-            End Function
-
-            Public Shared Widening Operator CType(v As Object()) As Variable
-                Return New Variable With {.Name = v(0).ToString, .Data = v(1)}
-            End Operator
-        End Class
-
         Dim _TypeLibrary As TypeRegistry
 
         Public Function Evaluate(script As String) As Object()
@@ -70,7 +58,7 @@ Namespace Script
 #End Region
 
 
-        Public Function GetCollection(CollectionReference As LINQ.Statements.Tokens.ObjectCollection) As Object()
+        Public Function GetCollection(CollectionReference As ObjectCollection) As Object()
             Dim LQuery = From Item In Variables Where String.Equals(CollectionReference.Value, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item.Data  '
             Dim Result = LQuery.ToArray
             If Result.Count = 0 Then

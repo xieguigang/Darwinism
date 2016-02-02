@@ -1,4 +1,7 @@
-﻿Namespace Framework
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.LINQ.Framework.Reflection
+
+Namespace Framework
 
     ''' <summary>
     ''' Type registry table for loading the external LINQ entity assembly module.
@@ -6,60 +9,6 @@
     ''' </summary>
     ''' <remarks></remarks>
     Public Class TypeRegistry : Implements System.IDisposable
-
-        ''' <summary>
-        ''' item in the type registry table
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Class RegistryItem
-
-            ''' <summary>
-            ''' 类型的简称或者别称，即本属性为LINQEntity自定义属性中的构造函数的参数
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            <Xml.Serialization.XmlAttribute> Public Property Name As String
-            ''' <summary>
-            ''' 建议使用相对路径，以防止移动程序的时候任然需要重新注册方可以使用
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            <Xml.Serialization.XmlAttribute> Public Property AssemblyPath As String
-            ''' <summary>
-            ''' Full type name for the target LINQ entity type.(目标LINQEntity集合中的类型全称)
-            ''' </summary>
-            ''' <value></value>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            <Xml.Serialization.XmlAttribute> Public Property TypeId As String
-
-            Public ReadOnly Property AssemblyFullPath As String
-                Get
-                    Return IO.Path.GetFullPath(AssemblyPath)
-                End Get
-            End Property
-
-            Public Overrides Function ToString() As String
-                Return String.Format("({0}) {1}!{2}", Name, AssemblyPath, TypeId)
-            End Function
-
-            ''' <summary>
-            ''' 
-            ''' </summary>
-            ''' <param name="Obj">Name, TypeId, AssemblyPath, IsInnerType</param>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            Public Shared Widening Operator CType(Obj As Object()) As RegistryItem
-                Dim RegistryItem As RegistryItem = New RegistryItem
-                RegistryItem.Name = Obj(0).ToString
-                RegistryItem.TypeId = Obj(1).ToString
-                RegistryItem.AssemblyPath = Obj(2).ToString
-
-                Return RegistryItem
-            End Operator
-        End Class
 
         Public Property ExternalModules As List(Of RegistryItem)
 
@@ -91,7 +40,7 @@
         ''' <param name="Name"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Find(Name As String) As TypeRegistry.RegistryItem
+        Public Function Find(Name As String) As RegistryItem
             For i As Integer = 0 To ExternalModules.Count - 1
                 If String.Equals(Name, ExternalModules(i).Name, StringComparison.OrdinalIgnoreCase) Then
                     Return ExternalModules(i)
@@ -107,31 +56,30 @@
         ''' <returns></returns>
         ''' <remarks>查询出目标元素的类型定义并获取信息</remarks>
         Public Function Register(AssemblyPath As String) As Boolean
-            Dim Assembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(IO.Path.GetFullPath(AssemblyPath)) 'Load external module
-            Dim ILINQEntityTypes As System.Reflection.TypeInfo() =
-                LINQ.Framework.LQueryFramework.LoadAssembly(Assembly, Reflection.LINQEntity.ILINQEntity) 'Get type define informations of LINQ entity
+            Dim assm As Assembly = Assembly.LoadFrom(IO.Path.GetFullPath(AssemblyPath)) 'Load external module
+            Dim ILINQEntityTypes As TypeInfo() =
+                LQueryFramework.LoadAssembly(assm, LINQEntity.ILINQEntity) 'Get type define informations of LINQ entity
 
-            If ILINQEntityTypes.Count > 0 Then
-                Dim LQuery As Generic.IEnumerable(Of TypeRegistry.RegistryItem) =
-                    From Type As System.Type In ILINQEntityTypes
-                    Select New TypeRegistry.RegistryItem With {
-                        .Name = Framework.Reflection.LINQEntity.GetEntityType(Type),
+            If ILINQEntityTypes.IsNullOrEmpty Then Return False
+
+            Dim LQuery As IEnumerable(Of RegistryItem) =
+                    From Type As Type In ILINQEntityTypes
+                    Select New RegistryItem With {
+                        .Name = LINQEntity.GetEntityType(Type),
                         .AssemblyPath = AssemblyPath,
-                        .TypeId = Type.FullName}        'Generate the resitry item for each external type
+                        .TypeId = Type.FullName
+                    }        'Generate the resitry item for each external type
 
-                For Each Item In LQuery.ToArray         'Update exists registry item or insrt new item into the table
-                    Dim Item2 As RegistryItem = Find(Item.Name)         '在注册表中查询是否有已注册的类型
-                    If Item2 Is Nothing Then
-                        Call ExternalModules.Add(Item)  'Insert new record.(添加数据)
-                    Else                                'Update exists data.(更新数据)
-                        Item2.AssemblyPath = Item.AssemblyPath
-                        Item2.TypeId = Item.TypeId
-                    End If
-                Next
-                Return True
-            Else                                        'I did't found any LINQ entity type define information, skip this dll assembly file
-                Return False
-            End If
+            For Each Item As RegistryItem In LQuery     'Update exists registry item or insrt new item into the table
+                Dim Item2 As RegistryItem = Find(Item.Name)         '在注册表中查询是否有已注册的类型
+                If Item2 Is Nothing Then
+                    Call ExternalModules.Add(Item)  'Insert new record.(添加数据)
+                Else                                'Update exists data.(更新数据)
+                    Item2.AssemblyPath = Item.AssemblyPath
+                    Item2.TypeId = Item.TypeId
+                End If
+            Next
+            Return True
         End Function
 
         Public Shared Function Load(Path As String) As TypeRegistry
@@ -141,8 +89,9 @@
                 Return TypeRegistry
             Else
                 Return New TypeRegistry With {
-                    .ExternalModules = New List(Of TypeRegistry.RegistryItem),
-                    .File = Path}
+                    .ExternalModules = New List(Of RegistryItem),
+                    .File = Path
+                }
             End If
         End Function
 

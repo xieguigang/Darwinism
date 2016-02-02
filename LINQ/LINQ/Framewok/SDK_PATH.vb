@@ -9,18 +9,16 @@ Module SDK_PATH
     ''' 从高版本到低版本排列，从x64到x86排列
     ''' </summary>
     ''' <remarks></remarks>
-    Private ReadOnly PathList As String() =
-        New String() _
-        {
-            "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.3",
-            "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1",
-            "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5",
-            "C:\Windows\Microsoft.NET\Framework\v4.0.30319",
-            "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0",
-            "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client",
-            "C:\Windows\Microsoft.NET\Framework\v3.5",
-            "C:\Windows\Microsoft.NET\Framework\v2.0.50727"
-        }
+    Private ReadOnly PathList As String() = New String() {
+        "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.3",
+        "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1",
+        "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5",
+        "C:\Windows\Microsoft.NET\Framework\v4.0.30319",
+        "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0",
+        "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client",
+        "C:\Windows\Microsoft.NET\Framework\v3.5",
+        "C:\Windows\Microsoft.NET\Framework\v2.0.50727"
+    }
 
     ''' <summary>
     ''' .NET Framework的Reference Assembly文件夹的位置

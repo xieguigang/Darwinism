@@ -1,5 +1,7 @@
 ﻿Imports System.Text
 Imports System.CodeDom.Compiler
+Imports Microsoft.VisualBasic.LINQ.Statements
+Imports System.CodeDom
 
 Namespace Framework.DynamicCode.VBC
 
@@ -14,12 +16,12 @@ Namespace Framework.DynamicCode.VBC
         ''' </summary>
         ''' <remarks></remarks>
         Dim DotNETReferenceAssembliesDir As String
-        Dim LINQStatement As LINQ.Statements.LINQStatement
+        Dim LINQStatement As LINQStatement
 
         Public Const ModuleName As String = "ILINQProgram"
         Public Const SetObjectName As String = "SetObject"
 
-        Dim ObjectModel As CodeDom.CodeNamespace
+        Dim ObjectModel As CodeNamespace
 
         Public ReadOnly Property CompiledCode As String
             Get
@@ -33,7 +35,7 @@ Namespace Framework.DynamicCode.VBC
         ''' <param name="LINQStatement"></param>
         ''' <param name="SDK">.NET Framework Reference Assembly文件夹的位置</param>
         ''' <remarks></remarks>
-        Sub New(LINQStatement As LINQ.Statements.LINQStatement, SDK As String)
+        Sub New(LINQStatement As LINQStatement, SDK As String)
             Me.LINQStatement = LINQStatement
             Me.DotNETReferenceAssembliesDir = SDK
         End Sub

@@ -1,6 +1,11 @@
-﻿Namespace Statements.Tokens
+﻿Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
+Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
+Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
 
-    Public Class ObjectDeclaration : Inherits LINQ.Statements.Tokens.Token
+Namespace Statements.Tokens
+
+    Public Class ObjectDeclaration : Inherits Token
 
         ''' <summary>
         ''' 变量的名称
@@ -17,7 +22,7 @@
         ''' <remarks></remarks>
         Public Property TypeId As String
 
-        Public Property RegistryType As LINQ.Framework.TypeRegistry.RegistryItem
+        Public Property RegistryType As RegistryItem
 
         Friend SetObject As System.Reflection.MethodInfo
 
@@ -26,7 +31,7 @@
             Me.TryParse()
             Me.RegistryType = Statement.TypeRegistry.Find(TypeId)
             If RegistryType Is Nothing Then
-                Throw New LINQ.Framework.LQueryFramework.TypeMissingExzception("Could not found any information about the type {0}.", TypeId)
+                Throw New TypeMissingExzception("Could not found any information about the type {0}.", TypeId)
             Else
                 Dim ILINQCollection As System.Type = Tokens.ObjectCollection.LoadExternalModule(RegistryType)
                 Statement.Collection.ILINQCollection = Activator.CreateInstance(ILINQCollection)
@@ -35,11 +40,11 @@
         End Sub
 
         Private Sub TryParse()
-            Dim str = LINQ.Statements.Tokens.ReadOnlyObject.Parser.GetStatement(Statement._OriginalCommand, New String() {"from", "in"}, True)
+            Dim str = GetStatement(Statement._original, New String() {"from", "in"}, True)
             Dim Tokens As String() = str.Split
             Name = Tokens.First
             TypeId = Tokens.Last
-            Me._OriginalCommand = str
+            Me._original = str
         End Sub
 
         Public Overridable Function ToFieldDeclaration() As CodeDom.CodeMemberField
@@ -50,7 +55,7 @@
         End Function
 
         Public Sub Initialize()
-            Me.SetObject = LINQ.Framework.DynamicCode.DynamicInvoke.GetMethod(Statement.ILINQProgram, Framework.DynamicCode.VBC.DynamicCompiler.SetObjectName)
+            Me.SetObject = DynamicInvoke.GetMethod(Statement.ILINQProgram, DynamicCompiler.SetObjectName)
         End Sub
 
         Public Overrides Function ToString() As String

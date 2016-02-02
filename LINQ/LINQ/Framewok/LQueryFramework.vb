@@ -1,4 +1,9 @@
-﻿Namespace Framework
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.LINQ.Framework.ObjectModel
+Imports Microsoft.VisualBasic.LINQ.Script
+Imports Microsoft.VisualBasic.LINQ.Statements
+
+Namespace Framework
 
     Public Class LQueryFramework : Implements System.IDisposable
 
@@ -9,7 +14,7 @@
         Public Const DefaultFile As String = ".\LINQ.Framework.TypeDef.xml"
 
         Public Property TypeRegistry As TypeRegistry
-        Public Property Runtime As LINQ.Script.I_DynamicsRuntime
+        Public Property Runtime As I_DynamicsRuntime
 
         ''' <summary>
         ''' 本模块的完整的文件路径
@@ -17,16 +22,16 @@
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared ReadOnly Property ReferenceAssembly As String
-            Get
-                Dim PathValue As String = String.Format("{0}/linq.exe", System.Windows.Forms.Application.StartupPath)
-                Return IO.Path.GetFullPath(PathValue)
-            End Get
-        End Property
+        Public Shared ReadOnly Property ReferenceAssembly As String = App.ExecutablePath
 
         Sub New(Optional TypeDef As String = DefaultFile)
-            TypeRegistry = LINQ.Framework.TypeRegistry.Load(TypeDef)
+            TypeRegistry = TypeRegistry.Load(TypeDef)
         End Sub
+
+        Const TypeMissingExzceptionItem As String =
+            "There is a type missing error in this linq statement, where could not found any type registry information for type id ""{0}"""
+        Const TypeMissingExzceptionCollection As String =
+            "There is a type missing error while trying to load the {0} ILINQ interface type definition."
 
         ''' <summary>
         ''' 加载外部模块，并查询出目标类型的ILINQCollection接口类型信息
@@ -38,14 +43,14 @@
             Dim RegistryItem = TypeRegistry.Find(TypeId)
 
             If RegistryItem Is Nothing Then
-                Throw New TypeMissingExzception("There is a type missing error in this linq statement, where could not found any type registry information for type id ""{0}""", TypeId)
+                Throw New TypeMissingExzception(TypeMissingExzceptionItem, TypeId)
             End If
 
-            Dim Assembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
-            Dim ILINQCollection As System.Type = Assembly.GetType(RegistryItem.TypeId, False, False)
+            Dim assm As Assembly = Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
+            Dim ILINQCollection As System.Type = assm.GetType(RegistryItem.TypeId, False, False)
 
             If ILINQCollection Is Nothing Then
-                Throw New TypeMissingExzception("There is a type missing error while trying to load the {0} ILINQ interface type definition.", TypeId)
+                Throw New TypeMissingExzception(TypeMissingExzceptionCollection, TypeId)
             Else
                 Return ILINQCollection
             End If
@@ -54,39 +59,43 @@
         ''' <summary>
         ''' 查找出目标模块之中的含有指定的自定义属性的所有类型
         ''' </summary>
-        ''' <param name="Assembly"></param>
+        ''' <param name="assembly"></param>
         ''' <param name="FindEntry">目标自定义属性的类型</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadAssembly(Assembly As System.Reflection.Assembly, FindEntry As System.Type) As System.Reflection.TypeInfo()
-            Dim LQuery = From [Module] As System.Reflection.TypeInfo
-                         In Assembly.DefinedTypes
-                         Let attrs = [Module].GetCustomAttributes(FindEntry, inherit:=False)
-                         Where Not attrs Is Nothing AndAlso attrs.Count = 1
-                         Select [Module] '
+        Public Shared Function LoadAssembly(assembly As Assembly, FindEntry As System.Type) As TypeInfo()
+            Dim LQuery = From [mod] As TypeInfo
+                         In assembly.DefinedTypes
+                         Let attrs As Object() = [mod].GetCustomAttributes(FindEntry, inherit:=False)
+                         Where Not attrs Is Nothing AndAlso attrs.Length = 1
+                         Select [mod] '
             Return LQuery.ToArray
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="PropertyName"></param>
+        ''' <param name="name"></param>
         ''' <param name="Target"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function GetValue(PropertyName As String, Target As Object) As Object
-            Dim Type As System.Type = Target.GetType
-            Dim PropertyInfoCollection = Type.GetProperties
-            Dim LQuery = From [Property] As System.Reflection.PropertyInfo In PropertyInfoCollection Where String.Equals([Property].Name, PropertyName, StringComparison.OrdinalIgnoreCase) Select [Property] '
-
-            Dim Result = LQuery.ToArray
-            If Result.Count > 0 Then
-                Dim PropertyInfo As System.Reflection.PropertyInfo = Result.First
-                Return PropertyInfo.GetValue(Target)
+        Public Shared Function GetValue(name As String, Target As Object) As Object
+            Dim Type As Type = Target.GetType
+            Dim Properties As PropertyInfo() = Type.GetProperties
+            Dim LQuery = From [Property] As PropertyInfo
+                         In Properties
+                         Where String.Equals([Property].Name, name, StringComparison.OrdinalIgnoreCase)
+                         Select [Property] '
+            Dim Result As PropertyInfo = LQuery.FirstOrDefault
+            If Not Result Is Nothing Then
+                Return Result.GetValue(Target)
             Else
-                Throw New DataException("No such a property named '" & PropertyName & "' in the target type information.")
+                Dim ex As String = String.Format(PropertyNotFound, name)
+                Throw New DataException(ex)
             End If
         End Function
+
+        Public Const PropertyNotFound As String = "No such a property named '{0}' in the target type information."
 
         ''' <summary>
         ''' Exception for [We could not found any registered type information from the type registry.]
@@ -127,7 +136,7 @@
         ''' Next
         ''' Return List.ToArray
         ''' </remarks>
-        Public Function EXEC(Statement As LINQ.Statements.LINQStatement) As Object()
+        Public Function EXEC(Statement As LINQStatement) As Object()
             Using ObjectModel As LINQ.Framework.ObjectModel.LINQ = CreateObjectModel(Statement)
                 Return ObjectModel.EXEC
             End Using
@@ -138,9 +147,9 @@
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Friend Function CreateObjectModel(Statement As LINQ.Statements.LINQStatement) As LINQ.Framework.ObjectModel.LINQ
+        Friend Function CreateObjectModel(Statement As LINQStatement) As LINQ.Framework.ObjectModel.LINQ
             If Statement.Collection.IsParallel Then
-                Return New LINQ.Framework.ObjectModel.ParallelLINQ(Statement:=Statement, FrameworkRuntime:=Me.Runtime)
+                Return New ParallelLINQ(Statement:=Statement, FrameworkRuntime:=Me.Runtime)
             Else
                 Return New LINQ.Framework.ObjectModel.LINQ(Statement:=Statement, Runtime:=Me.Runtime)
             End If

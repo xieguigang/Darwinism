@@ -14,7 +14,7 @@ Namespace Framework.ObjectModel
         End Sub
 
         Public Overrides Function EXEC() As Object()
-            Dim LQuery = From [Object] As Object In ObjectCollection.AsParallel
+            Dim LQuery = From [Object] As Object In source.AsParallel
                          Let f As Boolean = SetObject([Object])
                          Where True = Test()
                          Let t As Object = SelectConstruct()

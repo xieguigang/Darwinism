@@ -1,4 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
+Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 
 Namespace Statements.Tokens
 
@@ -12,20 +14,20 @@ Namespace Statements.Tokens
         End Sub
 
         Private Sub TryParse()
-            Dim str = Regex.Match(Statement._OriginalCommand, " select .+", RegexOptions.IgnoreCase).Value
+            Dim str = Regex.Match(Statement._original, " select .+", RegexOptions.IgnoreCase).Value
             For Each key In Options.OptionList
                 str = Regex.Split(str, String.Format(" {0}\s?", key), RegexOptions.IgnoreCase).First
             Next
             str = Mid(str, 9)
-            MyBase._OriginalCommand = str
+            MyBase._original = str
             If String.IsNullOrEmpty(str) Then
                 Throw New SyntaxErrorException("Not SELECT statement token, can not procedure the query operation!")
             End If
-            Me.Expression = New Parser.Parser().ParseExpression(str)
+            Me.Expression = New LINQ.Parser.Parser().ParseExpression(str)
         End Sub
 
         Public Sub Initialzie()
-            SelectMethod = Framework.DynamicCode.DynamicInvoke.GetMethod(MyBase.Statement.ILINQProgram, Framework.DynamicCode.VBC.SelectConstructCompiler.SelectMethodName)
+            SelectMethod = DynamicInvoke.GetMethod(MyBase.Statement.ILINQProgram, SelectConstructCompiler.SelectMethodName)
         End Sub
     End Class
 End Namespace

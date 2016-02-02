@@ -14,7 +14,7 @@ Namespace Framework.ObjectModel
         Protected Friend SetObject As System.Func(Of Object, Boolean)
         Protected Friend SelectConstruct As System.Func(Of Object)
         Protected Friend Statement As LINQStatement
-        Protected Friend ObjectCollection As Object()
+        Protected Friend source As Object()
         Protected Friend FrameworkRuntime As I_DynamicsRuntime
 
         Sub New(Statement As LINQStatement, Runtime As I_DynamicsRuntime)
@@ -22,7 +22,7 @@ Namespace Framework.ObjectModel
             Me.Test = Function() Statement.ConditionTest.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
             Me.SetObject = Function(p As Object) Statement.Object.SetObject.Invoke(StatementInstance, {p})
             Me.SelectConstruct = Function() Statement.SelectConstruct.SelectMethod.Invoke(StatementInstance, Nothing)
-            Me.ObjectCollection = LINQ.GetCollection(Statement, Runtime)
+            Me.source = LINQ.GetCollection(Statement, Runtime)
             Me.Statement = Statement
             Me.FrameworkRuntime = Runtime
         End Sub
@@ -37,7 +37,7 @@ Namespace Framework.ObjectModel
         End Function
 
         Public Overridable Function EXEC() As Object()
-            Dim LQuery = From [Object] As Object In ObjectCollection
+            Dim LQuery = From [Object] As Object In source
                          Let f As Boolean = SetObject([Object])
                          Where True = Test()
                          Let t As Object = SelectConstruct()

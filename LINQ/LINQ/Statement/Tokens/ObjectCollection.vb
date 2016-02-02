@@ -1,10 +1,12 @@
-﻿Namespace Statements.Tokens
+﻿Imports Microsoft.VisualBasic.LINQ.Framework
+
+Namespace Statements.Tokens
 
     ''' <summary>
     ''' 表示目标对象的数据集合的文件路径或者内存对象的引用
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ObjectCollection : Inherits LINQ.Statements.Tokens.Token
+    Public Class ObjectCollection : Inherits Token
 
         Public Enum CollectionTypes
             ''' <summary>
@@ -48,7 +50,7 @@
         ''' <remarks></remarks>
         Public ReadOnly Property Value As String
             Get
-                Return _OriginalCommand
+                Return _original
             End Get
         End Property
 
@@ -60,7 +62,7 @@
         Private Sub TryParse()
             For i As Integer = 0 To Statement._Tokens.Count - 1
                 If String.Equals("In", Statement._Tokens(i), StringComparison.OrdinalIgnoreCase) Then
-                    Me._OriginalCommand = Statement._Tokens(i + 1)
+                    Me._original = Statement._Tokens(i + 1)
                     Return
                 End If
             Next
@@ -68,7 +70,7 @@
 
         Public Overrides Function ToString() As String
             If Type = CollectionTypes.File Then
-                Return String.Format("(File) {0}", Me._OriginalCommand)
+                Return String.Format("(File) {0}", Me._original)
             Else
                 Return Type.ToString
             End If
@@ -80,9 +82,10 @@
         ''' <param name="RegistryItem"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadExternalModule(RegistryItem As Framework.TypeRegistry.RegistryItem) As System.Type
-            Dim Assembly As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
-            Return Assembly.GetType(RegistryItem.TypeId)
+        Public Shared Function LoadExternalModule(RegistryItem As RegistryItem) As Type
+            Dim assm As System.Reflection.Assembly =
+                System.Reflection.Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
+            Return assm.GetType(RegistryItem.TypeId)
         End Function
     End Class
 End Namespace
