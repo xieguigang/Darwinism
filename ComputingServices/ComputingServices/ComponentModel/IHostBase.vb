@@ -18,5 +18,14 @@ Namespace ComponentModel
         Public MustOverride ReadOnly Property Portal As IPEndPoint
 
         Protected Friend __host As TSocket
+
+        Public Shared Narrowing Operator CType(master As IMasterBase(Of TSocket)) As IPEndPoint
+            Return master.Portal
+        End Operator
+
+        Public Shared Narrowing Operator CType(master As IMasterBase(Of TSocket)) As System.Net.IPEndPoint
+            Return master.Portal.GetIPEndPoint
+        End Operator
+
     End Class
 End Namespace

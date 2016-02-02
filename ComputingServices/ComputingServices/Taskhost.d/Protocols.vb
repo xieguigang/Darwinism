@@ -14,8 +14,13 @@ Namespace TaskHost
 
         Public Enum TaskProtocols As Long
 
+            ''' <summary>
+            ''' 释放掉某一个资源
+            ''' </summary>
+            Free = -1000L
+
 #Region "Task"
-            Invoke
+            Invoke = 0L
             InvokeLinq
 #End Region
 
