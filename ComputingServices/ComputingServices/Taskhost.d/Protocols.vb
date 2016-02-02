@@ -16,6 +16,7 @@ Namespace TaskHost
 
 #Region "Task"
             Invoke
+            InvokeLinq
 #End Region
 
 #Region "LINQ supports"

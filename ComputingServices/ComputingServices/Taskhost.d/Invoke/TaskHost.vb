@@ -27,7 +27,7 @@ Namespace TaskHost
         End Function
 
         ''' <summary>
-        ''' 本地服务器通过这个方法调用远程主机
+        ''' 本地服务器通过这个方法调用远程主机上面的函数
         ''' </summary>
         ''' <param name="target"></param>
         ''' <param name="args"></param>
@@ -51,8 +51,20 @@ Namespace TaskHost
             End If
         End Function
 
+        ''' <summary>
+        ''' 执行远程机器上面的代码，然后返回数据查询接口
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="target">远程机器上面的函数指针</param>
+        ''' <param name="args"></param>
+        ''' <returns></returns>
         Public Function AsLinq(Of T)(target As [Delegate], ParamArray args As Object()) As ILinq(Of T)
             Dim params As InvokeInfo = InvokeInfo.CreateObject(target, args)
+            Dim jparam As String = params.GetJson
+            Dim req As New RequestStream(ProtocolEntry, TaskProtocols.InvokeLinq, jparam)
+            Dim rep As RequestStream = New AsynInvoke(_remote).SendMessage(req)
+            Dim svr As IPEndPoint = rep.GetUTF8String.LoadObject(Of IPEndPoint)
+            Return New ILinq(Of T)(svr)
         End Function
     End Class
 End Namespace
