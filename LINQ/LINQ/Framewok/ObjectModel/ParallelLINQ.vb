@@ -1,4 +1,7 @@
-﻿Namespace Framework.ObjectModel
+﻿Imports Microsoft.VisualBasic.LINQ.Script
+Imports Microsoft.VisualBasic.LINQ.Statements
+
+Namespace Framework.ObjectModel
 
     ''' <summary>
     ''' 并行LINQ查询表达式的对象模型
@@ -6,7 +9,7 @@
     ''' <remarks></remarks>
     Friend Class ParallelLINQ : Inherits LINQ
 
-        Sub New(Statement As Global.LINQ.Statements.LINQStatement, FrameworkRuntime As Global.LINQ.Script.I_DynamicsRuntime)
+        Sub New(Statement As LINQStatement, FrameworkRuntime As I_DynamicsRuntime)
             Call MyBase.New(Statement, Runtime:=FrameworkRuntime)
         End Sub
 

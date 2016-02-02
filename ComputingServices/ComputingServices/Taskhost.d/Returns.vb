@@ -42,4 +42,16 @@
             Return GetValue(type)
         End Function
     End Class
+
+    Public Class Returns(Of T) : Inherits Returns
+
+        Public Overloads Function GetValue() As T
+            Dim value As Object = GetValue(GetType(T))
+            Return DirectCast(value, T)
+        End Function
+
+        Public Function AsQuerable() As IEnumerable(Of T)
+
+        End Function
+    End Class
 End Namespace

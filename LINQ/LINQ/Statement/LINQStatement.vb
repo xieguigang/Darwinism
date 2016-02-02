@@ -1,5 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
+Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 
 Namespace Statements
 
@@ -116,7 +117,7 @@ Namespace Statements
             Statement.SelectConstruct = New LINQ.Statements.Tokens.SelectConstruct(Statement)
             Statement.Statement = Statement
 
-            Using Compiler As Global.LINQ.Framework.DynamicCode.VBC.DynamicCompiler = New Framework.DynamicCode.VBC.DynamicCompiler(Statement, SDK_PATH.AvaliableSDK) 'Dynamic code compiling.(动态编译代码)
+            Using Compiler As DynamicCompiler = New Framework.DynamicCode.VBC.DynamicCompiler(Statement, SDK_PATH.AvaliableSDK) 'Dynamic code compiling.(动态编译代码)
                 Dim LINQEntityLibFile As String = Statement.Object.RegistryType.AssemblyFullPath '
 
                 If Not String.Equals(FileIO.FileSystem.GetParentPath(LINQEntityLibFile), System.Windows.Forms.Application.StartupPath) Then

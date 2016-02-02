@@ -115,6 +115,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APP\CLI.vb" />
     <Compile Include="Framewok\SDK_PATH.vb" />
     <Compile Include="Framewok\ObjectModel\ParallelLINQ.vb" />
     <Compile Include="Framewok\ObjectModel\LINQ.vb" />
@@ -128,7 +129,7 @@
     <Compile Include="Framewok\LQueryFramework.vb" />
     <Compile Include="Framewok\DynamicCode\AnonymousType.vb" />
     <Compile Include="Framewok\DynamicCode\vbc\DynamicCompiler.vb" />
-    <Compile Include="Program.vb" />
+    <Compile Include="APP\Program.vb" />
     <Compile Include="Parser\Enums.vb" />
     <Compile Include="Parser\Parser.vb" />
     <Compile Include="Parser\Token.vb" />

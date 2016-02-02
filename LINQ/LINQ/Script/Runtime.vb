@@ -1,4 +1,6 @@
-﻿Namespace Script
+﻿Imports Microsoft.VisualBasic.LINQ.Framework
+
+Namespace Script
 
     ''' <summary>
     ''' LINQ脚本查询环境
@@ -22,7 +24,7 @@
             End Operator
         End Class
 
-        Dim _TypeLibrary As Global.LINQ.Framework.TypeRegistry
+        Dim _TypeLibrary As TypeRegistry
 
         Public Function Evaluate(script As String) As Object()
             Throw New NotImplementedException

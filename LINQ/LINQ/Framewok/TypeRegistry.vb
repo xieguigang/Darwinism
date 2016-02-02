@@ -1,7 +1,8 @@
 ﻿Namespace Framework
 
     ''' <summary>
-    ''' Type registry table for loading the external LINQ entity assembly module. 
+    ''' Type registry table for loading the external LINQ entity assembly module.
+    ''' (起始这个模块就是相当于一个类型缓存而已，因为程序可以直接读取dll文件里面的内容，但是直接读取的方法会造成性能下降，所以需要使用这个对象来缓存所需要的类型数据) 
     ''' </summary>
     ''' <remarks></remarks>
     Public Class TypeRegistry : Implements System.IDisposable
@@ -149,7 +150,7 @@
             If String.IsNullOrEmpty(Path) Then
                 Path = Me.File
             End If
-            Call Me.GetXml.SaveTo(Path, Text.Encoding.Unicode)
+            Call Me.GetXml.SaveTo(Path, System.Text.Encoding.Unicode)
         End Sub
 
         Public Shared Widening Operator CType(Path As String) As TypeRegistry

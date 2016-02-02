@@ -1,4 +1,7 @@
-﻿Namespace Framework.ObjectModel
+﻿Imports Microsoft.VisualBasic.LINQ.Script
+Imports Microsoft.VisualBasic.LINQ.Statements
+
+Namespace Framework.ObjectModel
 
     ''' <summary>
     ''' LINQ查询表达式的对象模型
@@ -10,11 +13,11 @@
         Protected Friend Test As System.Func(Of Boolean)
         Protected Friend SetObject As System.Func(Of Object, Boolean)
         Protected Friend SelectConstruct As System.Func(Of Object)
-        Protected Friend Statement As Global.LINQ.Statements.LINQStatement
+        Protected Friend Statement As LINQStatement
         Protected Friend ObjectCollection As Object()
-        Protected Friend FrameworkRuntime As Global.LINQ.Script.I_DynamicsRuntime
+        Protected Friend FrameworkRuntime As I_DynamicsRuntime
 
-        Sub New(Statement As Global.LINQ.Statements.LINQStatement, Runtime As Global.LINQ.Script.I_DynamicsRuntime)
+        Sub New(Statement As LINQStatement, Runtime As I_DynamicsRuntime)
             Me.StatementInstance = Statement.CreateInstance  'Create a instance for the LINQ entity and intialzie the components
             Me.Test = Function() Statement.ConditionTest.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
             Me.SetObject = Function(p As Object) Statement.Object.SetObject.Invoke(StatementInstance, {p})
@@ -24,7 +27,7 @@
             Me.FrameworkRuntime = Runtime
         End Sub
 
-        Protected Friend Shared Function GetCollection(Statement As Global.LINQ.Statements.LINQStatement, Runtime As Global.LINQ.Script.I_DynamicsRuntime) As Object()
+        Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As I_DynamicsRuntime) As Object()
             If Statement.Collection.Type = Statements.Tokens.ObjectCollection.CollectionTypes.File Then
                 Return Statement.Collection.ILINQCollection.GetCollection(Statement.Collection.Value)
             Else
