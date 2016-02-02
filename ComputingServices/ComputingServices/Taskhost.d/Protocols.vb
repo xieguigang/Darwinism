@@ -5,5 +5,12 @@
     ''' </summary>
     Public Module Protocols
 
+        Public Enum TaskProtocols
+
+#Region "LINQ supports"
+            MoveNext
+#End Region
+        End Enum
+
     End Module
 End Namespace
