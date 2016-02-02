@@ -91,6 +91,9 @@
     <Compile Include="Asymmetric\Master.vb" />
     <Compile Include="ComponentModel\IHostBase.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="FileSystem\Protocols.vb" />
+    <Compile Include="FileSystem\FileSystemHost.vb" />
+    <Compile Include="FileSystem\FileSystem.vb" />
     <Compile Include="P2P\ServicesComponents\InternalServicesModule.vb" />
     <Compile Include="P2P\ServicesComponents\NodeServicesAPI.vb" />
     <Compile Include="P2P\ServicesComponents\ClusterServicesAPI.vb" />
