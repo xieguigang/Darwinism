@@ -1,7 +1,7 @@
 ﻿
 Imports System.Net
 
-Namespace ServicesComponents
+Namespace P2P.ServicesComponents
 
     ''' <summary>
     ''' 运行于节点之中的随系统自动启动的节点服务
@@ -41,7 +41,7 @@ Namespace ServicesComponents
 
             Call New Threading.Thread(AddressOf Me._runningServicesProtocol).Start()
             Call WaitForSocketStart()
-            Dim Message = PbsProtocol.NodeRegisterToServices(New Net.IPEndPoint(WANIP, _ServicesSocket.LocalPort), PbsThread.ThreadTypes.NodeServices)
+            Dim Message = PbsProtocol.NodeRegisterToServices(New Net.IPEndPoint(WANIP, __host.LocalPort), PbsThread.ThreadTypes.NodeServices)
             Message = New Net.AsynInvoke(_ClusterEp).SendMessage(Message)
 
             Me._NodeEntry = FileIO.FileSystem.GetFileInfo(NodeEntry).FullName

@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
@@ -11,7 +12,8 @@ Namespace Asymmetric
     ''' </summary>
     ''' 
     <Protocol(GetType(Protocols.Protocols))>
-    Public Class Parasitifer : Implements System.IDisposable
+    Public Class Parasitifer : Inherits IMasterBase(Of SSLSynchronizationServicesSocket)
+        Implements System.IDisposable
 
         ''' <summary>
         ''' 获取当前物理主机上面的系统负载
@@ -31,8 +33,7 @@ Namespace Asymmetric
         ''' </summary>
         ReadOnly _instanceList As SortedDictionary(Of String, DDM.Instance) =
             New SortedDictionary(Of String, DDM.Instance)
-        ReadOnly _protocolHandler As Net.Protocol.Reflection.ProtocolHandler
-        ReadOnly _socket As Net.SSL.SSLSynchronizationServicesSocket
+        ReadOnly _protocolHandler As ProtocolHandler
         ''' <summary>
         ''' 这个节点在主节点上面的授权认证信息
         ''' </summary>
@@ -56,7 +57,7 @@ Namespace Asymmetric
             _master = New Microsoft.VisualBasic.Net.IPEndPoint(
                 Master, Protocols.MasterSvr).GetIPEndPoint
             _protocolHandler = New ProtocolHandler(Me)
-            _socket = New Net.SSL.SSLSynchronizationServicesSocket(Protocols.ParasitiferSvr, CA, container:=Me)
+            __host = New Net.SSL.SSLSynchronizationServicesSocket(Protocols.ParasitiferSvr, CA, container:=Me)
             _OAuth = Net.SSL.SSLProtocols.Handshaking(CA, _master)
             _invokeAuthnic = New Certificate(Guid.NewGuid.ToString, Now.ToBinary)
 
@@ -78,7 +79,7 @@ Namespace Asymmetric
                 Call response.__DEBUG_ECHO
             End If
 #End If
-            Call Me._socket.Install(_OAuth, True)
+            Call Me.__host.Install(_OAuth, True)
         End Sub
 
         ''' <summary>
@@ -94,8 +95,8 @@ Namespace Asymmetric
         End Function
 
         Public Sub Run()
-            _socket.Responsehandler = AddressOf _protocolHandler.HandleRequest
-            _socket.Run()
+            __host.Responsehandler = AddressOf _protocolHandler.HandleRequest
+            __host.Run()
         End Sub
 
 #Region "Protocols"
@@ -145,7 +146,7 @@ Namespace Asymmetric
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call _socket.Dispose()
+                    Call __host.Free
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

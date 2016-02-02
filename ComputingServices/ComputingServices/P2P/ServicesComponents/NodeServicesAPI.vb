@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting
 
-Namespace ServicesComponents
+Namespace P2P.ServicesComponents
 
     <[Namespace]("NodeServices.API")>
     Public Class NodeServicesAPI

@@ -1,8 +1,10 @@
-﻿Namespace ServicesComponents
+﻿Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 
-    Public MustInherit Class InternalServicesModule : Implements System.IDisposable
+Namespace P2P.ServicesComponents
 
-        Protected _ServicesSocket As Net.TcpSynchronizationServicesSocket
+    Public MustInherit Class InternalServicesModule : Inherits IHostBase
+        Implements System.IDisposable
+
         Protected _ShoalShell As Microsoft.VisualBasic.Scripting.ShoalShell.Runtime.ScriptEngine
         Protected ProtocolHandler As Net.Protocol.Reflection.ProtocolHandler
 
@@ -11,13 +13,13 @@
 
         Protected Sub _runningServicesProtocol(Protocol As PbsProtocol)
             ProtocolHandler = New Net.Protocol.Reflection.ProtocolHandler(Protocol)
-            _ServicesSocket = New Net.TcpSynchronizationServicesSocket(GetServicesPort)
-            _ServicesSocket.Responsehandler = AddressOf ProtocolHandler.HandleRequest
-            _ServicesSocket.Run()
+            __host = New Net.TcpSynchronizationServicesSocket(GetServicesPort)
+            __host.Responsehandler = AddressOf ProtocolHandler.HandleRequest
+            __host.Run()
         End Sub
 
         Protected Sub WaitForSocketStart()
-            Do While _ServicesSocket Is Nothing
+            Do While __host Is Nothing
                 Call Threading.Thread.Sleep(10)
             Loop
         End Sub
@@ -26,7 +28,7 @@
             _ShoalShell = New Scripting.ShoalShell.Runtime.ScriptEngine()
             Call ImportsAPI()
 
-            Do While Not _ServicesSocket Is Nothing
+            Do While Not __host Is Nothing
                 Call Console.Write(">>> ")
                 Dim cmdl As String = Console.ReadLine
                 Call _ShoalShell.Exec(cmdl)
@@ -44,7 +46,7 @@
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call _ShoalShell.Free
-                    Call _ServicesSocket.Free
+                    Call __host.Free
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

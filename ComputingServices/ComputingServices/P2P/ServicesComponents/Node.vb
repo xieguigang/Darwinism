@@ -1,5 +1,5 @@
 ﻿
-Namespace ServicesComponents
+Namespace P2P.ServicesComponents
 
     ''' <summary>
     ''' 计算网络之中的一个节点实例

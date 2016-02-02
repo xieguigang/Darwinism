@@ -26,29 +26,9 @@ Namespace TaskHost
         ''' <returns></returns>
         Public Function Invoke(target As [Delegate], ParamArray args As Object()) As Object
             Dim params As InvokeInfo = InvokeInfo.CreateObject(target, args)
-            Dim rtvl As Returns = Invoke(params) ' 测试
+            Dim rtvl As Rtvl = TaskInvoke.Invoke(params) ' 测试
             Dim value As Object = rtvl.GetValue(target)
             Return value
-        End Function
-
-        ''' <summary>
-        ''' 远程服务器上面通过这个方法执行函数调用
-        ''' </summary>
-        ''' <param name="params"></param>
-        ''' <returns></returns>
-        Public Function Invoke(params As InvokeInfo) As Returns
-            Dim func As MethodInfo = params.GetMethod
-            Dim paramsValue As Object() = InvokeInfo.GetParameters(func, params.Parameters)
-            Dim rtvl As Returns
-            Try
-                Dim value As Object = func.Invoke(Nothing, paramsValue)
-                rtvl = New Returns(value, func.ReturnType)
-            Catch ex As Exception
-                ex = New Exception(params.GetJson, ex)
-                rtvl = New Returns(ex)
-            End Try
-
-            Return rtvl
         End Function
 
         Public Function Invoke(Of T)(target As [Delegate], ParamArray args As Object()) As T
@@ -61,7 +41,7 @@ Namespace TaskHost
         End Function
 
         Public Function AsLinq(Of T)(target As [Delegate], ParamArray args As Object()) As ILinq(Of T)
-
+            Dim params As InvokeInfo = InvokeInfo.CreateObject(target, args)
         End Function
     End Class
 End Namespace

@@ -89,6 +89,7 @@
     <Compile Include="Asymmetric\Protocols.vb" />
     <Compile Include="Asymmetric\Parasitifer.vb" />
     <Compile Include="Asymmetric\Master.vb" />
+    <Compile Include="ComponentModel\IHostBase.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="P2P\ServicesComponents\InternalServicesModule.vb" />
     <Compile Include="P2P\ServicesComponents\NodeServicesAPI.vb" />
@@ -115,9 +116,10 @@
     <Compile Include="P2P\PbsProtocol.vb" />
     <Compile Include="P2P\PbsThread.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
-    <Compile Include="Taskhost.d\LinqProvider.vb" />
-    <Compile Include="Taskhost.d\Returns.vb" />
-    <Compile Include="Taskhost.d\Invoke.vb" />
+    <Compile Include="Taskhost.d\Linq\ILinq%28Of T%29.vb" />
+    <Compile Include="Taskhost.d\Linq\LinqProvider.vb" />
+    <Compile Include="Taskhost.d\Invoke\Return.vb" />
+    <Compile Include="Taskhost.d\Invoke\InvokeInfo.vb" />
     <Compile Include="Taskhost.d\Protocols.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskHost.vb" />
   </ItemGroup>

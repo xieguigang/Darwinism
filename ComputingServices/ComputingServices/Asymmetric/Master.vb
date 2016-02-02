@@ -1,5 +1,7 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol
+﻿Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.SSL
 Imports NodeAbstract = System.Collections.Generic.KeyValuePair(Of String, Microsoft.VisualBasic.Net.SSL.Certificate)
 
 Namespace Asymmetric
@@ -9,9 +11,8 @@ Namespace Asymmetric
     ''' </summary>
     ''' 
     <Protocol(GetType(Protocols.Protocols))>
-    Public Class Master
+    Public Class Master : Inherits IMasterBase(Of SSLSynchronizationServicesSocket)
 
-        Dim _socket As Net.SSL.SSLSynchronizationServicesSocket
         ''' <summary>
         ''' 键名是IP地址，由于一台物理主机上面只会有一个管理节点，所以端口号都是固定了的
         ''' </summary>
@@ -37,17 +38,17 @@ Namespace Asymmetric
         ''' <param name="PublicToken">计算自于宿主节点的证书哈希值</param>
         Sub New(PublicToken As String)
             Dim [public] = Net.SSL.Certificate.Install(PublicToken, uid:=0)
-            _socket = New Net.SSL.SSLSynchronizationServicesSocket(Protocols.MasterSvr, [public], container:=Me)
+            __host = New Net.SSL.SSLSynchronizationServicesSocket(Protocols.MasterSvr, [public], container:=Me)
             _protocol = New ProtocolHandler(Me)
-            _socket.Responsehandler = AddressOf _protocol.HandleRequest
+            __host.Responsehandler = AddressOf _protocol.HandleRequest
         End Sub
 
         Public Sub Run()
-            Call _socket.Run()
+            Call __host.Run()
         End Sub
 
         Public Overrides Function ToString() As String
-            Return _socket.ToString
+            Return __host.ToString
         End Function
 
         ''' <summary>
@@ -141,7 +142,7 @@ Namespace Asymmetric
         <Protocol(Protocols.Protocols.NodeRegister)>
         Private Function NodeRegister(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim post As Protocols.RegisterPost = Protocols.GetPostData(request)
-            Dim nodeCA = _socket.PrivateKeys(post.uid)
+            Dim nodeCA = __host.PrivateKeys(post.uid)
             Dim IPAddr As String = post.IPAddress
 
             If Me._nodes.ContainsKey(IPAddr) Then

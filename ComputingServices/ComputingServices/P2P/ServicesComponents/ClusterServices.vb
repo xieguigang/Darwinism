@@ -2,7 +2,7 @@
 Imports System.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 
-Namespace ServicesComponents
+Namespace P2P.ServicesComponents
 
     ''' <summary>
     ''' 所需要进行节点调用的中心主机程序上面的节点计算服务
@@ -14,7 +14,7 @@ Namespace ServicesComponents
 
         Public ReadOnly Property IsServicesRunning As Boolean
             Get
-                Return Not _ServicesSocket Is Nothing
+                Return Not __host Is Nothing
             End Get
         End Property
 

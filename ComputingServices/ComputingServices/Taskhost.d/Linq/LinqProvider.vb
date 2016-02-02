@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
@@ -12,10 +13,8 @@ Namespace TaskHost
     ''' </summary>
     ''' 
     <Protocol(GetType(TaskProtocols))>
-    Public Class LinqProvider
+    Public Class LinqProvider : Inherits IHostBase
 
-        ReadOnly __host As TcpSynchronizationServicesSocket =
-            New TcpSynchronizationServicesSocket(GetFirstAvailablePort)
         ReadOnly _type As Type
         ReadOnly _source As Iterator
         ReadOnly _local As Boolean
@@ -48,8 +47,8 @@ Namespace TaskHost
             Return New LinqProvider(source, GetType(T))
         End Function
 
-        Public Function GetReturns() As Returns
-            Return New Returns(Portal, GetType(IPEndPoint))
+        Public Function GetReturns() As Rtvl
+            Return New Rtvl(Portal, GetType(IPEndPoint))
         End Function
 
         <Protocol(TaskProtocols.MoveNext)>
