@@ -1,4 +1,5 @@
 ﻿
+Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 ''' <summary>
 ''' 我想要构建的是一个去中心化的网格计算框架
 ''' </summary>
@@ -6,7 +7,13 @@ Module ServicesProgram
 
     Sub Main()
 
-        Call Microsoft.VisualBasic.ComputingServices.TaskHost.test()
+        Dim source = {1, 2, 3, 4, 5, 6, 7, 8, 9, 1000}
+        Dim sourceRead As LinqProvider = LinqProvider.CreateObject(source)
+
+
+
+
+        Pause()
 
         '  Call Microsoft.VisualBasic.ComputingServices.CLI_InitStart("./GridNode.exe", "cli /wan 127.0.0.1")
 

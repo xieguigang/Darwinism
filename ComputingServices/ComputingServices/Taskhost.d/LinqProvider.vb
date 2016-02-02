@@ -19,6 +19,11 @@ Namespace TaskHost
         ReadOnly _type As Type
         ReadOnly _source As Iterator
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="type">Element's <see cref="System.Type">type</see> in the <paramref name="source"/></param>
         Sub New(source As IEnumerable, type As Type)
             __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
             _type = type
@@ -32,6 +37,10 @@ Namespace TaskHost
                 Return New IPEndPoint(GetMyIPAddress, __host.LocalPort)
             End Get
         End Property
+
+        Public Shared Function CreateObject(Of T)(source As IEnumerable(Of T)) As LinqProvider
+            Return New LinqProvider(source, GetType(T))
+        End Function
 
         Public Function GetReturns() As Returns
             Return New Returns(Portal, GetType(IPEndPoint))
