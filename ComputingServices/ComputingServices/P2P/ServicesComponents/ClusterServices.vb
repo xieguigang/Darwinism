@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Parallel
 Imports System.Net
 Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net
 
 Namespace P2P.ServicesComponents
 
@@ -12,7 +13,7 @@ Namespace P2P.ServicesComponents
 
         Implements System.IDisposable
 
-        Public ReadOnly Property IsServicesRunning As Boolean
+        Public ReadOnly Property Running As Boolean
             Get
                 Return Not __host Is Nothing
             End Get
@@ -54,7 +55,11 @@ Namespace P2P.ServicesComponents
         End Function
 
         Public Function GetLightLoadNode() As PbsThread
-            Dim LQuery = (From Node In Me.NodeServices.AsParallel Select Node, Load = Node.GetUpdatedServerLoad Order By Load Ascending).ToArray
+            Dim LQuery = (From node As PbsThread
+                          In Me.NodeServices.AsParallel
+                          Select node,
+                              Load = node.GetUpdatedServerLoad
+                          Order By Load Ascending).ToArray
             Return LQuery.FirstOrDefault?.Node
         End Function
 
@@ -65,6 +70,12 @@ Namespace P2P.ServicesComponents
         Public ReadOnly Property HaveNodes As Boolean
             Get
                 Return Not NodeServices.IsNullOrEmpty
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Portal As Net.IPEndPoint
+            Get
+                Return New Net.IPEndPoint(GetMyIPAddress, GetServicesPort)
             End Get
         End Property
 

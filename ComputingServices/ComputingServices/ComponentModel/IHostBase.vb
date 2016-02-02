@@ -15,6 +15,8 @@ Namespace ComponentModel
 
     Public MustInherit Class IMasterBase(Of TSocket As IServicesSocket)
 
-        Protected __host As TSocket
+        Public MustOverride ReadOnly Property Portal As IPEndPoint
+
+        Protected Friend __host As TSocket
     End Class
 End Namespace

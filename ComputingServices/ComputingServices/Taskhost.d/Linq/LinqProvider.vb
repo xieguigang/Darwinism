@@ -25,21 +25,19 @@ Namespace TaskHost
         ''' <param name="source"></param>
         ''' <param name="type">Element's <see cref="System.Type">type</see> in the <paramref name="source"/></param>
         Sub New(source As IEnumerable, type As Type, Optional local As Boolean = True)
-            __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
+            Call MyBase.New(Net.GetFirstAvailablePort)
+
             _type = type
             _source = New Iterator(source)
             _local = local
+            __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
 
             Call Parallel.Run(AddressOf __host.Run)
         End Sub
 
-        Public ReadOnly Property Portal As IPEndPoint
+        Public Overrides ReadOnly Property Portal As IPEndPoint
             Get
-                If _local Then
-                    Return New IPEndPoint(AsynInvoke.LocalIPAddress, __host.LocalPort)
-                Else
-                    Return New IPEndPoint(GetMyIPAddress, __host.LocalPort)
-                End If
+                Return Me.GetPortal(_local)
             End Get
         End Property
 

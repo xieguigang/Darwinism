@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
@@ -42,6 +43,12 @@ Namespace Asymmetric
         ''' 当前的这个管理节点和其所管理的服务实例之间相互通信所需要的身份认证信息
         ''' </summary>
         ReadOnly _invokeAuthnic As Net.SSL.Certificate
+
+        Public Overrides ReadOnly Property Portal As IPEndPoint
+            Get
+                Return New IPEndPoint(Master.IPAddress, __host.LocalPort)
+            End Get
+        End Property
 
         ''' <summary>
         ''' 

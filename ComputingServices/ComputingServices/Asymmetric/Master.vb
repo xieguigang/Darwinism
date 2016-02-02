@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
@@ -30,7 +31,13 @@ Namespace Asymmetric
             End Get
         End Property
 
-        Public ReadOnly Property IPAddress As String = Microsoft.VisualBasic.GetMyIPAddress
+        Public Shared ReadOnly Property IPAddress As String = GetMyIPAddress()
+
+        Public Overrides ReadOnly Property Portal As IPEndPoint
+            Get
+                Return New IPEndPoint(IPAddress, __host.LocalPort)
+            End Get
+        End Property
 
         ''' <summary>
         ''' 

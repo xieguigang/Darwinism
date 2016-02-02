@@ -1,5 +1,6 @@
-﻿
-Imports System.Net
+﻿Imports System.Net
+Imports Microsoft.VisualBasic.ComputingServices.Asymmetric
+Imports Microsoft.VisualBasic.Net
 
 Namespace P2P.ServicesComponents
 
@@ -23,6 +24,12 @@ Namespace P2P.ServicesComponents
         ''' 由于中心节点不需要执行具体的计算，所以在初始化了<see cref="ClusterServices"/>之后，本节点服务会被销毁
         ''' </summary>
         Public Property SynchronizeData As PbsThread()
+
+        Public Overrides ReadOnly Property Portal As Net.IPEndPoint
+            Get
+                Return New Net.IPEndPoint(Master.IPAddress, __host.LocalPort)
+            End Get
+        End Property
 
         ReadOnly _NodeEntry As String
 
