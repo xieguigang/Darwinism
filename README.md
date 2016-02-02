@@ -1,2 +1,2 @@
 # Microsoft.VisualBasic.Parallel
-Parallel library of my
+Parallel library of GCModeller parallel computing
