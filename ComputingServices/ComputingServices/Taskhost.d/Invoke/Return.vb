@@ -33,6 +33,11 @@ Namespace TaskHost
             value = Serialization.GetJson(value, type)
         End Sub
 
+        ''' <summary>
+        ''' If the remote execute raising a exception, then a exception will be throw from this function.
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Public Function GetValue(type As Type) As Object
             If errCode <> HTTP_RFC.RFC_OK Then
                 Throw New Exception(ex)

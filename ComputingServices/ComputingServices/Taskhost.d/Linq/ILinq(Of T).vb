@@ -10,12 +10,24 @@ Namespace TaskHost
     Public Class ILinq(Of T) : Implements IEnumerable(Of T)
         Implements IDisposable
 
+        ''' <summary>
+        ''' Element type in the source collection.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Type As Type = GetType(T)
+        ''' <summary>
+        ''' Remote entry point
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Portal As IPEndPoint
 
         ReadOnly invoke As AsynInvoke
         ReadOnly req As New RequestStream(Protocols.ProtocolEntry, TaskProtocols.MoveNext)
 
+        ''' <summary>
+        ''' Creates a linq source reader from the remote entry point
+        ''' </summary>
+        ''' <param name="portal"></param>
         Sub New(portal As IPEndPoint)
             Me.Portal = portal
             Me.invoke = New AsynInvoke(portal)
@@ -24,6 +36,8 @@ Namespace TaskHost
         Public Overrides Function ToString() As String
             Return $"{Type.FullName}@{Portal.ToString}"
         End Function
+
+#Region "Implements IEnumerable(Of T)"
 
         Public Iterator Function AsQuerable() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             Call invoke.SendMessage(Protocols.LinqReset)  ' resets the remote linq source read position
@@ -46,8 +60,10 @@ Namespace TaskHost
             Yield AsQuerable()
         End Function
 
+#End Region
+
         ''' <summary>
-        ''' 释放远程主机上面的资源
+        ''' Automatically free the remote resource.(释放远程主机上面的资源)
         ''' </summary>
         Private Sub __free()
             Dim uid As String = Portal.ToString

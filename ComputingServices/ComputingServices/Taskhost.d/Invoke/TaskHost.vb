@@ -17,13 +17,14 @@ Namespace TaskHost
         End Sub
 
         ''' <summary>
-        ''' 相当于Sub，调用远程的命令行程序，只会返回0或者错误代码
+        ''' Start the application on the remote host.(相当于Sub，调用远程的命令行程序，只会返回0或者错误代码)
         ''' </summary>
-        ''' <param name="exe"></param>
+        ''' <param name="exe">Exe file path</param>
         ''' <param name="args"></param>
         ''' <returns></returns>
         Public Function Shell(exe As String, args As String) As Integer
-
+            Dim func As Func(Of String, String, Integer) = AddressOf Protocols.Shell
+            Return Invoke(Of Integer)(func, {exe, args})
         End Function
 
         ''' <summary>
