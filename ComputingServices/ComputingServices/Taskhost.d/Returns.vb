@@ -1,4 +1,7 @@
-﻿Namespace TaskHost
+﻿Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Protocol
+
+Namespace TaskHost
 
     ''' <summary>
     ''' 远端调用的函数返回
@@ -45,13 +48,29 @@
 
     Public Class Returns(Of T) : Inherits Returns
 
+        Public ReadOnly Property Type As Type = GetType(T)
+
         Public Overloads Function GetValue() As T
             Dim value As Object = GetValue(GetType(T))
             Return DirectCast(value, T)
         End Function
 
-        Public Function AsQuerable() As IEnumerable(Of T)
+        Public Iterator Function AsQuerable() As IEnumerable(Of T)
+            Dim portal As IPEndPoint = Serialization.LoadObject(Of IPEndPoint)(value)
+            Dim invoke As New AsynInvoke(portal)
+            Dim req As New RequestStream(Protocols.ProtocolEntry, TaskProtocols.MoveNext)
 
+            Do While True
+                Dim rep As RequestStream = invoke.SendMessage(req)
+                If rep.ProtocolCategory = TaskProtocols.ReadsDone Then
+                    Exit Do
+                End If
+                Dim json As String = rep.GetUTF8String
+                Dim value As Object = Serialization.LoadObject(json, Type)
+                Dim x As T = DirectCast(value, T)
+
+                Yield x
+            Loop
         End Function
     End Class
 End Namespace
