@@ -29,7 +29,7 @@ Namespace TaskHost
         End Property
 
         ''' <summary>
-        ''' 远程服务器上面通过这个方法执行函数调用
+        ''' Invoke the function on the remote server.(远程服务器上面通过这个方法执行函数调用)
         ''' </summary>
         ''' <param name="params"></param>
         ''' <returns></returns>
@@ -49,7 +49,7 @@ Namespace TaskHost
         End Function
 
         ''' <summary>
-        ''' 
+        ''' A common function of invoke the method on the remote machine
         ''' </summary>
         ''' <param name="params">远程主机上面的函数指针</param>
         ''' <param name="value">value's <see cref="system.type"/></param>

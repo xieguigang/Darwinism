@@ -16,6 +16,10 @@ Namespace TaskHost
             _remote = remote
         End Sub
 
+        Sub New(remote As String, port As Integer)
+            _remote = New IPEndPoint(remote, port)
+        End Sub
+
         ''' <summary>
         ''' Start the application on the remote host.(相当于Sub，调用远程的命令行程序，只会返回0或者错误代码)
         ''' </summary>

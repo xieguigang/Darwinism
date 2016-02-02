@@ -1,43 +1,51 @@
-﻿Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 
 ''' <summary>
 ''' 我想要构建的是一个去中心化的网格计算框架
 ''' </summary>
 Module ServicesProgram
 
-    Public Function remoteLINQTest(n As Integer) As Integer()
-        Return {4, 56, 4, 6, 5, 74, 98, 145, 3132, 45, 6, 4, 8}.Join((-1).CopyVector(n)).ToArray
+    Public Function Main() As Integer
+        Return GetType(ServicesProgram).RunCLI(App.CommandLine, AddressOf TestLocal)
     End Function
 
-    Sub Main()
+    ''' <summary>
+    ''' Example of running on local machine
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function TestLocal() As Integer
+        Dim exe As String = App.ExecutablePath
+        Dim port As Integer = Microsoft.VisualBasic.Net.GetFirstAvailablePort
 
-        Dim source = {1, 2, 3, 4, 5, 6, 7, 8, 9, 1000}
-        Dim sourceRead As LinqProvider = LinqProvider.CreateObject(source)
-        Dim retur As ILinq(Of Integer) = New ILinq(Of Integer)(sourceRead)
+        Call Process.Start(exe, $"/remote /port {port}").Start()  ' example test
+        Call Threading.Thread.Sleep(1500)
 
-        Dim all = retur.ToArray
-        Dim xls = (From x In retur Where x > 6 Select x).ToArray
+        Dim remote As New TaskHost("127.0.0.1", port)
+        Dim msg As String = "Code execute on the remotes!"
+        Dim remoteFunc As Func(Of String, Integer) = AddressOf TestExample1  ' Gets the function pointer on the remote machine
 
-        '   Pause()
+        Call remote.Invoke(Of Integer)(remoteFunc, msg).__DEBUG_ECHO ' gets the value that returns from the remote machine
 
+    End Function
 
-        Dim host As New TaskInvoke
-        Dim portal = host.Portal
-        Dim invokeInterface As New TaskHost(portal)
-        Dim ddd As Func(Of Integer, Integer()) = AddressOf remoteLINQTest  ' 得到远程主机上面的函数指针
+    Public Function TestExample1(msg As String) As Integer
+        Call MsgBox(msg, MsgBoxStyle.Information, App.Command)  ' remotes have the commandline but the local is empty
+        Return 100000 * RandomDouble()
+    End Function
 
-        Using source2 As ILinq(Of Integer) = invokeInterface.AsLinq(Of Integer)(ddd, 5)
-            Dim result As Integer() = (From x As Integer In source2 Select x).ToArray
-        End Using
+    ''' <summary>
+    ''' Example of running on a remote machine.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("/remote", Usage:="/remote [/port <port, default:=1234>]")>
+    Public Function TestRemote(args As CommandLine.CommandLine) As Integer
+        Dim port As Integer = args.GetValue("/port", 1234)
+        Dim invoke As New TaskInvoke(port)
 
-        Pause()
+        Call Pause()
 
-        '  Call Microsoft.VisualBasic.ComputingServices.CLI_InitStart("./GridNode.exe", "cli /wan 127.0.0.1")
-
-        Dim master As New Microsoft.VisualBasic.ComputingServices.Asymmetric.Master("1234567890")
-        Call Microsoft.VisualBasic.Parallel.Run(AddressOf master.Run)
-        Call Threading.Thread.Sleep(1000)
-
-        Dim nodeMgr As New Microsoft.VisualBasic.ComputingServices.Asymmetric.Parasitifer("./GridNode.exe", "127.0.0.1", "1234567890")
-    End Sub
+        Return 0
+    End Function
 End Module
