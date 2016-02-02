@@ -59,5 +59,9 @@ Namespace TaskHost
                 Return DirectCast(value, T)
             End If
         End Function
+
+        Public Function AsLinq(Of T)(target As [Delegate], ParamArray args As Object()) As ILinq(Of T)
+
+        End Function
     End Class
 End Namespace

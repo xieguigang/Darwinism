@@ -114,11 +114,12 @@
     </Compile>
     <Compile Include="P2P\PbsProtocol.vb" />
     <Compile Include="P2P\PbsThread.vb" />
+    <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
     <Compile Include="Taskhost.d\LinqProvider.vb" />
     <Compile Include="Taskhost.d\Returns.vb" />
     <Compile Include="Taskhost.d\Invoke.vb" />
     <Compile Include="Taskhost.d\Protocols.vb" />
-    <Compile Include="Taskhost.d\TaskHost.vb" />
+    <Compile Include="Taskhost.d\Invoke\TaskHost.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
