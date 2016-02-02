@@ -2,9 +2,9 @@
 
 Namespace FileSystem
 
-    Public Class Protocols
+    Public Module Protocols
 
-        Public Enum FileSystemMethods As Long
+        Public Enum FileSystemAPI As Long
             '
             ' Summary:
             '     Gets or sets the current directory.
@@ -929,48 +929,10 @@ Namespace FileSystem
             '   T:System.Security.SecurityException:
             '     The user lacks necessary permissions to view the path.
             ReadAllBytes
-            '
-            ' Summary:
-            '     Returns the contents of a text file as a String.
-            '
-            ' Parameters:
-            '   file:
-            '     Name and path of the file to read.
-            '
-            ' Returns:
-            '     String containing the contents of the file.
-            '
-            ' Exceptions:
-            '   T:System.ArgumentException:
-            '     The path is not valid for one of the following reasons: it is a zero-length string;
-            '     it contains only white space; it contains invalid characters; or it is a device
-            '     path (starts with \\.\); it ends with a trailing slash.
-            '
-            '   T:System.ArgumentNullException:
-            '     file is Nothing.
-            '
-            '   T:System.IO.FileNotFoundException:
-            '     The file does not exist.
-            '
-            '   T:System.IO.IOException:
-            '     The file is in use by another process, or an I/O error occurs.
-            '
-            '   T:System.IO.PathTooLongException:
-            '     The path exceeds the system-defined maximum length.
-            '
-            '   T:System.NotSupportedException:
-            '     A file or directory name in the path contains a colon (:) or is in an invalid
-            '     format.
-            '
-            '   T:System.OutOfMemoryException:
-            '     There is not enough memory to write the string to buffer.
-            '
-            '   T:System.Security.SecurityException:
-            '     The user lacks necessary permissions to view the path.
-            ReadAllText
         End Enum
 
         Public ReadOnly Property ProtocolEntry As Long =
-            New Protocol(GetType(FileSystemMethods)).EntryPoint
-    End Class
+            New Protocol(GetType(FileSystemAPI)).EntryPoint
+
+    End Module
 End Namespace

@@ -1,8 +1,10 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Protocol
 
 Namespace FileSystem
 
@@ -18,47 +20,40 @@ Namespace FileSystem
             _portal = portal
         End Sub
 
-        '
-        ' Summary:
-        '     Gets or sets the current directory.
-        '
-        ' Returns:
-        '     The current directory for file I/O operations.
-        '
+        Public Overrides Function ToString() As String
+            Return $"{CurrentDirectory}@{_portal.ToString}"
+        End Function
+
         ' Exceptions:
         '   T:System.IO.DirectoryNotFoundException:
         '     The path is not valid.
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' Gets or sets the current directory.
+        ''' </summary>
+        ''' <returns>The current directory for file I/O operations.</returns>
         Public Property CurrentDirectory As String
             Get
-
+                Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.CurrentDirectory)
+                Dim invoke As New AsynInvoke(_portal)
+                Dim rep As RequestStream = invoke.SendMessage(req)
+                Return req.GetUTF8String
             End Get
             Set(value As String)
-
+                Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.CurrentDirectory, value)
+                Dim invoke As New AsynInvoke(_portal)
+                Call invoke.SendMessage(req)
             End Set
         End Property
 
-        '
-        ' Summary:
-        '     Returns a read-only collection of all available drive names.
-        '
-        ' Returns:
-        '     A read-only collection of all available drives as System.IO.DriveInfo objects.
+        ''' <summary>
+        ''' Returns a read-only collection of all available drive names.
+        ''' </summary>
+        ''' <returns>A read-only collection of all available drives as System.IO.DriveInfo objects.</returns>
         Public ReadOnly Property Drives As ReadOnlyCollection(Of DriveInfo)
 
-        '
-        ' Summary:
-        '     Copies the contents of a directory to another directory.
-        '
-        ' Parameters:
-        '   sourceDirectoryName:
-        '     The directory to be copied.
-        '
-        '   destinationDirectoryName:
-        '     The location to which the directory contents should be copied.
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The new name specified for the directory contains a colon (:) or slash (\ or
@@ -98,22 +93,27 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     A destination file exists but cannot be accessed.
+        ''' <summary>
+        ''' Copies the contents of a directory to another directory.
+        ''' </summary>
+        ''' <param name="sourceDirectoryName">The directory to be copied.</param>
+        ''' <param name="destinationDirectoryName">The location to which the directory contents should be copied.</param>
         Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String)
 
         End Sub
         '
         ' Summary:
-        '     Copies the contents of a directory to another directory.
+        '     
         '
         ' Parameters:
         '   sourceDirectoryName:
-        '     The directory to be copied.
+        '     
         '
         '   destinationDirectoryName:
-        '     The location to which the directory contents should be copied.
+        '     
         '
         '   showUI:
-        '     Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
+        '     
         '
         ' Exceptions:
         '   T:System.ArgumentException:
@@ -158,22 +158,28 @@ Namespace FileSystem
         '   T:System.OperationCanceledException:
         '     ShowUI is set to UIOption.AllDialogs and the user cancels the operation, or one
         '     or more files in the directory cannot be copied.
+        ''' <summary>
+        ''' Copies the contents of a directory to another directory.
+        ''' </summary>
+        ''' <param name="sourceDirectoryName">The directory to be copied.</param>
+        ''' <param name="destinationDirectoryName">The location to which the directory contents should be copied.</param>
+        ''' <param name="showUI">Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.</param>
         Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption)
 
         End Sub
         '
         ' Summary:
-        '     Copies the contents of a directory to another directory.
+        '     
         '
         ' Parameters:
         '   sourceDirectoryName:
-        '     The directory to be copied.
+        '     
         '
         '   destinationDirectoryName:
-        '     The location to which the directory contents should be copied.
+        '     
         '
         '   overwrite:
-        '     True to overwrite existing files; otherwise False. Default is False.
+        '     
         '
         ' Exceptions:
         '   T:System.ArgumentException:
@@ -214,6 +220,12 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     A destination file exists but cannot be accessed.
+        ''' <summary>
+        ''' Copies the contents of a directory to another directory.
+        ''' </summary>
+        ''' <param name="sourceDirectoryName">The directory to be copied.</param>
+        ''' <param name="destinationDirectoryName">The location to which the directory contents should be copied.</param>
+        ''' <param name="overwrite">True to overwrite existing files; otherwise False. Default is False.</param>
         Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String, overwrite As Boolean)
 
         End Sub
@@ -278,6 +290,13 @@ Namespace FileSystem
         '   T:System.OperationCanceledException:
         '     ShowUI is set to UIOption.AllDialogs and the user cancels the operation, or one
         '     or more files in the directory cannot be copied.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceDirectoryName"></param>
+        ''' <param name="destinationDirectoryName"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="onUserCancel"></param>
         Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption, onUserCancel As UICancelOption)
 
         End Sub
@@ -331,6 +350,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String)
 
         End Sub
@@ -390,6 +415,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
+        ''' <param name="showUI"></param>
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String, showUI As UIOption)
 
         End Sub
@@ -449,6 +480,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
+        ''' <param name="overwrite"></param>
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String, overwrite As Boolean)
 
         End Sub
@@ -516,6 +553,13 @@ Namespace FileSystem
         '   T:System.OperationCanceledException:
         '     UICancelOption is set to ThrowException, and the user has canceled the operation
         '     or an unspecified I/O error occurs.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="onUserCancel"></param>
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String, showUI As UIOption, onUserCancel As UICancelOption)
 
         End Sub
@@ -546,6 +590,10 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have permission to create the directory.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
         Public Sub CreateDirectory(directory As String)
 
         End Sub
@@ -593,6 +641,11 @@ Namespace FileSystem
         '
         '   T:System.OperationCanceledException:
         '     The user cancels the operation or the directory cannot be deleted.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="onDirectoryNotEmpty"></param>
         Public Sub DeleteDirectory(directory As String, onDirectoryNotEmpty As DeleteDirectoryOption)
 
         End Sub
@@ -643,6 +696,12 @@ Namespace FileSystem
         '
         '   T:System.OperationCanceledException:
         '     The user cancels the operation or the directory cannot be deleted.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="recycle"></param>
         Public Sub DeleteDirectory(directory As String, showUI As UIOption, recycle As RecycleOption)
 
         End Sub
@@ -696,6 +755,13 @@ Namespace FileSystem
         '
         '   T:System.OperationCanceledException:
         '     The user cancels the operation or the directory cannot be deleted.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="recycle"></param>
+        ''' <param name="onUserCancel"></param>
         Public Sub DeleteDirectory(directory As String, showUI As UIOption, recycle As RecycleOption, onUserCancel As UICancelOption)
 
         End Sub
@@ -734,6 +800,10 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have permission to delete the file or the file is read-only.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
         Public Sub DeleteFile(file As String)
 
         End Sub
@@ -779,6 +849,12 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have permission to delete the file or the file is read-only.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="recycle"></param>
         Public Sub DeleteFile(file As String, showUI As UIOption, recycle As RecycleOption)
 
         End Sub
@@ -831,6 +907,13 @@ Namespace FileSystem
         '
         '   T:System.OperationCanceledException:
         '     The user cancelled the operation and onUserCancel is set to Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="recycle"></param>
+        ''' <param name="onUserCancel"></param>
         Public Sub DeleteFile(file As String, showUI As UIOption, recycle As RecycleOption, onUserCancel As UICancelOption)
 
         End Sub
@@ -879,6 +962,11 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceDirectoryName"></param>
+        ''' <param name="destinationDirectoryName"></param>
         Public Sub MoveDirectory(sourceDirectoryName As String, destinationDirectoryName As String)
 
         End Sub
@@ -934,6 +1022,12 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceDirectoryName"></param>
+        ''' <param name="destinationDirectoryName"></param>
+        ''' <param name="overwrite"></param>
         Public Sub MoveDirectory(sourceDirectoryName As String, destinationDirectoryName As String, overwrite As Boolean)
 
         End Sub
@@ -988,6 +1082,12 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceDirectoryName"></param>
+        ''' <param name="destinationDirectoryName"></param>
+        ''' <param name="showUI"></param>
         Public Sub MoveDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption)
 
         End Sub
@@ -1057,6 +1157,13 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceDirectoryName"></param>
+        ''' <param name="destinationDirectoryName"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="onUserCancel"></param>
         Public Sub MoveDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption, onUserCancel As UICancelOption)
 
         End Sub
@@ -1095,6 +1202,11 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
         Public Sub MoveFile(sourceFileName As String, destinationFileName As String)
 
         End Sub
@@ -1139,6 +1251,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
+        ''' <param name="overwrite"></param>
         Public Sub MoveFile(sourceFileName As String, destinationFileName As String, overwrite As Boolean)
 
         End Sub
@@ -1183,6 +1301,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
+        ''' <param name="showUI"></param>
         Public Sub MoveFile(sourceFileName As String, destinationFileName As String, showUI As UIOption)
 
         End Sub
@@ -1235,6 +1359,13 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sourceFileName"></param>
+        ''' <param name="destinationFileName"></param>
+        ''' <param name="showUI"></param>
+        ''' <param name="onUserCancel"></param>
         Public Sub MoveFile(sourceFileName As String, destinationFileName As String, showUI As UIOption, onUserCancel As UICancelOption)
 
         End Sub
@@ -1279,6 +1410,12 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="newName"></param>
         Public Sub RenameDirectory(directory As String, newName As String)
 
         End Sub
@@ -1323,6 +1460,11 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="newName"></param>
         Public Sub RenameFile(file As String, newName As String)
 
         End Sub
@@ -1368,6 +1510,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="data"></param>
+        ''' <param name="append"></param>
         Public Sub WriteAllBytes(file As String, data() As Byte, append As Boolean)
 
         End Sub
@@ -1413,6 +1561,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="text"></param>
+        ''' <param name="append"></param>
         Public Sub WriteAllText(file As String, text As String, append As Boolean)
 
         End Sub
@@ -1461,6 +1615,13 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="text"></param>
+        ''' <param name="append"></param>
+        ''' <param name="encoding"></param>
         Public Sub WriteAllText(file As String, text As String, append As Boolean, encoding As Encoding)
 
         End Sub
@@ -1482,6 +1643,12 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     baseDirectory or relativePath are malformed paths.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="baseDirectory"></param>
+        ''' <param name="relativePath"></param>
+        ''' <returns></returns>
         Public Function CombinePath(baseDirectory As String, relativePath As String) As String
 
         End Function
@@ -1495,6 +1662,11 @@ Namespace FileSystem
         '
         ' Returns:
         '     True if the directory exists; otherwise False.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <returns></returns>
         Public Function DirectoryExists(directory As String) As Boolean
 
         End Function
@@ -1513,6 +1685,11 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The name of the file ends with a backslash (\).
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Function FileExists(file As String) As Boolean
 
         End Function
@@ -1563,6 +1740,14 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="containsText"></param>
+        ''' <param name="ignoreCase"></param>
+        ''' <param name="searchType"></param>
+        ''' <returns></returns>
         Public Function FindInFiles(directory As String, containsText As String, ignoreCase As Boolean, searchType As FileIO.SearchOption) As ReadOnlyCollection(Of String)
 
         End Function
@@ -1616,6 +1801,15 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="containsText"></param>
+        ''' <param name="ignoreCase"></param>
+        ''' <param name="searchType"></param>
+        ''' <param name="fileWildcards"></param>
+        ''' <returns></returns>
         Public Function FindInFiles(directory As String, containsText As String, ignoreCase As Boolean, searchType As FileIO.SearchOption, ParamArray fileWildcards() As String) As ReadOnlyCollection(Of String)
 
         End Function
@@ -1659,6 +1853,11 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <returns></returns>
         Public Function GetDirectories(directory As String) As ReadOnlyCollection(Of String)
 
         End Function
@@ -1712,6 +1911,13 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="searchType"></param>
+        ''' <param name="wildcards"></param>
+        ''' <returns></returns>
         Public Function GetDirectories(directory As String, searchType As FileIO.SearchOption, ParamArray wildcards() As String) As ReadOnlyCollection(Of String)
 
         End Function
@@ -1743,6 +1949,11 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <returns></returns>
         Public Function GetDirectoryInfo(directory As String) As DirectoryInfo
 
         End Function
@@ -1771,6 +1982,11 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="drive"></param>
+        ''' <returns></returns>
         Public Function GetDriveInfo(drive As String) As DriveInfo
 
         End Function
@@ -1804,6 +2020,11 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks ACL (access control list) access to the file.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Function GetFileInfo(file As String) As FileInfo
 
         End Function
@@ -1846,6 +2067,11 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <returns></returns>
         Public Function GetFiles(directory As String) As ReadOnlyCollection(Of String)
 
         End Function
@@ -1894,6 +2120,13 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="directory"></param>
+        ''' <param name="searchType"></param>
+        ''' <param name="wildcards"></param>
+        ''' <returns></returns>
         Public Function GetFiles(directory As String, searchType As FileIO.SearchOption, ParamArray wildcards() As String) As ReadOnlyCollection(Of String)
 
         End Function
@@ -1907,6 +2140,11 @@ Namespace FileSystem
         '
         ' Returns:
         '     The file name from the specified path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         Public Function GetName(path As String) As String
 
         End Function
@@ -1939,6 +2177,11 @@ Namespace FileSystem
         '   T:System.NotSupportedException:
         '     A file or directory name in the path contains a colon (:) or is in an invalid
         '     format.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         Public Function GetParentPath(path As String) As String
 
         End Function
@@ -1949,6 +2192,10 @@ Namespace FileSystem
         '
         ' Returns:
         '     String containing the full path of the temporary file.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetTempFileName() As String
 
         End Function
@@ -1995,6 +2242,11 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Function OpenTextFieldParser(file As String) As TextFieldParser
 
         End Function
@@ -2044,6 +2296,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="delimiters"></param>
+        ''' <returns></returns>
         Public Function OpenTextFieldParser(file As String, ParamArray delimiters() As String) As TextFieldParser
 
         End Function
@@ -2093,6 +2351,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="fieldWidths"></param>
+        ''' <returns></returns>
         Public Function OpenTextFieldParser(file As String, ParamArray fieldWidths() As Integer) As TextFieldParser
 
         End Function
@@ -2116,6 +2380,11 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to read from the file.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Function OpenTextFileReader(file As String) As StreamReader
 
         End Function
@@ -2142,6 +2411,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to read from the file.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Function OpenTextFileReader(file As String, encoding As Encoding) As StreamReader
 
         End Function
@@ -2163,6 +2438,12 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a trailing slash.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="append"></param>
+        ''' <returns></returns>
         Public Function OpenTextFileWriter(file As String, append As Boolean) As StreamWriter
 
         End Function
@@ -2187,6 +2468,13 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a trailing slash.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="append"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As StreamWriter
 
         End Function
@@ -2228,6 +2516,11 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Function ReadAllBytes(file As String) As Byte()
 
         End Function
@@ -2269,6 +2562,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Function ReadAllText(file As String) As String
 
         End Function
@@ -2313,6 +2612,12 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Function ReadAllText(file As String, encoding As Encoding) As String
 
         End Function
