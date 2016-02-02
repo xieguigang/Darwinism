@@ -10,8 +10,11 @@ Module ServicesProgram
         Dim source = {1, 2, 3, 4, 5, 6, 7, 8, 9, 1000}
         Dim sourceRead As LinqProvider = LinqProvider.CreateObject(source)
 
+        Dim port = sourceRead.Portal
+        Dim retur As ILinq(Of Integer) = New ILinq(Of Integer)(port)
 
-
+        Dim all = retur.ToArray
+        Dim xls = (From x In retur Where x > 6 Select x).ToArray
 
         Pause()
 

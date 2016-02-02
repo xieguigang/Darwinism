@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+﻿Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 
 Namespace TaskHost
 
@@ -11,12 +12,17 @@ Namespace TaskHost
 
 #Region "LINQ supports"
             MoveNext
+            Reset
             ReadsDone = -1000L
 #End Region
         End Enum
 
         Public ReadOnly Property ProtocolEntry As Long =
             New Protocol(GetType(TaskProtocols)).EntryPoint
+
+        Public Function LinqReset() As RequestStream
+            Return New RequestStream(ProtocolEntry, TaskProtocols.Reset)
+        End Function
 
     End Module
 End Namespace
