@@ -80,6 +80,7 @@ Namespace TaskHost
             If __linq.ContainsKey(uid) Then
                 Dim x As LinqProvider = __linq(uid)
                 Call x.Free  ' 释放Linq数据源的指针
+                Call __linq.Remove(uid)  ' 从哈希表之中移除数据源释放服务器资源
             End If
             Return NetResponse.RFC_OK  ' HTTP/200
         End Function
