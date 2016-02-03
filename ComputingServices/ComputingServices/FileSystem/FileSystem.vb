@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace FileSystem
 
@@ -14,6 +15,9 @@ Namespace FileSystem
     ''' </summary>
     Public Class FileSystem
 
+        ''' <summary>
+        ''' 远端服务器的开放的句柄端口
+        ''' </summary>
         ReadOnly _portal As IPEndPoint
 
         Sub New(portal As IPEndPoint)
@@ -2199,56 +2203,17 @@ Namespace FileSystem
         Public Function GetTempFileName() As String
 
         End Function
-        '
-        ' Summary:
-        '     The OpenTextFieldParser method allows you to create a Microsoft.VisualBasic.FileIO.TextFieldParser
-        '     object, which provides a way to easily and efficiently parse structured text
-        '     files, such as logs. The TextFieldParser object can be used to read both delimited
-        '     and fixed-width files.
-        '
-        ' Parameters:
-        '   file:
-        '     The file to be opened with the TextFieldParser.
-        '
-        ' Returns:
-        '     Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\); it ends with a trailing slash.
-        '
-        '   T:System.ArgumentNullException:
-        '     file is Nothing.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The file is in use by another process, or an I/O error occurs.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:Microsoft.VisualBasic.FileIO.MalformedLineException:
-        '     A row cannot be parsed using the specified format. The exception message specifies
-        '     the line causing the exception, while the Microsoft.VisualBasic.FileIO.TextFieldParser.ErrorLine
-        '     property is assigned the text contained in the line.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
+
         ''' <summary>
-        ''' 
+        ''' 在远程服务器上面打开一个文件句柄
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
-        Public Function OpenTextFieldParser(file As String) As TextFieldParser
-
+        Public Function OpenFileHandle(file As String, mode As FileMode) As FileHandle
+            Dim req As RequestStream = API.OpenHandle(file, mode)
+            Dim invoke As New AsynInvoke(Me._portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
+            Return rep.GetUTF8String.LoadObject(Of FileHandle)
         End Function
         '
         ' Summary:
@@ -2380,14 +2345,14 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to read from the file.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="file"></param>
-        ''' <returns></returns>
-        Public Function OpenTextFileReader(file As String) As IO.StreamReader
+        '''' <summary>
+        '''' 
+        '''' </summary>
+        '''' <param name="file"></param>
+        '''' <returns></returns>
+        'Public Function OpenTextFileReader(file As String) As IO.StreamReader
 
-        End Function
+        'End Function
         '
         ' Summary:
         '     Opens a System.IO.StreamReader object to read from a file.
@@ -2411,15 +2376,15 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to read from the file.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="encoding"></param>
-        ''' <returns></returns>
-        Public Function OpenTextFileReader(file As String, encoding As Encoding) As IO.StreamReader
+        '''' <summary>
+        '''' 
+        '''' </summary>
+        '''' <param name="file"></param>
+        '''' <param name="encoding"></param>
+        '''' <returns></returns>
+        'Public Function OpenTextFileReader(file As String, encoding As Encoding) As IO.StreamReader
 
-        End Function
+        'End Function
         '
         ' Summary:
         '     Opens a System.IO.StreamWriter object to write to the specified file.
@@ -2438,15 +2403,15 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a trailing slash.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="append"></param>
-        ''' <returns></returns>
-        Public Function OpenTextFileWriter(file As String, append As Boolean) As IO.StreamWriter
+        '''' <summary>
+        '''' 
+        '''' </summary>
+        '''' <param name="file"></param>
+        '''' <param name="append"></param>
+        '''' <returns></returns>
+        'Public Function OpenTextFileWriter(file As String, append As Boolean) As IO.StreamWriter
 
-        End Function
+        'End Function
         '
         ' Summary:
         '     Opens a System.IO.StreamWriter to write to the specified file.
@@ -2468,16 +2433,16 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a trailing slash.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="append"></param>
-        ''' <param name="encoding"></param>
-        ''' <returns></returns>
-        Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As IO.StreamWriter
+        '''' <summary>
+        '''' 
+        '''' </summary>
+        '''' <param name="file"></param>
+        '''' <param name="append"></param>
+        '''' <param name="encoding"></param>
+        '''' <returns></returns>
+        'Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As IO.StreamWriter
 
-        End Function
+        'End Function
         '
         ' Summary:
         '     Returns the contents of a file as a byte array.

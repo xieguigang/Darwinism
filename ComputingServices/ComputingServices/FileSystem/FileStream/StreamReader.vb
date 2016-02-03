@@ -8,12 +8,12 @@ Imports Microsoft.VisualBasic.Net.Protocol
 
 Namespace FileSystem.IO
 
-    Public Class StreamReader : Inherits BaseStream
+    'Public Class StreamReader : Inherits BaseStream
 
-        Sub New(file As String, device As FileSystem)
-            Call MyBase.New(remote:=device)
-            Me.FileName = file
-        End Sub
+    '    Sub New(file As String, device As FileSystem)
+    '        Call MyBase.New(remote:=device)
+    '        Me.FileName = file
+    '    End Sub
 
-    End Class
+    'End Class
 End Namespace

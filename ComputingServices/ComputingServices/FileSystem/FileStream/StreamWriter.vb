@@ -8,11 +8,11 @@ Imports Microsoft.VisualBasic.Net.Protocol
 
 Namespace FileSystem.IO
 
-    Public Class StreamWriter : Inherits BaseStream
+    'Public Class StreamWriter : Inherits BaseStream
 
-        Sub New(file As String, device As FileSystem)
-            Call MyBase.New(remote:=device)
-            Me.FileName = file
-        End Sub
-    End Class
+    '    Sub New(file As String, device As FileSystem)
+    '        Call MyBase.New(remote:=device)
+    '        Me.FileName = file
+    '    End Sub
+    'End Class
 End Namespace

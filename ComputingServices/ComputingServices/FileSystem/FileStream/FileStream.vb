@@ -13,18 +13,16 @@ Imports Microsoft.Win32.SafeHandles
 
 Namespace FileSystem.IO
 
-    '
-    ' Summary:
-    '     Provides a System.IO.Stream for a file, supporting both synchronous and asynchronous
-    '     read and write operations.To browse the .NET Framework source code for this type,
-    '     see the Reference Source.
-    <ComVisible(True)>
-    Public Class FileStream
+    ''' <summary>
+    ''' Provides a System.IO.Stream for a file, supporting both synchronous and asynchronous
+    ''' read and write operations.To browse the .NET Framework source code for this type,
+    ''' see the Reference Source.
+    ''' </summary>
+    <ComVisible(True)> Public Class FileStream
         Inherits BaseStream
         '
         ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path and creation mode.
+        '     
         '
         ' Parameters:
         '   path:
@@ -69,801 +67,812 @@ Namespace FileSystem.IO
         '
         '   T:System.ArgumentOutOfRangeException:
         '     mode contains an invalid value.
-        <SecuritySafeCritical> Public Sub New(path As String, mode As FileMode)
-
+        ''' <summary>
+        ''' Initializes a new instance of the System.IO.FileStream class with the specified
+        ''' path and creation mode.
+        ''' </summary>
+        ''' <param name="path">远程机器上面的文件</param>
+        ''' <param name="mode"></param>
+        <SecuritySafeCritical> Public Sub New(path As String, mode As FileMode, remote As FileSystem)
+            Call MyBase.New(remote)
+            Name = path
+            FileHandle = remote.OpenFileHandle(path, mode)
         End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class for the specified
-        '     file handle, with the specified read/write permission.
-        '
-        ' Parameters:
-        '   handle:
-        '     A file handle for the file that the current FileStream object will encapsulate.
-        '
-        '   access:
-        '     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
-        '     properties of the FileStream object.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     access is not a field of System.IO.FileAccess.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     file handle, such as when access is Write or ReadWrite and the file handle is
-        '     set for read-only access.
-        <SecuritySafeCritical> Public Sub New(handle As SafeFileHandle, access As FileAccess)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class for the specified
-        '     file handle, with the specified read/write permission.
-        '
-        ' Parameters:
-        '   handle:
-        '     A file handle for the file that the current FileStream object will encapsulate.
-        '
-        '   access:
-        '     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
-        '     properties of the FileStream object.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     access is not a field of System.IO.FileAccess.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     file handle, such as when access is Write or ReadWrite and the file handle is
-        '     set for read-only access.
-        <Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access) instead.  http://go.microsoft.com/fwlink/?linkid=14202")>
-        Public Sub New(handle As IntPtr, access As FileAccess)
+        Public ReadOnly Property FileHandle As FileHandle
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path, creation mode, and read/write permission.
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current FileStream object will
-        '     encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
-        '   access:
-        '     A constant that determines how the file can be accessed by the FileStream object.
-        '     This also determines the values returned by the System.IO.FileStream.CanRead
-        '     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
-        '     is true if path specifies a disk file.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     path is null.
-        '
-        '   T:System.ArgumentException:
-        '     path is an empty string (""), contains only white space, or contains one or more
-        '     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
-        '     "lpt1:", etc. in an NTFS environment.
-        '
-        '   T:System.NotSupportedException:
-        '     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
-        '     non-NTFS environment.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
-        '     and the file specified by path does not exist. The file must already exist in
-        '     these modes.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as specifying FileMode.CreateNew when the file specified by
-        '     path already exists, occurred. -or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The specified path is invalid, such as being on an unmapped drive.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     path, such as when access is Write or ReadWrite and the file or directory is
-        '     set for read-only access.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The specified path, file name, or both exceed the system-defined maximum length.
-        '     For example, on Windows-based platforms, paths must be less than 248 characters,
-        '     and file names must be less than 260 characters.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     mode contains an invalid value.
-        <SecuritySafeCritical>
-        Public Sub New(path As String, mode As FileMode, access As FileAccess)
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class for the specified
+        ''     file handle, with the specified read/write permission.
+        ''
+        '' Parameters:
+        ''   handle:
+        ''     A file handle for the file that the current FileStream object will encapsulate.
+        ''
+        ''   access:
+        ''     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
+        ''     properties of the FileStream object.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentException:
+        ''     access is not a field of System.IO.FileAccess.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     file handle, such as when access is Write or ReadWrite and the file handle is
+        ''     set for read-only access.
+        '<SecuritySafeCritical> Public Sub New(handle As SafeFileHandle, access As FileAccess)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class for the specified
-        '     file handle, with the specified read/write permission, and buffer size.
-        '
-        ' Parameters:
-        '   handle:
-        '     A file handle for the file that the current FileStream object will encapsulate.
-        '
-        '   access:
-        '     A System.IO.FileAccess constant that sets the System.IO.FileStream.CanRead and
-        '     System.IO.FileStream.CanWrite properties of the FileStream object.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The handle parameter is an invalid handle.-or-The handle parameter is a synchronous
-        '     handle and it was used asynchronously.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     The bufferSize parameter is negative.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     file handle, such as when access is Write or ReadWrite and the file handle is
-        '     set for read-only access.
-        <SecuritySafeCritical>
-        Public Sub New(handle As SafeFileHandle, access As FileAccess, bufferSize As Integer)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class for the specified
+        ''     file handle, with the specified read/write permission.
+        ''
+        '' Parameters:
+        ''   handle:
+        ''     A file handle for the file that the current FileStream object will encapsulate.
+        ''
+        ''   access:
+        ''     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
+        ''     properties of the FileStream object.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentException:
+        ''     access is not a field of System.IO.FileAccess.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     file handle, such as when access is Write or ReadWrite and the file handle is
+        ''     set for read-only access.
+        '<Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access) instead.  http://go.microsoft.com/fwlink/?linkid=14202")>
+        'Public Sub New(handle As IntPtr, access As FileAccess)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class for the specified
-        '     file handle, with the specified read/write permission and FileStream instance
-        '     ownership.
-        '
-        ' Parameters:
-        '   handle:
-        '     A file handle for the file that the current FileStream object will encapsulate.
-        '
-        '   access:
-        '     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
-        '     properties of the FileStream object.
-        '
-        '   ownsHandle:
-        '     true if the file handle will be owned by this FileStream instance; otherwise,
-        '     false.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     access is not a field of System.IO.FileAccess.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     file handle, such as when access is Write or ReadWrite and the file handle is
-        '     set for read-only access.
-        <Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access) instead, and optionally make a new SafeFileHandle with ownsHandle=false if needed.  http://go.microsoft.com/fwlink/?linkid=14202")>
-        Public Sub New(handle As IntPtr, access As FileAccess, ownsHandle As Boolean)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class with the specified
+        ''     path, creation mode, and read/write permission.
+        ''
+        '' Parameters:
+        ''   path:
+        ''     A relative or absolute path for the file that the current FileStream object will
+        ''     encapsulate.
+        ''
+        ''   mode:
+        ''     A constant that determines how to open or create the file.
+        ''
+        ''   access:
+        ''     A constant that determines how the file can be accessed by the FileStream object.
+        ''     This also determines the values returned by the System.IO.FileStream.CanRead
+        ''     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
+        ''     is true if path specifies a disk file.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentNullException:
+        ''     path is null.
+        ''
+        ''   T:System.ArgumentException:
+        ''     path is an empty string (""), contains only white space, or contains one or more
+        ''     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
+        ''     "lpt1:", etc. in an NTFS environment.
+        ''
+        ''   T:System.NotSupportedException:
+        ''     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
+        ''     non-NTFS environment.
+        ''
+        ''   T:System.IO.FileNotFoundException:
+        ''     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
+        ''     and the file specified by path does not exist. The file must already exist in
+        ''     these modes.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as specifying FileMode.CreateNew when the file specified by
+        ''     path already exists, occurred. -or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.DirectoryNotFoundException:
+        ''     The specified path is invalid, such as being on an unmapped drive.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     path, such as when access is Write or ReadWrite and the file or directory is
+        ''     set for read-only access.
+        ''
+        ''   T:System.IO.PathTooLongException:
+        ''     The specified path, file name, or both exceed the system-defined maximum length.
+        ''     For example, on Windows-based platforms, paths must be less than 248 characters,
+        ''     and file names must be less than 260 characters.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     mode contains an invalid value.
+        '<SecuritySafeCritical>
+        'Public Sub New(path As String, mode As FileMode, access As FileAccess)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path, creation mode, read/write permission, and sharing permission.
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current FileStream object will
-        '     encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
-        '   access:
-        '     A constant that determines how the file can be accessed by the FileStream object.
-        '     This also determines the values returned by the System.IO.FileStream.CanRead
-        '     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
-        '     is true if path specifies a disk file.
-        '
-        '   share:
-        '     A constant that determines how the file will be shared by processes.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     path is null.
-        '
-        '   T:System.ArgumentException:
-        '     path is an empty string (""), contains only white space, or contains one or more
-        '     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
-        '     "lpt1:", etc. in an NTFS environment.
-        '
-        '   T:System.NotSupportedException:
-        '     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
-        '     non-NTFS environment.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
-        '     and the file specified by path does not exist. The file must already exist in
-        '     these modes.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as specifying FileMode.CreateNew when the file specified by
-        '     path already exists, occurred. -or-The system is running Windows 98 or Windows
-        '     98 Second Edition and share is set to FileShare.Delete.-or-The stream has been
-        '     closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The specified path is invalid, such as being on an unmapped drive.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     path, such as when access is Write or ReadWrite and the file or directory is
-        '     set for read-only access.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The specified path, file name, or both exceed the system-defined maximum length.
-        '     For example, on Windows-based platforms, paths must be less than 248 characters,
-        '     and file names must be less than 260 characters.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     mode contains an invalid value.
-        <SecuritySafeCritical>
-        Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class for the specified
+        ''     file handle, with the specified read/write permission, and buffer size.
+        ''
+        '' Parameters:
+        ''   handle:
+        ''     A file handle for the file that the current FileStream object will encapsulate.
+        ''
+        ''   access:
+        ''     A System.IO.FileAccess constant that sets the System.IO.FileStream.CanRead and
+        ''     System.IO.FileStream.CanWrite properties of the FileStream object.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentException:
+        ''     The handle parameter is an invalid handle.-or-The handle parameter is a synchronous
+        ''     handle and it was used asynchronously.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     The bufferSize parameter is negative.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     file handle, such as when access is Write or ReadWrite and the file handle is
+        ''     set for read-only access.
+        '<SecuritySafeCritical>
+        'Public Sub New(handle As SafeFileHandle, access As FileAccess, bufferSize As Integer)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class for the specified
-        '     file handle, with the specified read/write permission, buffer size, and synchronous
-        '     or asynchronous state.
-        '
-        ' Parameters:
-        '   handle:
-        '     A file handle for the file that this FileStream object will encapsulate.
-        '
-        '   access:
-        '     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
-        '     properties of the FileStream object.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        '   isAsync:
-        '     true if the handle was opened asynchronously (that is, in overlapped I/O mode);
-        '     otherwise, false.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The handle parameter is an invalid handle.-or-The handle parameter is a synchronous
-        '     handle and it was used asynchronously.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     The bufferSize parameter is negative.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     file handle, such as when access is Write or ReadWrite and the file handle is
-        '     set for read-only access.
-        <SecuritySafeCritical>
-        Public Sub New(handle As SafeFileHandle, access As FileAccess, bufferSize As Integer, isAsync As Boolean)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class for the specified
+        ''     file handle, with the specified read/write permission and FileStream instance
+        ''     ownership.
+        ''
+        '' Parameters:
+        ''   handle:
+        ''     A file handle for the file that the current FileStream object will encapsulate.
+        ''
+        ''   access:
+        ''     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
+        ''     properties of the FileStream object.
+        ''
+        ''   ownsHandle:
+        ''     true if the file handle will be owned by this FileStream instance; otherwise,
+        ''     false.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentException:
+        ''     access is not a field of System.IO.FileAccess.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     file handle, such as when access is Write or ReadWrite and the file handle is
+        ''     set for read-only access.
+        '<Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access) instead, and optionally make a new SafeFileHandle with ownsHandle=false if needed.  http://go.microsoft.com/fwlink/?linkid=14202")>
+        'Public Sub New(handle As IntPtr, access As FileAccess, ownsHandle As Boolean)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class for the specified
-        '     file handle, with the specified read/write permission, FileStream instance ownership,
-        '     and buffer size.
-        '
-        ' Parameters:
-        '   handle:
-        '     A file handle for the file that this FileStream object will encapsulate.
-        '
-        '   access:
-        '     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
-        '     properties of the FileStream object.
-        '
-        '   ownsHandle:
-        '     true if the file handle will be owned by this FileStream instance; otherwise,
-        '     false.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentOutOfRangeException:
-        '     bufferSize is negative.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     file handle, such as when access is Write or ReadWrite and the file handle is
-        '     set for read-only access.
-        <Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access, int bufferSize) instead, and optionally make a new SafeFileHandle with ownsHandle=false if needed.  http://go.microsoft.com/fwlink/?linkid=14202")>
-        Public Sub New(handle As IntPtr, access As FileAccess, ownsHandle As Boolean, bufferSize As Integer)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class with the specified
+        ''     path, creation mode, read/write permission, and sharing permission.
+        ''
+        '' Parameters:
+        ''   path:
+        ''     A relative or absolute path for the file that the current FileStream object will
+        ''     encapsulate.
+        ''
+        ''   mode:
+        ''     A constant that determines how to open or create the file.
+        ''
+        ''   access:
+        ''     A constant that determines how the file can be accessed by the FileStream object.
+        ''     This also determines the values returned by the System.IO.FileStream.CanRead
+        ''     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
+        ''     is true if path specifies a disk file.
+        ''
+        ''   share:
+        ''     A constant that determines how the file will be shared by processes.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentNullException:
+        ''     path is null.
+        ''
+        ''   T:System.ArgumentException:
+        ''     path is an empty string (""), contains only white space, or contains one or more
+        ''     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
+        ''     "lpt1:", etc. in an NTFS environment.
+        ''
+        ''   T:System.NotSupportedException:
+        ''     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
+        ''     non-NTFS environment.
+        ''
+        ''   T:System.IO.FileNotFoundException:
+        ''     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
+        ''     and the file specified by path does not exist. The file must already exist in
+        ''     these modes.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as specifying FileMode.CreateNew when the file specified by
+        ''     path already exists, occurred. -or-The system is running Windows 98 or Windows
+        ''     98 Second Edition and share is set to FileShare.Delete.-or-The stream has been
+        ''     closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.DirectoryNotFoundException:
+        ''     The specified path is invalid, such as being on an unmapped drive.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     path, such as when access is Write or ReadWrite and the file or directory is
+        ''     set for read-only access.
+        ''
+        ''   T:System.IO.PathTooLongException:
+        ''     The specified path, file name, or both exceed the system-defined maximum length.
+        ''     For example, on Windows-based platforms, paths must be less than 248 characters,
+        ''     and file names must be less than 260 characters.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     mode contains an invalid value.
+        '<SecuritySafeCritical>
+        'Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class for the specified
-        '     file handle, with the specified read/write permission, FileStream instance ownership,
-        '     buffer size, and synchronous or asynchronous state.
-        '
-        ' Parameters:
-        '   handle:
-        '     A file handle for the file that this FileStream object will encapsulate.
-        '
-        '   access:
-        '     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
-        '     properties of the FileStream object.
-        '
-        '   ownsHandle:
-        '     true if the file handle will be owned by this FileStream instance; otherwise,
-        '     false.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        '   isAsync:
-        '     true if the handle was opened asynchronously (that is, in overlapped I/O mode);
-        '     otherwise, false.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentOutOfRangeException:
-        '     access is less than FileAccess.Read or greater than FileAccess.ReadWrite or bufferSize
-        '     is less than or equal to 0.
-        '
-        '   T:System.ArgumentException:
-        '     The handle is invalid.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     file handle, such as when access is Write or ReadWrite and the file handle is
-        '     set for read-only access.
-        <Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access, int bufferSize, bool isAsync) instead, and optionally make a new SafeFileHandle with ownsHandle=false if needed.  http://go.microsoft.com/fwlink/?linkid=14202")> <SecuritySafeCritical>
-        Public Sub New(handle As IntPtr, access As FileAccess, ownsHandle As Boolean, bufferSize As Integer, isAsync As Boolean)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class for the specified
+        ''     file handle, with the specified read/write permission, buffer size, and synchronous
+        ''     or asynchronous state.
+        ''
+        '' Parameters:
+        ''   handle:
+        ''     A file handle for the file that this FileStream object will encapsulate.
+        ''
+        ''   access:
+        ''     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
+        ''     properties of the FileStream object.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        ''   isAsync:
+        ''     true if the handle was opened asynchronously (that is, in overlapped I/O mode);
+        ''     otherwise, false.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentException:
+        ''     The handle parameter is an invalid handle.-or-The handle parameter is a synchronous
+        ''     handle and it was used asynchronously.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     The bufferSize parameter is negative.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     file handle, such as when access is Write or ReadWrite and the file handle is
+        ''     set for read-only access.
+        '<SecuritySafeCritical>
+        'Public Sub New(handle As SafeFileHandle, access As FileAccess, bufferSize As Integer, isAsync As Boolean)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path, creation mode, read/write and sharing permission, and buffer size.
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current FileStream object will
-        '     encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
-        '   access:
-        '     A constant that determines how the file can be accessed by the FileStream object.
-        '     This also determines the values returned by the System.IO.FileStream.CanRead
-        '     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
-        '     is true if path specifies a disk file.
-        '
-        '   share:
-        '     A constant that determines how the file will be shared by processes.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     path is null.
-        '
-        '   T:System.ArgumentException:
-        '     path is an empty string (""), contains only white space, or contains one or more
-        '     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
-        '     "lpt1:", etc. in an NTFS environment.
-        '
-        '   T:System.NotSupportedException:
-        '     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
-        '     non-NTFS environment.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
-        '     value.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
-        '     and the file specified by path does not exist. The file must already exist in
-        '     these modes.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as specifying FileMode.CreateNew when the file specified by
-        '     path already exists, occurred. -or-The system is running Windows 98 or Windows
-        '     98 Second Edition and share is set to FileShare.Delete.-or-The stream has been
-        '     closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The specified path is invalid, such as being on an unmapped drive.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     path, such as when access is Write or ReadWrite and the file or directory is
-        '     set for read-only access.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The specified path, file name, or both exceed the system-defined maximum length.
-        '     For example, on Windows-based platforms, paths must be less than 248 characters,
-        '     and file names must be less than 260 characters.
-        <SecuritySafeCritical>
-        Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare, bufferSize As Integer)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class for the specified
+        ''     file handle, with the specified read/write permission, FileStream instance ownership,
+        ''     and buffer size.
+        ''
+        '' Parameters:
+        ''   handle:
+        ''     A file handle for the file that this FileStream object will encapsulate.
+        ''
+        ''   access:
+        ''     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
+        ''     properties of the FileStream object.
+        ''
+        ''   ownsHandle:
+        ''     true if the file handle will be owned by this FileStream instance; otherwise,
+        ''     false.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     bufferSize is negative.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     file handle, such as when access is Write or ReadWrite and the file handle is
+        ''     set for read-only access.
+        '<Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access, int bufferSize) instead, and optionally make a new SafeFileHandle with ownsHandle=false if needed.  http://go.microsoft.com/fwlink/?linkid=14202")>
+        'Public Sub New(handle As IntPtr, access As FileAccess, ownsHandle As Boolean, bufferSize As Integer)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path, creation mode, read/write and sharing permission, buffer size, and synchronous
-        '     or asynchronous state.
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current FileStream object will
-        '     encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
-        '   access:
-        '     A constant that determines how the file can be accessed by the FileStream object.
-        '     This also determines the values returned by the System.IO.FileStream.CanRead
-        '     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
-        '     is true if path specifies a disk file.
-        '
-        '   share:
-        '     A constant that determines how the file will be shared by processes.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096..
-        '
-        '   useAsync:
-        '     Specifies whether to use asynchronous I/O or synchronous I/O. However, note that
-        '     the underlying operating system might not support asynchronous I/O, so when specifying
-        '     true, the handle might be opened synchronously depending on the platform. When
-        '     opened asynchronously, the System.IO.FileStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
-        '     and System.IO.FileStream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
-        '     methods perform better on large reads or writes, but they might be much slower
-        '     for small reads or writes. If the application is designed to take advantage of
-        '     asynchronous I/O, set the useAsync parameter to true. Using asynchronous I/O
-        '     correctly can speed up applications by as much as a factor of 10, but using it
-        '     without redesigning the application for asynchronous I/O can decrease performance
-        '     by as much as a factor of 10.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     path is null.
-        '
-        '   T:System.ArgumentException:
-        '     path is an empty string (""), contains only white space, or contains one or more
-        '     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
-        '     "lpt1:", etc. in an NTFS environment.
-        '
-        '   T:System.NotSupportedException:
-        '     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
-        '     non-NTFS environment.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
-        '     value.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
-        '     and the file specified by path does not exist. The file must already exist in
-        '     these modes.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as specifying FileMode.CreateNew when the file specified by
-        '     path already exists, occurred.-or- The system is running Windows 98 or Windows
-        '     98 Second Edition and share is set to FileShare.Delete.-or-The stream has been
-        '     closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The specified path is invalid, such as being on an unmapped drive.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     path, such as when access is Write or ReadWrite and the file or directory is
-        '     set for read-only access.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The specified path, file name, or both exceed the system-defined maximum length.
-        '     For example, on Windows-based platforms, paths must be less than 248 characters,
-        '     and file names must be less than 260 characters.
-        <SecuritySafeCritical>
-        Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare, bufferSize As Integer, useAsync As Boolean)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class for the specified
+        ''     file handle, with the specified read/write permission, FileStream instance ownership,
+        ''     buffer size, and synchronous or asynchronous state.
+        ''
+        '' Parameters:
+        ''   handle:
+        ''     A file handle for the file that this FileStream object will encapsulate.
+        ''
+        ''   access:
+        ''     A constant that sets the System.IO.FileStream.CanRead and System.IO.FileStream.CanWrite
+        ''     properties of the FileStream object.
+        ''
+        ''   ownsHandle:
+        ''     true if the file handle will be owned by this FileStream instance; otherwise,
+        ''     false.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        ''   isAsync:
+        ''     true if the handle was opened asynchronously (that is, in overlapped I/O mode);
+        ''     otherwise, false.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     access is less than FileAccess.Read or greater than FileAccess.ReadWrite or bufferSize
+        ''     is less than or equal to 0.
+        ''
+        ''   T:System.ArgumentException:
+        ''     The handle is invalid.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as a disk error, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     file handle, such as when access is Write or ReadWrite and the file handle is
+        ''     set for read-only access.
+        '<Obsolete("This constructor has been deprecated.  Please use new FileStream(SafeFileHandle handle, FileAccess access, int bufferSize, bool isAsync) instead, and optionally make a new SafeFileHandle with ownsHandle=false if needed.  http://go.microsoft.com/fwlink/?linkid=14202")> <SecuritySafeCritical>
+        'Public Sub New(handle As IntPtr, access As FileAccess, ownsHandle As Boolean, bufferSize As Integer, isAsync As Boolean)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path, creation mode, read/write and sharing permission, the access other FileStreams
-        '     can have to the same file, the buffer size, and additional file options.
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current FileStream object will
-        '     encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
-        '   access:
-        '     A constant that determines how the file can be accessed by the FileStream object.
-        '     This also determines the values returned by the System.IO.FileStream.CanRead
-        '     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
-        '     is true if path specifies a disk file.
-        '
-        '   share:
-        '     A constant that determines how the file will be shared by processes.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        '   options:
-        '     A value that specifies additional file options.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     path is null.
-        '
-        '   T:System.ArgumentException:
-        '     path is an empty string (""), contains only white space, or contains one or more
-        '     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
-        '     "lpt1:", etc. in an NTFS environment.
-        '
-        '   T:System.NotSupportedException:
-        '     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
-        '     non-NTFS environment.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
-        '     value.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
-        '     and the file specified by path does not exist. The file must already exist in
-        '     these modes.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as specifying FileMode.CreateNew when the file specified by
-        '     path already exists, occurred.-or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The specified path is invalid, such as being on an unmapped drive.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     path, such as when access is Write or ReadWrite and the file or directory is
-        '     set for read-only access. -or-System.IO.FileOptions.Encrypted is specified for
-        '     options, but file encryption is not supported on the current platform.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The specified path, file name, or both exceed the system-defined maximum length.
-        '     For example, on Windows-based platforms, paths must be less than 248 characters,
-        '     and file names must be less than 260 characters.
-        <SecuritySafeCritical>
-        Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare, bufferSize As Integer, options As FileOptions)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class with the specified
+        ''     path, creation mode, read/write and sharing permission, and buffer size.
+        ''
+        '' Parameters:
+        ''   path:
+        ''     A relative or absolute path for the file that the current FileStream object will
+        ''     encapsulate.
+        ''
+        ''   mode:
+        ''     A constant that determines how to open or create the file.
+        ''
+        ''   access:
+        ''     A constant that determines how the file can be accessed by the FileStream object.
+        ''     This also determines the values returned by the System.IO.FileStream.CanRead
+        ''     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
+        ''     is true if path specifies a disk file.
+        ''
+        ''   share:
+        ''     A constant that determines how the file will be shared by processes.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentNullException:
+        ''     path is null.
+        ''
+        ''   T:System.ArgumentException:
+        ''     path is an empty string (""), contains only white space, or contains one or more
+        ''     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
+        ''     "lpt1:", etc. in an NTFS environment.
+        ''
+        ''   T:System.NotSupportedException:
+        ''     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
+        ''     non-NTFS environment.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
+        ''     value.
+        ''
+        ''   T:System.IO.FileNotFoundException:
+        ''     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
+        ''     and the file specified by path does not exist. The file must already exist in
+        ''     these modes.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as specifying FileMode.CreateNew when the file specified by
+        ''     path already exists, occurred. -or-The system is running Windows 98 or Windows
+        ''     98 Second Edition and share is set to FileShare.Delete.-or-The stream has been
+        ''     closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.DirectoryNotFoundException:
+        ''     The specified path is invalid, such as being on an unmapped drive.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     path, such as when access is Write or ReadWrite and the file or directory is
+        ''     set for read-only access.
+        ''
+        ''   T:System.IO.PathTooLongException:
+        ''     The specified path, file name, or both exceed the system-defined maximum length.
+        ''     For example, on Windows-based platforms, paths must be less than 248 characters,
+        ''     and file names must be less than 260 characters.
+        '<SecuritySafeCritical>
+        'Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare, bufferSize As Integer)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path, creation mode, access rights and sharing permission, the buffer size, and
-        '     additional file options.
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current System.IO.FileStream
-        '     object will encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
-        '   rights:
-        '     A constant that determines the access rights to use when creating access and
-        '     audit rules for the file.
-        '
-        '   share:
-        '     A constant that determines how the file will be shared by processes.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        '   options:
-        '     A constant that specifies additional file options.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     path is null.
-        '
-        '   T:System.ArgumentException:
-        '     path is an empty string (""), contains only white space, or contains one or more
-        '     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
-        '     "lpt1:", etc. in an NTFS environment.
-        '
-        '   T:System.NotSupportedException:
-        '     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
-        '     non-NTFS environment.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
-        '     value.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
-        '     and the file specified by path does not exist. The file must already exist in
-        '     these modes.
-        '
-        '   T:System.PlatformNotSupportedException:
-        '     The current operating system is not Windows NT or later.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as specifying FileMode.CreateNew when the file specified by
-        '     path already exists, occurred. -or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The specified path is invalid, such as being on an unmapped drive.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     path, such as when access is Write or ReadWrite and the file or directory is
-        '     set for read-only access. -or-System.IO.FileOptions.Encrypted is specified for
-        '     options, but file encryption is not supported on the current platform.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The specified path, file name, or both exceed the system-defined maximum length.
-        '     For example, on Windows-based platforms, paths must be less than 248 characters,
-        '     and file names must be less than 260 characters.
-        <SecuritySafeCritical>
-        Public Sub New(path As String, mode As FileMode, rights As FileSystemRights, share As FileShare, bufferSize As Integer, options As FileOptions)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class with the specified
+        ''     path, creation mode, read/write and sharing permission, buffer size, and synchronous
+        ''     or asynchronous state.
+        ''
+        '' Parameters:
+        ''   path:
+        ''     A relative or absolute path for the file that the current FileStream object will
+        ''     encapsulate.
+        ''
+        ''   mode:
+        ''     A constant that determines how to open or create the file.
+        ''
+        ''   access:
+        ''     A constant that determines how the file can be accessed by the FileStream object.
+        ''     This also determines the values returned by the System.IO.FileStream.CanRead
+        ''     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
+        ''     is true if path specifies a disk file.
+        ''
+        ''   share:
+        ''     A constant that determines how the file will be shared by processes.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096..
+        ''
+        ''   useAsync:
+        ''     Specifies whether to use asynchronous I/O or synchronous I/O. However, note that
+        ''     the underlying operating system might not support asynchronous I/O, so when specifying
+        ''     true, the handle might be opened synchronously depending on the platform. When
+        ''     opened asynchronously, the System.IO.FileStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
+        ''     and System.IO.FileStream.BeginWrite(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)
+        ''     methods perform better on large reads or writes, but they might be much slower
+        ''     for small reads or writes. If the application is designed to take advantage of
+        ''     asynchronous I/O, set the useAsync parameter to true. Using asynchronous I/O
+        ''     correctly can speed up applications by as much as a factor of 10, but using it
+        ''     without redesigning the application for asynchronous I/O can decrease performance
+        ''     by as much as a factor of 10.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentNullException:
+        ''     path is null.
+        ''
+        ''   T:System.ArgumentException:
+        ''     path is an empty string (""), contains only white space, or contains one or more
+        ''     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
+        ''     "lpt1:", etc. in an NTFS environment.
+        ''
+        ''   T:System.NotSupportedException:
+        ''     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
+        ''     non-NTFS environment.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
+        ''     value.
+        ''
+        ''   T:System.IO.FileNotFoundException:
+        ''     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
+        ''     and the file specified by path does not exist. The file must already exist in
+        ''     these modes.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as specifying FileMode.CreateNew when the file specified by
+        ''     path already exists, occurred.-or- The system is running Windows 98 or Windows
+        ''     98 Second Edition and share is set to FileShare.Delete.-or-The stream has been
+        ''     closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.DirectoryNotFoundException:
+        ''     The specified path is invalid, such as being on an unmapped drive.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     path, such as when access is Write or ReadWrite and the file or directory is
+        ''     set for read-only access.
+        ''
+        ''   T:System.IO.PathTooLongException:
+        ''     The specified path, file name, or both exceed the system-defined maximum length.
+        ''     For example, on Windows-based platforms, paths must be less than 248 characters,
+        ''     and file names must be less than 260 characters.
+        '<SecuritySafeCritical>
+        'Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare, bufferSize As Integer, useAsync As Boolean)
 
-        End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.IO.FileStream class with the specified
-        '     path, creation mode, access rights and sharing permission, the buffer size, additional
-        '     file options, access control and audit security.
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current System.IO.FileStream
-        '     object will encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
-        '   rights:
-        '     A constant that determines the access rights to use when creating access and
-        '     audit rules for the file.
-        '
-        '   share:
-        '     A constant that determines how the file will be shared by processes.
-        '
-        '   bufferSize:
-        '     A positive System.Int32 value greater than 0 indicating the buffer size. The
-        '     default buffer size is 4096.
-        '
-        '   options:
-        '     A constant that specifies additional file options.
-        '
-        '   fileSecurity:
-        '     A constant that determines the access control and audit security for the file.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     path is null.
-        '
-        '   T:System.ArgumentException:
-        '     path is an empty string (""), contains only white space, or contains one or more
-        '     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
-        '     "lpt1:", etc. in an NTFS environment.
-        '
-        '   T:System.NotSupportedException:
-        '     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
-        '     non-NTFS environment.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
-        '     value.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
-        '     and the file specified by path does not exist. The file must already exist in
-        '     these modes.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error, such as specifying FileMode.CreateNew when the file specified by
-        '     path already exists, occurred. -or-The stream has been closed.
-        '
-        '   T:System.Security.SecurityException:
-        '     The caller does not have the required permission.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The specified path is invalid, such as being on an unmapped drive.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The access requested is not permitted by the operating system for the specified
-        '     path, such as when access is Write or ReadWrite and the file or directory is
-        '     set for read-only access. -or-System.IO.FileOptions.Encrypted is specified for
-        '     options, but file encryption is not supported on the current platform.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The specified path, file name, or both exceed the system-defined maximum length.
-        '     For example, on Windows-based platforms, paths must be less than 248 characters,
-        '     and file names must be less than 260 characters.
-        '
-        '   T:System.PlatformNotSupportedException:
-        '     The current operating system is not Windows NT or later.
-        <SecuritySafeCritical>
-        Public Sub New(path As String, mode As FileMode, rights As FileSystemRights, share As FileShare, bufferSize As Integer, options As FileOptions, fileSecurity As FileSecurity)
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class with the specified
+        ''     path, creation mode, read/write and sharing permission, the access other FileStreams
+        ''     can have to the same file, the buffer size, and additional file options.
+        ''
+        '' Parameters:
+        ''   path:
+        ''     A relative or absolute path for the file that the current FileStream object will
+        ''     encapsulate.
+        ''
+        ''   mode:
+        ''     A constant that determines how to open or create the file.
+        ''
+        ''   access:
+        ''     A constant that determines how the file can be accessed by the FileStream object.
+        ''     This also determines the values returned by the System.IO.FileStream.CanRead
+        ''     and System.IO.FileStream.CanWrite properties of the FileStream object. System.IO.FileStream.CanSeek
+        ''     is true if path specifies a disk file.
+        ''
+        ''   share:
+        ''     A constant that determines how the file will be shared by processes.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        ''   options:
+        ''     A value that specifies additional file options.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentNullException:
+        ''     path is null.
+        ''
+        ''   T:System.ArgumentException:
+        ''     path is an empty string (""), contains only white space, or contains one or more
+        ''     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
+        ''     "lpt1:", etc. in an NTFS environment.
+        ''
+        ''   T:System.NotSupportedException:
+        ''     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
+        ''     non-NTFS environment.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
+        ''     value.
+        ''
+        ''   T:System.IO.FileNotFoundException:
+        ''     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
+        ''     and the file specified by path does not exist. The file must already exist in
+        ''     these modes.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as specifying FileMode.CreateNew when the file specified by
+        ''     path already exists, occurred.-or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.DirectoryNotFoundException:
+        ''     The specified path is invalid, such as being on an unmapped drive.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     path, such as when access is Write or ReadWrite and the file or directory is
+        ''     set for read-only access. -or-System.IO.FileOptions.Encrypted is specified for
+        ''     options, but file encryption is not supported on the current platform.
+        ''
+        ''   T:System.IO.PathTooLongException:
+        ''     The specified path, file name, or both exceed the system-defined maximum length.
+        ''     For example, on Windows-based platforms, paths must be less than 248 characters,
+        ''     and file names must be less than 260 characters.
+        '<SecuritySafeCritical>
+        'Public Sub New(path As String, mode As FileMode, access As FileAccess, share As FileShare, bufferSize As Integer, options As FileOptions)
 
-        End Sub
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class with the specified
+        ''     path, creation mode, access rights and sharing permission, the buffer size, and
+        ''     additional file options.
+        ''
+        '' Parameters:
+        ''   path:
+        ''     A relative or absolute path for the file that the current System.IO.FileStream
+        ''     object will encapsulate.
+        ''
+        ''   mode:
+        ''     A constant that determines how to open or create the file.
+        ''
+        ''   rights:
+        ''     A constant that determines the access rights to use when creating access and
+        ''     audit rules for the file.
+        ''
+        ''   share:
+        ''     A constant that determines how the file will be shared by processes.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        ''   options:
+        ''     A constant that specifies additional file options.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentNullException:
+        ''     path is null.
+        ''
+        ''   T:System.ArgumentException:
+        ''     path is an empty string (""), contains only white space, or contains one or more
+        ''     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
+        ''     "lpt1:", etc. in an NTFS environment.
+        ''
+        ''   T:System.NotSupportedException:
+        ''     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
+        ''     non-NTFS environment.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
+        ''     value.
+        ''
+        ''   T:System.IO.FileNotFoundException:
+        ''     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
+        ''     and the file specified by path does not exist. The file must already exist in
+        ''     these modes.
+        ''
+        ''   T:System.PlatformNotSupportedException:
+        ''     The current operating system is not Windows NT or later.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as specifying FileMode.CreateNew when the file specified by
+        ''     path already exists, occurred. -or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.DirectoryNotFoundException:
+        ''     The specified path is invalid, such as being on an unmapped drive.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     path, such as when access is Write or ReadWrite and the file or directory is
+        ''     set for read-only access. -or-System.IO.FileOptions.Encrypted is specified for
+        ''     options, but file encryption is not supported on the current platform.
+        ''
+        ''   T:System.IO.PathTooLongException:
+        ''     The specified path, file name, or both exceed the system-defined maximum length.
+        ''     For example, on Windows-based platforms, paths must be less than 248 characters,
+        ''     and file names must be less than 260 characters.
+        '<SecuritySafeCritical>
+        'Public Sub New(path As String, mode As FileMode, rights As FileSystemRights, share As FileShare, bufferSize As Integer, options As FileOptions)
+
+        'End Sub
+        ''
+        '' Summary:
+        ''     Initializes a new instance of the System.IO.FileStream class with the specified
+        ''     path, creation mode, access rights and sharing permission, the buffer size, additional
+        ''     file options, access control and audit security.
+        ''
+        '' Parameters:
+        ''   path:
+        ''     A relative or absolute path for the file that the current System.IO.FileStream
+        ''     object will encapsulate.
+        ''
+        ''   mode:
+        ''     A constant that determines how to open or create the file.
+        ''
+        ''   rights:
+        ''     A constant that determines the access rights to use when creating access and
+        ''     audit rules for the file.
+        ''
+        ''   share:
+        ''     A constant that determines how the file will be shared by processes.
+        ''
+        ''   bufferSize:
+        ''     A positive System.Int32 value greater than 0 indicating the buffer size. The
+        ''     default buffer size is 4096.
+        ''
+        ''   options:
+        ''     A constant that specifies additional file options.
+        ''
+        ''   fileSecurity:
+        ''     A constant that determines the access control and audit security for the file.
+        ''
+        '' Exceptions:
+        ''   T:System.ArgumentNullException:
+        ''     path is null.
+        ''
+        ''   T:System.ArgumentException:
+        ''     path is an empty string (""), contains only white space, or contains one or more
+        ''     invalid characters. -or-path refers to a non-file device, such as "con:", "com1:",
+        ''     "lpt1:", etc. in an NTFS environment.
+        ''
+        ''   T:System.NotSupportedException:
+        ''     path refers to a non-file device, such as "con:", "com1:", "lpt1:", etc. in a
+        ''     non-NTFS environment.
+        ''
+        ''   T:System.ArgumentOutOfRangeException:
+        ''     bufferSize is negative or zero.-or- mode, access, or share contain an invalid
+        ''     value.
+        ''
+        ''   T:System.IO.FileNotFoundException:
+        ''     The file cannot be found, such as when mode is FileMode.Truncate or FileMode.Open,
+        ''     and the file specified by path does not exist. The file must already exist in
+        ''     these modes.
+        ''
+        ''   T:System.IO.IOException:
+        ''     An I/O error, such as specifying FileMode.CreateNew when the file specified by
+        ''     path already exists, occurred. -or-The stream has been closed.
+        ''
+        ''   T:System.Security.SecurityException:
+        ''     The caller does not have the required permission.
+        ''
+        ''   T:System.IO.DirectoryNotFoundException:
+        ''     The specified path is invalid, such as being on an unmapped drive.
+        ''
+        ''   T:System.UnauthorizedAccessException:
+        ''     The access requested is not permitted by the operating system for the specified
+        ''     path, such as when access is Write or ReadWrite and the file or directory is
+        ''     set for read-only access. -or-System.IO.FileOptions.Encrypted is specified for
+        ''     options, but file encryption is not supported on the current platform.
+        ''
+        ''   T:System.IO.PathTooLongException:
+        ''     The specified path, file name, or both exceed the system-defined maximum length.
+        ''     For example, on Windows-based platforms, paths must be less than 248 characters,
+        ''     and file names must be less than 260 characters.
+        ''
+        ''   T:System.PlatformNotSupportedException:
+        ''     The current operating system is not Windows NT or later.
+        '<SecuritySafeCritical>
+        'Public Sub New(path As String, mode As FileMode, rights As FileSystemRights, share As FileShare, bufferSize As Integer, options As FileOptions, fileSecurity As FileSecurity)
+
+        'End Sub
 
         '
         ' Summary:
@@ -872,7 +881,13 @@ Namespace FileSystem.IO
         ' Returns:
         '     true if the stream supports reading; false if the stream is closed or was opened
         '     with write-only access.
-        Public ReadOnly Property CanRead As Boolean
+
+        Public Overrides ReadOnly Property CanRead As Boolean
+            Get
+
+            End Get
+        End Property
+
         '
         ' Summary:
         '     Gets a value indicating whether the current stream supports seeking.
@@ -881,7 +896,7 @@ Namespace FileSystem.IO
         '     true if the stream supports seeking; false if the stream is closed or if the
         '     FileStream was constructed from an operating-system handle such as a pipe or
         '     output to the console.
-        Public ReadOnly Property CanSeek As Boolean
+        Public Overrides ReadOnly Property CanSeek As Boolean
         '
         ' Summary:
         '     Gets a value indicating whether the current stream supports writing.
@@ -889,7 +904,7 @@ Namespace FileSystem.IO
         ' Returns:
         '     true if the stream supports writing; false if the stream is closed or was opened
         '     with read-only access.
-        Public ReadOnly Property CanWrite As Boolean
+        Public Overrides ReadOnly Property CanWrite As Boolean
         '
         ' Summary:
         '     Gets the operating system file handle for the file that the current FileStream
@@ -924,13 +939,12 @@ Namespace FileSystem.IO
         '
         '   T:System.IO.IOException:
         '     An I/O error, such as the file being closed, occurred.
-        Public ReadOnly Property Length As Long
-        '
-        ' Summary:
-        '     Gets the name of the FileStream that was passed to the constructor.
-        '
-        ' Returns:
-        '     A string that is the name of the FileStream.
+        Public Overrides ReadOnly Property Length As Long
+
+        ''' <summary>
+        ''' Gets the name of the FileStream that was passed to the constructor.
+        ''' </summary>
+        ''' <returns>A string that is the name of the FileStream.</returns>
         Public ReadOnly Property Name As String
         '
         ' Summary:
@@ -952,7 +966,7 @@ Namespace FileSystem.IO
         '
         '   T:System.IO.EndOfStreamException:
         '     Attempted seeking past the end of a stream that does not support this.
-        Public Property Position As Long
+        Public Overrides Property Position As Long
         '
         ' Summary:
         '     Gets a Microsoft.Win32.SafeHandles.SafeFileHandle object that represents the
@@ -988,7 +1002,7 @@ Namespace FileSystem.IO
         '   T:System.IO.IOException:
         '     The stream is closed or an internal error has occurred.
         <SecuritySafeCritical>
-        Public Sub EndWrite(asyncResult As IAsyncResult)
+        Public Overrides Sub EndWrite(asyncResult As IAsyncResult)
 
         End Sub
         '
@@ -1002,7 +1016,7 @@ Namespace FileSystem.IO
         '
         '   T:System.ObjectDisposedException:
         '     The stream is closed.
-        Public Sub Flush()
+        Public Overrides Sub Flush()
 
         End Sub
         '
@@ -1014,7 +1028,7 @@ Namespace FileSystem.IO
         '   flushToDisk:
         '     true to flush all intermediate file buffers; otherwise, false.
         <SecuritySafeCritical>
-        Public Overridable Sub Flush(flushToDisk As Boolean)
+        Public Overloads Sub Flush(flushToDisk As Boolean)
 
         End Sub
         '
@@ -1086,7 +1100,7 @@ Namespace FileSystem.IO
         '   T:System.ArgumentOutOfRangeException:
         '     Attempted to set the value parameter to less than 0.
         <SecuritySafeCritical>
-        Public Sub SetLength(value As Long)
+        Public Overrides Sub SetLength(value As Long)
 
         End Sub
         '
@@ -1143,7 +1157,7 @@ Namespace FileSystem.IO
         '   T:System.NotSupportedException:
         '     The current stream instance does not support writing.
         <SecuritySafeCritical>
-        Public Sub Write(array() As Byte, offset As Integer, count As Integer)
+        Public Overrides Sub Write(array() As Byte, offset As Integer, count As Integer)
 
         End Sub
         '
@@ -1161,7 +1175,7 @@ Namespace FileSystem.IO
         '   T:System.NotSupportedException:
         '     The stream does not support writing.
         <SecuritySafeCritical>
-        Public Sub WriteByte(value As Byte)
+        Public Overrides Sub WriteByte(value As Byte)
 
         End Sub
         '
@@ -1174,7 +1188,7 @@ Namespace FileSystem.IO
         '     true to release both managed and unmanaged resources; false to release only unmanaged
         '     resources.
         <SecuritySafeCritical>
-        Protected Sub Dispose(disposing As Boolean)
+        Protected Overrides Sub Dispose(disposing As Boolean)
 
         End Sub
         '
@@ -1182,7 +1196,7 @@ Namespace FileSystem.IO
         '     Ensures that resources are freed and other cleanup operations are performed when
         '     the garbage collector reclaims the FileStream.
         <SecuritySafeCritical>
-        Protected Sub Finalize()
+        Protected Overrides Sub Finalize()
 
         End Sub
 
@@ -1224,7 +1238,7 @@ Namespace FileSystem.IO
         '   T:System.IO.IOException:
         '     An asynchronous read was attempted past the end of the file.
         <SecuritySafeCritical>
-        Public Function BeginRead(array() As Byte, offset As Integer, numBytes As Integer, userCallback As AsyncCallback, stateObject As Object) As IAsyncResult
+        Public Overrides Function BeginRead(array() As Byte, offset As Integer, numBytes As Integer, userCallback As AsyncCallback, stateObject As Object) As IAsyncResult
 
         End Function
         '
@@ -1272,7 +1286,7 @@ Namespace FileSystem.IO
         '   T:System.IO.IOException:
         '     An I/O error occurred.
         <SecuritySafeCritical>
-        Public Function BeginWrite(array() As Byte, offset As Integer, numBytes As Integer, userCallback As AsyncCallback, stateObject As Object) As IAsyncResult
+        Public Overrides Function BeginWrite(array() As Byte, offset As Integer, numBytes As Integer, userCallback As AsyncCallback, stateObject As Object) As IAsyncResult
 
         End Function
         '
@@ -1304,7 +1318,7 @@ Namespace FileSystem.IO
         '   T:System.IO.IOException:
         '     The stream is closed or an internal error has occurred.
         <SecuritySafeCritical>
-        Public Function EndRead(asyncResult As IAsyncResult) As Integer
+        Public Overrides Function EndRead(asyncResult As IAsyncResult) As Integer
 
         End Function
         '
@@ -1323,7 +1337,7 @@ Namespace FileSystem.IO
         '   T:System.ObjectDisposedException:
         '     The stream has been disposed.
         <ComVisible(False)> <SecuritySafeCritical>
-        Public Function FlushAsync(cancellationToken As CancellationToken) As Task
+        Public Overrides Function FlushAsync(cancellationToken As CancellationToken) As Task
 
         End Function
         '
@@ -1392,7 +1406,7 @@ Namespace FileSystem.IO
         '   T:System.ObjectDisposedException:
         '     Methods were called after the stream was closed.
         <SecuritySafeCritical>
-        Public Function Read(array() As Byte, offset As Integer, count As Integer) As Integer
+        Public Overrides Function Read(array() As Byte, offset As Integer, count As Integer) As Integer
 
         End Function
         '
@@ -1440,7 +1454,7 @@ Namespace FileSystem.IO
         '   T:System.InvalidOperationException:
         '     The stream is currently in use by a previous read operation.
         <ComVisible(False)> <SecuritySafeCritical>
-        Public Function ReadAsync(buffer() As Byte, offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task(Of Integer)
+        Public Overrides Function ReadAsync(buffer() As Byte, offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task(Of Integer)
 
         End Function
         '
@@ -1457,7 +1471,7 @@ Namespace FileSystem.IO
         '   T:System.ObjectDisposedException:
         '     The current stream is closed.
         <SecuritySafeCritical>
-        Public Function ReadByte() As Integer
+        Public Overrides Function ReadByte() As Integer
 
         End Function
         '
@@ -1489,7 +1503,7 @@ Namespace FileSystem.IO
         '   T:System.ObjectDisposedException:
         '     Methods were called after the stream was closed.
         <SecuritySafeCritical>
-        Public Function Seek(offset As Long, origin As SeekOrigin) As Long
+        Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
 
         End Function
         '
@@ -1534,7 +1548,7 @@ Namespace FileSystem.IO
         '   T:System.InvalidOperationException:
         '     The stream is currently in use by a previous write operation.
         <ComVisible(False)> <SecuritySafeCritical>
-        Public Function WriteAsync(buffer() As Byte, offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task
+        Public Overrides Function WriteAsync(buffer() As Byte, offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task
 
         End Function
     End Class

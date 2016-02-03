@@ -1,5 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComputingServices.FileSystem
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.LINQ.Extensions
 
 ''' <summary>
 ''' 我想要构建的是一个去中心化的网格计算框架
@@ -7,6 +9,13 @@ Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Module ServicesProgram
 
     Public Function Main() As Integer
+
+        Dim DIR As New FileSystemHost(1526)
+        Dim fs As New FileSystem(DIR.Portal)
+
+        Dim file As New IO.FileStream("Z:\1ST.MP3", System.IO.FileMode.Open, fs)
+
+
         Return GetType(ServicesProgram).RunCLI(App.CommandLine, AddressOf TestLocal)
     End Function
 

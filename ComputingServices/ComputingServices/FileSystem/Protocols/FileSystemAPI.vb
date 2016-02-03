@@ -1,82 +1,23 @@
-﻿Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
-Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
-Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.LINQ.Extensions
-Imports System.IO
+﻿Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 
-Namespace FileSystem
+Namespace FileSystem.Protocols
 
-    <Protocol(GetType(FileSystemAPI))>
-    Public Class FileSystemHost : Inherits IHostBase
+    Public Enum FileSystemAPI As Long
 
         ''' <summary>
-        ''' 远程服务器上面已经打开的文件句柄
+        ''' 在服务器上面打开一个文件句柄
         ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property OpenedHandles As Dictionary(Of String, FileStream) =
-            New Dictionary(Of String, FileStream)
+        OpenHandle
 
         ''' <summary>
-        ''' 
+        ''' Gets or sets the current directory.
         ''' </summary>
-        ''' <param name="port"></param>
-        Sub New(port As Integer)
-            Dim protocols As New ProtocolHandler(Me)
-            __host = New TcpSynchronizationServicesSocket(port)
-            __host.Responsehandler = AddressOf protocols.HandleRequest
-            Call Parallel.Run(AddressOf __host.Run)
-        End Sub
+        CurrentDirectory
 
-        Public Overrides ReadOnly Property Portal As IPEndPoint
-            Get
-                Return New IPEndPoint(AsynInvoke.LocalIPAddress, __host.LocalPort)
-            End Get
-        End Property
-
-        '
-        ' Summary:
-        '     Gets or sets the current directory.
-        '
-        ' Returns:
-        '     The current directory for file I/O operations.
-        '
-        ' Exceptions:
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The path is not valid.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The user lacks necessary permissions.
-        <Protocol(FileSystemAPI.CurrentDirectory)>
-        Private Function CurrentDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim DIR As String = args.GetUTF8String
-            If String.IsNullOrEmpty(DIR) Then
-                DIR = FileIO.FileSystem.CurrentDirectory    ' GET
-                Return New RequestStream(DIR)
-            Else
-                Try
-                    FileIO.FileSystem.CurrentDirectory = DIR    'SET
-                Catch ex As Exception
-                    Return New RequestStream(HTTP_RFC.RFC_OK, HTTP_RFC.RFC_INTERNAL_SERVER_ERROR, ex.ToString)
-                End Try
-
-                Return NetResponse.RFC_OK
-            End If
-        End Function
-        '
-        ' Summary:
-        '     Returns a read-only collection of all available drive names.
-        '
-        ' Returns:
-        '     A read-only collection of all available drives as System.IO.DriveInfo objects.
-
-        <Protocol(FileSystemAPI.Drives)>
-        Private Function Drives(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim lst = FileIO.FileSystem.Drives.ToArray(Function(x) x.GetJson)
-            Return New RequestStream(lst.GetJson)
-        End Function
+        ''' <summary>
+        ''' Returns a read-only collection of all available drive names.
+        ''' </summary>
+        Drives
 
         '
         ' Summary:
@@ -128,9 +69,10 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     A destination file exists but cannot be accessed.
-        Private Function CopyDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        ''' <summary>
+        ''' Copies the contents of a directory to another directory.
+        ''' </summary>
+        CopyDirectory
 
         '
         ' Summary:
@@ -182,9 +124,7 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
-        Private Function CopyFile(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        CopyFile
 
         '
         ' Summary:
@@ -213,9 +153,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have permission to create the directory.
-        Private Function CreateDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        CreateDirectory
         '
         ' Summary:
         '     Deletes a directory.
@@ -260,10 +198,7 @@ Namespace FileSystem
         '
         '   T:System.OperationCanceledException:
         '     The user cancels the operation or the directory cannot be deleted.
-        Private Function DeleteDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
-
+        DeleteDirectory
 
 
         '
@@ -301,9 +236,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have permission to delete the file or the file is read-only.
-        Private Function DeleteFile(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        DeleteFile
 
         '
         ' Summary:
@@ -350,10 +283,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
-        Private Function MoveDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
-
+        MoveDirectory
         '
         ' Summary:
         '     Moves a file to a new location.
@@ -389,10 +319,7 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
-        Private Function MoveFile(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-
-        End Function
+        MoveFile
         '
         ' Summary:
         '     Renames a directory.
@@ -434,9 +361,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
-        Private Function RenameDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        RenameDirectory
         '
         ' Summary:
         '     Renames a file.
@@ -478,9 +403,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user does not have required permission.
-        Private Function RenameFile(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        RenameFile
         '
         ' Summary:
         '     Writes data to a binary file.
@@ -523,9 +446,7 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
-        Private Function WriteAllBytes(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        WriteAllBytes
         '
         ' Summary:
         '     Writes text to a file.
@@ -568,9 +489,7 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
-        Private Function WriteAllText(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        WriteAllText
         '
         ' Summary:
         '     Combines two paths and returns a properly formatted path.
@@ -588,9 +507,7 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     baseDirectory or relativePath are malformed paths.
-        Private Function CombinePath(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        CombinePath
         '
         ' Summary:
         '     Returns True if the specified directory exists.
@@ -601,9 +518,7 @@ Namespace FileSystem
         '
         ' Returns:
         '     True if the directory exists; otherwise False.
-        Private Function DirectoryExists(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        DirectoryExists
         '
         ' Summary:
         '     Returns True if the specified file exists.
@@ -618,9 +533,7 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The name of the file ends with a backslash (\).
-        Private Function FileExists(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        FileExists
         '
         ' Summary:
         '     Returns a read-only collection of strings representing the names of files containing
@@ -668,9 +581,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
-        Private Function FindInFiles(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        FindInFiles
 
         '
         ' Summary:
@@ -712,9 +623,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
-        Private Function GetDirectories(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        GetDirectories
 
         '
         ' Summary:
@@ -744,9 +653,7 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path
-        Private Function GetDirectoryInfo(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        GetDirectoryInfo
         '
         ' Summary:
         '     Returns a System.IO.DriveInfo object for the specified drive.
@@ -772,9 +679,7 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path
-        Private Function GetDriveInfo(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        GetDriveInfo
         '
         ' Summary:
         '     Returns a System.IO.FileInfo object for the specified file.
@@ -805,9 +710,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks ACL (access control list) access to the file.
-        Private Function GetFileInfo(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        GetFileInfo
         '
         ' Summary:
         '     Returns a read-only collection of strings representing the names of files within
@@ -847,11 +750,7 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
-        Private Function GetFiles(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
-
-
+        GetFiles
 
         '
         ' Summary:
@@ -863,9 +762,7 @@ Namespace FileSystem
         '
         ' Returns:
         '     The file name from the specified path.
-        Private Function GetName(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        GetName
         '
         ' Summary:
         '     Returns the parent path of the provided path.
@@ -895,9 +792,7 @@ Namespace FileSystem
         '   T:System.NotSupportedException:
         '     A file or directory name in the path contains a colon (:) or is in an invalid
         '     format.
-        Private Function GetParentPath(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        GetParentPath
         '
         ' Summary:
         '     Creates a uniquely named zero-byte temporary file on disk and returns the full
@@ -905,21 +800,51 @@ Namespace FileSystem
         '
         ' Returns:
         '     String containing the full path of the temporary file.
-        Private Function GetTempFileName(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
-
-        <Protocol(FileSystemAPI.OpenHandle)>
-        Private Function OpenFileHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim params As FileOpen = Serialization.LoadObject(Of FileOpen)(args.GetUTF8String)
-            Dim stream As FileStream = params.OpenHandle
-            Dim handle As New FileHandle With {
-                .FileName = params.FileName,
-                .HashCode = stream.GetHashCode
-            }  ' 可能会出现重复的文件名，所以使用这个句柄对象来进行唯一标示
-            Call OpenedHandles.Add(handle.ToString, stream)
-            Return New RequestStream(handle.GetJson)
-        End Function
+        GetTempFileName
+        '
+        ' Summary:
+        '     The OpenTextFieldParser method allows you to create a Microsoft.VisualBasic.FileIO.TextFieldParser
+        '     object, which provides a way to easily and efficiently parse structured text
+        '     files, such as logs. The TextFieldParser object can be used to read both delimited
+        '     and fixed-width files.
+        '
+        ' Parameters:
+        '   file:
+        '     The file to be opened with the TextFieldParser.
+        '
+        ' Returns:
+        '     Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.
+        '
+        ' Exceptions:
+        '   T:System.ArgumentException:
+        '     The path is not valid for one of the following reasons: it is a zero-length string;
+        '     it contains only white space; it contains invalid characters; or it is a device
+        '     path (starts with \\.\); it ends with a trailing slash.
+        '
+        '   T:System.ArgumentNullException:
+        '     file is Nothing.
+        '
+        '   T:System.IO.FileNotFoundException:
+        '     The file does not exist.
+        '
+        '   T:System.IO.IOException:
+        '     The file is in use by another process, or an I/O error occurs.
+        '
+        '   T:System.IO.PathTooLongException:
+        '     The path exceeds the system-defined maximum length.
+        '
+        '   T:System.NotSupportedException:
+        '     A file or directory name in the path contains a colon (:) or is in an invalid
+        '     format.
+        '
+        '   T:Microsoft.VisualBasic.FileIO.MalformedLineException:
+        '     A row cannot be parsed using the specified format. The exception message specifies
+        '     the line causing the exception, while the Microsoft.VisualBasic.FileIO.TextFieldParser.ErrorLine
+        '     property is assigned the text contained in the line.
+        '
+        '   T:System.Security.SecurityException:
+        '     The user lacks necessary permissions to view the path.
+        OpenTextFieldParser
         '
         ' Summary:
         '     Opens a System.IO.StreamReader object to read from a file.
@@ -940,9 +865,7 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to read from the file.
-        Private Function OpenTextFileReader(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        OpenTextFileReader
         '
         ' Summary:
         '     Opens a System.IO.StreamWriter object to write to the specified file.
@@ -961,9 +884,7 @@ Namespace FileSystem
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a trailing slash.
-        Private Function OpenTextFileWriter(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
-        End Function
+        OpenTextFileWriter
         '
         ' Summary:
         '     Returns the contents of a file as a byte array.
@@ -1002,11 +923,6 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
-        <Protocol(FileSystemAPI.ReadAllBytes)>
-        Private Function ReadAllBytes(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim file As String = args.GetUTF8String
-            Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(file)
-            Return New RequestStream(HTTP_RFC.RFC_OK, HTTP_RFC.RFC_OK, byts)
-        End Function
-    End Class
+        ReadAllBytes
+    End Enum
 End Namespace

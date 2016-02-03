@@ -11,7 +11,7 @@ Namespace FileSystem.IO
     ''' <summary>
     ''' <see cref="System.IO.FileStream"/><see cref="System.IO.StreamWriter"/>
     ''' </summary>
-    Public MustInherit Class BaseStream
+    Public MustInherit Class BaseStream : Inherits Stream
         Implements IDisposable
 
         Public ReadOnly Property FileSystem As FileSystem
