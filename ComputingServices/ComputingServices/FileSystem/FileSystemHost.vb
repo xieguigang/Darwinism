@@ -36,6 +36,21 @@ Namespace FileSystem
             End Get
         End Property
 
+#Region "FileStream"
+
+        <Protocol(FileSystemAPI.Flush)>
+        Private Function Flush(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim handle = args.GetUTF8String.LoadObject(Of ReadBuffer)
+            Dim uid As String = handle.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                Call stream.Flush()
+                Return NetResponse.RFC_OK
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+
         <Protocol(FileSystemAPI.ReadBuffer)>
         Private Function ReadBuffer(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim handle = args.GetUTF8String.LoadObject(Of ReadBuffer)
@@ -64,19 +79,47 @@ Namespace FileSystem
             End If
         End Function
 
-        '
-        ' Summary:
-        '     Gets or sets the current directory.
-        '
-        ' Returns:
-        '     The current directory for file I/O operations.
-        '
+
+        <Protocol(FileSystemAPI.OpenHandle)>
+        Private Function OpenFileHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim params As FileOpen = Serialization.LoadObject(Of FileOpen)(args.GetUTF8String)
+            Dim stream As FileStream = params.OpenHandle
+            Dim handle As New FileHandle With {
+                .FileName = params.FileName,
+                .HashCode = stream.GetHashCode
+            }  ' 可能会出现重复的文件名，所以使用这个句柄对象来进行唯一标示
+            Call OpenedHandles.Add(handle.ToString, stream)
+            Return New RequestStream(handle.GetJson)
+        End Function
+
+        <Protocol(FileSystemAPI.CloseHandle)>
+        Private Function CloseHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim handle = args.GetUTF8String.LoadObject(Of FileHandle)
+            Dim uid As String = handle.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                Call stream.Free
+                Call OpenedHandles.Remove(uid)
+                Return NetResponse.RFC_OK
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+#End Region
+
         ' Exceptions:
         '   T:System.IO.DirectoryNotFoundException:
         '     The path is not valid.
         '
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
+        ''' <summary>
+        ''' Gets or sets the current directory.
+        ''' </summary>
+        ''' <param name="CA"></param>
+        ''' <param name="args"></param>
+        ''' <param name="remote"></param>
+        ''' <returns>The current directory for file I/O operations.</returns>
         <Protocol(FileSystemAPI.CurrentDirectory)>
         Private Function CurrentDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim DIR As String = args.GetUTF8String
@@ -93,13 +136,14 @@ Namespace FileSystem
                 Return NetResponse.RFC_OK
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns a read-only collection of all available drive names.
-        '
-        ' Returns:
-        '     A read-only collection of all available drives as System.IO.DriveInfo objects.
 
+        ''' <summary>
+        ''' Returns a read-only collection of all available drive names.
+        ''' </summary>
+        ''' <param name="CA"></param>
+        ''' <param name="args"></param>
+        ''' <param name="remote"></param>
+        ''' <returns>A read-only collection of all available drives as System.IO.DriveInfo objects.</returns>
         <Protocol(FileSystemAPI.Drives)>
         Private Function Drives(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim lst = FileIO.FileSystem.Drives.ToArray(Function(x) x.GetJson)
@@ -937,17 +981,6 @@ Namespace FileSystem
 
         End Function
 
-        <Protocol(FileSystemAPI.OpenHandle)>
-        Private Function OpenFileHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim params As FileOpen = Serialization.LoadObject(Of FileOpen)(args.GetUTF8String)
-            Dim stream As FileStream = params.OpenHandle
-            Dim handle As New FileHandle With {
-                .FileName = params.FileName,
-                .HashCode = stream.GetHashCode
-            }  ' 可能会出现重复的文件名，所以使用这个句柄对象来进行唯一标示
-            Call OpenedHandles.Add(handle.ToString, stream)
-            Return New RequestStream(handle.GetJson)
-        End Function
         '
         ' Summary:
         '     Opens a System.IO.StreamReader object to read from a file.

@@ -14,7 +14,8 @@ Namespace FileSystem.Protocols
         ''' </summary>
         ReadBuffer
         WriteBuffer
-
+        CloseHandle
+        Flush
         ''' <summary>
         ''' Gets or sets the current directory.
         ''' </summary>

@@ -979,16 +979,6 @@ Namespace FileSystem.IO
         '     the current System.IO.FileStream object encapsulates.
         Public Overridable ReadOnly Property SafeFileHandle As SafeFileHandle
 
-        '
-        ' Summary:
-        '     Ends an asynchronous write operation and blocks until the I/O operation is complete.
-        '     (Consider using System.IO.FileStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
-        '     instead; see the Remarks section.)
-        '
-        ' Parameters:
-        '   asyncResult:
-        '     The pending asynchronous I/O request.
-        '
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     asyncResult is null.
@@ -1002,35 +992,40 @@ Namespace FileSystem.IO
         '
         '   T:System.IO.IOException:
         '     The stream is closed or an internal error has occurred.
+        ''' <summary>
+        ''' Ends an asynchronous write operation and blocks until the I/O operation is complete.
+        ''' (Consider using System.IO.FileStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+        ''' instead; see the Remarks section.)
+        ''' </summary>
+        ''' <param name="asyncResult">The pending asynchronous I/O request.</param>
         <SecuritySafeCritical>
         Public Overrides Sub EndWrite(asyncResult As IAsyncResult)
-
+            Call __writeHandle.EndInvoke(asyncResult)
         End Sub
-        '
-        ' Summary:
-        '     Clears buffers for this stream and causes any buffered data to be written to
-        '     the file.
-        '
+
         ' Exceptions:
         '   T:System.IO.IOException:
         '     An I/O error occurred.
         '
         '   T:System.ObjectDisposedException:
         '     The stream is closed.
+        ''' <summary>
+        ''' Clears buffers for this stream and causes any buffered data to be written to
+        ''' the file.
+        ''' </summary>
         Public Overrides Sub Flush()
-
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.Flush, FileHandle)
+            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Call invoke.SendMessage(req)
         End Sub
-        '
-        ' Summary:
-        '     Clears buffers for this stream and causes any buffered data to be written to
-        '     the file, and also clears all intermediate file buffers.
-        '
-        ' Parameters:
-        '   flushToDisk:
-        '     true to flush all intermediate file buffers; otherwise, false.
-        <SecuritySafeCritical>
-        Public Overloads Sub Flush(flushToDisk As Boolean)
 
+        ''' <summary>
+        ''' Clears buffers for this stream and causes any buffered data to be written to
+        ''' the file, and also clears all intermediate file buffers.
+        ''' </summary>
+        ''' <param name="flushToDisk">true to flush all intermediate file buffers; otherwise, false.</param>
+        <SecuritySafeCritical> Public Overloads Sub Flush(flushToDisk As Boolean)
+            Call Flush()
         End Sub
         '
         ' Summary:
@@ -1163,71 +1158,41 @@ Namespace FileSystem.IO
             Call invoke.SendMessage(req)
         End Sub
 
-        '
-        ' Summary:
-        '     Writes a byte to the current position in the file stream.
-        '
-        ' Parameters:
-        '   value:
-        '     A byte to write to the stream.
-        '
         ' Exceptions:
         '   T:System.ObjectDisposedException:
         '     The stream is closed.
         '
         '   T:System.NotSupportedException:
         '     The stream does not support writing.
-        <SecuritySafeCritical>
-        Public Overrides Sub WriteByte(value As Byte)
-
+        ''' <summary>
+        ''' Writes a byte to the current position in the file stream.
+        ''' </summary>
+        ''' <param name="value">A byte to write to the stream.</param>
+        <SecuritySafeCritical> Public Overrides Sub WriteByte(value As Byte)
+            Call Write({value}, Scan0, 1)
         End Sub
-        '
-        ' Summary:
-        '     Releases the unmanaged resources used by the System.IO.FileStream and optionally
-        '     releases the managed resources.
-        '
-        ' Parameters:
-        '   disposing:
-        '     true to release both managed and unmanaged resources; false to release only unmanaged
-        '     resources.
+
+        ''' <summary>
+        ''' Releases the unmanaged resources used by the System.IO.FileStream and optionally
+        ''' releases the managed resources.
+        ''' </summary>
+        ''' <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged
+        ''' resources.</param>
         <SecuritySafeCritical>
         Protected Overrides Sub Dispose(disposing As Boolean)
-
-        End Sub
-        '
-        ' Summary:
-        '     Ensures that resources are freed and other cleanup operations are performed when
-        '     the garbage collector reclaims the FileStream.
-        <SecuritySafeCritical>
-        Protected Overrides Sub Finalize()
-
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.CloseHandle, FileHandle)
+            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Call invoke.SendMessage(req)
         End Sub
 
-        '
-        ' Summary:
-        '     Begins an asynchronous read operation. (Consider using System.IO.FileStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
-        '     instead; see the Remarks section.)
-        '
-        ' Parameters:
-        '   array:
-        '     The buffer to read data into.
-        '
-        '   offset:
-        '     The byte offset in array at which to begin reading.
-        '
-        '   numBytes:
-        '     The maximum number of bytes to read.
-        '
-        '   userCallback:
-        '     The method to be called when the asynchronous read operation is completed.
-        '
-        '   stateObject:
-        '     A user-provided object that distinguishes this particular asynchronous read request
-        '     from other requests.
-        '
-        ' Returns:
-        '     An object that references the asynchronous read.
-        '
+        ''' <summary>
+        ''' Ensures that resources are freed and other cleanup operations are performed when
+        ''' the garbage collector reclaims the FileStream.
+        ''' </summary>
+        <SecuritySafeCritical> Protected Overrides Sub Finalize()
+            ' DO NOTHING
+        End Sub
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The array length minus offset is less than numBytes.
@@ -1240,36 +1205,24 @@ Namespace FileSystem.IO
         '
         '   T:System.IO.IOException:
         '     An asynchronous read was attempted past the end of the file.
+        ''' <summary>
+        ''' Begins an asynchronous read operation. (Consider using System.IO.FileStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+        ''' instead; see the Remarks section.)
+        ''' </summary>
+        ''' <param name="array">The buffer to read data into.</param>
+        ''' <param name="offset">The byte offset in array at which to begin reading.</param>
+        ''' <param name="numBytes">The maximum number of bytes to read.</param>
+        ''' <param name="userCallback">The method to be called when the asynchronous read operation is completed.</param>
+        ''' <param name="stateObject">A user-provided object that distinguishes this particular asynchronous read request
+        ''' from other requests.</param>
+        ''' <returns>An object that references the asynchronous read.</returns>
         <SecuritySafeCritical>
         Public Overrides Function BeginRead(array() As Byte, offset As Integer, numBytes As Integer, userCallback As AsyncCallback, stateObject As Object) As IAsyncResult
-
+            Return __readHandle.BeginInvoke(array, offset, numBytes, userCallback, stateObject)
         End Function
-        '
-        ' Summary:
-        '     Begins an asynchronous write operation. (Consider using System.IO.FileStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
-        '     instead; see the Remarks section.)
-        '
-        ' Parameters:
-        '   array:
-        '     The buffer containing data to write to the current stream.
-        '
-        '   offset:
-        '     The zero-based byte offset in array at which to begin copying bytes to the current
-        '     stream.
-        '
-        '   numBytes:
-        '     The maximum number of bytes to write.
-        '
-        '   userCallback:
-        '     The method to be called when the asynchronous write operation is completed.
-        '
-        '   stateObject:
-        '     A user-provided object that distinguishes this particular asynchronous write
-        '     request from other requests.
-        '
-        ' Returns:
-        '     An object that references the asynchronous write.
-        '
+
+        ReadOnly __readHandle As Func(Of Byte(), Integer, Integer, Integer) = AddressOf Read
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     array length minus offset is less than numBytes.
@@ -1288,25 +1241,28 @@ Namespace FileSystem.IO
         '
         '   T:System.IO.IOException:
         '     An I/O error occurred.
-        <SecuritySafeCritical>
-        Public Overrides Function BeginWrite(array() As Byte, offset As Integer, numBytes As Integer, userCallback As AsyncCallback, stateObject As Object) As IAsyncResult
-
+        ''' <summary>
+        ''' Begins an asynchronous write operation. (Consider using System.IO.FileStream.WriteAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+        ''' instead; see the Remarks section.)
+        ''' </summary>
+        ''' <param name="array">The buffer containing data to write to the current stream.</param>
+        ''' <param name="offset">The zero-based byte offset in array at which to begin copying bytes to the current
+        ''' stream.</param>
+        ''' <param name="numBytes">The maximum number of bytes to write.</param>
+        ''' <param name="userCallback">The method to be called when the asynchronous write operation is completed.</param>
+        ''' <param name="stateObject">A user-provided object that distinguishes this particular asynchronous write
+        ''' request from other requests.</param>
+        ''' <returns>An object that references the asynchronous write.</returns>
+        <SecuritySafeCritical> Public Overrides Function BeginWrite(array() As Byte,
+                                                                    offset As Integer,
+                                                                    numBytes As Integer,
+                                                                    userCallback As AsyncCallback,
+                                                                    stateObject As Object) As IAsyncResult
+            Return __writeHandle.BeginInvoke(array, offset, numBytes, userCallback, stateObject)
         End Function
-        '
-        ' Summary:
-        '     Waits for the pending asynchronous read operation to complete. (Consider using
-        '     System.IO.FileStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
-        '     instead; see the Remarks section.)
-        '
-        ' Parameters:
-        '   asyncResult:
-        '     The reference to the pending asynchronous request to wait for.
-        '
-        ' Returns:
-        '     The number of bytes read from the stream, between 0 and the number of bytes you
-        '     requested. Streams only return 0 at the end of the stream, otherwise, they should
-        '     block until at least 1 byte is available.
-        '
+
+        ReadOnly __writeHandle As Action(Of Byte(), Integer, Integer) = AddressOf Write ' Sub() Call Write(array, offset, numBytes)
+
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     asyncResult is null.
@@ -1320,9 +1276,17 @@ Namespace FileSystem.IO
         '
         '   T:System.IO.IOException:
         '     The stream is closed or an internal error has occurred.
-        <SecuritySafeCritical>
-        Public Overrides Function EndRead(asyncResult As IAsyncResult) As Integer
-
+        ''' <summary>
+        ''' Waits for the pending asynchronous read operation to complete. (Consider using
+        ''' System.IO.FileStream.ReadAsync(System.Byte[],System.Int32,System.Int32,System.Threading.CancellationToken)
+        ''' instead; see the Remarks section.)
+        ''' </summary>
+        ''' <param name="asyncResult">The reference to the pending asynchronous request to wait for.</param>
+        ''' <returns>The number of bytes read from the stream, between 0 and the number of bytes you
+        ''' requested. Streams only return 0 at the end of the stream, otherwise, they should
+        ''' block until at least 1 byte is available.</returns>
+        <SecuritySafeCritical> Public Overrides Function EndRead(asyncResult As IAsyncResult) As Integer
+            Return __readHandle.EndInvoke(asyncResult)
         End Function
         '
         ' Summary:
@@ -1414,32 +1378,7 @@ Namespace FileSystem.IO
             Call System.Array.ConstrainedCopy(rep.ChunkBuffer, Scan0, array, offset, count)
             Return rep.ChunkBuffer.Length
         End Function
-        '
-        ' Summary:
-        '     Asynchronously reads a sequence of bytes from the current stream, advances the
-        '     position within the stream by the number of bytes read, and monitors cancellation
-        '     requests.
-        '
-        ' Parameters:
-        '   buffer:
-        '     The buffer to write the data into.
-        '
-        '   offset:
-        '     The byte offset in buffer at which to begin writing data from the stream.
-        '
-        '   count:
-        '     The maximum number of bytes to read.
-        '
-        '   cancellationToken:
-        '     The token to monitor for cancellation requests.
-        '
-        ' Returns:
-        '     A task that represents the asynchronous read operation. The value of the TResult
-        '     parameter contains the total number of bytes read into the buffer. The result
-        '     value can be less than the number of bytes requested if the number of bytes currently
-        '     available is less than the requested number, or it can be 0 (zero) if the end
-        '     of the stream has been reached.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     buffer is null.
@@ -1458,26 +1397,43 @@ Namespace FileSystem.IO
         '
         '   T:System.InvalidOperationException:
         '     The stream is currently in use by a previous read operation.
+        ''' <summary>
+        ''' Asynchronously reads a sequence of bytes from the current stream, advances the
+        ''' position within the stream by the number of bytes read, and monitors cancellation
+        ''' requests.
+        ''' </summary>
+        ''' <param name="buffer">The buffer to write the data into.</param>
+        ''' <param name="offset">The byte offset in buffer at which to begin writing data from the stream.</param>
+        ''' <param name="count">The maximum number of bytes to read.</param>
+        ''' <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        ''' <returns>A task that represents the asynchronous read operation. The value of the TResult
+        ''' parameter contains the total number of bytes read into the buffer. The result
+        ''' value can be less than the number of bytes requested if the number of bytes currently
+        ''' available is less than the requested number, or it can be 0 (zero) if the end
+        ''' of the stream has been reached.</returns>
         <ComVisible(False)> <SecuritySafeCritical>
         Public Overrides Function ReadAsync(buffer() As Byte, offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task(Of Integer)
-
+            Return New Task(Of Integer)(Function() Read(buffer, offset, count), cancellationToken)
         End Function
-        '
-        ' Summary:
-        '     Reads a byte from the file and advances the read position one byte.
-        '
-        ' Returns:
-        '     The byte, cast to an System.Int32, or -1 if the end of the stream has been reached.
-        '
+
         ' Exceptions:
         '   T:System.NotSupportedException:
         '     The current stream does not support reading.
         '
         '   T:System.ObjectDisposedException:
         '     The current stream is closed.
-        <SecuritySafeCritical>
-        Public Overrides Function ReadByte() As Integer
-
+        ''' <summary>
+        ''' Reads a byte from the file and advances the read position one byte.
+        ''' </summary>
+        ''' <returns>The byte, cast to an System.Int32, or -1 if the end of the stream has been reached.</returns>
+        <SecuritySafeCritical> Public Overrides Function ReadByte() As Integer
+            Dim buf As Byte() = New Byte(0) {}
+            Dim i As Integer = Read(buf, Scan0, 1)
+            If i = -1 Then
+                Return -1
+            Else
+                Return CType(buf(Scan0), Integer)
+            End If
         End Function
         '
         ' Summary:
@@ -1511,29 +1467,7 @@ Namespace FileSystem.IO
         Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
 
         End Function
-        '
-        ' Summary:
-        '     Asynchronously writes a sequence of bytes to the current stream, advances the
-        '     current position within this stream by the number of bytes written, and monitors
-        '     cancellation requests.
-        '
-        ' Parameters:
-        '   buffer:
-        '     The buffer to write data from.
-        '
-        '   offset:
-        '     The zero-based byte offset in buffer from which to begin copying bytes to the
-        '     stream.
-        '
-        '   count:
-        '     The maximum number of bytes to write.
-        '
-        '   cancellationToken:
-        '     The token to monitor for cancellation requests.
-        '
-        ' Returns:
-        '     A task that represents the asynchronous write operation.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     buffer is null.
@@ -1552,9 +1486,20 @@ Namespace FileSystem.IO
         '
         '   T:System.InvalidOperationException:
         '     The stream is currently in use by a previous write operation.
+        ''' <summary>
+        ''' Asynchronously writes a sequence of bytes to the current stream, advances the
+        ''' current position within this stream by the number of bytes written, and monitors
+        ''' cancellation requests.
+        ''' </summary>
+        ''' <param name="buffer">The buffer to write data from.</param>
+        ''' <param name="offset">The zero-based byte offset in buffer from which to begin copying bytes to the
+        ''' stream.</param>
+        ''' <param name="count">The maximum number of bytes to write.</param>
+        ''' <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        ''' <returns>A task that represents the asynchronous write operation.</returns>
         <ComVisible(False)> <SecuritySafeCritical>
         Public Overrides Function WriteAsync(buffer() As Byte, offset As Integer, count As Integer, cancellationToken As CancellationToken) As Task
-
+            Return New Task(Sub() Call Write(buffer, offset, count), cancellationToken)
         End Function
     End Class
 End Namespace
