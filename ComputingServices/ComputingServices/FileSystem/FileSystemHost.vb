@@ -36,6 +36,21 @@ Namespace FileSystem
             End Get
         End Property
 
+        <Protocol(FileSystemAPI.ReadBuffer)>
+        Private Function ReadBuffer(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim handle = args.GetUTF8String.LoadObject(Of ReadBuffer)
+            Dim uid As String = handle.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                Dim buffer As Byte() = handle.CreateBuffer
+                Call stream.Read(buffer, handle.offset, handle.length)
+                Dim value As RequestStream = RequestStream.CreatePackage(buffer)
+                Return value
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+
         '
         ' Summary:
         '     Gets or sets the current directory.

@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.Win32.SafeHandles
 
 Namespace FileSystem.IO
@@ -1367,26 +1368,7 @@ Namespace FileSystem.IO
         Public Function GetAccessControl() As FileSecurity
 
         End Function
-        '
-        ' Summary:
-        '     Reads a block of bytes from the stream and writes the data in a given buffer.
-        '
-        ' Parameters:
-        '   array:
-        '     When this method returns, contains the specified byte array with the values between
-        '     offset and (offset + count - 1) replaced by the bytes read from the current source.
-        '
-        '   offset:
-        '     The byte offset in array at which the read bytes will be placed.
-        '
-        '   count:
-        '     The maximum number of bytes to read.
-        '
-        ' Returns:
-        '     The total number of bytes read into the buffer. This might be less than the number
-        '     of bytes requested if that number of bytes are not currently available, or zero
-        '     if the end of the stream is reached.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     array is null.
@@ -1405,9 +1387,30 @@ Namespace FileSystem.IO
         '
         '   T:System.ObjectDisposedException:
         '     Methods were called after the stream was closed.
+        ''' <summary>
+        ''' Reads a block of bytes from the stream and writes the data in a given buffer.
+        ''' </summary>
+        ''' <param name="array">
+        ''' When this method returns, contains the specified byte array with the values between
+        ''' offset and (offset + count - 1) replaced by the bytes read from the current source.
+        ''' </param>
+        ''' <param name="offset">The byte offset in array at which the read bytes will be placed.</param>
+        ''' <param name="count">The maximum number of bytes to read.</param>
+        ''' <returns>The total number of bytes read into the buffer. This might be less than the number
+        ''' of bytes requested if that number of bytes are not currently available, or zero
+        ''' if the end of the stream is reached.</returns>
         <SecuritySafeCritical>
         Public Overrides Function Read(array() As Byte, offset As Integer, count As Integer) As Integer
-
+            Dim args As ReadBuffer = New ReadBuffer(Me.FileHandle) With {
+                .length = count,
+                .offset = offset
+            }
+            Dim req As RequestStream =
+                New RequestStream(ProtocolEntry, FileSystemAPI.ReadBuffer, args.GetJson)
+            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
+            Call System.Array.ConstrainedCopy(rep.ChunkBuffer, Scan0, array, offset, count)
+            Return rep.ChunkBuffer.Length
         End Function
         '
         ' Summary:

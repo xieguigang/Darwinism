@@ -18,7 +18,7 @@ Namespace FileSystem
         ''' <summary>
         ''' 远端服务器的开放的句柄端口
         ''' </summary>
-        ReadOnly _portal As IPEndPoint
+        Public ReadOnly Property Portal As IPEndPoint
 
         Sub New(portal As IPEndPoint)
             _portal = portal
