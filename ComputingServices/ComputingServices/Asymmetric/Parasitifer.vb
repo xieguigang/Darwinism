@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
 Imports Microsoft.VisualBasic.Net.TCPExtensions
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace Asymmetric
 

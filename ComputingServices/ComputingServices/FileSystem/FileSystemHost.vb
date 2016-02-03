@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace FileSystem
 
