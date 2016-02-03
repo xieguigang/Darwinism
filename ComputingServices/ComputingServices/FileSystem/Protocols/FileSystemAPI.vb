@@ -13,6 +13,7 @@ Namespace FileSystem.Protocols
         ''' Reads a block of bytes from the stream and writes the data in a given buffer.
         ''' </summary>
         ReadBuffer
+        WriteBuffer
 
         ''' <summary>
         ''' Gets or sets the current directory.

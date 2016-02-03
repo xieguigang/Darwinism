@@ -101,6 +101,9 @@ Namespace FileSystem.Protocols
         Public Property offset As Integer Implements IReadWriteBuffer.offset
         Public Property buffer As Byte()
 
+        Sub New()
+        End Sub
+
         Sub New(raw As Byte())
             Dim buf As Byte() = New Byte(INT32 - 1) {}
             Dim p As Integer = Scan0

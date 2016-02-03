@@ -1123,21 +1123,7 @@ Namespace FileSystem.IO
         Public Overridable Sub Unlock(position As Long, length As Long)
 
         End Sub
-        '
-        ' Summary:
-        '     Writes a block of bytes to the file stream.
-        '
-        ' Parameters:
-        '   array:
-        '     The buffer containing data to write to the stream.
-        '
-        '   offset:
-        '     The zero-based byte offset in array from which to begin copying bytes to the
-        '     stream.
-        '
-        '   count:
-        '     The maximum number of bytes to write.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     array is null.
@@ -1157,10 +1143,26 @@ Namespace FileSystem.IO
         '
         '   T:System.NotSupportedException:
         '     The current stream instance does not support writing.
+        ''' <summary>
+        ''' Writes a block of bytes to the file stream.
+        ''' </summary>
+        ''' <param name="array">The buffer containing data to write to the stream.</param>
+        ''' <param name="offset">The zero-based byte offset in array from which to begin copying bytes to the
+        ''' stream.</param>
+        ''' <param name="count">The maximum number of bytes to write.</param>
         <SecuritySafeCritical>
         Public Overrides Sub Write(array() As Byte, offset As Integer, count As Integer)
-
+            Dim args As WriteStream = New WriteStream With {
+                .Handle = FileHandle,
+                .buffer = array,
+                .length = count,
+                .offset = offset
+            }
+            Dim req As New RequestStream(ProtocolEntry, FileSystemAPI.WriteBuffer, args)
+            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Call invoke.SendMessage(req)
         End Sub
+
         '
         ' Summary:
         '     Writes a byte to the current position in the file stream.

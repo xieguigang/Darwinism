@@ -51,6 +51,19 @@ Namespace FileSystem
             End If
         End Function
 
+        <Protocol(FileSystemAPI.WriteBuffer)>
+        Private Function WriteBuffer(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim params As WriteStream = args.GetRawStream(Of WriteStream)
+            Dim uid As String = params.Handle.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                Call stream.Write(params.buffer, params.offset, params.length)
+                Return NetResponse.RFC_OK
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+
         '
         ' Summary:
         '     Gets or sets the current directory.

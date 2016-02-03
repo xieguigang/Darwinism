@@ -17,9 +17,9 @@ Module ServicesProgram
 
         Dim buf As Byte() = New Byte(5 * 1024 * 100) {}
         Call file.Read(buf, Scan0, buf.Length)
-        Call buf.FlushStream("x:\sdfgsdf.mp3")
+        Call buf.FlushStream("x:\1....sdfgsdf.mp3")
 
-        Dim writeFile As New IO.FileStream("x:\dfgdfghf.mp3", System.IO.FileMode.OpenOrCreate, fs)
+        Dim writeFile As New IO.FileStream("x:\2....dfgdfghf.mp3", System.IO.FileMode.OpenOrCreate, fs)
         Call writeFile.Write(buf, Scan0, buf.Length)
 
         Return GetType(ServicesProgram).RunCLI(App.CommandLine, AddressOf TestLocal)
