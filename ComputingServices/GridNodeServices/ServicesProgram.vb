@@ -10,17 +10,28 @@ Module ServicesProgram
         Return GetType(ServicesProgram).RunCLI(App.CommandLine, AddressOf TestLocal)
     End Function
 
+    Private Sub __testLinq()
+        Dim array = 20.Sequence
+        Dim source As New LinqProvider(array, GetType(Integer))
+        Call Threading.Thread.Sleep(100)
+        Dim reader As New ILinq(Of Integer)(source.Portal)
+
+        Dim xr = (From x In reader Where x > 10 Select x).ToArray
+    End Sub
+
     ''' <summary>
     ''' Example of running on local machine
     ''' </summary>
     ''' <returns></returns>
     Public Function TestLocal() As Integer
+        Call __testLinq()
+
         Dim exe As String = App.ExecutablePath
         Dim port As Integer = Microsoft.VisualBasic.Net.GetFirstAvailablePort
 
-        Call Process.Start(exe, $"/remote /port {port}").Start()  ' example test
-        Call Threading.Thread.Sleep(1500)
-
+        '   Call Process.Start(exe, $"/remote /port {port}").Start()  ' example test
+        '  Call Threading.Thread.Sleep(1500)
+        Dim invoke As New TaskInvoke(port)
         Dim remote As New TaskHost("127.0.0.1", port)
         Dim msg As String = "Code execute on the remotes!"
         Dim remoteFunc As Func(Of String, Integer) = AddressOf TestExample1  ' Gets the function pointer on the remote machine

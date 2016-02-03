@@ -48,10 +48,10 @@ Namespace TaskHost
                 Dim value As Object = Serialization.LoadObject(json, Type)
                 Dim x As T = DirectCast(value, T)
 
-                Yield x
-
                 If rep.ProtocolCategory = TaskProtocols.ReadsDone Then
                     Exit Do
+                Else
+                    Yield x
                 End If
             Loop
         End Function

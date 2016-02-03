@@ -29,8 +29,8 @@ Namespace TaskHost
         End Sub
 
         Sub New(value As Object, type As Type)
-            errCode = HTTP_RFC.RFC_OK
-            value = Serialization.GetJson(value, type)
+            _errCode = HTTP_RFC.RFC_OK
+            _value = Serialization.GetJson(value, type)
         End Sub
 
         ''' <summary>
