@@ -59,7 +59,7 @@ Namespace P2P.ServicesComponents
         End Sub
 
         Protected Overrides Sub ImportsAPI()
-            Call _ShoalShell.Imports(New NodeServicesAPI(Me))
+            Call _ShellImportsAPI(New NodeServicesAPI(Me), GetType(NodeServicesAPI))
         End Sub
 
         Protected Overrides Function GetServicesPort() As Integer

@@ -2,11 +2,20 @@
 
 Namespace P2P.ServicesComponents
 
+    Public Delegate Function RunShell(script As String) As Object
+    ''' <summary>
+    ''' 向控制台导入本服务的管理用的API
+    ''' </summary>
+    ''' <param name="console"></param>
+    ''' <returns></returns>
+    Public Delegate Function ShellImportsAPI(console As Object, type As Type) As Boolean
+
     Public MustInherit Class InternalServicesModule : Inherits IHostBase
         Implements System.IDisposable
 
-        Protected _ShoalShell As Microsoft.VisualBasic.Scripting.ShoalShell.Runtime.ScriptEngine
+        Protected _ShoalShellExec As RunShell
         Protected ProtocolHandler As Net.Protocol.Reflection.ProtocolHandler
+        Protected _ShellImportsAPI As ShellImportsAPI
 
         Protected MustOverride Sub ImportsAPI()
         Protected MustOverride Function GetServicesPort() As Integer
@@ -25,13 +34,12 @@ Namespace P2P.ServicesComponents
         End Sub
 
         Protected Sub _runningShoalShell()
-            _ShoalShell = New Scripting.ShoalShell.Runtime.ScriptEngine()
             Call ImportsAPI()
 
             Do While Not __host Is Nothing
                 Call Console.Write(">>> ")
                 Dim cmdl As String = Console.ReadLine
-                Call _ShoalShell.Exec(cmdl)
+                Call _ShoalShellExec(cmdl)
             Loop
         End Sub
 
@@ -45,7 +53,6 @@ Namespace P2P.ServicesComponents
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call _ShoalShell.Free
                     Call __host.Free
                 End If
 

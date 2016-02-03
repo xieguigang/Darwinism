@@ -45,7 +45,7 @@ Namespace P2P.ServicesComponents
         End Sub
 
         Protected Overrides Sub ImportsAPI()
-            Call _ShoalShell.Imports(ClusterServicesAPI)
+            Call _ShellImportsAPI(ClusterServicesAPI, GetType(ClusterServicesAPI))
         End Sub
 
         Public ReadOnly Property ClusterServicesAPI As ClusterServicesAPI = New ClusterServicesAPI(Me)
