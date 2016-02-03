@@ -2385,7 +2385,7 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
-        Public Function OpenTextFileReader(file As String) As StreamReader
+        Public Function OpenTextFileReader(file As String) As IO.StreamReader
 
         End Function
         '
@@ -2417,7 +2417,7 @@ Namespace FileSystem
         ''' <param name="file"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Public Function OpenTextFileReader(file As String, encoding As Encoding) As StreamReader
+        Public Function OpenTextFileReader(file As String, encoding As Encoding) As IO.StreamReader
 
         End Function
         '
@@ -2444,7 +2444,7 @@ Namespace FileSystem
         ''' <param name="file"></param>
         ''' <param name="append"></param>
         ''' <returns></returns>
-        Public Function OpenTextFileWriter(file As String, append As Boolean) As StreamWriter
+        Public Function OpenTextFileWriter(file As String, append As Boolean) As IO.StreamWriter
 
         End Function
         '
@@ -2475,7 +2475,7 @@ Namespace FileSystem
         ''' <param name="append"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As StreamWriter
+        Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As IO.StreamWriter
 
         End Function
         '

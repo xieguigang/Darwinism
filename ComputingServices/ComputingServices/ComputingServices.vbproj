@@ -91,6 +91,9 @@
     <Compile Include="Asymmetric\Master.vb" />
     <Compile Include="ComponentModel\IHostBase.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="FileSystem\FileStream\BaseStream.vb" />
+    <Compile Include="FileSystem\FileStream\StreamWriter.vb" />
+    <Compile Include="FileSystem\FileStream\StreamReader.vb" />
     <Compile Include="FileSystem\Protocols.vb" />
     <Compile Include="FileSystem\FileSystemHost.vb" />
     <Compile Include="FileSystem\FileSystem.vb" />
@@ -135,7 +138,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ComputingServices.Designer.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
