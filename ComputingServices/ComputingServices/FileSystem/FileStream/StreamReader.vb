@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 
-Namespace FileSystem
+Namespace FileSystem.IO
 
     Public Class StreamReader : Inherits BaseStream
 

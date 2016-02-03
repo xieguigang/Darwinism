@@ -92,6 +92,7 @@
     <Compile Include="ComponentModel\IHostBase.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="FileSystem\FileStream\BaseStream.vb" />
+    <Compile Include="FileSystem\FileStream\FileStream.vb" />
     <Compile Include="FileSystem\FileStream\StreamWriter.vb" />
     <Compile Include="FileSystem\FileStream\StreamReader.vb" />
     <Compile Include="FileSystem\Protocols.vb" />
