@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.LINQ
 
 Namespace FileSystem
 
@@ -57,6 +58,15 @@ Namespace FileSystem
         ''' </summary>
         ''' <returns>A read-only collection of all available drives as System.IO.DriveInfo objects.</returns>
         Public ReadOnly Property Drives As ReadOnlyCollection(Of DriveInfo)
+            Get
+                Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.Drives)
+                Dim invoke As New AsynInvoke(_Portal)
+                Dim rep As RequestStream = invoke.SendMessage(req)
+                Dim array As String() = req.GetUTF8String.LoadObject(Of String())
+                Dim lst As DriveInfo() = array.ToArray(Function(s) s.LoadObject(Of DriveInfo))
+                Return New ReadOnlyCollection(Of DriveInfo)(lst)
+            End Get
+        End Property
 
         ' Exceptions:
         '   T:System.ArgumentException:
@@ -105,86 +115,7 @@ Namespace FileSystem
         Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String)
 
         End Sub
-        '
-        ' Summary:
-        '     
-        '
-        ' Parameters:
-        '   sourceDirectoryName:
-        '     
-        '
-        '   destinationDirectoryName:
-        '     
-        '
-        '   showUI:
-        '     
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The new name specified for the directory contains a colon (:) or slash (\ or
-        '     /).
-        '
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     destinationDirectoryName or sourceDirectoryName is Nothing or an empty string.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The source directory does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The source directory is a root directory
-        '
-        '   T:System.IO.IOException:
-        '     The combined path points to an existing file.
-        '
-        '   T:System.IO.IOException:
-        '     The source path and target path are the same.
-        '
-        '   T:System.InvalidOperationException:
-        '     The operation is cyclic.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.NotSupportedException:
-        '     A folder name in the path contains a colon (:) or is in an invalid format.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     A destination file exists but cannot be accessed.
-        '
-        '   T:System.OperationCanceledException:
-        '     ShowUI is set to UIOption.AllDialogs and the user cancels the operation, or one
-        '     or more files in the directory cannot be copied.
-        ''' <summary>
-        ''' Copies the contents of a directory to another directory.
-        ''' </summary>
-        ''' <param name="sourceDirectoryName">The directory to be copied.</param>
-        ''' <param name="destinationDirectoryName">The location to which the directory contents should be copied.</param>
-        ''' <param name="showUI">Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.</param>
-        Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption)
 
-        End Sub
-        '
-        ' Summary:
-        '     
-        '
-        ' Parameters:
-        '   sourceDirectoryName:
-        '     
-        '
-        '   destinationDirectoryName:
-        '     
-        '
-        '   overwrite:
-        '     
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The new name specified for the directory contains a colon (:) or slash (\ or
@@ -233,77 +164,7 @@ Namespace FileSystem
         Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String, overwrite As Boolean)
 
         End Sub
-        '
-        ' Summary:
-        '     Copies the contents of a directory to another directory.
-        '
-        ' Parameters:
-        '   sourceDirectoryName:
-        '     The directory to be copied.
-        '
-        '   destinationDirectoryName:
-        '     The location to which the directory contents should be copied.
-        '
-        '   showUI:
-        '     Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   onUserCancel:
-        '     Specifies what should be done if the user clicks Cancel during the operation.
-        '     Default is Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The new name specified for the directory contains a colon (:) or slash (\ or
-        '     /).
-        '
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     destinationDirectoryName or sourceDirectoryName is Nothing or an empty string.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The source directory does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The source directory is a root directory
-        '
-        '   T:System.IO.IOException:
-        '     The combined path points to an existing file.
-        '
-        '   T:System.IO.IOException:
-        '     The source path and target path are the same.
-        '
-        '   T:System.InvalidOperationException:
-        '     The operation is cyclic.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.NotSupportedException:
-        '     A folder name in the path contains a colon (:) or is in an invalid format.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     A destination file exists but cannot be accessed.
-        '
-        '   T:System.OperationCanceledException:
-        '     ShowUI is set to UIOption.AllDialogs and the user cancels the operation, or one
-        '     or more files in the directory cannot be copied.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="sourceDirectoryName"></param>
-        ''' <param name="destinationDirectoryName"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="onUserCancel"></param>
-        Public Sub CopyDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption, onUserCancel As UICancelOption)
 
-        End Sub
         '
         ' Summary:
         '     Copies a file to a new location.
@@ -363,71 +224,7 @@ Namespace FileSystem
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String)
 
         End Sub
-        '
-        ' Summary:
-        '     Copies a file to a new location.
-        '
-        ' Parameters:
-        '   sourceFileName:
-        '     The file to be copied.
-        '
-        '   destinationFileName:
-        '     The location to which the file should be copied.
-        '
-        '   showUI:
-        '     Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentException:
-        '     The system could not retrieve the absolute path.
-        '
-        '   T:System.ArgumentException:
-        '     destinationFileName contains path information.
-        '
-        '   T:System.ArgumentNullException:
-        '     destinationFileName or sourceFileName is Nothing or an empty string.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The source file is not valid or does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The combined path points to an existing directory.
-        '
-        '   T:System.IO.IOException:
-        '     The user does not have sufficient permissions to access the file.
-        '
-        '   T:System.IO.IOException:
-        '     A file in the target directory with the same name is in use.
-        '
-        '   T:System.IO.IOException:
-        '     The destination file exists and overwrite is set to False.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The user does not have required permission.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="sourceFileName"></param>
-        ''' <param name="destinationFileName"></param>
-        ''' <param name="showUI"></param>
-        Public Sub CopyFile(sourceFileName As String, destinationFileName As String, showUI As UIOption)
 
-        End Sub
         '
         ' Summary:
         '     Copies a file to a new location.
@@ -493,80 +290,7 @@ Namespace FileSystem
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String, overwrite As Boolean)
 
         End Sub
-        '
-        ' Summary:
-        '     Copies a file to a new location.
-        '
-        ' Parameters:
-        '   sourceFileName:
-        '     The file to be copied.
-        '
-        '   destinationFileName:
-        '     The location to which the file should be copied.
-        '
-        '   showUI:
-        '     Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   onUserCancel:
-        '     Specifies what should be done if the user clicks Cancel during the operation.
-        '     Default is Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentException:
-        '     The system could not retrieve the absolute path.
-        '
-        '   T:System.ArgumentException:
-        '     destinationFileName contains path information.
-        '
-        '   T:System.ArgumentNullException:
-        '     destinationFileName or sourceFileName is Nothing or an empty string.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The source file is not valid or does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The combined path points to an existing directory.
-        '
-        '   T:System.IO.IOException:
-        '     The user does not have sufficient permissions to access the file.
-        '
-        '   T:System.IO.IOException:
-        '     A file in the target directory with the same name is in use.
-        '
-        '   T:System.IO.IOException:
-        '     The destination file exists and overwrite is set to False.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The user does not have required permission.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        '
-        '   T:System.OperationCanceledException:
-        '     UICancelOption is set to ThrowException, and the user has canceled the operation
-        '     or an unspecified I/O error occurs.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="sourceFileName"></param>
-        ''' <param name="destinationFileName"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="onUserCancel"></param>
-        Public Sub CopyFile(sourceFileName As String, destinationFileName As String, showUI As UIOption, onUserCancel As UICancelOption)
 
-        End Sub
         '
         ' Summary:
         '     Creates a directory.
@@ -653,122 +377,7 @@ Namespace FileSystem
         Public Sub DeleteDirectory(directory As String, onDirectoryNotEmpty As DeleteDirectoryOption)
 
         End Sub
-        '
-        ' Summary:
-        '     Deletes a directory.
-        '
-        ' Parameters:
-        '   directory:
-        '     Directory to be deleted.
-        '
-        '   showUI:
-        '     Specifies whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   recycle:
-        '     Specifies whether or not the deleted file should be sent to the Recycle Bin.
-        '     Default is RecycleOption.DeletePermanently.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is a zero-length string, is malformed, contains only white space, or
-        '     contains invalid characters (including wildcard characters). The path is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     directory is Nothing or an empty string.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The directory does not exist or is a file.
-        '
-        '   T:System.IO.IOException:
-        '     The directory is not empty, and onDirectoryNotEmpty is set to ThrowIfDirectoryNonEmpty.
-        '
-        '   T:System.IO.IOException:
-        '     The user does not have permission to delete the directory or subdirectory.
-        '
-        '   T:System.IO.IOException:
-        '     A file in the directory or subdirectory is in use.
-        '
-        '   T:System.NotSupportedException:
-        '     The directory name contains a colon (:).
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user does not have required permissions.
-        '
-        '   T:System.OperationCanceledException:
-        '     The user cancels the operation or the directory cannot be deleted.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="directory"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="recycle"></param>
-        Public Sub DeleteDirectory(directory As String, showUI As UIOption, recycle As RecycleOption)
 
-        End Sub
-        '
-        ' Summary:
-        '     Deletes a directory.
-        '
-        ' Parameters:
-        '   directory:
-        '     Directory to be deleted.
-        '
-        '   showUI:
-        '     Specifies whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   recycle:
-        '     Specifies whether or not the deleted file should be sent to the Recycle Bin.
-        '     Default is RecycleOption.DeletePermanently.
-        '
-        '   onUserCancel:
-        '     Specifies whether to throw an exception if the user clicks Cancel.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is a zero-length string, is malformed, contains only white space, or
-        '     contains invalid characters (including wildcard characters). The path is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     directory is Nothing or an empty string.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The directory does not exist or is a file.
-        '
-        '   T:System.IO.IOException:
-        '     The directory is not empty, and onDirectoryNotEmpty is set to ThrowIfDirectoryNonEmpty.
-        '
-        '   T:System.IO.IOException:
-        '     The user does not have permission to delete the directory or subdirectory.
-        '
-        '   T:System.IO.IOException:
-        '     A file in the directory or subdirectory is in use.
-        '
-        '   T:System.NotSupportedException:
-        '     The directory name contains a colon (:).
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user does not have required permissions.
-        '
-        '   T:System.OperationCanceledException:
-        '     The user cancels the operation or the directory cannot be deleted.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="directory"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="recycle"></param>
-        ''' <param name="onUserCancel"></param>
-        Public Sub DeleteDirectory(directory As String, showUI As UIOption, recycle As RecycleOption, onUserCancel As UICancelOption)
-
-        End Sub
         '
         ' Summary:
         '     Deletes a file.
@@ -811,116 +420,7 @@ Namespace FileSystem
         Public Sub DeleteFile(file As String)
 
         End Sub
-        '
-        ' Summary:
-        '     Deletes a file.
-        '
-        ' Parameters:
-        '   file:
-        '     Name and path of the file to be deleted.
-        '
-        '   showUI:
-        '     Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   recycle:
-        '     Whether or not the deleted file should be sent to the Recycle Bin. Default is
-        '     RecycleOption.DeletePermanently.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; it has a trailing
-        '     slash where a file must be specified; or it is a device path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     file is Nothing or an empty string.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.IO.IOException:
-        '     The file is in use.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file does not exist.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The user does not have permission to delete the file or the file is read-only.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="recycle"></param>
-        Public Sub DeleteFile(file As String, showUI As UIOption, recycle As RecycleOption)
 
-        End Sub
-        '
-        ' Summary:
-        '     Deletes a file.
-        '
-        ' Parameters:
-        '   file:
-        '     Name and path of the file to be deleted.
-        '
-        '   showUI:
-        '     Whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   recycle:
-        '     Whether or not the deleted file should be sent to the Recycle Bin. Default is
-        '     RecycleOption.DeletePermanently.
-        '
-        '   onUserCancel:
-        '     Specifies whether or not an exception is thrown when the user cancels the operation.
-        '     Default is UICancelOption.ThrowException.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; it has a trailing
-        '     slash where a file must be specified; or it is a device path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     file is Nothing or an empty string.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.IO.IOException:
-        '     The file is in use.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The file does not exist.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The user does not have permission to delete the file or the file is read-only.
-        '
-        '   T:System.OperationCanceledException:
-        '     The user cancelled the operation and onUserCancel is set to Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="recycle"></param>
-        ''' <param name="onUserCancel"></param>
-        Public Sub DeleteFile(file As String, showUI As UIOption, recycle As RecycleOption, onUserCancel As UICancelOption)
-
-        End Sub
         '
         ' Summary:
         '     Moves a directory from one location to another.
@@ -1035,142 +535,7 @@ Namespace FileSystem
         Public Sub MoveDirectory(sourceDirectoryName As String, destinationDirectoryName As String, overwrite As Boolean)
 
         End Sub
-        '
-        ' Summary:
-        '     Moves a directory from one location to another.
-        '
-        ' Parameters:
-        '   sourceDirectoryName:
-        '     Path of the directory to be moved.
-        '
-        '   destinationDirectoryName:
-        '     Path of the directory to which the source directory is being moved.
-        '
-        '   showUI:
-        '     Specifies whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     sourceDirectoryName or destinationDirectoryName is Nothing or an empty string.
-        '
-        '   T:System.ArgumentNullException:
-        '     sourceDirectoryName or destinationDirectoryName is Nothing or an empty string.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The directory does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The source is a root directory or The source path and the target path are the
-        '     same.
-        '
-        '   T:System.IO.IOException:
-        '     The target directory already exists and overwrite is set to False.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.InvalidOperationException:
-        '     The operation is cyclic.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The user does not have required permission.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="sourceDirectoryName"></param>
-        ''' <param name="destinationDirectoryName"></param>
-        ''' <param name="showUI"></param>
-        Public Sub MoveDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption)
 
-        End Sub
-        '
-        ' Summary:
-        '     Moves a directory from one location to another.
-        '
-        ' Parameters:
-        '   sourceDirectoryName:
-        '     Path of the directory to be moved.
-        '
-        '   destinationDirectoryName:
-        '     Path of the directory to which the source directory is being moved.
-        '
-        '   showUI:
-        '     Specifies whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   onUserCancel:
-        '     Specifies whether or not an exception is thrown when the user cancels the operation.
-        '     Default is UICancelOption.ThrowException.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\).
-        '
-        '   T:System.ArgumentNullException:
-        '     sourceDirectoryName or destinationDirectoryName is Nothing or an empty string.
-        '
-        '   T:System.ArgumentNullException:
-        '     sourceDirectoryName or destinationDirectoryName is Nothing or an empty string.
-        '
-        '   T:System.IO.DirectoryNotFoundException:
-        '     The directory does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The source is a root directory or The source path and the target path are the
-        '     same.
-        '
-        '   T:System.IO.IOException:
-        '     The target directory already exists and overwrite is set to False.
-        '
-        '   T:System.IO.IOException:
-        '     onUserCancel is set to ThrowException and a subdirectory of the file cannot be
-        '     copied.
-        '
-        '   T:System.OperationCanceledException:
-        '     onUserCancel is set to ThrowException, and the user cancels the operation, or
-        '     the operation cannot be completed.
-        '
-        '   T:System.Security.SecurityException:
-        '     onUserCancel is set to ThrowException, and the user lacks necessary permissions.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.InvalidOperationException:
-        '     The operation is cyclic.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The user does not have required permission.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="sourceDirectoryName"></param>
-        ''' <param name="destinationDirectoryName"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="onUserCancel"></param>
-        Public Sub MoveDirectory(sourceDirectoryName As String, destinationDirectoryName As String, showUI As UIOption, onUserCancel As UICancelOption)
-
-        End Sub
         '
         ' Summary:
         '     Moves a file to a new location.
@@ -1264,115 +629,7 @@ Namespace FileSystem
         Public Sub MoveFile(sourceFileName As String, destinationFileName As String, overwrite As Boolean)
 
         End Sub
-        '
-        ' Summary:
-        '     Moves a file to a new location.
-        '
-        ' Parameters:
-        '   sourceFileName:
-        '     Path of the file to be moved.
-        '
-        '   destinationFileName:
-        '     Path of the directory into which the file should be moved.
-        '
-        '   showUI:
-        '     Specifies whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\); it ends with a trailing slash.
-        '
-        '   T:System.ArgumentNullException:
-        '     destinationFileName is Nothing or an empty string.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The source file is not valid or does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The destination file exists and overwrite is set to False.
-        '
-        '   T:System.IO.IOException:
-        '     The file is in use by another process, or an I/O error occurs.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="sourceFileName"></param>
-        ''' <param name="destinationFileName"></param>
-        ''' <param name="showUI"></param>
-        Public Sub MoveFile(sourceFileName As String, destinationFileName As String, showUI As UIOption)
 
-        End Sub
-        '
-        ' Summary:
-        '     Moves a file to a new location.
-        '
-        ' Parameters:
-        '   sourceFileName:
-        '     Path of the file to be moved.
-        '
-        '   destinationFileName:
-        '     Path of the directory into which the file should be moved.
-        '
-        '   showUI:
-        '     Specifies whether to visually track the operation's progress. Default is UIOption.OnlyErrorDialogs.
-        '
-        '   onUserCancel:
-        '     Specifies whether or not an exception is thrown when the user cancels the operation.
-        '     Default is UICancelOption.ThrowException.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     The path is not valid for one of the following reasons: it is a zero-length string;
-        '     it contains only white space; it contains invalid characters; or it is a device
-        '     path (starts with \\.\); it ends with a trailing slash.
-        '
-        '   T:System.ArgumentNullException:
-        '     destinationFileName is Nothing or an empty string.
-        '
-        '   T:System.IO.FileNotFoundException:
-        '     The source file is not valid or does not exist.
-        '
-        '   T:System.IO.IOException:
-        '     The destination file exists and overwrite is set to False.
-        '
-        '   T:System.IO.IOException:
-        '     The file is in use by another process, or an I/O error occurs.
-        '
-        '   T:System.OperationCanceledException:
-        '     onUserCancel is set to ThrowException, and either the user has cancelled the
-        '     operation or an unspecified I/O error occurs.
-        '
-        '   T:System.IO.PathTooLongException:
-        '     The path exceeds the system-defined maximum length.
-        '
-        '   T:System.NotSupportedException:
-        '     A file or directory name in the path contains a colon (:) or is in an invalid
-        '     format.
-        '
-        '   T:System.Security.SecurityException:
-        '     The user lacks necessary permissions to view the path.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="sourceFileName"></param>
-        ''' <param name="destinationFileName"></param>
-        ''' <param name="showUI"></param>
-        ''' <param name="onUserCancel"></param>
-        Public Sub MoveFile(sourceFileName As String, destinationFileName As String, showUI As UIOption, onUserCancel As UICancelOption)
-
-        End Sub
         '
         ' Summary:
         '     Renames a directory.
@@ -2215,23 +1472,7 @@ Namespace FileSystem
             Dim rep As RequestStream = invoke.SendMessage(req)
             Return rep.GetUTF8String.LoadObject(Of FileHandle)
         End Function
-        '
-        ' Summary:
-        '     The OpenTextFieldParser method allows you to create a Microsoft.VisualBasic.FileIO.TextFieldParser
-        '     object, which provides a way to easily and efficiently parse structured text
-        '     files, such as logs. The TextFieldParser object can be used to read both delimited
-        '     and fixed-width files.
-        '
-        ' Parameters:
-        '   file:
-        '     The file to be opened with the TextFieldParser.
-        '
-        '   delimiters:
-        '     Delimiters for the fields.
-        '
-        ' Returns:
-        '     Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -2262,31 +1503,21 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' The OpenTextFieldParser method allows you to create a Microsoft.VisualBasic.FileIO.TextFieldParser
+        ''' object, which provides a way to easily and efficiently parse structured text
+        ''' files, such as logs. The TextFieldParser object can be used to read both delimited
+        ''' and fixed-width files.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="delimiters"></param>
-        ''' <returns></returns>
+        ''' <param name="file">The file to be opened with the TextFieldParser.</param>
+        ''' <param name="delimiters">Delimiters for the fields.</param>
+        ''' <returns>Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.</returns>
         Public Function OpenTextFieldParser(file As String, ParamArray delimiters() As String) As TextFieldParser
-
+            Dim fileStream As New IO.FileStream(file, FileMode.Open, Me)
+            Dim parser As New TextFieldParser(fileStream, System.Text.Encoding.Default, True)
+            parser.Delimiters = delimiters
+            Return parser
         End Function
-        '
-        ' Summary:
-        '     The OpenTextFieldParser method allows you to create a Microsoft.VisualBasic.FileIO.TextFieldParser
-        '     object, which provides a way to easily and efficiently parse structured text
-        '     files, such as logs. The TextFieldParser object can be used to read both delimited
-        '     and fixed-width files.
-        '
-        ' Parameters:
-        '   file:
-        '     The file to be opened with the TextFieldParser.
-        '
-        '   fieldWidths:
-        '     Widths of the fields.
-        '
-        ' Returns:
-        '     Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -2317,25 +1548,21 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' The OpenTextFieldParser method allows you to create a Microsoft.VisualBasic.FileIO.TextFieldParser
+        ''' object, which provides a way to easily and efficiently parse structured text
+        ''' files, such as logs. The TextFieldParser object can be used to read both delimited
+        ''' and fixed-width files.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="fieldWidths"></param>
-        ''' <returns></returns>
+        ''' <param name="file">The file to be opened with the TextFieldParser.</param>
+        ''' <param name="fieldWidths">Widths of the fields.</param>
+        ''' <returns>Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.</returns>
         Public Function OpenTextFieldParser(file As String, ParamArray fieldWidths() As Integer) As TextFieldParser
-
+            Dim fileStream As New IO.FileStream(file, FileMode.Open, Me)
+            Dim parser As New TextFieldParser(fileStream, System.Text.Encoding.Default, True)
+            parser.FieldWidths = fieldWidths
+            Return parser
         End Function
-        '
-        ' Summary:
-        '     Opens a System.IO.StreamReader object to read from a file.
-        '
-        ' Parameters:
-        '   file:
-        '     File to be read.
-        '
-        ' Returns:
-        '     System.IO.StreamReader object to read from the file
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a backslash (\).
@@ -2345,28 +1572,15 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to read from the file.
-        '''' <summary>
-        '''' 
-        '''' </summary>
-        '''' <param name="file"></param>
-        '''' <returns></returns>
-        'Public Function OpenTextFileReader(file As String) As IO.StreamReader
+        ''' <summary>
+        ''' Opens a System.IO.StreamReader object to read from a file.
+        ''' </summary>
+        ''' <param name="file">File to be read.</param>
+        ''' <returns>System.IO.StreamReader object to read from the file</returns>
+        Public Function OpenTextFileReader(file As String) As System.IO.StreamReader
+            Return OpenTextFileReader(file, Encoding.ASCII)
+        End Function
 
-        'End Function
-        '
-        ' Summary:
-        '     Opens a System.IO.StreamReader object to read from a file.
-        '
-        ' Parameters:
-        '   file:
-        '     File to be read.
-        '
-        '   encoding:
-        '     The encoding to use for the file contents. Default is ASCII.
-        '
-        ' Returns:
-        '     System.IO.StreamReader object to read from the file
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a backslash (\).
@@ -2376,84 +1590,49 @@ Namespace FileSystem
         '
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to read from the file.
-        '''' <summary>
-        '''' 
-        '''' </summary>
-        '''' <param name="file"></param>
-        '''' <param name="encoding"></param>
-        '''' <returns></returns>
-        'Public Function OpenTextFileReader(file As String, encoding As Encoding) As IO.StreamReader
+        ''' <summary>
+        ''' Opens a System.IO.StreamReader object to read from a file.
+        ''' </summary>
+        ''' <param name="file">File to be read.</param>
+        ''' <param name="encoding">The encoding to use for the file contents. Default is ASCII.</param>
+        ''' <returns>System.IO.StreamReader object to read from the file</returns>
+        Public Function OpenTextFileReader(file As String, encoding As Encoding) As System.IO.StreamReader
+            Dim fileStream As New IO.FileStream(file, FileMode.OpenOrCreate, Me)
+            Dim reader As New System.IO.StreamReader(fileStream, encoding)
+            Return reader
+        End Function
 
-        'End Function
-        '
-        ' Summary:
-        '     Opens a System.IO.StreamWriter object to write to the specified file.
-        '
-        ' Parameters:
-        '   file:
-        '     File to be written to.
-        '
-        '   append:
-        '     True to append to the contents of the file; False to overwrite the contents of
-        '     the file. Default is False.
-        '
-        ' Returns:
-        '     System.IO.StreamWriter object to write to the specified file.
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a trailing slash.
-        '''' <summary>
-        '''' 
-        '''' </summary>
-        '''' <param name="file"></param>
-        '''' <param name="append"></param>
-        '''' <returns></returns>
-        'Public Function OpenTextFileWriter(file As String, append As Boolean) As IO.StreamWriter
+        ''' <summary>
+        ''' Opens a System.IO.StreamWriter object to write to the specified file.
+        ''' </summary>
+        ''' <param name="file">File to be written to.</param>
+        ''' <param name="append">True to append to the contents of the file; False to overwrite the contents of
+        ''' the file. Default is False.</param>
+        ''' <returns>System.IO.StreamWriter object to write to the specified file.</returns>
+        Public Function OpenTextFileWriter(file As String, append As Boolean) As System.IO.StreamWriter
+            Return OpenTextFileWriter(file, append, System.Text.Encoding.ASCII)
+        End Function
 
-        'End Function
-        '
-        ' Summary:
-        '     Opens a System.IO.StreamWriter to write to the specified file.
-        '
-        ' Parameters:
-        '   file:
-        '     File to be written to.
-        '
-        '   append:
-        '     True to append to the contents in the file; False to overwrite the contents of
-        '     the file. Default is False.
-        '
-        '   encoding:
-        '     Encoding to be used in writing to the file. Default is ASCII.
-        '
-        ' Returns:
-        '     System.IO.StreamWriter object to write to the specified file.
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The file name ends with a trailing slash.
-        '''' <summary>
-        '''' 
-        '''' </summary>
-        '''' <param name="file"></param>
-        '''' <param name="append"></param>
-        '''' <param name="encoding"></param>
-        '''' <returns></returns>
-        'Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As IO.StreamWriter
+        ''' <summary>
+        ''' Opens a System.IO.StreamWriter to write to the specified file.
+        ''' </summary>
+        ''' <param name="file">File to be written to.</param>
+        ''' <param name="append">True to append to the contents in the file; False to overwrite the contents of
+        ''' the file. Default is False.</param>
+        ''' <param name="encoding">Encoding to be used in writing to the file. Default is ASCII.</param>
+        ''' <returns>System.IO.StreamWriter object to write to the specified file.</returns>
+        Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As System.IO.StreamWriter
+            Dim mode As FileMode = If(append, FileMode.Append, FileMode.OpenOrCreate)
+            Dim fileStream As New IO.FileStream(file, mode, Me)
+            Return New StreamWriter(fileStream, encoding)
+        End Function
 
-        'End Function
-        '
-        ' Summary:
-        '     Returns the contents of a file as a byte array.
-        '
-        ' Parameters:
-        '   file:
-        '     File to be read.
-        '
-        ' Returns:
-        '     Byte array containing the contents of the file.
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -2482,24 +1661,17 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' Returns the contents of a file as a byte array.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <returns></returns>
+        ''' <param name="file">File to be read.</param>
+        ''' <returns>Byte array containing the contents of the file.</returns>
         Public Function ReadAllBytes(file As String) As Byte()
-
+            Dim fileStream As New IO.FileStream(file, FileMode.Open, Me)
+            Dim buffer As Byte() = New Byte(fileStream.Length - 1) {}
+            Call fileStream.Read(buffer, Scan0, buffer.Length)
+            Return buffer
         End Function
-        '
-        ' Summary:
-        '     Returns the contents of a text file as a String.
-        '
-        ' Parameters:
-        '   file:
-        '     Name and path of the file to read.
-        '
-        ' Returns:
-        '     String containing the contents of the file.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -2529,27 +1701,14 @@ Namespace FileSystem
         '     The user lacks necessary permissions to view the path.
 
         ''' <summary>
-        ''' 
+        ''' Returns the contents of a text file as a String.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <returns></returns>
+        ''' <param name="file">Name and path of the file to read.</param>
+        ''' <returns>String containing the contents of the file.</returns>
         Public Function ReadAllText(file As String) As String
-
+            Return ReadAllText(file, Encoding.ASCII)
         End Function
-        '
-        ' Summary:
-        '     Returns the contents of a text file as a String.
-        '
-        ' Parameters:
-        '   file:
-        '     Name and path of the file to read.
-        '
-        '   encoding:
-        '     Character encoding to use in reading the file. Default is UTF-8.
-        '
-        ' Returns:
-        '     String containing the contents of the file.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -2578,13 +1737,14 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' Returns the contents of a text file as a String.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="encoding"></param>
-        ''' <returns></returns>
+        ''' <param name="file">Name and path of the file to read.</param>
+        ''' <param name="encoding">Character encoding to use in reading the file. Default is UTF-8.</param>
+        ''' <returns>String containing the contents of the file.</returns>
         Public Function ReadAllText(file As String, encoding As Encoding) As String
-
+            Dim reader = OpenTextFileReader(file, encoding)
+            Return reader.ReadToEnd
         End Function
     End Class
 End Namespace

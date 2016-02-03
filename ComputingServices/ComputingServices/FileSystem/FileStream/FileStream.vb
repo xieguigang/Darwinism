@@ -21,18 +21,7 @@ Namespace FileSystem.IO
     ''' </summary>
     <ComVisible(True)> Public Class FileStream
         Inherits BaseStream
-        '
-        ' Summary:
-        '     
-        '
-        ' Parameters:
-        '   path:
-        '     A relative or absolute path for the file that the current FileStream object will
-        '     encapsulate.
-        '
-        '   mode:
-        '     A constant that determines how to open or create the file.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     path is an empty string (""), contains only white space, or contains one or more
@@ -72,14 +61,19 @@ Namespace FileSystem.IO
         ''' Initializes a new instance of the System.IO.FileStream class with the specified
         ''' path and creation mode.
         ''' </summary>
-        ''' <param name="path">远程机器上面的文件</param>
-        ''' <param name="mode"></param>
+        ''' <param name="path">A relative or absolute path for the file that the current FileStream object will
+        ''' encapsulate.（远程机器上面的文件）</param>
+        ''' <param name="mode">A constant that determines how to open or create the file.</param>
         <SecuritySafeCritical> Public Sub New(path As String, mode As FileMode, remote As FileSystem)
             Call MyBase.New(remote)
             Name = path
             FileHandle = remote.OpenFileHandle(path, mode)
         End Sub
 
+        ''' <summary>
+        ''' File handle on the remote machine file system
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property FileHandle As FileHandle
 
         ''
@@ -875,14 +869,11 @@ Namespace FileSystem.IO
 
         'End Sub
 
-        '
-        ' Summary:
-        '     Gets a value indicating whether the current stream supports reading.
-        '
-        ' Returns:
-        '     true if the stream supports reading; false if the stream is closed or was opened
-        '     with write-only access.
-
+        ''' <summary>
+        ''' Gets a value indicating whether the current stream supports reading.
+        ''' </summary>
+        ''' <returns>true if the stream supports reading; false if the stream is closed or was opened
+        ''' with write-only access.</returns>
         Public Overrides ReadOnly Property CanRead As Boolean
             Get
 
@@ -898,7 +889,10 @@ Namespace FileSystem.IO
         '     FileStream was constructed from an operating-system handle such as a pipe or
         '     output to the console.
         Public Overrides ReadOnly Property CanSeek As Boolean
-        '
+            Get
+
+            End Get
+        End Property
         ' Summary:
         '     Gets a value indicating whether the current stream supports writing.
         '
@@ -906,7 +900,10 @@ Namespace FileSystem.IO
         '     true if the stream supports writing; false if the stream is closed or was opened
         '     with read-only access.
         Public Overrides ReadOnly Property CanWrite As Boolean
-        '
+            Get
+
+            End Get
+        End Property
         ' Summary:
         '     Gets the operating system file handle for the file that the current FileStream
         '     object encapsulates.
@@ -941,6 +938,10 @@ Namespace FileSystem.IO
         '   T:System.IO.IOException:
         '     An I/O error, such as the file being closed, occurred.
         Public Overrides ReadOnly Property Length As Long
+            Get
+
+            End Get
+        End Property
 
         ''' <summary>
         ''' Gets the name of the FileStream that was passed to the constructor.
