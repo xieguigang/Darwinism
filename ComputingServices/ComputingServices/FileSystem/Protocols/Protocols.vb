@@ -10,10 +10,11 @@ Namespace FileSystem.Protocols
         Public ReadOnly Property ProtocolEntry As Long =
             New Protocol(GetType(FileSystemAPI)).EntryPoint
 
-        Public Function OpenHandle(file As String, mode As FileMode) As RequestStream
+        Public Function OpenHandle(file As String, mode As FileMode, access As FileAccess) As RequestStream
             Dim params As New FileOpen With {
                 .FileName = file,
-                .Mode = mode
+                .Mode = mode,
+                .Access = access
             }
             Return RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.OpenHandle, params)
         End Function

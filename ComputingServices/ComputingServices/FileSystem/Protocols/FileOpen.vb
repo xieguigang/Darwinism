@@ -16,6 +16,7 @@ Namespace FileSystem.Protocols
         ''' </summary>
         ''' <returns></returns>
         Public Property Mode As Integer
+        Public Property Access As Integer = FileAccess.Read
 
         Public Overrides Function ToString() As String
             Return $"[{DirectCast(Mode, FileMode).ToString }] " & FileName.ToFileURL
@@ -27,7 +28,8 @@ Namespace FileSystem.Protocols
         ''' </summary>
         Public Function OpenHandle() As FileStream
             Dim mode As FileMode = DirectCast(Me.Mode, FileMode)
-            Return New FileStream(FileName, mode)
+            Dim access As FileAccess = DirectCast(Me.Access, FileAccess)
+            Return New FileStream(FileName, mode, access)
         End Function
     End Class
 

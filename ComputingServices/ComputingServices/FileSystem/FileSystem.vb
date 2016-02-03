@@ -1466,9 +1466,9 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
-        Public Function OpenFileHandle(file As String, mode As FileMode) As FileHandle
-            Dim req As RequestStream = API.OpenHandle(file, mode)
-            Dim invoke As New AsynInvoke(Me._portal)
+        Public Function OpenFileHandle(file As String, mode As FileMode, access As FileAccess) As FileHandle
+            Dim req As RequestStream = API.OpenHandle(file, mode, access)
+            Dim invoke As New AsynInvoke(Me._Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Return rep.GetUTF8String.LoadObject(Of FileHandle)
         End Function
