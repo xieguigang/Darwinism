@@ -1286,7 +1286,7 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
-        Public Function GetFileInfo(file As String) As FileInfo
+        Public Function GetFileInfo(file As String) As System.IO.FileInfo
 
         End Function
         '
@@ -1466,11 +1466,11 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
-        Public Function OpenFileHandle(file As String, mode As FileMode, access As FileAccess) As FileHandle
+        Public Function OpenFileHandle(file As String, mode As FileMode, access As FileAccess) As FileStreamInfo
             Dim req As RequestStream = API.OpenHandle(file, mode, access)
             Dim invoke As New AsynInvoke(Me._Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
-            Return rep.GetUTF8String.LoadObject(Of FileHandle)
+            Return rep.GetUTF8String.LoadObject(Of FileStreamInfo)
         End Function
 
         ' Exceptions:

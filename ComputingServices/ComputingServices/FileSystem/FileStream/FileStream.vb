@@ -56,6 +56,7 @@ Namespace FileSystem.IO
         '
         '   T:System.ArgumentOutOfRangeException:
         '     mode contains an invalid value.
+
         ''' <summary>
         ''' Initializes a new instance of the System.IO.FileStream class with the specified
         ''' path and creation mode.
@@ -72,6 +73,11 @@ Namespace FileSystem.IO
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property FileHandle As FileHandle
+            Get
+                Return Info
+            End Get
+        End Property
+        Public ReadOnly Property Info As FileStreamInfo
 
         ' Exceptions:
         '   T:System.ArgumentException:
@@ -87,6 +93,7 @@ Namespace FileSystem.IO
         '     The access requested is not permitted by the operating system for the specified
         '     file handle, such as when access is Write or ReadWrite and the file handle is
         '     set for read-only access.
+
         ''' <summary>
         ''' Initializes a new instance of the System.IO.FileStream class for the specified
         ''' file handle, with the specified read/write permission.
@@ -95,7 +102,10 @@ Namespace FileSystem.IO
         ''' <param name="remote"></param>
         <SecuritySafeCritical> Public Sub New(handle As FileHandle, remote As FileSystem)
             Call MyBase.New(remote)
-            FileHandle = handle
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.GetFileStreamInfo, handle)
+            Dim invoke As New AsynInvoke(remote.Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
+            Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadObject)
             Name = handle.FileName
         End Sub
 
@@ -156,8 +166,9 @@ Namespace FileSystem.IO
         Public Sub New(path As String, mode As FileMode, access As FileAccess, remote As FileSystem)
             Call MyBase.New(remote)
             Name = path
-            FileHandle = remote.OpenFileHandle(path, mode, access)
+            Info = remote.OpenFileHandle(path, mode, access)
         End Sub
+
         ''
         '' Summary:
         ''     Initializes a new instance of the System.IO.FileStream class for the specified
@@ -799,70 +810,75 @@ Namespace FileSystem.IO
         ''' with write-only access.</returns>
         Public Overrides ReadOnly Property CanRead As Boolean
             Get
-
+                Return Info.CanRead
             End Get
         End Property
 
-        '
-        ' Summary:
-        '     Gets a value indicating whether the current stream supports seeking.
-        '
-        ' Returns:
-        '     true if the stream supports seeking; false if the stream is closed or if the
-        '     FileStream was constructed from an operating-system handle such as a pipe or
-        '     output to the console.
+        ''' <summary>
+        ''' Gets a value indicating whether the current stream supports seeking.
+        ''' </summary>
+        ''' <returns>true if the stream supports seeking; false if the stream is closed or if the
+        ''' FileStream was constructed from an operating-system handle such as a pipe or
+        ''' output to the console.</returns>
         Public Overrides ReadOnly Property CanSeek As Boolean
             Get
-
+                Return Info.CanSeek
             End Get
         End Property
-        ' Summary:
-        '     Gets a value indicating whether the current stream supports writing.
-        '
-        ' Returns:
-        '     true if the stream supports writing; false if the stream is closed or was opened
-        '     with read-only access.
+
+        ''' <summary>
+        ''' Gets a value indicating whether the current stream supports writing.
+        ''' </summary>
+        ''' <returns>true if the stream supports writing; false if the stream is closed or was opened
+        ''' with read-only access.</returns>
         Public Overrides ReadOnly Property CanWrite As Boolean
             Get
-
+                Return Info.CanWrite
             End Get
         End Property
-        ' Summary:
-        '     Gets the operating system file handle for the file that the current FileStream
-        '     object encapsulates.
-        '
-        ' Returns:
-        '     The operating system file handle for the file encapsulated by this FileStream
-        '     object, or -1 if the FileStream has been closed.
-        '
+
         ' Exceptions:
         '   T:System.Security.SecurityException:
         '     The caller does not have the required permission.
+        ''' <summary>
+        ''' Gets the operating system file handle for the file that the current FileStream
+        ''' object encapsulates.
+        ''' </summary>
+        ''' <returns>The operating system file handle for the file encapsulated by this FileStream
+        ''' object, or -1 if the FileStream has been closed.</returns>
         <Obsolete("This property has been deprecated.  Please use FileStream's SafeFileHandle property instead.  http://go.microsoft.com/fwlink/?linkid=14202")>
         Public Overridable ReadOnly Property Handle As IntPtr
-        '
-        ' Summary:
-        '     Gets a value indicating whether the FileStream was opened asynchronously or synchronously.
-        '
-        ' Returns:
-        '     true if the FileStream was opened asynchronously; otherwise, false.
+            Get
+                Return Info.FileHandle
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets a value indicating whether the FileStream was opened asynchronously or synchronously.
+        ''' </summary>
+        ''' <returns>true if the FileStream was opened asynchronously; otherwise, false.</returns>
         Public Overridable ReadOnly Property IsAsync As Boolean
-        '
-        ' Summary:
-        '     Gets the length in bytes of the stream.
-        '
-        ' Returns:
-        '     A long value representing the length of the stream in bytes.
-        '
+            Get
+                Return Info.IsAsync
+            End Get
+        End Property
+
         ' Exceptions:
         '   T:System.NotSupportedException:
         '     System.IO.FileStream.CanSeek for this stream is false.
         '
         '   T:System.IO.IOException:
         '     An I/O error, such as the file being closed, occurred.
+        ''' <summary>
+        ''' Gets the length in bytes of the stream.
+        ''' </summary>
+        ''' <returns>A long value representing the length of the stream in bytes.</returns>
         Public Overrides ReadOnly Property Length As Long
             Get
-
+                Dim args = Protocols.GetSetLength(FileStreamPosition.GET, FileHandle)
+                Dim invoke As New AsynInvoke(FileSystem.Portal)
+                Dim rep As RequestStream = invoke.SendMessage(args)
+                Return CTypeDynamic(Of Long)(rep.GetUTF8String)
             End Get
         End Property
 
@@ -871,13 +887,7 @@ Namespace FileSystem.IO
         ''' </summary>
         ''' <returns>A string that is the name of the FileStream.</returns>
         Public ReadOnly Property Name As String
-        '
-        ' Summary:
-        '     Gets or sets the current position of this stream.
-        '
-        ' Returns:
-        '     The current position of this stream.
-        '
+
         ' Exceptions:
         '   T:System.NotSupportedException:
         '     The stream does not support seeking.
@@ -891,17 +901,23 @@ Namespace FileSystem.IO
         '
         '   T:System.IO.EndOfStreamException:
         '     Attempted seeking past the end of a stream that does not support this.
+        ''' <summary>
+        ''' Gets or sets the current position of this stream.
+        ''' </summary>
+        ''' <returns>The current position of this stream.</returns>
         Public Overrides Property Position As Long
-        '
-        ' Summary:
-        '     Gets a Microsoft.Win32.SafeHandles.SafeFileHandle object that represents the
-        '     operating system file handle for the file that the current System.IO.FileStream
-        '     object encapsulates.
-        '
-        ' Returns:
-        '     An object that represents the operating system file handle for the file that
-        '     the current System.IO.FileStream object encapsulates.
-        Public Overridable ReadOnly Property SafeFileHandle As SafeFileHandle
+            Get
+                Dim args = Protocols.GetSetReadPosition(FileStreamPosition.GET, FileHandle)
+                Dim invoke As New AsynInvoke(FileSystem.Portal)
+                Dim rep As RequestStream = invoke.SendMessage(args)
+                Return CTypeDynamic(Of Long)(rep.GetUTF8String)
+            End Get
+            Set(value As Long)
+                Dim args = Protocols.GetSetReadPosition(value, FileHandle)
+                Dim invoke As New AsynInvoke(FileSystem.Portal)
+                Dim rep As RequestStream = invoke.SendMessage(args)
+            End Set
+        End Property
 
         ' Exceptions:
         '   T:System.ArgumentNullException:
@@ -975,54 +991,16 @@ Namespace FileSystem.IO
         '     of the file.
         <SecuritySafeCritical>
         Public Overridable Sub Lock(position As Long, length As Long)
-
+            Call __lock(position, length, True)
         End Sub
-        '
-        ' Summary:
-        '     Applies access control list (ACL) entries described by a System.Security.AccessControl.FileSecurity
-        '     object to the file described by the current System.IO.FileStream object.
-        '
-        ' Parameters:
-        '   fileSecurity:
-        '     An object that describes an ACL entry to apply to the current file.
-        '
-        ' Exceptions:
-        '   T:System.ObjectDisposedException:
-        '     The file is closed.
-        '
-        '   T:System.ArgumentNullException:
-        '     The fileSecurity parameter is null.
-        '
-        '   T:System.SystemException:
-        '     The file could not be found or modified.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     The current process does not have access to open the file.
-        <SecuritySafeCritical>
-        Public Sub SetAccessControl(fileSecurity As FileSecurity)
 
+        Private Sub __lock(position As Long, length As Long, lock As Boolean)
+            Dim args As New LockArgs(FileHandle) With {.Lock = lock, .length = length, .position = position}
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.StreamLock, args)
+            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
-        '
-        ' Summary:
-        '     Sets the length of this stream to the given value.
-        '
-        ' Parameters:
-        '   value:
-        '     The new length of the stream.
-        '
-        ' Exceptions:
-        '   T:System.IO.IOException:
-        '     An I/O error has occurred.
-        '
-        '   T:System.NotSupportedException:
-        '     The stream does not support both writing and seeking.
-        '
-        '   T:System.ArgumentOutOfRangeException:
-        '     Attempted to set the value parameter to less than 0.
-        <SecuritySafeCritical>
-        Public Overrides Sub SetLength(value As Long)
 
-        End Sub
         '
         ' Summary:
         '     Allows access by other processes to all or part of a file that was previously
@@ -1040,7 +1018,27 @@ Namespace FileSystem.IO
         '     position or length is negative.
         <SecuritySafeCritical>
         Public Overridable Sub Unlock(position As Long, length As Long)
+            Call __lock(position, length, False)
+        End Sub
 
+        ' Exceptions:
+        '   T:System.IO.IOException:
+        '     An I/O error has occurred.
+        '
+        '   T:System.NotSupportedException:
+        '     The stream does not support both writing and seeking.
+        '
+        '   T:System.ArgumentOutOfRangeException:
+        '     Attempted to set the value parameter to less than 0.
+        ''' <summary>
+        ''' Sets the length of this stream to the given value.
+        ''' </summary>
+        ''' <param name="value">The new length of the stream.</param>
+        <SecuritySafeCritical>
+        Public Overrides Sub SetLength(value As Long)
+            Dim args = Protocols.GetSetLength(value, FileHandle)
+            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim rep As RequestStream = invoke.SendMessage(args)
         End Sub
 
         ' Exceptions:
@@ -1212,51 +1210,19 @@ Namespace FileSystem.IO
         <SecuritySafeCritical> Public Overrides Function EndRead(asyncResult As IAsyncResult) As Integer
             Return __readHandle.EndInvoke(asyncResult)
         End Function
-        '
-        ' Summary:
-        '     Asynchronously clears all buffers for this stream, causes any buffered data to
-        '     be written to the underlying device, and monitors cancellation requests.
-        '
-        ' Parameters:
-        '   cancellationToken:
-        '     The token to monitor for cancellation requests.
-        '
-        ' Returns:
-        '     A task that represents the asynchronous flush operation.
-        '
+
         ' Exceptions:
         '   T:System.ObjectDisposedException:
         '     The stream has been disposed.
+        ''' <summary>
+        ''' Asynchronously clears all buffers for this stream, causes any buffered data to
+        ''' be written to the underlying device, and monitors cancellation requests.
+        ''' </summary>
+        ''' <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        ''' <returns>A task that represents the asynchronous flush operation.</returns>
         <ComVisible(False)> <SecuritySafeCritical>
         Public Overrides Function FlushAsync(cancellationToken As CancellationToken) As Task
-
-        End Function
-        '
-        ' Summary:
-        '     Gets a System.Security.AccessControl.FileSecurity object that encapsulates the
-        '     access control list (ACL) entries for the file described by the current System.IO.FileStream
-        '     object.
-        '
-        ' Returns:
-        '     An object that encapsulates the access control settings for the file described
-        '     by the current System.IO.FileStream object.
-        '
-        ' Exceptions:
-        '   T:System.ObjectDisposedException:
-        '     The file is closed.
-        '
-        '   T:System.IO.IOException:
-        '     An I/O error occurred while opening the file.
-        '
-        '   T:System.SystemException:
-        '     The file could not be found.
-        '
-        '   T:System.UnauthorizedAccessException:
-        '     This operation is not supported on the current platform.-or- The caller does
-        '     not have the required permission.
-        <SecuritySafeCritical>
-        Public Function GetAccessControl() As FileSecurity
-
+            Return New Task(AddressOf Flush, cancellationToken)
         End Function
 
         ' Exceptions:
@@ -1359,21 +1325,7 @@ Namespace FileSystem.IO
                 Return CType(buf(Scan0), Integer)
             End If
         End Function
-        '
-        ' Summary:
-        '     Sets the current position of this stream to the given value.
-        '
-        ' Parameters:
-        '   offset:
-        '     The point relative to origin from which to begin seeking.
-        '
-        '   origin:
-        '     Specifies the beginning, the end, or the current position as a reference point
-        '     for offset, using a value of type System.IO.SeekOrigin.
-        '
-        ' Returns:
-        '     The new position in the stream.
-        '
+
         ' Exceptions:
         '   T:System.IO.IOException:
         '     An I/O error occurred.
@@ -1387,9 +1339,23 @@ Namespace FileSystem.IO
         '
         '   T:System.ObjectDisposedException:
         '     Methods were called after the stream was closed.
-        <SecuritySafeCritical>
-        Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
-
+        ''' <summary>
+        ''' Sets the current position of this stream to the given value.
+        ''' </summary>
+        ''' <param name="offset">The point relative to origin from which to begin seeking.</param>
+        ''' <param name="origin">Specifies the beginning, the end, or the current position as a reference point
+        ''' for offset, using a value of type System.IO.SeekOrigin.</param>
+        ''' <returns>The new position in the stream.</returns>
+        <SecuritySafeCritical> Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
+            Dim args As New SeekArgs(FileHandle) With {
+                .offset = offset,
+                .origin = origin
+            }
+            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.StreamSeek, args)
+            Dim rep As RequestStream = invoke.SendMessage(req)
+            Dim l As Long = BitConverter.ToInt64(rep.ChunkBuffer, Scan0)
+            Return l
         End Function
 
         ' Exceptions:

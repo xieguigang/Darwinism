@@ -8,7 +8,14 @@ Namespace FileSystem.Protocols
         ''' 在服务器上面打开一个文件句柄
         ''' </summary>
         OpenHandle
-
+        GetFileStreamInfo
+        ''' <summary>
+        ''' 获取或者得到文件流里面的指针的位置
+        ''' </summary>
+        FilePosition
+        FileStreamLength
+        StreamSeek
+        StreamLock
         ''' <summary>
         ''' Reads a block of bytes from the stream and writes the data in a given buffer.
         ''' </summary>

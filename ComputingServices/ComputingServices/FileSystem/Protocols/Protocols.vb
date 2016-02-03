@@ -18,5 +18,26 @@ Namespace FileSystem.Protocols
             }
             Return RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.OpenHandle, params)
         End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pos">-100表示set</param>
+        ''' <param name="handle"></param>
+        ''' <returns></returns>
+        Public Function GetSetReadPosition(pos As Long, handle As FileHandle) As RequestStream
+            Dim args As New FileStreamPosition(handle) With {.Position = pos}
+            Return RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.FilePosition, args)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="handle"></param>
+        ''' <returns></returns>
+        Public Function GetSetLength(length As Long, handle As FileHandle) As RequestStream
+            Dim args As New FileStreamPosition(handle) With {.Position = length}
+            Return RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.FileStreamLength, args)
+        End Function
     End Module
 End Namespace

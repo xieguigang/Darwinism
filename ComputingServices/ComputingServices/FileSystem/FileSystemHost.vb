@@ -38,6 +38,34 @@ Namespace FileSystem
 
 #Region "FileStream"
 
+
+        <Protocol(FileSystemAPI.StreamLock)>
+        Private Function Lock(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim params As LockArgs = args.LoadObject(Of LockArgs)
+            Dim uid As String = params.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                Call params.LockOrNot(stream)
+                Return NetResponse.RFC_OK
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+
+        <Protocol(FileSystemAPI.StreamSeek)>
+        Private Function Seek(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim params As SeekArgs = args.LoadObject(Of SeekArgs)
+            Dim uid As String = params.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                Dim l As Long = params.Seek(stream)
+                Dim value As RequestStream = RequestStream.CreatePackage(BitConverter.GetBytes(l))
+                Return value
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+
         <Protocol(FileSystemAPI.Flush)>
         Private Function Flush(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim handle = args.GetUTF8String.LoadObject(Of ReadBuffer)
@@ -84,12 +112,25 @@ Namespace FileSystem
         Private Function OpenFileHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim params As FileOpen = Serialization.LoadObject(Of FileOpen)(args.GetUTF8String)
             Dim stream As FileStream = params.OpenHandle
-            Dim handle As New FileHandle With {
-                .FileName = params.FileName,
-                .HashCode = stream.GetHashCode
-            }  ' 可能会出现重复的文件名，所以使用这个句柄对象来进行唯一标示
-            Call OpenedHandles.Add(handle.ToString, stream)
+            Dim handle = FileStreamInfo.GetInfo(stream)
+            handle.FileName = params.FileName
+            Call OpenedHandles.Add(handle.Handle, stream)
             Return New RequestStream(handle.GetJson)
+        End Function
+
+        <Protocol(FileSystemAPI.GetFileStreamInfo)>
+        Private Function GetStreamInfo(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim handle = args.GetUTF8String.LoadObject(Of FileHandle)
+            Dim uid As String = handle.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                Dim info As FileStreamInfo = FileStreamInfo.GetInfo(stream)
+                info.FileName = handle.FileName
+                Dim json As String = info.GetJson
+                Return New RequestStream(json)
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
         End Function
 
         <Protocol(FileSystemAPI.CloseHandle)>
@@ -101,6 +142,40 @@ Namespace FileSystem
                 Call stream.Free
                 Call OpenedHandles.Remove(uid)
                 Return NetResponse.RFC_OK
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+
+        <Protocol(FileSystemAPI.CloseHandle)>
+        Private Function GetSetPosition(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim params As FileStreamPosition = args.LoadObject(Of FileStreamPosition)
+            Dim uid As String = params.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                If params.Position = FileStreamPosition.GET Then
+                    Return RequestStream.CreatePackage(stream.Position)
+                Else
+                    stream.Position = params.Position
+                    Return NetResponse.RFC_OK
+                End If
+            Else
+                Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
+            End If
+        End Function
+
+        <Protocol(FileSystemAPI.CloseHandle)>
+        Private Function GetSetLength(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim params As FileStreamPosition = args.LoadObject(Of FileStreamPosition)
+            Dim uid As String = params.Handle
+            If OpenedHandles.ContainsKey(uid) Then
+                Dim stream As FileStream = OpenedHandles(uid)
+                If params.Position = FileStreamPosition.GET Then
+                    Return RequestStream.CreatePackage(stream.Length)
+                Else
+                    stream.SetLength(params.Position)
+                    Return NetResponse.RFC_OK
+                End If
             Else
                 Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")
             End If

@@ -153,4 +153,23 @@ Namespace FileSystem.Protocols
             Return ReadBuffer.CreateBuffer(Me)
         End Function
     End Class
+
+    Public Class FileStreamPosition : Inherits FileHandle
+
+        Public Const [GET] As Long = -100
+
+        ''' <summary>
+        ''' -100表示获取
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Position As Long = [GET]
+
+        Sub New(handle As FileHandle)
+            Call MyBase.New(handle)
+        End Sub
+
+        Sub New()
+
+        End Sub
+    End Class
 End Namespace
