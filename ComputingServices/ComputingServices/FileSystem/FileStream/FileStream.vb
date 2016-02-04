@@ -10,6 +10,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.ComputingServices.FileSystem.FileSystem
 Imports Microsoft.Win32.SafeHandles
 
 Namespace FileSystem.IO
@@ -167,6 +168,24 @@ Namespace FileSystem.IO
             Call MyBase.New(remote)
             Name = path
             Info = remote.OpenFileHandle(path, mode, access)
+        End Sub
+
+        <SecuritySafeCritical>
+        Public Sub New(path As String, mode As FileMode, access As FileAccess, remote As IPEndPoint)
+            Call MyBase.New(remote)
+            Name = path
+            Info = OpenFileHandle(path, mode, access, remote)
+        End Sub
+
+        <SecuritySafeCritical>
+        Public Sub New(path As String, mode As FileMode, access As FileAccess)
+            Call Me.New(New FileURI(path), mode, access)
+        End Sub
+
+
+        <SecuritySafeCritical>
+        Public Sub New(uri As FileURI, mode As FileMode, access As FileAccess)
+            Call Me.New(uri.File, mode, access, uri.EntryPoint)
         End Sub
 
         ''
@@ -876,7 +895,7 @@ Namespace FileSystem.IO
         Public Overrides ReadOnly Property Length As Long
             Get
                 Dim args = Protocols.GetSetLength(FileStreamPosition.GET, FileHandle)
-                Dim invoke As New AsynInvoke(FileSystem.Portal)
+                Dim invoke As New AsynInvoke(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(args)
                 Return CTypeDynamic(Of Long)(rep.GetUTF8String)
             End Get
@@ -908,13 +927,13 @@ Namespace FileSystem.IO
         Public Overrides Property Position As Long
             Get
                 Dim args = Protocols.GetSetReadPosition(FileStreamPosition.GET, FileHandle)
-                Dim invoke As New AsynInvoke(FileSystem.Portal)
+                Dim invoke As New AsynInvoke(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(args)
                 Return CTypeDynamic(Of Long)(rep.GetUTF8String)
             End Get
             Set(value As Long)
                 Dim args = Protocols.GetSetReadPosition(value, FileHandle)
-                Dim invoke As New AsynInvoke(FileSystem.Portal)
+                Dim invoke As New AsynInvoke(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(args)
             End Set
         End Property
@@ -955,7 +974,7 @@ Namespace FileSystem.IO
         ''' </summary>
         Public Overrides Sub Flush()
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.Flush, FileHandle)
-            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim invoke As New AsynInvoke(FileSystem)
             Call invoke.SendMessage(req)
         End Sub
 
@@ -997,7 +1016,7 @@ Namespace FileSystem.IO
         Private Sub __lock(position As Long, length As Long, lock As Boolean)
             Dim args As New LockArgs(FileHandle) With {.Lock = lock, .length = length, .position = position}
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.StreamLock, args)
-            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim invoke As New AsynInvoke(FileSystem)
             Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
@@ -1037,7 +1056,7 @@ Namespace FileSystem.IO
         <SecuritySafeCritical>
         Public Overrides Sub SetLength(value As Long)
             Dim args = Protocols.GetSetLength(value, FileHandle)
-            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim invoke As New AsynInvoke(FileSystem)
             Dim rep As RequestStream = invoke.SendMessage(args)
         End Sub
 
@@ -1076,7 +1095,7 @@ Namespace FileSystem.IO
                 .offset = offset
             }
             Dim req As New RequestStream(ProtocolEntry, FileSystemAPI.WriteBuffer, args)
-            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim invoke As New AsynInvoke(FileSystem)
             Call invoke.SendMessage(req)
         End Sub
 
@@ -1103,7 +1122,7 @@ Namespace FileSystem.IO
         <SecuritySafeCritical>
         Protected Overrides Sub Dispose(disposing As Boolean)
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.CloseHandle, FileHandle)
-            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim invoke As New AsynInvoke(FileSystem)
             Call invoke.SendMessage(req)
         End Sub
 
@@ -1263,7 +1282,7 @@ Namespace FileSystem.IO
             }
             Dim req As RequestStream =
                 New RequestStream(ProtocolEntry, FileSystemAPI.ReadBuffer, args.GetJson)
-            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim invoke As New AsynInvoke(FileSystem)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Call System.Array.ConstrainedCopy(rep.ChunkBuffer, Scan0, array, offset, count)
             Return rep.ChunkBuffer.Length
@@ -1351,7 +1370,7 @@ Namespace FileSystem.IO
                 .offset = offset,
                 .origin = origin
             }
-            Dim invoke As New AsynInvoke(FileSystem.Portal)
+            Dim invoke As New AsynInvoke(FileSystem)
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.StreamSeek, args)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Dim l As Long = BitConverter.ToInt64(rep.ChunkBuffer, Scan0)

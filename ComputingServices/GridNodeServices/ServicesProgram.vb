@@ -1,7 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem
+Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.LINQ.Extensions
+Imports Microsoft.VisualBasic.Net
 
 ''' <summary>
 ''' 我想要构建的是一个去中心化的网格计算框架
@@ -9,6 +11,12 @@ Imports Microsoft.VisualBasic.LINQ.Extensions
 Module ServicesProgram
 
     Public Function Main() As Integer
+
+        Dim filertwer As New FileURI("Z:\日漫\[160127] TVアニメ 「だがしかし」 (Dagashi Kashi) OPテーマ 「Checkmate!？」／M\01. Checkmate!.flac", New IPEndPoint("192.168.2.2", 55))
+
+        Dim off As New FileURI(filertwer.ToString)
+
+        off = New FileURI("Z:\日漫\[160127] TVアニメ 「だがしかし」 (Dagashi Kashi) OPテーマ 「Checkmate!？」／M\01. Checkmate!.flac")
 
         Dim DIR As New FileSystemHost(1526)
         Dim fs As New FileSystem(DIR.Portal)
