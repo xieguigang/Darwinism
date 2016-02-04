@@ -1,4 +1,6 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
+Imports Microsoft.VisualBasic.ComputingServices.FileSystem
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Serialization
@@ -8,16 +10,19 @@ Namespace TaskHost
     ''' <summary>
     ''' 由于是远程调用，所以运行的环境可能会很不一样，所以在设计程序的时候请尽量避免或者不要使用模块变量，以免出现难以调查的BUG
     ''' </summary>
-    Public Class TaskHost
+    Public Class TaskHost : Implements IRemoteSupport
 
         Dim _remote As IPEndPoint
 
+        Public ReadOnly Property FileSystem As FileSystemHost Implements IRemoteSupport.FileSystem
+
         Sub New(remote As IPEndPoint)
             _remote = remote
+            FileSystem = New FileSystemHost(GetFirstAvailablePort)
         End Sub
 
         Sub New(remote As String, port As Integer)
-            _remote = New IPEndPoint(remote, port)
+            Call Me.New(New IPEndPoint(remote, port))
         End Sub
 
         ''' <summary>

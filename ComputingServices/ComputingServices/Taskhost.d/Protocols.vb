@@ -32,6 +32,10 @@ Namespace TaskHost
             ''' Invoke a function as a linq data source.
             ''' </summary>
             InvokeLinq
+            ''' <summary>
+            ''' Gets the portal of the remote FileSystem
+            ''' </summary>
+            RemoteFileSystem
 #End Region
 
 #Region "LINQ supports"

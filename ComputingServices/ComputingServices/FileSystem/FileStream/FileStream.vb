@@ -59,6 +59,32 @@ Namespace FileSystem.IO
         '     mode contains an invalid value.
 
         ''' <summary>
+        ''' port@remote_IP://hash+&lt;path>
+        ''' </summary>
+        ''' <returns>Using for json serialization</returns>
+        Public Property hashInfo As String
+            Get
+                Return $"{FileSystem.Port}@{FileSystem.IPAddress}://{FileHandle.HashCode}+{FileHandle.FileName}"
+            End Get
+            Set(value As String)
+                If String.IsNullOrEmpty(value) Then
+                    Return
+                End If
+
+                Dim handle As FileHandle = Nothing
+                Call FileURI.FileStreamParser(value, FileSystem, handle)
+                Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.GetFileStreamInfo, handle)
+                Dim invoke As New AsynInvoke(FileSystem)
+                Dim rep As RequestStream = invoke.SendMessage(req)
+                _Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadObject)
+                _Name = handle.FileName
+            End Set
+        End Property
+
+        Sub New()
+        End Sub
+
+        ''' <summary>
         ''' Initializes a new instance of the System.IO.FileStream class with the specified
         ''' path and creation mode.
         ''' </summary>

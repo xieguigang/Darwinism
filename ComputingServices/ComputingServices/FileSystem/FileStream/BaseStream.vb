@@ -14,11 +14,23 @@ Namespace FileSystem.IO
     Public MustInherit Class BaseStream : Inherits Stream
         Implements IDisposable
 
+        Dim _FileSystem As IPEndPoint
+
         ''' <summary>
         ''' 远端机器上面的文件系统的访问入口点
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property FileSystem As IPEndPoint
+        Public Property FileSystem As IPEndPoint
+            Get
+                Return _FileSystem
+            End Get
+            Protected Set(value As IPEndPoint)
+                _FileSystem = value
+            End Set
+        End Property
+
+        Sub New()
+        End Sub
 
         Sub New(remote As FileSystem)
             FileSystem = remote.Portal

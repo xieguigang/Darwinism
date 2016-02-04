@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
+Imports Microsoft.VisualBasic.ComputingServices.FileSystem
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
@@ -9,24 +10,36 @@ Namespace TaskHost
 
     <Protocol(GetType(TaskProtocols))>
     Public Class TaskInvoke : Inherits IHostBase
+        Implements IRemoteSupport
 
         ''' <summary>
-        ''' Running on local lan
+        ''' Running on local LAN
         ''' </summary>
         Dim _local As Boolean
 
-        Sub New(Optional local As Boolean = True)
-            Call MyBase.New(GetFirstAvailablePort)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="local">Program is running in a local server cluster which in the range of the same LAN network?</param>
+        ''' <param name="port">You can suing function <see cref="GetFirstAvailablePort"/> to initialize this server object.</param>
+        Sub New(Optional local As Boolean = True, Optional port As Integer = 1234)
+            Call MyBase.New(port)
             _local = local
             __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
-            Call Parallel.Run(AddressOf __host.Run)
+            FileSystem = New FileSystemHost(GetFirstAvailablePort)
         End Sub
+
+        Public Function Run() As Integer
+            Return __host.Run()
+        End Function
 
         Public Overrides ReadOnly Property Portal As IPEndPoint
             Get
                 Return Me.GetPortal(_local)
             End Get
         End Property
+
+        Public ReadOnly Property FileSystem As FileSystemHost Implements IRemoteSupport.FileSystem
 
         ''' <summary>
         ''' Invoke the function on the remote server.(远程服务器上面通过这个方法执行函数调用)

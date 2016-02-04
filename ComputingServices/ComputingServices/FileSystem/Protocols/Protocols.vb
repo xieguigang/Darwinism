@@ -53,6 +53,24 @@ Namespace FileSystem.Protocols
                 Return $"{EntryPoint.Port}@{EntryPoint.IPAddress}://{File}"
             End If
         End Function
+
+        ''' <summary>
+        ''' port@remote_IP://hash+&lt;path>
+        ''' </summary>
+        ''' <param name="uri"></param>
+        ''' <param name="remote"></param>
+        ''' <param name="handle"></param>
+        Public Shared Sub FileStreamParser(uri As String, ByRef remote As IPEndPoint, ByRef handle As FileHandle)
+            Dim file As New FileURI(uri)
+            remote = file.EntryPoint
+            uri = file.File
+            Dim hash As String = Regex.Match(uri, "^\d+\+").Value
+            uri = Mid(uri, hash.Length + 1)
+            handle = New FileHandle With {
+                .FileName = uri,
+                .HashCode = Scripting.CTypeDynamic(Of Integer)(hash)
+            }
+        End Sub
     End Class
 
     ''' <summary>
