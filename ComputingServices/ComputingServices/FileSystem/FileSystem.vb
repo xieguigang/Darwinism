@@ -785,7 +785,7 @@ Namespace FileSystem
         ''' is False.</param>
         Public Sub WriteAllBytes(file As String, data() As Byte, append As Boolean)
             Dim mode As FileMode = If(append, FileMode.Append, FileMode.OpenOrCreate)
-            Dim remoteFile As New IO.FileStream(file, mode, Me)
+            Dim remoteFile As New IO.RemoteFileStream(file, mode, Me)
             Call remoteFile.Write(data, Scan0, data.Length)
         End Sub
 
@@ -1433,7 +1433,7 @@ Namespace FileSystem
         ''' <param name="delimiters">Delimiters for the fields.</param>
         ''' <returns>Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.</returns>
         Public Function OpenTextFieldParser(file As String, ParamArray delimiters() As String) As TextFieldParser
-            Dim fileStream As New IO.FileStream(file, FileMode.Open, Me)
+            Dim fileStream As New IO.RemoteFileStream(file, FileMode.Open, Me)
             Dim parser As New TextFieldParser(fileStream, System.Text.Encoding.Default, True)
             parser.Delimiters = delimiters
             Return parser
@@ -1478,7 +1478,7 @@ Namespace FileSystem
         ''' <param name="fieldWidths">Widths of the fields.</param>
         ''' <returns>Microsoft.VisualBasic.FileIO.TextFieldParser to read the specified file.</returns>
         Public Function OpenTextFieldParser(file As String, ParamArray fieldWidths() As Integer) As TextFieldParser
-            Dim fileStream As New IO.FileStream(file, FileMode.Open, Me)
+            Dim fileStream As New IO.RemoteFileStream(file, FileMode.Open, Me)
             Dim parser As New TextFieldParser(fileStream, System.Text.Encoding.Default, True)
             parser.FieldWidths = fieldWidths
             Return parser
@@ -1518,7 +1518,7 @@ Namespace FileSystem
         ''' <param name="encoding">The encoding to use for the file contents. Default is ASCII.</param>
         ''' <returns>System.IO.StreamReader object to read from the file</returns>
         Public Function OpenTextFileReader(file As String, encoding As Encoding) As System.IO.StreamReader
-            Dim fileStream As New IO.FileStream(file, FileMode.OpenOrCreate, Me)
+            Dim fileStream As New IO.RemoteFileStream(file, FileMode.OpenOrCreate, Me)
             Dim reader As New System.IO.StreamReader(fileStream, encoding)
             Return reader
         End Function
@@ -1550,7 +1550,7 @@ Namespace FileSystem
         ''' <returns>System.IO.StreamWriter object to write to the specified file.</returns>
         Public Function OpenTextFileWriter(file As String, append As Boolean, encoding As Encoding) As System.IO.StreamWriter
             Dim mode As FileMode = If(append, FileMode.Append, FileMode.OpenOrCreate)
-            Dim fileStream As New IO.FileStream(file, mode, Me)
+            Dim fileStream As New IO.RemoteFileStream(file, mode, Me)
             Return New StreamWriter(fileStream, encoding)
         End Function
 
@@ -1587,7 +1587,7 @@ Namespace FileSystem
         ''' <param name="file">File to be read.</param>
         ''' <returns>Byte array containing the contents of the file.</returns>
         Public Function ReadAllBytes(file As String) As Byte()
-            Dim fileStream As New IO.FileStream(file, FileMode.Open, Me)
+            Dim fileStream As New IO.RemoteFileStream(file, FileMode.Open, Me)
             Dim buffer As Byte() = New Byte(fileStream.Length - 1) {}
             Call fileStream.Read(buffer, Scan0, buffer.Length)
             Return buffer

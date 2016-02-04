@@ -16,7 +16,7 @@ Namespace FileSystem.Protocols
         ''' <param name="destination"></param>
         ''' <param name="remote"></param>
         Public Sub Upload(local As String, destination As String, remote As IPEndPoint)
-            Using file As New IO.FileStream(destination, FileMode.OpenOrCreate, remote)
+            Using file As New IO.RemoteFileStream(destination, FileMode.OpenOrCreate, remote)
                 Dim localFile As New FileStream(local, FileMode.Open)
                 Call Transfer(localFile, file, 1024 * 1024)
             End Using
@@ -39,7 +39,7 @@ Namespace FileSystem.Protocols
         End Sub
 
         Public Sub Download(destination As String, local As String, remote As IPEndPoint)
-            Using file As New IO.FileStream(destination, FileMode.OpenOrCreate, remote)
+            Using file As New IO.RemoteFileStream(destination, FileMode.OpenOrCreate, remote)
                 Dim localFile As New FileStream(local, FileMode.OpenOrCreate)
                 Call Transfer(file, localFile, 1024 * 1024)
             End Using

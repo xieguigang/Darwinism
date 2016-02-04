@@ -12,6 +12,8 @@ Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem.FileSystem
 Imports Microsoft.Win32.SafeHandles
+Imports System.Runtime.Serialization.Json
+Imports System.Runtime.Serialization
 
 Namespace FileSystem.IO
 
@@ -20,7 +22,9 @@ Namespace FileSystem.IO
     ''' read and write operations.To browse the .NET Framework source code for this type,
     ''' see the Reference Source.
     ''' </summary>
-    <ComVisible(True)> Public Class FileStream : Inherits BaseStream
+    ''' 
+    <Xml.Serialization.XmlType("RemoteFileStream")>
+    Public Class RemoteFileStream : Inherits BaseStream
 
         ' Exceptions:
         '   T:System.ArgumentException:
@@ -62,7 +66,7 @@ Namespace FileSystem.IO
         ''' port@remote_IP://hash+&lt;path>
         ''' </summary>
         ''' <returns>Using for json serialization</returns>
-        Public Property hashInfo As String
+        <Xml.Serialization.XmlText> Public Property hashInfo As String
             Get
                 Return $"{FileSystem.Port}@{FileSystem.IPAddress}://{FileHandle.HashCode}+{FileHandle.FileName}"
             End Get
@@ -954,6 +958,9 @@ Namespace FileSystem.IO
         ''' Gets or sets the current position of this stream.
         ''' </summary>
         ''' <returns>The current position of this stream.</returns>
+        <Xml.Serialization.XmlIgnore>
+        <Xml.Serialization.SoapIgnore>
+        <IgnoreDataMember>
         Public Overrides Property Position As Long
             Get
                 Dim args = Protocols.GetSetReadPosition(FileStreamPosition.GET, FileHandle)

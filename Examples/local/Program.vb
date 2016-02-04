@@ -8,7 +8,7 @@ Module Program
         Dim remoteMachine As New TaskHost(New IPEndPoint("127.0.0.1", 1234))
         Dim func As Func(Of Stream, String, String()) = AddressOf AnalysisExample.API.LongTest1
         Dim path As String = "E:\Microsoft.VisualBasic.Parallel\trunk\Examples\local\local.vbproj"
-        Dim localfile As New ComputingServices.FileSystem.IO.FileStream(path, FileMode.Open, remoteMachine.FileSystem)
+        Dim localfile As New ComputingServices.FileSystem.IO.RemoteFileStream(path, FileMode.Open, remoteMachine.FileSystem)
         Dim array As String() = remoteMachine.Invoke(func, {localfile, "this is the message from local machine!"})
         ' remote linq
 
