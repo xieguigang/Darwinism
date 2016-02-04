@@ -69,6 +69,10 @@ Namespace FileSystem.IO
             Call Me.New(path, mode, FileAccess.Read, remote)
         End Sub
 
+        <SecuritySafeCritical> Public Sub New(path As String, mode As FileMode, remote As IPEndPoint)
+            Call Me.New(path, mode, FileAccess.Read, remote)
+        End Sub
+
         ''' <summary>
         ''' File handle on the remote machine file system
         ''' </summary>

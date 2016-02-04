@@ -12,6 +12,16 @@ Namespace FileSystem.Protocols
         Public Property EntryPoint As IPEndPoint
         Public Property File As String
 
+        ''' <summary>
+        ''' 是否为本地文件
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsLocal As Boolean
+            Get
+                Return EntryPoint Is Nothing
+            End Get
+        End Property
+
         Sub New(uri As String)
             Dim addr As String = Regex.Match(uri, "^\d+@\d+(\.\d+){3}[:]\/\/").Value
             If String.IsNullOrEmpty(addr) Then  '本地文件

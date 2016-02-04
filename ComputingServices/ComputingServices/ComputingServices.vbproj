@@ -95,6 +95,7 @@
     <Compile Include="FileSystem\FileStream\FileStream.vb" />
     <Compile Include="FileSystem\FileStream\StreamWriter.vb" />
     <Compile Include="FileSystem\FileStream\StreamReader.vb" />
+    <Compile Include="FileSystem\Protocols\NetTransfer.vb" />
     <Compile Include="FileSystem\Protocols\FileStreamInfo.vb" />
     <Compile Include="FileSystem\Protocols\FileSystemAPI.vb" />
     <Compile Include="FileSystem\Protocols\FileOpen.vb" />

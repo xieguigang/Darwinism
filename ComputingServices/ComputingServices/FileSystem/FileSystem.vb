@@ -165,17 +165,6 @@ Namespace FileSystem
 
         End Sub
 
-        '
-        ' Summary:
-        '     Copies a file to a new location.
-        '
-        ' Parameters:
-        '   sourceFileName:
-        '     The file to be copied.
-        '
-        '   destinationFileName:
-        '     The location to which the file should be copied.
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -217,12 +206,12 @@ Namespace FileSystem
         '     The user lacks necessary permissions to view the path.
 
         ''' <summary>
-        ''' 
+        ''' Copies a file to a new location.
         ''' </summary>
-        ''' <param name="sourceFileName"></param>
-        ''' <param name="destinationFileName"></param>
+        ''' <param name="sourceFileName">The file to be copied.</param>
+        ''' <param name="destinationFileName">The location to which the file should be copied.</param>
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String)
-
+            Call CopyFile(sourceFileName, destinationFileName)
         End Sub
 
         '
@@ -288,7 +277,22 @@ Namespace FileSystem
         ''' <param name="destinationFileName"></param>
         ''' <param name="overwrite"></param>
         Public Sub CopyFile(sourceFileName As String, destinationFileName As String, overwrite As Boolean)
+            Dim source As FileURI = New FileURI(sourceFileName)
+            Dim destination As FileURI = New FileURI(destinationFileName)
 
+            If source.IsLocal Then
+                If destination.IsLocal Then
+                    Call FileIO.FileSystem.CopyFile(sourceFileName, destinationFileName, overwrite)
+                Else    ' 进行文件上传
+                    Call NetTransfer.Upload(source.File, destination.File, destination.EntryPoint)
+                End If
+            Else
+                If destination.IsLocal Then  ' 文件下载，然后执行删除
+                    Call NetTransfer.Download(source.File, destination.File, source.EntryPoint)
+                Else    ' 远程文件系统之上的文件复制
+
+                End If
+            End If
         End Sub
 
         '
@@ -536,17 +540,6 @@ Namespace FileSystem
 
         End Sub
 
-        '
-        ' Summary:
-        '     Moves a file to a new location.
-        '
-        ' Parameters:
-        '   sourceFileName:
-        '     Path of the file to be moved.
-        '
-        '   destinationFileName:
-        '     Path of the directory into which the file should be moved.
-        '
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -572,27 +565,14 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' Moves a file to a new location.
         ''' </summary>
-        ''' <param name="sourceFileName"></param>
-        ''' <param name="destinationFileName"></param>
+        ''' <param name="sourceFileName">Path of the file to be moved.</param>
+        ''' <param name="destinationFileName">Path of the directory into which the file should be moved.</param>
         Public Sub MoveFile(sourceFileName As String, destinationFileName As String)
-
+            Call MoveFile(sourceFileName, destinationFileName, False)
         End Sub
-        '
-        ' Summary:
-        '     Moves a file to a new location.
-        '
-        ' Parameters:
-        '   sourceFileName:
-        '     Path of the file to be moved.
-        '
-        '   destinationFileName:
-        '     Path of the directory into which the file should be moved.
-        '
-        '   overwrite:
-        '     True to overwrite existing files; otherwise False. Default is False.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -621,13 +601,30 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' Moves a file to a new location.
         ''' </summary>
-        ''' <param name="sourceFileName"></param>
-        ''' <param name="destinationFileName"></param>
-        ''' <param name="overwrite"></param>
+        ''' <param name="sourceFileName">Path of the file to be moved.</param>
+        ''' <param name="destinationFileName">Path of the directory into which the file should be moved.</param>
+        ''' <param name="overwrite">True to overwrite existing files; otherwise False. Default is False.</param>
         Public Sub MoveFile(sourceFileName As String, destinationFileName As String, overwrite As Boolean)
+            Dim source As FileURI = New FileURI(sourceFileName)
+            Dim destination As FileURI = New FileURI(destinationFileName)
 
+            If source.IsLocal Then
+                If destination.IsLocal Then
+                    Call FileIO.FileSystem.MoveFile(sourceFileName, destinationFileName, overwrite)
+                Else    ' 进行文件上传
+                    Call NetTransfer.Upload(source.File, destination.File, destination.EntryPoint)
+                End If
+            Else
+                If destination.IsLocal Then  ' 文件下载，然后执行删除
+                    Call NetTransfer.Download(source.File, destination.File, source.EntryPoint)
+                    Call DeleteFile(source.File)
+                Else    ' 远程文件系统之上的文件移动
+
+
+                End If
+            End If
         End Sub
 
         '
@@ -729,21 +726,7 @@ Namespace FileSystem
         Public Sub RenameFile(file As String, newName As String)
 
         End Sub
-        '
-        ' Summary:
-        '     Writes data to a binary file.
-        '
-        ' Parameters:
-        '   file:
-        '     Path and name of the file to be written to.
-        '
-        '   data:
-        '     Data to be written to the file.
-        '
-        '   append:
-        '     True to append to the file contents; False to overwrite the file contents. Default
-        '     is False.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -772,29 +755,18 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' Writes data to a binary file.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="data"></param>
-        ''' <param name="append"></param>
+        ''' <param name="file">Path and name of the file to be written to.</param>
+        ''' <param name="data">Data to be written to the file.</param>
+        ''' <param name="append">True to append to the file contents; False to overwrite the file contents. Default
+        ''' is False.</param>
         Public Sub WriteAllBytes(file As String, data() As Byte, append As Boolean)
-
+            Dim mode As FileMode = If(append, FileMode.Append, FileMode.OpenOrCreate)
+            Dim remoteFile As New IO.FileStream(file, mode, Me)
+            Call remoteFile.Write(data, Scan0, data.Length)
         End Sub
-        '
-        ' Summary:
-        '     Writes text to a file.
-        '
-        ' Parameters:
-        '   file:
-        '     File to be written to.
-        '
-        '   text:
-        '     Text to be written to file.
-        '
-        '   append:
-        '     True to append to the contents of the file; False to overwrite the contents of
-        '     the file.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -823,32 +795,16 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' Writes text to a file.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="text"></param>
-        ''' <param name="append"></param>
+        ''' <param name="file">File to be written to.</param>
+        ''' <param name="text">Text to be written to file.</param>
+        ''' <param name="append">True to append to the contents of the file; False to overwrite the contents of
+        ''' the file.</param>
         Public Sub WriteAllText(file As String, text As String, append As Boolean)
-
+            Call WriteAllText(file, text, append, Encoding.Default)
         End Sub
-        '
-        ' Summary:
-        '     Writes text to a file.
-        '
-        ' Parameters:
-        '   file:
-        '     File to be written to.
-        '
-        '   text:
-        '     Text to be written to file.
-        '
-        '   append:
-        '     True to append to the contents of the file; False to overwrite the contents of
-        '     the file.
-        '
-        '   encoding:
-        '     What encoding to use when writing to file.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -877,42 +833,18 @@ Namespace FileSystem
         '   T:System.Security.SecurityException:
         '     The user lacks necessary permissions to view the path.
         ''' <summary>
-        ''' 
+        ''' Writes text to a file.
         ''' </summary>
-        ''' <param name="file"></param>
-        ''' <param name="text"></param>
-        ''' <param name="append"></param>
-        ''' <param name="encoding"></param>
+        ''' <param name="file">File to be written to.</param>
+        ''' <param name="text">Text to be written to file.</param>
+        ''' <param name="append">True to append to the contents of the file; False to overwrite the contents of
+        ''' the file.</param>
+        ''' <param name="encoding">What encoding to use when writing to file.</param>
         Public Sub WriteAllText(file As String, text As String, append As Boolean, encoding As Encoding)
-
+            Dim buf As Byte() = encoding.GetBytes(text)
+            Call WriteAllBytes(file, buf, append)
         End Sub
 
-        '
-        ' Summary:
-        '     Combines two paths and returns a properly formatted path.
-        '
-        ' Parameters:
-        '   baseDirectory:
-        '     String. First path to be combined.
-        '
-        '   relativePath:
-        '     String. Second path to be combined.
-        '
-        ' Returns:
-        '     The combination of the specified paths.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     baseDirectory or relativePath are malformed paths.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="baseDirectory"></param>
-        ''' <param name="relativePath"></param>
-        ''' <returns></returns>
-        Public Function CombinePath(baseDirectory As String, relativePath As String) As String
-
-        End Function
         '
         ' Summary:
         '     Returns True if the specified directory exists.
@@ -954,27 +886,7 @@ Namespace FileSystem
         Public Function FileExists(file As String) As Boolean
 
         End Function
-        '
-        ' Summary:
-        '     Returns a read-only collection of strings representing the names of files containing
-        '     the specified text.
-        '
-        ' Parameters:
-        '   directory:
-        '     The directory to be searched.
-        '
-        '   containsText:
-        '     The search text.
-        '
-        '   ignoreCase:
-        '     True if the search should be case-sensitive; otherwise False. Default is True.
-        '
-        '   searchType:
-        '     Whether to include subfolders. Default is SearchOption.SearchTopLevelOnly.
-        '
-        ' Returns:
-        '     Read-only collection of the names of files containing the specified text..
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -1002,15 +914,16 @@ Namespace FileSystem
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
         ''' <summary>
-        ''' 
+        ''' Returns a read-only collection of strings representing the names of files containing
+        ''' the specified text.
         ''' </summary>
-        ''' <param name="directory"></param>
-        ''' <param name="containsText"></param>
-        ''' <param name="ignoreCase"></param>
-        ''' <param name="searchType"></param>
-        ''' <returns></returns>
+        ''' <param name="directory">The directory to be searched.</param>
+        ''' <param name="containsText">The search text.</param>
+        ''' <param name="ignoreCase">True if the search should be case-sensitive; otherwise False. Default is True.</param>
+        ''' <param name="searchType">Whether to include subfolders. Default is SearchOption.SearchTopLevelOnly.</param>
+        ''' <returns>Read-only collection of the names of files containing the specified text..</returns>
         Public Function FindInFiles(directory As String, containsText As String, ignoreCase As Boolean, searchType As FileIO.SearchOption) As ReadOnlyCollection(Of String)
-
+            Return FindInFiles(directory, containsText, ignoreCase, searchType, "*.*")
         End Function
         '
         ' Summary:
@@ -1074,19 +987,7 @@ Namespace FileSystem
         Public Function FindInFiles(directory As String, containsText As String, ignoreCase As Boolean, searchType As FileIO.SearchOption, ParamArray fileWildcards() As String) As ReadOnlyCollection(Of String)
 
         End Function
-        '
-        ' Summary:
-        '     Returns a collection of strings representing the path names of subdirectories
-        '     within a directory.
-        '
-        ' Parameters:
-        '   directory:
-        '     Name and path of directory.
-        '
-        ' Returns:
-        '     Read-only collection of the path names of subdirectories within the specified
-        '     directory..
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -1115,12 +1016,14 @@ Namespace FileSystem
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
         ''' <summary>
-        ''' 
+        ''' Returns a collection of strings representing the path names of subdirectories
+        ''' within a directory.
         ''' </summary>
-        ''' <param name="directory"></param>
-        ''' <returns></returns>
+        ''' <param name="directory">Name and path of directory.</param>
+        ''' <returns>Read-only collection of the path names of subdirectories within the specified
+        ''' directory.</returns>
         Public Function GetDirectories(directory As String) As ReadOnlyCollection(Of String)
-
+            Return GetDirectories(directory, FileIO.SearchOption.SearchTopLevelOnly)
         End Function
         '
         ' Summary:
@@ -1289,18 +1192,7 @@ Namespace FileSystem
         Public Function GetFileInfo(file As String) As System.IO.FileInfo
 
         End Function
-        '
-        ' Summary:
-        '     Returns a read-only collection of strings representing the names of files within
-        '     a directory.
-        '
-        ' Parameters:
-        '   directory:
-        '     Directory to be searched.
-        '
-        ' Returns:
-        '     Read-only collection of file names from the specified directory.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentException:
         '     The path is not valid for one of the following reasons: it is a zero-length string;
@@ -1329,12 +1221,13 @@ Namespace FileSystem
         '   T:System.UnauthorizedAccessException:
         '     The user lacks necessary permissions.
         ''' <summary>
-        ''' 
+        ''' Returns a read-only collection of strings representing the names of files within
+        ''' a directory.
         ''' </summary>
-        ''' <param name="directory"></param>
-        ''' <returns></returns>
+        ''' <param name="directory">Directory to be searched.</param>
+        ''' <returns>Read-only collection of file names from the specified directory.</returns>
         Public Function GetFiles(directory As String) As ReadOnlyCollection(Of String)
-
+            Return GetFiles(directory, FileIO.SearchOption.SearchTopLevelOnly)
         End Function
         '
         ' Summary:
@@ -1391,24 +1284,7 @@ Namespace FileSystem
         Public Function GetFiles(directory As String, searchType As FileIO.SearchOption, ParamArray wildcards() As String) As ReadOnlyCollection(Of String)
 
         End Function
-        '
-        ' Summary:
-        '     Parses the file name out of the path provided.
-        '
-        ' Parameters:
-        '   path:
-        '     Required. Path to be parsed. String.
-        '
-        ' Returns:
-        '     The file name from the specified path.
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        Public Function GetName(path As String) As String
 
-        End Function
         '
         ' Summary:
         '     Returns the parent path of the provided path.
