@@ -147,7 +147,7 @@ Namespace FileSystem
             End If
         End Function
 
-        <Protocol(FileSystemAPI.CloseHandle)>
+        <Protocol(FileSystemAPI.FilePosition)>
         Private Function GetSetPosition(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim params As FileStreamPosition = args.LoadObject(Of FileStreamPosition)
             Dim uid As String = params.Handle
@@ -164,7 +164,7 @@ Namespace FileSystem
             End If
         End Function
 
-        <Protocol(FileSystemAPI.CloseHandle)>
+        <Protocol(FileSystemAPI.FileStreamLength)>
         Private Function GetSetLength(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim params As FileStreamPosition = args.LoadObject(Of FileStreamPosition)
             Dim uid As String = params.Handle

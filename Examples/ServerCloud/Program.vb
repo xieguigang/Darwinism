@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Module Program
 
     Sub Main()
-        Call GetType(Program).RunCLI(App.CommandLine)
+        Call GetType(Program).RunCLI(App.CommandLine, Function() Start(CommandLine.TryParse("")))
     End Sub
 
     <ExportAPI("/start", Usage:="/start /port <port, default:1234>")>
