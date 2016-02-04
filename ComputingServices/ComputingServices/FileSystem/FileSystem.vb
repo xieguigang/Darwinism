@@ -57,14 +57,14 @@ Namespace FileSystem
         ''' Returns a read-only collection of all available drive names.
         ''' </summary>
         ''' <returns>A read-only collection of all available drives as System.IO.DriveInfo objects.</returns>
-        Public ReadOnly Property Drives As ReadOnlyCollection(Of DriveInfo)
+        Public ReadOnly Property Drives As ReadOnlyCollection(Of System.IO.DriveInfo)
             Get
                 Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.Drives)
                 Dim invoke As New AsynInvoke(_Portal)
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Dim array As String() = req.GetUTF8String.LoadObject(Of String())
                 Dim lst As DriveInfo() = array.ToArray(Function(s) s.LoadObject(Of DriveInfo))
-                Return New ReadOnlyCollection(Of DriveInfo)(lst)
+                Return New ReadOnlyCollection(Of System.IO.DriveInfo)(CType(lst, IList(Of System.IO.DriveInfo)))
             End Get
         End Property
 
@@ -327,7 +327,9 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="directory"></param>
         Public Sub CreateDirectory(directory As String)
-
+            Dim req As New RequestStream(ProtocolEntry, FileSystemAPI.CreateDirectory, directory)
+            Dim invoke As New AsynInvoke(Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
         '
         ' Summary:
@@ -379,7 +381,13 @@ Namespace FileSystem
         ''' <param name="directory"></param>
         ''' <param name="onDirectoryNotEmpty"></param>
         Public Sub DeleteDirectory(directory As String, onDirectoryNotEmpty As DeleteDirectoryOption)
-
+            Dim op As New DeleteArgs With {
+                .obj = directory,
+                .option = onDirectoryNotEmpty
+            }
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.DeleteDirectory, op)
+            Dim invoke As New AsynInvoke(Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
         '
@@ -422,7 +430,9 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="file"></param>
         Public Sub DeleteFile(file As String)
-
+            Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.DeleteFile, file)
+            Dim invoke As New AsynInvoke(Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
         '
@@ -675,7 +685,13 @@ Namespace FileSystem
         ''' <param name="directory"></param>
         ''' <param name="newName"></param>
         Public Sub RenameDirectory(directory As String, newName As String)
-
+            Dim rename As New RenameArgs With {
+                .old = directory,
+                .[New] = newName
+            }
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.RenameDirectory, rename)
+            Dim invoke As New AsynInvoke(Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
         '
         ' Summary:
@@ -724,7 +740,13 @@ Namespace FileSystem
         ''' <param name="file"></param>
         ''' <param name="newName"></param>
         Public Sub RenameFile(file As String, newName As String)
-
+            Dim rename As New RenameArgs With {
+             .old = file,
+             .[New] = newName
+         }
+            Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.RenameFile, rename)
+            Dim invoke As New AsynInvoke(Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
         ' Exceptions:
@@ -861,7 +883,14 @@ Namespace FileSystem
         ''' <param name="directory"></param>
         ''' <returns></returns>
         Public Function DirectoryExists(directory As String) As Boolean
-
+            Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.DirectoryExists, directory)
+            Dim invoke As New AsynInvoke(Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
+            If rep.ChunkBuffer.First = 1 Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         '
@@ -884,7 +913,14 @@ Namespace FileSystem
         ''' <param name="file"></param>
         ''' <returns></returns>
         Public Function FileExists(file As String) As Boolean
-
+            Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.FileExists, file)
+            Dim invoke As New AsynInvoke(Portal)
+            Dim rep As RequestStream = invoke.SendMessage(req)
+            If rep.ChunkBuffer.First = 1 Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         ' Exceptions:
@@ -1118,7 +1154,7 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="directory"></param>
         ''' <returns></returns>
-        Public Function GetDirectoryInfo(directory As String) As DirectoryInfo
+        Public Function GetDirectoryInfo(directory As String) As System.IO.DirectoryInfo
 
         End Function
         '
@@ -1151,7 +1187,7 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="drive"></param>
         ''' <returns></returns>
-        Public Function GetDriveInfo(drive As String) As DriveInfo
+        Public Function GetDriveInfo(drive As String) As System.IO.DriveInfo
 
         End Function
         '

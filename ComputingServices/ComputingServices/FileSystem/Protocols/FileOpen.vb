@@ -5,6 +5,16 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace FileSystem.Protocols
 
+    Public Class RenameArgs
+        Public Property old As String
+        Public Property [New] As String
+    End Class
+
+    Public Class DeleteArgs
+        Public Property obj As String
+        Public Property [option] As Integer
+    End Class
+
     ''' <summary>
     ''' Initializes a new instance of the System.IO.FileStream class with the specified
     ''' path and creation mode.
