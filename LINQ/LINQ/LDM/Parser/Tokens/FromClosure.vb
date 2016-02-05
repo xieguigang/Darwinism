@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
 
 Namespace Statements.Tokens
 
+    ''' <summary>
+    ''' The init variable.
+    ''' </summary>
     Public Class FromClosure : Inherits Closure
 
         ''' <summary>
@@ -28,23 +31,15 @@ Namespace Statements.Tokens
 
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.TokenParser.Tokens.From, tokens, parent)
-            Me.TryParse()
-            Me.RegistryType = Statement.TypeRegistry.Find(TypeId)
-            If RegistryType Is Nothing Then
-                Throw New TypeMissingExzception("Could not found any information about the type {0}.", TypeId)
-            Else
-                Dim ILINQCollection As System.Type = _tokens.ObjectCollection.LoadExternalModule(RegistryType)
-                Statement.Collection.ILINQCollection = Activator.CreateInstance(ILINQCollection)
-                Me.TypeId = Statement.Collection.ILINQCollection.GetEntityType.FullName
-            End If
-        End Sub
 
-        Private Sub TryParse()
-            Dim str = GetStatement(_statement._Original, New String() {"from", "in"}, True)
-            Dim Tokens As String() = str.Split
-            Name = Tokens.First
-            TypeId = Tokens.Last
-            Me._original = str
+            'Me.RegistryType = Statement.TypeRegistry.Find(TypeId)
+            'If RegistryType Is Nothing Then
+            '    Throw New TypeMissingExzception("Could not found any information about the type {0}.", TypeId)
+            'Else
+            '    Dim ILINQCollection As System.Type = _tokens.ObjectCollection.LoadExternalModule(RegistryType)
+            '    Statement.Collection.ILINQCollection = Activator.CreateInstance(ILINQCollection)
+            '    Me.TypeId = Statement.Collection.ILINQCollection.GetEntityType.FullName
+            'End If
         End Sub
 
         Public Overridable Function ToFieldDeclaration() As CodeDom.CodeMemberField

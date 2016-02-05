@@ -148,7 +148,7 @@ Namespace Framework
         ''' <returns></returns>
         ''' <remarks></remarks>
         Friend Function CreateObjectModel(Statement As LINQStatement) As LINQ.Framework.ObjectModel.LINQ
-            If Statement.Collection.IsParallel Then
+            If Statement.source.IsParallel Then
                 Return New ParallelLINQ(Statement:=Statement, FrameworkRuntime:=Me.Runtime)
             Else
                 Return New LINQ.Framework.ObjectModel.LINQ(Statement:=Statement, Runtime:=Me.Runtime)

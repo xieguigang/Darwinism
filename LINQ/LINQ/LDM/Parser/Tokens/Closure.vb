@@ -5,15 +5,10 @@ Namespace Statements.Tokens
     Public MustInherit Class Closure
 
         Protected _statement As LINQStatement
-        Protected _tokens As ClosureTokens()
-        ''' <summary>
-        ''' <see cref="_tokens"/>的第一个元素
-        ''' </summary>
         Protected _source As ClosureTokens
 
         Sub New(type As TokenParser.Tokens, tokens As ClosureTokens(), parent As LINQStatement)
-            _tokens = GetTokens(type, from:=tokens)
-            _source = _tokens.FirstOrDefault
+            _source = GetTokens(type, from:=tokens)
             _statement = parent
 
             If _source Is Nothing Then
@@ -29,14 +24,19 @@ Namespace Statements.Tokens
             End If
         End Sub
 
+        Sub New(token As ClosureTokens, parent As LINQStatement)
+            _source = token
+            _statement = parent
+        End Sub
+
         Const MissingRequiredField As String = "Missing the required LINQ statement token {0}!"
 
         Public Overrides Function ToString() As String
-            Return _tokens.ToString
+            Return _source.ToString
         End Function
 
-        Public Shared Function GetTokens(type As TokenParser.Tokens, from As ClosureTokens()) As ClosureTokens()
-            Dim LQuery = (From x As ClosureTokens In from Where x.Token = type Select x).ToArray
+        Public Shared Function GetTokens(type As TokenParser.Tokens, from As ClosureTokens()) As ClosureTokens
+            Dim LQuery = (From x As ClosureTokens In from Where x.Token = type Select x).FirstOrDefault
             Return LQuery
         End Function
     End Class

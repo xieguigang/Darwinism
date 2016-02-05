@@ -11,8 +11,8 @@
         End Sub
 
         Public Function Compile() As CodeDom.CodeStatement
-            Dim AssignStatement = New CodeDom.CodeAssignStatement(New CodeDom.CodeVariableReferenceExpression(Target.Name), Target.Expression)  '生成赋值语句，设置函数返回值
-            Return AssignStatement
+            'Dim AssignStatement = New CodeDom.CodeAssignStatement(New CodeDom.CodeVariableReferenceExpression(Target.Name), Target.Expression)  '生成赋值语句，设置函数返回值
+            'Return AssignStatement
         End Function
 
         Public Overrides Function ToString() As String

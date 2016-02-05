@@ -116,8 +116,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APP\CLI.vb" />
-    <Compile Include="Statement\Parser\ClosureTokens.vb" />
-    <Compile Include="Statement\Parser\ClosureParser.vb" />
+    <Compile Include="LDM\Expression\Expression.vb" />
+    <Compile Include="LDM\Expression\Closure.vb" />
+    <Compile Include="LDM\Expression\FromClosure.vb" />
+    <Compile Include="LDM\Expression\InClosure.vb" />
+    <Compile Include="LDM\Expression\LetClosure.vb" />
+    <Compile Include="LDM\Expression\SelectClosure.vb" />
+    <Compile Include="LDM\Expression\WhereClosure.vb" />
+    <Compile Include="LDM\Parser\ClosureTokens.vb" />
+    <Compile Include="LDM\Parser\ClosureParser.vb" />
     <Compile Include="TokenIcer.vb" />
     <Compile Include="Framewok\SDK_PATH.vb" />
     <Compile Include="Framewok\ObjectModel\ParallelLINQ.vb" />
@@ -139,7 +146,7 @@
     <Compile Include="Script\Tokens\ValueAssignment.vb" />
     <Compile Include="Script\Tokens\FileIO.vb" />
     <Compile Include="Script\ScriptParser.vb" />
-    <Compile Include="Statement\LINQStatement.vb" />
+    <Compile Include="LDM\Parser\LINQStatement.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -155,13 +162,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Statement\Tokens\Options.vb" />
-    <Compile Include="Statement\Tokens\SelectClosure.vb" />
-    <Compile Include="Statement\Tokens\LetClosure.vb" />
-    <Compile Include="Statement\Tokens\InClosure.vb" />
-    <Compile Include="Statement\Tokens\Closure.vb" />
-    <Compile Include="Statement\Tokens\FromClosure.vb" />
-    <Compile Include="Statement\Tokens\WhereClosure.vb" />
+    <Compile Include="LDM\Parser\Tokens\Options.vb" />
+    <Compile Include="LDM\Parser\Tokens\SelectClosure.vb" />
+    <Compile Include="LDM\Parser\Tokens\LetClosure.vb" />
+    <Compile Include="LDM\Parser\Tokens\InClosure.vb" />
+    <Compile Include="LDM\Parser\Tokens\Closure.vb" />
+    <Compile Include="LDM\Parser\Tokens\FromClosure.vb" />
+    <Compile Include="LDM\Parser\Tokens\WhereClosure.vb" />
     <Compile Include="Framewok\DynamicCode\DynamicInvoke.vb" />
   </ItemGroup>
   <ItemGroup>

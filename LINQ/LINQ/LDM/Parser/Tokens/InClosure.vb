@@ -50,30 +50,20 @@ Namespace Statements.Tokens
         ''' <remarks></remarks>
         Public ReadOnly Property Value As String
             Get
-                Return _original
+                '       Return _original
             End Get
         End Property
 
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.TokenParser.Tokens.In, tokens, parent)
-            Call Me.TryParse()
-        End Sub
-
-        Private Sub TryParse()
-            For i As Integer = 0 To _statement._Tokens.Count - 1
-                If String.Equals("In", _statement._Tokens(i), StringComparison.OrdinalIgnoreCase) Then
-                    Me._original = _statement._Tokens(i + 1)
-                    Return
-                End If
-            Next
         End Sub
 
         Public Overrides Function ToString() As String
-            If Type = CollectionTypes.File Then
-                Return String.Format("(File) {0}", Me._original)
-            Else
-                Return Type.ToString
-            End If
+            'If Type = CollectionTypes.File Then
+            '    Return String.Format("(File) {0}", Me._original)
+            'Else
+            '    Return Type.ToString
+            'End If
         End Function
 
         ''' <summary>

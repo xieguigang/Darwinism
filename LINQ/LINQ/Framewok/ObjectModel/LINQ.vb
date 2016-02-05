@@ -19,20 +19,20 @@ Namespace Framework.ObjectModel
 
         Sub New(Statement As LINQStatement, Runtime As I_DynamicsRuntime)
             Me.StatementInstance = Statement.CreateInstance  'Create a instance for the LINQ entity and intialzie the components
-            Me.Test = Function() Statement.ConditionTest.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
-            Me.SetObject = Function(p As Object) Statement.Object.SetObject.Invoke(StatementInstance, {p})
-            Me.SelectConstruct = Function() Statement.SelectConstruct.SelectMethod.Invoke(StatementInstance, Nothing)
+            Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
+            Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
+            Me.SelectConstruct = Function() Statement.SelectClosure.SelectMethod.Invoke(StatementInstance, Nothing)
             Me.source = LINQ.GetCollection(Statement, Runtime)
             Me.Statement = Statement
             Me.FrameworkRuntime = Runtime
         End Sub
 
         Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As I_DynamicsRuntime) As Object()
-            If Statement.Collection.Type = Statements.Tokens.InClosure.CollectionTypes.File Then
-                Return Statement.Collection.ILINQCollection.GetCollection(Statement.Collection.Value)
+            If Statement.source.Type = Statements.Tokens.InClosure.CollectionTypes.File Then
+                Return Statement.source.ILINQCollection.GetCollection(Statement.source.Value)
             Else
                 '返回运行时环境中的对象集合
-                Return Runtime.GetCollection(Statement.Collection)
+                Return Runtime.GetCollection(Statement.source)
             End If
         End Function
 

@@ -56,7 +56,7 @@ Namespace Framework.DynamicCode.VBC
         End Function
 
         Private Function DeclareType() As CodeDom.CodeTypeDeclaration
-            Dim [Module] = DynamicCode.VBC.TokenCompiler.DeclareType(ModuleName, LINQStatement.Object, LINQStatement.ReadOnlyObjects)
+            Dim [Module] = DynamicCode.VBC.TokenCompiler.DeclareType(ModuleName, LINQStatement.var, LINQStatement.PreDeclare)
             Call [Module].Members.Add(New DynamicCode.VBC.WhereConditionTestCompiler(LINQStatement).Compile)
             Call [Module].Members.Add(DeclareSetObject)
             Call [Module].Members.Add(New DynamicCode.VBC.SelectConstructCompiler(LINQStatement).Compile)
@@ -66,13 +66,13 @@ Namespace Framework.DynamicCode.VBC
 
         Private Function DeclareSetObject() As CodeDom.CodeMemberMethod
             Dim StatementCollection As CodeDom.CodeStatementCollection = New CodeDom.CodeStatementCollection
-            Call StatementCollection.Add(New CodeDom.CodeAssignStatement(New CodeDom.CodeFieldReferenceExpression(New CodeDom.CodeThisReferenceExpression(), LINQStatement.Object.Name), New CodeDom.CodeArgumentReferenceExpression("p")))
-            For Each ReadOnlyObject In LINQStatement.ReadOnlyObjects
+            Call StatementCollection.Add(New CodeDom.CodeAssignStatement(New CodeDom.CodeFieldReferenceExpression(New CodeDom.CodeThisReferenceExpression(), LINQStatement.var.Name), New CodeDom.CodeArgumentReferenceExpression("p")))
+            For Each ReadOnlyObject In LINQStatement.PreDeclare
                 Call StatementCollection.Add(New DynamicCode.VBC.ReadOnlyObjectCompiler(ReadOnlyObject).Compile)
             Next
 
             Dim SetObject As CodeDom.CodeMemberMethod = DeclareFunction(SetObjectName, "System.Boolean", StatementCollection)
-            SetObject.Parameters.Add(New CodeDom.CodeParameterDeclarationExpression(LINQStatement.Object.TypeId, "p"))
+            SetObject.Parameters.Add(New CodeDom.CodeParameterDeclarationExpression(LINQStatement.var.TypeId, "p"))
             SetObject.Attributes = CodeDom.MemberAttributes.Public
             Return SetObject
         End Function
