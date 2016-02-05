@@ -1,6 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
+Imports Microsoft.VisualBasic.LINQ.LDM
 
 Namespace Statements.Tokens
 
@@ -22,6 +23,7 @@ Namespace Statements.Tokens
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.TokenParser.Tokens.Select, tokens, parent)
 
+            Dim stack = StackParser.Parsing(New Queue(Of TokenIcer.Token)(_source.Tokens))
         End Sub
 
         Private Shared Function __isDelimiter(x As TokenIcer.Token) As Boolean
