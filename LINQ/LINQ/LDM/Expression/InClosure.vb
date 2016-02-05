@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Framework
+﻿Imports System.CodeDom
+Imports Microsoft.VisualBasic.LINQ.Framework
 
 Namespace LDM.Expression
 
@@ -54,8 +55,10 @@ Namespace LDM.Expression
             End Get
         End Property
 
-        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
-            Call MyBase.New(TokenIcer.TokenParser.Tokens.In, tokens, parent)
+        Sub New(source As Statements.Tokens.FromClosure)
+            Call MyBase.New(source)
+
+
         End Sub
 
         Public Overrides Function ToString() As String
@@ -76,6 +79,10 @@ Namespace LDM.Expression
             Dim assm As System.Reflection.Assembly =
                 System.Reflection.Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
             Return assm.GetType(RegistryItem.TypeId)
+        End Function
+
+        Protected Overrides Function __parsing() As CodeExpression
+
         End Function
     End Class
 End Namespace

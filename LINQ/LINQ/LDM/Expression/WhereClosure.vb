@@ -11,21 +11,14 @@ Namespace LDM.Expression
 
         Friend Expression As CodeExpression
         Friend TestMethod As MethodInfo
+        Sub New(source As Statements.Tokens.FromClosure)
+            Call MyBase.New(source)
 
-        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
-            Call MyBase.New(TokenIcer.TokenParser.Tokens.Where, tokens, parent)
 
-            'Dim Parser As LINQ.Parser.Parser = New LINQ.Parser.Parser
-            'Dim str = GetStatement(Statement._Original, New String() {"where", "let"}, False)
-            'If String.IsNullOrEmpty(str) Then
-            '    str = GetStatement(Statement._Original, New String() {"where", "select"}, False)
-            'End If
-
-            'Expression = Parser.ParseExpression(str)
         End Sub
 
-        Public Sub Initialize()
-            Me.TestMethod = DynamicInvoke.GetMethod(_statement.ILINQProgram, WhereConditionTestCompiler.FunctionName)
-        End Sub
+        Protected Overrides Function __parsing() As CodeExpression
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace

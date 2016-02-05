@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Framework
+﻿Imports System.CodeDom
+Imports Microsoft.VisualBasic.LINQ.Framework
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
@@ -29,32 +30,18 @@ Namespace LDM.Expression
 
         Friend SetObject As System.Reflection.MethodInfo
 
-        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
-            Call MyBase.New(TokenIcer.TokenParser.Tokens.From, tokens, parent)
+        Sub New(source As Statements.Tokens.FromClosure)
+            Call MyBase.New(source)
 
-            'Me.RegistryType = Statement.TypeRegistry.Find(TypeId)
-            'If RegistryType Is Nothing Then
-            '    Throw New TypeMissingExzception("Could not found any information about the type {0}.", TypeId)
-            'Else
-            '    Dim ILINQCollection As System.Type = _tokens.ObjectCollection.LoadExternalModule(RegistryType)
-            '    Statement.Collection.ILINQCollection = Activator.CreateInstance(ILINQCollection)
-            '    Me.TypeId = Statement.Collection.ILINQCollection.GetEntityType.FullName
-            'End If
-        End Sub
 
-        Public Overridable Function ToFieldDeclaration() As CodeDom.CodeMemberField
-            Dim CodeMemberField = New CodeDom.CodeMemberField(TypeId, Name)
-            CodeMemberField.Attributes = CodeDom.MemberAttributes.Public
-
-            Return CodeMemberField
-        End Function
-
-        Public Sub Initialize()
-            Me.SetObject = DynamicInvoke.GetMethod(_statement.ILINQProgram, DynamicCompiler.SetObjectName)
         End Sub
 
         Public Overrides Function ToString() As String
             Return String.Format("Dim {0} As {1}", Name, TypeId)
+        End Function
+
+        Protected Overrides Function __parsing() As CodeExpression
+
         End Function
     End Class
 End Namespace
