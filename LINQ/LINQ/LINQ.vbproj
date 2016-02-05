@@ -116,7 +116,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APP\CLI.vb" />
-    <Compile Include="Class1.vb" />
+    <Compile Include="Statement\Parser\StatementParser.vb" />
+    <Compile Include="TokenIcer.vb" />
     <Compile Include="Framewok\SDK_PATH.vb" />
     <Compile Include="Framewok\ObjectModel\ParallelLINQ.vb" />
     <Compile Include="Framewok\ObjectModel\LINQ.vb" />
