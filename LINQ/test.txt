@@ -1,0 +1,1 @@
+From var As Type In $source->parallel Let x = var -> aa(d,"g ++ ") where x -> test2(test3(xx),var) is true select new varType(var,x), x+3
