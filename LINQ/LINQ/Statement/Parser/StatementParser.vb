@@ -34,7 +34,7 @@ Public Module StatementParser
         Public Property Tokens As Token()
 
         Public Overrides Function ToString() As String
-            Return $"[{Token}] {Tokens.ToArray(Function(x) x.TokenValue).JoinBy("")}"
+            Return $"[{Token}] {Tokens.ToArray(Function(x) x.TokenValue).JoinBy(" ")}"
         End Function
     End Class
 End Module

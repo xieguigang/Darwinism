@@ -18,7 +18,7 @@ Namespace Statements
     ''' Select [Object/Object Constrctor] 
     ''' [Distinct] 
     ''' [Order Statement]</remarks>
-    Public Class LINQStatement : Inherits Token
+    Public Class LINQStatement
 
         ''' <summary>
         ''' An object element in the target query collection.(目标待查询集合之中的一个元素)
@@ -85,6 +85,8 @@ Namespace Statements
             End Get
         End Property
 
+        Public ReadOnly Property Original As String
+
         ''' <summary>
         ''' Create a instance for the compiled LINQ statement object model.
         ''' </summary>
@@ -95,7 +97,7 @@ Namespace Statements
         End Function
 
         Public Overrides Function ToString() As String
-            Return _original
+            Return Original
         End Function
 
         ''' <summary>
@@ -107,7 +109,7 @@ Namespace Statements
         ''' <remarks></remarks>
         Public Shared Function TryParse(StatementText As String, registry As TypeRegistry) As LINQStatement
             Dim Statement As LINQStatement = New LINQStatement With {
-                ._original = StatementText,
+                ._Original = StatementText,
                 ._Tokens = GetTokens(StatementText),
                 .TypeRegistry = registry
             }
@@ -116,7 +118,6 @@ Namespace Statements
             Statement.ReadOnlyObjects = GetReadOnlyObjects(Statement)
             Statement.ConditionTest = New WhereCondition(Statement)
             Statement.SelectConstruct = New SelectConstruct(Statement)
-            Statement.Statement = Statement
 
             Using Compiler As DynamicCompiler = New DynamicCompiler(Statement, SDK_PATH.AvaliableSDK) 'Dynamic code compiling.(动态编译代码)
                 Dim LINQEntityLibFile As String = Statement.Object.RegistryType.AssemblyFullPath '
@@ -140,24 +141,10 @@ Namespace Statements
         End Function
 
         Private Function Initialzie() As LINQStatement
-            Call Statement.Object.Initialize()
-            Call Statement.ConditionTest.Initialize()
-            Call Statement.SelectConstruct.Initialzie()
+            Call [Object].Initialize()
+            Call ConditionTest.Initialize()
+            Call SelectConstruct.Initialzie()
             Return Me
-        End Function
-
-        Private Shared Function GetTokens(Statement As String) As String()
-            Dim Tokens As String() = Regex.Split(Statement, " (?=(?:[^""]|""[^""]*"")*$)")
-            For i As Integer = 0 To Tokens.Count - 1
-                Dim s As String = Tokens(i)
-                If Len(s) > 2 AndAlso (s.First = """"c AndAlso s.Last = """"c) Then
-                    s = Mid(s, 2, Len(s) - 2)
-                End If
-
-                Tokens(i) = s
-            Next
-
-            Return Tokens
         End Function
     End Class
 End Namespace

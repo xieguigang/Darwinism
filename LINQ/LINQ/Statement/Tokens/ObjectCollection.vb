@@ -55,14 +55,14 @@ Namespace Statements.Tokens
         End Property
 
         Sub New(Statement As LINQ.Statements.LINQStatement)
-            Me.Statement = Statement
+            Me._statement = Statement
             Call Me.TryParse()
         End Sub
 
         Private Sub TryParse()
-            For i As Integer = 0 To Statement._Tokens.Count - 1
-                If String.Equals("In", Statement._Tokens(i), StringComparison.OrdinalIgnoreCase) Then
-                    Me._original = Statement._Tokens(i + 1)
+            For i As Integer = 0 To _statement._Tokens.Count - 1
+                If String.Equals("In", _statement._Tokens(i), StringComparison.OrdinalIgnoreCase) Then
+                    Me._original = _statement._Tokens(i + 1)
                     Return
                 End If
             Next

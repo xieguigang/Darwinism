@@ -9,12 +9,12 @@ Namespace Statements.Tokens
         Friend SelectMethod As System.Reflection.MethodInfo
 
         Sub New(Statement As LINQStatement)
-            MyBase.Statement = Statement
+            MyBase._statement = Statement
             Call Me.TryParse()
         End Sub
 
         Private Sub TryParse()
-            Dim str = Regex.Match(Statement._original, " select .+", RegexOptions.IgnoreCase).Value
+            Dim str = Regex.Match(_statement._original, " select .+", RegexOptions.IgnoreCase).Value
             For Each key In Options.OptionList
                 str = Regex.Split(str, String.Format(" {0}\s?", key), RegexOptions.IgnoreCase).First
             Next
@@ -27,7 +27,7 @@ Namespace Statements.Tokens
         End Sub
 
         Public Sub Initialzie()
-            SelectMethod = DynamicInvoke.GetMethod(MyBase.Statement.ILINQProgram, SelectConstructCompiler.SelectMethodName)
+            SelectMethod = DynamicInvoke.GetMethod(MyBase._statement.ILINQProgram, SelectConstructCompiler.SelectMethodName)
         End Sub
     End Class
 End Namespace

@@ -13,7 +13,7 @@ Namespace Statements.Tokens
         Friend TestMethod As MethodInfo
 
         Sub New(Statement As LINQStatement)
-            Me.Statement = Statement
+            Me._statement = Statement
 
             Dim Parser As LINQ.Parser.Parser = New LINQ.Parser.Parser
             Dim str = GetStatement(Statement._original, New String() {"where", "let"}, False)
@@ -25,7 +25,7 @@ Namespace Statements.Tokens
         End Sub
 
         Public Sub Initialize()
-            Me.TestMethod = DynamicInvoke.GetMethod(Statement.ILINQProgram, WhereConditionTestCompiler.FunctionName)
+            Me.TestMethod = DynamicInvoke.GetMethod(_statement.ILINQProgram, WhereConditionTestCompiler.FunctionName)
         End Sub
     End Class
 End Namespace
