@@ -8,7 +8,8 @@ Namespace Statements.Tokens
         Friend Expression As CodeDom.CodeExpression
         Friend SelectMethod As System.Reflection.MethodInfo
 
-        Sub New(Statement As LINQStatement)
+        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
+            Call MyBase.New(TokenIcer.TokenParser.Tokens.Select, tokens, parent)
             MyBase._statement = Statement
             Call Me.TryParse()
         End Sub

@@ -21,7 +21,7 @@
 
     Public MustInherit Class TokenCompiler
 
-        Public Shared Function DeclareType(Name As String, [Object] As Statements.Tokens.ObjectDeclaration, ReadOnlyObjects As Statements.Tokens.LetClosure()) As CodeDom.CodeTypeDeclaration
+        Public Shared Function DeclareType(Name As String, [Object] As Statements.Tokens.FromClosure, ReadOnlyObjects As Statements.Tokens.LetClosure()) As CodeDom.CodeTypeDeclaration
             Dim [Module] As CodeDom.CodeTypeDeclaration = New CodeDom.CodeTypeDeclaration(Name)
             Call [Module].Members.Add([Object].ToFieldDeclaration)  '声明模块变量，然后在后面的条件测试函数中进行引用
             For Each ReadOnlyObject In ReadOnlyObjects

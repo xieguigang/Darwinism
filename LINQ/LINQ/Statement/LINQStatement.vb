@@ -24,7 +24,7 @@ Namespace Statements
         ''' An object element in the target query collection.(目标待查询集合之中的一个元素)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property [Object] As LINQ.Statements.Tokens.ObjectDeclaration
+        Public Property [Object] As LINQ.Statements.Tokens.FromClosure
         ''' <summary>
         ''' Where test condition for the query.(查询所使用的Where条件测试语句)
         ''' </summary>
@@ -39,7 +39,7 @@ Namespace Statements
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Collection As LINQ.Statements.Tokens.ObjectCollection
+        Public Property Collection As LINQ.Statements.Tokens.InClosure
         ''' <summary>
         ''' A read only object collection which were construct by the LET statement token in the LINQ statement.
         ''' (使用Let语句所构造出来的只读对象类型的对象申明集合)
@@ -113,8 +113,8 @@ Namespace Statements
                 ._Tokens = GetTokens(StatementText),
                 .TypeRegistry = registry
             }
-            Statement.Collection = New ObjectCollection(Statement)
-            Statement.Object = New ObjectDeclaration(Statement)
+            Statement.Collection = New InClosure(Statement)
+            Statement.Object = New FromClosure(Statement)
             Statement.ReadOnlyObjects = GetReadOnlyObjects(Statement)
             Statement.ConditionTest = New WhereClosure(Statement)
             Statement.SelectConstruct = New SelectClosure(Statement)

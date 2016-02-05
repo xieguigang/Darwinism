@@ -12,7 +12,8 @@ Namespace Statements.Tokens
         Friend Expression As CodeExpression
         Friend TestMethod As MethodInfo
 
-        Sub New(Statement As LINQStatement)
+        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
+            Call MyBase.New(TokenIcer.TokenParser.Tokens.Where, tokens, parent)
             Me._statement = Statement
 
             Dim Parser As LINQ.Parser.Parser = New LINQ.Parser.Parser

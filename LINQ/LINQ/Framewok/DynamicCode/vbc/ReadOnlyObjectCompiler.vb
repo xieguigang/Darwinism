@@ -2,7 +2,7 @@
 
     Public Class ReadOnlyObjectCompiler : Inherits TokenCompiler
 
-        Public [Object] As Statements.Tokens.ObjectDeclaration
+        Public [Object] As Statements.Tokens.FromClosure
         Public ReadOnlyObjects As Statements.Tokens.LetClosure()
         Dim Target As Statements.Tokens.LetClosure
 

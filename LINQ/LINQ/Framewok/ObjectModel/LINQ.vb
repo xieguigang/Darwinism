@@ -28,7 +28,7 @@ Namespace Framework.ObjectModel
         End Sub
 
         Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As I_DynamicsRuntime) As Object()
-            If Statement.Collection.Type = Statements.Tokens.ObjectCollection.CollectionTypes.File Then
+            If Statement.Collection.Type = Statements.Tokens.InClosure.CollectionTypes.File Then
                 Return Statement.Collection.ILINQCollection.GetCollection(Statement.Collection.Value)
             Else
                 '返回运行时环境中的对象集合

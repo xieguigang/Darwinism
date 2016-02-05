@@ -58,7 +58,7 @@ Namespace Script
 #End Region
 
 
-        Public Function GetCollection(CollectionReference As ObjectCollection) As Object()
+        Public Function GetCollection(CollectionReference As InClosure) As Object()
             Dim LQuery = From Item In Variables Where String.Equals(CollectionReference.Value, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item.Data  '
             Dim Result = LQuery.ToArray
             If Result.Count = 0 Then

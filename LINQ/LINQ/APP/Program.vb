@@ -7,7 +7,7 @@
     Public Function Main() As Integer
 
         Dim s As String = "From var As Type In $source->parallel Let x = var -> aa(d,""g ++ "") where x -> test2(test3(xx),var) is true select new varType(var,x), x+3"
-        Dim rs = StatementParser.TryParse(s)
+        Dim rs = ClosureParser.TryParse(s)
 
 
         Return GetType(CLI).RunCLI(App.CommandLine, AddressOf __exeEmpty)

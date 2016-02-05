@@ -7,19 +7,16 @@ Namespace Statements.Tokens
     ''' Object declared using a LET expression.(使用Let语句所声明的只读对象)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class LetClosure : Inherits Statements.Tokens.ObjectDeclaration
+    Public Class LetClosure : Inherits Closure
 
         Friend Expression As CodeDom.CodeExpression
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Statement">LINQ表达式</param>
-        ''' <param name="Parser">Parser实例</param>
-        ''' <param name="Declare">所解析出来的申明语句</param>
         ''' <remarks></remarks>
-        Sub New(Statement As LINQ.Statements.LINQStatement, Parser As LINQ.Parser.Parser, [Declare] As String)
-            MyBase.New(Statement)
+        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
+            Call MyBase.New(TokenIcer.TokenParser.Tokens.Let, tokens, parent)
             Dim Name As String = Regex.Match([Declare], ".+?\=").Value
             MyBase.Name = Name.Replace("=", "").Trim
             MyBase.TypeId = Mid([Declare], Len(Name) + 1).Trim
@@ -88,7 +85,7 @@ Namespace Statements.Tokens
             Return objs.ToArray
         End Function
 
-        Public Function GetReadOnlyObjects(Statement As LINQ.Statements.LINQStatement) As LINQ.Statements.Tokens.ObjectDeclaration()
+        Public Function GetReadOnlyObjects(Statement As LINQ.Statements.LINQStatement) As LINQ.Statements.Tokens.FromClosure()
             Dim LetStatements As String() = GetLetStatements(Statement)
             Dim Parser As LINQ.Parser.Parser = New LINQ.Parser.Parser
             Dim ReadOnlyObjectList As List(Of Statements.Tokens.LetClosure) = New List(Of Tokens.LetClosure)

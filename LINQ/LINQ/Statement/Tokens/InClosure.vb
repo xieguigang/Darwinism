@@ -6,7 +6,7 @@ Namespace Statements.Tokens
     ''' 表示目标对象的数据集合的文件路径或者内存对象的引用
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ObjectCollection : Inherits Closure
+    Public Class InClosure : Inherits Closure
 
         Public Enum CollectionTypes
             ''' <summary>
@@ -21,7 +21,7 @@ Namespace Statements.Tokens
             Reference
         End Enum
 
-        Dim CollectionType As ObjectCollection.CollectionTypes = CollectionTypes.File
+        Dim CollectionType As InClosure.CollectionTypes = CollectionTypes.File
         ''' <summary>
         ''' ILINQCollection对象的实例
         ''' </summary>
@@ -30,7 +30,7 @@ Namespace Statements.Tokens
         ''' <remarks></remarks>
         Public Property ILINQCollection As Framework.ILINQCollection
 
-        Public ReadOnly Property Type As ObjectCollection.CollectionTypes
+        Public ReadOnly Property Type As InClosure.CollectionTypes
             Get
                 Return CollectionType
             End Get
@@ -54,8 +54,8 @@ Namespace Statements.Tokens
             End Get
         End Property
 
-        Sub New(Statement As LINQ.Statements.LINQStatement)
-            Me._statement = Statement
+        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
+            Call MyBase.New(TokenIcer.TokenParser.Tokens.In, tokens, parent)
             Call Me.TryParse()
         End Sub
 

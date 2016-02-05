@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
 
 Namespace Statements.Tokens
 
-    Public Class ObjectDeclaration : Inherits Closure
+    Public Class FromClosure : Inherits Closure
 
         ''' <summary>
         ''' 变量的名称
@@ -26,8 +26,8 @@ Namespace Statements.Tokens
 
         Friend SetObject As System.Reflection.MethodInfo
 
-        Sub New(Statement As LINQ.Statements.LINQStatement)
-            Me._statement = Statement
+        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
+            Call MyBase.New(TokenIcer.TokenParser.Tokens.From, tokens, parent)
             Me.TryParse()
             Me.RegistryType = Statement.TypeRegistry.Find(TypeId)
             If RegistryType Is Nothing Then
@@ -40,7 +40,7 @@ Namespace Statements.Tokens
         End Sub
 
         Private Sub TryParse()
-            Dim str = GetStatement(_statement._original, New String() {"from", "in"}, True)
+            Dim str = GetStatement(_statement._Original, New String() {"from", "in"}, True)
             Dim Tokens As String() = str.Split
             Name = Tokens.First
             TypeId = Tokens.Last
