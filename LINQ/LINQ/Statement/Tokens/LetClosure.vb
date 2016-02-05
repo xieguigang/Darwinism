@@ -7,7 +7,7 @@ Namespace Statements.Tokens
     ''' Object declared using a LET expression.(使用Let语句所声明的只读对象)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ReadOnlyObject : Inherits Statements.Tokens.ObjectDeclaration
+    Public Class LetClosure : Inherits Statements.Tokens.ObjectDeclaration
 
         Friend Expression As CodeDom.CodeExpression
 
@@ -65,16 +65,16 @@ Namespace Statements.Tokens
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Function GetLetStatements(Statement As LINQ.Statements.LINQStatement) As String()
-            Dim str As String = GetStatement(Statement._original, New String() {"let", "where"}, False)
+            Dim str As String = GetStatement(Statement._Original, New String() {"let", "where"}, False)
             If String.IsNullOrEmpty(str) Then
-                str = GetStatement(Statement._original, New String() {"let", "select"}, False)
+                str = GetStatement(Statement._Original, New String() {"let", "select"}, False)
                 If String.IsNullOrEmpty(str) Then
                     Return New String() {}
                 End If
             End If
 
             Dim objs = Strings.Split(str, " let ", -1, CompareMethod.Text).ToList
-            str = GetStatement(Statement._original, New String() {"where", "select"}, False)
+            str = GetStatement(Statement._Original, New String() {"where", "select"}, False)
             If Not String.IsNullOrEmpty(str) Then
                 Dim sBuilder As StringBuilder = New StringBuilder(Regex.Match(str, " let .+", RegexOptions.IgnoreCase).Value)
                 If sBuilder.Length = 0 Then
@@ -91,9 +91,9 @@ Namespace Statements.Tokens
         Public Function GetReadOnlyObjects(Statement As LINQ.Statements.LINQStatement) As LINQ.Statements.Tokens.ObjectDeclaration()
             Dim LetStatements As String() = GetLetStatements(Statement)
             Dim Parser As LINQ.Parser.Parser = New LINQ.Parser.Parser
-            Dim ReadOnlyObjectList As List(Of Statements.Tokens.ReadOnlyObject) = New List(Of Tokens.ReadOnlyObject)
+            Dim ReadOnlyObjectList As List(Of Statements.Tokens.LetClosure) = New List(Of Tokens.LetClosure)
             For Each obj In LetStatements
-                Dim ReadOnlyObject As Tokens.ReadOnlyObject = New Tokens.ReadOnlyObject(Statement, Parser, obj)
+                Dim ReadOnlyObject As Tokens.LetClosure = New Tokens.LetClosure(Statement, Parser, obj)
                 Call ReadOnlyObjectList.Add(ReadOnlyObject)
             Next
 

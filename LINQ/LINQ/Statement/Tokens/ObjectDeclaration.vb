@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
 
 Namespace Statements.Tokens
 
-    Public Class ObjectDeclaration : Inherits Token
+    Public Class ObjectDeclaration : Inherits Closure
 
         ''' <summary>
         ''' 变量的名称

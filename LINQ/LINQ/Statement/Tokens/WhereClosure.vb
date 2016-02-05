@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 
 Namespace Statements.Tokens
 
-    Public Class WhereCondition : Inherits Token
+    Public Class WhereClosure : Inherits Closure
 
         Friend Expression As CodeExpression
         Friend TestMethod As MethodInfo
@@ -16,9 +16,9 @@ Namespace Statements.Tokens
             Me._statement = Statement
 
             Dim Parser As LINQ.Parser.Parser = New LINQ.Parser.Parser
-            Dim str = GetStatement(Statement._original, New String() {"where", "let"}, False)
+            Dim str = GetStatement(Statement._Original, New String() {"where", "let"}, False)
             If String.IsNullOrEmpty(str) Then
-                str = GetStatement(Statement._original, New String() {"where", "select"}, False)
+                str = GetStatement(Statement._Original, New String() {"where", "select"}, False)
             End If
 
             Expression = Parser.ParseExpression(str)

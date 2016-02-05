@@ -6,7 +6,7 @@ Namespace Statements.Tokens
     ''' 表示目标对象的数据集合的文件路径或者内存对象的引用
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ObjectCollection : Inherits Token
+    Public Class ObjectCollection : Inherits Closure
 
         Public Enum CollectionTypes
             ''' <summary>

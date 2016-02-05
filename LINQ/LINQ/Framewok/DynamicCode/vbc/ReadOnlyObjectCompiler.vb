@@ -3,10 +3,10 @@
     Public Class ReadOnlyObjectCompiler : Inherits TokenCompiler
 
         Public [Object] As Statements.Tokens.ObjectDeclaration
-        Public ReadOnlyObjects As Statements.Tokens.ReadOnlyObject()
-        Dim Target As Statements.Tokens.ReadOnlyObject
+        Public ReadOnlyObjects As Statements.Tokens.LetClosure()
+        Dim Target As Statements.Tokens.LetClosure
 
-        Sub New(Target As Statements.Tokens.ReadOnlyObject)
+        Sub New(Target As Statements.Tokens.LetClosure)
             Me.Target = Target
         End Sub
 

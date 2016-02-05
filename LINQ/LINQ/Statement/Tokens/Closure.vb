@@ -2,7 +2,7 @@
 
 Namespace Statements.Tokens
 
-    Public MustInherit Class Token
+    Public MustInherit Class Closure
 
         Protected _statement As LINQStatement
         Protected _tokens As StatementToken()

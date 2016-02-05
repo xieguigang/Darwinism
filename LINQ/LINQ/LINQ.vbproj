@@ -134,10 +134,6 @@
     <Compile Include="Framewok\DynamicCode\AnonymousType.vb" />
     <Compile Include="Framewok\DynamicCode\vbc\DynamicCompiler.vb" />
     <Compile Include="APP\Program.vb" />
-    <Compile Include="Parser\Enums.vb" />
-    <Compile Include="Parser\Parser.vb" />
-    <Compile Include="Parser\Token.vb" />
-    <Compile Include="Parser\Tokenizer.vb" />
     <Compile Include="Script\Tokens\Method.vb" />
     <Compile Include="Script\Tokens\ValueAssignment.vb" />
     <Compile Include="Script\Tokens\FileIO.vb" />
@@ -159,12 +155,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Statement\Tokens\Options.vb" />
-    <Compile Include="Statement\Tokens\SelectConstruct.vb" />
-    <Compile Include="Statement\Tokens\ReadOnlyObject.vb" />
+    <Compile Include="Statement\Tokens\SelectClosure.vb" />
+    <Compile Include="Statement\Tokens\LetClosure.vb" />
     <Compile Include="Statement\Tokens\ObjectCollection.vb" />
-    <Compile Include="Statement\Tokens\Token.vb" />
+    <Compile Include="Statement\Tokens\Closure.vb" />
     <Compile Include="Statement\Tokens\ObjectDeclaration.vb" />
-    <Compile Include="Statement\Tokens\WhereCondition.vb" />
+    <Compile Include="Statement\Tokens\WhereClosure.vb" />
     <Compile Include="Framewok\DynamicCode\DynamicInvoke.vb" />
   </ItemGroup>
   <ItemGroup>

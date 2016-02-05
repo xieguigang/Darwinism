@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 
 Namespace Statements.Tokens
 
-    Public Class SelectConstruct : Inherits Tokens.Token
+    Public Class SelectClosure : Inherits Tokens.Closure
         Friend Expression As CodeDom.CodeExpression
         Friend SelectMethod As System.Reflection.MethodInfo
 
@@ -14,7 +14,7 @@ Namespace Statements.Tokens
         End Sub
 
         Private Sub TryParse()
-            Dim str = Regex.Match(_statement._original, " select .+", RegexOptions.IgnoreCase).Value
+            Dim str = Regex.Match(_statement._Original, " select .+", RegexOptions.IgnoreCase).Value
             For Each key In Options.OptionList
                 str = Regex.Split(str, String.Format(" {0}\s?", key), RegexOptions.IgnoreCase).First
             Next

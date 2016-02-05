@@ -31,7 +31,7 @@ Namespace Statements
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property ConditionTest As LINQ.Statements.Tokens.WhereCondition
+        Public Property ConditionTest As LINQ.Statements.Tokens.WhereClosure
         ''' <summary>
         ''' Target query collection expression, this can be a file path or a database connection string.
         ''' (目标待查询集合，值可以为一个文件路径或者数据库连接字符串)
@@ -47,14 +47,14 @@ Namespace Statements
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property ReadOnlyObjects As LINQ.Statements.Tokens.ReadOnlyObject()
+        Public Property ReadOnlyObjects As LINQ.Statements.Tokens.LetClosure()
         ''' <summary>
         ''' A expression for return the query result.(用于生成查询数据返回的语句)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property SelectConstruct As LINQ.Statements.Tokens.SelectConstruct
+        Public Property SelectConstruct As LINQ.Statements.Tokens.SelectClosure
 
         Friend _Tokens As String()
         Friend TypeRegistry As LINQ.Framework.TypeRegistry
@@ -116,8 +116,8 @@ Namespace Statements
             Statement.Collection = New ObjectCollection(Statement)
             Statement.Object = New ObjectDeclaration(Statement)
             Statement.ReadOnlyObjects = GetReadOnlyObjects(Statement)
-            Statement.ConditionTest = New WhereCondition(Statement)
-            Statement.SelectConstruct = New SelectConstruct(Statement)
+            Statement.ConditionTest = New WhereClosure(Statement)
+            Statement.SelectConstruct = New SelectClosure(Statement)
 
             Using Compiler As DynamicCompiler = New DynamicCompiler(Statement, SDK_PATH.AvaliableSDK) 'Dynamic code compiling.(动态编译代码)
                 Dim LINQEntityLibFile As String = Statement.Object.RegistryType.AssemblyFullPath '
