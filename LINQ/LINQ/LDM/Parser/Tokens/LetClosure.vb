@@ -43,6 +43,9 @@ Namespace Statements.Tokens
 
             Do While tokens.Read(i, current).Token = TokenIcer.TokenParser.Tokens.Let
                 Call list.Add(current)
+                If i = tokens.Length Then
+                    Exit Do
+                End If
             Loop
 
             Dim value = list.ToArray(Function(x) New LetClosure(x, parent))
@@ -55,10 +58,15 @@ Namespace Statements.Tokens
             Dim list As New List(Of ClosureTokens)
 
             Do While tokens.Read(i, current).Token <> TokenIcer.TokenParser.Tokens.Where
+                If i = tokens.Length Then
+                    Exit Do
+                End If
             Loop
-            i += 1
             Do While tokens.Read(i, current).Token = TokenIcer.TokenParser.Tokens.Let
                 Call list.Add(current)
+                If i = tokens.Length Then
+                    Exit Do
+                End If
             Loop
 
             Dim value = list.ToArray(Function(x) New LetClosure(x, parent))
