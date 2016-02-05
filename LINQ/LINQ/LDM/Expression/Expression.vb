@@ -50,5 +50,27 @@ Namespace LDM.Expression
             AfterDeclare = statement.AfterDeclare.ToArray(Function(x) New LetClosure(x))
             SelectClosure = New SelectClosure(statement.SelectClosure)
         End Sub
+
+        Public Sub Execute()
+            'Using Compiler As DynamicCompiler = New DynamicCompiler(Statement, SDK_PATH.AvaliableSDK) 'Dynamic code compiling.(动态编译代码)
+            '    Dim LINQEntityLibFile As String = Statement.Object.RegistryType.AssemblyFullPath '
+
+            '    If Not String.Equals(FileIO.FileSystem.GetParentPath(LINQEntityLibFile), System.Windows.Forms.Application.StartupPath) Then
+            '        LINQEntityLibFile = String.Format("{0}\TEMP_LINQ.Entity.lib", System.Windows.Forms.Application.StartupPath)
+
+            '        If FileIO.FileSystem.FileExists(LINQEntityLibFile) Then
+            '            Call FileIO.FileSystem.DeleteFile(LINQEntityLibFile, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+            '        End If
+            '        Call FileIO.FileSystem.CopyFile(Statement.Object.RegistryType.AssemblyFullPath, LINQEntityLibFile)
+            '    End If
+
+            '    Dim ReferenceAssemblys As String() = New String() {LQueryFramework.ReferenceAssembly, LINQEntityLibFile}
+            '    Dim CompiledAssembly = Compiler.Compile(ReferenceAssemblys)
+            '    Statement.ILINQProgram = DynamicInvoke.GetType(CompiledAssembly, Framework.DynamicCode.VBC.DynamicCompiler.ModuleName).First
+            '    Statement._CompiledCode = Compiler.CompiledCode
+            'End Using
+
+            'Return Statement.Initialzie
+        End Sub
     End Class
 End Namespace

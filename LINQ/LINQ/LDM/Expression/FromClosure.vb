@@ -33,7 +33,18 @@ Namespace LDM.Expression
         Sub New(source As Statements.Tokens.FromClosure, registry As TypeRegistry)
             Call MyBase.New(source)
 
+            'Me.RegistryType = Statement.TypeRegistry.Find(TypeId)
+            'If RegistryType Is Nothing Then
+            '    Throw New TypeMissingExzception("Could not found any information about the type {0}.", TypeId)
+            'Else
+            '    Dim ILINQCollection As System.Type = _tokens.ObjectCollection.LoadExternalModule(RegistryType)
+            '    Statement.Collection.ILINQCollection = Activator.CreateInstance(ILINQCollection)
+            '    Me.TypeId = Statement.Collection.ILINQCollection.GetEntityType.FullName
+            'End If
+        End Sub
 
+        Public Sub Initialize()
+            '  Me.SetObject = DynamicInvoke.GetMethod(_statement.ILINQProgram, DynamicCompiler.SetObjectName)
         End Sub
 
         Public Overrides Function ToString() As String

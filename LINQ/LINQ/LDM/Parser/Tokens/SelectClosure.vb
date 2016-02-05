@@ -8,6 +8,17 @@ Namespace Statements.Tokens
         Friend Expression As CodeDom.CodeExpression
         Friend SelectMethod As System.Reflection.MethodInfo
 
+        ''' <summary>
+        ''' 通过Select表达式所产生的数据投影
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Projects As Project()
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="tokens">使用逗号分隔数据投影</param>
+        ''' <param name="parent"></param>
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.TokenParser.Tokens.Select, tokens, parent)
             Call Me.TryParse()
@@ -29,5 +40,9 @@ Namespace Statements.Tokens
         Public Sub Initialzie()
             SelectMethod = DynamicInvoke.GetMethod(MyBase._statement.ILINQProgram, SelectConstructCompiler.SelectMethodName)
         End Sub
+    End Class
+
+    Public Class Project
+        Public Property value As TokenIcer.Token()
     End Class
 End Namespace

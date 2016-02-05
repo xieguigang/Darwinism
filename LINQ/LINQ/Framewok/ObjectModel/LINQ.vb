@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.LINQ.Script
 Imports Microsoft.VisualBasic.LINQ.Statements
+Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
 
 Namespace Framework.ObjectModel
 
@@ -20,7 +21,7 @@ Namespace Framework.ObjectModel
         Sub New(Statement As LINQStatement, Runtime As I_DynamicsRuntime)
             Me.StatementInstance = Statement.CreateInstance  'Create a instance for the LINQ entity and intialzie the components
             Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
-            Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
+            '  Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
             Me.SelectConstruct = Function() Statement.SelectClosure.SelectMethod.Invoke(StatementInstance, Nothing)
             Me.source = LINQ.GetCollection(Statement, Runtime)
             Me.Statement = Statement
@@ -28,7 +29,7 @@ Namespace Framework.ObjectModel
         End Sub
 
         Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As I_DynamicsRuntime) As Object()
-            If Statement.source.Type = Statements.Tokens.InClosure.CollectionTypes.File Then
+            If Statement.source.Type = SourceTypes.FileURI Then
                 Return Statement.source.ILINQCollection.GetCollection(Statement.source.Value)
             Else
                 '返回运行时环境中的对象集合
