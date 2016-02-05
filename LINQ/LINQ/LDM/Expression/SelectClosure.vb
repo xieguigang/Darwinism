@@ -9,7 +9,7 @@ Namespace LDM.Expression
 
         Friend SelectMethod As System.Reflection.MethodInfo
 
-        Sub New(source As Statements.Tokens.FromClosure)
+        Sub New(source As Statements.Tokens.SelectClosure)
             Call MyBase.New(source)
 
 

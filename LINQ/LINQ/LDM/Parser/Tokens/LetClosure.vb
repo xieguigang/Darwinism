@@ -37,11 +37,32 @@ Namespace Statements.Tokens
     Public Module Parser
 
         Public Function GetPreDeclare(tokens As ClosureTokens(), parent As LINQStatement) As LetClosure()
+            Dim i As Integer = 2
+            Dim current As ClosureTokens = Nothing
+            Dim list As New List(Of ClosureTokens)
 
+            Do While tokens.Read(i, current).Token = TokenIcer.TokenParser.Tokens.Let
+                Call list.Add(current)
+            Loop
+
+            Dim value = list.ToArray(Function(x) New LetClosure(x, parent))
+            Return value
         End Function
 
         Public Function GetAfterDeclare(tokens As ClosureTokens(), parent As LINQStatement) As LetClosure()
+            Dim i As Integer = 2
+            Dim current As ClosureTokens = Nothing
+            Dim list As New List(Of ClosureTokens)
 
+            Do While tokens.Read(i, current).Token <> TokenIcer.TokenParser.Tokens.Where
+            Loop
+            i += 1
+            Do While tokens.Read(i, current).Token = TokenIcer.TokenParser.Tokens.Let
+                Call list.Add(current)
+            Loop
+
+            Dim value = list.ToArray(Function(x) New LetClosure(x, parent))
+            Return value
         End Function
     End Module
 End Namespace

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Statements
+﻿Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Statements
 
 Namespace LDM.Expression
 
@@ -41,8 +42,13 @@ Namespace LDM.Expression
         ''' <remarks></remarks>
         Public Property SelectClosure As SelectClosure
 
-        Sub New(statement As LINQStatement)
-
+        Sub New(statement As LINQStatement, registry As TypeRegistry)
+            var = New FromClosure(statement.var, registry)
+            source = New InClosure(statement.source)
+            PreDeclare = statement.PreDeclare.ToArray(Function(x) New LetClosure(x))
+            Where = New WhereClosure(statement.Where)
+            AfterDeclare = statement.AfterDeclare.ToArray(Function(x) New LetClosure(x))
+            SelectClosure = New SelectClosure(statement.SelectClosure)
         End Sub
     End Class
 End Namespace

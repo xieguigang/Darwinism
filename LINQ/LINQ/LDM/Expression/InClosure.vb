@@ -55,7 +55,7 @@ Namespace LDM.Expression
             End Get
         End Property
 
-        Sub New(source As Statements.Tokens.FromClosure)
+        Sub New(source As Statements.Tokens.InClosure)
             Call MyBase.New(source)
 
 

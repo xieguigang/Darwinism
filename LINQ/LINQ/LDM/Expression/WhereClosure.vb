@@ -11,7 +11,7 @@ Namespace LDM.Expression
 
         Friend Expression As CodeExpression
         Friend TestMethod As MethodInfo
-        Sub New(source As Statements.Tokens.FromClosure)
+        Sub New(source As Statements.Tokens.WhereClosure)
             Call MyBase.New(source)
 
 

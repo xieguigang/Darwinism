@@ -30,7 +30,7 @@ Namespace LDM.Expression
 
         Friend SetObject As System.Reflection.MethodInfo
 
-        Sub New(source As Statements.Tokens.FromClosure)
+        Sub New(source As Statements.Tokens.FromClosure, registry As TypeRegistry)
             Call MyBase.New(source)
 
 

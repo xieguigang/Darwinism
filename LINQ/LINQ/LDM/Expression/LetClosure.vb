@@ -12,7 +12,7 @@ Namespace LDM.Expression
 
         Friend Expression As CodeDom.CodeExpression
 
-        Sub New(source As Statements.Tokens.FromClosure)
+        Sub New(source As Statements.Tokens.LetClosure)
             Call MyBase.New(source)
 
 
