@@ -91,6 +91,16 @@ Namespace Framework.Provider
             Return True
         End Function
 
+        ''' <summary>
+        ''' 扫描安装应用程序文件夹之中的所有插件
+        ''' </summary>
+        Public Sub InstallCurrent()
+            Dim dlls = FileIO.FileSystem.GetFiles(App.HOME, FileIO.SearchOption.SearchTopLevelOnly, "*.dll", "*.exe")
+            For Each assm As String In dlls
+                Call Register(assm)
+            Next
+        End Sub
+
         Public Shared Function Load(Path As String) As TypeRegistry
             If FileIO.FileSystem.FileExists(Path) Then
                 Dim registry As TypeRegistry = Path.LoadTextDoc(Of TypeRegistry)()
@@ -101,6 +111,10 @@ Namespace Framework.Provider
                     .typeDefs = Nothing
                 }
             End If
+        End Function
+
+        Public Shared Function LoadDefault() As TypeRegistry
+            Return TypeRegistry.Load(LQueryFramework.DefaultFile)
         End Function
 
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean

@@ -30,6 +30,11 @@ Namespace Framework.Provider
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Xml.Serialization.XmlAttribute> Public Property TypeId As String
+        ''' <summary>
+        ''' 函数名称
+        ''' </summary>
+        ''' <returns></returns>
+        <Xml.Serialization.XmlAttribute> Public Property Func As String
 
         Public Function LoadAssembly() As Assembly
             Dim path As String = FileIO.FileSystem.GetFileInfo(Assembly).FullName
