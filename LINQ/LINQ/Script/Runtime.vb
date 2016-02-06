@@ -59,14 +59,14 @@ Namespace Script
 #End Region
 
 
-        Public Function GetCollection(CollectionReference As InClosure) As Object()
-            Dim LQuery = From Item In _vars Where String.Equals(CollectionReference.Value, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item.Data  '
-            Dim Result = LQuery.ToArray
-            If Result.Count = 0 Then
-                Return New Object() {}
-            Else
-                Return Result.First
-            End If
+        Public Function GetResource(source As InClosure) As IEnumerable
+            'Dim LQuery = From Item In _vars Where String.Equals(source.Value, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item.Data  '
+            'Dim Result = LQuery.ToArray
+            'If Result.Count = 0 Then
+            '    Return New Object() {}
+            'Else
+            '    Return Result.First
+            'End If
         End Function
 
         ''' <summary>

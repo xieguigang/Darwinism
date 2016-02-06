@@ -68,34 +68,7 @@ Namespace Statements.Tokens
     ''' <remarks></remarks>
     Public MustInherit Class InClosure : Inherits Closure
 
-        ''' <summary>
-        ''' ILINQCollection对象的实例
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Property ILINQCollection As ILinqProvider
-
         Public MustOverride ReadOnly Property Type As SourceTypes
-
-
-        Public ReadOnly Property IsParallel As Boolean
-            Get
-                Return False
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' The file io object url or a object collection reference in the LINQ Frameowrk runtime. 
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property Value As String
-            Get
-                '       Return _original
-            End Get
-        End Property
 
         Sub New(token As ClosureTokens, parent As LINQStatement)
             Call MyBase.New(token, parent)

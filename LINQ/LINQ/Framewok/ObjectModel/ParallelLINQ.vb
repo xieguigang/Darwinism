@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Script
+﻿Imports Microsoft.VisualBasic.LINQ.LDM.Expression
+Imports Microsoft.VisualBasic.LINQ.Script
 Imports Microsoft.VisualBasic.LINQ.Statements
 
 Namespace Framework.ObjectModel
@@ -9,8 +10,8 @@ Namespace Framework.ObjectModel
     ''' <remarks></remarks>
     Public Class ParallelLINQ : Inherits LINQ
 
-        Sub New(Statement As LINQStatement, FrameworkRuntime As DynamicsRuntime)
-            Call MyBase.New(Statement, Runtime:=FrameworkRuntime)
+        Sub New(expression As Expression, FrameworkRuntime As DynamicsRuntime)
+            Call MyBase.New(expression, Runtime:=FrameworkRuntime)
         End Sub
 
         Public Overrides Function EXEC() As Object()

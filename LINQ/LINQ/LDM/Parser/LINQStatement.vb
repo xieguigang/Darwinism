@@ -80,12 +80,6 @@ Namespace Statements
             End Get
         End Property
 
-        Public ReadOnly Property IsParallel As Boolean
-            Get
-                Return Me.source.IsParallel
-            End Get
-        End Property
-
         ''' <summary>
         ''' Original statement text of this linq expression
         ''' </summary>

@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.LINQ.Framework.ObjectModel
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+Imports Microsoft.VisualBasic.LINQ.LDM.Expression
 Imports Microsoft.VisualBasic.LINQ.Script
 Imports Microsoft.VisualBasic.LINQ.Statements
 
@@ -147,10 +148,12 @@ Namespace Framework
         ''' <returns></returns>
         ''' <remarks></remarks>
         Private Function __createObject(statement As LINQStatement) As ObjectModel.LINQ
-            If statement.source.IsParallel Then
-                Return New ParallelLINQ(Statement:=statement, FrameworkRuntime:=Me.Runtime)
+            Dim expr As Expression = New Expression(statement, Registry)
+
+            If expr.source.IsParallel Then
+                '     Return New ParallelLINQ(Statement:=statement, FrameworkRuntime:=Me.Runtime)
             Else
-                Return New ObjectModel.LINQ(Statement:=statement, Runtime:=Me.Runtime)
+                '      Return New ObjectModel.LINQ(Statement:=statement, Runtime:=Me.Runtime)
             End If
         End Function
 

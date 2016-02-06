@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Script
+﻿Imports Microsoft.VisualBasic.LINQ.LDM.Expression
+Imports Microsoft.VisualBasic.LINQ.Script
 Imports Microsoft.VisualBasic.LINQ.Statements
 Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
 
@@ -18,7 +19,7 @@ Namespace Framework.ObjectModel
         Protected Friend source As Object()
         Protected Friend FrameworkRuntime As DynamicsRuntime
 
-        Sub New(Statement As LINQStatement, Runtime As DynamicsRuntime)
+        Sub New(expression As Expression, Runtime As DynamicsRuntime)
             Me.StatementInstance = Statement.CreateInstance  'Create a instance for the LINQ entity and intialzie the components
             '  Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
             '  Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
@@ -30,10 +31,10 @@ Namespace Framework.ObjectModel
 
         Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As DynamicsRuntime) As Object()
             If Statement.source.Type = SourceTypes.FileURI Then
-                Return Statement.source.ILINQCollection.GetResource(Statement.source.Value)
+                '    Return Statement.source.ILINQCollectin.GetResource(Statement.source.Value)
             Else
                 '返回运行时环境中的对象集合
-                Return Runtime.GetCollection(Statement.source)
+                Return Runtime.GetResource(Statement.source)
             End If
         End Function
 

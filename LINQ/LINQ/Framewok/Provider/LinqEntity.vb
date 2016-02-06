@@ -6,14 +6,19 @@ Namespace Framework.Provider
     ''' LINQ entity type
     ''' </summary>
     ''' <remarks></remarks>
-    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Struct, AllowMultiple:=False, Inherited:=True)>
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public Class LinqEntity : Inherits System.Attribute
 
         Public ReadOnly Property Type As String
 
         Public Shared ReadOnly Property ILinqEntity As Type = GetType(LinqEntity)
 
-        Sub New(type As String)
+        ''' <summary>
+        ''' 方法应该申明在模块之中，或者Class之中应该是共享的静态方法
+        ''' </summary>
+        ''' <param name="type">类型的简称</param>
+        ''' <param name="ref">实际引用的类型位置</param>
+        Sub New(type As String, ref As Type)
             Me.Type = type
         End Sub
 
