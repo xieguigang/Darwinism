@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+﻿Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 
 Module Program
 
@@ -9,7 +10,10 @@ Module Program
     Public Function Main() As Integer
 
         Dim s As String = "From var As Type In ""$source->parallel"" Let x = var -> aa(d,""g ++ "") Let y as string = var -> aa(d,""g ++ "") where x -> test2(test3(xx),var) is true Let x = var -> aa(d,""g ++ "") Let x = var -> aa(d,""g ++ "") Let x = var -> aa(d,""g ++ "") select new varType(var,x), x+3"
+        s = " from var  as typedef in ""./settings/LinqRegistry.xml"" where var -> name = ""typedef"" let val as string = mid(var->assembly,5) select var->name , var -> typeid"
         Dim expr = LINQ.Statements.LINQStatement.TryParse(s)
+        Dim runtime As New LQueryFramework
+        Dim sss = runtime.EXEC(expr)
 
         Dim r As TypeRegistry = TypeRegistry.LoadDefault
         Dim h = r.GetHandle("typedef")

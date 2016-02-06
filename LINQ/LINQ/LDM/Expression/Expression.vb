@@ -45,10 +45,10 @@ Namespace LDM.Expression
 
         Sub New(statement As LINQStatement, registry As TypeRegistry)
             var = New FromClosure(statement.var, registry)
-            source = New InClosure(statement.source)
-            PreDeclare = statement.PreDeclare.ToArray(Function(x) New LetClosure(x))
+            source = New InClosure(statement.source, var, registry)
+            PreDeclare = statement.PreDeclare.ToArray(Function(x) New LetClosure(x, registry))
             Where = New WhereClosure(statement.Where)
-            AfterDeclare = statement.AfterDeclare.ToArray(Function(x) New LetClosure(x))
+            AfterDeclare = statement.AfterDeclare.ToArray(Function(x) New LetClosure(x, registry))
             SelectClosure = New SelectClosure(statement.SelectClosure)
         End Sub
 

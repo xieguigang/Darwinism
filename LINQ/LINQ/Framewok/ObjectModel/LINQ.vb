@@ -34,17 +34,17 @@ Namespace Framework.ObjectModel
                 '    Return Statement.source.ILINQCollectin.GetResource(Statement.source.Value)
             Else
                 '返回运行时环境中的对象集合
-                Return Runtime.GetResource(Statement.source)
+                '   Return Runtime.GetResource(Statement.source)
             End If
         End Function
 
-        Public Overridable Function EXEC() As Object()
+        Public Overridable Function EXEC() As IEnumerable
             Dim LQuery = From [Object] As Object In source
                          Let f As Boolean = SetObject([Object])
                          Where True = Test()
                          Let t As Object = SelectConstruct()
                          Select t     'Build a LINQ query object model using the constructed elements
-            Return LQuery.ToArray 'Return the query result
+            Return LQuery 'Return the query result
         End Function
 
         Public Overrides Function ToString() As String

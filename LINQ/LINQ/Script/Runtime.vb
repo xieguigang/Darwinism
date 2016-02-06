@@ -12,11 +12,11 @@ Namespace Script
     Public Class DynamicsRuntime : Inherits DynamicObject
         Implements System.IDisposable
 
-        Dim _vars As List(Of Variable) = New List(Of Variable)
+        Dim _vars As Dictionary(Of String, Variable) = New Dictionary(Of String, Variable)
         Dim _registry As TypeRegistry
 
-        Public Function Evaluate(script As String) As Object()
-            Throw New NotImplementedException
+        Public Function Evaluate(script As String) As IEnumerable
+
         End Function
 
         Public Function Initialize() As Boolean
@@ -24,7 +24,7 @@ Namespace Script
         End Function
 
         Public Function SetVariable(var As String, value As Object) As Boolean
-            Throw New NotImplementedException
+
         End Function
 
 #Region "IDisposable Support"
@@ -59,32 +59,26 @@ Namespace Script
 #End Region
 
 
-        Public Function GetResource(source As InClosure) As IEnumerable
-            'Dim LQuery = From Item In _vars Where String.Equals(source.Value, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item.Data  '
-            'Dim Result = LQuery.ToArray
-            'If Result.Count = 0 Then
-            '    Return New Object() {}
-            'Else
-            '    Return Result.First
-            'End If
+        Public Function GetResource(source As String) As IEnumerable
+            If _vars.ContainsKey(source.ToLower.ShadowCopy(source)) Then
+                Return _vars(source).Data
+            Else
+                Return Nothing
+            End If
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Name"></param>
-        ''' <param name="Collection"></param>
+        ''' <param name="name"></param>
+        ''' <param name="source"></param>
         ''' <remarks></remarks>
-        Public Function SetObject(Name As String, Collection As Object()) As Boolean
-            Dim LQuery = From Item In _vars Where String.Equals(Name, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item '
-            Dim Result = LQuery.ToArray
-            If Result.Count = 0 Then '添加新纪录
-                Call _vars.Add({Name, Collection})
-            Else
-                Result.First.Data = Collection
+        Public Function SetObject(name As String, source As IEnumerable) As Boolean
+            If _vars.ContainsKey(name.ToLower.ShadowCopy(name)) Then
+                Call _vars.Remove(name)
             End If
-
-            Throw New NotImplementedException
+            Call _vars.Add(name, New Variable With {.Name = name, .Data = source})
+            Return True
         End Function
 
         Public Overrides Function ToString() As String
@@ -101,7 +95,7 @@ Namespace Script
         ''' 
         ''' </remarks>
         Public Function Source(FilePath As String) As Boolean
-            Throw New NotImplementedException
+
         End Function
     End Class
 End Namespace

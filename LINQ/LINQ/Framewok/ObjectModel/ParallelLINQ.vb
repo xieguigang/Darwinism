@@ -14,7 +14,7 @@ Namespace Framework.ObjectModel
             Call MyBase.New(expression, Runtime:=FrameworkRuntime)
         End Sub
 
-        Public Overrides Function EXEC() As Object()
+        Public Overrides Function EXEC() As IEnumerable
             Dim LQuery = From [Object] As Object In source.AsParallel
                          Let f As Boolean = SetObject([Object])
                          Where True = Test()

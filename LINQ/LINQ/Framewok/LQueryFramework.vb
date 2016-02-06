@@ -136,7 +136,7 @@ Namespace Framework
         ''' Next
         ''' Return List.ToArray
         ''' </remarks>
-        Public Function EXEC(statement As LINQStatement) As Object()
+        Public Function EXEC(statement As LINQStatement) As IEnumerable
             Using obj As ObjectModel.LINQ = __createObject(statement)
                 Return obj.EXEC
             End Using

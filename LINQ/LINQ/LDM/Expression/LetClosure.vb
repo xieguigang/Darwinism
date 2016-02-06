@@ -1,6 +1,9 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
 Imports System.CodeDom
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+Imports Microsoft.VisualBasic.LINQ.TokenIcer.TokenParser
+Imports Microsoft.VisualBasic.LINQ.Extensions
 
 Namespace LDM.Expression
 
@@ -10,26 +13,40 @@ Namespace LDM.Expression
     ''' <remarks></remarks>
     Public Class LetClosure : Inherits Closure
 
-        Friend Expression As CodeDom.CodeExpression
+        Public ReadOnly Property FieldDeclaration As CodeMemberField
 
-        Sub New(source As Statements.Tokens.LetClosure)
+        Sub New(source As Statements.Tokens.LetClosure, registry As TypeRegistry)
             Call MyBase.New(source)
 
-
+            Dim type As Type = __getType(registry)
+            FieldDeclaration = Field(source.Name, type.GetType)
+            Call __init()
         End Sub
 
-        Public Function ToFieldDeclaration() As CodeDom.CodeMemberField
-            'Dim CodeMemberField = New CodeDom.CodeMemberField("System.Object", Name)
-            'CodeMemberField.Attributes = CodeDom.MemberAttributes.Public
-            'Return CodeMemberField
+        Private Function __getType(registry As TypeRegistry) As Type
+            Dim source As Statements.Tokens.LetClosure =
+                DirectCast(_source, Statements.Tokens.LetClosure)
+            Dim type As TypeEntry = registry.Find(source.Type)
+            If type Is Nothing Then
+                ' 尝试系统类型
+                Dim typeDef As Type = Scripting.GetType(source.Type, True)
+                Return typeDef
+            Else
+                Return type.GetType
+            End If
         End Function
 
         Public Overrides Function ToString() As String
-            '      Return String.Format("Let {0} = {1}", Name, MyBase.TypeId)
+            Return Me._source.ToString
         End Function
 
+        ''' <summary>
+        ''' 在这里解析初始化赋值的表达式
+        ''' </summary>
+        ''' <returns></returns>
         Protected Overrides Function __parsing() As CodeExpression
-
+            Dim init As Func =
+                DirectCast(_source, Statements.Tokens.LetClosure).Expression.Args.First
         End Function
     End Class
 End Namespace

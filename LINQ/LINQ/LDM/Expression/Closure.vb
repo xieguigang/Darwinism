@@ -9,10 +9,13 @@ Namespace LDM.Expression
 
         Sub New(source As Statements.Tokens.Closure)
             _source = source
-            _expression = __parsing()
         End Sub
 
         Protected MustOverride Function __parsing() As CodeDom.CodeExpression
+
+        Protected Sub __init()
+            _expression = __parsing()
+        End Sub
 
         Public Overrides Function ToString() As String
             Return _source.ToString
