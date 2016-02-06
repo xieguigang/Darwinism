@@ -10,6 +10,7 @@ Namespace Framework.Provider
     Public Class LinqEntity : Inherits System.Attribute
 
         Public ReadOnly Property Type As String
+        Public ReadOnly Property RefType As Type
 
         Public Shared ReadOnly Property ILinqEntity As Type = GetType(LinqEntity)
 
@@ -20,6 +21,7 @@ Namespace Framework.Provider
         ''' <param name="ref">实际引用的类型位置</param>
         Sub New(type As String, ref As Type)
             Me.Type = type
+            Me.RefType = ref
         End Sub
 
         Public Overrides Function ToString() As String

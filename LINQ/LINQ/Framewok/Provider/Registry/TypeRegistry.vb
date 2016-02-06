@@ -66,20 +66,16 @@ Namespace Framework.Provider
         ''' <remarks>查询出目标元素的类型定义并获取信息</remarks>
         Public Function Register(assmPath As String) As Boolean
             Dim assm As Assembly = Assembly.LoadFrom(IO.Path.GetFullPath(assmPath)) 'Load external module
-            Dim typeDefs As TypeInfo() =
-                LQueryFramework.LoadAssembly(assm, LinqEntity.ILinqEntity) 'Get type define informations of LINQ entity
+            Dim typeDefs As Type() = assm.GetTypes  'Get type define informations of LINQ entity
 
             If typeDefs.IsNullOrEmpty Then Return False
 
-            Dim LQuery As IEnumerable(Of TypeEntry) =
-                    From type As Type In typeDefs
-                    Select New TypeEntry With {
-                        .name = LinqEntity.GetEntityType(type),
-                        .Assembly = assmPath,
-                        .TypeId = type.FullName
-                    }        'Generate the resitry item for each external type
+            Dim LQuery = From type As Type In typeDefs
+                         Let entries As TypeEntry() = __parsingEntry(type, assm)
+                         Where Not entries.IsNullOrEmpty
+                         Select entries
 
-            For Each x As TypeEntry In LQuery     'Update exists registry item or insrt new item into the table
+            For Each x As TypeEntry In LQuery.MatrixToList      'Update exists registry item or insrt new item into the table
                 Dim exists As TypeEntry = Find(x.name)         '在注册表中查询是否有已注册的类型
                 If exists Is Nothing Then
                     Call Me.typeDefs.Add(x)  'Insert new record.(添加数据)
@@ -89,6 +85,24 @@ Namespace Framework.Provider
                 End If
             Next
             Return True
+        End Function
+
+        Private Shared Function __parsingEntry(type As Type, assm As Assembly) As TypeEntry()
+            Dim methods As MethodInfo() = type.GetMethods(bindingAttr:=BindingFlags.Static)
+            Dim LQuery = (From x As MethodInfo In methods
+                          Let attrs As Object() = x.GetCustomAttributes(LinqEntity.ILinqEntity, inherit:=True)
+                          Where Not attrs.IsNullOrEmpty
+                          Select x,
+                              attr = DirectCast(attrs(Scan0), LinqEntity))
+            Dim path As String = FileIO.FileSystem.GetFileInfo(assm.Location).Name
+            Dim result As TypeEntry() = LQuery.ToArray(
+                Function(x) New TypeEntry With {
+                    .Func = x.x.Name,
+                    .Assembly = path,
+                    .name = x.attr.Type,
+                    .TypeId = x.attr.RefType.FullName
+                })
+            Return result
         End Function
 
         ''' <summary>
