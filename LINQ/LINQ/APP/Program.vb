@@ -14,6 +14,8 @@ Module Program
         Dim r As TypeRegistry = TypeRegistry.LoadDefault
         Dim h = r.GetHandle("typedef")
         Dim c = h("E:\Microsoft.VisualBasic.Parallel\trunk\LINQ\LINQ\bin\Debug\Settings\LinqRegistry.xml")
+        Dim tt = r.Find("typedef")
+        Dim t = tt.GetType
 
         Return GetType(CLI).RunCLI(App.CommandLine, AddressOf __exeEmpty)
     End Function

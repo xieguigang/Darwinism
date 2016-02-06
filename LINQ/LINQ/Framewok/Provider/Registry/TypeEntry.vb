@@ -47,8 +47,15 @@ Namespace Framework.Provider
             Return assm
         End Function
 
+        ''' <summary>
+        ''' 得到集合之中的元素的类型
+        ''' </summary>
+        ''' <returns></returns>
         Public Overloads Function [GetType]() As Type
-            Dim assm As Assembly = LoadAssembly()
+            Dim tokens As String() = Me.TypeId.Split("!"c)
+            Dim assmPath As String = FileIO.FileSystem.GetFileInfo(tokens(Scan0)).FullName
+            Dim assm As Assembly = System.Reflection.Assembly.LoadFile(assmPath)
+            Dim typeId As String = tokens(1)
             Dim type As Type = assm.GetType(TypeId)
             Return type
         End Function
