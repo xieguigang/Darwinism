@@ -1,5 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
+Imports Microsoft.VisualBasic.LINQ.LDM
+Imports Microsoft.VisualBasic.LINQ.TokenIcer
 
 Namespace Statements.Tokens
 
@@ -9,18 +11,44 @@ Namespace Statements.Tokens
     ''' <remarks></remarks>
     Public Class LetClosure : Inherits Closure
 
-        Friend Expression As CodeDom.CodeExpression
+        ''' <summary>
+        ''' Variable name
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Name As String
 
         ''' <summary>
-        ''' 
+        ''' Optional
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Type As String
+
+        Public Property Expression As Func
+
+        ''' <summary>
+        ''' Let var = expression
         ''' </summary>
         ''' <remarks></remarks>
         Sub New(token As ClosureTokens, parent As LINQStatement)
             Call MyBase.New(token, parent)
-            'Dim Name As String = Regex.Match([Declare], ".+?\=").Value
-            'MyBase.Name = Name.Replace("=", "").Trim
-            'MyBase.TypeId = Mid([Declare], Len(Name) + 1).Trim
-            'Me.Expression = Parser.ParseExpression(MyBase.TypeId)
+
+            Name = _source.Tokens.First.TokenValue
+
+            Dim sk As Integer
+
+            If _source.Tokens(1).TokenName = TokenParser.Tokens.Equals Then
+                sk = 2                ' 没有申明类型
+            Else
+                If _source.Tokens(1).TokenName = TokenParser.Tokens.As Then
+                    Type = _source.Tokens(2).TokenValue
+                    sk = 3
+                Else
+                    Throw New SyntaxErrorException
+                End If
+            End If
+
+            Dim expr = _source.Tokens.Skip(2).ToArray
+            Expression = New Queue(Of Token)(expr).Parsing
         End Sub
 
         Public Function ToFieldDeclaration() As CodeDom.CodeMemberField

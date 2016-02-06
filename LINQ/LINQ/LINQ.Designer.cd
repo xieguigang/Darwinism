@@ -1,247 +1,387 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="LINQ.Framework.TypeRegistry" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="28.25" Y="2.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.LQueryFramework" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAgIAAACAgAAAEAAAAAAAAAAANAAAAAIAAAoAAAAA=</HashCode>
-      <FileName>Framewok\TypeRegistry.vb</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="LINQ.My.MySettings" Collapsed="true">
-    <Position X="24.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Statements.LINQStatement">
-    <Position X="18.75" Y="3" Width="5" />
-    <TypeIdentifier>
-      <HashCode>AIABJUABAAQAQAAkAAAAAAAAgAAAAKAgAAgBAAAAAAA=</HashCode>
-      <FileName>Statement\LINQStatement.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Statements.Tokens.ObjectDeclaration">
-    <Position X="14" Y="3" Width="3" />
-    <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAAQAEAgAAAAQAAAAAgAAgAAAAAAAAgAA=</HashCode>
-      <FileName>Statement\Tokens\ObjectDeclaration.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Statements.Tokens.Token">
-    <Position X="11.25" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Statement\Tokens\Token.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Statements.Tokens.WhereCondition">
-    <Position X="4.75" Y="3" Width="2.75" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>Statement\Tokens\WhereCondition.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Framework.LQueryFramework" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="30" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAICAAAAAACAIAAEAUAABAAABAAAABAgAAAAA=</HashCode>
+      <HashCode>AAAAAAAAoCAAAAAACAIAAEAUACJAAABAAAABAgAAAAA=</HashCode>
       <FileName>Framewok\LQueryFramework.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="LINQ.Statements.Tokens.ObjectCollection">
-    <Position X="8.25" Y="3" Width="4" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="LINQ.Statements.Tokens.ObjectCollection.CollectionTypes">
-        <TypeIdentifier>
-          <NewMemberFileName>Statement\Tokens\ObjectCollection.vb</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC.DynamicCompiler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAIAAEAAIAAAAAAAAAACAAAQAgAgAAAAA=</HashCode>
-      <FileName>Statement\Tokens\ObjectCollection.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Framework.DynamicCode.AnonymousType" Collapsed="true">
-    <Position X="24.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQACAAA=</HashCode>
-      <FileName>Framewok\DynamicCode\AnonymousType.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Parser.Parser" Collapsed="true">
-    <Position X="28.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAgAACAAAAgAAAAAAAIAAIAACAAAAAggA=</HashCode>
-      <FileName>Parser\Parser.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Parser.Token" Collapsed="true">
-    <Position X="24.75" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAAEAQAEAAAAAAAAAAIAARAACAAABAA=</HashCode>
-      <FileName>Parser\Token.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Parser.Tokenizer" Collapsed="true">
-    <Position X="26.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAAIAAAgAAAQEABCABAQAAAAAAAAQIAAIAAACgAA=</HashCode>
-      <FileName>Parser\Tokenizer.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Statements.Tokens.ReadOnlyObject">
-    <Position X="13" Y="7" Width="5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Class Name="LINQ.Statements.Tokens.ReadOnlyObject.Parser">
-        <TypeIdentifier>
-          <NewMemberFileName>Statement\Tokens\ReadOnlyObject.vb</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAgAAQAAAAAAAAAAA=</HashCode>
-      <FileName>Statement\Tokens\ReadOnlyObject.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Statements.Tokens.SelectConstruct">
-    <Position X="1.25" Y="3" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAIAAAAAA=</HashCode>
-      <FileName>Statement\Tokens\SelectConstruct.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Framework.DynamicCode.VBC.DynamicCompiler" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="26.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AABAAIAAACAAAIAJAAAABAAIAAQAAAADAAgAAgAAAEQ=</HashCode>
+      <HashCode>AABAAIAAACAAAIABAAAABAAAAAQAAAACAAgAAgAAAEQ=</HashCode>
       <FileName>Framewok\DynamicCode\vbc\DynamicCompiler.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="LINQ.Framework.DynamicCode.VBC.ReadOnlyObjectCompiler">
-    <Position X="0.5" Y="10.25" Width="2.75" />
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC.ReadOnlyObjectCompiler">
+    <Position X="14.75" Y="18.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAAAAAkAAAAACAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAAAAEAAAAAAAAAEAAAAACAAAAAAAAAAAAAAAEAAAEA=</HashCode>
       <FileName>Framewok\DynamicCode\vbc\ReadOnlyObjectCompiler.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LINQ.Framework.DynamicCode.VBC.SelectConstructCompiler">
-    <Position X="4" Y="10.25" Width="2.75" />
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC.SelectConstructCompiler">
+    <Position X="18" Y="18.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAgAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Framewok\DynamicCode\vbc\SelectConstructCompiler.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LINQ.Framework.DynamicCode.VBC.TokenCompiler">
-    <Position X="1.5" Y="8.5" Width="7.75" />
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC.TokenCompiler">
+    <Position X="16" Y="16.5" Width="7" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Framewok\DynamicCode\vbc\SelectConstructCompiler.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LINQ.Framework.DynamicCode.VBC.WhereConditionTestCompiler">
-    <Position X="7.5" Y="10.25" Width="2.75" />
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC.WhereConditionTestCompiler">
+    <Position X="21.5" Y="18.25" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAEAAACAAACAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAACAAACAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Framewok\DynamicCode\vbc\WhereConditionTestCompiler.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LINQ.Statements.Tokens.Options" Collapsed="true">
-    <Position X="26.5" Y="1.5" Width="1.5" />
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.ObjectModel.LINQ">
+    <Position X="0.5" Y="17.5" Width="5.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Statement\Tokens\Options.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Framework.Runtime" Collapsed="true">
-    <Position X="30" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAgAAAAAAAAAAAAAAAAQAAEAAAAA=</HashCode>
-      <FileName>Framewok\Runtime.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="LINQ.Framework.ObjectModel.LINQ">
-    <Position X="12.25" Y="11.5" Width="5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIABAACAAAAAECgAAAAASAAAAAAAAAAAACkAAgAA=</HashCode>
+      <HashCode>AAAAIABAACAAAAIEAgAAAAASAAAAAAAAAAAACkAAgAA=</HashCode>
       <FileName>Framewok\ObjectModel\LINQ.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="LINQ.Framework.ObjectModel.ParallelLINQ">
-    <Position X="12.5" Y="16" Width="4.5" />
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.ObjectModel.ParallelLINQ">
+    <Position X="1" Y="22" Width="5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Framewok\ObjectModel\ParallelLINQ.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="LINQ.Framework.Reflection.LINQEntity" Collapsed="true">
-    <Position X="28.25" Y="0.5" Width="1.5" />
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.Reflection.LINQEntity" Collapsed="true">
+    <Position X="35.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Framewok\ReflectionAttributes.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="LINQ.Framework.ILINQCollection" Collapsed="true">
-    <Position X="24.75" Y="5" Width="1.5" />
+  <Class Name="Microsoft.VisualBasic.LINQ.ClosureTokens" Collapsed="true">
+    <Position X="33.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>LDM\Parser\ClosureTokens.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.AnonymousType" Collapsed="true">
+    <Position X="32" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Framewok\DynamicCode\AnonymousType.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.[Property]" Collapsed="true">
+    <Position X="30.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Framewok\DynamicCode\AnonymousType.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.RegistryItem" Collapsed="true">
+    <Position X="30.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Framewok\TypeRegistry\RegistryItem.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Framework.TypeRegistry" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Framewok\TypeRegistry\TypeRegistry.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Expression.Closure">
+    <Position X="9" Y="10.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAUAAAAAEAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>LDM\Expression\Closure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Expression.Expression" Collapsed="true">
+    <Position X="37.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAgAAYAAAAAAAAAAAEAAIAAAAAAAAABAAA=</HashCode>
+      <FileName>LDM\Expression\Expression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Expression.FromClosure">
+    <Position X="4.25" Y="13.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAQAEAgAAAAQAAAAAAAAgAAAAAAAAgAA=</HashCode>
+      <FileName>LDM\Expression\FromClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Expression.InClosure">
+    <Position X="8.75" Y="13.5" Width="4" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Microsoft.VisualBasic.LINQ.LDM.Expression.InClosure.CollectionTypes">
+        <TypeIdentifier>
+          <NewMemberFileName>LDM\Expression\InClosure.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAIAAEAAIAAAAAAAAAACAAAQAgAgAAAAA=</HashCode>
+      <FileName>LDM\Expression\InClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Expression.LetClosure">
+    <Position X="13.5" Y="13.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAEAAAAAAAAAAAAgAAQAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Expression\LetClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Expression.SelectClosure">
+    <Position X="17.25" Y="13.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>LDM\Expression\SelectClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Expression.WhereClosure">
+    <Position X="1.25" Y="13.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAQAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Expression\WhereClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.LINQStatement" Collapsed="true">
+    <Position X="37.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIABBIAAAAAgAAIEAAAAAAAAAAEAAKAgAAgBCAABAAA=</HashCode>
+      <FileName>LDM\Parser\LINQStatement.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.Closure">
+    <Position X="13" Y="0.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAACQAAAEAAAAAEAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\Closure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.FromClosure">
+    <Position X="6.25" Y="3.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAgAAgAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\FromClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.UriRef">
+    <Position X="20.5" Y="7.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\InClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.Reference">
+    <Position X="25.25" Y="7.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\InClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.InClosure">
+    <Position X="22.25" Y="3.75" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAiAAAQAgAgAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\InClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.LetClosure">
+    <Position X="1.75" Y="3.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAgAAQAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\LetClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.Options" Collapsed="true">
+    <Position X="35.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\Options.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.SelectClosure">
+    <Position X="11" Y="3.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAgAAAAAAQAAAAIAAAAQA=</HashCode>
+      <FileName>LDM\Parser\Tokens\SelectClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.WhereClosure">
+    <Position X="15.75" Y="3.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\WhereClosure.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.LDM.Func" Collapsed="true">
+    <Position X="32" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>LDM\StackParser.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.My.MySettings" Collapsed="true">
+    <Position X="33.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Script.I_DynamicsRuntime" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAiAAAQAEAgAAAgQAAAAABAAAAAQAAkAAAAA=</HashCode>
+      <FileName>Script\Runtime.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Script.ScriptParser" Collapsed="true">
+    <Position X="32" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Script\ScriptParser.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Script.Variable" Collapsed="true">
+    <Position X="32" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Script\Variable.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Script.Tokens.FileIO" Collapsed="true">
+    <Position X="30.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Script\Tokens\FileIO.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Script.Tokens.Method" Collapsed="true">
+    <Position X="32" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Script\Tokens\Method.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.Script.Tokens.ValueAssignment" Collapsed="true">
+    <Position X="30.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Script\Tokens\ValueAssignment.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.TokenIcer.TokenParser" Collapsed="true">
+    <Position X="35.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAQAAAAAEAAAAAAAwAAACAARAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>TokenIcer.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.TokenIcer.Token" Collapsed="true">
+    <Position X="33.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAABAAAAAAGAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>TokenIcer.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.LINQ.TokenIcer.PeekToken" Collapsed="true">
+    <Position X="37.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAQAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>TokenIcer.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Microsoft.VisualBasic.LINQ.Framework.ILINQCollection" Collapsed="true">
+    <Position X="30.25" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Framewok\ILINQ.vb</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="LINQ.Parser.TokenType" Collapsed="true">
-    <Position X="26.5" Y="6" Width="1.5" />
+  <Enum Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.SourceTypes" Collapsed="true">
+    <Position X="30.25" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAiAAhAQAAAAAASIAAIEA=</HashCode>
-      <FileName>Parser\Enums.vb</FileName>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\InClosure.vb</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="LINQ.Parser.TokenPriority" Collapsed="true">
-    <Position X="24.75" Y="6" Width="1.5" />
+  <Module Name="Microsoft.VisualBasic.Linq.Extensions" Collapsed="true">
+    <Position X="35.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier />
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.CLI" Collapsed="true">
+    <Position X="30.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAIAAAAAAAAAEAAACQAAgAgAAAAABEAAAA=</HashCode>
-      <FileName>Parser\Enums.vb</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Module Name="LINQ.My.Resources.Resources" Collapsed="true">
-    <Position X="30" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>APP\CLI.vb</FileName>
     </TypeIdentifier>
   </Module>
-  <Module Name="LINQ.My.MySettingsProperty" Collapsed="true">
-    <Position X="28.25" Y="3.75" Width="1.5" />
+  <Module Name="Microsoft.VisualBasic.LINQ.Program" Collapsed="true">
+    <Position X="32" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAIAAAA=</HashCode>
+      <FileName>APP\Program.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.SDK_PATH" Collapsed="true">
+    <Position X="35.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Framewok\SDK_PATH.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.ClosureParser" Collapsed="true">
+    <Position X="32" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\ClosureParser.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.Framework.DynamicCode.DynamicInvoke" Collapsed="true">
+    <Position X="33.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Framewok\DynamicCode\DynamicInvoke.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.Parser" Collapsed="true">
+    <Position X="30.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\Parser\Tokens\LetClosure.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.LDM.StackParser" Collapsed="true">
+    <Position X="37.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LDM\StackParser.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.My.Resources.Resources" Collapsed="true">
+    <Position X="33.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAgIAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.LINQ.My.MySettingsProperty" Collapsed="true">
+    <Position X="37.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Module>
-  <Module Name="LINQ.Extensions" Collapsed="true">
-    <Position X="26.5" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAgAAAAAAAAAAAAAAAAAAAIAAAABAAAAAA=</HashCode>
-      <FileName>Extensions.vb</FileName>
-    </TypeIdentifier>
-  </Module>
-  <Module Name="LINQ.Framework.DynamicCode.DynamicInvoke" Collapsed="true">
-    <Position X="24.75" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
-      <FileName>Framewok\DynamicCode\DynamicInvoke.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Font Name="Segoe UI" Size="9" />

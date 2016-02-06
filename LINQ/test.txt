@@ -1,1 +1,1 @@
-From var As Type In $source->parallel Let x = var -> aa(d,$"g ++ ") and test(88*7u) where x -> test2(test3(xx),var) is true select new varType(var,x), x+3
+From var As Type In $source->parallel Let x as integer() = var -> aa(d,$"g ++ ") and test(88*7u) where x -> test2(test3(xx),var) is true select new varType(var,x), x+3

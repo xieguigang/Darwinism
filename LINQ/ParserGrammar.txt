@@ -1,7 +1,8 @@
 "->" Call
-"," ParamDeli
 "[0-9]+" Integer
 "[0-9]+\.+[0-9]+" Float
+"[a-zA-Z_][a-zA-Z0-9_]*\(\)" ArrayType
+"," ParamDeli
 "[ \t]+" WhiteSpace
 "[Ll][Ee][Tt]" Let
 "=" Equals
@@ -21,10 +22,10 @@
 "[oO][rR]" Or
 "[iI][sS]" Is
 "[aA][sS]" As
-"[iI][nN]" In
 "[fF][rR][oO][mM]" From
 "[wW][hH][eE][rR][eE]" Where
 "[sS][eE][lL][eE][cC][tT]" Select
-"[Ii][mM][pP][oO][rR][tT][sS]" Imports
+"^[Ii][mM][pP][oO][rR][tT][sS]" Imports
 "[a-zA-Z_][a-zA-Z0-9_]*" var
+"[iI][nN]" In
 "\$[a-zA-Z0-9_]*" varRef

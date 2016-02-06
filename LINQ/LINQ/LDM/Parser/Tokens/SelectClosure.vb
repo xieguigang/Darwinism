@@ -13,7 +13,7 @@ Namespace Statements.Tokens
         ''' 通过Select表达式所产生的数据投影
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Projects As Project()
+        Public ReadOnly Property Projects As Func()
 
         ''' <summary>
         ''' 
@@ -22,8 +22,7 @@ Namespace Statements.Tokens
         ''' <param name="parent"></param>
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.TokenParser.Tokens.Select, tokens, parent)
-
-            Dim stack = StackParser.Parsing(New Queue(Of TokenIcer.Token)(_source.Tokens))
+            Projects = StackParser.Parsing(New Queue(Of TokenIcer.Token)(_source.Tokens)).Args
         End Sub
 
         Private Shared Function __isDelimiter(x As TokenIcer.Token) As Boolean
@@ -33,9 +32,5 @@ Namespace Statements.Tokens
         Public Sub Initialzie()
             SelectMethod = DynamicInvoke.GetMethod(MyBase._statement.ILINQProgram, SelectConstructCompiler.SelectMethodName)
         End Sub
-    End Class
-
-    Public Class Project
-        Public Property value As TokenIcer.Token()
     End Class
 End Namespace
