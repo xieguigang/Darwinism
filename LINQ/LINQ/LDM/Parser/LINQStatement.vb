@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 
 Namespace Statements
 

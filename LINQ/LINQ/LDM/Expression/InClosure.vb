@@ -1,5 +1,7 @@
 ﻿Imports System.CodeDom
 Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
 
 Namespace LDM.Expression
 
@@ -9,33 +11,15 @@ Namespace LDM.Expression
     ''' <remarks></remarks>
     Public Class InClosure : Inherits Closure
 
-        Public Enum CollectionTypes
-            ''' <summary>
-            ''' 目标集合类型为一个数据文件
-            ''' </summary>
-            ''' <remarks></remarks>
-            File
-            ''' <summary>
-            ''' 目标集合类型为一个内存对象的引用
-            ''' </summary>
-            ''' <remarks></remarks>
-            Reference
-        End Enum
+        Public ReadOnly Property Type As SourceTypes
 
-        Dim CollectionType As InClosure.CollectionTypes = CollectionTypes.File
         ''' <summary>
         ''' ILINQCollection对象的实例
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property ILINQCollection As Framework.ILINQCollection
-
-        Public ReadOnly Property Type As InClosure.CollectionTypes
-            Get
-                Return CollectionType
-            End Get
-        End Property
+        Public Property ILINQCollection As ILinqProvider
 
         Public ReadOnly Property IsParallel As Boolean
             Get
@@ -67,18 +51,6 @@ Namespace LDM.Expression
             'Else
             '    Return Type.ToString
             'End If
-        End Function
-
-        ''' <summary>
-        ''' 加载外部模块之中的ILINQCollection类型信息
-        ''' </summary>
-        ''' <param name="RegistryItem"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function LoadExternalModule(RegistryItem As TypeEntry) As Type
-            Dim assm As System.Reflection.Assembly =
-                System.Reflection.Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
-            Return assm.GetType(RegistryItem.TypeId)
         End Function
 
         Protected Overrides Function __parsing() As CodeExpression

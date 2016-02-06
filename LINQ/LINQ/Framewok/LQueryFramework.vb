@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.LINQ.Framework.ObjectModel
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 Imports Microsoft.VisualBasic.LINQ.Script
 Imports Microsoft.VisualBasic.LINQ.Statements
 
@@ -11,10 +12,10 @@ Namespace Framework
         ''' LINQ查询框架的默认注册表文件的文件名
         ''' </summary>
         ''' <remarks></remarks>
-        Public Const DefaultFile As String = ".\LINQ.Framework.TypeDef.xml"
+        Public Const DefaultFile As String = "./Settings/LinqRegistry.xml"
 
-        Public Property TypeRegistry As TypeRegistry
-        Public Property Runtime As I_DynamicsRuntime
+        Public Property Registry As TypeRegistry
+        Public Property Runtime As DynamicsRuntime
 
         ''' <summary>
         ''' 本模块的完整的文件路径
@@ -24,35 +25,39 @@ Namespace Framework
         ''' <remarks></remarks>
         Public Shared ReadOnly Property ReferenceAssembly As String = App.ExecutablePath
 
-        Sub New(Optional TypeDef As String = DefaultFile)
-            TypeRegistry = TypeRegistry.Load(TypeDef)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="library">Registry library xml file path</param>
+        Sub New(Optional library As String = DefaultFile)
+            Registry = TypeRegistry.Load(library)
         End Sub
 
-        Const TypeMissingExzceptionItem As String =
+        Const TypeEntryMissingException As String =
             "There is a type missing error in this linq statement, where could not found any type registry information for type id ""{0}"""
-        Const TypeMissingExzceptionCollection As String =
+        Const LinqInterfaceMissingException As String =
             "There is a type missing error while trying to load the {0} ILINQ interface type definition."
 
         ''' <summary>
         ''' 加载外部模块，并查询出目标类型的ILINQCollection接口类型信息
         ''' </summary>
-        ''' <param name="TypeId">目标对象的类型标识符，即RegistryItem对象中的Name属性</param>
+        ''' <param name="typeId">目标对象的类型标识符，即RegistryItem对象中的Name属性</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function LoadExternalModule(TypeId As String) As System.Type
-            Dim RegistryItem = TypeRegistry.Find(TypeId)
+        Public Overloads Function [GetType](typeId As String) As Type
+            Dim typeDef As TypeEntry = Registry.Find(typeId)
 
-            If RegistryItem Is Nothing Then
-                Throw New TypeMissingExzception(TypeMissingExzceptionItem, TypeId)
+            If typeDef Is Nothing Then
+                Throw New TypeMissingExzception(TypeEntryMissingException, typeId)
             End If
 
-            Dim assm As Assembly = Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
-            Dim ILINQCollection As System.Type = assm.GetType(RegistryItem.TypeId, False, False)
+            Dim assm As Assembly = typeDef.LoadAssembly
+            Dim type As Type = assm.GetType(typeDef.TypeId, False, False)
 
-            If ILINQCollection Is Nothing Then
-                Throw New TypeMissingExzception(TypeMissingExzceptionCollection, TypeId)
+            If type Is Nothing Then
+                Throw New TypeMissingExzception(LinqInterfaceMissingException, typeId)
             Else
-                Return ILINQCollection
+                Return type
             End If
         End Function
 
@@ -60,13 +65,13 @@ Namespace Framework
         ''' 查找出目标模块之中的含有指定的自定义属性的所有类型
         ''' </summary>
         ''' <param name="assembly"></param>
-        ''' <param name="FindEntry">目标自定义属性的类型</param>
+        ''' <param name="findEntry">目标自定义属性的类型</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadAssembly(assembly As Assembly, FindEntry As System.Type) As TypeInfo()
+        Public Shared Function LoadAssembly(assembly As Assembly, findEntry As Type) As TypeInfo()
             Dim LQuery = From [mod] As TypeInfo
                          In assembly.DefinedTypes
-                         Let attrs As Object() = [mod].GetCustomAttributes(FindEntry, inherit:=False)
+                         Let attrs As Object() = [mod].GetCustomAttributes(findEntry, inherit:=False)
                          Where Not attrs Is Nothing AndAlso attrs.Length = 1
                          Select [mod] '
             Return LQuery.ToArray
@@ -76,19 +81,19 @@ Namespace Framework
         ''' 
         ''' </summary>
         ''' <param name="name"></param>
-        ''' <param name="Target"></param>
+        ''' <param name="target"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function GetValue(name As String, Target As Object) As Object
-            Dim Type As Type = Target.GetType
+        Public Shared Function GetValue(name As String, target As Object) As Object
+            Dim Type As Type = target.GetType
             Dim Properties As PropertyInfo() = Type.GetProperties
             Dim LQuery = From [Property] As PropertyInfo
                          In Properties
                          Where String.Equals([Property].Name, name, StringComparison.OrdinalIgnoreCase)
                          Select [Property] '
-            Dim Result As PropertyInfo = LQuery.FirstOrDefault
-            If Not Result Is Nothing Then
-                Return Result.GetValue(Target)
+            Dim result As PropertyInfo = LQuery.FirstOrDefault
+            If Not result Is Nothing Then
+                Return result.GetValue(target)
             Else
                 Dim ex As String = String.Format(PropertyNotFound, name)
                 Throw New DataException(ex)
@@ -103,16 +108,10 @@ Namespace Framework
         ''' <remarks></remarks>
         Public Class TypeMissingExzception : Inherits Exception
 
-            Dim _Msg As String
-
             Public Overrides ReadOnly Property Message As String
-                Get
-                    Return _Msg
-                End Get
-            End Property
 
-            Sub New(Msg As String, ParamArray arg As String())
-                _Msg = String.Format(Msg, arg)
+            Sub New(msg As String, ParamArray arg As String())
+                Me.Message = String.Format(msg, arg)
             End Sub
 
             Public Overrides Function ToString() As String
@@ -123,7 +122,7 @@ Namespace Framework
         ''' <summary>
         ''' Execute a compiled LINQ statement object model to query a object-orientale database.
         ''' </summary>
-        ''' <param name="Statement"></param>
+        ''' <param name="statement"></param>
         ''' <returns></returns>
         ''' <remarks>
         ''' Dim List As List(Of Object) = New List(Of Object)
@@ -136,9 +135,9 @@ Namespace Framework
         ''' Next
         ''' Return List.ToArray
         ''' </remarks>
-        Public Function EXEC(Statement As LINQStatement) As Object()
-            Using ObjectModel As LINQ.Framework.ObjectModel.LINQ = CreateObjectModel(Statement)
-                Return ObjectModel.EXEC
+        Public Function EXEC(statement As LINQStatement) As Object()
+            Using obj As ObjectModel.LINQ = __createObject(statement)
+                Return obj.EXEC
             End Using
         End Function
 
@@ -147,11 +146,11 @@ Namespace Framework
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Friend Function CreateObjectModel(Statement As LINQStatement) As LINQ.Framework.ObjectModel.LINQ
-            If Statement.source.IsParallel Then
-                Return New ParallelLINQ(Statement:=Statement, FrameworkRuntime:=Me.Runtime)
+        Private Function __createObject(statement As LINQStatement) As ObjectModel.LINQ
+            If statement.source.IsParallel Then
+                Return New ParallelLINQ(Statement:=statement, FrameworkRuntime:=Me.Runtime)
             Else
-                Return New LINQ.Framework.ObjectModel.LINQ(Statement:=Statement, Runtime:=Me.Runtime)
+                Return New ObjectModel.LINQ(Statement:=statement, Runtime:=Me.Runtime)
             End If
         End Function
 
@@ -162,7 +161,7 @@ Namespace Framework
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-                    Call TypeRegistry.Dispose()
+                    Call Registry.Dispose()
                     ' TODO:  释放托管状态(托管对象)。
                 End If
 
@@ -186,6 +185,5 @@ Namespace Framework
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
     End Class
 End Namespace

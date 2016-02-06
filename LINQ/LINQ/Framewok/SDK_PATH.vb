@@ -9,7 +9,7 @@ Module SDK_PATH
     ''' 从高版本到低版本排列，从x64到x86排列
     ''' </summary>
     ''' <remarks></remarks>
-    Private ReadOnly PathList As String() = New String() {
+    Private ReadOnly _pathList As String() = New String() {
         "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.3",
         "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1",
         "C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5",
@@ -28,7 +28,7 @@ Module SDK_PATH
     ''' <remarks></remarks>
     Public ReadOnly Property AvaliableSDK As String
         Get
-            For Each Path As String In PathList
+            For Each Path As String In _pathList
                 If FileIO.FileSystem.DirectoryExists(Path) Then
                     Return Path
                 End If

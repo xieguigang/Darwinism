@@ -1,9 +1,9 @@
 ﻿Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.LINQ.Framework.Reflection
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 
-Namespace Framework
+Namespace Framework.Provider
 
     ''' <summary>
     ''' Type registry table for loading the external LINQ entity assembly module.
@@ -67,14 +67,14 @@ Namespace Framework
         Public Function Register(assmPath As String) As Boolean
             Dim assm As Assembly = Assembly.LoadFrom(IO.Path.GetFullPath(assmPath)) 'Load external module
             Dim typeDefs As TypeInfo() =
-                LQueryFramework.LoadAssembly(assm, LINQEntity.ILINQEntity) 'Get type define informations of LINQ entity
+                LQueryFramework.LoadAssembly(assm, LinqEntity.ILinqEntity) 'Get type define informations of LINQ entity
 
             If typeDefs.IsNullOrEmpty Then Return False
 
             Dim LQuery As IEnumerable(Of TypeEntry) =
                     From type As Type In typeDefs
                     Select New TypeEntry With {
-                        .name = LINQEntity.GetEntityType(type),
+                        .name = LinqEntity.GetEntityType(type),
                         .Assembly = assmPath,
                         .TypeId = type.FullName
                     }        'Generate the resitry item for each external type

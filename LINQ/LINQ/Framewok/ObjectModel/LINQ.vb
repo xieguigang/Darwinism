@@ -8,7 +8,7 @@ Namespace Framework.ObjectModel
     ''' LINQ查询表达式的对象模型
     ''' </summary>
     ''' <remarks></remarks>
-    Friend Class LINQ : Implements System.IDisposable
+    Public Class LINQ : Implements System.IDisposable
 
         Protected Friend StatementInstance As Object
         Protected Friend Test As System.Func(Of Boolean)
@@ -16,9 +16,9 @@ Namespace Framework.ObjectModel
         Protected Friend SelectConstruct As System.Func(Of Object)
         Protected Friend Statement As LINQStatement
         Protected Friend source As Object()
-        Protected Friend FrameworkRuntime As I_DynamicsRuntime
+        Protected Friend FrameworkRuntime As DynamicsRuntime
 
-        Sub New(Statement As LINQStatement, Runtime As I_DynamicsRuntime)
+        Sub New(Statement As LINQStatement, Runtime As DynamicsRuntime)
             Me.StatementInstance = Statement.CreateInstance  'Create a instance for the LINQ entity and intialzie the components
             '  Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
             '  Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
@@ -28,9 +28,9 @@ Namespace Framework.ObjectModel
             Me.FrameworkRuntime = Runtime
         End Sub
 
-        Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As I_DynamicsRuntime) As Object()
+        Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As DynamicsRuntime) As Object()
             If Statement.source.Type = SourceTypes.FileURI Then
-                Return Statement.source.ILINQCollection.GetCollection(Statement.source.Value)
+                Return Statement.source.ILINQCollection.GetResource(Statement.source.Value)
             Else
                 '返回运行时环境中的对象集合
                 Return Runtime.GetCollection(Statement.source)

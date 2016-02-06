@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 
 Namespace Statements.Tokens
 
@@ -73,7 +74,7 @@ Namespace Statements.Tokens
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property ILINQCollection As Framework.ILINQCollection
+        Public Property ILINQCollection As ILinqProvider
 
         Public MustOverride ReadOnly Property Type As SourceTypes
 
@@ -99,18 +100,6 @@ Namespace Statements.Tokens
         Sub New(token As ClosureTokens, parent As LINQStatement)
             Call MyBase.New(token, parent)
         End Sub
-
-        ''' <summary>
-        ''' 加载外部模块之中的ILINQCollection类型信息
-        ''' </summary>
-        ''' <param name="RegistryItem"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function LoadExternalModule(RegistryItem As TypeEntry) As Type
-            Dim assm As System.Reflection.Assembly =
-                System.Reflection.Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
-            Return assm.GetType(RegistryItem.TypeId)
-        End Function
 
         Public Shared Function CreateObject(tokens As ClosureTokens(), parent As LINQStatement) As InClosure
             Dim source As ClosureTokens = Closure.GetTokens(TokenIcer.TokenParser.Tokens.In, tokens)

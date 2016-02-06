@@ -1,7 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-Namespace Framework
+Namespace Framework.Provider
 
     ''' <summary>
     ''' item in the type registry table

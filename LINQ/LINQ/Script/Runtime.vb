@@ -1,5 +1,6 @@
 ﻿Imports System.Dynamic
 Imports Microsoft.VisualBasic.LINQ.Framework
+Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
 
 Namespace Script
@@ -8,11 +9,11 @@ Namespace Script
     ''' LINQ脚本查询环境
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class I_DynamicsRuntime : Inherits DynamicObject
+    Public Class DynamicsRuntime : Inherits DynamicObject
         Implements System.IDisposable
 
-        Dim Variables As List(Of Variable) = New List(Of Variable)
-        Dim _TypeLibrary As TypeRegistry
+        Dim _vars As List(Of Variable) = New List(Of Variable)
+        Dim _registry As TypeRegistry
 
         Public Function Evaluate(script As String) As Object()
             Throw New NotImplementedException
@@ -59,7 +60,7 @@ Namespace Script
 
 
         Public Function GetCollection(CollectionReference As InClosure) As Object()
-            Dim LQuery = From Item In Variables Where String.Equals(CollectionReference.Value, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item.Data  '
+            Dim LQuery = From Item In _vars Where String.Equals(CollectionReference.Value, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item.Data  '
             Dim Result = LQuery.ToArray
             If Result.Count = 0 Then
                 Return New Object() {}
@@ -75,10 +76,10 @@ Namespace Script
         ''' <param name="Collection"></param>
         ''' <remarks></remarks>
         Public Function SetObject(Name As String, Collection As Object()) As Boolean
-            Dim LQuery = From Item In Variables Where String.Equals(Name, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item '
+            Dim LQuery = From Item In _vars Where String.Equals(Name, Item.Name, StringComparison.OrdinalIgnoreCase) Select Item '
             Dim Result = LQuery.ToArray
             If Result.Count = 0 Then '添加新纪录
-                Call Variables.Add({Name, Collection})
+                Call _vars.Add({Name, Collection})
             Else
                 Result.First.Data = Collection
             End If
@@ -87,7 +88,7 @@ Namespace Script
         End Function
 
         Public Overrides Function ToString() As String
-            Return String.Format("{0} variables in the LINQ runtime.", Variables.Count)
+            Return String.Format("{0} variables in the LINQ runtime.", _vars.Count)
         End Function
 
         ''' <summary>
