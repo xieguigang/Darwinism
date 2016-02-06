@@ -26,7 +26,7 @@ Namespace LDM.Expression
         ''' <remarks></remarks>
         Public Property TypeId As String
 
-        Public Property RegistryType As RegistryItem
+        Public Property RegistryType As TypeEntry
 
         Friend SetObject As System.Reflection.MethodInfo
 

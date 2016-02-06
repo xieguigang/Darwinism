@@ -1,4 +1,6 @@
 ﻿Imports System.Reflection
+Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.LINQ.Framework.Reflection
 
 Namespace Framework
@@ -8,28 +10,36 @@ Namespace Framework
     ''' (起始这个模块就是相当于一个类型缓存而已，因为程序可以直接读取dll文件里面的内容，但是直接读取的方法会造成性能下降，所以需要使用这个对象来缓存所需要的类型数据) 
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TypeRegistry : Implements System.IDisposable
+    Public Class TypeRegistry : Inherits ITextFile
+        Implements IDisposable
 
-        Public Property ExternalModules As List(Of RegistryItem)
+        <Xml.Serialization.XmlElement> Public Property typeDefs As TypeEntry()
+            Get
+                Return _typeHash.Values.ToArray
+            End Get
+            Set(value As TypeEntry())
+                If value Is Nothing Then
+                    _typeHash = New Dictionary(Of String, TypeEntry)
+                Else
+                    _typeHash = value.ToDictionary(Function(x) x.name.ToLower)
+                End If
+            End Set
+        End Property
 
-        Dim File As String
-
-        Public Overrides Function ToString() As String
-            Return File
-        End Function
+        Dim _typeHash As Dictionary(Of String, TypeEntry)
 
         ''' <summary>
         ''' 返回包含有该类型的目标模块的文件路径
         ''' </summary>
-        ''' <param name="Name">LINQ Entity集合中的元素的简称或者别称，即Item中的Name属性</param>
+        ''' <param name="name">LINQ Entity集合中的元素的简称或者别称，即Item中的Name属性</param>
         ''' <returns>If the key is not exists in this object, than the function will return a empty string.</returns>
         ''' <remarks></remarks>
-        Public Function FindAssemblyPath(Name As String) As String
-            Dim Item = Find(Name)
-            If Item Is Nothing Then
-                Return ""
+        Public Function FindAssemblyPath(name As String) As Assembly
+            Dim type As TypeEntry = Find(name)
+            If type Is Nothing Then
+                Return Nothing
             Else
-                Return Item.AssemblyFullPath
+                Return type.LoadAssembly
             End If
         End Function
 
@@ -37,46 +47,45 @@ Namespace Framework
         ''' Return a registry item in the table using its specific name property.
         ''' (返回注册表中的一个指定名称的项目)
         ''' </summary>
-        ''' <param name="Name"></param>
+        ''' <param name="name">大小写不敏感的</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Find(Name As String) As RegistryItem
-            For i As Integer = 0 To ExternalModules.Count - 1
-                If String.Equals(Name, ExternalModules(i).Name, StringComparison.OrdinalIgnoreCase) Then
-                    Return ExternalModules(i)
-                End If
-            Next
-            Return Nothing
+        Public Function Find(name As String) As TypeEntry
+            If _typeHash.ContainsKey(name.ToLower.ShadowCopy(name)) Then
+                Return _typeHash(name)
+            Else
+                Return Nothing
+            End If
         End Function
 
         ''' <summary>
         ''' Registry the external LINQ entity assembly module in the LINQFramework
         ''' </summary>
-        ''' <param name="AssemblyPath">DLL file path</param>
+        ''' <param name="assmPath">DLL file path</param>
         ''' <returns></returns>
         ''' <remarks>查询出目标元素的类型定义并获取信息</remarks>
-        Public Function Register(AssemblyPath As String) As Boolean
-            Dim assm As Assembly = Assembly.LoadFrom(IO.Path.GetFullPath(AssemblyPath)) 'Load external module
-            Dim ILINQEntityTypes As TypeInfo() =
+        Public Function Register(assmPath As String) As Boolean
+            Dim assm As Assembly = Assembly.LoadFrom(IO.Path.GetFullPath(assmPath)) 'Load external module
+            Dim typeDefs As TypeInfo() =
                 LQueryFramework.LoadAssembly(assm, LINQEntity.ILINQEntity) 'Get type define informations of LINQ entity
 
-            If ILINQEntityTypes.IsNullOrEmpty Then Return False
+            If typeDefs.IsNullOrEmpty Then Return False
 
-            Dim LQuery As IEnumerable(Of RegistryItem) =
-                    From Type As Type In ILINQEntityTypes
-                    Select New RegistryItem With {
-                        .Name = LINQEntity.GetEntityType(Type),
-                        .AssemblyPath = AssemblyPath,
-                        .TypeId = Type.FullName
+            Dim LQuery As IEnumerable(Of TypeEntry) =
+                    From type As Type In typeDefs
+                    Select New TypeEntry With {
+                        .name = LINQEntity.GetEntityType(type),
+                        .Assembly = assmPath,
+                        .TypeId = type.FullName
                     }        'Generate the resitry item for each external type
 
-            For Each Item As RegistryItem In LQuery     'Update exists registry item or insrt new item into the table
-                Dim Item2 As RegistryItem = Find(Item.Name)         '在注册表中查询是否有已注册的类型
-                If Item2 Is Nothing Then
-                    Call ExternalModules.Add(Item)  'Insert new record.(添加数据)
+            For Each x As TypeEntry In LQuery     'Update exists registry item or insrt new item into the table
+                Dim exists As TypeEntry = Find(x.name)         '在注册表中查询是否有已注册的类型
+                If exists Is Nothing Then
+                    Call Me.typeDefs.Add(x)  'Insert new record.(添加数据)
                 Else                                'Update exists data.(更新数据)
-                    Item2.AssemblyPath = Item.AssemblyPath
-                    Item2.TypeId = Item.TypeId
+                    exists.Assembly = x.Assembly
+                    exists.TypeId = x.TypeId
                 End If
             Next
             Return True
@@ -84,59 +93,18 @@ Namespace Framework
 
         Public Shared Function Load(Path As String) As TypeRegistry
             If FileIO.FileSystem.FileExists(Path) Then
-                Dim TypeRegistry As TypeRegistry = Path.LoadXml(Of TypeRegistry)()
-                TypeRegistry.File = Path
-                Return TypeRegistry
+                Dim registry As TypeRegistry = Path.LoadTextDoc(Of TypeRegistry)()
+                Return registry
             Else
                 Return New TypeRegistry With {
-                    .ExternalModules = New List(Of RegistryItem),
-                    .File = Path
+                    .FilePath = Path,
+                    .typeDefs = Nothing
                 }
             End If
         End Function
 
-        Public Sub Save(Optional Path As String = "")
-            If String.IsNullOrEmpty(Path) Then
-                Path = Me.File
-            End If
-            Call Me.GetXml.SaveTo(Path, System.Text.Encoding.Unicode)
-        End Sub
-
-        Public Shared Widening Operator CType(Path As String) As TypeRegistry
-            Return TypeRegistry.Load(Path)
-        End Operator
-
-#Region "IDisposable Support"
-        Private disposedValue As Boolean ' 检测冗余的调用
-
-        ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
-            If Not Me.disposedValue Then
-                If disposing Then
-                    ' TODO:  释放托管状态(托管对象)。
-                    Call Me.Save()
-                End If
-
-                ' TODO:  释放非托管资源(非托管对象)并重写下面的 Finalize()。
-                ' TODO:  将大型字段设置为 null。
-            End If
-            Me.disposedValue = True
-        End Sub
-
-        ' TODO:  仅当上面的 Dispose(ByVal disposing As Boolean)具有释放非托管资源的代码时重写 Finalize()。
-        'Protected Overrides Sub Finalize()
-        '    ' 不要更改此代码。    请将清理代码放入上面的 Dispose(ByVal disposing As Boolean)中。
-        '    Dispose(False)
-        '    MyBase.Finalize()
-        'End Sub
-
-        ' Visual Basic 添加此代码是为了正确实现可处置模式。
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' 不要更改此代码。    请将清理代码放入上面的 Dispose (disposing As Boolean)中。
-            Dispose(True)
-            GC.SuppressFinalize(Me)
-        End Sub
-#End Region
-
+        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
+            Return Me.GetXml.SaveAsXml(getPath(FilePath), True, Encoding)
+        End Function
     End Class
 End Namespace

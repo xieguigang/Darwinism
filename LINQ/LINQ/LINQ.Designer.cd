@@ -204,7 +204,7 @@
   <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.LetClosure">
     <Position X="1.75" Y="3.75" Width="3.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAgAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAgAAQAQAAAAAAAAA=</HashCode>
       <FileName>LDM\Parser\Tokens\LetClosure.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -225,14 +225,14 @@
   <Class Name="Microsoft.VisualBasic.LINQ.Statements.Tokens.WhereClosure">
     <Position X="15.75" Y="3.75" Width="4" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>LDM\Parser\Tokens\WhereClosure.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Microsoft.VisualBasic.LINQ.LDM.Func" Collapsed="true">
     <Position X="32" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AAAAAAAAAgAAAAAEAAAAAQAAAAAAAAAAAAAAAAAEAAA=</HashCode>
       <FileName>LDM\StackParser.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -294,7 +294,7 @@
   <Class Name="Microsoft.VisualBasic.LINQ.TokenIcer.Token" Collapsed="true">
     <Position X="33.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAABAAAAAAGAAAAAAAAAAAAAAE=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAGAAAAAAAAAAAAAAE=</HashCode>
       <FileName>TokenIcer.vb</FileName>
     </TypeIdentifier>
   </Class>

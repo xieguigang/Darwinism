@@ -130,7 +130,7 @@
     <Compile Include="Framewok\SDK_PATH.vb" />
     <Compile Include="Framewok\ObjectModel\ParallelLINQ.vb" />
     <Compile Include="Framewok\ObjectModel\LINQ.vb" />
-    <Compile Include="Framewok\TypeRegistry\RegistryItem.vb" />
+    <Compile Include="Framewok\TypeRegistry\TypeEntry.vb" />
     <Compile Include="Script\Variable.vb" />
     <Compile Include="Script\Runtime.vb" />
     <Compile Include="Framewok\DynamicCode\vbc\SelectConstructCompiler.vb" />

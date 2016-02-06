@@ -75,7 +75,7 @@ Namespace LDM.Expression
         ''' <param name="RegistryItem"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LoadExternalModule(RegistryItem As RegistryItem) As Type
+        Public Shared Function LoadExternalModule(RegistryItem As TypeEntry) As Type
             Dim assm As System.Reflection.Assembly =
                 System.Reflection.Assembly.LoadFrom(RegistryItem.AssemblyFullPath)
             Return assm.GetType(RegistryItem.TypeId)
