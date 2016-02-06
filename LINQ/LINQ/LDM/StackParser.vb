@@ -1,29 +1,57 @@
-﻿Imports Microsoft.VisualBasic.LINQ.TokenIcer
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.LINQ.TokenIcer
 
 Namespace LDM
 
     Public Module StackParser
 
-        Public Function Parser(source As Queue(Of Token)) As Func()
-
+        ''' <summary>
+        ''' 返回顶层的根节点
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Parsing(source As Queue(Of Token)) As Func
+            Dim pretend As Token = New Token(TokenParser.Tokens.Pretend, "Pretend")
+            Dim root As Func = New Func With {
+                .Caller = New List(Of Token) From {pretend},
+                .Args = __parsing(source)
+            }
+            Return root
         End Function
 
-        Public Function Parsing(source As Queue(Of Token)) As Func()
+        ''' <summary>
+        ''' 主要是解析当前的栈层之中的使用，逗号分隔的参数列表
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        Private Function __parsing(source As Queue(Of Token)) As Func()
             Dim list As New List(Of Func)
+            Dim current As Func = New Func
 
             Do While Not source.IsNullOrEmpty
                 Dim x As Token = source.Dequeue
                 Dim peek As Token = source.Peek
+
                 If peek Is Nothing Then
-                    Call list.Add(New Func With {.Caller = x})
+                    Call current.Caller.Add(x)
+                    Call list.Add(current)
                     Exit Do
                 End If
+
                 If peek.TokenName = TokenParser.Tokens.LPair Then  ' 向下一层堆栈
                     Call source.Dequeue()
-
+                    current.Args = __parsing(source)
                 ElseIf peek.TokenName = TokenParser.Tokens.RPair Then  ' 向上一层退栈
+                    Call source.Dequeue()
+                    Call list.Add(current)
+                    Exit Do
+                ElseIf x.TokenName = TokenParser.Tokens.ParamDeli Then
+                    Call list.Add(current)
+                    current = New Func With {
+                        .Caller = New List(Of Token)
+                    }
                 Else
-                    Call list.Add(New Func With {.Caller = x})
+                    Call current.Caller.Add(x)
                 End If
             Loop
 
@@ -33,7 +61,7 @@ Namespace LDM
 
     Public Class Func
 
-        Public Property Caller As TokenIcer.Token
+        Public Property Caller As List(Of Token)
         Public Property Args As Func()
     End Class
 End Namespace

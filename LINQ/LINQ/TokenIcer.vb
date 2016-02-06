@@ -41,19 +41,20 @@ Namespace TokenIcer
             Slash = 14
             Plus = 15
             Minus = 16
-            cor = 17
-            [And] = 18
-            [Not] = 19
-            [Or] = 20
-            [Is] = 21
-            [As] = 22
-            [In] = 23
-            From = 24
-            Where = 25
-            [Select] = 26
-            [Imports] = 27
-            var = 28
-            varRef = 29
+            Pretend = 17
+            cor = 18
+            [And] = 19
+            [Not] = 20
+            [Or] = 21
+            [Is] = 22
+            [As] = 23
+            [In] = 24
+            From = 25
+            Where = 26
+            [Select] = 27
+            [Imports] = 28
+            var = 29
+            varRef = 30
         End Enum
 
         ' A public setter for our input string
@@ -100,6 +101,7 @@ Namespace TokenIcer
             _tokens.Add(Tokens.Slash, "\/")
             _tokens.Add(Tokens.Plus, "\+")
             _tokens.Add(Tokens.Minus, "\-")
+            _tokens.Add(Tokens.Pretend, "Pretend")
             _tokens.Add(Tokens.cor, "[nN][eE][wW]")
             _tokens.Add(Tokens.[And], "[aA][nN][dD]")
             _tokens.Add(Tokens.[Not], "[nN][oO][tT]")

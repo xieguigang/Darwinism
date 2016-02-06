@@ -14,6 +14,7 @@
 "\/" Slash
 "\+" Plus
 "\-" Minus 
+"Pretend" Pretend
 "[nN][eE][wW]" cor
 "[aA][nN][dD]" And
 "[nN][oO][tT]" Not
