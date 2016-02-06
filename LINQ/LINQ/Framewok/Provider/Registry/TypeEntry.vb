@@ -24,12 +24,17 @@ Namespace Framework.Provider
         ''' <remarks></remarks>
         <Xml.Serialization.XmlAttribute> Public Property Assembly As String
         ''' <summary>
-        ''' Full type name for the target LINQ entity type.(目标LINQEntity集合中的类型全称)
+        ''' Full type name for the target LINQ entity type. Assembly!typeFullName (目标LINQEntity集合中的类型全称)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>Assembly!typeFullName</remarks>
         <Xml.Serialization.XmlAttribute> Public Property TypeId As String
+        ''' <summary>
+        ''' <see cref="Func"/>方法的声明位置
+        ''' </summary>
+        ''' <returns></returns>
+        <Xml.Serialization.XmlAttribute> Public Property DeclaringType As String
         ''' <summary>
         ''' 函数名称
         ''' </summary>

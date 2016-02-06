@@ -7,7 +7,7 @@ Namespace Framework.Provider
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
-    Public Class LinqEntity : Inherits System.Attribute
+    Public Class LinqEntity : Inherits Attribute
 
         Public ReadOnly Property Type As String
         Public ReadOnly Property RefType As Type

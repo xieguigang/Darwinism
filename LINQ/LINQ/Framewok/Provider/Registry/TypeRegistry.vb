@@ -43,6 +43,25 @@ Namespace Framework.Provider
             End If
         End Function
 
+        Public Function GetHandle(name As String) As GetLinqResource
+            Dim entry As TypeEntry = Find(name)
+            Dim assm As Assembly = entry.LoadAssembly
+            Dim type = assm.GetType(entry.DeclaringType)
+            Dim method As MethodInfo = type.GetMethod(entry.Func, types:={GetType(String)})
+            Dim [delegate] As New __delegateProvider With {.method = method}
+            Dim handle As GetLinqResource = AddressOf [delegate].GetLinqResource
+            Return handle
+        End Function
+
+        Private Class __delegateProvider
+            Public method As MethodInfo
+
+            Public Function GetLinqResource(uri As String) As IEnumerable
+                Dim value As Object = method.Invoke(Nothing, {uri})
+                Return DirectCast(value, IEnumerable)
+            End Function
+        End Class
+
         ''' <summary>
         ''' Return a registry item in the table using its specific name property.
         ''' (返回注册表中的一个指定名称的项目)
@@ -77,12 +96,10 @@ Namespace Framework.Provider
 
             For Each x As TypeEntry In LQuery.MatrixToList      'Update exists registry item or insrt new item into the table
                 Dim exists As TypeEntry = Find(x.name)         '在注册表中查询是否有已注册的类型
-                If exists Is Nothing Then
-                    Call Me.typeDefs.Add(x)  'Insert new record.(添加数据)
-                Else                                'Update exists data.(更新数据)
-                    exists.Assembly = x.Assembly
-                    exists.TypeId = x.TypeId
+                If Not exists Is Nothing Then
+                    Call _typeHash.Remove(x.name)
                 End If
+                Call _typeHash.Add(x.name, x)  'Insert new record.(添加数据)
             Next
             Return True
         End Function
@@ -100,7 +117,8 @@ Namespace Framework.Provider
                     .Func = x.x.Name,
                     .Assembly = path,
                     .name = x.attr.Type,
-                    .TypeId = x.attr.RefType.FullName
+                    .TypeId = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name & "!" & x.attr.RefType.FullName,
+                    .DeclaringType = x.x.DeclaringType.FullName
                 })
             Return result
         End Function
