@@ -58,7 +58,7 @@ Namespace Statements.Tokens
         End Function
 
         Public Overrides Function ToString() As String
-            '      Return String.Format("Let {0} = {1}", Name, MyBase.TypeId)
+            Return _source.ToString
         End Function
     End Class
 

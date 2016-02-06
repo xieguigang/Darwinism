@@ -72,6 +72,12 @@ Namespace LDM
         Public Property Caller As List(Of Token)
         Public Property Args As Func()
 
+        Public ReadOnly Property IsFuncCalls As Boolean
+            Get
+                Return Not Args.IsNullOrEmpty
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             If Args.IsNullOrEmpty Then
                 Return String.Join(" ", Caller.ToArray(Function(x) x.TokenValue))

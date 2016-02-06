@@ -20,7 +20,7 @@ Namespace Framework.ObjectModel
 
         Sub New(Statement As LINQStatement, Runtime As I_DynamicsRuntime)
             Me.StatementInstance = Statement.CreateInstance  'Create a instance for the LINQ entity and intialzie the components
-            Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
+            '  Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
             '  Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
             Me.SelectConstruct = Function() Statement.SelectClosure.SelectMethod.Invoke(StatementInstance, Nothing)
             Me.source = LINQ.GetCollection(Statement, Runtime)
