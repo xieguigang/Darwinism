@@ -59,6 +59,10 @@ Namespace LDM
                 End If
             Loop
 
+            If list.Count = 0 Then
+                Call list.Add(current)
+            End If
+
             Return list.ToArray
         End Function
     End Module

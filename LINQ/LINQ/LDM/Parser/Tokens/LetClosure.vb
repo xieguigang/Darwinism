@@ -41,13 +41,13 @@ Namespace Statements.Tokens
             Else
                 If _source.Tokens(1).TokenName = TokenParser.Tokens.As Then
                     Type = _source.Tokens(2).TokenValue
-                    sk = 3
+                    sk = 4
                 Else
                     Throw New SyntaxErrorException
                 End If
             End If
 
-            Dim expr = _source.Tokens.Skip(2).ToArray
+            Dim expr As Token() = _source.Tokens.Skip(sk).ToArray
             Expression = New Queue(Of Token)(expr).Parsing
         End Sub
 
