@@ -4,13 +4,24 @@ Namespace LDM
 
     Public Module StackParser
 
+        Public Function Parser(source As Queue(Of Token)) As Func()
+
+        End Function
+
         Public Function Parsing(source As Queue(Of Token)) As Func()
             Dim list As New List(Of Func)
 
             Do While Not source.IsNullOrEmpty
                 Dim x As Token = source.Dequeue
-                If x.TokenName = TokenParser.Tokens.LPair Then  ' 向下一层堆栈
-                ElseIf x.TokenName = TokenParser.Tokens.RPair Then  ' 向上一层退栈
+                Dim peek As Token = source.Peek
+                If peek Is Nothing Then
+                    Call list.Add(New Func With {.Caller = x})
+                    Exit Do
+                End If
+                If peek.TokenName = TokenParser.Tokens.LPair Then  ' 向下一层堆栈
+                    Call source.Dequeue()
+
+                ElseIf peek.TokenName = TokenParser.Tokens.RPair Then  ' 向上一层退栈
                 Else
                     Call list.Add(New Func With {.Caller = x})
                 End If

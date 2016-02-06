@@ -26,29 +26,34 @@ Namespace TokenIcer
         Public Enum Tokens
             UNDEFINED = 0
             [Call] = 1
-            paramDeli = 2
+            ParamDeli = 2
             [Integer] = 3
             Float = 4
-            WHITESPACE = 5
+            WhiteSpace = 5
             [Let] = 6
             Equals = 7
-            [String] = 8
-            VbCrLf = 9
-            LPair = 10
-            RPair = 11
-            ASTERISK = 12
-            Slash = 13
-            Plus = 14
-            Minus = 15
-            [Is] = 16
-            [As] = 17
-            [In] = 18
-            From = 19
-            Where = 20
-            [Select] = 21
-            [Imports] = 22
-            var = 23
-            varRef = 24
+            StringIntrop = 8
+            [String] = 9
+            VbCrLf = 10
+            LPair = 11
+            RPair = 12
+            Asterisk = 13
+            Slash = 14
+            Plus = 15
+            Minus = 16
+            cor = 17
+            [And] = 18
+            [Not] = 19
+            [Or] = 20
+            [Is] = 21
+            [As] = 22
+            [In] = 23
+            From = 24
+            Where = 25
+            [Select] = 26
+            [Imports] = 27
+            var = 28
+            varRef = 29
         End Enum
 
         ' A public setter for our input string
@@ -80,20 +85,25 @@ Namespace TokenIcer
 
             ' These lines add each grammar rule to the dictionary
             _tokens.Add(Tokens.[Call], "->")
-            _tokens.Add(Tokens.paramDeli, ",")
+            _tokens.Add(Tokens.ParamDeli, ",")
             _tokens.Add(Tokens.[Integer], "[0-9]+")
             _tokens.Add(Tokens.Float, "[0-9]+\.+[0-9]+")
-            _tokens.Add(Tokens.WHITESPACE, "[ \t]+")
+            _tokens.Add(Tokens.WhiteSpace, "[ \t]+")
             _tokens.Add(Tokens.[Let], "[Ll][Ee][Tt]")
             _tokens.Add(Tokens.Equals, "=")
+            _tokens.Add(Tokens.StringIntrop, "\$"".*?""")
             _tokens.Add(Tokens.[String], """.*?""")
             _tokens.Add(Tokens.VbCrLf, "[\r\n]+")
             _tokens.Add(Tokens.LPair, "\(")
             _tokens.Add(Tokens.RPair, "\)")
-            _tokens.Add(Tokens.ASTERISK, "\*")
+            _tokens.Add(Tokens.Asterisk, "\*")
             _tokens.Add(Tokens.Slash, "\/")
             _tokens.Add(Tokens.Plus, "\+")
             _tokens.Add(Tokens.Minus, "\-")
+            _tokens.Add(Tokens.cor, "[nN][eE][wW]")
+            _tokens.Add(Tokens.[And], "[aA][nN][dD]")
+            _tokens.Add(Tokens.[Not], "[nN][oO][tT]")
+            _tokens.Add(Tokens.[Or], "[oO][rR]")
             _tokens.Add(Tokens.[Is], "[iI][sS]")
             _tokens.Add(Tokens.[As], "[aA][sS]")
             _tokens.Add(Tokens.[In], "[iI][nN]")

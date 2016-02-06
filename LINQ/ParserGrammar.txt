@@ -1,18 +1,23 @@
 "->" Call
-"," paramDeli
+"," ParamDeli
 "[0-9]+" Integer
 "[0-9]+\.+[0-9]+" Float
-"[ \t]+" WHITESPACE
+"[ \t]+" WhiteSpace
 "[Ll][Ee][Tt]" Let
 "=" Equals
+"\$\".*?\"" StringIntrop
 "\".*?\"" String
 "[\r\n]+" VbCrLf
 "\(" LPair
 "\)" RPair
-"\*" ASTERISK
+"\*" Asterisk
 "\/" Slash
 "\+" Plus
 "\-" Minus 
+"[nN][eE][wW]" cor
+"[aA][nN][dD]" And
+"[nN][oO][tT]" Not
+"[oO][rR]" Or
 "[iI][sS]" Is
 "[aA][sS]" As
 "[iI][nN]" In
