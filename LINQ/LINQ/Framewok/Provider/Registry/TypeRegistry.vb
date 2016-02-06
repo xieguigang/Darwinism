@@ -88,7 +88,7 @@ Namespace Framework.Provider
         End Function
 
         Private Shared Function __parsingEntry(type As Type, assm As Assembly) As TypeEntry()
-            Dim methods As MethodInfo() = type.GetMethods(bindingAttr:=BindingFlags.Static)
+            Dim methods As MethodInfo() = type.GetMethods(bindingAttr:=BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic)
             Dim LQuery = (From x As MethodInfo In methods
                           Let attrs As Object() = x.GetCustomAttributes(LinqEntity.ILinqEntity, inherit:=True)
                           Where Not attrs.IsNullOrEmpty
@@ -117,10 +117,15 @@ Namespace Framework.Provider
 
         Public Shared Function Load(Path As String) As TypeRegistry
             If FileIO.FileSystem.FileExists(Path) Then
-                Dim registry As TypeRegistry = Path.LoadTextDoc(Of TypeRegistry)()
-                Return registry
+                Try
+                    Dim registry As TypeRegistry = Path.LoadTextDoc(Of TypeRegistry)()
+                    Return registry
+                Catch ex As Exception
+                    Call App.LogException(New Exception(Path.ToFileURL, ex))
+                    GoTo NEWLY
+                End Try
             Else
-                Return New TypeRegistry With {
+NEWLY:          Return New TypeRegistry With {
                     .FilePath = Path,
                     .typeDefs = Nothing
                 }
@@ -132,7 +137,7 @@ Namespace Framework.Provider
         End Function
 
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return Me.GetXml.SaveAsXml(getPath(FilePath), True, Encoding)
+            Return Me.SaveAsXml(getPath(FilePath), True, Encoding)
         End Function
     End Class
 End Namespace
