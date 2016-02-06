@@ -26,17 +26,23 @@ Namespace LDM
         ''' <returns></returns>
         Private Function __parsing(source As Queue(Of Token)) As Func()
             Dim list As New List(Of Func)
-            Dim current As Func = New Func
+            Dim current As Func = New Func With {
+                .Caller = New List(Of Token)
+            }
 
             Do While Not source.IsNullOrEmpty
                 Dim x As Token = source.Dequeue
-                Dim peek As Token = source.Peek
 
-                If peek Is Nothing Then
+                If Not x.TokenName = TokenParser.Tokens.ParamDeli Then
                     Call current.Caller.Add(x)
+                End If
+
+                If source.Count = 0 Then
                     Call list.Add(current)
                     Exit Do
                 End If
+
+                Dim peek As Token = source.Peek
 
                 If peek.TokenName = TokenParser.Tokens.LPair Then  ' 向下一层堆栈
                     Call source.Dequeue()
@@ -50,8 +56,6 @@ Namespace LDM
                     current = New Func With {
                         .Caller = New List(Of Token)
                     }
-                Else
-                    Call current.Caller.Add(x)
                 End If
             Loop
 
@@ -63,6 +67,17 @@ Namespace LDM
 
         Public Property Caller As List(Of Token)
         Public Property Args As Func()
+
+        Public Overrides Function ToString() As String
+            If Args.IsNullOrEmpty Then
+                Return String.Join(" ", Caller.ToArray(Function(x) x.TokenValue))
+            Else
+                Dim caller As String = String.Join(" ", Me.Caller.ToArray(Function(x) x.TokenValue))
+                Dim params As String() = Me.Args.ToArray(Function(x) x.ToString)
+                Dim args As String = String.Join(", ", params)
+                Return $"{caller}({args})"
+            End If
+        End Function
     End Class
 End Namespace
 

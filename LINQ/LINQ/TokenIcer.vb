@@ -293,6 +293,10 @@ Namespace TokenIcer
             TokenName = name
             TokenValue = value
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{TokenName} --> {TokenValue}"
+        End Function
     End Class
 End Namespace
 
