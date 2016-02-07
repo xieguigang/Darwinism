@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace TaskHost
 
@@ -33,7 +34,7 @@ Namespace TaskHost
             _local = local
             __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
 
-            Call Parallel.Run(AddressOf __host.Run)
+            Call Runtask(AddressOf __host.Run)
         End Sub
 
         Public Overrides ReadOnly Property Portal As IPEndPoint

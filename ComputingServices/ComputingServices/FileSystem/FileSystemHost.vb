@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.LINQ.Extensions
 Imports System.IO
 
@@ -27,7 +28,7 @@ Namespace FileSystem
             Dim protocols As New ProtocolHandler(Me)
             __host = New TcpSynchronizationServicesSocket(port)
             __host.Responsehandler = AddressOf protocols.HandleRequest
-            Call Parallel.Run(AddressOf __host.Run)
+            Call Runtask(AddressOf __host.Run)
         End Sub
 
         Public Overrides ReadOnly Property Portal As IPEndPoint

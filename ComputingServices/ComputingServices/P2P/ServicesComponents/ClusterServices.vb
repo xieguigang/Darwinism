@@ -38,7 +38,7 @@ Namespace P2P.ServicesComponents
             Call Console.WriteLine("Cluster Services Started!")
 
             If argvs Is Nothing OrElse String.Equals(argvs("/console"), "TRUE", StringComparison.OrdinalIgnoreCase) Then
-                Call Run(AddressOf _runningShoalShell)
+                Call RunTask(AddressOf _runningShoalShell)
             End If
 
             Call _runningServicesProtocol(New PbsProtocol(Me))
