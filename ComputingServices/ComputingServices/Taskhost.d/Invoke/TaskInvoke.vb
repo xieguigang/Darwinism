@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem
 Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.LINQ
 Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 Imports Microsoft.VisualBasic.Serialization
@@ -69,7 +70,7 @@ Namespace TaskHost
         ''' <returns></returns>
         Private Shared Function __invoke(params As InvokeInfo, ByRef value As Type) As Object
             Dim func As MethodInfo = params.GetMethod
-            Dim paramsValue As Object() = InvokeInfo.GetParameters(func, params.Parameters)
+            Dim paramsValue As Object() = params.Parameters.ToArray(Function(arg) arg.GetValue)
             Dim x As Object = func.Invoke(Nothing, paramsValue)
             value = func.ReturnType
             Return x
