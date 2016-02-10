@@ -75,9 +75,9 @@ Namespace Statements.Tokens
         End Sub
 
         Public Shared Function CreateObject(tokens As ClosureTokens(), parent As LINQStatement) As InClosure
-            Dim source As ClosureTokens = Closure.GetTokens(TokenIcer.TokenParser.Tokens.In, tokens)
+            Dim source As ClosureTokens = Closure.GetTokens(TokenIcer.Tokens.In, tokens)
             If source.Tokens.Length = 1 AndAlso
-               source.Tokens(Scan0).TokenName = TokenIcer.TokenParser.Tokens.String Then
+               source.Tokens(Scan0).TokenName = TokenIcer.Tokens.String Then
                 Return New UriRef(source, parent)
             Else
                 Return New Reference(source, parent)

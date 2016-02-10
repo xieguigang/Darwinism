@@ -2,8 +2,9 @@
 Imports System.Text
 Imports System.CodeDom
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
-Imports Microsoft.VisualBasic.LINQ.TokenIcer.TokenParser
+Imports Microsoft.VisualBasic.LINQ.Statements
 Imports Microsoft.VisualBasic.LINQ.Extensions
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace LDM.Expression
 
@@ -45,8 +46,8 @@ Namespace LDM.Expression
         ''' </summary>
         ''' <returns></returns>
         Protected Overrides Function __parsing() As CodeExpression
-            Dim init As Func =
-                DirectCast(_source, Statements.Tokens.LetClosure).Expression.Args.First
+            Dim init As Func(Of TokenIcer.Tokens) =
+                DirectCast(_source, Tokens.LetClosure).Expression.Args.First
         End Function
     End Class
 End Namespace

@@ -4,20 +4,18 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
-Imports Microsoft.VisualBasic.LINQ.LDM
-Imports Microsoft.VisualBasic.LINQ.TokenIcer
+Imports Microsoft.VisualBasic.LINQ.Statements.TokenIcer.Parser
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Statements.Tokens
 
     Public Class WhereClosure : Inherits Closure
 
-        Public ReadOnly Property Expression As Func
+        Public ReadOnly Property Expression As Func(Of TokenIcer.Tokens)
 
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
-            Call MyBase.New(TokenParser.Tokens.Where, tokens, parent)
-
-            Dim source = New Queue(Of Token)(_source.Tokens)
-            Expression = source.Parsing
+            Call MyBase.New(TokenIcer.Tokens.Where, tokens, parent)
+            Expression = _source.Tokens.Parsing(stackt)
         End Sub
 
         Public Sub Initialize()

@@ -26,7 +26,7 @@ Namespace Statements.Tokens
         Public Property TypeId As String
 
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
-            Call MyBase.New(TokenIcer.TokenParser.Tokens.From, tokens, parent)
+            Call MyBase.New(TokenIcer.Tokens.From, tokens, parent)
 
             Name = _source.Tokens(Scan0).TokenValue
             TypeId = _source.Tokens(2).TokenValue

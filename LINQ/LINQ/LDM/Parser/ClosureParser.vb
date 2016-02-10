@@ -1,22 +1,22 @@
-﻿Imports Microsoft.VisualBasic.LINQ.TokenIcer
+﻿Imports Microsoft.VisualBasic.LINQ.Statements
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Public Module ClosureParser
 
     Public Function TryParse(st As String) As ClosureTokens()
-        Dim parser As TokenParser = New TokenParser With {.InputString = st}
-        Dim token As Token = Nothing
+        Dim source As Token(Of TokenIcer.Tokens)() = TokenIcer.GetTokens(st)
         Dim parts As New List(Of ClosureTokens)
-        Dim tmp As New List(Of Token)
-        Dim current As TokenParser.Tokens
+        Dim tmp As New List(Of Token(Of TokenIcer.Tokens))
+        Dim current As TokenIcer.Tokens
         Dim closure As ClosureTokens
 
-        Do While Not parser.GetToken.ShadowCopy(token) Is Nothing
+        For Each token As Token(Of TokenIcer.Tokens) In source
             Select Case token.TokenName
-                Case TokenParser.Tokens.Imports,
-                     TokenParser.Tokens.In,
-                     TokenParser.Tokens.Let,
-                     TokenParser.Tokens.Select,
-                     TokenParser.Tokens.Where
+                Case TokenIcer.Tokens.Imports,
+                     TokenIcer.Tokens.In,
+                     TokenIcer.Tokens.Let,
+                     TokenIcer.Tokens.Select,
+                     TokenIcer.Tokens.Where
 
                     closure = New ClosureTokens With {
                         .Token = current,
@@ -25,14 +25,14 @@ Public Module ClosureParser
                     Call parts.Add(closure)
                     Call tmp.Clear()
                     current = token.TokenName
-                Case TokenParser.Tokens.From
-                    current = TokenParser.Tokens.From
-                Case TokenParser.Tokens.WHITESPACE
+                Case TokenIcer.Tokens.From
+                    current = TokenIcer.Tokens.From
+                Case TokenIcer.Tokens.WhiteSpace
                     ' Do Nothing
                 Case Else
                     Call tmp.Add(token)
             End Select
-        Loop
+        Next
 
         closure = New ClosureTokens With {
             .Token = current,

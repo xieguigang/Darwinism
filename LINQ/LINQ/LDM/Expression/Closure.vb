@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic.LINQ.TokenIcer
-
-Namespace LDM.Expression
+﻿Namespace LDM.Expression
 
     Public MustInherit Class Closure
 

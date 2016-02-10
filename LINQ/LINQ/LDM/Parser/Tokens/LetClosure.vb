@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
-Imports Microsoft.VisualBasic.LINQ.LDM
-Imports Microsoft.VisualBasic.LINQ.TokenIcer
+Imports Microsoft.VisualBasic.LINQ.Statements.TokenIcer
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Statements.Tokens
 
@@ -23,7 +23,7 @@ Namespace Statements.Tokens
         ''' <returns></returns>
         Public Property Type As String
 
-        Public Property Expression As Func
+        Public Property Expression As Func(Of TokenIcer.Tokens)
 
         ''' <summary>
         ''' Let var = expression
@@ -36,10 +36,10 @@ Namespace Statements.Tokens
 
             Dim sk As Integer
 
-            If _source.Tokens(1).TokenName = TokenParser.Tokens.Equals Then
+            If _source.Tokens(1).TokenName = TokenIcer.Tokens.Equals Then
                 sk = 2                ' 没有申明类型
             Else
-                If _source.Tokens(1).TokenName = TokenParser.Tokens.As Then
+                If _source.Tokens(1).TokenName = TokenIcer.Tokens.As Then
                     Type = _source.Tokens(2).TokenValue
                     sk = 4
                 Else
@@ -47,8 +47,8 @@ Namespace Statements.Tokens
                 End If
             End If
 
-            Dim expr As Token() = _source.Tokens.Skip(sk).ToArray
-            Expression = New Queue(Of Token)(expr).Parsing
+            Dim expr As IEnumerable(Of Token(Of TokenIcer.Tokens)) = _source.Tokens.Skip(sk)
+            Expression = expr.Parsing(stackt)
         End Sub
 
         Public Function ToFieldDeclaration() As CodeDom.CodeMemberField
@@ -69,7 +69,7 @@ Namespace Statements.Tokens
             Dim current As ClosureTokens = Nothing
             Dim list As New List(Of ClosureTokens)
 
-            Do While tokens.Read(i, current).Token = TokenIcer.TokenParser.Tokens.Let
+            Do While tokens.Read(i, current).Token = TokenIcer.Tokens.Let
                 Call list.Add(current)
                 If i = tokens.Length Then
                     Exit Do
@@ -85,12 +85,12 @@ Namespace Statements.Tokens
             Dim current As ClosureTokens = Nothing
             Dim list As New List(Of ClosureTokens)
 
-            Do While tokens.Read(i, current).Token <> TokenIcer.TokenParser.Tokens.Where
+            Do While tokens.Read(i, current).Token <> TokenIcer.Tokens.Where
                 If i = tokens.Length Then
                     Exit Do
                 End If
             Loop
-            Do While tokens.Read(i, current).Token = TokenIcer.TokenParser.Tokens.Let
+            Do While tokens.Read(i, current).Token = TokenIcer.Tokens.Let
                 Call list.Add(current)
                 If i = tokens.Length Then
                     Exit Do
