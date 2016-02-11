@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Serialization
 Namespace TaskHost
 
     ''' <summary>
+    ''' Using this object to running the method on the remote machine.
     ''' 由于是远程调用，所以运行的环境可能会很不一样，所以在设计程序的时候请尽量避免或者不要使用模块变量，以免出现难以调查的BUG
     ''' </summary>
     Public Class TaskHost : Implements IRemoteSupport
@@ -37,7 +38,15 @@ Namespace TaskHost
         End Function
 
         ''' <summary>
-        ''' 本地服务器通过这个方法调用远程主机上面的函数
+        ''' Running the function delegate pointer on the remote machine. 
+        ''' 
+        ''' *****************************************************************************************************
+        ''' NOTE: Performance issue, this is important! if the function pointer its returns type is a collection, 
+        ''' then you should using the method <see cref="TaskHost.AsLinq(Of T)([Delegate], Object())"/> to running 
+        ''' your code on the remote. Or a large json data will be return back through network in one package, 
+        ''' this may cause a serious performance problem both on your server and your local client.
+        ''' (本地服务器通过这个方法调用远程主机上面的函数，假若目标函数的返回值类型是一个集合，
+        ''' 请使用<see cref="TaskHost.AsLinq(Of T)([Delegate], Object())"/>方法，否则集合之中的所有数据都将会一次性返回，这个可能会导致严重的性能问题)
         ''' </summary>
         ''' <param name="target"></param>
         ''' <param name="args"></param>
@@ -62,7 +71,8 @@ Namespace TaskHost
         End Function
 
         ''' <summary>
-        ''' 执行远程机器上面的代码，然后返回数据查询接口
+        ''' If your function pointer returns type is a collection, then using this method is recommended.
+        ''' (执行远程机器上面的代码，然后返回数据查询接口)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="target">远程机器上面的函数指针</param>

@@ -13,8 +13,15 @@ Module Program
         Dim array As String() = remoteMachine.Invoke(func, {localfile, "this is the message from local machine!"})
         ' remote linq
 
+        Call array.Length.__DEBUG_ECHO
+
+        localfile = New ComputingServices.FileSystem.IO.RemoteFileStream(path, FileMode.Open, remoteMachine.FileSystem)
         Dim source = remoteMachine.AsLinq(Of String)(func, {localfile, "this is the remote linq example!"})
-        Dim array2 = (From s As String In source.AsParallel Where InStr(s, "+") Select s).ToArray
+        Dim array2 = (From s As String In source Where InStr(s, "Include=") > 0 Select s)
+
+        For Each line As String In array2
+            Call Console.WriteLine(line)
+        Next
 
 
         Call Pause()
