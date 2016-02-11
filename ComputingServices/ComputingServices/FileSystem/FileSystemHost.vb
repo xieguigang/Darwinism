@@ -87,8 +87,9 @@ Namespace FileSystem
             If OpenedHandles.ContainsKey(uid) Then
                 Dim stream As FileStream = OpenedHandles(uid)
                 Dim buffer As Byte() = handle.CreateBuffer
-                Call stream.Read(buffer, handle.offset, handle.length)
+                Dim n As Integer = stream.Read(buffer, handle.offset, handle.length)
                 Dim value As RequestStream = RequestStream.CreatePackage(buffer)
+                value.Protocol = CLng(n)
                 Return value
             Else
                 Return New RequestStream(Scan0, HTTP_RFC.RFC_TOKEN_INVALID, $"File handle {uid} is not opened!")

@@ -1322,7 +1322,7 @@ Namespace FileSystem.IO
             Dim invoke As New AsynInvoke(FileSystem)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Call System.Array.ConstrainedCopy(rep.ChunkBuffer, Scan0, array, offset, count)
-            Return rep.ChunkBuffer.Length
+            Return rep.Protocol ' 在host的协议里面会将读函数的返回值放在protocol属性里面返回
         End Function
 
         ' Exceptions:
