@@ -35,7 +35,7 @@ Example:
     
 2. The object of the remote function pointer its parameter should be a simple class, which is the Class object instance can be serialization and deserialization by the json through the property, if the class is initialize by a method, and then this class is not a "simple" class, Json transfer of this class and create instance at the remote machine could be failure or running in a unexpected result. 
 3. Currently this library just support the statics method, but the instance method will be supported in the feature works.
-
+4. If want to read and write the file on the remote machine, the RemoteFileStream is available for your remote function read local file to the remote machine and read remote file on the server to your client.
 
 
 
