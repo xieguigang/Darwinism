@@ -4,6 +4,7 @@ Imports System.Runtime.InteropServices
 Imports System.Security
 Imports System.Security.AccessControl
 Imports System.Text
+Imports System.Xml.Serialization
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.FileIO
@@ -23,7 +24,7 @@ Namespace FileSystem.IO
     ''' see the Reference Source.
     ''' </summary>
     ''' 
-    <Xml.Serialization.XmlType("RemoteFileStream")>
+    <XmlType("RemoteFileStream")>
     Public Class RemoteFileStream : Inherits BaseStream
 
         ' Exceptions:
@@ -66,7 +67,7 @@ Namespace FileSystem.IO
         ''' port@remote_IP://hash+&lt;path>
         ''' </summary>
         ''' <returns>Using for json serialization</returns>
-        <Xml.Serialization.XmlText> Public Property hashInfo As String
+        <XmlText> Public Property hashInfo As String
             Get
                 Return $"{FileSystem.Port}@{FileSystem.IPAddress}://{FileHandle.HashCode}+{FileHandle.FileName}"
             End Get
@@ -958,8 +959,8 @@ Namespace FileSystem.IO
         ''' Gets or sets the current position of this stream.
         ''' </summary>
         ''' <returns>The current position of this stream.</returns>
-        <Xml.Serialization.XmlIgnore>
-        <Xml.Serialization.SoapIgnore>
+        <XmlIgnore>
+        <SoapIgnore>
         <IgnoreDataMember>
         Public Overrides Property Position As Long
             Get

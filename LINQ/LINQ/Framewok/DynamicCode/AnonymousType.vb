@@ -1,8 +1,10 @@
-﻿Namespace Framework.DynamicCode
+﻿Imports System.Xml.Serialization
+
+Namespace Framework.DynamicCode
 
     Public Class AnonymousType
 
-        <Xml.Serialization.XmlArray> Public Property Properties As [Property]()
+        <XmlArray> Public Property Properties As [Property]()
 
         Default Public ReadOnly Property [Property](Name As String) As Object
             Get
@@ -16,8 +18,8 @@
     End Class
 
     Public Class [Property]
-        <Xml.Serialization.XmlAttribute> Public Property Name As String
-        <Xml.Serialization.XmlElement> Public Property Value As Object
+        <XmlAttribute> Public Property Name As String
+        <XmlElement> Public Property Value As Object
 
         Public Overrides Function ToString() As String
             Return String.Format("{0}:={1}", Name, Value.ToString)

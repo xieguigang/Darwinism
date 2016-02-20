@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Framework.Provider
@@ -15,31 +16,31 @@ Namespace Framework.Provider
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute> Public Property name As String Implements sIdEnumerable.Identifier
+        <XmlAttribute> Public Property name As String Implements sIdEnumerable.Identifier
         ''' <summary>
         ''' 建议使用相对路径，以防止移动程序的时候任然需要重新注册方可以使用
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute> Public Property Assembly As String
+        <XmlAttribute> Public Property Assembly As String
         ''' <summary>
         ''' Full type name for the target LINQ entity type. Assembly!typeFullName (目标LINQEntity集合中的类型全称)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>Assembly!typeFullName</remarks>
-        <Xml.Serialization.XmlAttribute> Public Property TypeId As String
+        <XmlAttribute> Public Property TypeId As String
         ''' <summary>
         ''' <see cref="Func"/>方法的声明位置
         ''' </summary>
         ''' <returns></returns>
-        <Xml.Serialization.XmlAttribute> Public Property DeclaringType As String
+        <XmlAttribute> Public Property DeclaringType As String
         ''' <summary>
         ''' 函数名称
         ''' </summary>
         ''' <returns></returns>
-        <Xml.Serialization.XmlAttribute> Public Property Func As String
+        <XmlAttribute> Public Property Func As String
 
         Public Function LoadAssembly() As Assembly
             Dim path As String = FileIO.FileSystem.GetFileInfo(Assembly).FullName

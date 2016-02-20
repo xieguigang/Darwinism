@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
@@ -185,13 +186,13 @@ Namespace Asymmetric
 
         Public Class Instance : Inherits Net.Protocol.RawStream
 
-            <Xml.Serialization.XmlIgnore>
+            <XmlIgnore>
             Public Property Process As Process
             ''' <summary>
             ''' 直接对这个节点进行交互的端口
             ''' </summary>
             ''' <returns></returns>
-            <Xml.Serialization.XmlElement>
+            <XmlElement>
             Public Property Portal As Microsoft.VisualBasic.Net.IPEndPoint
 
             Sub New(rawStream As Byte())

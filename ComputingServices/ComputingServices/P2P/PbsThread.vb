@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComputingServices.P2P.ServicesComponents
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComputingServices.P2P.ServicesComponents
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocol
 
@@ -16,7 +17,7 @@ Namespace P2P
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute> Public Property Guid As String
+        <XmlAttribute> Public Property Guid As String
         ''' <summary>
         ''' 运行于进程实例之中的细胞模型在数据库之中的模型编号
         ''' </summary>
@@ -37,7 +38,7 @@ Namespace P2P
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlAttribute> Public Property ServerLoad As String
+        <XmlAttribute> Public Property ServerLoad As String
 
         Public Function GetUpdatedServerLoad() As Double
 

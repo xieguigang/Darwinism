@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Text
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 
@@ -13,7 +14,7 @@ Namespace Framework.Provider
     Public Class TypeRegistry : Inherits ITextFile
         Implements IDisposable
 
-        <Xml.Serialization.XmlElement> Public Property typeDefs As TypeEntry()
+        <XmlElement> Public Property typeDefs As TypeEntry()
             Get
                 Return _typeHash.Values.ToArray
             End Get

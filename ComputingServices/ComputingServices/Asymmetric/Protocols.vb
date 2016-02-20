@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Net.Protocol
 Imports Microsoft.VisualBasic.Net.Protocol.Reflection
 
 Namespace Asymmetric
@@ -53,8 +54,8 @@ Namespace Asymmetric
         End Function
 
         Public Class RegisterPost
-            <Xml.Serialization.XmlAttribute> Public Property IPAddress As String
-            <Xml.Serialization.XmlAttribute> Public Property uid As Long
+            <XmlAttribute> Public Property IPAddress As String
+            <XmlAttribute> Public Property uid As Long
         End Class
 
         Public Function NodeRegister(IPAddress As String, OAuth As Net.SSL.Certificate) As RequestStream
