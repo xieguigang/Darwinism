@@ -93,6 +93,10 @@ Namespace TaskHost
             Return values
         End Function
 
+        Public Sub SetArgs(ParamArray args As Object())
+            Me.Parameters = args.ToArray(Function(x) New Argv(x))
+        End Sub
+
         Public Shared Function CreateObject(func As [Delegate], args As Object()) As InvokeInfo
             Dim type As Type = func.Method.DeclaringType
             Dim assm As Assembly = type.Assembly

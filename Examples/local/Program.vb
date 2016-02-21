@@ -26,4 +26,9 @@ Module Program
 
         Call Pause()
     End Sub
+
+    Sub test()
+        Dim info = GetType(Program).AddressOf(NameOf(Main))
+        Dim resulkt = info.Invoke(Nothing)
+    End Sub
 End Module

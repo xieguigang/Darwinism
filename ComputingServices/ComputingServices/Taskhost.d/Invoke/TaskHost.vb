@@ -53,12 +53,17 @@ Namespace TaskHost
         ''' <returns></returns>
         Public Function Invoke(target As [Delegate], ParamArray args As Object()) As Object
             Dim params As InvokeInfo = InvokeInfo.CreateObject(target, args)
-            Dim value As String = Serialization.GetJson(params)
+            Dim rtvl As Rtvl = Invoke(params)
+            Dim obj As Object = Rtvl.GetValue(target)
+            Return obj
+        End Function
+
+        Public Function Invoke(info As InvokeInfo) As Rtvl
+            Dim value As String = Serialization.GetJson(info)
             Dim req As RequestStream = New RequestStream(ProtocolEntry, TaskProtocols.Invoke, value)
             Dim rep As RequestStream = New AsynInvoke(_remote).SendMessage(req)
             Dim rtvl As Rtvl = Serialization.LoadObject(Of Rtvl)(rep.GetUTF8String)
-            Dim obj As Object = rtvl.GetValue(target)
-            Return obj
+            Return rtvl
         End Function
 
         Public Function Invoke(Of T)(target As [Delegate], ParamArray args As Object()) As T

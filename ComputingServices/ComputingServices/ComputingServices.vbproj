@@ -136,6 +136,7 @@
     <Compile Include="Taskhost.d\Linq\LinqProvider.vb" />
     <Compile Include="Taskhost.d\Invoke\Return.vb" />
     <Compile Include="Taskhost.d\Invoke\InvokeInfo.vb" />
+    <Compile Include="Taskhost.d\Extensions.vb" />
     <Compile Include="Taskhost.d\Protocols.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskHost.vb" />
   </ItemGroup>

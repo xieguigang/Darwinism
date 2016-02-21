@@ -76,6 +76,10 @@ Namespace TaskHost
             Return x
         End Function
 
+        Public Shared Function TryInvoke(info As InvokeInfo) As Object
+            Return __invoke(info, Nothing)
+        End Function
+
         <Protocol(TaskProtocols.Invoke)>
         Private Function Invoke(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim params As InvokeInfo = Serialization.LoadObject(Of InvokeInfo)(args.GetUTF8String)
