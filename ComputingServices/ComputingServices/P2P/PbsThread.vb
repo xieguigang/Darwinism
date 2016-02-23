@@ -1,7 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComputingServices.P2P.ServicesComponents
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace P2P
 

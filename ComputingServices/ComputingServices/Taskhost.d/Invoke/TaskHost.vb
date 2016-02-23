@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace TaskHost

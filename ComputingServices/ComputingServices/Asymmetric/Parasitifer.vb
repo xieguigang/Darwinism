@@ -2,8 +2,8 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
 Imports Microsoft.VisualBasic.Net.TCPExtensions
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -184,7 +184,7 @@ Namespace Asymmetric
 
     Namespace DDM
 
-        Public Class Instance : Inherits Net.Protocol.RawStream
+        Public Class Instance : Inherits RawStream
 
             <XmlIgnore>
             Public Property Process As Process
@@ -193,7 +193,7 @@ Namespace Asymmetric
             ''' </summary>
             ''' <returns></returns>
             <XmlElement>
-            Public Property Portal As Microsoft.VisualBasic.Net.IPEndPoint
+            Public Property Portal As IPEndPoint
 
             Sub New(rawStream As Byte())
                 Dim str As String = System.Text.Encoding.UTF8.GetString(rawStream)

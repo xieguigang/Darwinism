@@ -3,8 +3,8 @@ Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.LINQ
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace TaskHost

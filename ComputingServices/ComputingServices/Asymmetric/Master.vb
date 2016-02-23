@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
 Imports NodeAbstract = System.Collections.Generic.KeyValuePair(Of String, Microsoft.VisualBasic.Net.SSL.Certificate)
 

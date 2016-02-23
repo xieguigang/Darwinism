@@ -9,7 +9,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem.FileSystem
 Imports Microsoft.Win32.SafeHandles

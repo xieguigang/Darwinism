@@ -1,9 +1,9 @@
 ﻿Imports System.ComponentModel
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection.ProtocolHandler
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection.ProtocolHandler
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.ComputingServices.P2P.ServicesComponents
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace P2P
 

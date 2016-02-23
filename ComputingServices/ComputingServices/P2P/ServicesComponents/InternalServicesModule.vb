@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace P2P.ServicesComponents
 
@@ -14,14 +15,14 @@ Namespace P2P.ServicesComponents
         Implements System.IDisposable
 
         Protected _ShoalShellExec As RunShell
-        Protected ProtocolHandler As Net.Protocol.Reflection.ProtocolHandler
+        Protected ProtocolHandler As ProtocolHandler
         Protected _ShellImportsAPI As ShellImportsAPI
 
         Protected MustOverride Sub ImportsAPI()
         Protected MustOverride Function GetServicesPort() As Integer
 
         Protected Sub _runningServicesProtocol(Protocol As PbsProtocol)
-            ProtocolHandler = New Net.Protocol.Reflection.ProtocolHandler(Protocol)
+            ProtocolHandler = New ProtocolHandler(Protocol)
             __host = New Net.TcpSynchronizationServicesSocket(GetServicesPort)
             __host.Responsehandler = AddressOf ProtocolHandler.HandleRequest
             __host.Run()

@@ -1,8 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.LINQ.Extensions

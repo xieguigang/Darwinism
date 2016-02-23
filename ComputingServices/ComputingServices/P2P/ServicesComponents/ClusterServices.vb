@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Parallel
 Imports System.Net
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net
 
 Namespace P2P.ServicesComponents
