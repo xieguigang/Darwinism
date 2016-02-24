@@ -44,5 +44,9 @@ Namespace TaskHost
         <Extension> Public Function Invoke(Of T)(info As InvokeInfo, host As TaskHost) As T
             Return DirectCast(info.Invoke(host), T)
         End Function
+
+        Public Function AddressEquals(obj As Object) As Boolean
+
+        End Function
     End Module
 End Namespace
