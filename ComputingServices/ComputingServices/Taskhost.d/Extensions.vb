@@ -45,8 +45,8 @@ Namespace TaskHost
             Return DirectCast(info.Invoke(host), T)
         End Function
 
-        Public Function AddressEquals(obj As Object) As Boolean
-
+        Public Function AddressEquals(a As Object, b As Object) As Boolean
+            Return ObjectAddress.AddressOf(a) = b
         End Function
     End Module
 End Namespace

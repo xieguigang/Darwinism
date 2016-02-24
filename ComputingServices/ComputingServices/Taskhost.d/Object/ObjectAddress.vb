@@ -69,5 +69,29 @@ Namespace TaskHost
                 .TypeId = x.GetType.FullName
             }
         End Function
+
+        Public Shared Operator =(a As ObjectAddress, b As ObjectAddress) As Boolean
+            Return a.__hash = b.__hash
+        End Operator
+
+        Public Shared Operator <>(a As ObjectAddress, b As ObjectAddress) As Boolean
+            Return a.__hash <> b.__hash
+        End Operator
+
+        Public Shared Operator =(a As ObjectAddress, b As Object) As Boolean
+            Return a.__hash = [AddressOf](b).__hash
+        End Operator
+
+        Public Shared Operator <>(a As ObjectAddress, b As Object) As Boolean
+            Return a.__hash <> [AddressOf](b).__hash
+        End Operator
+
+        Public Shared Operator =(a As Object, b As ObjectAddress) As Boolean
+            Return [AddressOf](a).__hash = b.__hash
+        End Operator
+
+        Public Shared Operator <>(a As Object, b As ObjectAddress) As Boolean
+            Return [AddressOf](a).__hash <> b.__hash
+        End Operator
     End Class
 End Namespace
