@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+﻿Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace FileSystem.Protocols
 

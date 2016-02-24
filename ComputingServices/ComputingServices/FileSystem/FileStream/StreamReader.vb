@@ -4,7 +4,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComputingServices.FileSystem.Protocols
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace FileSystem.IO
 

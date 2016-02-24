@@ -1,8 +1,8 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Net.Protocol
-Imports Microsoft.VisualBasic.Net.Protocol.Reflection
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace FileSystem.Protocols

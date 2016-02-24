@@ -17,14 +17,16 @@
             Return GetObject(addr.ReferenceAddress)
         End Function
 
+        Public Function IsNull(p As Long) As Boolean
+            Return Not __innerHash.ContainsKey(p)
+        End Function
+
         Public Function SetObject(obj As Object) As ObjectAddress
             Dim addr As ObjectAddress = ObjectAddress.AddressOf(obj)
             Dim p As Long = addr.ReferenceAddress
-            Dim innerObj As Object
 
-            If __innerHash.ContainsKey(p) Then
-                innerObj = obj
-                ' 将属性值复制给当前内存之中的对象
+            If __innerHash.ContainsKey(p) Then    ' 将属性值复制给当前内存之中的对象
+                Call ShadowsCopy.ShadowsCopy(obj, __innerHash(p), Me)
             Else
                 Call __innerHash.Add(p, obj)
                 Call __innerAddr.Add(p, addr)
