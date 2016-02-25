@@ -43,7 +43,8 @@ Namespace TaskHost
 
                         ' 检查栈空间是否已经复制过当前的对象了？
                         If stack.IndexOf(addr.ReferenceAddress) = -1 Then     ' 假若出现循环引用的话，应该怎样进行复制？？
-                            Call ShadowsCopy(value, innerTarget, memory)  ' 假若已经存在了，则递归进入下一层复制
+                            Call stack.Add(addr.ReferenceAddress)      ' 写栈路径记录
+                            Call __innerCopy(value, innerTarget, memory, stack)  ' 假若已经存在了，则递归进入下一层复制
                         End If
                     End If
                 End If
