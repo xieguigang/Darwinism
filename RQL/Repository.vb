@@ -15,9 +15,23 @@ Public Class Repository : Implements ISaveHandle
     ''' <returns></returns>
     Public ReadOnly Property Models As Dictionary(Of String, EntityProvider)
 
-    Public Function GetRepository(url As String) As IEnumerable
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="url">大小写不敏感，不需要额外的处理</param>
+    ''' <returns></returns>
+    Public Function GetRepository(url As String, Optional where As String = "") As IEnumerable
         Dim api As EntityProvider = Models(url.ToLower)
-        Return api.GetRepository
+        If String.IsNullOrEmpty(where) Then
+            Return api.GetRepository
+        Else
+            Return api.LinqWhere(where)
+        End If
+    End Function
+
+    Public Overloads Function [GetType](url As String) As Type
+        Dim api As EntityProvider = Models(url.ToLower)
+        Return api.GetType
     End Function
 
     Public Function LoadFile(url As String) As Repository

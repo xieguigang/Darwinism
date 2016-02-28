@@ -12,6 +12,7 @@ Namespace TaskHost
     <Protocol(GetType(TaskProtocols))>
     Public Class TaskInvoke : Inherits IHostBase
         Implements IRemoteSupport
+        Implements IDisposable
 
         ''' <summary>
         ''' Running on local LAN
@@ -41,6 +42,7 @@ Namespace TaskHost
         End Property
 
         Public ReadOnly Property FileSystem As FileSystemHost Implements IRemoteSupport.FileSystem
+        Public ReadOnly Property LinqProvider As LinqPool = New LinqPool
 
         ''' <summary>
         ''' Invoke the function on the remote server.(远程服务器上面通过这个方法执行函数调用)
@@ -87,19 +89,10 @@ Namespace TaskHost
             Return New RequestStream(value.GetJson)
         End Function
 
-        ''' <summary>
-        ''' linq池
-        ''' </summary>
-        ReadOnly __linq As New Dictionary(Of String, LinqProvider)
-
         <Protocol(TaskProtocols.Free)>
         Private Function Free(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim uid As String = args.GetUTF8String
-            If __linq.ContainsKey(uid) Then
-                Dim x As LinqProvider = __linq(uid)
-                Call x.Free  ' 释放Linq数据源的指针
-                Call __linq.Remove(uid)  ' 从哈希表之中移除数据源释放服务器资源
-            End If
+            Call LinqProvider.Free(uid)
             Return NetResponse.RFC_OK  ' HTTP/200
         End Function
 
@@ -116,11 +109,41 @@ Namespace TaskHost
             Dim type As Type = Nothing
             Dim value As Object = __invoke(params, type)
             Dim source As IEnumerable = DirectCast(value, IEnumerable)
-            Dim linq As New LinqProvider(source, type.GetArrayElement(True))  ' 创建 Linq 数据源
-            Dim portal As IPEndPoint = linq.Portal
-            Call __linq.Add(portal.ToString, linq)  ' 数据源添加入哈希表之中
-            Dim svr As String = portal.GetJson  ' 返回数据源信息
+            Dim svr As String = LinqProvider.OpenQuery(source, type).GetJson   ' 返回数据源信息
             Return New RequestStream(svr)
         End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not Me.disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                    Call _LinqProvider.Free
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            Me.disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace
