@@ -28,6 +28,10 @@ Namespace TaskHost
             Return assm
         End Function
 
+        ''' <summary>
+        ''' Get mapping type information.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overloads Function [GetType]() As Type
             Dim assm As Assembly = LoadAssembly()
             Dim type As Type = assm.GetType(Me.FullIdentity)
