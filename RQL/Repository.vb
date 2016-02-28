@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Serialization.JsonContract
 Imports RQL.StorageTek
 
 ''' <summary>
-''' 
+''' Repository database
 ''' </summary>
 Public Class Repository : Implements ISaveHandle
 
