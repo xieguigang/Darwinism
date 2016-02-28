@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.LINQ.LDM.Expression
 
 Namespace StorageTek
 
@@ -27,6 +28,14 @@ Namespace StorageTek
 
         Public Overrides Function ToString() As String
             Return $"[{Tek.ToString}] {MapFileIO}  //{MyBase.ToString}"
+        End Function
+
+        Public Function LinqWhere(where As String) As IEnumerable
+            Dim Closure = WhereClosure.CreateLinqWhere([GetType], where)
+            Dim LQuery = (From x As Object In Me.GetRepository()
+                          Where True = Closure.WhereTest(x)
+                          Select x)
+            Return LQuery
         End Function
     End Class
 End Namespace

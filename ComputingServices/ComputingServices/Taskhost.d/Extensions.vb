@@ -17,9 +17,9 @@ Namespace TaskHost
         <Extension> Public Function [AddressOf](type As Type, name As String) As InvokeInfo
             Dim method = type.GetMethod(name, bindingAttr:=PublicShared)
             Dim info As New InvokeInfo With {
-                .Assembly = FileIO.FileSystem.GetFileInfo(type.Assembly.Location).Name,
+                .assm = FileIO.FileSystem.GetFileInfo(type.Assembly.Location).Name,
                 .Name = method.Name,
-                .Type = type.FullName
+                .FullIdentity = type.FullName
             }
             Return info
         End Function

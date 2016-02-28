@@ -113,9 +113,9 @@
       <Project>{87383048-1b31-49b7-9fb7-0ded1b80ace8}</Project>
       <Name>ComputingServices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LINQ\LINQ\LINQ.vbproj">
+    <ProjectReference Include="..\LINQ\LINQ\Linq.vbproj">
       <Project>{0a9b9fa6-e12d-48fd-b979-9f021a591e69}</Project>
-      <Name>LINQ</Name>
+      <Name>Linq</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\..\Reference SharedLib\HTTPServer\HTTPServer.projitems" Label="Shared" />
