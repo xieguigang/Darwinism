@@ -8,7 +8,7 @@ Public Enum StorageTeks As Integer
     ''' </summary>
     DIR = 2
     ''' <summary>
-    ''' Csv rows.(Csv文件的行映射为某一个实体对象)
+    ''' Csv rows.(Csv文件的行映射为某一个实体对象)(需要外部插件)
     ''' </summary>
     Tabular = 4
     ''' <summary>
@@ -20,7 +20,7 @@ Public Enum StorageTeks As Integer
     ''' </summary>
     Json = 16
     ''' <summary>
-    ''' 实体对象是存储在MySQL数据库的某一张表之中的
+    ''' 实体对象是存储在MySQL数据库的某一张表之中的.(需要外部插件)
     ''' </summary>
     SQL = 32
 End Enum
