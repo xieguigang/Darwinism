@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="P2P\PbsProtocol.vb" />
     <Compile Include="P2P\PbsThread.vb" />
+    <Compile Include="Taskhost.d\Invoke\Type.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
     <Compile Include="Taskhost.d\Linq\ILinq%28Of T%29.vb" />
     <Compile Include="Taskhost.d\Linq\LinqProvider.vb" />

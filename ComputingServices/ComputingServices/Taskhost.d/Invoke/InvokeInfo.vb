@@ -36,18 +36,8 @@ Namespace TaskHost
     ''' <summary>
     ''' 分布式计算框架之中的远程调用的参数信息
     ''' </summary>
-    Public Class InvokeInfo
+    Public Class InvokeInfo : Inherits TypeInfo
 
-        ''' <summary>
-        ''' 模块文件
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Assembly As String
-        ''' <summary>
-        ''' 源
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Type As String
         ''' <summary>
         ''' 函数名
         ''' </summary>
@@ -59,18 +49,6 @@ Namespace TaskHost
         ''' <returns></returns>
         Public Property Parameters As Argv()
 
-        Public Function LoadAssembly() As Assembly
-            Dim path As String = App.HOME & "/" & Assembly
-            Dim assm As Assembly = System.Reflection.Assembly.LoadFile(path)
-            Return assm
-        End Function
-
-        Public Overloads Function [GetType]() As Type
-            Dim assm As Assembly = LoadAssembly()
-            Dim type As Type = assm.GetType(Me.Type)
-            Return type
-        End Function
-
         Public Function GetMethod() As MethodInfo
             Dim type As Type = [GetType]()
             Dim func As MethodInfo = type.GetMethod(Name, BindingFlags.Public Or BindingFlags.Static)
@@ -78,7 +56,7 @@ Namespace TaskHost
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{Assembly}!{Type}::{Name}"
+            Return $"{assm}!{FullIdentity}::{Name}"
         End Function
 
         ''' <summary>
@@ -103,10 +81,10 @@ Namespace TaskHost
             Dim name As String = func.Method.Name
             Dim params As Argv() = args.ToArray(Function(x) New Argv(x))  ' 由于函数调用的参数的类型可能是基类，所以json序列化操作会存在问题，在这里使用这个新的参数构建模块来避免这个问题
             Return New InvokeInfo With {
-                .Assembly = FileIO.FileSystem.GetFileInfo(assm.Location).Name,
+                .assm = FileIO.FileSystem.GetFileInfo(assm.Location).Name,
                 .Name = name,
                 .Parameters = params,
-                .Type = type.FullName
+                .FullIdentity = type.FullName
             }
         End Function
     End Class
