@@ -133,6 +133,7 @@
     <Compile Include="Framewok\ObjectModel\ParallelLINQ.vb" />
     <Compile Include="Framewok\ObjectModel\LINQ.vb" />
     <Compile Include="Framewok\Provider\Registry\TypeEntry.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="Script\Variable.vb" />
     <Compile Include="Script\Runtime.vb" />
     <Compile Include="Framewok\DynamicCode\vbc\SelectConstructCompiler.vb" />

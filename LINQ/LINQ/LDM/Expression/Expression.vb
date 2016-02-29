@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.LINQ.Statements
 
 Namespace LDM.Expression
 
+    ''' <summary>
+    ''' Linq expression model
+    ''' </summary>
     Public Class Expression
 
         ''' <summary>
