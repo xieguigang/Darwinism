@@ -5,10 +5,10 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode.VBC
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.CodeDOM_VBC
 
 Namespace LDM.Expression
 
