@@ -27,6 +27,12 @@ Namespace Framework.Provider
             End Set
         End Property
 
+        ''' <summary>
+        ''' .NET SDK directory
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property SDK As String
+
         Dim _typeHash As Dictionary(Of String, TypeEntry)
 
         ''' <summary>

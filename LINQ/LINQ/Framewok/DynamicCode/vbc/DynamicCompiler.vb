@@ -1,8 +1,11 @@
 ﻿Imports System.Text
 Imports System.CodeDom.Compiler
-Imports Microsoft.VisualBasic.Linq.Statements
 Imports System.CodeDom
+Imports Microsoft.VisualBasic.Linq.Statements
 Imports Microsoft.VisualBasic.CodeDOM_VBC
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
+Imports System.Reflection
 
 Namespace Framework.DynamicCode.VBC
 
@@ -10,49 +13,55 @@ Namespace Framework.DynamicCode.VBC
     ''' 编译整个LINQ语句的动态代码编译器
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class DynamicCompiler : Implements System.IDisposable
+    Public Class DynamicCompiler : Implements IDisposable
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <remarks></remarks>
-        Dim DotNETReferenceAssembliesDir As String
-        Dim LINQStatement As LINQStatement
+        Public ReadOnly Property EntityProvider As TypeRegistry
+        Public ReadOnly Property ApiProvider As APIProvider
 
-        Public Const ModuleName As String = "ILINQProgram"
-        Public Const SetObjectName As String = "SetObject"
-
-        Dim ObjectModel As CodeNamespace
-
-        Public ReadOnly Property CompiledCode As String
-            Get
-                Return GenerateCode(ObjectModel)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="LINQStatement"></param>
-        ''' <param name="SDK">.NET Framework Reference Assembly文件夹的位置</param>
-        ''' <remarks></remarks>
-        Sub New(LINQStatement As LINQStatement, SDK As String)
-            Me.LINQStatement = LINQStatement
-            Me.DotNETReferenceAssembliesDir = SDK
+        Sub New(entity As TypeRegistry, api As APIProvider)
+            ApiProvider = api
+            EntityProvider = entity
         End Sub
 
-        Public Function DeclareAssembly() As CodeDom.CodeCompileUnit
+        Sub New()
+            Call Me.New(TypeRegistry.LoadDefault, APIProvider.LoadDefault)
+        End Sub
+
+        Public ReadOnly Property ImportsNamespace As List(Of String) = New List(Of String)
+        Public ReadOnly Property ReferenceList As New List(Of String)
+
+        Public Sub [Imports](ns As String)
+            Dim types As Type() = ApiProvider.GetType(ns)
+            For Each nsDef As Type In types
+                Dim name As String = nsDef.FullName
+                If Not ImportsNamespace.Contains(name) Then
+                    Call ImportsNamespace.Add(name)
+                End If
+                Dim assm As String = nsDef.Assembly.Location
+                If Not ReferenceList.Contains(assm) Then
+                    Call ReferenceList.Add(assm)
+                End If
+            Next
+        End Sub
+
+        Public Function Compile([declare] As CodeTypeDeclaration) As Type
+            Dim assmUnit As CodeCompileUnit = DeclareAssembly()
+            Dim ns As CodeNamespace = assmUnit.Namespaces.Item(0)
+            Call ns.Types.Add([declare])
+            Call ns.Imports.AddRange(Me.ImportsNamespace.ImportsNamespace)
+            Dim assm As Assembly = CompileDll(assmUnit, ReferenceList, EntityProvider.SDK)
+            Dim types As Type() = assm.GetTypes
+            Dim name As String = [declare].Name
+            Dim LQuery = (From x As Type In types
+                          Where String.Equals(x.Name, name)
+                          Select x).FirstOrDefault
+            Return LQuery
+        End Function
+
+        Public Shared Function DeclareAssembly() As CodeCompileUnit
             Dim Assembly As CodeDom.CodeCompileUnit = New CodeDom.CodeCompileUnit
             Dim DynamicCodeNameSpace As CodeDom.CodeNamespace = New CodeDom.CodeNamespace("LINQDynamicCodeCompiled")
             Assembly.Namespaces.Add(DynamicCodeNameSpace)
-
-            DynamicCodeNameSpace.Types.Add(DeclareType)
-            DynamicCodeNameSpace.Imports.AddRange(New String() {}.ImportsNamespace)
-#If DEBUG Then
-            Console.WriteLine(GenerateCode(DynamicCodeNameSpace))
-#End If
-            ObjectModel = DynamicCodeNameSpace
-
             Return Assembly
         End Function
 

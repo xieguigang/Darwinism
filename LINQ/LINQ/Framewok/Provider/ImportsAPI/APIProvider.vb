@@ -33,6 +33,19 @@ Namespace Framework.Provider.ImportsAPI
         Public Shared ReadOnly Property DefaultFile As String =
             App.ProductSharedDIR & "/API.Imports.json"
 
+        ''' <summary>
+        ''' 命名空间的大小写不敏感
+        ''' </summary>
+        ''' <param name="ns"></param>
+        ''' <returns></returns>
+        Public Overloads Function [GetType](ns As String) As Type()
+            If __nsList.ContainsKey(ns.ToLower.ShadowCopy(ns)) Then
+                Return __nsList(ns).Modules.ToArray(Function(x) x.GetType)
+            Else
+                Return New Type() {}
+            End If
+        End Function
+
         Public Function Register(assm As Assembly) As Boolean
             Dim types As Type() = assm.GetTypes
             Dim LQuery = (From type As Type In types
@@ -68,6 +81,10 @@ Namespace Framework.Provider.ImportsAPI
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(Path, encoding.GetEncodings)
+        End Function
+
+        Public Shared Function LoadDefault() As APIProvider
+            Return LoadJsonFile(Of APIProvider)(DefaultFile)
         End Function
 
         Sub Save()

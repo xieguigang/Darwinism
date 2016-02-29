@@ -64,6 +64,12 @@ Namespace LDM.Expression
             Return [Function]
         End Function
 
+        Public Function BuildModule() As CodeTypeDeclaration
+            Dim type As New CodeTypeDeclaration(NameOf(WhereClosure))
+            Call type.Members.Add(__buildFunc)
+            Return type
+        End Function
+
         Sub New(expr As Token(Of Tokens)(), type As Type)
             Call MyBase.New(New Statements.Tokens.WhereClosure(expr))
         End Sub
