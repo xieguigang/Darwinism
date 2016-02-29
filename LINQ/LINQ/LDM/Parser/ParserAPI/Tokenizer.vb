@@ -230,59 +230,50 @@ Namespace LDM.Parser
                     Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Is, TokenPriority.Equality)
                 Case Statements.TokenIcer.Tokens.Minus
                     MoveNext()
-                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = TokenType.Identifier OrElse _PrevToken.Type = TokenType.CloseParens Then
-                        Return New Token(op, TokenType.[Operator], TokenPriority.PlusMinus)
+                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = Statements.TokenIcer.Tokens.var Then
+                        Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Minus, TokenPriority.PlusMinus)
                     Else
-                        Return New Token(op, TokenType.[Operator], TokenPriority.UnaryMinus)
+                        Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Minus, TokenPriority.UnaryMinus)
                     End If
-                Case "+"c
+                Case Statements.TokenIcer.Tokens.Plus
                     MoveNext()
-                    Return New Token(op, TokenType.[Operator], TokenPriority.PlusMinus)
-                Case "!"c
+                    Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Plus, TokenPriority.PlusMinus)
+                Case Statements.TokenIcer.Tokens.Not
                     MoveNext()
-                    If _En.Current = "="c Then
-                        op += _En.Current
+                    If Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.Equals Then
                         MoveNext()
-                        Return New Token(op, TokenType.[Operator], TokenPriority.Equality)
+                        Return New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.Equals, TokenPriority.Equality)
                     Else
-                        Return New Token(op, TokenType.[Operator], TokenPriority.[Not])
+                        Return New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.Not, TokenPriority.[Not])
                     End If
-                Case "*"c, "/"c
+                Case Statements.TokenIcer.Tokens.Asterisk OrElse Statements.TokenIcer.Tokens.Slash
                     MoveNext()
-                    Return New Token(op, TokenType.[Operator], TokenPriority.MulDiv)
-                Case "%"c
+                    Return New Token(Tokens.GetCurrent.TokenValue, Tokens.GetCurrent.TokenName, TokenPriority.MulDiv)
+                Case  
                     MoveNext()
                     Return New Token(op, TokenType.[Operator], TokenPriority.[Mod])
-                Case "|"c
+                Case Statements.TokenIcer.Tokens.Or
                     MoveNext()
-                    If _En.Current = "|"c Then
-                        op += _En.Current
-                        MoveNext()
-                    End If
-                    Return New Token(op, TokenType.[Operator], TokenPriority.[Or])
-                Case "&"c
+                    Return New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.Or, TokenPriority.[Or])
+                Case Statements.TokenIcer.Tokens.And
                     MoveNext()
-                    If _En.Current = "&"c Then
-                        op += _En.Current
-                        MoveNext()
-                    End If
-                    Return New Token(op, TokenType.[Operator], TokenPriority.[And])
-                Case "("c
+                    Return New Token(Tokens.GetCurrent, Statements.TokenIcer.Tokens.And, TokenPriority.[And])
+                Case Statements.TokenIcer.Tokens.LPair
                     MoveNext()
-                    Return New Token(op, TokenType.OpenParens, TokenPriority.None)
-                Case ")"c
+                    Return New Token("(", OpenParens, TokenPriority.None)
+                Case Statements.TokenIcer.Tokens.RPair
                     MoveNext()
-                    Return New Token(op, TokenType.CloseParens, TokenPriority.None)
-                Case "["c
-                    MoveNext()
-                    Return New Token(op, TokenType.OpenBracket, TokenPriority.None)
-                Case "]"c
-                    MoveNext()
-                    Return New Token(op, TokenType.CloseBracket, TokenPriority.None)
-                Case """"c
+                    Return New Token(")", CloseParens, TokenPriority.None)
+                    'Case "["c
+                    '    MoveNext()
+                    '    Return New Token(op, TokenType.OpenBracket, TokenPriority.None)
+                    'Case "]"c
+                    '    MoveNext()
+                    '    Return New Token(op, TokenType.CloseBracket, TokenPriority.None)
+                Case Else
                     ' When we detect a quote, we can just ignore it since the user doesn't really need to know about it.
                     MoveNext()
-                    _PrevToken = New Token(op, TokenType.Quote, TokenPriority.None)
+                    _PrevToken = New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.String, TokenPriority.None)
                     Return GetString()
             End Select
             Return Token.NullToken
