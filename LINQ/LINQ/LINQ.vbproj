@@ -126,8 +126,10 @@
     <Compile Include="LDM\Expression\LetClosure.vb" />
     <Compile Include="LDM\Expression\SelectClosure.vb" />
     <Compile Include="LDM\Expression\WhereClosure.vb" />
+    <Compile Include="LDM\Parser\TokenPriority.vb" />
     <Compile Include="LDM\Parser\ClosureTokens.vb" />
     <Compile Include="LDM\Parser\ClosureParser.vb" />
+    <Compile Include="LDM\Parser\Parser.vb" />
     <Compile Include="LDM\TokenIcer.vb" />
     <Compile Include="Framewok\SDK_PATH.vb" />
     <Compile Include="Framewok\ObjectModel\ParallelLINQ.vb" />

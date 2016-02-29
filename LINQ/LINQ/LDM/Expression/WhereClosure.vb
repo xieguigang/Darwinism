@@ -55,8 +55,22 @@ Namespace LDM.Expression
         Protected Overrides Function __parsing() As CodeExpression
             Dim expr As Func(Of Tokens) =
                 MyBase._source.Source.ParsingStack.Args.First  ' 只能够有一个测试语句
+            Dim code As New CodeExpression
+
+            For Each c In expr.Caller
+                If c.InnerStack Is Nothing Then
+                    If c.obj.TokenName = Tokens.varRef Then
+
+                    End If
+                Else
+
+                End If
+            Next
+
+            Return code
         End Function
 
+        Public Const ARGV As String = "obj"
         Public Const TestMethod As String = "___test"
 
         Private Function __buildFunc() As CodeMemberMethod
