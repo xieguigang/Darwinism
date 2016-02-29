@@ -12,8 +12,8 @@
 
         Public Function Compile() As CodeDom.CodeMemberMethod
             Dim AssignStatement = New CodeDom.CodeAssignStatement(New CodeDom.CodeVariableReferenceExpression("rval"), Statement.SelectClosure.Expression)  '生成赋值语句，设置函数返回值
-            Dim [Function] As CodeDom.CodeMemberMethod = DynamicCode.VBC.DynamicCompiler.DeclareFunction(
-                                SelectMethodName, "System.Object", New CodeDom.CodeStatementCollection From {AssignStatement})
+            Dim [Function] As CodeDom.CodeMemberMethod =
+                DeclareFunction(SelectMethodName, "System.Object", New CodeDom.CodeStatementCollection From {AssignStatement})
             [Function].Attributes = CodeDom.MemberAttributes.Public
             Return [Function]
         End Function

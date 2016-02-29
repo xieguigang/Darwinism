@@ -17,8 +17,13 @@ Public Class Repository : Implements ISaveHandle
     ''' <returns></returns>
     Public ReadOnly Property Models As Dictionary(Of String, EntityProvider)
 
-    Dim __types As TypeRegistry
-    Dim __api As APIProvider
+    ReadOnly __types As TypeRegistry
+    ReadOnly __api As APIProvider
+
+    Sub New()
+        __api = APIProvider.LoadDefault
+        __types = TypeRegistry.LoadDefault
+    End Sub
 
     ''' <summary>
     ''' 

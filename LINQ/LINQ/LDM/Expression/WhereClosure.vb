@@ -7,6 +7,8 @@ Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.CodeDOM_VBC
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 
 Namespace LDM.Expression
 
@@ -26,6 +28,7 @@ Namespace LDM.Expression
     ''' End Module
     ''' </remarks>
     Public Class WhereClosure : Inherits Closure
+        Implements ICompiler
 
         ''' <summary>
         ''' 有where生成的模块里面的一个测试函数的函数方法信息
@@ -77,6 +80,11 @@ Namespace LDM.Expression
 
         Sub New(expr As Token(Of Tokens)(), type As Type)
             Call MyBase.New(New Statements.Tokens.WhereClosure(expr))
+        End Sub
+
+        Public Sub CompileToken(types As TypeRegistry, api As APIProvider) Implements ICompiler.CompileToken
+            Dim type As Type = Me.Compile(types, api)
+            Me.__testMethod = type.GetMethod(TestMethod)
         End Sub
 
         ''' <summary>

@@ -1,5 +1,5 @@
 ﻿Imports System.Reflection
-Imports Microsoft.VisualBasic.LINQ.Extensions
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Scripting
 

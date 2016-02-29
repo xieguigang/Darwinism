@@ -21,7 +21,7 @@
                 StatementCollection = New CodeDom.CodeStatementCollection
                 '         StatementCollection.Add(New CodeDom.CodeAssignStatement(New CodeDom.CodeVariableReferenceExpression("rval"), Statement.Where.Expression))
             End If
-            Dim [Function] As CodeDom.CodeMemberMethod = DynamicCompiler.DeclareFunction(FunctionName, "System.Boolean", StatementCollection)
+            Dim [Function] As CodeDom.CodeMemberMethod = DeclareFunction(FunctionName, "System.Boolean", StatementCollection)
             [Function].Attributes = CodeDom.MemberAttributes.Public
             Return [Function]
         End Function

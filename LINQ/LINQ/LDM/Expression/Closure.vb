@@ -1,4 +1,7 @@
-﻿Namespace LDM.Expression
+﻿Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
+
+Namespace LDM.Expression
 
     Public MustInherit Class Closure
 
@@ -20,4 +23,8 @@
             Return _source.ToString
         End Function
     End Class
+
+    Public Interface ICompiler
+        Sub CompileToken(types As TypeRegistry, api As APIProvider)
+    End Interface
 End Namespace
