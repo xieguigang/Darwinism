@@ -11,6 +11,33 @@ Namespace Framework.Provider.ImportsAPI
         ''' {namespace, typeinfo}
         ''' </summary>
         ''' <returns></returns>
-        Public Property Modules As Dictionary(Of String, TypeInfo)
+        Public Property Modules As TypeInfo()
+            Get
+                Return __list.ToArray
+            End Get
+            Set(value As TypeInfo())
+                If value Is Nothing Then
+                    __list = New List(Of TypeInfo)
+                Else
+                    __list = value.ToList
+                End If
+            End Set
+        End Property
+
+        Dim __list As List(Of TypeInfo)
+
+        Public Sub Add(type As Type)
+            Dim info As New TypeInfo(type)
+            Call __list.Add(info)
+        End Sub
+
+        Public Function Remove(type As Type) As Boolean
+            Dim LQuery = (From x In __list Where x = type Select x).ToArray
+            For Each x In LQuery
+                Call __list.Remove(x)
+            Next
+
+            Return Not LQuery.IsNullOrEmpty
+        End Function
     End Class
 End Namespace
