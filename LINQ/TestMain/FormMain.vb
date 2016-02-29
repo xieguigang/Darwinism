@@ -14,7 +14,7 @@ Public Class FormMain
     ''' <param name="Linq"></param>
     ''' <remarks></remarks>
     Private Sub Exe(Linq As String)
-        Dim Statement = Global.LINQ.Statements.LINQStatement.TryParse(Linq, LINQFramework.TypeRegistry)
+        Dim Statement = Microsoft.VisualBasic.Linq.Statements.LINQStatement.TryParse(Linq) ', LINQFramework.TypeRegistry)
 
         TextBox1.AppendText(String.Format("{0}{1}Auto-generated code for debug:{2}{3}{4}", vbCrLf, vbCrLf, vbCrLf, Statement.CompiledCode, vbCrLf))
         TextBox1.AppendText(vbCrLf & "Query Result:" & vbCrLf)
@@ -35,8 +35,8 @@ Public Class FormMain
     Private Sub RegistryExternalModuleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RegistryExternalModuleToolStripMenuItem.Click
         Dim File As New Global.System.Windows.Forms.OpenFileDialog
         If File.ShowDialog = Global.System.Windows.Forms.DialogResult.OK Then
-            Call LINQFramework.TypeRegistry.Register(File.FileName)
-            Call LINQFramework.TypeRegistry.Save()
+            Call LINQFramework.Registry.Register(File.FileName)
+            Call LINQFramework.Registry.Save()
         End If
     End Sub
 

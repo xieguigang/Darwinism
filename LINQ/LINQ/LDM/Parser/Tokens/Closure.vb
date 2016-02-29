@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Statements.TokenIcer
+﻿Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Statements.Tokens
 
@@ -27,6 +28,14 @@ Namespace Statements.Tokens
         Sub New(token As ClosureTokens, parent As LINQStatement)
             _source = token
             _statement = parent
+        End Sub
+
+        Sub New(type As TokenIcer.Tokens, expr As IEnumerable(Of Token(Of TokenIcer.Tokens)))
+            _source = New ClosureTokens With {
+                .Token = type,
+                .Tokens = expr.ToArray
+            }
+            _statement = Nothing
         End Sub
 
         Const MissingRequiredField As String = "Missing the required LINQ statement token {0}!"

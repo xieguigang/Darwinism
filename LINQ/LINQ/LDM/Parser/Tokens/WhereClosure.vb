@@ -18,6 +18,10 @@ Namespace Statements.Tokens
             Expression = _source.Tokens.Parsing(stackt)
         End Sub
 
+        Sub New(source As Func(Of TokenIcer.Tokens))
+            Call MyBase.New(TokenIcer.Tokens.Where, source)
+        End Sub
+
         Public Sub Initialize()
             '   Me.TestMethod = DynamicInvoke.GetMethod(_statement.ILINQProgram, WhereConditionTestCompiler.FunctionName)
         End Sub

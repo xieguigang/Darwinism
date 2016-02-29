@@ -1,5 +1,6 @@
 ﻿' This file was Auto Generated with TokenIcer
 Imports System.Collections.Generic
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
@@ -101,8 +102,17 @@ Namespace Statements.TokenIcer
         ''' <remarks>
         ''' The constructor initalizes memory and adds all of the tokens to the token dictionary.
         ''' </remarks>
-        Public Function GetTokens(expr As String) As Token(Of Tokens)()
+        <Extension> Public Function GetTokens(expr As String) As Token(Of Tokens)()
             Return __getParser.GetTokens(expr)
+        End Function
+
+        <Extension>
+        Public Function TrimWhiteSpace(source As IEnumerable(Of Token(Of Tokens))) As Token(Of Tokens)()
+            Dim LQuery = (From x As Token(Of Tokens)
+                          In source
+                          Where x.TokenName <> Tokens.WhiteSpace
+                          Select x).ToArray
+            Return LQuery
         End Function
     End Module
 End Namespace
