@@ -27,7 +27,6 @@ Namespace LDM.Expression
     ''' </remarks>
     Public Class WhereClosure : Inherits Closure
 
-        Friend Expression As CodeExpression
         ''' <summary>
         ''' 有where生成的模块里面的一个测试函数的函数方法信息
         ''' </summary>
@@ -39,7 +38,6 @@ Namespace LDM.Expression
 
         Sub New(source As Statements.Tokens.WhereClosure)
             Call MyBase.New(source)
-
         End Sub
 
         Sub New(expr As Func(Of Tokens), type As Type)
@@ -52,7 +50,8 @@ Namespace LDM.Expression
         ''' </summary>
         ''' <returns></returns>
         Protected Overrides Function __parsing() As CodeExpression
-
+            Dim expr As Func(Of Tokens) =
+                MyBase._source.Source.ParsingStack.Args.First  ' 只能够有一个测试语句
         End Function
 
         Private Function __buildFunc() As CodeMemberMethod

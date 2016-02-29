@@ -7,6 +7,7 @@
 
         Sub New(source As Statements.Tokens.Closure)
             _source = source
+            Call __init()
         End Sub
 
         Protected MustOverride Function __parsing() As CodeDom.CodeExpression

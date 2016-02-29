@@ -32,22 +32,22 @@ Namespace Statements.Tokens
         Sub New(token As ClosureTokens, parent As LINQStatement)
             Call MyBase.New(token, parent)
 
-            Name = _source.Tokens.First.TokenValue
+            Name = Source.Tokens.First.TokenValue
 
             Dim sk As Integer
 
-            If _source.Tokens(1).TokenName = TokenIcer.Tokens.Equals Then
+            If Source.Tokens(1).TokenName = TokenIcer.Tokens.Equals Then
                 sk = 2                ' 没有申明类型
             Else
-                If _source.Tokens(1).TokenName = TokenIcer.Tokens.As Then
-                    Type = _source.Tokens(2).TokenValue
+                If Source.Tokens(1).TokenName = TokenIcer.Tokens.As Then
+                    Type = Source.Tokens(2).TokenValue
                     sk = 4
                 Else
                     Throw New SyntaxErrorException
                 End If
             End If
 
-            Dim expr As IEnumerable(Of Token(Of TokenIcer.Tokens)) = _source.Tokens.Skip(sk)
+            Dim expr As IEnumerable(Of Token(Of TokenIcer.Tokens)) = Source.Tokens.Skip(sk)
             Expression = expr.Parsing(stackt)
         End Sub
 
@@ -58,7 +58,7 @@ Namespace Statements.Tokens
         End Function
 
         Public Overrides Function ToString() As String
-            Return _source.ToString
+            Return Source.ToString
         End Function
     End Class
 

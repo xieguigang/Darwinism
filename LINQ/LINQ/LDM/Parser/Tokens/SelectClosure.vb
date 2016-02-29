@@ -24,7 +24,7 @@ Namespace Statements.Tokens
         ''' <param name="parent"></param>
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.Tokens.Select, tokens, parent)
-            Projects = _source.Tokens.Parsing(stackT).Args
+            Projects = Source.Tokens.Parsing(stackT).Args
         End Sub
 
         Private Shared Function __isDelimiter(x As Token(Of TokenIcer.Tokens)) As Boolean

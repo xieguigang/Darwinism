@@ -6,13 +6,13 @@ Namespace Statements.Tokens
     Public MustInherit Class Closure
 
         Protected _statement As LINQStatement
-        Protected _source As ClosureTokens
+        Public ReadOnly Property Source As ClosureTokens
 
         Sub New(type As TokenIcer.Tokens, tokens As ClosureTokens(), parent As LINQStatement)
-            _source = GetTokens(type, from:=tokens)
+            _Source = GetTokens(type, from:=tokens)
             _statement = parent
 
-            If _source Is Nothing Then
+            If _Source Is Nothing Then
                 If type = TokenIcer.Tokens.From OrElse
                     type = TokenIcer.Tokens.In OrElse
                     type = TokenIcer.Tokens.Select Then
@@ -26,7 +26,7 @@ Namespace Statements.Tokens
         End Sub
 
         Sub New(token As ClosureTokens, parent As LINQStatement)
-            _source = token
+            _Source = token
             _statement = parent
         End Sub
 

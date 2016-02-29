@@ -28,8 +28,8 @@ Namespace Statements.Tokens
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.Tokens.From, tokens, parent)
 
-            Name = _source.Tokens(Scan0).TokenValue
-            TypeId = _source.Tokens(2).TokenValue
+            Name = Source.Tokens(Scan0).TokenValue
+            TypeId = Source.Tokens(2).TokenValue
         End Sub
 
         Public Overridable Function ToFieldDeclaration() As CodeDom.CodeMemberField

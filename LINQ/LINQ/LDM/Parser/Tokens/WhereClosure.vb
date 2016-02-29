@@ -15,7 +15,7 @@ Namespace Statements.Tokens
 
         Sub New(tokens As ClosureTokens(), parent As LINQStatement)
             Call MyBase.New(TokenIcer.Tokens.Where, tokens, parent)
-            Expression = _source.Tokens.Parsing(stackt)
+            Expression = Source.Tokens.Parsing(stackT)
         End Sub
 
         Sub New(source As Func(Of TokenIcer.Tokens))

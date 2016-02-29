@@ -34,12 +34,6 @@ Namespace Statements.Tokens
             End Get
         End Property
 
-        Public ReadOnly Property Source As ClosureTokens
-            Get
-                Return Me._source
-            End Get
-        End Property
-
         Sub New(tokens As ClosureTokens, parent As LINQStatement)
             Call MyBase.New(tokens, parent)
         End Sub

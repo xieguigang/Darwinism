@@ -116,6 +116,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APP\CLI.vb" />
+    <Compile Include="Framewok\Provider\ImportsAPI\APIProvider.vb" />
+    <Compile Include="Framewok\Provider\ImportsAPI\ImportsAPI.vb" />
     <Compile Include="LDM\Expression\Expression.vb" />
     <Compile Include="LDM\Expression\Closure.vb" />
     <Compile Include="LDM\Expression\FromClosure.vb" />
