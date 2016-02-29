@@ -225,16 +225,12 @@ Namespace LDM.Parser
             Dim Current = Tokens.GetCurrent
 
             Select Case Current.TokenName
-                Case "<"c, "="c, ">"c
+                Case Statements.TokenIcer.Tokens.Equals OrElse Statements.TokenIcer.Tokens.Is
                     MoveNext()
-                    If _En.Current = "="c Then
-                        op += _En.Current
-                        MoveNext()
-                    End If
-                    Return New Token(op, TokenType.[Operator], TokenPriority.Equality)
-                Case "-"c
+                    Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Is, TokenPriority.Equality)
+                Case Statements.TokenIcer.Tokens.Minus
                     MoveNext()
-                    If _PrevToken.Type = TokenType.Primitive OrElse _PrevToken.Type = TokenType.Identifier OrElse _PrevToken.Type = TokenType.CloseParens Then
+                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = TokenType.Identifier OrElse _PrevToken.Type = TokenType.CloseParens Then
                         Return New Token(op, TokenType.[Operator], TokenPriority.PlusMinus)
                     Else
                         Return New Token(op, TokenType.[Operator], TokenPriority.UnaryMinus)
