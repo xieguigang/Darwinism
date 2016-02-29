@@ -230,7 +230,7 @@ Namespace LDM.Parser
                     Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Is, TokenPriority.Equality)
                 Case Statements.TokenIcer.Tokens.Minus
                     MoveNext()
-                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = Statements.TokenIcer.Tokens.var Then
+                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = Statements.TokenIcer.Tokens.Identifier Then
                         Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Minus, TokenPriority.PlusMinus)
                     Else
                         Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Minus, TokenPriority.UnaryMinus)
@@ -249,9 +249,9 @@ Namespace LDM.Parser
                 Case Statements.TokenIcer.Tokens.Asterisk OrElse Statements.TokenIcer.Tokens.Slash
                     MoveNext()
                     Return New Token(Tokens.GetCurrent.TokenValue, Tokens.GetCurrent.TokenName, TokenPriority.MulDiv)
-                Case  
+                Case Statements.TokenIcer.Tokens.Mod
                     MoveNext()
-                    Return New Token(op, TokenType.[Operator], TokenPriority.[Mod])
+                    Return New Token("%", Statements.TokenIcer.Tokens.Mod, TokenPriority.[Mod])
                 Case Statements.TokenIcer.Tokens.Or
                     MoveNext()
                     Return New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.Or, TokenPriority.[Or])
@@ -264,12 +264,12 @@ Namespace LDM.Parser
                 Case Statements.TokenIcer.Tokens.RPair
                     MoveNext()
                     Return New Token(")", CloseParens, TokenPriority.None)
-                    'Case "["c
-                    '    MoveNext()
-                    '    Return New Token(op, TokenType.OpenBracket, TokenPriority.None)
-                    'Case "]"c
-                    '    MoveNext()
-                    '    Return New Token(op, TokenType.CloseBracket, TokenPriority.None)
+                Case Statements.TokenIcer.Tokens.OpenBracket
+                    MoveNext()
+                    Return New Token("[", Statements.TokenIcer.Tokens.OpenBracket, TokenPriority.None)
+                Case Statements.TokenIcer.Tokens.CloseBracket
+                    MoveNext()
+                    Return New Token("]", Statements.TokenIcer.Tokens.CloseBracket, TokenPriority.None)
                 Case Else
                     ' When we detect a quote, we can just ignore it since the user doesn't really need to know about it.
                     MoveNext()

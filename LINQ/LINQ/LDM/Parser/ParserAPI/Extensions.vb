@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
 
 Namespace LDM.Parser
 
@@ -8,5 +9,8 @@ Namespace LDM.Parser
         Public ReadOnly Property OpenParens As Tokens = Tokens.LPair
         Public ReadOnly Property CloseParens As Tokens = Tokens.RPair
 
+        <Extension> Public Function IsOperator(token As Tokens) As Boolean
+
+        End Function
     End Module
 End Namespace
