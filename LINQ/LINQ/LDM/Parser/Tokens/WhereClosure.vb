@@ -19,6 +19,10 @@ Namespace Statements.Tokens
         End Sub
 
         Sub New(source As Func(Of TokenIcer.Tokens))
+            Call MyBase.New(TokenIcer.Tokens.Where, source.ToArray(stackT))
+        End Sub
+
+        Sub New(source As Token(Of TokenIcer.Tokens)())
             Call MyBase.New(TokenIcer.Tokens.Where, source)
         End Sub
 

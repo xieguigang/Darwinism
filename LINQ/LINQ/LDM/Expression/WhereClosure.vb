@@ -6,17 +6,36 @@ Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.CodeDOM_VBC
 
 Namespace LDM.Expression
 
     ''' <summary>
     ''' 测试的是一个对象
     ''' </summary>
+    ''' <remarks>
+    ''' Where 测试的一个对象类型，对象的属性则是前面的In和Let所生成的变量
+    ''' Where 对象里面则通过一个逻辑值的函数来测试对象
     ''' 
+    ''' Public Module Where
+    ''' 
+    '''     Public Function Test(x As objectType) As Boolean
+    '''         Return (......) X ' 由where生成的测试语句
+    '''     End Function
+    ''' 
+    ''' End Module
+    ''' </remarks>
     Public Class WhereClosure : Inherits Closure
 
         Friend Expression As CodeExpression
-        Friend TestMethod As MethodInfo
+        ''' <summary>
+        ''' 有where生成的模块里面的一个测试函数的函数方法信息
+        ''' </summary>
+        Dim TestMethod As MethodInfo
+        ''' <summary>
+        ''' 前面的语句所生成的匿名类型的类型信息
+        ''' </summary>
+        Dim _typeINFO As Type
 
         Sub New(source As Statements.Tokens.WhereClosure)
             Call MyBase.New(source)
@@ -27,9 +46,28 @@ Namespace LDM.Expression
             Call MyBase.New(New Statements.Tokens.WhereClosure(expr))
         End Sub
 
+        ''' <summary>
+        ''' 在这个函数里面生成测试函数之中的表达式，然后再由vbc生成模块类型
+        ''' 函数只有一个参数，并且参数名为obj
+        ''' </summary>
+        ''' <returns></returns>
         Protected Overrides Function __parsing() As CodeExpression
 
         End Function
+
+        Private Function __buildFunc() As CodeMemberMethod
+            Dim [Function] As CodeMemberMethod =
+                DeclareFunc("Test", New Dictionary(Of String, Type) From {{"obj", Me._typeINFO}}, GetType(Boolean))
+            Call [Function].Statements.Add(LocalsInit("rtvl", GetType(Boolean), init:=False))
+            Call [Function].Statements.Add(ValueAssign(LocalVariable("obj"), __parsing))
+            Call [Function].Statements.Add([Return]("obj"))
+
+            Return [Function]
+        End Function
+
+        Sub New(expr As Token(Of Tokens)(), type As Type)
+            Call MyBase.New(New Statements.Tokens.WhereClosure(expr))
+        End Sub
 
         ''' <summary>
         ''' 
@@ -40,7 +78,7 @@ Namespace LDM.Expression
         ''' </param>
         ''' <returns></returns>
         Public Function WhereTest(obj As Object) As Boolean
-
+            Return DirectCast(TestMethod.Invoke(Nothing, {obj}), Boolean)
         End Function
 
         ''' <summary>
@@ -53,9 +91,8 @@ Namespace LDM.Expression
         ''' </param>
         ''' <returns></returns>
         Public Shared Function CreateLinqWhere(type As Type, expr As String) As WhereClosure
-            Dim tokens = Statements.TokenIcer.GetTokens(expr).TrimWhiteSpace.Parsing(stackT)
-            Dim exp = tokens.Args.First ' Where里面只允许单条表达式语句
-            Return New WhereClosure(exp, type)
+            Dim tokens = Statements.TokenIcer.GetTokens(expr).TrimWhiteSpace
+            Return New WhereClosure(tokens, type)
         End Function
     End Class
 End Namespace

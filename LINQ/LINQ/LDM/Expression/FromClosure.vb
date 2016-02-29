@@ -1,9 +1,10 @@
 ﻿Imports System.CodeDom
-Imports Microsoft.VisualBasic.LINQ.Framework
-Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
-Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
-Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
-Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+Imports Microsoft.VisualBasic.CodeDOM_VBC
+Imports Microsoft.VisualBasic.Linq.Framework
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode.VBC
+Imports Microsoft.VisualBasic.Linq.Framework.LQueryFramework
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
 
 Namespace LDM.Expression
 

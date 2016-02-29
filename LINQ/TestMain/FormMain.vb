@@ -1,5 +1,4 @@
-﻿Imports LINQ.Extensions
-
+﻿
 Public Class FormMain
 
     Dim LINQFramework As LINQ.Framework.LQueryFramework = New LINQ.Framework.LQueryFramework

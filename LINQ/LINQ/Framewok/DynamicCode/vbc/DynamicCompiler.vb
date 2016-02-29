@@ -1,7 +1,8 @@
 ﻿Imports System.Text
 Imports System.CodeDom.Compiler
-Imports Microsoft.VisualBasic.LINQ.Statements
+Imports Microsoft.VisualBasic.Linq.Statements
 Imports System.CodeDom
+Imports Microsoft.VisualBasic.CodeDOM_VBC
 
 Namespace Framework.DynamicCode.VBC
 
