@@ -1,4 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports Microsoft.VisualBasic.Linq.LDM.Expression
 Imports Microsoft.VisualBasic.Scripting
 
@@ -31,7 +33,7 @@ Namespace StorageTek
             Return $"[{Tek.ToString}] {MapFileIO}  //{MyBase.ToString}"
         End Function
 
-        Public Function LinqWhere(where As String) As IEnumerable
+        Public Function LinqWhere(where As String, types As TypeRegistry, api As APIProvider) As IEnumerable
             Dim Closure = WhereClosure.CreateLinqWhere([GetType], where)
             Dim LQuery = (From x As Object In Me.GetRepository()
                           Where True = Closure.WhereTest(x)

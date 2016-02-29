@@ -30,11 +30,11 @@ Namespace LDM.Expression
         ''' <summary>
         ''' 有where生成的模块里面的一个测试函数的函数方法信息
         ''' </summary>
-        Dim TestMethod As MethodInfo
+        Dim __testMethod As MethodInfo
         ''' <summary>
         ''' 前面的语句所生成的匿名类型的类型信息
         ''' </summary>
-        Dim _typeINFO As Type
+        Dim __typeINFO As Type
 
         Sub New(source As Statements.Tokens.WhereClosure)
             Call MyBase.New(source)
@@ -54,9 +54,14 @@ Namespace LDM.Expression
                 MyBase._source.Source.ParsingStack.Args.First  ' 只能够有一个测试语句
         End Function
 
+        Public Const TestMethod As String = "___test"
+
         Private Function __buildFunc() As CodeMemberMethod
+            Dim args As New Dictionary(Of String, Type) From {
+                {"obj", Me.__typeINFO}
+            }
             Dim [Function] As CodeMemberMethod =
-                DeclareFunc("Test", New Dictionary(Of String, Type) From {{"obj", Me._typeINFO}}, GetType(Boolean))
+                DeclareFunc(TestMethod, args, GetType(Boolean))
             Call [Function].Statements.Add(LocalsInit("rtvl", GetType(Boolean), init:=False))
             Call [Function].Statements.Add(ValueAssign(LocalVariable("obj"), __parsing))
             Call [Function].Statements.Add([Return]("obj"))
@@ -83,7 +88,7 @@ Namespace LDM.Expression
         ''' </param>
         ''' <returns></returns>
         Public Function WhereTest(obj As Object) As Boolean
-            Return DirectCast(TestMethod.Invoke(Nothing, {obj}), Boolean)
+            Return DirectCast(__testMethod.Invoke(Nothing, {obj}), Boolean)
         End Function
 
         ''' <summary>

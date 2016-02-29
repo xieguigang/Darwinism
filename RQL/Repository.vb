@@ -1,6 +1,8 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports Microsoft.VisualBasic.Serialization.JsonContract
 Imports RQL.StorageTek
 
@@ -15,6 +17,9 @@ Public Class Repository : Implements ISaveHandle
     ''' <returns></returns>
     Public ReadOnly Property Models As Dictionary(Of String, EntityProvider)
 
+    Dim __types As TypeRegistry
+    Dim __api As APIProvider
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -25,7 +30,7 @@ Public Class Repository : Implements ISaveHandle
         If String.IsNullOrEmpty(where) Then
             Return api.GetRepository
         Else
-            Return api.LinqWhere(where)
+            Return api.LinqWhere(where, __types, __api)
         End If
     End Function
 
@@ -43,7 +48,7 @@ Public Class Repository : Implements ISaveHandle
     End Function
 
     Public Shared ReadOnly Property DefaultFile As String =
-        App.ProductSharedDir & "/RQL.Provider.json"
+        App.ProductSharedDIR & "/RQL.Provider.json"
 
     Private Function ISaveHandle_Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
         If String.IsNullOrEmpty(Path) Then
