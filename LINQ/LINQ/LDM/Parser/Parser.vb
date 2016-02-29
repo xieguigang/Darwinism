@@ -39,8 +39,13 @@ Namespace LDM.Parser
         ''' </summary>
         ''' <param name="exp">expression to parse</param>
         ''' <returns>CodeDom representing the expression</returns>
-        Public Function ParseExpression(exp As Token(Of Tokens)()) As CodeExpression
-            Return ReadExpression(exp, Scan0, TokenPriority.None)
+        Public Function ParseExpression(exp As String) As CodeExpression
+            Dim t As New Tokenizer(exp)
+            If Not t.IsInvalid Then
+                t.GetNextToken()
+                Return ReadExpression(t, TokenPriority.None)
+            End If
+            Return Nothing
         End Function
 
         ''' <summary>
@@ -49,15 +54,13 @@ Namespace LDM.Parser
         ''' <param name="t"></param>
         ''' <param name="priority"></param>
         ''' <returns></returns>
-        Private Function ReadExpression(t As Token(Of Tokens)(), [next] As Integer, priority As TokenPriority) As CodeExpression
+        Private Function ReadExpression(t As Tokenizer, priority As TokenPriority) As CodeExpression
             Dim left As CodeExpression = Nothing, right As CodeExpression = Nothing
             Dim cont As Boolean = True, applyNot As Boolean = False, applyNegative As Boolean = False
             While cont
-                Dim current As Token(Of Tokens) = t([next].MoveNext)
-
-                Select Case current.TokenName
-                    Case Tokens.Float OrElse Tokens.Integer OrElse Tokens.String
-                        left = New CodePrimitiveExpression(current.TryCast)
+                Select Case t.Current.Type
+                    Case TokenType.Primitive
+                        left = New CodePrimitiveExpression(t.Current.ParsedObject)
                         t.GetNextToken()
                         cont = False
                     Case TokenType.[Operator]
