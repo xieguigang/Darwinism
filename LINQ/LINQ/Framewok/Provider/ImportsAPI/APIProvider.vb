@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Framework.Provider.ImportsAPI
 
@@ -13,24 +14,52 @@ Namespace Framework.Provider.ImportsAPI
 
         Public Property Packages As ImportsNs()
             Get
-                Return __nsList.ToArray
+                Return __nsList.Values.ToArray
             End Get
             Set(value As ImportsNs())
                 If value Is Nothing Then
-                    __nsList = New List(Of ImportsNs)
+                    __nsList = New Dictionary(Of String, ImportsNs)
                 Else
-                    __nsList = value.ToList
+                    __nsList = value.ToDictionary(Function(x) x.Namespace.ToLower)
                 End If
             End Set
         End Property
 
-        Dim __nsList As List(Of ImportsNs)
+        ''' <summary>
+        ''' {lower_ns, imports_ns}
+        ''' </summary>
+        Dim __nsList As Dictionary(Of String, ImportsNs)
 
         Public Shared ReadOnly Property DefaultFile As String =
             App.ProductSharedDIR & "/API.Imports.json"
 
         Public Function Register(assm As Assembly) As Boolean
+            Dim types As Type() = assm.GetTypes
+            Dim LQuery = (From type As Type In types
+                          Let ns As PackageNamespace = GetEntry(type)
+                          Where Not ns Is Nothing
+                          Select ns,
+                              type).ToArray
+            For Each type In LQuery
+                Dim ns As String = type.ns.Namespace.ToLower
+                If Not __nsList.ContainsKey(ns) Then
+                    Call __nsList.Add(ns, New ImportsNs)
+                End If
 
+                Call __nsList(ns).Add(type.type)
+            Next
+            Return True
+        End Function
+
+        Public Function Register(path As String) As Boolean
+            Try
+                Dim assm As Assembly = Assembly.LoadFile(path)
+                Return Register(assm)
+            Catch ex As Exception
+                ex = New Exception(path, ex)
+                Call App.LogException(ex)
+                Return False
+            End Try
         End Function
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
