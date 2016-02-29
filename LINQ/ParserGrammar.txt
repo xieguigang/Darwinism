@@ -1,4 +1,4 @@
-"->\s*[a-zA-Z_][a-zA-Z0-9_]*" CallFunc
+"->" CallFunc
 "[0-9]+" Integer
 "[0-9]+\.+[0-9]+" Float
 "[a-zA-Z_][a-zA-Z0-9_]*\(\)" ArrayType
@@ -9,12 +9,21 @@
 "\$\".*?\"" StringIntrop
 "\".*?\"" String
 "[\r\n]+" VbCrLf
+"\[" OpenBracket
+"\]" CloseBracket
 "\(" LPair
 "\)" RPair
 "\*" Asterisk
 "\/" Slash
+"\\" ModSlash
 "\+" Plus
 "\-" Minus 
+"%" Mod
+"<<" Shift
+">=" LT_EQ
+"<=" GT_EQ
+"<" LT
+">" GT
 "Pretend" Pretend
 "[nN][eE][wW]" cor
 "[aA][nN][dD]" And
@@ -28,5 +37,5 @@
 "^[Ii][mM][pP][oO][rR][tT][sS]" Imports
 "[iI][nN]" In
 
-"[a-zA-Z_][a-zA-Z0-9_]*" var
+"[a-zA-Z_][a-zA-Z0-9_]*" Identifier
 "\$[a-zA-Z0-9_]*" varRef

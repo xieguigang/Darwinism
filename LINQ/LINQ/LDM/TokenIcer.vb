@@ -23,26 +23,35 @@ Namespace Statements.TokenIcer
         StringIntrop = 9
         [String] = 10
         VbCrLf = 11
-        LPair = 12
-        RPair = 13
-        Asterisk = 14
-        Slash = 15
-        Plus = 16
-        Minus = 17
-        Pretend = 18
-        cor = 19
-        [And] = 20
-        [Not] = 21
-        [Or] = 22
-        [Is] = 23
-        [As] = 24
-        From = 25
-        Where = 26
-        [Select] = 27
-        [Imports] = 28
-        [In] = 29
-        var = 30
-        varRef = 31
+        OpenBracket = 12
+        CloseBracket = 13
+        LPair = 14
+        RPair = 15
+        Asterisk = 16
+        Slash = 17
+        ModSlash = 18
+        Plus = 19
+        Minus = 20
+        [Mod] = 21
+        Shift = 22
+        LT_EQ = 23
+        GT_EQ = 24
+        LT = 25
+        GT = 26
+        Pretend = 27
+        cor = 28
+        [And] = 29
+        [Not] = 30
+        [Or] = 31
+        [Is] = 32
+        [As] = 33
+        From = 34
+        Where = 35
+        [Select] = 36
+        [Imports] = 37
+        [In] = 38
+        Identifier = 39
+        varRef = 40
     End Enum
 
     Public Module Parser
@@ -60,7 +69,7 @@ Namespace Statements.TokenIcer
             Dim _tokens As New Dictionary(Of Tokens, String)()
 
             ' These lines add each grammar rule to the dictionary
-            _tokens.Add(Tokens.CallFunc, "->\s*[a-zA-Z_][a-zA-Z0-9_]*")
+            _tokens.Add(Tokens.CallFunc, "->")
             _tokens.Add(Tokens.[Integer], "[0-9]+")
             _tokens.Add(Tokens.Float, "[0-9]+\.+[0-9]+")
             _tokens.Add(Tokens.ArrayType, "[a-zA-Z_][a-zA-Z0-9_]*\(\)")
@@ -71,12 +80,21 @@ Namespace Statements.TokenIcer
             _tokens.Add(Tokens.StringIntrop, "\$"".*?""")
             _tokens.Add(Tokens.[String], """.*?""")
             _tokens.Add(Tokens.VbCrLf, "[\r\n]+")
+            _tokens.Add(Tokens.OpenBracket, "\[")
+            _tokens.Add(Tokens.CloseBracket, "\]")
             _tokens.Add(Tokens.LPair, "\(")
             _tokens.Add(Tokens.RPair, "\)")
             _tokens.Add(Tokens.Asterisk, "\*")
             _tokens.Add(Tokens.Slash, "\/")
+            _tokens.Add(Tokens.ModSlash, "[\\]")
             _tokens.Add(Tokens.Plus, "\+")
             _tokens.Add(Tokens.Minus, "\-")
+            _tokens.Add(Tokens.[Mod], "%")
+            _tokens.Add(Tokens.Shift, "<<")
+            _tokens.Add(Tokens.LT_EQ, ">=")
+            _tokens.Add(Tokens.GT_EQ, "<=")
+            _tokens.Add(Tokens.LT, "<")
+            _tokens.Add(Tokens.GT, ">")
             _tokens.Add(Tokens.Pretend, "Pretend")
             _tokens.Add(Tokens.cor, "[nN][eE][wW]")
             _tokens.Add(Tokens.[And], "[aA][nN][dD]")
@@ -89,7 +107,7 @@ Namespace Statements.TokenIcer
             _tokens.Add(Tokens.[Select], "[sS][eE][lL][eE][cC][tT]")
             _tokens.Add(Tokens.[Imports], "^[Ii][mM][pP][oO][rR][tT][sS]")
             _tokens.Add(Tokens.[In], "[iI][nN]")
-            _tokens.Add(Tokens.var, "[a-zA-Z_][a-zA-Z0-9_]*")
+            _tokens.Add(Tokens.Identifier, "[a-zA-Z_][a-zA-Z0-9_]*")
             _tokens.Add(Tokens.varRef, "\$[a-zA-Z0-9_]*")
 
             Return New TokenParser(Of Tokens)(_tokens, Tokens.UNDEFINED)
