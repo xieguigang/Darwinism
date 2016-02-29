@@ -21,7 +21,11 @@ Namespace LDM.Parser
         ''' </summary>
         ''' <param name="s">string to tokenize</param>
         Public Sub New(s As String)
-            _En = s.GetEnumerator()
+            Call Me.New(Statements.TokenIcer.GetTokens(s))
+        End Sub
+
+        Sub New(tokens As IEnumerable(Of Token(Of Tokens)))
+            Me.Tokens = New Iterator(Of Token(Of Tokens))(tokens)
             MoveNext()
         End Sub
 
@@ -30,7 +34,7 @@ Namespace LDM.Parser
         ''' invalid.
         ''' </summary>
         Private Sub MoveNext()
-            If Not _En.MoveNext() Then
+            If Not Tokens.MoveNext() Then
                 _IsInvalid = True
             End If
         End Sub
@@ -61,7 +65,8 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return ((_En.Current >= "A"c AndAlso _En.Current <= "Z"c) OrElse (_En.Current >= "a"c AndAlso _En.Current <= "z"c) OrElse _En.Current = "_"c)
+                Dim Current = Tokens.GetCurrent
+                Return Current.TokenName = Statements.TokenIcer.Tokens.String
             End Get
         End Property
 
@@ -73,7 +78,7 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return _En.Current = "."c
+                Return Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.CallFunc
             End Get
         End Property
 
@@ -85,7 +90,7 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return _En.Current = ","c
+                Return Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.ParamDeli
             End Get
         End Property
 
@@ -97,7 +102,8 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return (_En.Current >= "0"c AndAlso _En.Current <= "9"c)
+                Dim t As Tokens = Tokens.GetCurrent.TokenName
+                Return t = Statements.TokenIcer.Tokens.Integer OrElse t = Statements.TokenIcer.Tokens.Float
             End Get
         End Property
 
@@ -109,7 +115,7 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return (_En.Current = " "c OrElse _En.Current = ControlChars.Tab)
+                Return Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.WhiteSpace
             End Get
         End Property
 
@@ -121,10 +127,17 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Select Case _En.Current
-                    Case ">"c, "<"c, "="c, "-"c, "+"c, "!"c,
-                        "/"c, "%"c, "*"c, "&"c, "|"c, "("c,
-                        ")"c, "["c, "]"c, """"c
+                Select Case Tokens.GetCurrent.TokenName
+                    Case Statements.TokenIcer.Tokens.Slash,
+                         Statements.TokenIcer.Tokens.RPair,
+                         Statements.TokenIcer.Tokens.Plus,
+                         Statements.TokenIcer.Tokens.Or,
+                         Statements.TokenIcer.Tokens.Not,
+                         Statements.TokenIcer.Tokens.Minus,
+                         Statements.TokenIcer.Tokens.LPair,
+                         Statements.TokenIcer.Tokens.Is,
+                         Statements.TokenIcer.Tokens.Equals,
+                         Statements.TokenIcer.Tokens.And
                         Return True
                     Case Else
                         Return False
@@ -137,19 +150,19 @@ Namespace LDM.Parser
         ''' that token.
         ''' </summary>
         ''' <returns>next token</returns>
-        Public Function GetNextToken() As Token(Of Tokens)
+        Public Function GetNextToken() As Token
             If _IsInvalid Then
-                Return New Token(Of Tokens)(Tokens.UNDEFINED)
+                Return Token.NullToken
             End If
 
             Dim token__1 As Token(Of Tokens)
             If IsChar Then
                 token__1 = GetString()
             ElseIf IsComma Then
-                token__1 = New Token(Of Tokens)(TokenType.Comma, ",", TokenPriority.None)
+                token__1 = New Token(",", Statements.TokenIcer.Tokens.ParamDeli, TokenPriority.None)
                 MoveNext()
             ElseIf IsDot Then
-                token__1 = New Token(".", TokenType.Dot, TokenPriority.None)
+                token__1 = New Token(".", Statements.TokenIcer.Tokens.CallFunc, TokenPriority.None)
                 MoveNext()
             ElseIf IsNumber Then
                 token__1 = GetNumber()
@@ -173,61 +186,15 @@ Namespace LDM.Parser
         ''' primitive quoted string, a primitive expression, or an identifier
         ''' </summary>
         ''' <returns></returns>
-        Private Function GetString() As Token(Of Tokens)
-            ' Handle empty strings
-            If _PrevToken.Type = TokenType.Quote AndAlso _En.Current = """"c Then
-                MoveNext()
-                Return New Token(String.Empty, TokenType.Primitive, TokenPriority.None)
-            End If
-            Dim sb As New StringBuilder()
-            sb.Append(_En.Current)
-            While True
-                If _IsInvalid Then
-                    Exit While
-                End If
-                MoveNext()
-                If _IsInvalid Then
-                    Exit While
-                End If
-
-                If IsChar Then
-                    sb.Append(_En.Current)
-                ElseIf IsNumber Then
-                    sb.Append(_En.Current)
-                Else
-                    If _PrevToken.Type = TokenType.Quote Then
-                        If _En.Current = """"c Then
-                            MoveNext()
-                            Exit While
-                        ElseIf _En.Current = "\"c Then
-                            ' In the case of \, we'll add that character and whatever character follows it.
-                            sb.Append(_En.Current)
-                            MoveNext()
-                            If Not _IsInvalid Then
-                                sb.Append(_En.Current)
-                            End If
-                        Else
-                            sb.Append(_En.Current)
-                        End If
-                    Else
-                        Exit While
-                    End If
-                End If
-            End While
-            Dim s As String = sb.ToString()
-
+        Private Function GetString() As Token
+            Dim s As String = Tokens.GetCurrent.TokenValue
             ' "false" or "true" is a primitive expression.
             If s = "false" OrElse s = "true" Then
-                Return New Token([Boolean].Parse(s), TokenType.Primitive, TokenPriority.None)
+                Return New Token([Boolean].Parse(s), Statements.TokenIcer.Tokens.String, TokenPriority.None)
             End If
 
             ' The previous token was a quote, so this is a primitive string.
-            If _PrevToken.Type = TokenType.Quote Then
-                Return New Token(s, TokenType.Primitive, TokenPriority.None)
-            End If
-
-            ' The default is that the string indicates an identifier.
-            Return New Token(s, TokenType.Identifier, TokenPriority.None)
+            Return New Token(Tokens.GetCurrent, TokenPriority.None)
         End Function
 
         ''' <summary>
@@ -240,67 +207,13 @@ Namespace LDM.Parser
         ''' Any numbers containing a dot (".") are considered doubles.
         ''' </remarks>
         Private Function GetNumber() As Token
-            Dim sb As New StringBuilder()
-            sb.Append(_En.Current)
-            Dim isDouble As Boolean = False
-            Dim isLong As Boolean = False
-            Dim cont As Boolean = True
-            While cont
-                If _IsInvalid Then
-                    Exit While
-                End If
-                MoveNext()
-                If _IsInvalid Then
-                    Exit While
-                End If
+            Dim Current = Tokens.GetCurrent
+            Dim s As String = Current.TokenValue
 
-                If IsNumber Then
-                    sb.Append(_En.Current)
-                ElseIf IsChar Then
-                    Select Case _En.Current
-                        Case "D"c, "d"c
-                            isDouble = True
-                            MoveNext()
-                            If IsChar OrElse IsNumber Then
-                                sb.Append(_En.Current)
-                                Throw New ArgumentException("Invalid number: " & sb.ToString())
-                            Else
-                                cont = False
-                            End If
-                        Case "L"c, "l"c
-                            isLong = True
-                            MoveNext()
-                            If IsChar OrElse IsNumber Then
-                                sb.Append(_En.Current)
-                                Throw New ArgumentException("Invalid number: " & sb.ToString())
-                            Else
-                                cont = False
-                            End If
-                        Case Else
-                            sb.Append(_En.Current)
-                            Throw New ArgumentException("Invalid number: " & sb.ToString())
-                    End Select
-                ElseIf IsDot Then
-                    sb.Append(_En.Current)
-                    If isDouble Then
-                        ' The number has already been marked as a double, which means it already
-                        ' contains a number.
-                        Throw New ArgumentException("Invalid number: " & sb.ToString())
-                    Else
-                        isDouble = True
-                    End If
-                Else
-                    Exit While
-                End If
-            End While
-            Dim s As String = sb.ToString()
-            If isLong Then
-                Return New Token(Int64.Parse(s), TokenType.Primitive, TokenPriority.None)
+            If Current.TokenName = Statements.TokenIcer.Tokens.Float Then
+                Return New Token([Double].Parse(s), Statements.TokenIcer.Tokens.String, TokenPriority.None)
             End If
-            If isDouble Then
-                Return New Token([Double].Parse(s), TokenType.Primitive, TokenPriority.None)
-            End If
-            Return New Token(Int32.Parse(s), TokenType.Primitive, TokenPriority.None)
+            Return New Token(Int32.Parse(s), Statements.TokenIcer.Tokens.String, TokenPriority.None)
         End Function
 
         ''' <summary>
@@ -309,8 +222,9 @@ Namespace LDM.Parser
         ''' </summary>
         ''' <returns></returns>
         Private Function GetOperator() As Token
-            Dim op As New String(_En.Current, 1)
-            Select Case _En.Current
+            Dim Current = Tokens.GetCurrent
+
+            Select Case Current.TokenName
                 Case "<"c, "="c, ">"c
                     MoveNext()
                     If _En.Current = "="c Then

@@ -31,6 +31,10 @@ Namespace LDM.Parser
             _ParsedObject = text
         End Sub
 
+        Sub New(source As Token(Of Tokens), priority As TokenPriority)
+            Call Me.New(source.TokenValue, source.TokenName, priority)
+        End Sub
+
         ''' <summary>
         ''' Constructor for tokens that are parsed.
         ''' </summary>
