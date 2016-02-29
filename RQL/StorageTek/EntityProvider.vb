@@ -1,12 +1,13 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.TaskHost
-Imports Microsoft.VisualBasic.LINQ.LDM.Expression
+Imports Microsoft.VisualBasic.Linq.LDM.Expression
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace StorageTek
 
     ''' <summary>
     ''' 实体对象
     ''' </summary>
-    Public Class EntityProvider : Inherits TypeInfo
+    Public Class EntityProvider : Inherits MetaData.TypeInfo
 
         ''' <summary>
         ''' 存储的方法

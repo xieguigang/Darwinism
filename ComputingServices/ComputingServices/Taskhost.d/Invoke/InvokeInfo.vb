@@ -1,10 +1,12 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.LINQ.Extensions
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Scripting
 
 Namespace TaskHost
 
     Public Class Argv
+
         Public Property Type As String
         ''' <summary>
         ''' Json string
@@ -28,7 +30,7 @@ Namespace TaskHost
 
         Public Function GetValue() As Object
             Dim type As Type = System.Type.GetType(Me.Type, True, False)
-            Dim o As Object = LoadObject(value, type)
+            Dim o As Object = JsonContract.LoadObject(value, type)
             Return o
         End Function
     End Class
@@ -36,7 +38,7 @@ Namespace TaskHost
     ''' <summary>
     ''' 分布式计算框架之中的远程调用的参数信息
     ''' </summary>
-    Public Class InvokeInfo : Inherits TypeInfo
+    Public Class InvokeInfo : Inherits MetaData.TypeInfo
 
         ''' <summary>
         ''' 函数名

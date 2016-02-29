@@ -7,5 +7,10 @@ Namespace Framework.Provider.ImportsAPI
     ''' </summary>
     Public Class ImportsNs : Inherits PackageNamespace
 
+        ''' <summary>
+        ''' {namespace, typeinfo}
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Modules As Dictionary(Of String, TypeInfo)
     End Class
 End Namespace
