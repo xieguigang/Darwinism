@@ -126,22 +126,9 @@ Namespace LDM.Parser
             Get
                 If _IsInvalid Then
                     Return False
+                Else
+                    Return Tokens.GetCurrent.TokenName.IsOperator
                 End If
-                Select Case Tokens.GetCurrent.TokenName
-                    Case Statements.TokenIcer.Tokens.Slash,
-                         Statements.TokenIcer.Tokens.RPair,
-                         Statements.TokenIcer.Tokens.Plus,
-                         Statements.TokenIcer.Tokens.Or,
-                         Statements.TokenIcer.Tokens.Not,
-                         Statements.TokenIcer.Tokens.Minus,
-                         Statements.TokenIcer.Tokens.LPair,
-                         Statements.TokenIcer.Tokens.Is,
-                         Statements.TokenIcer.Tokens.Equals,
-                         Statements.TokenIcer.Tokens.And
-                        Return True
-                    Case Else
-                        Return False
-                End Select
             End Get
         End Property
 
