@@ -26,7 +26,6 @@ Namespace LDM.Parser
 
         Sub New(tokens As IEnumerable(Of Token(Of Tokens)))
             _tokens = New Iterator(Of Token(Of Tokens))(tokens)
-            _prevToken = _tokens.GetCurrent
         End Sub
 
         ''' <summary>
@@ -35,8 +34,9 @@ Namespace LDM.Parser
         ''' </summary>
         Private Sub MoveNext()
             If Not _tokens.MoveNext() Then
-                _prevToken = _tokens.GetCurrent
                 _IsInvalid = True
+            Else
+                _prevToken = New Token(_tokens.GetCurrent)
             End If
         End Sub
 
