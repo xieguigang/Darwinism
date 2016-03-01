@@ -20,6 +20,10 @@ Namespace Framework.DynamicCode.VBC
         Sub New(entity As TypeRegistry, api As APIProvider)
             ApiProvider = api
             EntityProvider = entity
+
+            Call ReferenceList.Add(GetType(DynamicCompiler).Assembly.Location)
+            Call ReferenceList.Add(GetType(App).Assembly.Location)
+            Call ImportsNamespace.Add("System.Linq.Enumerable")
         End Sub
 
         Sub New()

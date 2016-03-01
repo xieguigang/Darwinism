@@ -77,7 +77,7 @@ Public Module LinqClosure
         End If
 
         Call lBuilder.AppendLine("          Dim obj As Object = " & __getProjects(projects))
-        Call lBuilder.AppendLine($"          Return Return New {GetType(LinqValue).FullName}(obj)")
+        Call lBuilder.AppendLine($"          Return New {GetType(LinqValue).FullName}(obj)")
 
         Call lBuilder.AppendLine("      End Function")
         Call lBuilder.AppendLine()
