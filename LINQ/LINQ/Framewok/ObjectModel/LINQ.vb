@@ -9,7 +9,7 @@ Namespace Framework.ObjectModel
     ''' LINQ查询表达式的对象模型
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class LINQ : Implements System.IDisposable
+    Public Class Linq : Implements System.IDisposable
 
         Protected Friend StatementInstance As Object
         Protected Friend Test As System.Func(Of Boolean)
@@ -24,7 +24,7 @@ Namespace Framework.ObjectModel
             '  Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
             '  Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
             Me.SelectConstruct = Function() Statement.SelectClosure.SelectMethod.Invoke(StatementInstance, Nothing)
-            Me.source = LINQ.GetCollection(Statement, Runtime)
+            Me.source = Linq.GetCollection(Statement, Runtime)
             Me.Statement = Statement
             Me.FrameworkRuntime = Runtime
         End Sub

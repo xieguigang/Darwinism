@@ -137,7 +137,7 @@ Namespace Framework
         ''' Return List.ToArray
         ''' </remarks>
         Public Function EXEC(statement As LINQStatement) As IEnumerable
-            Using obj As ObjectModel.LINQ = __createObject(statement)
+            Using obj As ObjectModel.Linq = __createObject(statement)
                 Return obj.EXEC
             End Using
         End Function
@@ -147,7 +147,7 @@ Namespace Framework
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function __createObject(statement As LINQStatement) As ObjectModel.LINQ
+        Private Function __createObject(statement As LINQStatement) As ObjectModel.Linq
             Dim expr As Expression = New Expression(statement, Registry)
 
             If expr.source.IsParallel Then

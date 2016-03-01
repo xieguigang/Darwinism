@@ -7,7 +7,7 @@ Namespace Framework.ObjectModel
     ''' 并行LINQ查询表达式的对象模型
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ParallelLINQ : Inherits LINQ
+    Public Class ParallelLinq : Inherits Linq
 
         Sub New(expression As Expression, FrameworkRuntime As DynamicsRuntime)
             Call MyBase.New(expression, Runtime:=FrameworkRuntime)

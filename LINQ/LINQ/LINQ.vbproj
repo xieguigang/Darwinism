@@ -137,8 +137,8 @@
     <Compile Include="LDM\Parser\ParserAPI\Parser.vb" />
     <Compile Include="LDM\TokenIcer.vb" />
     <Compile Include="Framewok\SDK_PATH.vb" />
-    <Compile Include="Framewok\ObjectModel\ParallelLINQ.vb" />
-    <Compile Include="Framewok\ObjectModel\LINQ.vb" />
+    <Compile Include="Framewok\ObjectModel\ParallelLinq.vb" />
+    <Compile Include="Framewok\ObjectModel\Linq.vb" />
     <Compile Include="Framewok\Provider\Registry\TypeEntry.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Script\Variable.vb" />
