@@ -1,7 +1,6 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Statements
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
+﻿Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Namespace Statements
+Namespace LDM.Statements
 
     Public Class ClosureTokens
 

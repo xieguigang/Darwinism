@@ -1,7 +1,7 @@
 Imports System.CodeDom
 Imports System.Collections.Generic
 Imports System.Collections.Specialized
-Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace LDM.Parser

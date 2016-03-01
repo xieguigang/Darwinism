@@ -4,10 +4,10 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
-Imports Microsoft.VisualBasic.LINQ.Statements.TokenIcer.Parser
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer.Parser
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Namespace Statements.Tokens
+Namespace LDM.Statements.Tokens
 
     Public Class WhereClosure : Inherits Closure
 

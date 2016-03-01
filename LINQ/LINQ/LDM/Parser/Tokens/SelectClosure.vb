@@ -3,9 +3,9 @@ Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.LINQ.LDM
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.LINQ.Statements.TokenIcer.Parser
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer.Parser
 
-Namespace Statements.Tokens
+Namespace LDM.Statements.Tokens
 
     Public Class SelectClosure : Inherits Tokens.Closure
         Friend Expression As CodeDom.CodeExpression

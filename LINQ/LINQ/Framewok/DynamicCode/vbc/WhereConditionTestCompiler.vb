@@ -1,4 +1,6 @@
-﻿Namespace Framework.DynamicCode.VBC
+﻿Imports Microsoft.VisualBasic.Linq.LDM
+
+Namespace Framework.DynamicCode.VBC
 
     Public Class WhereConditionTestCompiler : Inherits TokenCompiler
 
@@ -10,7 +12,7 @@
             Return True
         End Function
 
-        Sub New(Statement As LINQ.Statements.LINQStatement)
+        Sub New(Statement As Statements.LINQStatement)
             Me.Statement = Statement
         End Sub
 

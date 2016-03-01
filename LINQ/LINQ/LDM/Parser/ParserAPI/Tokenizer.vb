@@ -1,8 +1,8 @@
 Imports System.CodeDom
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Linq.Statements
-Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace LDM.Parser

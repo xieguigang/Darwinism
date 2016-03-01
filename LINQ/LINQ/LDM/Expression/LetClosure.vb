@@ -2,7 +2,7 @@
 Imports System.Text
 Imports System.CodeDom
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
-Imports Microsoft.VisualBasic.LINQ.Statements
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
 Imports Microsoft.VisualBasic.LINQ.Extensions
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.CodeDOM_VBC

@@ -1,12 +1,14 @@
-﻿Namespace Framework.DynamicCode.VBC
+﻿Imports Microsoft.VisualBasic.Linq.LDM
+
+Namespace Framework.DynamicCode.VBC
 
     Public Class SelectConstructCompiler : Inherits TokenCompiler
 
         Public Const SelectMethodName As String = "SelectMethod"
 
-        Dim Statement As LINQ.Statements.LINQStatement
+        Dim Statement As Statements.LINQStatement
 
-        Sub New(Statement As LINQ.Statements.LINQStatement)
+        Sub New(Statement As Statements.LINQStatement)
             Me.Statement = Statement
         End Sub
 

@@ -1,4 +1,6 @@
-﻿Namespace Framework.DynamicCode.VBC
+﻿Imports Microsoft.VisualBasic.Linq.LDM
+
+Namespace Framework.DynamicCode.VBC
 
     Public Class ReadOnlyObjectCompiler : Inherits TokenCompiler
 

@@ -1,7 +1,8 @@
-﻿
+﻿Imports Microsoft.VisualBasic.Linq.LDM.Statements
+
 Public Class FormMain
 
-    Dim LINQFramework As LINQ.Framework.LQueryFramework = New LINQ.Framework.LQueryFramework
+    Dim LINQFramework As Linq.Framework.LQueryFramework = New Linq.Framework.LQueryFramework
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Call Exe(TextBox1.Text)
@@ -13,7 +14,7 @@ Public Class FormMain
     ''' <param name="Linq"></param>
     ''' <remarks></remarks>
     Private Sub Exe(Linq As String)
-        Dim Statement = Microsoft.VisualBasic.Linq.Statements.LINQStatement.TryParse(Linq) ', LINQFramework.TypeRegistry)
+        Dim Statement = LINQStatement.TryParse(Linq) ', LINQFramework.TypeRegistry)
 
         TextBox1.AppendText(String.Format("{0}{1}Auto-generated code for debug:{2}{3}{4}", vbCrLf, vbCrLf, vbCrLf, Statement.CompiledCode, vbCrLf))
         TextBox1.AppendText(vbCrLf & "Query Result:" & vbCrLf)

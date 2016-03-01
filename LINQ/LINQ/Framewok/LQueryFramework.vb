@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.ObjectModel
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 Imports Microsoft.VisualBasic.LINQ.LDM.Expression
 Imports Microsoft.VisualBasic.LINQ.Script
-Imports Microsoft.VisualBasic.LINQ.Statements
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
 
 Namespace Framework
 

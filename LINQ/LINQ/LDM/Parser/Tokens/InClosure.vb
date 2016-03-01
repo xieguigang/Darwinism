@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.LINQ.Framework
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 
-Namespace Statements.Tokens
+Namespace LDM.Statements.Tokens
 
     ''' <summary>
     ''' 从字符串引用

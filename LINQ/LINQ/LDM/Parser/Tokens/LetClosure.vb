@@ -1,9 +1,9 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
-Imports Microsoft.VisualBasic.LINQ.Statements.TokenIcer
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Namespace Statements.Tokens
+Namespace LDM.Statements.Tokens
 
     ''' <summary>
     ''' Object declared using a LET expression.(使用Let语句所声明的只读对象)
@@ -48,7 +48,7 @@ Namespace Statements.Tokens
             End If
 
             Dim expr As IEnumerable(Of Token(Of TokenIcer.Tokens)) = Source.Tokens.Skip(sk)
-            Expression = expr.Parsing(stackt)
+            Expression = expr.Parsing(stackT)
         End Sub
 
         Public Function ToFieldDeclaration() As CodeDom.CodeMemberField

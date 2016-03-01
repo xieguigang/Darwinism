@@ -2,7 +2,7 @@
 Imports System.Reflection
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
@@ -63,13 +63,13 @@ Namespace LDM.Expression
 
         Private Function __buildFunc() As CodeMemberMethod
             Dim args As New Dictionary(Of String, Type) From {
-                {"obj", Me.__typeINFO}
+                {ARGV, Me.__typeINFO}
             }
             Dim [Function] As CodeMemberMethod =
                 DeclareFunc(TestMethod, args, GetType(Boolean))
             Call [Function].Statements.Add(LocalsInit("rtvl", GetType(Boolean), init:=False))
-            Call [Function].Statements.Add(ValueAssign(LocalVariable("obj"), __parsing))
-            Call [Function].Statements.Add([Return]("obj"))
+            Call [Function].Statements.Add(ValueAssign(LocalVariable(ARGV), __parsing))
+            Call [Function].Statements.Add([Return](ARGV))
 
             Return [Function]
         End Function

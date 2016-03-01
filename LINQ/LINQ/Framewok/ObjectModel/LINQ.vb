@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.LINQ.LDM.Expression
 Imports Microsoft.VisualBasic.LINQ.Script
-Imports Microsoft.VisualBasic.LINQ.Statements
-Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
 
 Namespace Framework.ObjectModel
 

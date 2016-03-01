@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
 
-Namespace Statements.Tokens
+Namespace LDM.Statements.Tokens
 
     ''' <summary>
     ''' The init variable.

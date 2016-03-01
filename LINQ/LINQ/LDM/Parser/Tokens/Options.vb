@@ -1,4 +1,4 @@
-﻿Namespace Statements.Tokens
+﻿Namespace LDM.Statements.Tokens
 
     Public Class Options
         Public Shared ReadOnly Property OptionList As String() = New String() {

@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.LINQ.Framework
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 Imports Microsoft.VisualBasic.LINQ.Script
-Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
 
 Namespace LDM.Expression
 

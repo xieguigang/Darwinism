@@ -1,12 +1,12 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
-Imports Microsoft.VisualBasic.LINQ.Statements.Tokens
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
 Imports Microsoft.VisualBasic.LINQ.Framework
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 
-Namespace Statements
+Namespace LDM.Statements
 
     ''' <summary>
     ''' A linq statement object model.
@@ -113,9 +113,9 @@ Namespace Statements
             }
             statement.var = New FromClosure(tokens, statement)
             statement.source = InClosure.CreateObject(tokens, statement)
-            statement.PreDeclare = Parser.GetPreDeclare(tokens, statement)
+            statement.PreDeclare = GetPreDeclare(tokens, statement)
             statement.Where = New WhereClosure(tokens, statement)
-            statement.AfterDeclare = Parser.GetAfterDeclare(tokens, statement)
+            statement.AfterDeclare = GetAfterDeclare(tokens, statement)
             statement.SelectClosure = New SelectClosure(tokens, statement)
 
             Return statement

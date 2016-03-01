@@ -4,7 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Namespace Statements.TokenIcer
+Namespace LDM.Statements.TokenIcer
 
     ' This is our token enumeration. It holds every token defined in the grammar
     ''' <summary>

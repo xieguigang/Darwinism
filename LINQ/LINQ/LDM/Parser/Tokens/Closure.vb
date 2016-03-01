@@ -1,7 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
+﻿Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Namespace Statements.Tokens
+Namespace LDM.Statements.Tokens
 
     Public MustInherit Class Closure
 
@@ -31,7 +30,7 @@ Namespace Statements.Tokens
         End Sub
 
         Sub New(type As TokenIcer.Tokens, expr As IEnumerable(Of Token(Of TokenIcer.Tokens)))
-            _source = New ClosureTokens With {
+            _Source = New ClosureTokens With {
                 .Token = type,
                 .Tokens = expr.ToArray
             }
@@ -41,7 +40,7 @@ Namespace Statements.Tokens
         Const MissingRequiredField As String = "Missing the required LINQ statement token {0}!"
 
         Public Overrides Function ToString() As String
-            Return _source.ToString
+            Return _Source.ToString
         End Function
 
         Public Shared Function GetTokens(type As TokenIcer.Tokens, from As ClosureTokens()) As ClosureTokens

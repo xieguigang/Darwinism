@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Statements
+﻿Imports Microsoft.VisualBasic.Linq.LDM.Statements
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Public Module ClosureParser
