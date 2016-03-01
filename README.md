@@ -38,7 +38,7 @@ End Module
 </code>
 </pre>
 
-2. The object of the remote function pointer its parameter should be a simple class, which is the Class object instance can be serialization and deserialization by the json through the property, if the class is initialize by a method, and then this class is not a "simple" class, Json transfer of this class and create instance at the remote machine could be failure or running in a unexpected result;
+2. The object of the remote function pointer its parameter should be a simple class, which is the Class object instance can be serialization and deserialization by the json through the property, if the class is initialize by a method, and then this class is not a =="simple"== class, Json transfer of this class and create instance at the remote machine could be failure or running in a unexpected result;
 3. Currently this library just support the statics method, but the instance method will be supported in the feature works;
 4. If want to read and write the file on the remote machine, the RemoteFileStream is available for your remote function read local file to the remote machine and read remote file on the server to your client.
 
@@ -76,10 +76,20 @@ The code show above that query all of the protein fasta sequence from the reposi
 
 2. query repository throw rest API extension
 And you also can query the server directly from the rest API.
+For example, there is a RQL repository services implements on server
+==http://linq.gcmodeller.org==
 
+And then query that want to apply on the object type ==KEGG/ssdb/prot==, then a rest API url is available as:
+==http://linq.gcmodeller.org/kegg/ssdb/prot?where=regex.match($-> title,"XC_").success==
 
-<pre>
-<code class="vb">
+if the where argments is not applied on the rest API, then the entired of the repository resource will be returns, and this situation is not recommended as the network transfer resource is wasted for the non-uselessness datas.
 
-</code>
-</pre>
+The where expression statement language syntax can references to the ==VisualBasic language== or ==Shoal language==
+
+Then a uid string will be returns from the server, and then you can execute the move next action to gets the remote linq iterator value from the
+http://linq.gcmodeller.org/moveNext?uid=&lt;uid_returns_from_previous_step>
+
+if the data source iterator is read done, then a error code 404 will be returns
+if the uid is can not be found on the repository services, then a error code of 501 will be returns
+if the data source is avaliable for iterator move next, then the object json text will be returns
+
