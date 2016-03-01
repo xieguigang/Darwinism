@@ -22,7 +22,40 @@ Namespace LDM.Statements.Tokens
         ''' <param name="parent"></param>
         Sub New(tokens As ClosureTokens(), parent As LinqStatement)
             Call MyBase.New(TokenIcer.Tokens.Select, tokens, parent)
-            ' Projects = Source.Tokens.Parsing(stackT).Args
+
+            Dim stacks = __getTokens.Parsing(stackT).Args
+            Projects = stacks.ToArray(Function(x) x.ToString)
         End Sub
+
+        Private Shared ReadOnly Property stackT As StackTokens(Of TokenIcer.Tokens)
+            Get
+                Return New StackTokens(Of TokenIcer.Tokens)(Function(a, b) a = b) With {
+                    .ParamDeli = TokenIcer.Tokens.Comma,
+                    .LPair = TokenIcer.Tokens.OpenParens,
+                    .Pretend = TokenIcer.Tokens.Pretend,
+                    .RPair = TokenIcer.Tokens.CloseParens,
+                    .WhiteSpace = TokenIcer.Tokens.WhiteSpace
+                }
+            End Get
+        End Property
+
+        Private Function __getTokens() As Token(Of TokenIcer.Tokens)()
+            Dim list As New List(Of Token(Of TokenIcer.Tokens))
+
+            For Each x In Source.Tokens
+                If x.TokenName <> TokenIcer.Tokens.Comma AndAlso
+                    x.TokenValue.Last = "," Then
+                    Dim a = New Token(Of TokenIcer.Tokens)(x.TokenName, Mid(x.TokenValue, 1, x.TokenValue.Length - 1))
+                    Dim c As New Token(Of TokenIcer.Tokens)(TokenIcer.Tokens.Comma, ",")
+
+                    list += a
+                    list += c
+                Else
+                    list += x
+                End If
+            Next
+
+            Return list.ToArray
+        End Function
     End Class
 End Namespace

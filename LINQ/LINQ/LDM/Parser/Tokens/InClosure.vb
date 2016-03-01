@@ -30,6 +30,10 @@ Namespace LDM.Statements.Tokens
         Public Overrides Function ToString() As String
             Return $"[In] uri:={URI}"
         End Function
+
+        Public Overrides Function GetRepository(handle As GetLinqResource) As IEnumerable
+            Throw New NotImplementedException()
+        End Function
     End Class
 
     Public Class Reference : Inherits InClosure
@@ -52,6 +56,10 @@ Namespace LDM.Statements.Tokens
 
         Public Overrides Function ToString() As String
             Return Source.ToString
+        End Function
+
+        Public Overrides Function GetRepository(handle As GetLinqResource) As IEnumerable
+            Throw New NotImplementedException()
         End Function
     End Class
 
@@ -90,5 +98,7 @@ Namespace LDM.Statements.Tokens
                 Return New Reference(source, parent)
             End If
         End Function
+
+        Public MustOverride Function GetRepository(handle As GetLinqResource) As IEnumerable
     End Class
 End Namespace

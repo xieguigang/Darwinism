@@ -9,14 +9,14 @@ Module Module1
 
     Sub Main()
 
-        Dim stststs = LDM.Statements.LinqStatement.TryParse("From x As Integer In source Let add = x + 50 Where add > 0 Let cc = add ^ 2 Select cc, x, add, nn = Sum(New Double() {cc, x, add * 22})")
+        Dim stststs = LDM.Statements.LinqStatement.TryParse("From x As Integer In ""http://linq.gcmodeller.org/kegg/ssdb/prot"" Let add = x + 50 Where add > 0 Let cc = add ^ 2 let abc as double = cc mod 99 +11.025R Select abc, cc, x, add, nn = cc+ x/ add * 22 mod 5, gg = max(cc,add)")
 
         Dim source = {1, 2, 3, 4, 5, 6, 7}
 
         Dim LQuery = (From x As Integer In source Let add = x + 50 Where add > 0 Let cc = add ^ 2 Select cc, x, add, nn = Sum(New Double() {cc, x, add * 22}))
 
 
-        Dim code As String = LinqClosure.BuildClosure("x", GetType(Integer), {"add = x + 50 "}, {"cc = add ^ 2"}, {"cc", "x", "add", "nn = Sum(New Double(){cc, x, Add * 22})"}, "add > 0")
+        Dim code As String = LinqClosure.BuildClosure("x", GetType(Integer), {"add = x + 50 "}, {"cc = add ^ 2"}, {"cc", "x", "add", "nn = cc+ x+ Add * 22"}, "add > 0")
 
         Call Console.WriteLine(code)
 

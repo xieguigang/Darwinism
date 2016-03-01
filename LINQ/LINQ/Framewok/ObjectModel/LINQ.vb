@@ -25,7 +25,8 @@ Namespace Framework.ObjectModel
         End Sub
 
         Protected Function __getSource() As IEnumerable
-
+            Dim handle = __linq.var.GetEntityRepository(__runtime.Types)
+            Return __linq.source.GetRepository(handle)
         End Function
 
         Public Overridable Function EXEC() As IEnumerable

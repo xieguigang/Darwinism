@@ -3,6 +3,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
 
 Namespace LDM.Statements.Tokens
 
@@ -31,32 +33,44 @@ Namespace LDM.Statements.Tokens
         ''' Let var = expression
         ''' </summary>
         ''' <remarks></remarks>
-        Sub New(token As ClosureTokens, parent As LinqStatement)
+        Sub New(token As ClosureTokens, parent As LinqStatement, Optional types As TypeRegistry = Nothing)
             Call MyBase.New(token, parent)
 
             Name = Source.Tokens.First.TokenValue
 
-            'Dim sk As Integer
+            If __isEquals(Source.Tokens(1)) Then
+                Code = Source.Tokens.ToArray(Function(x) x.TokenValue).JoinBy(" ")
+            Else
+                Dim sk As Integer
 
-            'If Source.Tokens(1).TokenName = TokenIcer.Tokens.Equals Then
-            '    sk = 2                ' 没有申明类型
-            'Else
-            '    If Source.Tokens(1).TokenName = TokenIcer.Tokens.As Then
-            '        Type = Source.Tokens(2).TokenValue
-            '        sk = 4
-            '    Else
-            '        Throw New SyntaxErrorException
-            '    End If
-            'End If
+                If Source.Tokens(1).TokenName = TokenIcer.Tokens.As Then
+                    Type = Source.Tokens(2).TokenValue
+                    sk = 4
 
-            'Dim expr As IEnumerable(Of Token(Of TokenIcer.Tokens)) = Source.Tokens.Skip(sk)
-            'Expression = expr.Parsing(stackT)
+                    If Not types Is Nothing Then
+                        Dim t = types.Find(Type)
+                        If Not t Is Nothing Then
+                            Type = t.GetType.FullName
+                        End If
+                    Else
+                        Type = Scripting.GetType(Type).FullName
+                    End If
+                Else
+                    Throw New SyntaxErrorException
+                End If
+
+                Dim expr = Source.Tokens.Skip(sk)
+                Code = expr.ToArray(Function(x) x.TokenValue).JoinBy(" ")
+                Code = $"{Name} As {Type} = {Code}"
+            End If
         End Sub
 
-        Public Function ToFieldDeclaration() As CodeDom.CodeMemberField
-            'Dim CodeMemberField = New CodeDom.CodeMemberField("System.Object", Name)
-            'CodeMemberField.Attributes = CodeDom.MemberAttributes.Public
-            'Return CodeMemberField
+        Private Shared Function __isEquals(t As Token(Of TokenIcer.Tokens)) As Boolean
+            If t.TokenName = TokenIcer.Tokens.Code AndAlso String.Equals(t.TokenValue, "=") Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         Public Overrides Function ToString() As String
@@ -66,7 +80,7 @@ Namespace LDM.Statements.Tokens
 
     Public Module Parser
 
-        Public Function GetPreDeclare(tokens As ClosureTokens(), parent As LinqStatement) As LetClosure()
+        Public Function GetPreDeclare(tokens As ClosureTokens(), parent As LinqStatement, Optional types As TypeRegistry = Nothing) As LetClosure()
             Dim i As Integer = 2
             Dim current As ClosureTokens = Nothing
             Dim list As New List(Of ClosureTokens)
@@ -78,11 +92,11 @@ Namespace LDM.Statements.Tokens
                 End If
             Loop
 
-            Dim value = list.ToArray(Function(x) New LetClosure(x, parent))
+            Dim value = list.ToArray(Function(x) New LetClosure(x, parent, types))
             Return value
         End Function
 
-        Public Function GetAfterDeclare(tokens As ClosureTokens(), parent As LinqStatement) As LetClosure()
+        Public Function GetAfterDeclare(tokens As ClosureTokens(), parent As LinqStatement, Optional types As TypeRegistry = Nothing) As LetClosure()
             Dim i As Integer = 2
             Dim current As ClosureTokens = Nothing
             Dim list As New List(Of ClosureTokens)
@@ -99,7 +113,7 @@ Namespace LDM.Statements.Tokens
                 End If
             Loop
 
-            Dim value = list.ToArray(Function(x) New LetClosure(x, parent))
+            Dim value = list.ToArray(Function(x) New LetClosure(x, parent, types))
             Return value
         End Function
     End Module

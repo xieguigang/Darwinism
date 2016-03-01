@@ -2,7 +2,8 @@
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Framework.Provider
 
@@ -50,14 +51,29 @@ Namespace Framework.Provider
             End If
         End Function
 
+        ''' <summary>
+        ''' 查找不成功会返回空值
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         Public Function GetHandle(name As String) As GetLinqResource
             Dim entry As TypeEntry = Find(name)
-            Dim assm As Assembly = entry.LoadAssembly
-            Dim type = assm.GetType(entry.DeclaringType)
-            Dim method As MethodInfo = type.GetMethod(entry.Func, types:={GetType(String)})
-            Dim [delegate] As New __delegateProvider With {.method = method}
-            Dim handle As GetLinqResource = AddressOf [delegate].GetLinqResource
-            Return handle
+            If entry Is Nothing Then
+                Return Nothing
+            End If
+            Try
+                Dim assm As Assembly = entry.LoadAssembly
+                Dim type = assm.GetType(entry.DeclaringType)
+                Dim method As MethodInfo = type.GetMethod(entry.Func, types:={GetType(String)})
+                Dim [delegate] As New __delegateProvider With {.method = method}
+                Dim handle As GetLinqResource = AddressOf [delegate].GetLinqResource
+                Return handle
+            Catch ex As Exception
+                ex = New Exception(name, ex)
+                ex = New Exception(entry.GetJson, ex)
+                Call App.LogException(ex)
+                Return Nothing
+            End Try
         End Function
 
         Private Class __delegateProvider

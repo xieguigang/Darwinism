@@ -71,7 +71,7 @@ Namespace Framework.DynamicCode
 
         Public Function Compile(Linq As LinqStatement, Optional ByRef err As String = "") As IProject
             Dim code As String = LinqClosure.BuildClosure(Linq.var.Name,
-                                                          Linq.var.TypeId,
+                                                          Linq.var.GetType(EntityProvider),
                                                           Linq.PreDeclare.ToArray(Function(x) x.Code),
                                                           Linq.AfterDeclare.ToArray(Function(x) x.Code),
                                                           Linq.SelectClosure.Projects, Linq.Where.Code)

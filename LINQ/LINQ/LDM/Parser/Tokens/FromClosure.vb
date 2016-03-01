@@ -1,6 +1,7 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Framework
-Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
+﻿Imports Microsoft.VisualBasic.Linq.Framework
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.LQueryFramework
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
 
 Namespace LDM.Statements.Tokens
 
@@ -31,11 +32,22 @@ Namespace LDM.Statements.Tokens
             TypeId = Source.Tokens(2).TokenValue
         End Sub
 
-        Public Overridable Function ToFieldDeclaration() As CodeDom.CodeMemberField
-            Dim CodeMemberField = New CodeDom.CodeMemberField(TypeId, Name)
-            CodeMemberField.Attributes = CodeDom.MemberAttributes.Public
+        Public Overloads Function [GetType](defs As TypeRegistry) As Type
+            Dim value = defs.Find(TypeId)
+            If value Is Nothing Then
+                Return Scripting.GetType(TypeId)
+            Else
+                Return value.GetType
+            End If
+        End Function
 
-            Return CodeMemberField
+        Public Function GetEntityRepository(defs As TypeRegistry) As Provider.GetLinqResource
+            Dim handle As GetLinqResource = defs.GetHandle(TypeId)
+            If handle Is Nothing Then
+                Throw New Exception
+            Else
+                Return handle
+            End If
         End Function
 
         Public Overrides Function ToString() As String

@@ -57,15 +57,6 @@ Namespace LDM.Statements
         ''' <remarks></remarks>
         Public Property SelectClosure As SelectClosure
 
-        Friend TypeRegistry As TypeRegistry
-        ''' <summary>
-        ''' 本LINQ脚本对象所编译出来的临时模块
-        ''' </summary>
-        ''' <remarks></remarks>
-        Friend ILINQProgram As Type
-
-        Public ReadOnly Property CompiledCode As String
-
         ''' <summary>
         ''' 获取目标LINQCollection待查询集合中的元素对象的类型标识符，以进行外部模块的动态加载
         ''' 与RegistryItem中的Name属性值相对应
@@ -85,18 +76,22 @@ Namespace LDM.Statements
         ''' <returns></returns>
         Public ReadOnly Property Text As String
 
-        ''' <summary>
-        ''' Create a instance for the compiled LINQ statement object model.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function CreateInstance() As Object
-            Return Activator.CreateInstance(ILINQProgram)
-        End Function
-
         Public Overrides Function ToString() As String
             Return Text
         End Function
+
+        Public ReadOnly Property CompiledCode As String
+            Get
+                Dim code As String =
+                    LinqClosure.BuildClosure(var.Name,
+                                             var.TypeId,
+                                             PreDeclare.ToArray(Function(x) x.Code),
+                                             AfterDeclare.ToArray(Function(x) x.Code),
+                                             SelectClosure.Projects,
+                                             Where.Code)
+                Return code
+            End Get
+        End Property
 
         ''' <summary>
         ''' Try to parsing a linq query script into a statement object model and compile the model into a assembly dynamic.
@@ -105,16 +100,16 @@ Namespace LDM.Statements
         ''' <param name="source"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function TryParse(source As String) As LinqStatement
+        Public Shared Function TryParse(source As String, Optional types As TypeRegistry = Nothing) As LinqStatement
             Dim tokens As ClosureTokens() = ClosureParser.TryParse(source)
             Dim statement As LinqStatement = New LinqStatement With {
                 ._Text = source
             }
             statement.var = New FromClosure(tokens, statement)
             statement.source = InClosure.CreateObject(tokens, statement)
-            statement.PreDeclare = GetPreDeclare(tokens, statement)
+            statement.PreDeclare = GetPreDeclare(tokens, statement, types)
             statement.Where = New WhereClosure(tokens, statement)
-            statement.AfterDeclare = GetAfterDeclare(tokens, statement)
+            statement.AfterDeclare = GetAfterDeclare(tokens, statement, types)
             statement.SelectClosure = New SelectClosure(tokens, statement)
 
             Return statement

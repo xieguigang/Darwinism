@@ -10,6 +10,12 @@
 "[Bb][Yy]" By
 "[Oo][rR][dD][eE][rR]" Order
 "[Ii][nN][tT][oO]" Into
+
+"\(" OpenParens
+"\)" CloseParens
+"\t[%]\t" Pretend
+"," Comma
+
 "[ \t]+" WhiteSpace
 "\".+?\"" String
 "[\$]\S+" VarRef
