@@ -10,34 +10,41 @@ Public Module LinqClosure
         Dim lBuilder As New StringBuilder()
 
         Call lBuilder.AppendLine("Namespace ___linqClosure")
-        Call lBuilder.AppendLine("Public Class Linq")
+        Call lBuilder.AppendLine()
+        Call lBuilder.AppendLine("  Public Class Linq")
+        Call lBuilder.AppendLine()
 
-        Call lBuilder.AppendLine($"Public Shared Function Project({x} As {type}) As LinqValue")
+        Call lBuilder.AppendLine($"     Public Shared Function Project({x} As {type}) As LinqValue")
+        Call lBuilder.AppendLine()
 
         If Not preLetClosures Is Nothing Then
             For Each line As String In preLetClosures
-                Call lBuilder.AppendLine("Dim " & line)
+                Call lBuilder.AppendLine("          Dim " & line)
             Next
+            Call lBuilder.AppendLine()
         End If
 
         If Not String.IsNullOrEmpty(where) Then
-            Call lBuilder.AppendLine($"If Not {where} Then")
-            Call lBuilder.AppendLine($"Return {GetType(LinqValue).FullName}.Unavailable()")
-            Call lBuilder.AppendLine("End If")
+            Call lBuilder.AppendLine($"          If Not {where} Then")
+            Call lBuilder.AppendLine($"             Return {GetType(LinqValue).FullName}.Unavailable()")
+            Call lBuilder.AppendLine("          End If")
+            Call lBuilder.AppendLine()
         End If
 
         If Not afterLetClosures Is Nothing Then
             For Each line As String In afterLetClosures
-                Call lBuilder.AppendLine("Dim " & line)
+                Call lBuilder.AppendLine("          Dim " & line)
             Next
+            Call lBuilder.AppendLine()
         End If
 
-        Call lBuilder.AppendLine("Dim obj As Object = " & __getProjects(projects))
-        Call lBuilder.AppendLine("Return obj")
+        Call lBuilder.AppendLine("          Dim obj As Object = " & __getProjects(projects))
+        Call lBuilder.AppendLine("          Return obj")
 
-        Call lBuilder.AppendLine("End Function")
+        Call lBuilder.AppendLine("      End Function")
+        Call lBuilder.AppendLine()
 
-        Call lBuilder.AppendLine("End Class")
+        Call lBuilder.AppendLine("  End Class")
         Call lBuilder.AppendLine("End Namespace")
 
         Return lBuilder.ToString
@@ -50,8 +57,8 @@ Public Module LinqClosure
             Return projects(Scan0)
         Else
             Dim anym As StringBuilder = New StringBuilder("New With {" & vbCrLf)
-            Call anym.AppendLine(String.Join(", ", projects.ToArray(Function(s) __property(s))))
-            Call anym.AppendLine("}")
+            Call anym.AppendLine(String.Join(", " & vbCrLf, projects.ToArray(Function(s) vbTab & __property(s))))
+            Call anym.AppendLine(vbTab & "}")
 
             Return anym.ToString
         End If
