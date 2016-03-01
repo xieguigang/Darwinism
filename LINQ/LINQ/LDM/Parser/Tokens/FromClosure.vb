@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.LINQ.Framework
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
-Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
-Imports Microsoft.VisualBasic.LINQ.Framework.LQueryFramework
+Imports Microsoft.VisualBasic.Linq.Framework.LQueryFramework
 
 Namespace LDM.Statements.Tokens
 

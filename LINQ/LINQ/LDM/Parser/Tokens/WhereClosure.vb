@@ -3,15 +3,15 @@ Imports System.Reflection
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
-Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode.VBC
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer.Parser
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace LDM.Statements.Tokens
 
     Public Class WhereClosure : Inherits Closure
+        Implements ICodeProvider
 
-        Public ReadOnly Property Expression As Func(Of TokenIcer.Tokens)
+        Public ReadOnly Property Code As String Implements ICodeProvider.Code
 
         Sub New(tokens As ClosureTokens(), parent As LinqStatement)
             Call MyBase.New(TokenIcer.Tokens.Where, tokens, parent)
@@ -31,6 +31,5 @@ Namespace LDM.Statements.Tokens
         End Function
 
         Public Delegate Function ITest(x As Object) As Boolean
-
     End Class
 End Namespace

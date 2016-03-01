@@ -5,8 +5,17 @@ Imports Microsoft.VisualBasic.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports System.Reflection
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
 
 Namespace Framework.DynamicCode
+
+    Public Interface ICodeProvider
+        ReadOnly Property Code As String
+    End Interface
+
+    Public Interface IProjectProvider
+        ReadOnly Property Projects As String()
+    End Interface
 
     ''' <summary>
     ''' 编译整个LINQ语句的动态代码编译器
@@ -58,6 +67,15 @@ Namespace Framework.DynamicCode
             Dim dll = CreateParameters(ReferenceList, EntityProvider.SDK)
             Dim assm As Assembly = CompileCode(code, dll, err)
             Return assm.GetProjectAbstract
+        End Function
+
+        Public Function Compile(Linq As LinqStatement, Optional ByRef err As String = "") As IProject
+            Dim code As String = LinqClosure.BuildClosure(Linq.var.Name,
+                                                          Linq.var.TypeId,
+                                                          Linq.PreDeclare.ToArray(Function(x) x.Code),
+                                                          Linq.AfterDeclare.ToArray(Function(x) x.Code),
+                                                          Linq.SelectClosure.Projects, Linq.Where.Code)
+            Return Compile(code, err)
         End Function
 
         Public Function Compile([declare] As CodeTypeDeclaration) As Type

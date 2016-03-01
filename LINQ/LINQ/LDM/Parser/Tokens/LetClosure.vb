@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 
 Namespace LDM.Statements.Tokens
 
@@ -10,6 +11,7 @@ Namespace LDM.Statements.Tokens
     ''' </summary>
     ''' <remarks></remarks>
     Public Class LetClosure : Inherits Closure
+        Implements ICodeProvider
 
         ''' <summary>
         ''' Variable name
@@ -23,7 +25,7 @@ Namespace LDM.Statements.Tokens
         ''' <returns></returns>
         Public Property Type As String
 
-        Public Property Expression As Func(Of TokenIcer.Tokens)
+        Public ReadOnly Property Code As String Implements ICodeProvider.Code
 
         ''' <summary>
         ''' Let var = expression

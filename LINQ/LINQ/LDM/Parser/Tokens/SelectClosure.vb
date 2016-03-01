@@ -7,12 +7,13 @@ Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer.Parser
 Namespace LDM.Statements.Tokens
 
     Public Class SelectClosure : Inherits Tokens.Closure
+        Implements IProjectProvider
 
         ''' <summary>
         ''' 通过Select表达式所产生的数据投影
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Projects As Func(Of TokenIcer.Tokens)()
+        Public ReadOnly Property Projects As String() Implements IProjectProvider.Projects
 
         ''' <summary>
         ''' 
