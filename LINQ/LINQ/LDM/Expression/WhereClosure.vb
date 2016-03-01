@@ -46,6 +46,7 @@ Namespace LDM.Expression
 
         Sub New(expr As Func(Of Tokens), type As Type)
             Call MyBase.New(New Statements.Tokens.WhereClosure(expr))
+            __typeINFO = type
         End Sub
 
         ''' <summary>
@@ -62,6 +63,7 @@ Namespace LDM.Expression
 
         Public Const ARGV As String = "obj"
         Public Const TestMethod As String = "___test"
+        Public Const RTVL As String = "rtvl"
 
         Private Function __buildFunc() As CodeMemberMethod
             Dim args As New Dictionary(Of String, Type) From {
@@ -69,9 +71,9 @@ Namespace LDM.Expression
             }
             Dim [Function] As CodeMemberMethod =
                 DeclareFunc(TestMethod, args, GetType(Boolean))
-            Call [Function].Statements.Add(LocalsInit("rtvl", GetType(Boolean), init:=False))
-            Call [Function].Statements.Add(ValueAssign(LocalVariable(ARGV), __parsing))
-            Call [Function].Statements.Add([Return](ARGV))
+            Call [Function].Statements.Add(LocalsInit(RTVL, GetType(Boolean), init:=False))
+            Call [Function].Statements.Add(ValueAssign(LocalVariable(RTVL), __parsing))
+            Call [Function].Statements.Add([Return](RTVL))
 
             Return [Function]
         End Function
@@ -84,6 +86,7 @@ Namespace LDM.Expression
 
         Sub New(expr As Token(Of Tokens)(), type As Type)
             Call MyBase.New(New Statements.Tokens.WhereClosure(expr))
+            __typeINFO = type
         End Sub
 
         Public Sub CompileToken(types As TypeRegistry, api As APIProvider) Implements ICompiler.CompileToken

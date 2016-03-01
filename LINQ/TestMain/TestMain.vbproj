@@ -5,12 +5,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BC89D746-E295-4C71-A0AB-1BBE45FF314E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <StartupObject>Sub Main</StartupObject>
     <RootNamespace>TestMain</RootNamespace>
     <AssemblyName>TestMain</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
