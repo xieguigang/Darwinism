@@ -43,6 +43,19 @@ Namespace Framework.DynamicCode.VBC
             Next
         End Sub
 
+        ''' <summary>
+        ''' 编译Linq代码
+        ''' </summary>
+        ''' <param name="LinqClosure"></param>
+        ''' <returns></returns>
+        Public Function Compile(LinqClosure As String, Optional ByRef err As String = "") As IProject
+            Dim lstImports = ImportsNamespace.ToArray(Function(ns) "Imports " & ns)
+            Dim code As String = lstImports.JoinBy(vbCrLf) & vbCrLf & LinqClosure
+            Dim dll = CreateParameters(ReferenceList, EntityProvider.SDK)
+            Dim assm As Assembly = CompileCode(code, dll, err)
+            Return assm.GetProjectAbstract
+        End Function
+
         Public Function Compile([declare] As CodeTypeDeclaration) As Type
             Dim assmUnit As CodeCompileUnit = DeclareAssembly()
             Dim ns As CodeNamespace = assmUnit.Namespaces.Item(0)
