@@ -4,10 +4,10 @@ Namespace LDM.Statements.Tokens
 
     Public MustInherit Class Closure
 
-        Protected _statement As LINQStatement
+        Protected _statement As LinqStatement
         Public ReadOnly Property Source As ClosureTokens
 
-        Sub New(type As TokenIcer.Tokens, tokens As ClosureTokens(), parent As LINQStatement)
+        Sub New(type As TokenIcer.Tokens, tokens As ClosureTokens(), parent As LinqStatement)
             _Source = GetTokens(type, from:=tokens)
             _statement = parent
 
@@ -24,7 +24,7 @@ Namespace LDM.Statements.Tokens
             End If
         End Sub
 
-        Sub New(token As ClosureTokens, parent As LINQStatement)
+        Sub New(token As ClosureTokens, parent As LinqStatement)
             _Source = token
             _statement = parent
         End Sub

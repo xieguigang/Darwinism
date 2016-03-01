@@ -2,25 +2,29 @@
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
 
 Module Module1
 
     Sub Main()
 
+        Dim stststs = LDM.Statements.LinqStatement.TryParse("From x As Integer In source Let add = x + 50 Where add > 0 Let cc = add ^ 2 Select cc, x, add, nn = Sum(New Double() {cc, x, add * 22})")
 
         Dim source = {1, 2, 3, 4, 5, 6, 7}
 
-        Dim LQuery = (From x As Integer In source Let add = x + 50 Where add / x Mod (x - 32) = 0 Let cc = add ^ 2 Select cc, x, add, nn = Sum({cc, x, add * 22}))
+        Dim LQuery = (From x As Integer In source Let add = x + 50 Where add > 0 Let cc = add ^ 2 Select cc, x, add, nn = Sum(New Double() {cc, x, add * 22}))
 
 
-        Dim code As String = LinqClosure.BuildClosure("x", GetType(Integer), {"add = x + 50 "}, {"cc = add ^ 2"}, {"cc", "x", "add", "nn = Sum(New Double(){cc, x, Add * 22})"}, "add / x Mod (x - 32) = 0")
+        Dim code As String = LinqClosure.BuildClosure("x", GetType(Integer), {"add = x + 50 "}, {"cc = add ^ 2"}, {"cc", "x", "add", "nn = Sum(New Double(){cc, x, Add * 22})"}, "add > 0")
 
         Call Console.WriteLine(code)
 
-        Dim compiler As New Framework.DynamicCode.VBC.DynamicCompiler
+        Dim compiler As New Framework.DynamicCode.DynamicCompiler
 
         Dim ttttttttttt = compiler.Compile(code)
 
+        Dim aa = ttttttttttt(1000000000)
 
 
 
@@ -33,11 +37,9 @@ Module Module1
 
         Dim s As String = "instr($s, cstr( $s->length), 8)"
         Dim typew = GetType(String)
-        Dim www = Microsoft.VisualBasic.Linq.LDM.Expression.WhereClosure.CreateLinqWhere(typew, s)
+        Dim www = WhereClosure.CreateLinqWhere(s, typew)
         Dim types As TypeRegistry = TypeRegistry.LoadDefault
         Dim api As APIProvider = APIProvider.LoadDefault
-
-        Call www.Compile(types, api)
 
 
         Dim p As New Parser.Parser

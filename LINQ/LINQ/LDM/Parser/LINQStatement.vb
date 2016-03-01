@@ -19,7 +19,7 @@ Namespace LDM.Statements
     ''' Select [Object/Object Constrctor] 
     ''' [Distinct] 
     ''' [Order Statement]</remarks>
-    Public Class LINQStatement
+    Public Class LinqStatement
 
         ''' <summary>
         ''' An object element in the target query collection.(目标待查询集合之中的一个元素)
@@ -106,9 +106,9 @@ Namespace LDM.Statements
         ''' <param name="source"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function TryParse(source As String) As LINQStatement
+        Public Shared Function TryParse(source As String) As LinqStatement
             Dim tokens As ClosureTokens() = ClosureParser.TryParse(source)
-            Dim statement As LINQStatement = New LINQStatement With {
+            Dim statement As LinqStatement = New LinqStatement With {
                 ._Text = source
             }
             statement.var = New FromClosure(tokens, statement)

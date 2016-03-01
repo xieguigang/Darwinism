@@ -11,12 +11,12 @@ Namespace LDM.Statements
             Return $"[{Token}] {Tokens.ToArray(Function(x) x.TokenValue).JoinBy(" ")}"
         End Function
 
-        ''' <summary>
-        ''' 表达式栈空间的解析
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function ParsingStack() As Func(Of TokenIcer.Tokens)
-            Return Tokens.Parsing(TokenIcer.stackT)
-        End Function
+        '''' <summary>
+        '''' 表达式栈空间的解析
+        '''' </summary>
+        '''' <returns></returns>
+        'Public Function ParsingStack() As Func(Of TokenIcer.Tokens)
+        '    Return Tokens.Parsing(TokenIcer.stackT)
+        'End Function
     End Class
 End Namespace

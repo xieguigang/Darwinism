@@ -1,7 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
-Imports Microsoft.VisualBasic.Linq.LDM.Expression
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
+Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens.WhereClosure
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace StorageTek
@@ -34,10 +35,9 @@ Namespace StorageTek
         End Function
 
         Public Function LinqWhere(where As String, types As TypeRegistry, api As APIProvider) As IEnumerable
-            Dim Closure = WhereClosure.CreateLinqWhere([GetType], where)
-            Dim LQuery = (From x As Object In Me.GetRepository()
-                          Where True = Closure.WhereTest(x)
-                          Select x)
+            Dim type As Type = Me.GetType
+            Dim test As ITest = WhereClosure.CreateLinqWhere(where, type)
+            Dim LQuery = (From x As Object In GetRepository() Where True = test(x) Select x)
             Return LQuery
         End Function
     End Class

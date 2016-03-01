@@ -1,7 +1,8 @@
-﻿Imports Microsoft.VisualBasic.LINQ.LDM.Expression
-Imports Microsoft.VisualBasic.LINQ.Script
+﻿Imports Microsoft.VisualBasic.Linq.Script
 Imports Microsoft.VisualBasic.Linq.LDM.Statements
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode.LinqClosure
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 
 Namespace Framework.ObjectModel
 
@@ -11,44 +12,29 @@ Namespace Framework.ObjectModel
     ''' <remarks></remarks>
     Public Class Linq : Implements System.IDisposable
 
-        Protected Friend StatementInstance As Object
-        Protected Friend Test As System.Func(Of Boolean)
-        Protected Friend SetObject As System.Func(Of Object, Boolean)
-        Protected Friend SelectConstruct As System.Func(Of Object)
-        Protected Friend Statement As LINQStatement
-        Protected Friend source As Object()
-        Protected Friend FrameworkRuntime As DynamicsRuntime
+        Protected ReadOnly __linq As LinqStatement
+        Protected ReadOnly __runtime As DynamicsRuntime
+        Protected ReadOnly __project As IProject
 
-        Sub New(expression As Expression, Runtime As DynamicsRuntime)
-            Me.StatementInstance = Statement.CreateInstance  'Create a instance for the LINQ entity and intialzie the components
-            '  Me.Test = Function() Statement.Where.TestMethod.Invoke(StatementInstance, Nothing) 'Construct the Lambda expression
-            '  Me.SetObject = Function(p As Object) Statement.var.SetObject.Invoke(StatementInstance, {p})
-            Me.SelectConstruct = Function() Statement.SelectClosure.SelectMethod.Invoke(StatementInstance, Nothing)
-            Me.source = Linq.GetCollection(Statement, Runtime)
-            Me.Statement = Statement
-            Me.FrameworkRuntime = Runtime
+        Sub New(Expr As LinqStatement, Runtime As DynamicsRuntime)
+            __linq = Expr
+            __runtime = Runtime
         End Sub
 
-        Protected Friend Shared Function GetCollection(Statement As LINQStatement, Runtime As DynamicsRuntime) As Object()
-            If Statement.source.Type = SourceTypes.FileURI Then
-                '    Return Statement.source.ILINQCollectin.GetResource(Statement.source.Value)
-            Else
-                '返回运行时环境中的对象集合
-                '   Return Runtime.GetResource(Statement.source)
-            End If
+        Protected Function __getSource() As IEnumerable
+
         End Function
 
         Public Overridable Function EXEC() As IEnumerable
-            Dim LQuery = From [Object] As Object In source
-                         Let f As Boolean = SetObject([Object])
-                         Where True = Test()
-                         Let t As Object = SelectConstruct()
-                         Select t     'Build a LINQ query object model using the constructed elements
-            Return LQuery 'Return the query result
+            Dim Linq = (From x As Object In __getSource()
+                        Let value As LinqValue = __project(x)
+                        Where value.IsTrue
+                        Select value.Projects)
+            Return Linq
         End Function
 
         Public Overrides Function ToString() As String
-            Return Statement.ToString
+            Return __linq.ToString
         End Function
 
 #Region "IDisposable Support"
@@ -81,6 +67,5 @@ Namespace Framework.ObjectModel
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
     End Class
 End Namespace

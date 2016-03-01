@@ -1,8 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.LINQ.Framework.ObjectModel
 Imports Microsoft.VisualBasic.LINQ.Framework.Provider
-Imports Microsoft.VisualBasic.LINQ.LDM.Expression
-Imports Microsoft.VisualBasic.LINQ.Script
+Imports Microsoft.VisualBasic.Linq.Script
 Imports Microsoft.VisualBasic.Linq.LDM.Statements
 
 Namespace Framework
@@ -136,25 +135,10 @@ Namespace Framework
         ''' Next
         ''' Return List.ToArray
         ''' </remarks>
-        Public Function EXEC(statement As LINQStatement) As IEnumerable
-            Using obj As ObjectModel.Linq = __createObject(statement)
+        Public Function EXEC(statement As LinqStatement) As IEnumerable
+            Using obj As ObjectModel.Linq = If(statement.source.IsParallel, New ParallelLinq(statement, Me.Runtime), New ObjectModel.Linq(statement, Me.Runtime))
                 Return obj.EXEC
             End Using
-        End Function
-
-        ''' <summary>
-        ''' 创建一个LINQ查询表达式的对象句柄
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Private Function __createObject(statement As LINQStatement) As ObjectModel.Linq
-            Dim expr As Expression = New Expression(statement, Registry)
-
-            If expr.source.IsParallel Then
-                '     Return New ParallelLINQ(Statement:=statement, FrameworkRuntime:=Me.Runtime)
-            Else
-                '      Return New ObjectModel.LINQ(Statement:=statement, Runtime:=Me.Runtime)
-            End If
         End Function
 
 #Region "IDisposable Support"

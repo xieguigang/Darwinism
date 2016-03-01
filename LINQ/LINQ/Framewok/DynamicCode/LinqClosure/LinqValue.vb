@@ -1,24 +1,27 @@
-﻿''' <summary>
-''' From x in $source let value as LinqValue = Project(x) Where value.IsTrue Select value.value
-''' </summary>
-Public Structure LinqValue
+﻿Namespace Framework.DynamicCode
 
-    Public Property IsTrue As Boolean
     ''' <summary>
-    ''' Linq表达式在Select语句之中所产生的数据投影
+    ''' From x in $source let value as LinqValue = Project(x) Where value.IsTrue Select value.value
     ''' </summary>
-    ''' <returns></returns>
-    Public Property Projects As Object
+    Public Structure LinqValue
 
-    Public Shared Function Unavailable() As LinqValue
-        Return New LinqValue With {
-            .IsTrue = False,
-            .Projects = Nothing
-        }
-    End Function
+        Public Property IsTrue As Boolean
+        ''' <summary>
+        ''' Linq表达式在Select语句之中所产生的数据投影
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Projects As Object
 
-    Sub New(obj As Object)
-        IsTrue = True
-        Projects = obj
-    End Sub
-End Structure
+        Public Shared Function Unavailable() As LinqValue
+            Return New LinqValue With {
+                .IsTrue = False,
+                .Projects = Nothing
+            }
+        End Function
+
+        Sub New(obj As Object)
+            IsTrue = True
+            Projects = obj
+        End Sub
+    End Structure
+End Namespace

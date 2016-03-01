@@ -16,7 +16,13 @@ Namespace LDM.Statements.Tokens
             End Get
         End Property
 
-        Sub New(tokens As ClosureTokens, parent As LINQStatement)
+        Public Overrides ReadOnly Property IsParallel As Boolean
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Sub New(tokens As ClosureTokens, parent As LinqStatement)
             Call MyBase.New(tokens, parent)
             URI = tokens.Tokens.First.TokenValue.GetString
         End Sub
@@ -34,7 +40,13 @@ Namespace LDM.Statements.Tokens
             End Get
         End Property
 
-        Sub New(tokens As ClosureTokens, parent As LINQStatement)
+        Public Overrides ReadOnly Property IsParallel As Boolean
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
+
+        Sub New(tokens As ClosureTokens, parent As LinqStatement)
             Call MyBase.New(tokens, parent)
         End Sub
 
@@ -63,12 +75,13 @@ Namespace LDM.Statements.Tokens
     Public MustInherit Class InClosure : Inherits Closure
 
         Public MustOverride ReadOnly Property Type As SourceTypes
+        Public MustOverride ReadOnly Property IsParallel As Boolean
 
-        Sub New(token As ClosureTokens, parent As LINQStatement)
+        Sub New(token As ClosureTokens, parent As LinqStatement)
             Call MyBase.New(token, parent)
         End Sub
 
-        Public Shared Function CreateObject(tokens As ClosureTokens(), parent As LINQStatement) As InClosure
+        Public Shared Function CreateObject(tokens As ClosureTokens(), parent As LinqStatement) As InClosure
             Dim source As ClosureTokens = Closure.GetTokens(TokenIcer.Tokens.In, tokens)
             If source.Tokens.Length = 1 AndAlso
                source.Tokens(Scan0).TokenName = TokenIcer.Tokens.String Then

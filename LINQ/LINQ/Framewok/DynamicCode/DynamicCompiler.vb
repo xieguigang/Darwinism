@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports System.Reflection
 
-Namespace Framework.DynamicCode.VBC
+Namespace Framework.DynamicCode
 
     ''' <summary>
     ''' 编译整个LINQ语句的动态代码编译器

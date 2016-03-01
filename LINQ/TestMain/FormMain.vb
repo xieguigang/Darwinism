@@ -14,7 +14,7 @@ Public Class FormMain
     ''' <param name="Linq"></param>
     ''' <remarks></remarks>
     Private Sub Exe(Linq As String)
-        Dim Statement = LINQStatement.TryParse(Linq) ', LINQFramework.TypeRegistry)
+        Dim Statement = LinqStatement.TryParse(Linq) ', LINQFramework.TypeRegistry)
 
         TextBox1.AppendText(String.Format("{0}{1}Auto-generated code for debug:{2}{3}{4}", vbCrLf, vbCrLf, vbCrLf, Statement.CompiledCode, vbCrLf))
         TextBox1.AppendText(vbCrLf & "Query Result:" & vbCrLf)

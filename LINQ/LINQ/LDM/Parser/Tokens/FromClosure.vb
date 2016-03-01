@@ -25,7 +25,7 @@ Namespace LDM.Statements.Tokens
         ''' <remarks></remarks>
         Public Property TypeId As String
 
-        Sub New(tokens As ClosureTokens(), parent As LINQStatement)
+        Sub New(tokens As ClosureTokens(), parent As LinqStatement)
             Call MyBase.New(TokenIcer.Tokens.From, tokens, parent)
 
             Name = Source.Tokens(Scan0).TokenValue

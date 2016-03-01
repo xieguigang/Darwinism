@@ -12,103 +12,55 @@ Namespace LDM.Statements.TokenIcer
     ''' </summary>
     Public Enum Tokens
         UNDEFINED = 0
-        CallFunc = 1
-        [Integer] = 2
-        Float = 3
-        ArrayType = 4
-        ParamDeli = 5
-        WhiteSpace = 6
+        [As] = 1
+        From = 2
+        Where = 3
+        [Select] = 4
+        [Imports] = 5
+        [In] = 6
         [Let] = 7
-        Equals = 8
-        StringIntrop = 9
-        [String] = 10
-        VbCrLf = 11
-        OpenBracket = 12
-        CloseBracket = 13
-        LPair = 14
-        RPair = 15
-        Asterisk = 16
-        Slash = 17
-        ModSlash = 18
-        Plus = 19
-        Minus = 20
-        [Mod] = 21
-        Shift = 22
-        LT_EQ = 23
-        GT_EQ = 24
-        LT = 25
-        GT = 26
-        Pretend = 27
-        cor = 28
-        [And] = 29
-        [Not] = 30
-        [Or] = 31
-        [Is] = 32
-        [As] = 33
-        From = 34
-        Where = 35
-        [Select] = 36
-        [Imports] = 37
-        [In] = 38
-        Identifier = 39
-        varRef = 40
+        Join = 8
+        Group = 9
+        By = 10
+        Order = 11
+        Into = 12
+        WhiteSpace = 13
+        [String] = 14
+        VarRef = 15
+        Code = 16
     End Enum
 
     Public Module Parser
 
-        Public ReadOnly Property stackT As StackTokens(Of Tokens) =
-            New StackTokens(Of Tokens)(Function(a, b) a = b) With {
-                .LPair = Tokens.LPair,
-                .ParamDeli = Tokens.ParamDeli,
-                .Pretend = Tokens.Pretend,
-                .RPair = Tokens.RPair,
-                .WhiteSpace = Tokens.WhiteSpace
-        }
+        'Public ReadOnly Property stackT As StackTokens(Of Tokens) =
+        '    New StackTokens(Of Tokens)(Function(a, b) a = b) With {
+        '        .LPair = Tokens.LPair,
+        '        .ParamDeli = Tokens.ParamDeli,
+        '        .Pretend = Tokens.Pretend,
+        '        .RPair = Tokens.RPair,
+        '        .WhiteSpace = Tokens.WhiteSpace
+        '}
 
         Private Function __getParser() As TokenParser(Of Tokens)
             Dim _tokens As New Dictionary(Of Tokens, String)()
 
             ' These lines add each grammar rule to the dictionary
-            _tokens.Add(Tokens.CallFunc, "->")
-            _tokens.Add(Tokens.[Integer], "[0-9]+")
-            _tokens.Add(Tokens.Float, "[0-9]+\.+[0-9]+")
-            _tokens.Add(Tokens.ArrayType, "[a-zA-Z_][a-zA-Z0-9_]*\(\)")
-            _tokens.Add(Tokens.ParamDeli, ",")
-            _tokens.Add(Tokens.WhiteSpace, "[ \t]+")
-            _tokens.Add(Tokens.[Let], "[Ll][Ee][Tt]")
-            _tokens.Add(Tokens.Equals, "=")
-            _tokens.Add(Tokens.StringIntrop, "\$"".*?""")
-            _tokens.Add(Tokens.[String], """.*?""")
-            _tokens.Add(Tokens.VbCrLf, "[\r\n]+")
-            _tokens.Add(Tokens.OpenBracket, "\[")
-            _tokens.Add(Tokens.CloseBracket, "\]")
-            _tokens.Add(Tokens.LPair, "\(")
-            _tokens.Add(Tokens.RPair, "\)")
-            _tokens.Add(Tokens.Asterisk, "\*")
-            _tokens.Add(Tokens.Slash, "\/")
-            _tokens.Add(Tokens.ModSlash, "[\\]")
-            _tokens.Add(Tokens.Plus, "\+")
-            _tokens.Add(Tokens.Minus, "\-")
-            _tokens.Add(Tokens.[Mod], "%")
-            _tokens.Add(Tokens.Shift, "<<")
-            _tokens.Add(Tokens.LT_EQ, ">=")
-            _tokens.Add(Tokens.GT_EQ, "<=")
-            _tokens.Add(Tokens.LT, "<")
-            _tokens.Add(Tokens.GT, ">")
-            _tokens.Add(Tokens.Pretend, "Pretend")
-            _tokens.Add(Tokens.cor, "[nN][eE][wW]")
-            _tokens.Add(Tokens.[And], "[aA][nN][dD]")
-            _tokens.Add(Tokens.[Not], "[nN][oO][tT]")
-            _tokens.Add(Tokens.[Or], "[oO][rR]")
-            _tokens.Add(Tokens.[Is], "[iI][sS]")
             _tokens.Add(Tokens.[As], "[aA][sS]")
             _tokens.Add(Tokens.From, "[fF][rR][oO][mM]")
             _tokens.Add(Tokens.Where, "[wW][hH][eE][rR][eE]")
             _tokens.Add(Tokens.[Select], "[sS][eE][lL][eE][cC][tT]")
-            _tokens.Add(Tokens.[Imports], "^[Ii][mM][pP][oO][rR][tT][sS]")
-            _tokens.Add(Tokens.[In], "[iI][nN]")
-            _tokens.Add(Tokens.Identifier, "[a-zA-Z_][a-zA-Z0-9_]*")
-            _tokens.Add(Tokens.varRef, "\$[a-zA-Z0-9_]*")
+            _tokens.Add(Tokens.[Imports], "^\s*[Ii][mM][pP][oO][rR][tT][sS]")
+            _tokens.Add(Tokens.[In], "[iI][nN]\s")
+            _tokens.Add(Tokens.[Let], "[Ll][Ee][Tt]")
+            _tokens.Add(Tokens.Join, "[Jj][oO][iI][nN]")
+            _tokens.Add(Tokens.Group, "[Gg][rR][oO][uU][pP]")
+            _tokens.Add(Tokens.By, "[Bb][Yy]")
+            _tokens.Add(Tokens.Order, "[Oo][rR][dD][eE][rR]")
+            _tokens.Add(Tokens.Into, "[Ii][nN][tT][oO]")
+            _tokens.Add(Tokens.WhiteSpace, "[ \t]+")
+            _tokens.Add(Tokens.[String], """.+?""")
+            _tokens.Add(Tokens.VarRef, "[\$]\S+")
+            _tokens.Add(Tokens.Code, "\S+")
 
             Return New TokenParser(Of Tokens)(_tokens, Tokens.UNDEFINED)
         End Function

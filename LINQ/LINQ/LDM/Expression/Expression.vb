@@ -46,7 +46,7 @@ Namespace LDM.Expression
         ''' <remarks></remarks>
         Public Property SelectClosure As SelectClosure
 
-        Sub New(statement As LINQStatement, registry As TypeRegistry)
+        Sub New(statement As LinqStatement, registry As TypeRegistry)
             var = New FromClosure(statement.var, registry)
             source = New InClosure(statement.source, var, registry)
             PreDeclare = statement.PreDeclare.ToArray(Function(x) New LetClosure(x, registry))

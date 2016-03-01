@@ -1,5 +1,6 @@
-﻿Imports Microsoft.VisualBasic.LINQ.LDM.Expression
-Imports Microsoft.VisualBasic.LINQ.Script
+﻿Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
+Imports Microsoft.VisualBasic.Linq.Script
 
 Namespace Framework.ObjectModel
 
@@ -9,17 +10,16 @@ Namespace Framework.ObjectModel
     ''' <remarks></remarks>
     Public Class ParallelLinq : Inherits Linq
 
-        Sub New(expression As Expression, FrameworkRuntime As DynamicsRuntime)
-            Call MyBase.New(expression, Runtime:=FrameworkRuntime)
+        Sub New(Expr As LinqStatement, FrameworkRuntime As DynamicsRuntime)
+            Call MyBase.New(Expr, Runtime:=FrameworkRuntime)
         End Sub
 
         Public Overrides Function EXEC() As IEnumerable
-            Dim LQuery = From [Object] As Object In source.AsParallel
-                         Let f As Boolean = SetObject([Object])
-                         Where True = Test()
-                         Let t As Object = SelectConstruct()
-                         Select t     'Build a LINQ query object model using the constructed elements
-            Return LQuery.ToArray 'Return the query result
+            Dim Linq = (From x As Object In __getSource.AsParallel
+                        Let value As LinqValue = __project(x)
+                        Where value.IsTrue
+                        Select value.Projects)
+            Return Linq
         End Function
     End Class
 End Namespace

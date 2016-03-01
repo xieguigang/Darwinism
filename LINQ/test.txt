@@ -1,1 +1,1 @@
-From var As Type In $source->parallel Let x as integer() = var -> aa(d,$"g ++ ") and test(88*7u) where x -> test2(test3(xx),var) is true select new varType(var,x), x+3
+From x As Integer in "$source" let a As "Double" =CDbl(x) Where a <> 0 Select x, n =a/3, g=Max(x,n) Group By n Into Group

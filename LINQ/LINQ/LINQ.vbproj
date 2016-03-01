@@ -121,37 +121,20 @@
     <Compile Include="Framewok\Provider\ImportsAPI\APIProvider.vb" />
     <Compile Include="Framewok\Provider\ImportsAPI\ImportsAPI.vb" />
     <Compile Include="Framewok\Provider\ImportsAPI\ImportsNs.vb" />
-    <Compile Include="LDM\Expression\Expression.vb" />
-    <Compile Include="LDM\Expression\Closure.vb" />
-    <Compile Include="LDM\Expression\FromClosure.vb" />
-    <Compile Include="LDM\Expression\InClosure.vb" />
-    <Compile Include="LDM\Expression\LetClosure.vb" />
-    <Compile Include="LDM\Expression\SelectClosure.vb" />
-    <Compile Include="LDM\Expression\WhereClosure.vb" />
-    <Compile Include="LDM\Parser\ParserAPI\Extensions.vb" />
-    <Compile Include="LDM\Parser\ParserAPI\Token.vb" />
-    <Compile Include="LDM\Parser\ParserAPI\Tokenizer.vb" />
-    <Compile Include="LDM\Parser\ParserAPI\TokenPriority.vb" />
     <Compile Include="LDM\Parser\ClosureTokens.vb" />
     <Compile Include="LDM\Parser\ClosureParser.vb" />
-    <Compile Include="LDM\Parser\ParserAPI\Parser.vb" />
     <Compile Include="LDM\TokenIcer.vb" />
     <Compile Include="Framewok\SDK_PATH.vb" />
     <Compile Include="Framewok\ObjectModel\ParallelLinq.vb" />
     <Compile Include="Framewok\ObjectModel\Linq.vb" />
     <Compile Include="Framewok\Provider\Registry\TypeEntry.vb" />
-    <Compile Include="Extensions.vb" />
     <Compile Include="Script\Variable.vb" />
     <Compile Include="Script\Runtime.vb" />
-    <Compile Include="Framewok\DynamicCode\vbc\SelectConstructCompiler.vb" />
-    <Compile Include="Framewok\DynamicCode\vbc\WhereConditionTestCompiler.vb" />
-    <Compile Include="Framewok\DynamicCode\vbc\ReadOnlyObjectCompiler.vb" />
     <Compile Include="Framewok\Provider\Registry\TypeRegistry.vb" />
     <Compile Include="Framewok\Provider\ILinqProvider.vb" />
     <Compile Include="Framewok\Provider\LinqEntity.vb" />
     <Compile Include="Framewok\LQueryFramework.vb" />
-    <Compile Include="Framewok\DynamicCode\AnonymousType.vb" />
-    <Compile Include="Framewok\DynamicCode\vbc\DynamicCompiler.vb" />
+    <Compile Include="Framewok\DynamicCode\DynamicCompiler.vb" />
     <Compile Include="APP\Program.vb" />
     <Compile Include="Script\Tokens\Method.vb" />
     <Compile Include="Script\Tokens\ValueAssignment.vb" />
@@ -180,7 +163,6 @@
     <Compile Include="LDM\Parser\Tokens\Closure.vb" />
     <Compile Include="LDM\Parser\Tokens\FromClosure.vb" />
     <Compile Include="LDM\Parser\Tokens\WhereClosure.vb" />
-    <Compile Include="Framewok\DynamicCode\DynamicInvoke.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
