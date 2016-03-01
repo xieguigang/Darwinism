@@ -14,8 +14,7 @@ Namespace LDM.Parser
 
         ReadOnly _tokens As Iterator(Of Token(Of Tokens))
 
-        Dim _IsInvalid As Boolean = False
-        Dim _PrevToken As Token = Token.NullToken
+        Dim _prevToken As Token = Token.NullToken
 
         ''' <summary>
         ''' A tokenizer is always constructed on a single string.  Create one tokenizer per string.
@@ -26,8 +25,8 @@ Namespace LDM.Parser
         End Sub
 
         Sub New(tokens As IEnumerable(Of Token(Of Tokens)))
-            Me._tokens = New Iterator(Of Token(Of Tokens))(tokens)
-            ' MoveNext()
+            _tokens = New Iterator(Of Token(Of Tokens))(tokens)
+            _prevToken = _tokens.GetCurrent
         End Sub
 
         ''' <summary>
@@ -36,6 +35,7 @@ Namespace LDM.Parser
         ''' </summary>
         Private Sub MoveNext()
             If Not _tokens.MoveNext() Then
+                _prevToken = _tokens.GetCurrent
                 _IsInvalid = True
             End If
         End Sub
@@ -45,18 +45,14 @@ Namespace LDM.Parser
         ''' </summary>
         Public ReadOnly Property Current() As Token
             Get
-                Return _PrevToken
+                Return _prevToken
             End Get
         End Property
 
         ''' <summary>
         ''' Indicates that there are no more characters in the string and tokenizer is finished.
         ''' </summary>
-        Public ReadOnly Property IsInvalid() As Boolean
-            Get
-                Return _IsInvalid
-            End Get
-        End Property
+        Public ReadOnly Property IsInvalid() As Boolean = False
 
         ''' <summary>
         ''' Is the current character a letter or underscore?
@@ -165,7 +161,7 @@ Namespace LDM.Parser
                 MoveNext()
             End If
 
-            _PrevToken = token__1
+            _prevToken = token__1
             Return token__1
         End Function
 
@@ -217,7 +213,7 @@ Namespace LDM.Parser
                     Return New Token(Current.TokenValue, Tokens.Is, TokenPriority.Equality)
                 Case Tokens.Minus
                     MoveNext()
-                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = Tokens.Identifier Then
+                    If _prevToken.TokenName = Primitive OrElse _prevToken.Type = Tokens.Identifier Then
                         Return New Token(Current.TokenValue, Tokens.Minus, TokenPriority.PlusMinus)
                     Else
                         Return New Token(Current.TokenValue, Tokens.Minus, TokenPriority.UnaryMinus)
@@ -260,7 +256,7 @@ Namespace LDM.Parser
                 Case Else
                     ' When we detect a quote, we can just ignore it since the user doesn't really need to know about it.
                     MoveNext()
-                    _PrevToken = New Token(_tokens.GetCurrent.TokenValue, Tokens.String, TokenPriority.None)
+                    _prevToken = New Token(_tokens.GetCurrent.TokenValue, Tokens.String, TokenPriority.None)
                     Return GetString()
             End Select
             Return Token.NullToken
