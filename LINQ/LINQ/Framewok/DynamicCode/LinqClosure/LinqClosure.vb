@@ -1,6 +1,44 @@
-﻿Imports System.Text
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Public Module LinqClosure
+
+    <Extension>
+    Public Function [GetType](assm As Assembly) As Type
+        Dim types As Type() = assm.GetTypes
+        Dim Linq As Type = (From type As Type In types
+                            Where String.Equals(type.Name, LinqClosure.Linq, StringComparison.Ordinal)
+                            Select type).FirstOrDefault
+        Return Linq
+    End Function
+
+    <Extension>
+    Public Function GetProjectAbstract(assm As Assembly) As IProject
+        Return AddressOf New __project(assm).Project
+    End Function
+
+    Private Class __project
+        ReadOnly __typeINFO As Type
+        ReadOnly __project As MethodInfo
+
+        Sub New(assm As Assembly)
+            __typeINFO = LinqClosure.[GetType](assm)
+            __project = __typeINFO.GetMethod(LinqClosure.Project)
+        End Sub
+
+        Public Function Project(x As Object) As LinqValue
+            Dim value As Object = __project.Invoke(Nothing, {x})
+            Return DirectCast(value, LinqValue)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{__typeINFO.FullName}::{__project.ToString}"
+        End Function
+    End Class
+
+    Const Linq As String = "Linq"
+    Const Project As String = "Project"
 
     Public Function BuildClosure(x As String, type As Type, preLetClosures As IEnumerable(Of String), afterLetClosures As IEnumerable(Of String), projects As IEnumerable(Of String), Optional where As String = "") As String
         Return BuildClosure(x, type.FullName, preLetClosures, afterLetClosures, projects, where)
@@ -11,10 +49,10 @@ Public Module LinqClosure
 
         Call lBuilder.AppendLine("Namespace ___linqClosure")
         Call lBuilder.AppendLine()
-        Call lBuilder.AppendLine("  Public Class Linq")
+        Call lBuilder.AppendLine($"  Public Class {LinqClosure.Linq}")
         Call lBuilder.AppendLine()
 
-        Call lBuilder.AppendLine($"     Public Shared Function Project({x} As {type}) As LinqValue")
+        Call lBuilder.AppendLine($"     Public Shared Function {Project}({x} As {type}) As {GetType(LinqValue).FullName}")
         Call lBuilder.AppendLine()
 
         If Not preLetClosures Is Nothing Then
@@ -39,7 +77,7 @@ Public Module LinqClosure
         End If
 
         Call lBuilder.AppendLine("          Dim obj As Object = " & __getProjects(projects))
-        Call lBuilder.AppendLine("          Return obj")
+        Call lBuilder.AppendLine($"          Return Return New {GetType(LinqValue).FullName}(obj)")
 
         Call lBuilder.AppendLine("      End Function")
         Call lBuilder.AppendLine()
@@ -79,6 +117,9 @@ Public Module LinqClosure
     Public Delegate Function IProject(x As Object) As LinqValue
 End Module
 
+''' <summary>
+''' Example
+''' </summary>
 Public NotInheritable Class Linq
 
     ''' <summary>
