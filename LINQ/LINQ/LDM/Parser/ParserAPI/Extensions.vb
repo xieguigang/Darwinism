@@ -8,6 +8,8 @@ Namespace LDM.Parser
         Public ReadOnly Property Primitive As Tokens = Tokens.String
         Public ReadOnly Property OpenParens As Tokens = Tokens.LPair
         Public ReadOnly Property CloseParens As Tokens = Tokens.RPair
+        Public ReadOnly Property Comma As Tokens = Tokens.ParamDeli
+        Public ReadOnly Property Dot As Tokens = Tokens.CallFunc
 
         ''' <summary>
         ''' Current tokens is a operator?

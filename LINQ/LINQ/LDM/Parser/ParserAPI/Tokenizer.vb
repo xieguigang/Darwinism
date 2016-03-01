@@ -1,6 +1,7 @@
 Imports System.CodeDom
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq.Statements
 Imports Microsoft.VisualBasic.Linq.Statements.TokenIcer
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
@@ -11,7 +12,7 @@ Namespace LDM.Parser
     ''' </summary>
     Public Class Tokenizer
 
-        ReadOnly Tokens As Iterator(Of Token(Of Tokens))
+        ReadOnly _tokens As Iterator(Of Token(Of Tokens))
 
         Dim _IsInvalid As Boolean = False
         Dim _PrevToken As Token = Token.NullToken
@@ -21,12 +22,12 @@ Namespace LDM.Parser
         ''' </summary>
         ''' <param name="s">string to tokenize</param>
         Public Sub New(s As String)
-            Call Me.New(Statements.TokenIcer.GetTokens(s))
+            Call Me.New(TokenIcer.GetTokens(s))
         End Sub
 
         Sub New(tokens As IEnumerable(Of Token(Of Tokens)))
-            Me.Tokens = New Iterator(Of Token(Of Tokens))(tokens)
-            MoveNext()
+            Me._tokens = New Iterator(Of Token(Of Tokens))(tokens)
+            ' MoveNext()
         End Sub
 
         ''' <summary>
@@ -34,7 +35,7 @@ Namespace LDM.Parser
         ''' invalid.
         ''' </summary>
         Private Sub MoveNext()
-            If Not Tokens.MoveNext() Then
+            If Not _tokens.MoveNext() Then
                 _IsInvalid = True
             End If
         End Sub
@@ -42,7 +43,7 @@ Namespace LDM.Parser
         ''' <summary>
         ''' Allows access to the token most recently parsed.
         ''' </summary>
-        Public ReadOnly Property Current() As Token(Of Tokens)
+        Public ReadOnly Property Current() As Token
             Get
                 Return _PrevToken
             End Get
@@ -65,8 +66,8 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Dim Current = Tokens.GetCurrent
-                Return Current.TokenName = Statements.TokenIcer.Tokens.String
+                Dim Current = _tokens.GetCurrent
+                Return Current.TokenName = Tokens.String
             End Get
         End Property
 
@@ -78,7 +79,7 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.CallFunc
+                Return _tokens.GetCurrent.TokenName = Tokens.CallFunc
             End Get
         End Property
 
@@ -90,7 +91,7 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.ParamDeli
+                Return _tokens.GetCurrent.TokenName = Tokens.ParamDeli
             End Get
         End Property
 
@@ -102,8 +103,8 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Dim t As Tokens = Tokens.GetCurrent.TokenName
-                Return t = Statements.TokenIcer.Tokens.Integer OrElse t = Statements.TokenIcer.Tokens.Float
+                Dim t As Tokens = _tokens.GetCurrent.TokenName
+                Return t = Tokens.Integer OrElse t = Tokens.Float
             End Get
         End Property
 
@@ -115,7 +116,7 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 End If
-                Return Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.WhiteSpace
+                Return _tokens.GetCurrent.TokenName = Tokens.WhiteSpace
             End Get
         End Property
 
@@ -127,7 +128,7 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 Else
-                    Return Tokens.GetCurrent.TokenName.IsOperator
+                    Return _tokens.GetCurrent.TokenName.IsOperator
                 End If
             End Get
         End Property
@@ -146,10 +147,10 @@ Namespace LDM.Parser
             If IsChar Then
                 token__1 = GetString()
             ElseIf IsComma Then
-                token__1 = New Token(",", Statements.TokenIcer.Tokens.ParamDeli, TokenPriority.None)
+                token__1 = New Token(",", Tokens.ParamDeli, TokenPriority.None)
                 MoveNext()
             ElseIf IsDot Then
-                token__1 = New Token(".", Statements.TokenIcer.Tokens.CallFunc, TokenPriority.None)
+                token__1 = New Token(".", Tokens.CallFunc, TokenPriority.None)
                 MoveNext()
             ElseIf IsNumber Then
                 token__1 = GetNumber()
@@ -174,14 +175,14 @@ Namespace LDM.Parser
         ''' </summary>
         ''' <returns></returns>
         Private Function GetString() As Token
-            Dim s As String = Tokens.GetCurrent.TokenValue
+            Dim s As String = _tokens.GetCurrent.TokenValue
             ' "false" or "true" is a primitive expression.
             If s = "false" OrElse s = "true" Then
-                Return New Token([Boolean].Parse(s), Statements.TokenIcer.Tokens.String, TokenPriority.None)
+                Return New Token([Boolean].Parse(s), Tokens.String, TokenPriority.None)
             End If
 
             ' The previous token was a quote, so this is a primitive string.
-            Return New Token(Tokens.GetCurrent, TokenPriority.None)
+            Return New Token(_tokens.GetCurrent, TokenPriority.None)
         End Function
 
         ''' <summary>
@@ -194,13 +195,13 @@ Namespace LDM.Parser
         ''' Any numbers containing a dot (".") are considered doubles.
         ''' </remarks>
         Private Function GetNumber() As Token
-            Dim Current = Tokens.GetCurrent
+            Dim Current = _tokens.GetCurrent
             Dim s As String = Current.TokenValue
 
-            If Current.TokenName = Statements.TokenIcer.Tokens.Float Then
-                Return New Token([Double].Parse(s), Statements.TokenIcer.Tokens.String, TokenPriority.None)
+            If Current.TokenName = Tokens.Float Then
+                Return New Token([Double].Parse(s), Tokens.String, TokenPriority.None)
             End If
-            Return New Token(Int32.Parse(s), Statements.TokenIcer.Tokens.String, TokenPriority.None)
+            Return New Token(Int32.Parse(s), Tokens.String, TokenPriority.None)
         End Function
 
         ''' <summary>
@@ -209,58 +210,57 @@ Namespace LDM.Parser
         ''' </summary>
         ''' <returns></returns>
         Private Function GetOperator() As Token
-            Dim Current = Tokens.GetCurrent
+            Dim Current = _tokens.GetCurrent
 
             Select Case Current.TokenName
-                Case Statements.TokenIcer.Tokens.Equals OrElse Statements.TokenIcer.Tokens.Is
+                Case Tokens.Equals OrElse Tokens.Is
+                    Return New Token(Current.TokenValue, Tokens.Is, TokenPriority.Equality)
+                Case Tokens.Minus
                     MoveNext()
-                    Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Is, TokenPriority.Equality)
-                Case Statements.TokenIcer.Tokens.Minus
-                    MoveNext()
-                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = Statements.TokenIcer.Tokens.Identifier Then
-                        Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Minus, TokenPriority.PlusMinus)
+                    If _PrevToken.TokenName = Primitive OrElse _PrevToken.Type = Tokens.Identifier Then
+                        Return New Token(Current.TokenValue, Tokens.Minus, TokenPriority.PlusMinus)
                     Else
-                        Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Minus, TokenPriority.UnaryMinus)
+                        Return New Token(Current.TokenValue, Tokens.Minus, TokenPriority.UnaryMinus)
                     End If
-                Case Statements.TokenIcer.Tokens.Plus
+                Case Tokens.Plus
                     MoveNext()
-                    Return New Token(Current.TokenValue, Statements.TokenIcer.Tokens.Plus, TokenPriority.PlusMinus)
-                Case Statements.TokenIcer.Tokens.Not
+                    Return New Token(Current.TokenValue, Tokens.Plus, TokenPriority.PlusMinus)
+                Case Tokens.Not
                     MoveNext()
-                    If Tokens.GetCurrent.TokenName = Statements.TokenIcer.Tokens.Equals Then
+                    If _tokens.GetCurrent.TokenName = Tokens.Equals Then
                         MoveNext()
-                        Return New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.Equals, TokenPriority.Equality)
+                        Return New Token(_tokens.GetCurrent.TokenValue, Tokens.Equals, TokenPriority.Equality)
                     Else
-                        Return New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.Not, TokenPriority.[Not])
+                        Return New Token(_tokens.GetCurrent.TokenValue, Tokens.Not, TokenPriority.[Not])
                     End If
-                Case Statements.TokenIcer.Tokens.Asterisk OrElse Statements.TokenIcer.Tokens.Slash
+                Case Tokens.Asterisk OrElse Tokens.Slash
                     MoveNext()
-                    Return New Token(Tokens.GetCurrent.TokenValue, Tokens.GetCurrent.TokenName, TokenPriority.MulDiv)
-                Case Statements.TokenIcer.Tokens.Mod
+                    Return New Token(_tokens.GetCurrent.TokenValue, _tokens.GetCurrent.TokenName, TokenPriority.MulDiv)
+                Case Tokens.Mod
                     MoveNext()
-                    Return New Token("%", Statements.TokenIcer.Tokens.Mod, TokenPriority.[Mod])
-                Case Statements.TokenIcer.Tokens.Or
+                    Return New Token("%", Tokens.Mod, TokenPriority.[Mod])
+                Case Tokens.Or
                     MoveNext()
-                    Return New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.Or, TokenPriority.[Or])
-                Case Statements.TokenIcer.Tokens.And
+                    Return New Token(_tokens.GetCurrent.TokenValue, Tokens.Or, TokenPriority.[Or])
+                Case Tokens.And
                     MoveNext()
-                    Return New Token(Tokens.GetCurrent, Statements.TokenIcer.Tokens.And, TokenPriority.[And])
-                Case Statements.TokenIcer.Tokens.LPair
+                    Return New Token(_tokens.GetCurrent, Tokens.And, TokenPriority.[And])
+                Case Tokens.LPair
                     MoveNext()
                     Return New Token("(", OpenParens, TokenPriority.None)
-                Case Statements.TokenIcer.Tokens.RPair
+                Case Tokens.RPair
                     MoveNext()
                     Return New Token(")", CloseParens, TokenPriority.None)
-                Case Statements.TokenIcer.Tokens.OpenBracket
+                Case Tokens.OpenBracket
                     MoveNext()
-                    Return New Token("[", Statements.TokenIcer.Tokens.OpenBracket, TokenPriority.None)
-                Case Statements.TokenIcer.Tokens.CloseBracket
+                    Return New Token("[", Tokens.OpenBracket, TokenPriority.None)
+                Case Tokens.CloseBracket
                     MoveNext()
-                    Return New Token("]", Statements.TokenIcer.Tokens.CloseBracket, TokenPriority.None)
+                    Return New Token("]", Tokens.CloseBracket, TokenPriority.None)
                 Case Else
                     ' When we detect a quote, we can just ignore it since the user doesn't really need to know about it.
                     MoveNext()
-                    _PrevToken = New Token(Tokens.GetCurrent.TokenValue, Statements.TokenIcer.Tokens.String, TokenPriority.None)
+                    _PrevToken = New Token(_tokens.GetCurrent.TokenValue, Tokens.String, TokenPriority.None)
                     Return GetString()
             End Select
             Return Token.NullToken
