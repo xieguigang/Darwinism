@@ -16,7 +16,7 @@ Module Module1
         Loop
         Call Scripting.ToString(itt.Current).__DEBUG_ECHO
 
-        Dim s As String = "$s->length + 5 > 0"
+        Dim s As String = "instr($s, cstr( $s->length), 8)"
         Dim typew = GetType(String)
         Dim www = Microsoft.VisualBasic.Linq.LDM.Expression.WhereClosure.CreateLinqWhere(typew, s)
         Dim types As TypeRegistry = TypeRegistry.LoadDefault

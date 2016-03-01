@@ -59,12 +59,31 @@ Namespace LDM.Parser
                 token__1 = GetNextToken()
             ElseIf IsOperator Then
                 token__1 = GetOperator()
+            ElseIf IsParens Then
+                token__1 = GetOperator()
             Else
                 token__1 = Token.NullToken
             End If
 
             _prevToken = token__1
         End Sub
+
+        ''' <summary>
+        ''' Is the current character a letter or underscore?
+        ''' </summary>
+        Public ReadOnly Property IsParens() As Boolean
+            Get
+                If IsInvalid Then
+                    Return False
+                Else
+                    If _tokens.Current Is Nothing Then
+                        Return False
+                    End If
+                End If
+                Dim Current = _tokens.GetCurrent
+                Return Current.TokenName = Tokens.LPair OrElse Current.TokenName = Tokens.RPair
+            End Get
+        End Property
 
         ''' <summary>
         ''' Allows access to the token most recently parsed.
@@ -214,7 +233,7 @@ Namespace LDM.Parser
                 ' Eat space and do recursive call.
                 MoveNext()
                 token__1 = GetNextToken()
-            ElseIf IsOperator Then
+            ElseIf IsOperator OrElse IsParens Then
                 token__1 = GetOperator()
             Else
                 token__1 = Token.NullToken

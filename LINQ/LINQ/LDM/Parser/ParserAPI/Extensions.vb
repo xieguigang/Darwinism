@@ -20,12 +20,10 @@ Namespace LDM.Parser
         <Extension> Public Function IsOperator(token As Tokens) As Boolean
             Select Case token
                 Case Statements.TokenIcer.Tokens.Slash,
-                     Statements.TokenIcer.Tokens.RPair,
                      Statements.TokenIcer.Tokens.Plus,
                      Statements.TokenIcer.Tokens.Or,
                      Statements.TokenIcer.Tokens.Not,
                      Statements.TokenIcer.Tokens.Minus,
-                     Statements.TokenIcer.Tokens.LPair,
                      Statements.TokenIcer.Tokens.Is,
                      Statements.TokenIcer.Tokens.Equals,
                      Statements.TokenIcer.Tokens.And,

@@ -71,7 +71,7 @@ Namespace LDM.Parser
                     t.GetNextToken()
                     cont = False
                 ElseIf t.Current.Type.IsOperator Then
-                    t.DirectlyMoveNext()
+                    ' t.DirectlyMoveNext()
 
                     ' An operator here is considered a unary operator.
                     Select Case t.Current.Text
@@ -82,7 +82,11 @@ Namespace LDM.Parser
                         Case Else
                             ' Throw New Exception("Unexpected operator: " & t.Current.Text)
                     End Select
-                    t.GetNextToken()
+
+                    If t.GetNextToken().Type.IsOperator Then
+                        Call t.DirectlyMoveNext()
+                    End If
+
                     Continue While
                 ElseIf t.Current.Type = Tokens.Identifier Then
                     left = ReadIdentifier(t)
@@ -161,7 +165,7 @@ Namespace LDM.Parser
                         If t.IsInvalid Then
                             Throw New Exception("Expected token for right side of binary expression.")
                         End If
-                        t.GetNextToken()
+                        t.DirectlyMoveNext()
                         right = ReadExpression(t, token.Priority)
                         left = New CodeBinaryOperatorExpression(left, binOp, right)
 
