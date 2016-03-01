@@ -56,5 +56,9 @@ Namespace LDM.Parser
         ''' or has not begun parsing yet.
         ''' </summary>
         Public Shared ReadOnly Property NullToken As New Token("", Tokens.UNDEFINED, TokenPriority.None)
+
+        Public Overrides Function ToString() As String
+            Return MyBase.ToString()
+        End Function
     End Class
 End Namespace

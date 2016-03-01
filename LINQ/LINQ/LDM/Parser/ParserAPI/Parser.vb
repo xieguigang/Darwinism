@@ -93,6 +93,8 @@ Namespace LDM.Parser
                         left = New CodeCastExpression(TryCast(left, CodeTypeReferenceExpression).Type, ReadExpression(t, TokenPriority.None))
                     End If
                     cont = False
+                Else
+                    t.GetNextToken()
                 End If
                 If t.IsInvalid Then
                     cont = False

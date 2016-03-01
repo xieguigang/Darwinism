@@ -36,7 +36,7 @@ Namespace LDM.Parser
             If Not _tokens.MoveNext() Then
                 _IsInvalid = True
             Else
-                _prevToken = New Token(_tokens.GetCurrent)
+                ' _prevToken = New Token(_tokens.GetCurrent)
             End If
         End Sub
 
@@ -48,6 +48,10 @@ Namespace LDM.Parser
                 Return _prevToken
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return Scripting.ToString(Current)
+        End Function
 
         ''' <summary>
         ''' Indicates that there are no more characters in the string and tokenizer is finished.
@@ -67,7 +71,7 @@ Namespace LDM.Parser
                     End If
                 End If
                 Dim Current = _tokens.GetCurrent
-                Return Current.TokenName = Tokens.String
+                Return Current.TokenName = Tokens.String OrElse Current.TokenName = Tokens.Identifier
             End Get
         End Property
 
@@ -163,9 +167,10 @@ Namespace LDM.Parser
                 Return Token.NullToken
             End If
 
-            Dim token__1 As Token(Of Tokens)
+            Dim token__1 As Token
             If IsChar Then
                 token__1 = GetString()
+                MoveNext()
             ElseIf IsComma Then
                 token__1 = New Token(",", Tokens.ParamDeli, TokenPriority.None)
                 MoveNext()
