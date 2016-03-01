@@ -112,7 +112,7 @@ Namespace LDM.Parser
                 Return left
             End If
             cont = True
-            While cont AndAlso Not t.IsInvalid
+            While Not t.IsInvalid ' cont AndAlso Not t.IsInvalid
                 Dim token As Token = t.Current
                 If token.Type.IsOperator Then
                     If t.Current.Priority < priority Then

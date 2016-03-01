@@ -33,11 +33,13 @@ Namespace LDM.Parser
         ''' invalid.
         ''' </summary>
         Private Sub MoveNext()
-            If Not _tokens.MoveNext() Then
-                _IsInvalid = True
-            Else
-                ' _prevToken = New Token(_tokens.GetCurrent)
-            End If
+            Call _tokens.MoveNext()
+
+            'If Not _tokens.MoveNext() Then
+            '    _IsInvalid = True
+            'Else
+            '    ' _prevToken = New Token(_tokens.GetCurrent)
+            'End If
         End Sub
 
         ''' <summary>
@@ -56,14 +58,18 @@ Namespace LDM.Parser
         ''' <summary>
         ''' Indicates that there are no more characters in the string and tokenizer is finished.
         ''' </summary>
-        Public ReadOnly Property IsInvalid() As Boolean = False
+        Public ReadOnly Property IsInvalid() As Boolean
+            Get
+                Return _tokens.ReadDone
+            End Get
+        End Property
 
         ''' <summary>
         ''' Is the current character a letter or underscore?
         ''' </summary>
         Public ReadOnly Property IsChar() As Boolean
             Get
-                If _IsInvalid Then
+                If IsInvalid Then
                     Return False
                 Else
                     If _tokens.Current Is Nothing Then
@@ -80,7 +86,7 @@ Namespace LDM.Parser
         ''' </summary>
         Public ReadOnly Property IsDot() As Boolean
             Get
-                If _IsInvalid Then
+                If IsInvalid Then
                     Return False
                 Else
                     If _tokens.Current Is Nothing Then
@@ -96,7 +102,7 @@ Namespace LDM.Parser
         ''' </summary>
         Public ReadOnly Property IsComma() As Boolean
             Get
-                If _IsInvalid Then
+                If IsInvalid Then
                     Return False
                 Else
                     If _tokens.Current Is Nothing Then
@@ -112,7 +118,7 @@ Namespace LDM.Parser
         ''' </summary>
         Public ReadOnly Property IsNumber() As Boolean
             Get
-                If _IsInvalid Then
+                If IsInvalid Then
                     Return False
                 Else
                     If _tokens.Current Is Nothing Then
@@ -129,7 +135,7 @@ Namespace LDM.Parser
         ''' </summary>
         Public ReadOnly Property IsSpace() As Boolean
             Get
-                If _IsInvalid Then
+                If IsInvalid Then
                     Return False
                 Else
                     If _tokens.Current Is Nothing Then
@@ -145,7 +151,7 @@ Namespace LDM.Parser
         ''' </summary>
         Public ReadOnly Property IsOperator() As Boolean
             Get
-                If _IsInvalid Then
+                If IsInvalid Then
                     Return False
                 Else
                     If _tokens.Current Is Nothing Then
@@ -163,7 +169,7 @@ Namespace LDM.Parser
         ''' </summary>
         ''' <returns>next token</returns>
         Public Function GetNextToken() As Token
-            If _IsInvalid Then
+            If IsInvalid Then
                 Return Token.NullToken
             End If
 
