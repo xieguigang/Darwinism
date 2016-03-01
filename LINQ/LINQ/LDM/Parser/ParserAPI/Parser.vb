@@ -40,7 +40,15 @@ Namespace LDM.Parser
         ''' <param name="exp">expression to parse</param>
         ''' <returns>CodeDom representing the expression</returns>
         Public Function ParseExpression(exp As String) As CodeExpression
-            Dim t As New Tokenizer(exp)
+            Return ParseExpression(New Tokenizer(exp))
+        End Function
+
+        ''' <summary>
+        ''' Parses an expression into a <see cref="CodeExpression"/>.
+        ''' </summary>
+        ''' <param name="t">expression to parse</param>
+        ''' <returns>CodeDom representing the expression</returns>
+        Public Function ParseExpression(t As Tokenizer) As CodeExpression
             If Not t.IsInvalid Then
                 t.GetNextToken()
                 Return ReadExpression(t, TokenPriority.None)

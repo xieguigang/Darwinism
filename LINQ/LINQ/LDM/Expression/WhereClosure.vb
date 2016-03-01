@@ -53,20 +53,8 @@ Namespace LDM.Expression
         ''' </summary>
         ''' <returns></returns>
         Protected Overrides Function __parsing() As CodeExpression
-            Dim expr As Func(Of Tokens) =
-                MyBase._source.Source.ParsingStack.Args.First  ' 只能够有一个测试语句
-            Dim code As New CodeExpression
-
-            For Each c In expr.Caller
-                If c.InnerStack Is Nothing Then
-                    If c.obj.TokenName = Tokens.varRef Then
-
-                    End If
-                Else
-
-                End If
-            Next
-
+            Dim parser As New LDM.Parser.Tokenizer(_source.Source.Tokens)
+            Dim code As CodeExpression = New LDM.Parser.Parser().ParseExpression(parser)
             Return code
         End Function
 
