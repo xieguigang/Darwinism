@@ -71,6 +71,8 @@ Namespace LDM.Parser
                     t.GetNextToken()
                     cont = False
                 ElseIf t.Current.Type.IsOperator Then
+                    t.DirectlyMoveNext()
+
                     ' An operator here is considered a unary operator.
                     Select Case t.Current.Text
                         Case "-"
@@ -78,7 +80,7 @@ Namespace LDM.Parser
                         Case "!"
                             applyNot = True
                         Case Else
-                            Throw New Exception("Unexpected operator: " & t.Current.Text)
+                            ' Throw New Exception("Unexpected operator: " & t.Current.Text)
                     End Select
                     t.GetNextToken()
                     Continue While
@@ -116,7 +118,7 @@ Namespace LDM.Parser
                 Dim token As Token = t.Current
                 If token.Type.IsOperator Then
                     If t.Current.Priority < priority Then
-                        cont = False
+                        Exit While
                     Else
                         ' In the case we have an operator, we'll assume it's a binary operator.
                         Dim binOp As CodeBinaryOperatorType

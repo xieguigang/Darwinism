@@ -42,6 +42,30 @@ Namespace LDM.Parser
             'End If
         End Sub
 
+        Public Sub DirectlyMoveNext()
+            Call _tokens.MoveNext()
+
+            Dim token__1 As Token
+
+            If IsChar Then
+                token__1 = GetString()
+            ElseIf IsComma Then
+                token__1 = New Token(",", Tokens.ParamDeli, TokenPriority.None)
+            ElseIf IsDot Then
+                token__1 = New Token(".", Tokens.CallFunc, TokenPriority.None)
+            ElseIf IsNumber Then
+                token__1 = GetNumber()
+            ElseIf IsSpace Then
+                token__1 = GetNextToken()
+            ElseIf IsOperator Then
+                token__1 = GetOperator()
+            Else
+                token__1 = Token.NullToken
+            End If
+
+            _prevToken = token__1
+        End Sub
+
         ''' <summary>
         ''' Allows access to the token most recently parsed.
         ''' </summary>
@@ -245,7 +269,7 @@ Namespace LDM.Parser
             Dim Current = _tokens.GetCurrent
 
             Select Case Current.TokenName
-                Case Tokens.Equals OrElse Tokens.Is
+                Case Tokens.Equals, Tokens.Is, Tokens.GT, Tokens.GT_EQ, Tokens.LT, Tokens.LT_EQ
                     Return New Token(Current.TokenValue, Tokens.Is, TokenPriority.Equality)
                 Case Tokens.Minus
                     MoveNext()
@@ -265,7 +289,7 @@ Namespace LDM.Parser
                     Else
                         Return New Token(_tokens.GetCurrent.TokenValue, Tokens.Not, TokenPriority.[Not])
                     End If
-                Case Tokens.Asterisk OrElse Tokens.Slash
+                Case Tokens.Asterisk, Tokens.Slash
                     MoveNext()
                     Return New Token(_tokens.GetCurrent.TokenValue, _tokens.GetCurrent.TokenName, TokenPriority.MulDiv)
                 Case Tokens.Mod
