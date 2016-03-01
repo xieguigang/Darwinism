@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.CodeDOM_VBC
+Imports Microsoft.VisualBasic.Linq.LDM.Parser
 
 Namespace LDM.Expression
 
@@ -53,7 +54,8 @@ Namespace LDM.Expression
         ''' </summary>
         ''' <returns></returns>
         Protected Overrides Function __parsing() As CodeExpression
-            Dim parser As New LDM.Parser.Tokenizer(_source.Source.Tokens)
+            Dim source = _source.Source.Tokens.Replace(ARGV)
+            Dim parser As New LDM.Parser.Tokenizer(source)
             Dim code As CodeExpression = New LDM.Parser.Parser().ParseExpression(parser)
             Return code
         End Function
