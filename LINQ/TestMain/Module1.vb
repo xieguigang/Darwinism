@@ -1,12 +1,22 @@
 ﻿Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Module Module1
 
     Sub Main()
 
-        Dim s As String = "$s->length + 5"
+
+        Dim source = {1, 2, 3, 4, 5, 6, 7}
+        Dim itt As New Iterator(source)
+
+        Do While itt.MoveNext
+            Call __DEBUG_ECHO(Scripting.ToString(itt.Current) & " --> " & itt.ReadDone)
+        Loop
+        Call Scripting.ToString(itt.Current).__DEBUG_ECHO
+
+        Dim s As String = "$s->length + 5 > 0"
         Dim typew = GetType(String)
         Dim www = Microsoft.VisualBasic.Linq.LDM.Expression.WhereClosure.CreateLinqWhere(typew, s)
         Dim types As TypeRegistry = TypeRegistry.LoadDefault

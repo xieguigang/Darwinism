@@ -60,7 +60,7 @@ Namespace LDM.Parser
         ''' </summary>
         Public ReadOnly Property IsInvalid() As Boolean
             Get
-                Return _tokens.ReadDone
+                Return _tokens.ReadDone AndAlso _tokens.Current Is Nothing
             End Get
         End Property
 
@@ -185,6 +185,7 @@ Namespace LDM.Parser
                 MoveNext()
             ElseIf IsNumber Then
                 token__1 = GetNumber()
+                MoveNext()
             ElseIf IsSpace Then
                 ' Eat space and do recursive call.
                 MoveNext()

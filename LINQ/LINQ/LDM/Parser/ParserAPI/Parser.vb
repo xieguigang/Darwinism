@@ -212,7 +212,8 @@ Namespace LDM.Parser
                     End While
                     cont = False
                 Else
-                    Throw New Exception("Token not expected: " & token.Text)
+                    Call t.GetNextToken()
+                    Exit While
                 End If
             End While
             Return left
