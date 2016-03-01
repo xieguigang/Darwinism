@@ -26,7 +26,7 @@ Module Program
     End Function
 
     Private Function __exeEmpty() As Integer
-        Call Console.WriteLine("{0}!{1}", GetType(Program).Assembly.Location, GetType(Linq.Framework.LQueryFramework).FullName)
+        Call Console.WriteLine("{0}!{1}", GetType(Program).Assembly.Location, GetType(Framework.LQueryFramework).FullName)
         Return 0
     End Function
 End Module

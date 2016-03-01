@@ -9,6 +9,14 @@ Module Module1
 
 
         Dim source = {1, 2, 3, 4, 5, 6, 7}
+
+        Dim LQuery = (From x As Integer In source Let add = x + 50 Where add / x Mod (x - 32) = 0 Let cc = add ^ 2 Select cc, x, add, nn = {cc, x, add * 22}.Average)
+
+
+        Dim code As String = LinqClosure.BuildClosure("x", GetType(Integer), {"add = x + 50 "}, {"cc = add ^ 2"}, {"cc", "x", "add", "nn = {cc, x, Add * 22}.Average"}, "add / x Mod (x - 32) = 0")
+
+        Call Console.WriteLine(code)
+
         Dim itt As New Iterator(source)
 
         Do While itt.MoveNext
