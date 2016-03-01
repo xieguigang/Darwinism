@@ -16,9 +16,12 @@ Namespace Framework.ObjectModel
         Protected ReadOnly __runtime As DynamicsRuntime
         Protected ReadOnly __project As IProject
 
+        Public ReadOnly Property [Error] As String
+
         Sub New(Expr As LinqStatement, Runtime As DynamicsRuntime)
             __linq = Expr
             __runtime = Runtime
+            __project = __runtime.Compiler.Compile(Expr, [Error])
         End Sub
 
         Protected Function __getSource() As IEnumerable

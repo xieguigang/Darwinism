@@ -14,6 +14,8 @@ Namespace Script
         Dim _vars As Dictionary(Of String, Variable) = New Dictionary(Of String, Variable)
         Dim _registry As TypeRegistry
 
+        Public ReadOnly Property Compiler As DynamicCode.DynamicCompiler
+
         Public Function Evaluate(script As String) As IEnumerable
 
         End Function
