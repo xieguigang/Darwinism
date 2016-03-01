@@ -61,6 +61,10 @@ Namespace LDM.Parser
             Get
                 If _IsInvalid Then
                     Return False
+                Else
+                    If _tokens.Current Is Nothing Then
+                        Return False
+                    End If
                 End If
                 Dim Current = _tokens.GetCurrent
                 Return Current.TokenName = Tokens.String
@@ -74,6 +78,10 @@ Namespace LDM.Parser
             Get
                 If _IsInvalid Then
                     Return False
+                Else
+                    If _tokens.Current Is Nothing Then
+                        Return False
+                    End If
                 End If
                 Return _tokens.GetCurrent.TokenName = Tokens.CallFunc
             End Get
@@ -86,6 +94,10 @@ Namespace LDM.Parser
             Get
                 If _IsInvalid Then
                     Return False
+                Else
+                    If _tokens.Current Is Nothing Then
+                        Return False
+                    End If
                 End If
                 Return _tokens.GetCurrent.TokenName = Tokens.ParamDeli
             End Get
@@ -98,6 +110,10 @@ Namespace LDM.Parser
             Get
                 If _IsInvalid Then
                     Return False
+                Else
+                    If _tokens.Current Is Nothing Then
+                        Return False
+                    End If
                 End If
                 Dim t As Tokens = _tokens.GetCurrent.TokenName
                 Return t = Tokens.Integer OrElse t = Tokens.Float
@@ -111,6 +127,10 @@ Namespace LDM.Parser
             Get
                 If _IsInvalid Then
                     Return False
+                Else
+                    If _tokens.Current Is Nothing Then
+                        Return False
+                    End If
                 End If
                 Return _tokens.GetCurrent.TokenName = Tokens.WhiteSpace
             End Get
@@ -124,8 +144,12 @@ Namespace LDM.Parser
                 If _IsInvalid Then
                     Return False
                 Else
-                    Return _tokens.GetCurrent.TokenName.IsOperator
+                    If _tokens.Current Is Nothing Then
+                        Return False
+                    End If
                 End If
+
+                Return _tokens.GetCurrent.TokenName.IsOperator
             End Get
         End Property
 
