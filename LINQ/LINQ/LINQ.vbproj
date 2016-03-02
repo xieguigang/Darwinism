@@ -118,6 +118,7 @@
     <Compile Include="APP\CLI.vb" />
     <Compile Include="Framewok\DynamicCode\LinqClosure\LinqClosure.vb" />
     <Compile Include="Framewok\DynamicCode\LinqClosure\LinqValue.vb" />
+    <Compile Include="Framewok\Provider\DefaultEntity.vb" />
     <Compile Include="Framewok\Provider\ImportsAPI\APIProvider.vb" />
     <Compile Include="Framewok\Provider\ImportsAPI\ImportsAPI.vb" />
     <Compile Include="Framewok\Provider\ImportsAPI\ImportsNs.vb" />

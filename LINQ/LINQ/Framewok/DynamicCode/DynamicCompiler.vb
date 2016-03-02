@@ -33,6 +33,10 @@ Namespace Framework.DynamicCode
             Call ReferenceList.Add(GetType(DynamicCompiler).Assembly.Location)
             Call ReferenceList.Add(GetType(App).Assembly.Location)
             Call ImportsNamespace.Add("System.Linq.Enumerable")
+            Call ImportsNamespace.Add("System")
+            Call ImportsNamespace.Add("System.Text")
+            Call ImportsNamespace.Add("Microsoft.VisualBasic")
+            Call ImportsNamespace.Add("Microsoft.VisualBasic.Linq")
         End Sub
 
         Sub New()

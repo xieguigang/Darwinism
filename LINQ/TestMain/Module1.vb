@@ -9,7 +9,9 @@ Module Module1
 
     Sub Main()
 
-        Dim stststs = LDM.Statements.LinqStatement.TryParse("From x As Integer In ""http://linq.gcmodeller.org/kegg/ssdb/prot"" Let add = x + 50 Where add > 0 Let cc = add ^ 2 let abc as double = cc mod 99 +11.025R Select abc, cc, x, add, nn = cc+ x/ add * 22 mod 5, gg = max(cc,add)")
+        Dim stststs = LDM.Statements.LinqStatement.TryParse("From x As Integer In ""E:\Microsoft.VisualBasic.Parallel\trunk\LINQ\ints.txt"" Let add = x + 50 Where add > 0 Let cc = add ^ 2 let abc as double = cc mod 99 +11.025R Select abc, cc, x, add, nn = cc+ x/ add * 22 mod 5, gg = math.max(cc,add)")
+        Dim runt As New Script.DynamicsRuntime
+        Dim result = (From x In runt.EXEC(stststs) Select x).ToArray
 
         Dim source = {1, 2, 3, 4, 5, 6, 7}
 

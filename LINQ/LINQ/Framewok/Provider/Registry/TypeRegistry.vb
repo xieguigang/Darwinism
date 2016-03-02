@@ -42,12 +42,12 @@ Namespace Framework.Provider
         ''' <param name="name">LINQ Entity集合中的元素的简称或者别称，即Item中的Name属性</param>
         ''' <returns>If the key is not exists in this object, than the function will return a empty string.</returns>
         ''' <remarks></remarks>
-        Public Function FindAssemblyPath(name As String) As Assembly
+        Public Function LoadAssembly(name As String) As Assembly
             Dim type As TypeEntry = Find(name)
             If type Is Nothing Then
                 Return Nothing
             Else
-                Return type.LoadAssembly
+                Return type.TypeId.LoadAssembly
             End If
         End Function
 
@@ -62,8 +62,7 @@ Namespace Framework.Provider
                 Return Nothing
             End If
             Try
-                Dim assm As Assembly = entry.LoadAssembly
-                Dim type = assm.GetType(entry.DeclaringType)
+                Dim type As Type = entry.Repository.GetType
                 Dim method As MethodInfo = type.GetMethod(entry.Func, types:={GetType(String)})
                 Dim [delegate] As New __delegateProvider With {.method = method}
                 Dim handle As GetLinqResource = AddressOf [delegate].GetLinqResource
@@ -117,7 +116,7 @@ Namespace Framework.Provider
                          Where Not entries.IsNullOrEmpty
                          Select entries
 
-            For Each x As TypeEntry In LQuery.MatrixToList      'Update exists registry item or insrt new item into the table
+            For Each x As TypeEntry In LQuery.MatrixAsIterator       'Update exists registry item or insrt new item into the table
                 Dim exists As TypeEntry = Find(x.name)         '在注册表中查询是否有已注册的类型
                 If Not exists Is Nothing Then
                     Call _typeHash.Remove(x.name)
@@ -134,14 +133,19 @@ Namespace Framework.Provider
                           Where Not attrs.IsNullOrEmpty
                           Select x,
                               attr = DirectCast(attrs(Scan0), LinqEntity))
-            Dim path As String = FileIO.FileSystem.GetFileInfo(assm.Location).Name
+            Dim path As String = FileIO.FileSystem.GetFileInfo(assm.Location).Name  ' 方法的路径，类型的路径可能是变化的
             Dim result As TypeEntry() = LQuery.ToArray(
                 Function(x) New TypeEntry With {
                     .Func = x.x.Name,
-                    .Assembly = path,
                     .name = x.attr.Type,
-                    .TypeId = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name & "!" & x.attr.RefType.FullName,
-                    .DeclaringType = x.x.DeclaringType.FullName
+                    .TypeId = New Scripting.MetaData.TypeInfo With {
+                        .assm = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name,
+                        .FullIdentity = x.attr.RefType.FullName
+                    },   ' 实体类型的信息
+                    .Repository = New Scripting.MetaData.TypeInfo With {
+                        .assm = path,
+                        .FullIdentity = x.x.DeclaringType.FullName
+                    }   ' 数据源的方法信息
                 })
             Return result
         End Function
@@ -166,10 +170,12 @@ Namespace Framework.Provider
                     GoTo NEWLY
                 End Try
             Else
-NEWLY:          Return New TypeRegistry With {
+NEWLY:          Dim nlibs As New TypeRegistry With {
                     .FilePath = Path,
                     .typeDefs = Nothing
                 }
+                Call nlibs.Register(GetType(TypeRegistry).Assembly.Location)
+                Return nlibs
             End If
         End Function
 

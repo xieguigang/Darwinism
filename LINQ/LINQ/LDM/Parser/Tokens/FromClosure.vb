@@ -36,7 +36,13 @@ Namespace LDM.Statements.Tokens
             If value Is Nothing Then
                 Return Scripting.GetType(TypeId)
             Else
-                Return value.GetType
+                Dim type As Type = value.GetType
+
+                If Not type Is Nothing Then
+                    Return type
+                Else
+                    Return value.GetType
+                End If
             End If
         End Function
 
