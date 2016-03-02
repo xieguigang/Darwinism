@@ -2,7 +2,7 @@
 
 Public Class FormMain
 
-    Dim LINQFramework As Linq.Framework.LQueryFramework = New Linq.Framework.LQueryFramework
+    Dim LINQFramework As Linq.Script.DynamicsRuntime = New Linq.Script.DynamicsRuntime
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Call Exe(TextBox1.Text)
@@ -35,8 +35,8 @@ Public Class FormMain
     Private Sub RegistryExternalModuleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RegistryExternalModuleToolStripMenuItem.Click
         Dim File As New Global.System.Windows.Forms.OpenFileDialog
         If File.ShowDialog = Global.System.Windows.Forms.DialogResult.OK Then
-            Call LINQFramework.Registry.Register(File.FileName)
-            Call LINQFramework.Registry.Save()
+            Call LINQFramework.Types.Register(File.FileName)
+            Call LINQFramework.Types.Save()
         End If
     End Sub
 

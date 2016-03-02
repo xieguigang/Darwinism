@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.LINQ.Framework.Provider
 ''' <summary>
 ''' 框架程序自带的注册模块以及一些配置的管理终端
 ''' </summary>
-Public Module CLI
+Module CLI
 
     ''' <summary>
     ''' 扫描应用程序文件夹之中可能的插件信息

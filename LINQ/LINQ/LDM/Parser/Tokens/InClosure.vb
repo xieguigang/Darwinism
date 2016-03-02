@@ -1,5 +1,6 @@
-﻿Imports Microsoft.VisualBasic.LINQ.Framework
-Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+﻿Imports Microsoft.VisualBasic.Linq.Script
+Imports Microsoft.VisualBasic.Linq.Framework
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
 
 Namespace LDM.Statements.Tokens
 
@@ -16,11 +17,7 @@ Namespace LDM.Statements.Tokens
             End Get
         End Property
 
-        Public Overrides ReadOnly Property IsParallel As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
+        Public Overrides ReadOnly Property IsParallel As Boolean = False
 
         Sub New(tokens As ClosureTokens, parent As LinqStatement)
             Call MyBase.New(tokens, parent)
@@ -31,11 +28,14 @@ Namespace LDM.Statements.Tokens
             Return $"[In] uri:={URI}"
         End Function
 
-        Public Overrides Function GetRepository(handle As GetLinqResource) As IEnumerable
-            Throw New NotImplementedException()
+        Public Overrides Function GetRepository(handle As GetLinqResource, runtime As DynamicsRuntime) As IEnumerable
+            Return handle(URI)
         End Function
     End Class
 
+    ''' <summary>
+    ''' 引用运行时环境之中的某一个变量或者执行表达式
+    ''' </summary>
     Public Class Reference : Inherits InClosure
 
         Public Overrides ReadOnly Property Type As SourceTypes
@@ -58,8 +58,15 @@ Namespace LDM.Statements.Tokens
             Return Source.ToString
         End Function
 
-        Public Overrides Function GetRepository(handle As GetLinqResource) As IEnumerable
-            Throw New NotImplementedException()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="handle"></param>
+        ''' <param name="runtime"></param>
+        ''' <returns></returns>
+        ''' <remarks>这里是不是也需要进行动态编译？</remarks>
+        Public Overrides Function GetRepository(handle As GetLinqResource, runtime As DynamicsRuntime) As IEnumerable
+
         End Function
     End Class
 
@@ -99,6 +106,6 @@ Namespace LDM.Statements.Tokens
             End If
         End Function
 
-        Public MustOverride Function GetRepository(handle As GetLinqResource) As IEnumerable
+        Public MustOverride Function GetRepository(handle As GetLinqResource, runtime As DynamicsRuntime) As IEnumerable
     End Class
 End Namespace

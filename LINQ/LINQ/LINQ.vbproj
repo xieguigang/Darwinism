@@ -133,7 +133,6 @@
     <Compile Include="Framewok\Provider\Registry\TypeRegistry.vb" />
     <Compile Include="Framewok\Provider\ILinqProvider.vb" />
     <Compile Include="Framewok\Provider\LinqEntity.vb" />
-    <Compile Include="Framewok\LQueryFramework.vb" />
     <Compile Include="Framewok\DynamicCode\DynamicCompiler.vb" />
     <Compile Include="APP\Program.vb" />
     <Compile Include="Script\Tokens\Method.vb" />

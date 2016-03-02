@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Linq.LDM
 Imports Microsoft.VisualBasic.Linq.Framework
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Script
 
 Module Program
 
@@ -13,7 +14,7 @@ Module Program
         Dim s As String = "From var As Type In ""$source->parallel"" Let x = var -> aa(d,""g ++ "") Let y as string = var -> aa(d,""g ++ "") where x -> test2(test3(xx),var) is true Let x = var -> aa(d,""g ++ "") Let x = var -> aa(d,""g ++ "") Let x = var -> aa(d,""g ++ "") select new varType(var,x), x+3"
         s = " from var  as typedef in ""./settings/LinqRegistry.xml"" where var -> name = ""typedef"" let val as string = mid(var->assembly,5) select var->name , var -> typeid"
         Dim expr = Statements.LinqStatement.TryParse(s)
-        Dim runtime As New LQueryFramework
+        Dim runtime As New DynamicsRuntime
         Dim sss = runtime.EXEC(expr)
 
         Dim r As TypeRegistry = TypeRegistry.LoadDefault
@@ -26,7 +27,7 @@ Module Program
     End Function
 
     Private Function __exeEmpty() As Integer
-        Call Console.WriteLine("{0}!{1}", GetType(Program).Assembly.Location, GetType(Framework.LQueryFramework).FullName)
+        Call Console.WriteLine("{0}!{1}", GetType(Program).Assembly.Location, GetType(DynamicsRuntime).FullName)
         Return 0
     End Function
 End Module

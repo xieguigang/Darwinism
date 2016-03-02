@@ -173,12 +173,14 @@ NEWLY:          Return New TypeRegistry With {
             End If
         End Function
 
+        Public Shared ReadOnly Property DefaultFile As String = App.ProductSharedDIR & "/Linq.Entity.Xml"
+
         Public Shared Function LoadDefault() As TypeRegistry
-            Return TypeRegistry.Load(LQueryFramework.DefaultFile)
+            Return TypeRegistry.Load(DefaultFile)
         End Function
 
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return Me.SaveAsXml(getPath(FilePath), True, Encoding)
+            Return Me.SaveAsXml(getPath(FilePath), False, Encoding)
         End Function
     End Class
 End Namespace
