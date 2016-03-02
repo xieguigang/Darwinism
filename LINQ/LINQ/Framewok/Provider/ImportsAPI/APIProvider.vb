@@ -14,7 +14,11 @@ Namespace Framework.Provider.ImportsAPI
 
         Public Property Packages As ImportsNs()
             Get
-                Return __nsList.Values.ToArray
+                If __nsList Is Nothing Then
+                    Return New ImportsNs() {}
+                Else
+                    Return __nsList.Values.ToArray
+                End If
             End Get
             Set(value As ImportsNs())
                 If value Is Nothing Then
@@ -56,7 +60,7 @@ Namespace Framework.Provider.ImportsAPI
             For Each type In LQuery
                 Dim ns As String = type.ns.Namespace.ToLower
                 If Not __nsList.ContainsKey(ns) Then
-                    Call __nsList.Add(ns, New ImportsNs)
+                    Call __nsList.Add(ns, New ImportsNs(type.ns))
                 End If
 
                 Call __nsList(ns).Add(type.type)
@@ -74,6 +78,13 @@ Namespace Framework.Provider.ImportsAPI
                 Return False
             End Try
         End Function
+
+        Public Sub Install()
+            Dim files = FileIO.FileSystem.GetFiles(App.HOME, FileIO.SearchOption.SearchTopLevelOnly, "*.exe", "*.dll")
+            For Each dll As String In files
+                Call Register(dll)
+            Next
+        End Sub
 
         Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             Return Me.GetJson.SaveTo(If(String.IsNullOrEmpty(Path), DefaultFile, Path), encoding)

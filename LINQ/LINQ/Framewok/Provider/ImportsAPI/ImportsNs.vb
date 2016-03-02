@@ -24,7 +24,14 @@ Namespace Framework.Provider.ImportsAPI
             End Set
         End Property
 
-        Dim __list As List(Of TypeInfo)
+        Dim __list As List(Of TypeInfo) = New List(Of TypeInfo)
+
+        Sub New()
+        End Sub
+
+        Sub New(base As PackageNamespace)
+            Call MyBase.New(base)
+        End Sub
 
         Public Sub Add(type As Type)
             Dim info As New TypeInfo(type)

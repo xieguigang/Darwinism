@@ -117,10 +117,7 @@ Namespace Framework.Provider
                          Select entries
 
             For Each x As TypeEntry In LQuery.MatrixAsIterator       'Update exists registry item or insrt new item into the table
-                Dim exists As TypeEntry = Find(x.name)         '在注册表中查询是否有已注册的类型
-                If Not exists Is Nothing Then
-                    Call _typeHash.Remove(x.name)
-                End If
+                Call _typeHash.Remove(x.name)
                 Call _typeHash.Add(x.name, x)  'Insert new record.(添加数据)
             Next
             Return True
@@ -156,7 +153,16 @@ Namespace Framework.Provider
         Public Sub InstallCurrent()
             Dim dlls = FileIO.FileSystem.GetFiles(App.HOME, FileIO.SearchOption.SearchTopLevelOnly, "*.dll", "*.exe")
             For Each assm As String In dlls
-                Call Register(assm)
+                Try
+                    Call Register(assm)
+                Catch ex As Exception
+                    ex = New Exception(assm, ex)
+                    Call App.LogException(ex)
+                    Call ex.PrintException
+#If DEBUG Then
+                    Call Register(assm)
+#End If
+                End Try
             Next
         End Sub
 

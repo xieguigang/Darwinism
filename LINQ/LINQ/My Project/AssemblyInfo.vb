@@ -9,10 +9,10 @@ Imports System.Runtime.InteropServices
 ' 查看程序集特性的值
 
 <Assembly: AssemblyTitle("LINQ Script: Universal Object Query Framework")> 
-<Assembly: AssemblyDescription("Universal Object Query Framework")> 
-<Assembly: AssemblyCompany("蓝思生物信息工程师工作站")> 
-<Assembly: AssemblyProduct("LINQ")> 
-<Assembly: AssemblyCopyright("Copyright © Lans Corp. 2014")> 
+<Assembly: AssemblyDescription("Universal Object Query Framework")>
+<Assembly: AssemblyCompany("xieguigang")>
+<Assembly: AssemblyProduct("Microsoft.VisualBasic.Linq")>
+<Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com. 2014")>
 <Assembly: AssemblyTrademark("GCModeller")> 
 
 <Assembly: ComVisible(False)>
