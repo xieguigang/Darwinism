@@ -15,18 +15,11 @@ Namespace TaskHost
         Implements IDisposable
 
         ''' <summary>
-        ''' Running on local LAN
-        ''' </summary>
-        Dim _local As Boolean
-
-        ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="local">Program is running in a local server cluster which in the range of the same LAN network?</param>
         ''' <param name="port">You can suing function <see cref="GetFirstAvailablePort"/> to initialize this server object.</param>
-        Sub New(Optional local As Boolean = True, Optional port As Integer = 1234)
+        Sub New(Optional port As Integer = 1234)
             Call MyBase.New(port)
-            _local = local
             __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
             FileSystem = New FileSystemHost(GetFirstAvailablePort)
         End Sub
@@ -37,7 +30,7 @@ Namespace TaskHost
 
         Public Overrides ReadOnly Property Portal As IPEndPoint
             Get
-                Return Me.GetPortal(_local)
+                Return Me.GetPortal
             End Get
         End Property
 

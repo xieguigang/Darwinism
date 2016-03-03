@@ -35,7 +35,7 @@ Namespace TaskHost
             If elType Is Nothing Then
                 elType = type
             End If
-            Dim linq As New LinqProvider(source, elType, False)  ' 创建 Linq 数据源
+            Dim linq As New LinqProvider(source, elType)  ' 创建 Linq 数据源
             Dim portal As IPEndPoint = linq.Portal
             Call __linq.Add(portal.ToString, linq)  ' 数据源添加入哈希表之中
             Return portal

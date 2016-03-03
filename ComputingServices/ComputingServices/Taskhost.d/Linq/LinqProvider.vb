@@ -21,28 +21,26 @@ Namespace TaskHost
         ReadOnly _arrayType As Type
         ReadOnly _type As Type
         ReadOnly _source As Iterator
-        ReadOnly _local As Boolean
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="type">Element's <see cref="System.Type">type</see> in the <paramref name="source"/></param>
-        Sub New(source As IEnumerable, type As Type, Optional local As Boolean = True)
+        Sub New(source As IEnumerable, type As Type)
             Call MyBase.New(Net.GetFirstAvailablePort)
 
             _type = type
             _source = New Iterator(source)
-            _local = local
             __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
             _arrayType = type.MakeArrayType
 
-            Call Runtask(AddressOf __host.Run)
+            Call RunTask(AddressOf __host.Run)
         End Sub
 
         Public Overrides ReadOnly Property Portal As IPEndPoint
             Get
-                Return Me.GetPortal(_local)
+                Return Me.GetPortal
             End Get
         End Property
 

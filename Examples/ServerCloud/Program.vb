@@ -10,6 +10,6 @@ Module Program
     <ExportAPI("/start", Usage:="/start /port <port, default:1234>")>
     Public Function Start(args As CommandLine.CommandLine) As Integer
         Dim port As Integer = args.GetValue("/port", 1234)
-        Return New TaskInvoke(True, port).Run()  ' No more code needs on your cloud server, just needs 2 lines code to running your task host.
+        Return New TaskInvoke(port).Run()  ' No more code needs on your cloud server, just needs 2 lines code to running your task host.
     End Function
 End Module
