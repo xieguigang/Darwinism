@@ -6,12 +6,12 @@ Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.HTTPInternal.Core
 
 ''' <summary>
-''' 在线查询服务提供模块
+''' 在线查询服务提供模块，在这个模块之中只负责进行url参数的解析工作
 ''' </summary>
 Public Class RESTProvider : Inherits HttpServer
 
     Public ReadOnly Property Repository As Repository
-    Public ReadOnly Property LinqProvider As LinqPool = New LinqPool
+    Public ReadOnly Property LinqProvider As LinqAPI = New LinqAPI
 
     ''' <summary>
     ''' 
@@ -23,6 +23,10 @@ Public Class RESTProvider : Inherits HttpServer
         Me.Repository = repo
     End Sub
 
+    Sub New()
+        Call Me.New(80, RQL.Repository.LoadDefault)
+    End Sub
+
     ''' <summary>
     ''' http://linq.gcmodeller.org/kegg/pathways?where=test_expr(pathway)
     ''' 测试条件里面的对象实例的标识符使用资源url里面的最后一个标识符为变量名
@@ -32,16 +36,26 @@ Public Class RESTProvider : Inherits HttpServer
     ''' <param name="p"></param>
     ''' <return>返回一个网络终点IpEndPoint</return>
     Public Overrides Sub handleGETRequest(p As HttpProcessor)
+        If p.IsWWWRoot Then
+            ' 返回帮助信息
+        Else
+            Call __apiInvoke(p)
+        End If
+    End Sub
+
+    Private Sub __apiInvoke(p As HttpProcessor)
         Dim url As String = p.http_url
         Dim pos As Integer = InStr(url, "?")
         Dim expr As String = ""
         If pos = 0 Then
             ' expr为空
         Else
-            expr = Mid(url, pos + 1).Trim
+            expr = Mid(url, pos + 1).Trim  ' 参数里面可能含有转意字符，还需要进行转意
+            expr = expr.URLEscapes
+            url = Mid(url, 1, pos - 1)
         End If
 
-        Dim source = Repository.GetRepository(url, expr) ' expr为空的话，则没有where测试，则返回所有数据
+        Dim source As IEnumerable = Repository.GetRepository(url, expr) ' expr为空的话，则没有where测试，则返回所有数据
         Dim linq As IPEndPoint = LinqProvider.OpenQuery(source, Repository.GetType(url))
         Call p.outputStream.WriteLine(linq.GetJson)
     End Sub

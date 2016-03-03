@@ -9,6 +9,9 @@ Module Module1
 
     Sub Main()
 
+        Dim svr As New RQL.RESTProvider
+        Call svr.Run()
+
         Dim stststs = LDM.Statements.LinqStatement.TryParse( _
  _
             "From x As Integer In ""E:\Microsoft.VisualBasic.Parallel\trunk\LINQ\ints.txt"" Let add = x + 50 Where add > 0 Let cc = add ^ 2 let abc as double = cc mod 99 +11.025R Select abc, cc, x, add, nn = cc+ x/ add * 22 mod 5, gg = math.max(cc,add)")

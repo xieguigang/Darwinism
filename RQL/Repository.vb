@@ -15,7 +15,7 @@ Public Class Repository : Implements ISaveHandle
     ''' {lower_case.url, type_info}
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Models As Dictionary(Of String, EntityProvider)
+    Public Property Models As New Dictionary(Of String, EntityProvider)
 
     ReadOnly __types As TypeRegistry
     ReadOnly __api As APIProvider
@@ -44,11 +44,20 @@ Public Class Repository : Implements ISaveHandle
         Return api.GetType
     End Function
 
-    Public Function LoadFile(url As String) As Repository
-        Return LoadJsonFile(Of Repository)(url)
+    Public Shared Function LoadFile(url As String) As Repository
+        Try
+            Return LoadJsonFile(Of Repository)(url)
+        Catch ex As Exception
+            ex = New Exception(url, ex)
+            Call App.LogException(ex)
+
+            Dim __new As New Repository
+            Call __new.Save(url, Encodings.ASCII)
+            Return __new
+        End Try
     End Function
 
-    Public Function LoadDefault() As Repository
+    Public Shared Function LoadDefault() As Repository
         Return LoadFile(DefaultFile)
     End Function
 
