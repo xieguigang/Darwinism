@@ -65,8 +65,8 @@ Namespace TaskHost
             Return New RequestStream(ProtocolEntry, TaskProtocols.Reset)
         End Function
 
-        <Extension> Public Function GetPortal(Of Tsvr As IServicesSocket)(master As IMasterBase(Of Tsvr), local As Boolean) As IPEndPoint
-            Dim ip As String = If(local, AsynInvoke.LocalIPAddress, GetMyIPAddress())
+        <Extension> Public Function GetPortal(Of Tsvr As IServicesSocket)(master As IMasterBase(Of Tsvr)) As IPEndPoint
+            Dim ip As String = If(EnvironmentLocal, AsynInvoke.LocalIPAddress, GetMyIPAddress())
             Dim port As Integer = master.__host.LocalPort
             Return New IPEndPoint(ip, port)
         End Function

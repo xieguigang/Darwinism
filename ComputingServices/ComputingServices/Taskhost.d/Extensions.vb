@@ -4,6 +4,41 @@ Namespace TaskHost
 
     Public Module Extensions
 
+        ''' <summary>
+        ''' Services running on a LAN?
+        ''' </summary>
+        Dim _local As Boolean = False
+
+        ''' <summary>
+        ''' 假若这个参数为真，则说明服务只是运行在局域网之中，则只会返回局域网的IP地址
+        ''' 假若为假，则说明服务是运行在互联网上面的，则会查询主机的公共IP地址，调试的时候建议设置为真
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property EnvironmentLocal As Boolean
+            Get
+                Return _local
+            End Get
+            Set(value As Boolean)
+                _local = value
+
+                If _local Then
+                    _IPAddress = Net.AsynInvoke.LocalIPAddress
+                Else
+                    _IPAddress = GetMyIPAddress()
+                End If
+            End Set
+        End Property
+
+        Public ReadOnly Property IPAddress As String
+
+        Sub New()
+#If DEBUG Then
+            EnvironmentLocal = True
+#Else
+            EnvironmentLocal = False
+#End If
+        End Sub
+
         Public ReadOnly Property PublicShared As System.Reflection.BindingFlags =
             System.Reflection.BindingFlags.Public Or
             System.Reflection.BindingFlags.Static
