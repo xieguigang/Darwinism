@@ -6,6 +6,10 @@ Namespace StorageTek
     ''' </summary>
     Public Enum StorageTeks As Integer
         ''' <summary>
+        ''' 使用的是Linq数据源
+        ''' </summary>
+        Linq
+        ''' <summary>
         ''' Individual files in a directory.(以单独的文件的形式保存在一个文件夹之中)
         ''' </summary>
         DIR = 2

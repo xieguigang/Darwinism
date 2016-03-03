@@ -64,7 +64,7 @@ Namespace Linq
         End Function
 
         Public Shared ReadOnly Property DefaultFile As String =
-        App.ProductSharedDIR & "/RQL.Provider.json"
+            App.ProductSharedDIR & "/RQL.Provider.json"
 
         Private Function ISaveHandle_Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             If String.IsNullOrEmpty(Path) Then

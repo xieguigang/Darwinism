@@ -60,29 +60,10 @@ Namespace Framework.Provider
             Dim entry As TypeEntry = Find(name)
             If entry Is Nothing Then
                 Return Nothing
+            Else
+                Return entry.GetHandle
             End If
-            Try
-                Dim type As Type = entry.Repository.GetType
-                Dim method As MethodInfo = type.GetMethod(entry.Func, types:={GetType(String)})
-                Dim [delegate] As New __delegateProvider With {.method = method}
-                Dim handle As GetLinqResource = AddressOf [delegate].GetLinqResource
-                Return handle
-            Catch ex As Exception
-                ex = New Exception(name, ex)
-                ex = New Exception(entry.GetJson, ex)
-                Call App.LogException(ex)
-                Return Nothing
-            End Try
         End Function
-
-        Private Class __delegateProvider
-            Public method As MethodInfo
-
-            Public Function GetLinqResource(uri As String) As IEnumerable
-                Dim value As Object = method.Invoke(Nothing, {uri})
-                Return DirectCast(value, IEnumerable)
-            End Function
-        End Class
 
         ''' <summary>
         ''' Return a registry item in the table using its specific name property.
