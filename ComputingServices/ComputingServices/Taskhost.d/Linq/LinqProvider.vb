@@ -35,8 +35,24 @@ Namespace TaskHost
             __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
             _arrayType = type.MakeArrayType
 
-            Call RunTask(AddressOf __host.Run)
+            __svrTask = __svrThread.BeginInvoke(Nothing, Nothing)  ' 避免崩溃的情况产生
         End Sub
+
+        ''' <summary>
+        ''' 使用线程可能会在出现错误的时候导致应用程序崩溃，所以在这里使用begineInvoke好了
+        ''' </summary>
+        Dim __svrThread As Action = Sub() Call __host.Run()
+        Dim __svrTask As IAsyncResult
+
+        ''' <summary>
+        ''' 当前的这个数据源服务是否已经正确的开启了？
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsOpen As Boolean
+            Get
+                Return New AsynInvoke(Portal).Ping >= 0
+            End Get
+        End Property
 
         ''' <summary>
         ''' Linq数据源的集合的类型信息

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net
+﻿Imports System.Threading
+Imports Microsoft.VisualBasic.Net
 
 Namespace TaskHost
 
@@ -42,12 +43,22 @@ Namespace TaskHost
             If elType Is Nothing Then
                 elType = type
             End If
-            Dim linq As New LinqProvider(source, elType)  ' 创建 Linq 数据源
-            Dim portal As IPEndPoint = linq.Portal
+
             SyncLock __linq
+RE_OPEN:        Dim linq As New LinqProvider(source, elType)  ' 创建 Linq 数据源
+                Dim portal As IPEndPoint = linq.Portal
+                Dim uid As String = portal.ToString
+
+                Call Thread.Sleep(5)
+
+                If Not linq.IsOpen Then
+                    GoTo RE_OPEN
+                End If
+
                 Call __linq.Add(portal.ToString, linq)  ' 数据源添加入哈希表之中
+
+                Return portal
             End SyncLock
-            Return portal
         End Function
 
 #Region "IDisposable Support"
