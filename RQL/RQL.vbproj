@@ -85,6 +85,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Repository.vb" />
     <Compile Include="Repository\LinqEntry.vb" />
     <Compile Include="Repository\LinqAPI.vb" />
     <Compile Include="RESTProvider.vb" />

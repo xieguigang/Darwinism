@@ -18,7 +18,7 @@ Public Class RESTProvider : Inherits HttpServer
     ''' </summary>
     ''' <param name="portal"></param>
     ''' <param name="repo">需要在这里将url转换为Long以进行protocol的绑定操作</param>
-    Sub New(portal As Integer, repo As Repository)
+    Sub New(portal As Integer, repo As Linq.Repository)
         Call MyBase.New(portal)
         Me.LinqProvider = New LinqAPI(repo)
     End Sub

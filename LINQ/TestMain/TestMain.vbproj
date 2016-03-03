@@ -154,6 +154,10 @@
       <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
       <Name>SMRUCC.HTTPInternal</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ComputingServices\ComputingServices\ComputingServices.vbproj">
+      <Project>{87383048-1b31-49b7-9fb7-0ded1b80ace8}</Project>
+      <Name>ComputingServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\RQL\RQL.vbproj">
       <Project>{bc922a27-9bc3-4e7e-be3d-55fc03fb4160}</Project>
       <Name>RQL</Name>

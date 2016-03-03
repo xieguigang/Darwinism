@@ -9,6 +9,16 @@ Module Module1
 
     Sub Main()
 
+        Dim RQLQuery = (From x As Integer
+                        In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where("$x mod 6 = 1").AsLinq(Of Integer)
+                        Where x > 100 Select x)
+
+        Dim query2 = (From x As Integer
+                      In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where(Function(xx) xx Mod 6 = 1).AsLinq(Of Integer)
+                      Where x > 100
+                      Select x)
+
+
         Dim svr As New RQL.RESTProvider
         Call svr.Run()
 
