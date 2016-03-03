@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Scripting.InputHandler
 
 Namespace TaskHost
 
@@ -17,6 +18,7 @@ Namespace TaskHost
     Public Class LinqProvider : Inherits IHostBase
         Implements IDisposable
 
+        ReadOnly _arrayType As Type
         ReadOnly _type As Type
         ReadOnly _source As Iterator
         ReadOnly _local As Boolean
@@ -33,6 +35,7 @@ Namespace TaskHost
             _source = New Iterator(source)
             _local = local
             __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
+            _arrayType = type.MakeArrayType
 
             Call Runtask(AddressOf __host.Run)
         End Sub
@@ -51,10 +54,34 @@ Namespace TaskHost
             Return New Rtvl(Portal, GetType(IPEndPoint))
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="n">
+        ''' 个数小于或者等于1，就只会返回一个对象；
+        ''' 个数大于1的，会读取相应数量的元素然后返回一个集合类型
+        ''' </param>
+        ''' <param name="readDone"></param>
+        ''' <returns></returns>
+        Public Function Moves(n As Integer, ByRef readDone As Boolean) As Object
+            If n <= 1 Then
+                Dim value As Object = _source.Current
+                readDone = _source.MoveNext()
+                Return value
+            Else
+                Dim list As New List(Of Object)
+                For i As Integer = 0 To n - 1
+                    Call list.Add(_source.Current)
+                    readDone = _source.MoveNext
+                Next
+                Return [DirectCast](list.ToArray, _type)
+            End If
+        End Function
+
         <Protocol(TaskProtocols.MoveNext)>
         Private Function __moveNext(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim value As Object = _source.Current
-            Dim readEnds As Boolean = _source.MoveNext()
+            Dim readEnds As Boolean
+            Dim value As Object = Moves(1, readEnds)
             Dim json As String = Serialization.GetJson(value, _type)
             Dim flag As Long = If(Not readEnds, Protocols.TaskProtocols.ReadsDone, HTTP_RFC.RFC_OK)
             Return New RequestStream(flag, flag, json)

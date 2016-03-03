@@ -3,6 +3,7 @@ Imports System.Net.Sockets
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization
+Imports RQL.Linq
 Imports SMRUCC.HTTPInternal.Core
 
 ''' <summary>
@@ -23,7 +24,7 @@ Public Class RESTProvider : Inherits HttpServer
     End Sub
 
     Sub New()
-        Call Me.New(80, RQL.Repository.LoadDefault)
+        Call Me.New(80, Repository.LoadDefault)
     End Sub
 
     ''' <summary>
@@ -61,11 +62,11 @@ Public Class RESTProvider : Inherits HttpServer
 
         Select Case url
             Case "/move_next.vb"
-                Call p.WriteLine(LinqProvider.MoveNext(args.requestParser(False)))
+                Call p.WriteLine(LinqProvider.MoveNext(args.requestParser()))
             Case "/helps"
                 Call p.WriteLine(__helps)
             Case "/close.vb"
-                Call p.WriteLine(LinqProvider.Free(args.requestParser(False)))
+                Call p.WriteLine(LinqProvider.Free(args.requestParser()))
             Case Else ' 打开linq查询
                 Dim Linq As LinqEntry = LinqProvider.OpenQuery(url, args)
                 Call p.outputStream.WriteLine(Linq.GetJson)

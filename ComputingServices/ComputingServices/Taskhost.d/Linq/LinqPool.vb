@@ -9,6 +9,10 @@ Namespace TaskHost
         ''' </summary>
         ReadOnly __linq As New Dictionary(Of String, LinqProvider)
 
+        ''' <summary>
+        ''' uid参数是Linq Portal的Tostring函数的结果
+        ''' </summary>
+        ''' <param name="uid"></param>
         Public Sub Free(uid As String)
             If Not __linq.ContainsKey(uid) Then Return
 
@@ -61,5 +65,6 @@ Namespace TaskHost
             ' GC.SuppressFinalize(Me)
         End Sub
 #End Region
+
     End Class
 End Namespace

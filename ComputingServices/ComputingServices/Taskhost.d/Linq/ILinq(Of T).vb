@@ -4,17 +4,15 @@ Imports Microsoft.VisualBasic.Net.Protocols
 Namespace TaskHost
 
     ''' <summary>
-    ''' Remote LINQ source reader
+    ''' Remote Linq source reader
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Class ILinq(Of T) : Implements IEnumerable(Of T)
-        Implements IDisposable
+    Public Class ILinqReader : Implements IDisposable
 
         ''' <summary>
         ''' Element type in the source collection.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Type As Type = GetType(T)
+        Public ReadOnly Property Type As Type
         ''' <summary>
         ''' Remote entry point
         ''' </summary>
@@ -25,42 +23,58 @@ Namespace TaskHost
         ReadOnly req As New RequestStream(Protocols.ProtocolEntry, TaskProtocols.MoveNext)
 
         ''' <summary>
-        ''' Creates a linq source reader from the remote entry point
+        ''' 
         ''' </summary>
         ''' <param name="portal"></param>
-        Sub New(portal As IPEndPoint)
+        ''' <param name="type">JSON反序列化所需要的类型信息</param>
+        Sub New(portal As IPEndPoint, type As Type)
             Me.Portal = portal
             Me.invoke = New AsynInvoke(portal)
+            Me.Type = type
         End Sub
 
-        Public Overrides Function ToString() As String
-            Return $"{Type.FullName}@{Portal.ToString}"
+        ''' <summary>
+        ''' 这个迭代器函数不会重置远程的数据源
+        ''' </summary>
+        ''' <param name="n">迭代器所返回来的元素数量，当小于1的时候会被自动重置为1个元素</param>
+        ''' <returns></returns>
+        Public Iterator Function Moves(n As Integer) As IEnumerable
+            If n <= 1 Then
+                n = 1
+            End If
+
+            For i As Integer = 0 To n - 1
+                Dim rep As RequestStream = invoke.SendMessage(req)
+                Dim json As String = rep.GetUTF8String
+                Dim value As Object = Serialization.LoadObject(json, Type)
+
+                If rep.ProtocolCategory = TaskProtocols.ReadsDone Then
+                    Exit For
+                Else
+                    Yield value
+                End If
+            Next
         End Function
 
-#Region "Implements IEnumerable(Of T)"
-
-        Public Iterator Function AsQuerable() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+        ''' <summary>
+        ''' 使用这个迭代器函数查询会自动重置远程的数据源的位置到初始位置
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function AsQuerable() As IEnumerable
             Call invoke.SendMessage(Protocols.LinqReset)  ' resets the remote linq source read position
 
             Do While True
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Dim json As String = rep.GetUTF8String
                 Dim value As Object = Serialization.LoadObject(json, Type)
-                Dim x As T = DirectCast(value, T)
 
                 If rep.ProtocolCategory = TaskProtocols.ReadsDone Then
                     Exit Do
                 Else
-                    Yield x
+                    Yield value
                 End If
             Loop
         End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield AsQuerable()
-        End Function
-
-#End Region
 
         ''' <summary>
         ''' Automatically free the remote resource.(释放远程主机上面的资源)
@@ -79,6 +93,7 @@ Namespace TaskHost
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
+
                     Call __free()
                     Call invoke.Free
                 End If
@@ -103,6 +118,50 @@ Namespace TaskHost
             ' TODO: uncomment the following line if Finalize() is overridden above.
             ' GC.SuppressFinalize(Me)
         End Sub
+#End Region
+    End Class
+
+    ''' <summary>
+    ''' Remote LINQ source reader
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Class ILinq(Of T) : Inherits ILinqReader
+        Implements IDisposable
+        Implements IEnumerable(Of T)
+
+        ''' <summary>
+        ''' Creates a linq source reader from the remote entry point
+        ''' </summary>
+        ''' <param name="portal"></param>
+        Sub New(portal As IPEndPoint)
+            Call MyBase.New(portal, GetType(T))
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{Type.FullName}@{Portal.ToString}"
+        End Function
+
+        Public Overloads Iterator Function Moves(n As Integer) As IEnumerable(Of T)
+            For Each x As Object In MyBase.Moves(n)
+                Yield DirectCast(x, T)
+            Next
+        End Function
+
+#Region "Implements IEnumerable(Of T)"
+
+        ''' <summary>
+        ''' 这个迭代器函数会自动重置远程数据源
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overloads Iterator Function AsQuerable() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each x As Object In MyBase.AsQuerable
+                Yield DirectCast(x, T)
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield AsQuerable()
+        End Function
 #End Region
     End Class
 End Namespace
