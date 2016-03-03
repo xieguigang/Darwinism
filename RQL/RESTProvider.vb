@@ -3,12 +3,12 @@ Imports System.Net.Sockets
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization
-Imports RQL.HttpInternal
+Imports SMRUCC.HTTPInternal.Core
 
 ''' <summary>
 ''' 在线查询服务提供模块
 ''' </summary>
-Public Class RESTProvider : Inherits HttpInternal.HttpServer
+Public Class RESTProvider : Inherits HttpServer
 
     Public ReadOnly Property Repository As Repository
     Public ReadOnly Property LinqProvider As LinqPool = New LinqPool
@@ -46,7 +46,7 @@ Public Class RESTProvider : Inherits HttpInternal.HttpServer
         Call p.outputStream.WriteLine(linq.GetJson)
     End Sub
 
-    Public Overrides Sub handlePOSTRequest(p As HttpProcessor, inputData As StreamReader)
+    Public Overrides Sub handlePOSTRequest(p As HttpProcessor, inputData As MemoryStream)
         Call p.writeFailure("Method not allowed!")
     End Sub
 

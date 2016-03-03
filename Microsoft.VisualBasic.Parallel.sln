@@ -19,19 +19,17 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AnalysisExample", "Examples
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RQL", "RQL\RQL.vbproj", "{BC922A27-9BC3-4E7E-BE3D-55FC03FB4160}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HTTPServer", "..\..\Reference SharedLib\HTTPServer\HTTPServer.shproj", "{932F99F9-BE59-4743-865F-1ED9331443E3}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TestMain", "LINQ\TestMain\TestMain.vbproj", "{BC89D746-E295-4C71-A0AB-1BBE45FF314E}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject.VB_FrameworkExtensions", "..\..\Microsoft.VisualBasic_Framework\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.shproj", "{B1043125-DCB7-44E3-AF8F-D39CB7F1D082}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{F65DAA4E-265B-4855-B070-0C3EFA38370B}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SMRUCC.HTTPInternal", "..\..\REST_Framework\HTTPServer\SMRUCC.HTTPInternal\SMRUCC.HTTPInternal.vbproj", "{FBFC1455-B232-4F16-AFC7-4054A8B864AB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\Microsoft.VisualBasic_Framework\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems*{b1043125-dcb7-44e3-af8f-d39cb7f1d082}*SharedItemsImports = 13
-		..\..\Reference SharedLib\HTTPServer\HTTPServer.projitems*{932f99f9-be59-4743-865f-1ed9331443e3}*SharedItemsImports = 13
-		..\..\Reference SharedLib\HTTPServer\HTTPServer.projitems*{bc922a27-9bc3-4e7e-be3d-55fc03fb4160}*SharedItemsImports = 4
 		..\..\Microsoft.VisualBasic_Framework\SharedProject.VB_FrameworkExtensions\SharedProject.VB_FrameworkExtensions.projitems*{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -139,6 +137,18 @@ Global
 		{BC89D746-E295-4C71-A0AB-1BBE45FF314E}.Release|x64.Build.0 = Release|Any CPU
 		{BC89D746-E295-4C71-A0AB-1BBE45FF314E}.Release|x86.ActiveCfg = Release|Any CPU
 		{BC89D746-E295-4C71-A0AB-1BBE45FF314E}.Release|x86.Build.0 = Release|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Debug|x64.ActiveCfg = Debug|x64
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Debug|x64.Build.0 = Debug|x64
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Release|x64.ActiveCfg = Release|x64
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Release|x64.Build.0 = Release|x64
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,7 +158,7 @@ Global
 		{D7350955-C7C6-4397-B21C-873EDECFAD82} = {8C829C3C-5091-4603-A22B-DD07500156ED}
 		{76BFD6E2-FC5C-4E7A-984D-917CE14D8A7B} = {8C829C3C-5091-4603-A22B-DD07500156ED}
 		{F7DD090B-91DD-42EA-B1F9-C88EE7B3A623} = {8C829C3C-5091-4603-A22B-DD07500156ED}
-		{932F99F9-BE59-4743-865F-1ED9331443E3} = {F65DAA4E-265B-4855-B070-0C3EFA38370B}
 		{B1043125-DCB7-44E3-AF8F-D39CB7F1D082} = {F65DAA4E-265B-4855-B070-0C3EFA38370B}
+		{FBFC1455-B232-4F16-AFC7-4054A8B864AB} = {F65DAA4E-265B-4855-B070-0C3EFA38370B}
 	EndGlobalSection
 EndGlobal
