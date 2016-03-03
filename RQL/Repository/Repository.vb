@@ -49,6 +49,11 @@ Namespace Linq
             End If
         End Function
 
+        ''' <summary>
+        ''' 获取得到的是集合之中的元素的类型
+        ''' </summary>
+        ''' <param name="url"></param>
+        ''' <returns></returns>
         Public Overloads Function [GetType](url As String) As Type
             Dim api As EntityProvider = Models(url.ToLower)
             Return api.GetType

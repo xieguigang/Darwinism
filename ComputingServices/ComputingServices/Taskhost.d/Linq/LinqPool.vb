@@ -21,8 +21,21 @@ Namespace TaskHost
             Call __linq.Remove(uid)  ' 从哈希表之中移除数据源释放服务器资源
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="type">
+        ''' 这里应该是集合的类型，函数会自动从这个类型信息之中得到元素的类型；
+        ''' 假若函数获取得到集合之中的元素的类型失败的话，则会直接使用所传入的类型参数作为集合之中的元素类型
+        ''' </param>
+        ''' <returns></returns>
         Public Function OpenQuery(source As IEnumerable, type As Type) As IPEndPoint
-            Dim linq As New LinqProvider(source, type.GetArrayElement(True), False)  ' 创建 Linq 数据源
+            Dim elType As Type = type.GetArrayElement(True)
+            If elType Is Nothing Then
+                elType = type
+            End If
+            Dim linq As New LinqProvider(source, elType, False)  ' 创建 Linq 数据源
             Dim portal As IPEndPoint = linq.Portal
             Call __linq.Add(portal.ToString, linq)  ' 数据源添加入哈希表之中
             Return portal
