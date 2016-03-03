@@ -22,7 +22,10 @@ Namespace TaskHost
 
             Dim x As LinqProvider = __linq(uid)
             Call x.Free  ' 释放Linq数据源的指针
-            Call __linq.Remove(uid)  ' 从哈希表之中移除数据源释放服务器资源
+
+            SyncLock __linq
+                Call __linq.Remove(uid)  ' 从哈希表之中移除数据源释放服务器资源
+            End SyncLock
         End Sub
 
         ''' <summary>
@@ -41,7 +44,9 @@ Namespace TaskHost
             End If
             Dim linq As New LinqProvider(source, elType)  ' 创建 Linq 数据源
             Dim portal As IPEndPoint = linq.Portal
-            Call __linq.Add(portal.ToString, linq)  ' 数据源添加入哈希表之中
+            SyncLock __linq
+                Call __linq.Add(portal.ToString, linq)  ' 数据源添加入哈希表之中
+            End SyncLock
             Return portal
         End Function
 

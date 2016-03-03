@@ -74,6 +74,8 @@ Public Class RESTProvider : Inherits HttpServer
             url = Mid(url, 1, pos - 1).ToLower
         End If
 
+        Call p.writeSuccess()
+
         Select Case url
             Case "/move_next.vb"
                 Call p.WriteLine(LinqProvider.MoveNext(args.requestParser()))

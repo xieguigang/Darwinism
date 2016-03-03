@@ -28,7 +28,7 @@ Namespace TaskHost
         ''' <param name="source"></param>
         ''' <param name="type">Element's <see cref="System.Type">type</see> in the <paramref name="source"/></param>
         Sub New(source As IEnumerable, type As Type)
-            Call MyBase.New(Net.GetFirstAvailablePort)
+            Call MyBase.New(Net.GetFirstAvailablePort(-1))
 
             _type = type
             _source = New Iterator(source)

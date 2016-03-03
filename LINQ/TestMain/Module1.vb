@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
+Imports Microsoft.VisualBasic.Parallel
 
 Module Module1
 
@@ -24,7 +25,15 @@ Module Module1
         ''Select Case x)
         'Dim id, number
         'Dim SQL As String = $"update table set id={id} where uid={number}"
+        Call RunTask(Sub()
+                         MsgBox("click to start!")
 
+                         Dim lquerrrr = (From i As Integer In 1000000.SeqIterator.AsParallel Select "http://127.0.0.1/test123.vb".GetRequest).ToArray
+                         MsgBox("DONE!")
+                         For i As Integer = 0 To 100000
+                             Call Trace.WriteLine("http://127.0.0.1/test123.vb".GET)
+                         Next
+                     End Sub)
 
         Dim svr As New RQL.RESTProvider
         Call svr.AddLinq("/test123.vb", "E:\Microsoft.VisualBasic.Parallel\trunk\LINQ\ints.txt", AddressOf Microsoft.VisualBasic.Linq.Framework.Provider.GetInt32)
