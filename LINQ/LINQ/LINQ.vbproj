@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APP\CLI.vb" />
+    <Compile Include="Framewok\DynamicCode\Abstract.vb" />
     <Compile Include="Framewok\DynamicCode\LinqClosure\LinqClosure.vb" />
     <Compile Include="Framewok\DynamicCode\LinqClosure\LinqValue.vb" />
     <Compile Include="Framewok\Provider\DefaultEntity.vb" />

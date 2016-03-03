@@ -9,14 +9,6 @@ Imports Microsoft.VisualBasic.Linq.LDM.Statements
 
 Namespace Framework.DynamicCode
 
-    Public Interface ICodeProvider
-        ReadOnly Property Code As String
-    End Interface
-
-    Public Interface IProjectProvider
-        ReadOnly Property Projects As String()
-    End Interface
-
     ''' <summary>
     ''' 编译整个LINQ语句的动态代码编译器
     ''' </summary>
