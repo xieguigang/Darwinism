@@ -48,7 +48,20 @@
 
 <h3>
 <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating pages manually</h3>
-
+            <h4>RQL(Repository Query Language)</h4>
+            
+            <p>
+                This project includes a object-oriented data source query language (RQL), which is based on the Microsoft Linq data source query techonogy.
+                RQL usage example:<br />
+                
+                <pre><code class="visualbasic">Imports GCModeller.RQL
+                
+var result = From prot As protein in "http://Linq.GCModeller.org/kegg/ssdb/xcb" Where prot->length < 300 Select prot
+                </code>
+                </pre>
+            </p>
+            
+            
 <p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
 
 <h3>
