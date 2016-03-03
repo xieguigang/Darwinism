@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.Linq.LDM.Statements
 Namespace Framework.DynamicCode
 
     ''' <summary>
-    ''' 编译整个LINQ语句的动态代码编译器
+    ''' 编译整个Linq语句的动态代码编译器
     ''' </summary>
     ''' <remarks></remarks>
     Public Class DynamicCompiler : Implements IDisposable
@@ -23,7 +23,7 @@ Namespace Framework.DynamicCode
             EntityProvider = entity
 
             Call ReferenceList.Add(GetType(DynamicCompiler).Assembly.Location)
-            Call ReferenceList.Add(GetType(App).Assembly.Location)
+            Call ReferenceList.Add(GetType(Microsoft.VisualBasic.App).Assembly.Location)
             Call ImportsNamespace.Add("System.Linq.Enumerable")
             Call ImportsNamespace.Add("System")
             Call ImportsNamespace.Add("System.Text")
@@ -37,6 +37,17 @@ Namespace Framework.DynamicCode
 
         Public ReadOnly Property ImportsNamespace As List(Of String) = New List(Of String)
         Public ReadOnly Property ReferenceList As New List(Of String)
+
+        ''' <summary>
+        ''' 使用Linq的注册表数据创建一个默认的编译器
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function DefaultCompiler() As DynamicCompiler
+            Dim DIR As String = App.GetProductSharedDIR(GetType(DynamicCompiler))
+            Dim types As String = DIR & "/" & FileIO.FileSystem.GetFileInfo(TypeRegistry.DefaultFile).Name
+            Dim api As String = DIR & "/" & FileIO.FileSystem.GetFileInfo(APIProvider.DefaultFile).Name
+            Return New DynamicCompiler(TypeRegistry.Load(types), APIProvider.Load(api))
+        End Function
 
         Public Sub [Imports](ns As String)
             Dim types As Type() = ApiProvider.GetType(ns)

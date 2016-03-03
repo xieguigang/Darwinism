@@ -155,7 +155,11 @@ Namespace TaskHost
         ''' <returns></returns>
         Public Overloads Iterator Function AsQuerable() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each x As Object In MyBase.AsQuerable
-                Yield DirectCast(x, T)
+                If x Is Nothing Then
+                    Yield x
+                Else
+                    Yield DirectCast(x, T)
+                End If
             Next
         End Function
 

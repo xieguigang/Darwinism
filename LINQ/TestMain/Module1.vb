@@ -10,6 +10,10 @@ Module Module1
 
     Sub Main()
 
+        Dim test2222 = LDM.Statements.Tokens.WhereClosure.CreateLinqWhere("$x mod 6=22", GetType(Integer))
+
+
+
         'Dim RQLQuery = (From x As Integer
         '                In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where("$x mod 6 = 1").AsLinq(Of Integer)
         '                Where x > 100 Select x)
@@ -27,6 +31,12 @@ Module Module1
         'Dim SQL As String = $"update table set id={id} where uid={number}"
         Call RunTask(Sub()
                          MsgBox("click to start!")
+
+                         Dim qlll = (From x As Integer In New RQL.API.Repository(Of Integer)("http://127.0.0.1/test123.vb").Where("$x mod 6 =1").AsLinq(Of Integer) Select x.__DEBUG_ECHO).ToArray
+
+
+                         MsgBox("test2")
+
 
                          Dim lquerrrr = (From i As Integer In 1000000.SeqIterator.AsParallel Select "http://127.0.0.1/test123.vb".GetRequest).ToArray
                          MsgBox("DONE!")

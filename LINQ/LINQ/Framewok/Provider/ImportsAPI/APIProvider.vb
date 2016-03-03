@@ -95,10 +95,14 @@ Namespace Framework.Provider.ImportsAPI
         End Function
 
         Public Shared Function LoadDefault() As APIProvider
+            Return Load(DefaultFile)
+        End Function
+
+        Public Shared Function Load(file As String) As APIProvider
             Try
-                Return LoadJsonFile(Of APIProvider)(DefaultFile)
+                Return LoadJsonFile(Of APIProvider)(file)
             Catch ex As Exception
-                ex = New Exception(DefaultFile.ToFileURL, ex)
+                ex = New Exception(file.ToFileURL, ex)
                 Call App.LogException(ex)
 
                 Return New APIProvider
