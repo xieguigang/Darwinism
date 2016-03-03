@@ -10,8 +10,12 @@ Module Module1
 
     Sub Main()
 
-        Dim test2222 = LDM.Statements.Tokens.WhereClosure.CreateLinqWhere("$x mod 6=22", GetType(Integer))
+        Dim cp = Microsoft.VisualBasic.Linq.Framework.DynamicCode.DynamicCompiler.DefaultCompiler
+        Dim test2222 = LDM.Statements.Tokens.WhereClosure.CreateLinqWhere("$x mod 6=0", GetType(Integer), cp)
 
+        test2222(6).__DEBUG_ECHO
+        test2222(12).__DEBUG_ECHO
+        test2222(13).__DEBUG_ECHO
 
 
         'Dim RQLQuery = (From x As Integer
@@ -82,7 +86,7 @@ Module Module1
 
         Dim s As String = "instr($s, cstr( $s->length), 8)"
         Dim typew = GetType(String)
-        Dim www = WhereClosure.CreateLinqWhere(s, typew)
+        '     Dim www = WhereClosure.CreateLinqWhere(s, typew)
         Dim types As TypeRegistry = TypeRegistry.LoadDefault
         Dim api As APIProvider = APIProvider.LoadDefault
 

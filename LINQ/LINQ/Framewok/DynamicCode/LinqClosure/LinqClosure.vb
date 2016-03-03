@@ -78,8 +78,8 @@ Namespace Framework.DynamicCode
                 Call lBuilder.AppendLine()
             End If
 
-            Call lBuilder.AppendLine("          Dim obj As Object = " & __getProjects(projects))
-            Call lBuilder.AppendLine($"          Return New {GetType(LinqValue).FullName}(obj)")
+            Call lBuilder.AppendLine($"          Dim {LinqClosure.obj} As Object = " & __getProjects(projects))
+            Call lBuilder.AppendLine($"          Return New {GetType(LinqValue).FullName}({LinqClosure.obj})")
 
             Call lBuilder.AppendLine("      End Function")
             Call lBuilder.AppendLine()
@@ -89,6 +89,11 @@ Namespace Framework.DynamicCode
 
             Return lBuilder.ToString
         End Function
+
+        ''' <summary>
+        ''' 名字复杂一些，避免在进行动态编译的时候的命名冲突
+        ''' </summary>
+        Const obj As String = "____x__EF53E4E8_897E_4282_AD81_2D6462990FCC__obj"
 
         Private Function __getProjects(source As IEnumerable(Of String)) As String
             Dim projects As String() = source.ToArray

@@ -57,7 +57,7 @@ Namespace LDM.Statements.Tokens
             End Function
         End Class
 
-        Const obj As String = "obj"
+        Const obj As String = "x_obj"
 
         Public Shared Function GetCode(where As String, type As Type) As String
             Dim code As String = LinqClosure.BuildClosure(obj, type, Nothing, Nothing, {obj}, where)

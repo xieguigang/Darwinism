@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
@@ -56,9 +57,9 @@ Namespace StorageTek
             Return $"[{Tek.ToString}] {MapFileIO}  //{MyBase.ToString}"
         End Function
 
-        Public Function LinqWhere(where As String, types As TypeRegistry, api As APIProvider) As IEnumerable
+        Public Function LinqWhere(where As String, types As TypeRegistry, api As APIProvider, compiler As DynamicCompiler) As IEnumerable
             Dim type As Type = Me.GetType
-            Dim test As ITest = WhereClosure.CreateLinqWhere(where, type)
+            Dim test As ITest = WhereClosure.CreateLinqWhere(where, type, compiler)
             Dim LQuery = (From x As Object In GetRepository() Where True = test(x) Select x)
             Return LQuery
         End Function

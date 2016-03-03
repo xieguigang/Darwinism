@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
 Imports Microsoft.VisualBasic.Serialization.JsonContract
@@ -21,6 +22,7 @@ Namespace Linq
 
         ReadOnly __types As TypeRegistry
         ReadOnly __api As APIProvider
+        ReadOnly __compiler As DynamicCompiler
 
         Sub New()
             __api = APIProvider.LoadDefault
@@ -45,7 +47,7 @@ Namespace Linq
             If String.IsNullOrEmpty(where) Then
                 Return api.GetRepository
             Else
-                Return api.LinqWhere(where, __types, __api)
+                Return api.LinqWhere(where, __types, __api, __compiler)
             End If
         End Function
 
