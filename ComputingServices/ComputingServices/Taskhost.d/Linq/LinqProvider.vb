@@ -38,6 +38,16 @@ Namespace TaskHost
             Call RunTask(AddressOf __host.Run)
         End Sub
 
+        ''' <summary>
+        ''' Linq数据源的集合的类型信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property BaseType As Type
+            Get
+                Return _arrayType
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property Portal As IPEndPoint
             Get
                 Return Me.GetPortal
@@ -61,7 +71,7 @@ Namespace TaskHost
         ''' </param>
         ''' <param name="readDone"></param>
         ''' <returns></returns>
-        Public Function Moves(n As Integer, ByRef readDone As Boolean) As Object
+        Public Function Moves(n As Integer, Optional ByRef readDone As Boolean = False) As Object
             If n <= 1 Then
                 Dim value As Object = _source.Current
                 readDone = _source.MoveNext()

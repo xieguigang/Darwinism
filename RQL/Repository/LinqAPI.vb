@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.SecurityString.MD5Hash
+Imports Microsoft.VisualBasic.Serialization
 Imports SMRUCC.HTTPInternal.AppEngine
 Imports SMRUCC.HTTPInternal.AppEngine.APIMethods
 Imports SMRUCC.HTTPInternal.Platform
@@ -54,7 +55,12 @@ Namespace Linq
         ''' <param name="args">uid,n</param>
         ''' <returns></returns>
         Public Function MoveNext(args As Dictionary(Of String, String)) As String
-
+            Dim uid As String = args(LinqAPI.uid)
+            Dim n As Integer = Scripting.CastInteger(args(LinqAPI.n))
+            Dim linq As LinqProvider = GetLinq(__uidMaps(uid))
+            Dim source As Object = linq.Moves(n)
+            Dim json As String = Serialization.GetJson(source, linq.BaseType)
+            Return json
         End Function
 
         ''' <summary>
@@ -63,7 +69,10 @@ Namespace Linq
         ''' <param name="args"></param>
         ''' <returns></returns>
         Public Overloads Function Free(args As Dictionary(Of String, String)) As String
-
+            Dim uid As String = args(LinqAPI.uid)
+            Call MyBase.Free(__uidMaps(uid))
+            Call __uidMaps.Remove(uid)
+            Return True
         End Function
     End Class
 End Namespace

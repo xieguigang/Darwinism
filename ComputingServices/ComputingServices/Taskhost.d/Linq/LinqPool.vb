@@ -9,6 +9,10 @@ Namespace TaskHost
         ''' </summary>
         ReadOnly __linq As New Dictionary(Of String, LinqProvider)
 
+        Public Function GetLinq(uid As String) As LinqProvider
+            Return __linq(uid)
+        End Function
+
         ''' <summary>
         ''' uid参数是Linq Portal的Tostring函数的结果
         ''' </summary>
