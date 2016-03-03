@@ -37,6 +37,20 @@ Namespace Framework.Provider
         ''' <returns></returns>
         <XmlAttribute> Public Property Func As String
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' Copy base values
+        ''' </summary>
+        ''' <param name="base"></param>
+        Sub New(base As TypeEntry)
+            Me.Func = base.Func
+            Me.name = base.name
+            Me.Repository = base.Repository
+            Me.TypeId = base.TypeId
+        End Sub
+
         ''' <summary>
         ''' 得到集合之中的元素的类型
         ''' </summary>

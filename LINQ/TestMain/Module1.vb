@@ -9,17 +9,25 @@ Module Module1
 
     Sub Main()
 
-        Dim RQLQuery = (From x As Integer
-                        In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where("$x mod 6 = 1").AsLinq(Of Integer)
-                        Where x > 100 Select x)
+        'Dim RQLQuery = (From x As Integer
+        '                In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where("$x mod 6 = 1").AsLinq(Of Integer)
+        '                Where x > 100 Select x)
 
-        Dim query2 = (From x As Integer
-                      In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where(Function(xx) xx Mod 6 = 1).AsLinq(Of Integer)
-                      Where x > 100
-                      Select x)
+        'Dim query2 = (From x As Integer
+        '              In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where(Function(xx) xx Mod 6 = 1).AsLinq(Of Integer)
+        '              Where x > 100
+        '              Select x)
+
+        ''   Dim query3 = (From x As Integer
+        ''                In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32?where=$ mod6 =1")
+        '' Where x > 100
+        ''Select Case x)
+        'Dim id, number
+        'Dim SQL As String = $"update table set id={id} where uid={number}"
 
 
         Dim svr As New RQL.RESTProvider
+        Call svr.AddLinq("/test123.vb", "E:\Microsoft.VisualBasic.Parallel\trunk\LINQ\ints.txt", AddressOf Microsoft.VisualBasic.Linq.Framework.Provider.GetInt32)
         Call svr.Run()
 
         Dim stststs = LDM.Statements.LinqStatement.TryParse( _

@@ -128,6 +128,19 @@ Namespace Framework.Provider
             Return result
         End Function
 
+        Public Shared Function ParsingEntry(m As MethodInfo) As TypeEntry
+            Dim attrs As LinqEntity = m.GetAttribute(Of LinqEntity)
+            If attrs Is Nothing Then
+                Return Nothing
+            End If
+            Return New TypeEntry With {
+                .Func = m.Name,
+                .name = attrs.Type,
+                .Repository = New Scripting.MetaData.TypeInfo(m.DeclaringType),
+                .TypeId = New Scripting.MetaData.TypeInfo(attrs.RefType)
+            }
+        End Function
+
         ''' <summary>
         ''' 扫描安装应用程序文件夹之中的所有插件
         ''' </summary>

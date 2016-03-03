@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Net.Sockets
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization
 Imports RQL.Linq
@@ -26,6 +27,19 @@ Public Class RESTProvider : Inherits HttpServer
     Sub New()
         Call Me.New(80, Repository.LoadDefault)
     End Sub
+
+    Public Function AddLinq(url As String, resource As String, handle As GetLinqResource) As Boolean
+        Try
+            Call LinqProvider.Repository.AddLinq(url, resource, handle)
+        Catch ex As Exception
+            ex = New Exception(url, ex)
+            ex = New Exception(resource, ex)
+            Call App.LogException(ex)
+            Return False
+        End Try
+
+        Return True
+    End Function
 
     ''' <summary>
     ''' http://linq.gcmodeller.org/kegg/pathways?where=test_expr(pathway)

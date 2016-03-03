@@ -23,6 +23,15 @@ Namespace StorageTek
         ''' <returns></returns>
         Public Property MapFileIO As String
 
+        Sub New()
+        End Sub
+
+        Sub New(Linq As TypeEntry, res As String)
+            Call MyBase.New(Linq)
+            Tek = StorageTeks.Linq
+            MapFileIO = res
+        End Sub
+
         Public Function GetRepository() As IEnumerable
             If Tek = StorageTeks.Linq Then  ' 使用的是Linq数据源
                 Dim hwnd As GetLinqResource = Me.GetHandle

@@ -1,4 +1,5 @@
-﻿Imports RQL.Linq
+﻿Imports Microsoft.VisualBasic.Serialization
+Imports RQL.Linq
 
 Namespace API
 
@@ -37,19 +38,29 @@ Namespace API
         ''' <param name="assertions">断言</param>
         ''' <returns></returns>
         Public Function Where(assertions As String) As LinqEntry
-
+            Return __innerQuery(Repository & "?where=" & assertions)
         End Function
 
         Public Function Where(predication As Func(Of T, Boolean)) As LinqEntry
 
         End Function
 
+        Private Shared Function __innerQuery(url As String) As LinqEntry
+            Dim source As String = url.GetRequest
+            Dim linq As LinqEntry = source.LoadObject(Of LinqEntry)
+            Return linq
+        End Function
+
 #Region "Implements IEnumerable(Of T)"
 
-
-
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-
+            For Each x As T In __innerQuery(Repository).AsLinq(Of T)
+                If Not disposedValue Then
+                    Yield x
+                Else
+                    Exit For
+                End If
+            Next
         End Function
 
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator

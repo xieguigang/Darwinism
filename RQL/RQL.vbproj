@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="StorageTek\API.vb" />
     <Compile Include="StorageTek\EntityProvider.vb" />
+    <Compile Include="StorageTek\LinqSource.vb" />
     <Compile Include="StorageTek\StorageTeks.vb" />
   </ItemGroup>
   <ItemGroup>

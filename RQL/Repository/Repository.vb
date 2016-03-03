@@ -27,6 +27,14 @@ Namespace Linq
             __types = TypeRegistry.LoadDefault
         End Sub
 
+        Public Sub AddLinq(url As String, resource As String, Linq As GetLinqResource)
+            Dim res As EntityProvider = LinqSource.Source(resource, Linq)
+            If Models.ContainsKey(url.ToLower.ShadowCopy(url)) Then
+                Call Models.Remove(url)
+            End If
+            Call Models.Add(url, res)
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
