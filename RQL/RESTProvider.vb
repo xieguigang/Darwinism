@@ -10,8 +10,7 @@ Imports SMRUCC.HTTPInternal.Core
 ''' </summary>
 Public Class RESTProvider : Inherits HttpServer
 
-    Public ReadOnly Property Repository As Repository
-    Public ReadOnly Property LinqProvider As LinqAPI = New LinqAPI
+    Public ReadOnly Property LinqProvider As LinqAPI
 
     ''' <summary>
     ''' 
@@ -20,7 +19,7 @@ Public Class RESTProvider : Inherits HttpServer
     ''' <param name="repo">需要在这里将url转换为Long以进行protocol的绑定操作</param>
     Sub New(portal As Integer, repo As Repository)
         Call MyBase.New(portal)
-        Me.Repository = repo
+        Me.LinqProvider = New LinqAPI(repo)
     End Sub
 
     Sub New()
@@ -37,27 +36,40 @@ Public Class RESTProvider : Inherits HttpServer
     ''' <return>返回一个网络终点IpEndPoint</return>
     Public Overrides Sub handleGETRequest(p As HttpProcessor)
         If p.IsWWWRoot Then
-            ' 返回帮助信息
+            Call p.WriteLine(__helps)  ' 返回帮助信息
         Else
             Call __apiInvoke(p)
         End If
     End Sub
 
+    Private Function __helps() As String
+
+    End Function
+
     Private Sub __apiInvoke(p As HttpProcessor)
         Dim url As String = p.http_url
         Dim pos As Integer = InStr(url, "?")
-        Dim expr As String = ""
+        Dim args As String = ""
+
         If pos = 0 Then
             ' expr为空
         Else
-            expr = Mid(url, pos + 1).Trim  ' 参数里面可能含有转意字符，还需要进行转意
-            expr = expr.URLEscapes
-            url = Mid(url, 1, pos - 1)
+            args = Mid(url, pos + 1).Trim  ' 参数里面可能含有转意字符，还需要进行转意
+            args = args.URLEscapes
+            url = Mid(url, 1, pos - 1).ToLower
         End If
 
-        Dim source As IEnumerable = Repository.GetRepository(url, expr) ' expr为空的话，则没有where测试，则返回所有数据
-        Dim linq As IPEndPoint = LinqProvider.OpenQuery(source, Repository.GetType(url))
-        Call p.outputStream.WriteLine(linq.GetJson)
+        Select Case url
+            Case "/move_next.vb"
+                Call p.WriteLine(LinqProvider.MoveNext(args.requestParser(False)))
+            Case "/helps"
+                Call p.WriteLine(__helps)
+            Case "/close.vb"
+                Call p.WriteLine(LinqProvider.Free(args.requestParser(False)))
+            Case Else ' 打开linq查询
+                Dim Linq As LinqEntry = LinqProvider.OpenQuery(url, args)
+                Call p.outputStream.WriteLine(Linq.GetJson)
+        End Select
     End Sub
 
     Public Overrides Sub handlePOSTRequest(p As HttpProcessor, inputData As MemoryStream)
