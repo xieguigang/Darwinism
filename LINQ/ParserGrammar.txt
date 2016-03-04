@@ -10,6 +10,7 @@
 "[Bb][Yy]" By
 "[Oo][rR][dD][eE][rR]" Order
 "[Ii][nN][tT][oO]" Into
+"[Rr][eE][tT][uU][rR][nN]" Return
 
 "\(" OpenParens
 "\)" CloseParens

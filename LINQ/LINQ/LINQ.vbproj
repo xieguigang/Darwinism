@@ -137,10 +137,10 @@
     <Compile Include="Framewok\Provider\LinqEntity.vb" />
     <Compile Include="Framewok\DynamicCode\DynamicCompiler.vb" />
     <Compile Include="APP\Program.vb" />
-    <Compile Include="Script\Tokens\Method.vb" />
-    <Compile Include="Script\Tokens\ValueAssignment.vb" />
-    <Compile Include="Script\Tokens\FileIO.vb" />
-    <Compile Include="Script\ScriptParser.vb" />
+    <Compile Include="Script\Tokens\Returns.vb" />
+    <Compile Include="Script\Tokens\Linq.vb" />
+    <Compile Include="Script\Tokens\Imports.vb" />
+    <Compile Include="Script\Script.vb" />
     <Compile Include="LDM\Parser\LINQStatement.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -175,7 +175,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="LINQ.Designer.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

@@ -12,9 +12,9 @@ Namespace Script
     ''' </summary>
     ''' <remarks></remarks>
     Public Class DynamicsRuntime : Inherits DynamicObject
-        Implements System.IDisposable
+        Implements IDisposable
 
-        ReadOnly _varsHash As Dictionary(Of String, Variable) = New Dictionary(Of String, Variable)
+        Dim _varsHash As Dictionary(Of String, Variable) = New Dictionary(Of String, Variable)
 
         Public ReadOnly Property Types As TypeRegistry
         Public ReadOnly Property Compiler As DynamicCode.DynamicCompiler
@@ -30,13 +30,16 @@ Namespace Script
             Call Me.New(TypeRegistry.LoadDefault, APIProvider.LoadDefault)
         End Sub
 
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="script"></param>
+        ''' <returns>
+        ''' If the Return statement is presents, then the variable of the returns will be return from the function, and this is a Function in VisualBasic 
+        ''' If not, then viod value will be returns, and this is a Sub in VisualBasic
+        ''' </returns>
         Public Function Evaluate(script As String) As IEnumerable
-
-        End Function
-
-        Public Function SetVariable(var As String, value As Object) As Boolean
-
+            Return New Script(script, Me).Evaluate
         End Function
 
 #Region "IDisposable Support"
@@ -84,13 +87,13 @@ Namespace Script
         ''' <param name="name"></param>
         ''' <param name="source"></param>
         ''' <remarks></remarks>
-        Public Function SetObject(name As String, source As IEnumerable) As Boolean
-            If _varsHash.ContainsKey(name.ToLower.ShadowCopy(name)) Then
-                Call _varsHash.Remove(name)
-            End If
-            Call _varsHash.Add(name, New Variable With {.Name = name, .Data = source})
-            Return True
-        End Function
+        Public Sub SetObject(name As String, source As IEnumerable)
+            Dim var As New Variable With {
+                .Data = source,
+                .Name = name
+            }
+            _varsHash += var
+        End Sub
 
         Public Overrides Function ToString() As String
             Return String.Format("{0} variables in the LINQ runtime.", _varsHash.Count)
@@ -99,14 +102,15 @@ Namespace Script
         ''' <summary>
         ''' 执行一个LINQ查询脚本文件
         ''' </summary>
-        ''' <param name="FilePath">LINQ脚本文件的文件路径</param>
+        ''' <param name="path">LINQ脚本文件的文件路径</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 脚本要求：
-        ''' 
+        ''' Imports Namespace
+        ''' var result = &lt;Linq>
         ''' </remarks>
-        Public Function Source(FilePath As String) As Boolean
-
+        Public Function Source(path As String) As IEnumerable
+            Return Evaluate(IO.File.ReadAllText(path))
         End Function
 
         ''' <summary>

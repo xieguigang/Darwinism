@@ -24,14 +24,15 @@ Namespace LDM.Statements.TokenIcer
         By = 10
         Order = 11
         Into = 12
-        OpenParens = 13
-        CloseParens = 14
-        Pretend = 15
-        Comma = 16
-        WhiteSpace = 17
-        [String] = 18
-        VarRef = 19
-        Code = 20
+        [Return] = 13
+        OpenParens = 14
+        CloseParens = 15
+        Pretend = 16
+        Comma = 17
+        WhiteSpace = 18
+        [String] = 19
+        VarRef = 20
+        Code = 21
     End Enum
 
     Public Module Parser
@@ -61,6 +62,7 @@ Namespace LDM.Statements.TokenIcer
             _tokens.Add(Tokens.By, "[Bb][Yy]")
             _tokens.Add(Tokens.Order, "[Oo][rR][dD][eE][rR]")
             _tokens.Add(Tokens.Into, "[Ii][nN][tT][oO]")
+            _tokens.Add(Tokens.[Return], "[Rr][eE][tT][uU][rR][nN]")
             _tokens.Add(Tokens.OpenParens, "\(")
             _tokens.Add(Tokens.CloseParens, "\)")
             _tokens.Add(Tokens.Pretend, "\t[%]\t")

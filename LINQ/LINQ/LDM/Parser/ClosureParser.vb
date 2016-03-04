@@ -1,12 +1,13 @@
-﻿Imports Microsoft.VisualBasic.Linq.LDM.Statements
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq.LDM.Statements
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace LDM.Statements
 
     Public Module ClosureParser
 
-        Public Function TryParse(st As String) As ClosureTokens()
-            Dim source As Token(Of TokenIcer.Tokens)() = TokenIcer.GetTokens(st)
+        <Extension>
+        Public Function TryParse(source As IEnumerable(Of Token(Of TokenIcer.Tokens))) As ClosureTokens()
             Dim parts As New List(Of ClosureTokens)
             Dim tmp As New List(Of Token(Of TokenIcer.Tokens))
             Dim current As TokenIcer.Tokens
@@ -43,6 +44,11 @@ Namespace LDM.Statements
             Call parts.Add(closure)
 
             Return parts.ToArray
+        End Function
+
+        Public Function TryParse(st As String) As ClosureTokens()
+            Dim source As Token(Of TokenIcer.Tokens)() = TokenIcer.GetTokens(st)
+            Return source.TryParse
         End Function
     End Module
 End Namespace

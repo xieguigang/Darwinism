@@ -1,9 +1,10 @@
 ﻿Imports System.Text.RegularExpressions
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
-Imports Microsoft.VisualBasic.LINQ.Framework.DynamicCode
-Imports Microsoft.VisualBasic.LINQ.Framework
-Imports Microsoft.VisualBasic.LINQ.Framework.Provider
+Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
+Imports Microsoft.VisualBasic.Linq.Framework
+Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace LDM.Statements
 
@@ -105,14 +106,33 @@ Namespace LDM.Statements
             Dim statement As LinqStatement = New LinqStatement With {
                 ._Text = source
             }
-            statement.var = New FromClosure(tokens, statement)
-            statement.source = InClosure.CreateObject(tokens, statement)
-            statement.PreDeclare = GetPreDeclare(tokens, statement, types)
-            statement.Where = New WhereClosure(tokens, statement)
-            statement.AfterDeclare = GetAfterDeclare(tokens, statement, types)
-            statement.SelectClosure = New SelectClosure(tokens, statement)
+            Return __innerParser(tokens, types, statement)
+        End Function
 
-            Return statement
+        Private Shared Function __innerParser(tokens As ClosureTokens(), types As TypeRegistry, linq As LinqStatement) As LinqStatement
+            linq.var = New FromClosure(tokens, linq)
+            linq.source = InClosure.CreateObject(tokens, linq)
+            linq.PreDeclare = GetPreDeclare(tokens, linq, types)
+            linq.Where = New WhereClosure(tokens, linq)
+            linq.AfterDeclare = GetAfterDeclare(tokens, linq, types)
+            linq.SelectClosure = New SelectClosure(tokens, linq)
+
+            Return linq
+        End Function
+
+        Public Shared Function TryParse(source As IEnumerable(Of Token(Of TokenIcer.Tokens)),
+                                        Optional types As TypeRegistry = Nothing,
+                                        Optional text As String = "") As LinqStatement
+            Dim tokens As ClosureTokens() = ClosureParser.TryParse(source)
+            Dim statement As LinqStatement = New LinqStatement With {
+                ._Text = text
+            }
+
+            If String.IsNullOrEmpty(text) Then
+                statement._Text = String.Join(" ", source.ToArray(Function(x) x.Text))
+            End If
+
+            Return __innerParser(tokens, types, statement)
         End Function
     End Class
 End Namespace

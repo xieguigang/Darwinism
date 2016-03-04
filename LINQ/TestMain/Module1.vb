@@ -18,6 +18,11 @@ Module Module1
         test2222(13).__DEBUG_ECHO
 
 
+        Dim run As New Script.DynamicsRuntime
+        Call run.SetObject("test1", {12, 36, 34, 7865, 84, 34, 6, 12, 9, 8})
+
+
+
         'Dim RQLQuery = (From x As Integer
         '                In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where("$x mod 6 = 1").AsLinq(Of Integer)
         '                Where x > 100 Select x)
