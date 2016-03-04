@@ -9,6 +9,7 @@ Namespace TaskHost
         ''' linq池
         ''' </summary>
         ReadOnly __linq As New Dictionary(Of String, LinqProvider)
+        ReadOnly __openQuerys As New Parallel.TaskQueue(Of IPEndPoint)
 
         Public Function GetLinq(uid As String) As LinqProvider
             Return __linq(uid)
@@ -44,22 +45,34 @@ Namespace TaskHost
                 elType = type
             End If
 
-            SyncLock __linq
-RE_OPEN:        Dim linq As New LinqProvider(source, elType)  ' 创建 Linq 数据源
+            Dim task As New __openTask(__linq) With {
+                .elType = elType,
+                .source = source
+            }
+            Return __openQuerys.Join(AddressOf task.OpenQuery)
+        End Function
+
+        Private Class __openTask
+
+            ReadOnly __linq As Dictionary(Of String, LinqProvider)
+
+            Public source As IEnumerable
+            Public elType As Type
+
+            Sub New(ByRef linq As Dictionary(Of String, LinqProvider))
+                __linq = linq
+            End Sub
+
+            Public Function OpenQuery() As IPEndPoint
+                Dim linq As New LinqProvider(source, elType)  ' 创建 Linq 数据源
                 Dim portal As IPEndPoint = linq.Portal
                 Dim uid As String = portal.ToString
-
-                Call Thread.Sleep(5)
-
-                If Not linq.IsOpen Then
-                    GoTo RE_OPEN
-                End If
 
                 Call __linq.Add(portal.ToString, linq)  ' 数据源添加入哈希表之中
 
                 Return portal
-            End SyncLock
-        End Function
+            End Function
+        End Class
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
