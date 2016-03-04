@@ -74,6 +74,10 @@ Namespace Script
 #End Region
 
         Public Function GetResource(source As String) As IEnumerable
+            If String.IsNullOrEmpty(source) Then
+                Throw New Exception("source name can not be null!")
+            End If
+
             If _varsHash.ContainsKey(source.ToLower.ShadowCopy(source)) Then
                 Return _varsHash(source).Data
             Else
@@ -137,6 +141,15 @@ Namespace Script
 
         Private Function __new(statement As LinqStatement) As ObjectModel.Linq
             Return If(statement.source.IsParallel, New ParallelLinq(statement, Me), New ObjectModel.Linq(statement, Me))
+        End Function
+
+        ''' <summary>
+        ''' 执行单条查询表达式
+        ''' </summary>
+        ''' <param name="linq"></param>
+        ''' <returns></returns>
+        Public Function EXEC(linq As String) As IEnumerable
+            Return EXEC(LinqStatement.TryParse(linq, Types))
         End Function
     End Class
 End Namespace

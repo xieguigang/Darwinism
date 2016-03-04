@@ -46,7 +46,7 @@ Namespace LDM.Statements.Tokens
 
         Public Overrides ReadOnly Property IsParallel As Boolean
             Get
-                Throw New NotImplementedException()
+                Return False  ' Not implements yet
             End Get
         End Property
 
@@ -61,12 +61,31 @@ Namespace LDM.Statements.Tokens
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="handle"></param>
+        ''' <param name="handle">
+        ''' 由于引用类型的数据源是runtime里面的一个变量，所以这个从url获取数据的方法在这里是没有用途的，这个只是为了保持接口的统一性
+        ''' </param>
         ''' <param name="runtime"></param>
         ''' <returns></returns>
         ''' <remarks>这里是不是也需要进行动态编译？</remarks>
         Public Overrides Function GetRepository(handle As GetLinqResource, runtime As DynamicsRuntime) As IEnumerable
+            Dim name As String = ""
 
+            For Each x In Source.Tokens
+                If x.Type = TokenIcer.Tokens.VarRef Then
+                    name = x.Text
+                    name = Mid(name, 2)
+
+                    Exit For
+
+                ElseIf x.Type = TokenIcer.Tokens.Code Then
+                    name = x.Text
+
+                    Exit For
+
+                End If
+            Next
+
+            Return runtime.GetResource(name)
         End Function
     End Class
 

@@ -5,10 +5,20 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Linq.Extensions
 
 Module Module1
 
     Sub Main()
+
+        '     Dim a As Double()
+        '     Dim b As Double()
+        '     Dim llll = (From x In a
+        '    Join y In b
+        '   On (x / 6) Equals (y Mod 3 = 5)
+        '  Where (x + y) < 0
+        ' Select Case x, y)
+
 
         Dim cp = Microsoft.VisualBasic.Linq.Framework.DynamicCode.DynamicCompiler.DefaultCompiler
         Dim test2222 = LDM.Statements.Tokens.WhereClosure.CreateLinqWhere("$x mod 6=0", GetType(Integer), cp)
@@ -21,7 +31,8 @@ Module Module1
         Dim run As New Script.DynamicsRuntime
         Call run.SetObject("test1", {12, 36, 34, 7865, 84, 34, 6, 12, 9, 8})
 
-
+        Dim lllll As String = "from x  as integer in $test1 where x > 100 select x, xx=x^2"
+        Dim resultffff = (From x In run.EXEC(lllll) Select x).ToArray
 
         'Dim RQLQuery = (From x As Integer
         '                In New RQL.API.Repository(Of Integer)("http://127.0.0.1/int32").Where("$x mod 6 = 1").AsLinq(Of Integer)

@@ -29,5 +29,10 @@ Namespace StorageTek
         ''' 实体对象是存储在MySQL数据库的某一张表之中的.(需要外部插件)
         ''' </summary>
         SQL = 32
+        ''' <summary>
+        ''' 二进制类型的数据源
+        ''' </summary>
+        ''' <remarks>例如图片，声音，视频等</remarks>
+        Binary = 64
     End Enum
 End Namespace

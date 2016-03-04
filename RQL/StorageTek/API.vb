@@ -68,7 +68,7 @@ Namespace StorageTek
         Private Function DIRRepository(url As String, type As Type, repo As IRepository, ext As String) As IEnumerable
             Dim DIR = FileIO.FileSystem.GetDirectoryInfo(url)
             Dim LQuery = (From f As IO.FileInfo
-                      In DIR.EnumerateFiles
+                          In DIR.EnumerateFiles
                           Let iExt As String = f.FullName.Split("."c).Last
                           Where String.Equals(iExt, ext, StringComparison.OrdinalIgnoreCase)
                           Select repo(f.FullName, type))
