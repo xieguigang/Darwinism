@@ -119,7 +119,7 @@ Namespace Asymmetric
             Dim proc As Process = Nothing
             Dim Port As Integer = Microsoft.VisualBasic.Parallel.Folk(_instance, cli, proc)
             Dim Portal As Microsoft.VisualBasic.Net.IPEndPoint =
-                New Net.IPEndPoint(WebServices.GetMyIPAddress, Port) With {
+                New Net.IPEndPoint(WebServiceUtils.GetMyIPAddress, Port) With {
                     .uid = proc.Id
             }
             Dim inst As New DDM.Instance With {

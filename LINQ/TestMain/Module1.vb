@@ -19,6 +19,12 @@ Module Module1
         '  Where (x + y) < 0
         ' Select Case x, y)
 
+        Dim tttlquery = (From line As String
+                             In IO.File.ReadAllLines("X:\New Text Document.txt")
+                         Let tokens = (From ss As String In line.Trim.Split Where Not String.IsNullOrEmpty(ss) Select ss).ToArray
+                         Select tokens).ToArray
+
+
 
         Dim cp = Microsoft.VisualBasic.Linq.Framework.DynamicCode.DynamicCompiler.DefaultCompiler
         Dim test2222 = LDM.Statements.Tokens.WhereClosure.CreateLinqWhere("$x mod 6=0", GetType(Integer), cp)

@@ -70,7 +70,7 @@ Public Class RESTProvider : Inherits HttpServer
             ' expr为空
         Else
             args = Mid(url, pos + 1).Trim  ' 参数里面可能含有转意字符，还需要进行转意
-            args = args.URLEscapes
+            args = args.UrlDecode
             url = Mid(url, 1, pos - 1).ToLower
         End If
 
