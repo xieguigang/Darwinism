@@ -99,7 +99,7 @@ Namespace Asymmetric
 #If DEBUG Then
             Return Net.AsynInvoke.LocalIPAddress
 #Else
-             Return WebServices.GetMyIPAddress
+            Return WebServiceUtils.GetMyIPAddress
 #End If
         End Function
 
