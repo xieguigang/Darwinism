@@ -40,7 +40,7 @@ Namespace TaskHost
         ''' </param>
         ''' <returns></returns>
         Public Function OpenQuery(source As IEnumerable, type As Type) As IPEndPoint
-            Dim elType As Type = type.GetArrayElement(True)
+            Dim elType As Type = type.GetTypeElement(True)
             If elType Is Nothing Then
                 elType = type
             End If

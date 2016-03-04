@@ -27,6 +27,13 @@ Namespace Linq
         Sub New()
             __api = APIProvider.LoadDefault
             __types = TypeRegistry.LoadDefault
+            __compiler = New DynamicCompiler(__types, __api)
+        End Sub
+
+        Sub New(compiler As DynamicCompiler)
+            __compiler = compiler
+            __api = compiler.ApiProvider
+            __types = compiler.EntityProvider
         End Sub
 
         Public Sub AddLinq(url As String, resource As String, Linq As GetLinqResource)

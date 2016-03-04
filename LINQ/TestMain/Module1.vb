@@ -58,7 +58,7 @@ Module Module1
                          MsgBox("test2")
 
 
-                         Dim lquerrrr = (From i As Integer In 1000000.SeqIterator.AsParallel Select "http://127.0.0.1/test123.vb".GetRequest).ToArray
+                         Dim lquerrrr = (From i As Integer In 1000000.SeqIterator.AsParallel Select "http://127.0.0.1/test123.vb".GetRequest.__DEBUG_ECHO).ToArray
                          MsgBox("DONE!")
                          For i As Integer = 0 To 100000
                              Call Trace.WriteLine("http://127.0.0.1/test123.vb".GET)
