@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
@@ -54,6 +55,11 @@ Namespace Linq
             If String.IsNullOrEmpty(where) Then
                 Return api.GetRepository
             Else
+                Dim prefix As String = Regex.Match(where, "^\s*where\s*=", RegexOptions.IgnoreCase Or RegexOptions.Multiline).Value
+                If Not String.IsNullOrEmpty(prefix) Then
+                    where = Mid(where, prefix.Length + 1)
+                End If
+
                 Return api.LinqWhere(where, __types, __api, __compiler)
             End If
         End Function

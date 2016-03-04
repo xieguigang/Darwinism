@@ -24,6 +24,14 @@ Module Module1
                          Let tokens = (From ss As String In line.Trim.Split Where Not String.IsNullOrEmpty(ss) Select ss).ToArray
                          Select tokens).ToArray
 
+        For Each line In tttlquery
+
+            For Each x In line
+                Call Console.Write(x & vbTab)
+            Next
+            Call Console.WriteLine()
+
+        Next
 
 
         Dim cp = Microsoft.VisualBasic.Linq.Framework.DynamicCode.DynamicCompiler.DefaultCompiler

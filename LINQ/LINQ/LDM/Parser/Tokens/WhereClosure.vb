@@ -21,7 +21,7 @@ Namespace LDM.Statements.Tokens
         ''' <summary>
         ''' 编译Linq之中的Where条件测试函数
         ''' </summary>
-        ''' <param name="Expr"></param>
+        ''' <param name="Expr">必须是符合VisualBasic语法的逻辑表达式</param>
         ''' <param name="type"></param>
         ''' <returns></returns>
         Public Shared Function CreateLinqWhere(Expr As String, type As Type, compiler As DynamicCompiler) As ITest
