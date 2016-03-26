@@ -1,5 +1,6 @@
 ﻿Imports System.Threading
 Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace TaskHost
 
@@ -9,7 +10,7 @@ Namespace TaskHost
         ''' linq池
         ''' </summary>
         ReadOnly __linq As New Dictionary(Of String, LinqProvider)
-        ReadOnly __openQuerys As New Parallel.TaskQueue(Of IPEndPoint)
+        ReadOnly __openQuerys As New TaskQueue(Of IPEndPoint)
 
         Public Function GetLinq(uid As String) As LinqProvider
             Return __linq(uid)
@@ -31,7 +32,7 @@ Namespace TaskHost
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="type">

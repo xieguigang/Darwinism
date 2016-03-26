@@ -57,7 +57,7 @@ Namespace StorageTek
             Return $"[{Tek.ToString}] {MapFileIO}  //{MyBase.ToString}"
         End Function
 
-        Public Function LinqWhere(where As String, types As TypeRegistry, api As APIProvider, compiler As DynamicCompiler) As IEnumerable
+        Public Function LinqWhere(where As String, compiler As DynamicCompiler) As IEnumerable
             Dim type As Type = Me.GetType
             Dim test As ITest = WhereClosure.CreateLinqWhere(where, type, compiler)
             Dim LQuery = (From x As Object In GetRepository() Where True = test(x) Select x)

@@ -46,7 +46,7 @@ Namespace Linq
         End Sub
 
         ''' <summary>
-        ''' 
+        '''
         ''' </summary>
         ''' <param name="url">大小写不敏感，不需要额外的处理</param>
         ''' <returns></returns>
@@ -60,7 +60,7 @@ Namespace Linq
                     where = Mid(where, prefix.Length + 1)
                 End If
 
-                Return api.LinqWhere(where, __types, __api, __compiler)
+                Return api.LinqWhere(where, __compiler)
             End If
         End Function
 
