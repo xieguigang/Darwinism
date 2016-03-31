@@ -1388,7 +1388,7 @@ Namespace FileSystem
         ''' <param name="file"></param>
         ''' <returns></returns>
         Public Shared Function OpenFileHandle(file As String, mode As FileMode, access As FileAccess, portal As IPEndPoint) As FileStreamInfo
-            Dim req As RequestStream = API.OpenHandle(file, mode, access)
+            Dim req As RequestStream = Protocols.API.OpenHandle(file, mode, access)
             Dim invoke As New AsynInvoke(portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Return rep.GetUTF8String.LoadObject(Of FileStreamInfo)
