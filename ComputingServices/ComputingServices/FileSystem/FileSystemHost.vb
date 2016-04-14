@@ -227,10 +227,6 @@ Namespace FileSystem
             Return New RequestStream(lst.GetJson)
         End Function
 
-        '
-        ' Summary:
-        '     Copies the contents of a directory to another directory.
-        '
         ' Parameters:
         '   sourceDirectoryName:
         '     The directory to be copied.
@@ -277,6 +273,14 @@ Namespace FileSystem
         '
         '   T:System.UnauthorizedAccessException:
         '     A destination file exists but cannot be accessed.
+        ''' <summary>
+        ''' Copies the contents of a directory to another directory.
+        ''' </summary>
+        ''' <param name="CA"></param>
+        ''' <param name="args"></param>
+        ''' <param name="remote"></param>
+        ''' <returns></returns>
+        <Protocol(FileSystemAPI.CopyDirectory)>
         Private Function CopyDirectory(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
 
         End Function

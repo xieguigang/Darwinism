@@ -43,36 +43,6 @@ Namespace FileSystem.Protocols
         End Function
     End Class
 
-    ''' <summary>
-    ''' 在远端服务器上面的文件句柄对象
-    ''' </summary>
-    Public Class FileHandle
-        Public Property FileName As String
-        Public Property HashCode As Integer
-
-        Sub New()
-        End Sub
-
-        Sub New(handle As FileHandle)
-            Me.FileName = handle.FileName
-            Me.HashCode = handle.HashCode
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Handle
-        End Function
-
-        ''' <summary>
-        ''' 远程机器上面唯一标示的文件句柄值
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Handle As String
-            Get
-                Return $"{HashCode}+{FileName.ToFileURL}"
-            End Get
-        End Property
-    End Class
-
     Public Class ReadBuffer : Inherits FileHandle
         Implements IReadWriteBuffer
 

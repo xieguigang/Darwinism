@@ -100,6 +100,8 @@
     <Compile Include="FileSystem\FileStream\StreamReader.vb" />
     <Compile Include="FileSystem\Objects\DirectoryInfo.vb" />
     <Compile Include="FileSystem\Objects\DriveInfo.vb" />
+    <Compile Include="FileSystem\Protocols\FileHandle.vb" />
+    <Compile Include="FileSystem\Protocols\FileURI.vb" />
     <Compile Include="FileSystem\Protocols\NetTransfer.vb" />
     <Compile Include="FileSystem\Protocols\FileStreamInfo.vb" />
     <Compile Include="FileSystem\Protocols\FileSystemAPI.vb" />
@@ -107,13 +109,6 @@
     <Compile Include="FileSystem\Protocols\Protocols.vb" />
     <Compile Include="FileSystem\FileSystemHost.vb" />
     <Compile Include="FileSystem\FileSystem.vb" />
-    <Compile Include="P2P\ServicesComponents\InternalServicesModule.vb" />
-    <Compile Include="P2P\ServicesComponents\NodeServicesAPI.vb" />
-    <Compile Include="P2P\ServicesComponents\ClusterServicesAPI.vb" />
-    <Compile Include="P2P\ServicesComponents\ClusterServices.vb" />
-    <Compile Include="P2P\ServicesComponents\Node.vb" />
-    <Compile Include="P2P\GridProtocol.vb" />
-    <Compile Include="P2P\ServicesComponents\NodeServices.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -129,8 +124,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="P2P\PbsProtocol.vb" />
-    <Compile Include="P2P\PbsThread.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
     <Compile Include="Taskhost.d\Linq\LinqPool.vb" />
     <Compile Include="Taskhost.d\Linq\ILinq%28Of T%29.vb" />
@@ -162,7 +155,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="P2P\ServicesComponents\ComputingModel.pptx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">

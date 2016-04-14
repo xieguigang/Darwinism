@@ -217,7 +217,6 @@ Namespace FileSystem.IO
             Call Me.New(New FileURI(path), mode, access)
         End Sub
 
-
         <SecuritySafeCritical>
         Public Sub New(uri As FileURI, mode As FileMode, access As FileAccess)
             Call Me.New(uri.File, mode, access, uri.EntryPoint)

@@ -1,13 +1,14 @@
 ﻿Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.Language
 
 Namespace FileSystem
 
     ''' <summary>
     ''' Provides access to information on a drive.
     ''' </summary>
-    <ComVisible(True)> Public NotInheritable Class DriveInfo
+    <ComVisible(True)> Public NotInheritable Class DriveInfo : Inherits ClassObject
 
         Sub New(info As System.IO.DriveInfo)
             Me.AvailableFreeSpace = info.AvailableFreeSpace
@@ -123,13 +124,5 @@ Namespace FileSystem
         ''' </summary>
         ''' <returns>The volume label.</returns>
         Public Property VolumeLabel As String
-
-        ''' <summary>
-        ''' Returns a drive name as a string.
-        ''' </summary>
-        ''' <returns>The name of the drive.</returns>
-        Public Overrides Function ToString() As String
-
-        End Function
     End Class
 End Namespace
