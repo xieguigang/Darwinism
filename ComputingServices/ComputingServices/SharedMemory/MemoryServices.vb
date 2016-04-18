@@ -22,10 +22,6 @@ Namespace SharedMemory
             End Set
         End Property
 
-        ''' <summary>
-        ''' 这个是提供给远程主机读取使用的
-        ''' </summary>
-        ReadOnly __variables As New Dictionary(Of HashValue)
         ReadOnly __remote As IPEndPoint
         ReadOnly __localSvr As SharedSvr
 

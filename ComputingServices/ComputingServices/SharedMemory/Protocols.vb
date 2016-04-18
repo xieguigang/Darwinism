@@ -30,8 +30,12 @@ Namespace SharedMemory
         Public Function ReadValue(remote As IPEndPoint, name As String, type As Type) As Object
             Dim req As RequestStream = ReadValue(name)
             Dim rep As RequestStream = New AsynInvoke(remote).SendMessage(req)
-            Dim value As TaskHost.Argv = rep.LoadObject(Of TaskHost.Argv)
-            Return JsonContract.LoadObject(value.value, type)
+            Return JsonContract.LoadObject(rep.GetUTF8String, type)
+        End Function
+
+        <Extension>
+        Public Function ReadValue(Of T)(remote As IPEndPoint, name As String) As T
+            Return DirectCast(remote.ReadValue(name, GetType(T)), T)
         End Function
 
         <Extension>
