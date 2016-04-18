@@ -134,7 +134,7 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ComputingServices\ComputingServices\ComputingServices.vbproj">
+    <ProjectReference Include="..\..\ComputingServices\ComputingServices.vbproj">
       <Project>{87383048-1b31-49b7-9fb7-0ded1b80ace8}</Project>
       <Name>ComputingServices</Name>
     </ProjectReference>
