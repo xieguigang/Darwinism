@@ -52,7 +52,7 @@ Namespace SharedMemory
         End Function
 
         <Protocol(MemoryProtocols.Read)>
-        Private Function Read(CA As Long, args As RequestStream, remote As IPEndPoint) As RequestStream
+        Private Function Read(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim name As String = args.GetUTF8String
 
             If __variables.ContainsKey(name) Then
@@ -63,7 +63,7 @@ Namespace SharedMemory
         End Function
 
         <Protocol(MemoryProtocols.Write)>
-        Private Function Write(CA As Long, args As RequestStream, remote As IPEndPoint) As RequestStream
+        Private Function Write(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim value As Argv = args.LoadObject(Of Argv)
             Dim b As Long = If(Allocate(value.Identifier, value.value.GetValue), HTTP_RFC.RFC_OK, HTTP_RFC.RFC_INTERNAL_SERVER_ERROR)
             Return New RequestStream(b, b, CStr(b))

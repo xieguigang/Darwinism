@@ -17,7 +17,7 @@ Namespace SharedMemory
         End Sub
 
         Public Function GetValueJson() As String
-            Return JsonContract.GetJson(value, Type.GetType)
+            Return JsonContract.GetJson(value, Type.GetType(True))
         End Function
 
         Public Overrides Function ToString() As String

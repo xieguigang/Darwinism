@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace SharedMemory
@@ -7,6 +8,7 @@ Namespace SharedMemory
     ''' Shared the memory with the remote machine.
     ''' </summary>
     Public Class MemoryServices : Implements IDisposable
+        Implements IObjectModel_Driver
 
         ''' <summary>
         ''' Gets the memory data from remote machine.
@@ -48,6 +50,10 @@ Namespace SharedMemory
 
         Public Overrides Function ToString() As String
             Return __remote.GetJson
+        End Function
+
+        Public Function Run() As Integer Implements IObjectModel_Driver.Run
+            Return __localSvr.Run
         End Function
 
 #Region "IDisposable Support"
