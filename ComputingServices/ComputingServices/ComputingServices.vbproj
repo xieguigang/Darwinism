@@ -124,6 +124,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SharedMemory\Protocols.vb" />
+    <Compile Include="SharedMemory\SharedSvr.vb" />
+    <Compile Include="SharedMemory\HashValue.vb" />
+    <Compile Include="SharedMemory\MemoryServices.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
     <Compile Include="Taskhost.d\Linq\LinqPool.vb" />
     <Compile Include="Taskhost.d\Linq\ILinq%28Of T%29.vb" />
