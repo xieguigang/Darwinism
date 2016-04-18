@@ -85,7 +85,8 @@ Namespace SharedMemory
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    __localSvr.Dispose()
+                    Call __localSvr.Dispose()
+                    Call __variables.Clear()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

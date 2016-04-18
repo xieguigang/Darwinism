@@ -21,7 +21,7 @@ Namespace SharedMemory
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"Dim {Identifier} As {Type.ToString} = {JsonContract.GetJson(value, Type.GetType)}"
+            Return $"Dim {Identifier} As {Type.ToString} = {JsonContract.GetJson(value, Type.GetType(True))}"
         End Function
     End Class
 

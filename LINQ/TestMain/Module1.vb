@@ -11,6 +11,10 @@ Module Module1
 
     Sub Main()
 
+
+
+
+
         '     Dim a As Double()
         '     Dim b As Double()
         '     Dim llll = (From x In a

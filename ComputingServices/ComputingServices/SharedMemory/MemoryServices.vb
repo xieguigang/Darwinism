@@ -9,18 +9,25 @@ Namespace SharedMemory
     Public Class MemoryServices : Implements IDisposable
 
         ''' <summary>
-        ''' 建议使用NameOf来设置或者获取参数值
+        ''' Gets the memory data from remote machine.
         ''' </summary>
-        ''' <param name="name"></param>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="name">建议使用NameOf来设置或者获取参数值</param>
         ''' <returns></returns>
-        Default Public Property value(name As String) As Object
-            Get ' Gets the memory data from remote machine.
+        Public Function GetValue(Of T)(name As String) As T
+            Return __remote.ReadValue(Of T)(name)
+        End Function
 
-            End Get
-            Set(value As Object)
-
-            End Set
-        End Property
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="name">建议使用NameOf来设置或者获取参数值</param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function SetValue(Of T)(name As String, value As T) As Boolean
+            Return __remote.WriteValue(name, value)
+        End Function
 
         ReadOnly __remote As IPEndPoint
         ReadOnly __localSvr As SharedSvr
@@ -36,10 +43,7 @@ Namespace SharedMemory
         End Sub
 
         Public Function Allocate(name As String, value As Object, Optional [overrides] As Boolean = False) As Boolean
-            If __variables.ContainsKey(name) Then
-            Else
-                __variables.Add(name, New HashValue(name, value))
-            End If
+            Return __localSvr.Allocate(name, value, [overrides])
         End Function
 
         Public Overrides Function ToString() As String
@@ -55,7 +59,6 @@ Namespace SharedMemory
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call __localSvr.Dispose()
-                    Call __variables.Clear()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

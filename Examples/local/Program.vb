@@ -6,6 +6,16 @@ Imports Microsoft.VisualBasic.Serialization
 Module Program
 
     Sub Main()
+
+        Dim nnnn As Integer() = {3, 424, 2324, 88, 2, 54, 46, 7, 57, 5, -1111, 86, 7, 87, 97, 55}
+        Dim value As New Microsoft.VisualBasic.ComputingServices.SharedMemory.HashValue(NameOf(nnnn), nnnn)
+        Call value.__DEBUG_ECHO
+
+
+
+
+
+
         Dim remoteMachine As New TaskHost(New IPEndPoint("127.0.0.1", 1234))
         Dim func As Func(Of Stream, String, String()) = AddressOf AnalysisExample.API.LongTest1
         Dim path As String = "E:\Microsoft.VisualBasic.Parallel\trunk\Examples\local\local.vbproj"
