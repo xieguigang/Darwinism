@@ -5,8 +5,15 @@ Imports Microsoft.VisualBasic.Scripting
 
 Namespace TaskHost
 
+    ''' <summary>
+    ''' Json value of the function parameter, and the type information is also included in this property.
+    ''' </summary>
     Public Class Argv
 
+        ''' <summary>
+        ''' <see cref="System.Type.FullName"/>
+        ''' </summary>
+        ''' <returns><see cref="System.Type.FullName"/></returns>
         Public Property Type As String
         ''' <summary>
         ''' Json string
@@ -33,7 +40,7 @@ Namespace TaskHost
         End Function
 
         Public Function GetValue() As Object
-            Dim type As Type = System.Type.GetType(Me.Type, True, False)
+            Dim type As Type = Type.GetType(Me.Type, True, False)
             Dim o As Object = JsonContract.LoadObject(value, type)
             Return o
         End Function

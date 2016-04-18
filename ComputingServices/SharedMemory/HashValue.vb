@@ -4,10 +4,25 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace SharedMemory
 
+    ''' <summary>
+    ''' The shared variable on the remote machine.
+    ''' </summary>
     Public Class HashValue : Implements sIdEnumerable
 
+        ''' <summary>
+        ''' The variable name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Identifier As String Implements sIdEnumerable.Identifier
+        ''' <summary>
+        ''' variable value
+        ''' </summary>
+        ''' <returns></returns>
         Public Property value As Object
+        ''' <summary>
+        ''' Simple type information
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Type As TypeInfo
 
         Sub New(name As String, x As Object)
@@ -16,6 +31,10 @@ Namespace SharedMemory
             Type = New TypeInfo(x.GetType)
         End Sub
 
+        ''' <summary>
+        ''' Json serialization for the network transfer.
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetValueJson() As String
             Return JsonContract.GetJson(value, Type.GetType(True))
         End Function
@@ -25,9 +44,20 @@ Namespace SharedMemory
         End Function
     End Class
 
+    ''' <summary>
+    ''' Variable value for the network transfer
+    ''' </summary>
     Public Structure Argv : Implements sIdEnumerable
 
+        ''' <summary>
+        ''' The variable name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Identifier As String Implements sIdEnumerable.Identifier
+        ''' <summary>
+        ''' Json value, and the type information is also included in this property.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property value As TaskHost.Argv
 
         Sub New(name As String, x As Object)
