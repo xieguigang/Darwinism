@@ -1,4 +1,9 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocols
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComputingServices.TaskHost
+Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace SharedMemory
 
@@ -9,12 +14,31 @@ Namespace SharedMemory
             Write
         End Enum
 
-        Public Function ReadValue(name As String) As RequestStream
+        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(MemoryProtocols)).EntryPoint
 
+        Public Function ReadValue(name As String) As RequestStream
+            Return New RequestStream(ProtocolEntry, MemoryProtocols.Read, name)
         End Function
 
         Public Function WriteValue(name As String, value As Object) As RequestStream
+            Dim json As New Argv(name, value)
+            Dim req As New RequestStream(ProtocolEntry, MemoryProtocols.Write, json.GetJson)
+            Return req
+        End Function
 
+        <Extension>
+        Public Function ReadValue(remote As IPEndPoint, name As String, type As Type) As Object
+            Dim req As RequestStream = ReadValue(name)
+            Dim rep As RequestStream = New AsynInvoke(remote).SendMessage(req)
+            Dim value As TaskHost.Argv = rep.LoadObject(Of TaskHost.Argv)
+            Return JsonContract.LoadObject(value.value, type)
+        End Function
+
+        <Extension>
+        Public Function WriteValue(remote As IPEndPoint, name As String, value As Object) As Boolean
+            Dim req As RequestStream = WriteValue(name, value)
+            Dim rep As RequestStream = New AsynInvoke(remote).SendMessage(req)
+            Return rep.Protocol = HTTP_RFC.RFC_OK
         End Function
     End Module
 End Namespace

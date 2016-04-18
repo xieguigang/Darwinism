@@ -17,6 +17,10 @@ Namespace TaskHost
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Creates the function remote calls one of its parameter value. 
+        ''' </summary>
+        ''' <param name="o"></param>
         Sub New(o As Object)
             Dim type As Type = o.GetType
 

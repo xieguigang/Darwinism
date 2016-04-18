@@ -1,17 +1,42 @@
-﻿Imports Microsoft.VisualBasic.Net
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace SharedMemory
 
     ''' <summary>
     ''' Memory shared services.
     ''' </summary>
+    ''' 
+    <Protocol(GetType(Protocols.MemoryProtocols))>
     Public Class SharedSvr : Implements IDisposable
+        Implements IObjectModel_Driver
 
         ReadOnly __localSvr As TcpSynchronizationServicesSocket
 
         Sub New(local As Integer)
             __localSvr = New TcpSynchronizationServicesSocket(local)
+            __localSvr.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
         End Sub
+
+        <Protocol(MemoryProtocols.Read)>
+        Private Function Read(CA As Long, args As RequestStream, remote As IPEndPoint) As RequestStream
+
+        End Function
+
+        <Protocol(MemoryProtocols.Write)>
+        Private Function Write(CA As Long, args As RequestStream, remote As IPEndPoint) As RequestStream
+
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return __localSvr.ToString
+        End Function
+
+        Public Function Run() As Integer Implements IObjectModel_Driver.Run
+            Return __localSvr.Run
+        End Function
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls

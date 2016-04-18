@@ -20,4 +20,19 @@ Namespace SharedMemory
             Return $"Dim {Identifier} As {Type.ToString} = {JsonContract.GetJson(value, Type.GetType)}"
         End Function
     End Class
+
+    Public Structure Argv : Implements sIdEnumerable
+
+        Public Property Identifier As String Implements sIdEnumerable.Identifier
+        Public Property value As TaskHost.Argv
+
+        Sub New(name As String, x As Object)
+            Identifier = name
+            value = New TaskHost.Argv(x)
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Structure
 End Namespace
