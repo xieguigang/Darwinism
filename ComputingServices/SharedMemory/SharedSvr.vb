@@ -2,6 +2,8 @@
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace SharedMemory
 
@@ -49,6 +51,20 @@ Namespace SharedMemory
             End If
 
             Return True
+        End Function
+
+        <Protocol(MemoryProtocols.TypeOf)>
+        Private Function __typeOf(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim name As String = args.GetUTF8String
+            Dim type As TypeInfo
+
+            If __variables.ContainsKey(name) Then
+                type = __variables(name).Type
+            Else
+                type = New TypeInfo(GetType(Void))
+            End If
+
+            Return New RequestStream(HTTP_RFC.RFC_OK, HTTP_RFC.RFC_OK, type.GetJson)
         End Function
 
         <Protocol(MemoryProtocols.Read)>

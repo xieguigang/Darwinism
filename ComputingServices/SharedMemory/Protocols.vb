@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace SharedMemory
@@ -12,9 +13,17 @@ Namespace SharedMemory
         Public Enum MemoryProtocols
             Read
             Write
+            [TypeOf]
         End Enum
 
         Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(MemoryProtocols)).EntryPoint
+
+        <Extension>
+        Public Function [TypeOf](remote As IPEndPoint, name As String) As Type
+            Dim req As New RequestStream(ProtocolEntry, MemoryProtocols.TypeOf, name)
+            Dim ref As TypeInfo = req.LoadObject(Of TypeInfo)
+            Return ref.GetType(True)
+        End Function
 
         Public Function ReadValue(name As String) As RequestStream
             Return New RequestStream(ProtocolEntry, MemoryProtocols.Read, name)

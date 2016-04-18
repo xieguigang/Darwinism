@@ -31,6 +31,16 @@ Namespace SharedMemory
             Return __remote.WriteValue(name, value)
         End Function
 
+        Public Function [TypeOf](name As String) As Type
+            Return __remote.TypeOf(name)
+        End Function
+
+        Public Function IsCompatible(Of T)(name As String, x As T) As Boolean
+            Dim type As Type = [TypeOf](name)
+            Dim ref As Type = GetType(T)
+            Return type.Equals(ref) OrElse ref.IsInheritsFrom(type)
+        End Function
+
         ReadOnly __remote As IPEndPoint
         ReadOnly __localSvr As SharedSvr
 
