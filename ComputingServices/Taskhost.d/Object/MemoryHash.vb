@@ -53,6 +53,11 @@
             Return System.Type.GetType(p.TypeId)
         End Function
 
+        ''' <summary>
+        ''' 按照内存指针销毁对象
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <returns></returns>
         Public Function Destroy(p As Long) As Boolean
             If Not __innerHash.ContainsKey(p) Then
                 Return False

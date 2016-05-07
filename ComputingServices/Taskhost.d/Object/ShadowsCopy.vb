@@ -13,7 +13,12 @@ Namespace TaskHost
         ''' <param name="memory">内存管理模块单元</param>
         ''' <returns></returns>
         Public Function ShadowsCopy(from As Object, target As Object, memory As MemoryHash) As Boolean
-            Return __innerCopy(from, target, memory, New List(Of Long) From {ObjectAddress.AddressOf(target).ReferenceAddress})
+            Dim p As Long = ObjectAddress.AddressOf(target).ReferenceAddress
+
+            Return __innerCopy(from,
+                               target,
+                               memory,
+                               New List(Of Long) + p)
         End Function
 
         ''' <summary>
