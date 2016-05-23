@@ -103,7 +103,7 @@ Namespace LDM.Statements
         ''' <remarks></remarks>
         Public Shared Function TryParse(source As String, Optional types As TypeRegistry = Nothing) As LinqStatement
             Dim tokens As ClosureTokens() = ClosureParser.TryParse(source)
-            Dim statement As LinqStatement = New LinqStatement With {
+            Dim statement As New LinqStatement With {
                 ._Text = source
             }
             Return __innerParser(tokens, types, statement)
@@ -124,7 +124,7 @@ Namespace LDM.Statements
                                         Optional types As TypeRegistry = Nothing,
                                         Optional text As String = "") As LinqStatement
             Dim tokens As ClosureTokens() = ClosureParser.TryParse(source)
-            Dim statement As LinqStatement = New LinqStatement With {
+            Dim statement As New LinqStatement With {
                 ._Text = text
             }
 
