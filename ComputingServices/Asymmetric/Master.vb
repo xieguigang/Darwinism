@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
+Imports Microsoft.VisualBasic.Win32
 Imports NodeAbstract = System.Collections.Generic.KeyValuePair(Of String, Microsoft.VisualBasic.Net.SSL.Certificate)
 
 Namespace Asymmetric

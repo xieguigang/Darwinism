@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
 Imports Microsoft.VisualBasic.Net.TCPExtensions
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Win32
 
 Namespace Asymmetric
 
@@ -23,7 +24,7 @@ Namespace Asymmetric
         ''' </summary>
         ''' <returns></returns>
         Public Overridable Function SystemLoad() As Double
-            Return WindowsServices.CPU_Usages.NextValue
+            Return CPU_Usages.NextValue
         End Function
 
         ''' <summary>
