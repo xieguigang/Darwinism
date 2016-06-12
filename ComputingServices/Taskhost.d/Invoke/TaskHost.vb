@@ -68,6 +68,7 @@ Namespace TaskHost
 
         Public Function Invoke(Of T)(target As [Delegate], ParamArray args As Object()) As T
             Dim value As Object = Invoke(target, args)
+
             If value Is Nothing Then
                 Return Nothing
             Else
