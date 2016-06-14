@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Net.SSL
 Imports Microsoft.VisualBasic.Net.TCPExtensions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Win32
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Asymmetric
 

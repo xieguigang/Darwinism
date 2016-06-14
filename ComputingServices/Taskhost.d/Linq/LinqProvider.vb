@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.InputHandler
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace TaskHost
 

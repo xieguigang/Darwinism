@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace TaskHost
