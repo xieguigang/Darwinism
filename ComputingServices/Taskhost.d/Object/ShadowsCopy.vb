@@ -35,7 +35,7 @@ Namespace TaskHost
             For Each prop As PropertyInfo In props
                 Dim value As Object = prop.GetValue(from)
 
-                If BasicTypesFlushs.ContainsKey(prop.PropertyType) Then
+                If ToStrings.ContainsKey(prop.PropertyType) Then
                     Call prop.SetValue(target, value)  ' 值类型，直接复制
                 Else   ' 引用类型，递归按址复制
                     Dim addr As ObjectAddress = ObjectAddress.AddressOf(value) ' 得到对象在内存之中的位置指针

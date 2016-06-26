@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace TaskHost
 
@@ -32,7 +33,7 @@ Namespace TaskHost
             Dim type As Type = o.GetType
 
             Me.Type = type.FullName
-            Me.value = Serialization.GetJson(o, type)
+            Me.value = JsonContract.GetJson(o, type)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -80,7 +81,7 @@ Namespace TaskHost
         ''' <returns></returns>
         Public Shared Function GetParameters(method As MethodInfo, args As String()) As Object()
             Dim params As Type() = method.GetParameters.ToArray(Function(x) x.ParameterType)
-            Dim values As Object() = args.ToArray(Function(x, idx) Serialization.LoadObject(x, params(idx)))
+            Dim values As Object() = args.ToArray(Function(x, idx) JsonContract.LoadObject(x, params(idx)))
             Return values
         End Function
 

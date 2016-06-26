@@ -15,6 +15,7 @@ Imports Microsoft.VisualBasic.ComputingServices.FileSystem.FileSystem
 Imports Microsoft.Win32.SafeHandles
 Imports System.Runtime.Serialization.Json
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileSystem.IO
 

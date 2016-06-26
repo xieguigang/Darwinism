@@ -6,7 +6,8 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.LINQ
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileSystem
 
@@ -22,11 +23,11 @@ Namespace FileSystem
         Public ReadOnly Property Portal As IPEndPoint
 
         Sub New(portal As IPEndPoint)
-            _portal = portal
+            _Portal = portal
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{CurrentDirectory}@{_portal.ToString}"
+            Return $"{CurrentDirectory}@{_Portal.ToString}"
         End Function
 
         ' Exceptions:
@@ -42,13 +43,13 @@ Namespace FileSystem
         Public Property CurrentDirectory As String
             Get
                 Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.CurrentDirectory)
-                Dim invoke As New AsynInvoke(_portal)
+                Dim invoke As New AsynInvoke(_Portal)
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Return req.GetUTF8String
             End Get
             Set(value As String)
                 Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.CurrentDirectory, value)
-                Dim invoke As New AsynInvoke(_portal)
+                Dim invoke As New AsynInvoke(_Portal)
                 Call invoke.SendMessage(req)
             End Set
         End Property

@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Linq
 Imports System.IO
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileSystem
 
@@ -113,7 +114,7 @@ Namespace FileSystem
 
         <Protocol(FileSystemAPI.OpenHandle)>
         Private Function OpenFileHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim params As FileOpen = Serialization.LoadObject(Of FileOpen)(args.GetUTF8String)
+            Dim params As FileOpen = JsonContract.LoadObject(Of FileOpen)(args.GetUTF8String)
             Dim stream As FileStream = params.OpenHandle
             Dim handle = FileStreamInfo.GetInfo(stream)
             handle.FileName = params.FileName

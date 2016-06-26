@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JsonContract
+﻿Imports Microsoft.VisualBasic.Serialization.JSON.JsonContract
 Imports Microsoft.VisualBasic
 
 Namespace StorageTek

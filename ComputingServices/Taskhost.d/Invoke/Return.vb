@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace TaskHost
 
@@ -31,7 +32,7 @@ Namespace TaskHost
 
         Sub New(value As Object, type As Type)
             _errCode = HTTP_RFC.RFC_OK
-            _value = Serialization.GetJson(value, type)
+            _value = JsonContract.GetJson(value, type)
         End Sub
 
         ''' <summary>
@@ -43,7 +44,7 @@ Namespace TaskHost
             If errCode <> HTTP_RFC.RFC_OK Then
                 Throw New Exception(ex)
             End If
-            Return Serialization.LoadObject(value, type)
+            Return LoadObject(value, type)
         End Function
 
         Public Function GetValue(func As [Delegate]) As Object

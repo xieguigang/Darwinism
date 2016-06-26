@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComputingServices.FileSystem
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace TaskHost
 
@@ -54,15 +55,15 @@ Namespace TaskHost
         Public Function Invoke(target As [Delegate], ParamArray args As Object()) As Object
             Dim params As InvokeInfo = InvokeInfo.CreateObject(target, args)
             Dim rtvl As Rtvl = Invoke(params)
-            Dim obj As Object = Rtvl.GetValue(target)
+            Dim obj As Object = rtvl.GetValue(target)
             Return obj
         End Function
 
         Public Function Invoke(info As InvokeInfo) As Rtvl
-            Dim value As String = Serialization.GetJson(info)
+            Dim value As String = JsonContract.GetJson(info)
             Dim req As RequestStream = New RequestStream(ProtocolEntry, TaskProtocols.Invoke, value)
             Dim rep As RequestStream = New AsynInvoke(_remote).SendMessage(req)
-            Dim rtvl As Rtvl = Serialization.LoadObject(Of Rtvl)(rep.GetUTF8String)
+            Dim rtvl As Rtvl = JsonContract.LoadObject(Of Rtvl)(rep.GetUTF8String)
             Return rtvl
         End Function
 

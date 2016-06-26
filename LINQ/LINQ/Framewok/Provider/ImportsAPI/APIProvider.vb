@@ -1,7 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Framework.Provider.ImportsAPI

@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace TaskHost
 
@@ -46,7 +47,7 @@ Namespace TaskHost
             For i As Integer = 0 To n - 1
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Dim json As String = rep.GetUTF8String
-                Dim value As Object = Serialization.LoadObject(json, Type)
+                Dim value As Object = JsonContract.LoadObject(json, Type)
 
                 If rep.ProtocolCategory = TaskProtocols.ReadsDone Then
                     Exit For
@@ -66,7 +67,7 @@ Namespace TaskHost
             Do While True
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Dim json As String = rep.GetUTF8String
-                Dim value As Object = Serialization.LoadObject(json, Type)
+                Dim value As Object = JsonContract.LoadObject(json, Type)
 
                 If rep.ProtocolCategory = TaskProtocols.ReadsDone Then
                     Exit Do

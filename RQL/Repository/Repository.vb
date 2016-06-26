@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
-Imports Microsoft.VisualBasic.Serialization.JsonContract
+Imports Microsoft.VisualBasic.Serialization.JSON.JsonContract
 Imports RQL.StorageTek
 
 Namespace Linq

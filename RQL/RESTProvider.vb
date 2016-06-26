@@ -3,7 +3,7 @@ Imports System.Net.Sockets
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports RQL.Linq
 Imports SMRUCC.HTTPInternal.Core
 
