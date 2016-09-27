@@ -4,9 +4,9 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.SecurityString.MD5Hash
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports SMRUCC.HTTPInternal.AppEngine
-Imports SMRUCC.HTTPInternal.AppEngine.APIMethods
-Imports SMRUCC.HTTPInternal.Platform
+Imports SMRUCC.WebCloud.HTTPInternal.AppEngine
+Imports SMRUCC.WebCloud.HTTPInternal.AppEngine.APIMethods
+Imports SMRUCC.WebCloud.HTTPInternal.Platform
 
 Namespace Linq
 
@@ -60,7 +60,7 @@ Namespace Linq
             Dim n As Integer = Scripting.CastInteger(args(LinqAPI.n))
             Dim linq As LinqProvider = GetLinq(__uidMaps(uid))
             Dim source As Object = linq.Moves(n)
-            Dim json As String = JsonContract.GetJson(source, linq.BaseType)
+            Dim json As String = JsonContract.GetObjectJson(source, linq.BaseType)
             Return json
         End Function
 

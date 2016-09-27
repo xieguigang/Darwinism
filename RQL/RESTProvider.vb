@@ -3,9 +3,9 @@ Imports System.Net.Sockets
 Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Linq.Framework.Provider
 Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.RQL.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports RQL.Linq
-Imports SMRUCC.HTTPInternal.Core
+Imports SMRUCC.WebCloud.HTTPInternal.Core
 
 ''' <summary>
 ''' 在线查询服务提供模块，在这个模块之中只负责进行url参数的解析工作
@@ -96,4 +96,7 @@ Public Class RESTProvider : Inherits HttpServer
     Protected Overrides Function __httpProcessor(client As TcpClient) As HttpProcessor
         Return New HttpProcessor(client, Me)
     End Function
+
+    Public Overrides Sub handleOtherMethod(p As HttpProcessor)
+    End Sub
 End Class
