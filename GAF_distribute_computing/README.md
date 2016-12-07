@@ -10,3 +10,29 @@ For running GA on a single machine, makes it run on a server cluster, we just ne
 
 ![](./Mutation-and-fitness.png)
 > A basic calculation in GA
+
+### Distribute Linq &amp; Parallel Linq
+
+### Using Distribute Linq in GA
+
+### VirtualBox demo
+
+### Config Server
+This demo was running on a latest Ubuntu server, after complete the installation of the Ubuntu server, then you should install the mono first by using:
+
+```bash
+sudo apt-get install mono-complete
+```
+
+And then deploy the server side runtime of this distribute environment just by upload the program to a directory and then start by command
+```bash
+mono ./dlinq.d /start
+```
+
+Here I using the virtual machine clone in the VirtualBox to simulate a local server cluster for this demo test:
+
+Running the demo in host,
+
+```bash
+./dga_demo
+```
