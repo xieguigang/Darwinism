@@ -27,8 +27,10 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports sciBASIC.ComputingServices.TaskHost
 
+''' <summary>
+''' Running on the server cluster nodes
+''' </summary>
 Module Program
 
     Sub Main()
