@@ -13,6 +13,19 @@ For running GA on a single machine, makes it run on a server cluster, we just ne
 
 ### Distribute Linq &amp; Parallel Linq
 
+Here is a example of Parallel Linq:
+```vbnet
+Dim LQuery = From x As <type> In source.AsParallel Select <.ctor>
+```
+
+And here is a example of Distribute Linq, its usage is very similar to parallel linq:
+```vbnet
+Dim LQuery = From x As <type2> In source.AsDistribute(task) Select <.ctor>
+```
+
+##### How it works?
+
+
 ### Using Distribute Linq in GA
 
 ### VirtualBox demo
