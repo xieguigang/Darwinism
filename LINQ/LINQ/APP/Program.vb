@@ -1,7 +1,7 @@
-﻿Imports Microsoft.VisualBasic.Linq.LDM
-Imports Microsoft.VisualBasic.Linq.Framework
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
-Imports Microsoft.VisualBasic.Linq.Script
+﻿Imports sciBASIC.ComputingServices.Linq.LDM
+Imports sciBASIC.ComputingServices.Linq.Framework
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
+Imports sciBASIC.ComputingServices.Linq.Script
 
 Module Program
 

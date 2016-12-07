@@ -1,6 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Linq.Script
-Imports Microsoft.VisualBasic.Linq.Framework
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
+﻿Imports sciBASIC.ComputingServices.Linq.Framework.Provider
+Imports sciBASIC.ComputingServices.Linq.Script
 
 Namespace LDM.Statements.Tokens
 

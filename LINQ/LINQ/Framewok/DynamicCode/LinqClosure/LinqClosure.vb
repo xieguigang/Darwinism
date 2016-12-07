@@ -1,6 +1,7 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Framework.DynamicCode
 

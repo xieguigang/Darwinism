@@ -27,11 +27,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports sciBASIC.ComputingServices.ComponentModel
 
 Namespace TaskHost
 

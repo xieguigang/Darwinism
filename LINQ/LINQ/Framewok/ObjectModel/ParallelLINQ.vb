@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
-Imports Microsoft.VisualBasic.Linq.LDM.Statements
-Imports Microsoft.VisualBasic.Linq.Script
+﻿Imports sciBASIC.ComputingServices.Linq.Framework.DynamicCode
+Imports sciBASIC.ComputingServices.Linq.LDM.Statements
+Imports sciBASIC.ComputingServices.Linq.Script
 
 Namespace Framework.ObjectModel
 

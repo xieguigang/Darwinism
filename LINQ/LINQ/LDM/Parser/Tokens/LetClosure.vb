@@ -1,10 +1,7 @@
-﻿Imports System.Text.RegularExpressions
-Imports System.Text
-Imports Microsoft.VisualBasic.Linq.LDM.Statements.TokenIcer
+﻿Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
-Imports Microsoft.VisualBasic.Linq.LDM.Statements
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports sciBASIC.ComputingServices.Linq.Framework.DynamicCode
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
 
 Namespace LDM.Statements.Tokens
 

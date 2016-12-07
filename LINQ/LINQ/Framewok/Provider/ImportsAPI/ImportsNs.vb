@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Scripting.MetaData
+﻿Imports Microsoft.VisualBasic.Extensions
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Framework.Provider.ImportsAPI
 
@@ -19,12 +21,12 @@ Namespace Framework.Provider.ImportsAPI
                 If value Is Nothing Then
                     __list = New List(Of TypeInfo)
                 Else
-                    __list = value.ToList
+                    __list = New List(Of TypeInfo)(value)
                 End If
             End Set
         End Property
 
-        Dim __list As List(Of TypeInfo) = New List(Of TypeInfo)
+        Dim __list As New List(Of TypeInfo)
 
         Sub New()
         End Sub

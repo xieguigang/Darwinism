@@ -1,6 +1,6 @@
 ﻿Imports System.Dynamic
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.LINQ.Framework
+Imports sciBASIC.ComputingServices.Linq.Framework
 
 Namespace Script
 

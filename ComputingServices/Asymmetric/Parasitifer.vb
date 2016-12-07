@@ -27,15 +27,15 @@
 
 Imports System.Reflection
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.SSL
 Imports Microsoft.VisualBasic.Net.TCPExtensions
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Win32
-Imports Microsoft.VisualBasic.Net.Http
+Imports sciBASIC.ComputingServices.ComponentModel
 
 Namespace Asymmetric
 
@@ -147,8 +147,7 @@ Namespace Asymmetric
 
             Dim proc As Process = Nothing
             Dim Port As Integer = Microsoft.VisualBasic.Parallel.Folk(_instance, cli, proc)
-            Dim Portal As Microsoft.VisualBasic.Net.IPEndPoint =
-                New Net.IPEndPoint(WebServiceUtils.GetMyIPAddress, Port) With {
+            Dim Portal As New IPEndPoint(WebServiceUtils.GetMyIPAddress, Port) With {
                     .uid = proc.Id
             }
             Dim inst As New DDM.Instance With {

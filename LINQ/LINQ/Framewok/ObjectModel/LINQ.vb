@@ -1,8 +1,8 @@
-﻿Imports Microsoft.VisualBasic.Linq.Script
-Imports Microsoft.VisualBasic.Linq.LDM.Statements
-Imports Microsoft.VisualBasic.Linq.LDM.Statements.Tokens
-Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode.LinqClosure
-Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
+﻿Imports sciBASIC.ComputingServices.Linq.Script
+Imports sciBASIC.ComputingServices.Linq.LDM.Statements
+Imports sciBASIC.ComputingServices.Linq.LDM.Statements.Tokens
+Imports sciBASIC.ComputingServices.Linq.Framework.DynamicCode.LinqClosure
+Imports sciBASIC.ComputingServices.Linq.Framework.DynamicCode
 
 Namespace Framework.ObjectModel
 

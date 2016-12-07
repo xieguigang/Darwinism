@@ -1,9 +1,9 @@
 ﻿Imports System.Dynamic
-Imports Microsoft.VisualBasic.Linq.LDM.Statements
-Imports Microsoft.VisualBasic.Linq.Framework
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
-Imports Microsoft.VisualBasic.Linq.Framework.ObjectModel
-Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
+Imports sciBASIC.ComputingServices.Linq.Framework
+Imports sciBASIC.ComputingServices.Linq.Framework.ObjectModel
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider.ImportsAPI
+Imports sciBASIC.ComputingServices.Linq.LDM.Statements
 
 Namespace Script
 

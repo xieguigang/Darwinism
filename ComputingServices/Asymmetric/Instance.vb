@@ -26,9 +26,9 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.ComputingServices.ComponentModel
 Imports Microsoft.VisualBasic.Net.SSL
 Imports Microsoft.VisualBasic.Net.TCPExtensions
+Imports sciBASIC.ComputingServices.ComponentModel
 
 Namespace Asymmetric
 
@@ -60,7 +60,7 @@ Namespace Asymmetric
 
         Private Sub __returnPortal(cli As CommandLine.CommandLine)
             Call __host.WaitForStart()
-            Call Parallel.ReturnPortal(cli, __host.LocalPort)
+            Call Microsoft.VisualBasic.Parallel.ReturnPortal(cli, __host.LocalPort)
         End Sub
 
         Protected Overridable Sub __handleException(ex As Exception)

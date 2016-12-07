@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Linq.Framework.Provider
-Imports Microsoft.VisualBasic.Linq.LDM.Statements
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
+﻿Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
+Imports sciBASIC.ComputingServices.Linq.LDM.Statements
 
 Namespace Script.Tokens
 

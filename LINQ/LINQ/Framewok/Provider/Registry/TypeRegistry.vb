@@ -2,8 +2,8 @@
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Linq
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
 
 Namespace Framework.Provider
 

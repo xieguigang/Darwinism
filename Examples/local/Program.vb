@@ -1,8 +1,8 @@
 ﻿Imports System.IO
-Imports Microsoft.VisualBasic.ComputingServices
-Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Net
-Imports Microsoft.VisualBasic.Serialization
+Imports sciBASIC.ComputingServices
+Imports sciBASIC.ComputingServices.FileSystem.IO
+Imports sciBASIC.ComputingServices.TaskHost
 
 Module Program
 
@@ -30,13 +30,13 @@ Module Program
         Dim remoteMachine As New TaskHost(New IPEndPoint("127.0.0.1", 1234))
         Dim func As Func(Of Stream, String, String()) = AddressOf AnalysisExample.API.LongTest1
         Dim path As String = "E:\Microsoft.VisualBasic.Parallel\trunk\Examples\local\local.vbproj"
-        Dim localfile As New ComputingServices.FileSystem.IO.RemoteFileStream(path, FileMode.Open, remoteMachine.FileSystem)
+        Dim localfile As New RemoteFileStream(path, FileMode.Open, remoteMachine.FileSystem)
         Dim array As String() = remoteMachine.Invoke(func, {localfile, "this is the message from local machine!"})
         ' remote linq
 
         Call array.Length.__DEBUG_ECHO
 
-        localfile = New ComputingServices.FileSystem.IO.RemoteFileStream(path, FileMode.Open, remoteMachine.FileSystem)
+        localfile = New RemoteFileStream(path, FileMode.Open, remoteMachine.FileSystem)
         Dim source = remoteMachine.AsLinq(Of String)(func, {localfile, "this is the remote linq example!"})
         Dim array2 = (From s As String In source Where InStr(s, "Include=") > 0 Select s)
 

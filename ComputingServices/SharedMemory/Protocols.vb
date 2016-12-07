@@ -26,13 +26,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComputingServices.TaskHost
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SharedMemory

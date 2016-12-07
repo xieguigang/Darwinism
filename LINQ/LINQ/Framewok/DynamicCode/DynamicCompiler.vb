@@ -1,11 +1,10 @@
 ﻿Imports System.CodeDom
-Imports System.CodeDom.Compiler
 Imports System.Reflection
-Imports System.Text
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
-Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
-Imports Microsoft.VisualBasic.Linq.LDM.Statements
+Imports Microsoft.VisualBasic.Linq
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider.ImportsAPI
+Imports sciBASIC.ComputingServices.Linq.LDM.Statements
 
 Namespace Framework.DynamicCode
 

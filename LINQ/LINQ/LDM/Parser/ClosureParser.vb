@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq.LDM.Statements
+Imports sciBASIC.ComputingServices.Linq.LDM.Statements
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace LDM.Statements

@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Linq.Framework
-Imports Microsoft.VisualBasic.Linq.Framework.DynamicCode
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
+﻿Imports sciBASIC.ComputingServices.Linq.Framework
+Imports sciBASIC.ComputingServices.Linq.Framework.DynamicCode
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
 
 Namespace LDM.Statements.Tokens
 

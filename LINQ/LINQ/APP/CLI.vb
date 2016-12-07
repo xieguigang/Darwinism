@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Framework.Provider.ImportsAPI
-Imports Microsoft.VisualBasic.Linq.Framework.Provider
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider.ImportsAPI
+Imports sciBASIC.ComputingServices.Linq.Framework.Provider
 
 ''' <summary>
 ''' 框架程序自带的注册模块以及一些配置的管理终端
