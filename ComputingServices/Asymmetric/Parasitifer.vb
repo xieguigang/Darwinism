@@ -1,9 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8a95b864bb66f787c8a3614cd9f44b9f, ..\ComputingServices\Asymmetric\Parasitifer.vb"
+﻿#Region "Microsoft.VisualBasic::b438e756f066c2bd4762d59f4f54ded2, ..\sciBASIC.ComputingServices\ComputingServices\Asymmetric\Parasitifer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
     ' 
     ' Copyright (c) 2016 GPL3 Licensed
     ' 
