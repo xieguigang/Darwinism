@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net
+﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Parallel
@@ -63,13 +64,33 @@ Namespace Cluster
         End Sub
 
         ''' <summary>
+        ''' 返回负载量最低的节点
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetPreferNode() As TaskRemote
+            SyncLock _nodes
+
+                Return LinqAPI.DefaultFirst(Of TaskRemote) <=
+ _
+                    From node As TaskRemote
+                    In _nodes.Values.AsParallel
+                    Select node,
+                        node.Load
+                    Order By Load Ascending
+
+            End SyncLock
+        End Function
+
+        ''' <summary>
         ''' 自动分配空闲的计算节点
         ''' </summary>
         ''' <param name="target"></param>
         ''' <param name="args"></param>
-        Public Sub Invoke(target As [Delegate], ParamArray args As Object())
-
-        End Sub
+        Public Function Invoke(target As [Delegate], ParamArray args As Object()) As Object
+            Dim node As TaskRemote = GetPreferNode()
+            Dim out As Object = node.Invoke(target, args)
+            Return out
+        End Function
 
         Public Sub ScanTask()
             Call RunTask(AddressOf Scan)

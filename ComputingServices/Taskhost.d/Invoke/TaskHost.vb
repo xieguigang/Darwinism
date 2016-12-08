@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sciBASIC.ComputingServices.ComponentModel
@@ -54,6 +55,23 @@ Namespace TaskHost
             Set(value As String)
                 _remote.IPAddress = value
             End Set
+        End Property
+
+        ''' <summary>
+        ''' 获取得到远程主机的负载量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Load As Double
+            Get
+                Dim req As New RequestStream(Protocols.ProtocolEntry, TaskProtocols.NodeLoad)
+                Dim rep = New AsynInvoke(_remote).SendMessage(req, 1000)
+
+                If rep.Protocol <> HTTP_RFC.RFC_OK Then
+                    Return 1000
+                Else
+                    Return rep.LoadObject(Of Double)
+                End If
+            End Get
         End Property
 
         Sub New(remote As IPEndPoint)
