@@ -19,6 +19,16 @@ Namespace Cluster
         Dim net$
 
         ''' <summary>
+        ''' 返回节点的数量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Nodes As Integer
+            Get
+                Return _nodes.Count
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="net$"><see cref="EnumerateAddress"/></param>

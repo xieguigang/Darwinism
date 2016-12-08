@@ -28,9 +28,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel.Linq
+Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports sciBASIC.ComputingServices.TaskHost
-Imports Remote = sciBASIC.ComputingServices.TaskHost.TaskRemote
 
 ''' <summary>
 ''' 分布式计算环境，因为这里是为了做高性能计算而构建的一个内部网络的计算集群，
@@ -61,7 +63,14 @@ Public Module Environment
     ''' 
     <Extension>
     Public Iterator Function AsDistributed(Of T, Tout)(source As IEnumerable(Of T), task As Func(Of T, Tout)) As IEnumerable(Of Tout)
+        Dim partitions = TaskPartitions.SplitIterator(source, source.Count / cluster.Nodes)
+        Dim tasks As New List(Of AsyncHandle(Of Tout()))
+        Dim run As Func(Of T(), Tout()) =
+            Function([in]) [in].ToArray(task)
 
+        For Each part As T() In partitions
+            tasks += New AsyncHandle(Of Tout())(Function() cluster.Invoke(run,))
+        Next
     End Function
 End Module
 
