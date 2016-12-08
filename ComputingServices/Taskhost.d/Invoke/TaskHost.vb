@@ -150,5 +150,14 @@ Namespace TaskHost
             Dim svr As IPEndPoint = rep.GetUTF8String.LoadObject(Of IPEndPoint)
             Return New ILinq(Of T)(svr)
         End Function
+
+        Public Function [Select](Of T, Tout)(target As [Delegate], source As T(), ParamArray args As Object()) As ILinq(Of Tout)
+            Dim params As InvokeInfo = InvokeInfo.CreateObject(target, {CObj(source)}.Join(args))
+            Dim jparam As String = params.GetJson
+            Dim req As New RequestStream(ProtocolEntry, TaskProtocols.Select, jparam)
+            Dim rep As RequestStream = New AsynInvoke(_remote).SendMessage(req)
+            Dim svr As IPEndPoint = rep.GetUTF8String.LoadObject(Of IPEndPoint)
+            Return New ILinq(Of Tout)(svr)
+        End Function
     End Class
 End Namespace
