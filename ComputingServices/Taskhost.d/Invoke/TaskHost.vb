@@ -36,7 +36,8 @@ Namespace TaskHost
 
     ''' <summary>
     ''' Using this object to running the method on the remote machine.
-    ''' 由于是远程调用，所以运行的环境可能会很不一样，所以在设计程序的时候请尽量避免或者不要使用模块变量，以免出现难以调查的BUG
+    ''' (由于是远程调用，所以运行的环境可能会很不一样，所以在设计程序的时候请尽量
+    ''' 避免或者不要使用模块变量，以免出现难以调查的BUG)
     ''' </summary>
     Public Class TaskHost : Implements IRemoteSupport
 
@@ -73,7 +74,8 @@ Namespace TaskHost
         ''' your code on the remote. Or a large json data will be return back through network in one package, 
         ''' this may cause a serious performance problem both on your server and your local client.
         ''' (本地服务器通过这个方法调用远程主机上面的函数，假若目标函数的返回值类型是一个集合，
-        ''' 请使用<see cref="TaskHost.AsLinq(Of T)([Delegate], Object())"/>方法，否则集合之中的所有数据都将会一次性返回，这个可能会导致严重的性能问题)
+        ''' 请使用<see cref="TaskHost.AsLinq(Of T)([Delegate], Object())"/>方法，否则集合之中的所有数据都将会一次性返回，
+        ''' 这个可能会导致严重的性能问题)
         ''' </summary>
         ''' <param name="target"></param>
         ''' <param name="args"></param>

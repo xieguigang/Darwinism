@@ -38,8 +38,10 @@ Imports sciBASIC.ComputingServices.FileSystem
 
 Namespace TaskHost
 
-    <Protocol(GetType(TaskProtocols))>
-    Public Class TaskInvoke : Inherits IHostBase
+    ''' <summary>
+    ''' Running on the server cluster nodes.
+    ''' </summary>
+    <Protocol(GetType(TaskProtocols))> Public Class TaskInvoke : Inherits IHostBase
         Implements IRemoteSupport
         Implements IDisposable
 
@@ -133,6 +135,11 @@ Namespace TaskHost
             Dim source As IEnumerable = DirectCast(value, IEnumerable)
             Dim svr As String = LinqProvider.OpenQuery(source, type).GetJson   ' 返回数据源信息
             Return New RequestStream(svr)
+        End Function
+
+        <Protocol(TaskProtocols.Handshake)>
+        Private Function Handshake(CA&, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+
         End Function
 
 #Region "IDisposable Support"
