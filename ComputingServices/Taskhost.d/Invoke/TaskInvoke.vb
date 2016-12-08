@@ -139,6 +139,34 @@ Namespace TaskHost
         End Function
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="CA"></param>
+        ''' <param name="args">``{source, args}``</param>
+        ''' <param name="remote"></param>
+        ''' <returns></returns>
+        <Protocol(TaskProtocols.Select)>
+        Private Function LinqSelect(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Dim params As InvokeInfo = JsonContract.LoadObject(Of InvokeInfo)(args.GetUTF8String) ' 得到远程函数指针信息
+            Dim func As MethodInfo = params.GetMethod
+            Dim paramsValue As Object() = params.Parameters.ToArray(Function(arg) arg.GetValue)
+            Dim source As IEnumerable = DirectCast(paramsValue(Scan0), IEnumerable)
+            Dim type As Type = func.ReturnType
+
+            source = From x As Object
+                     In source.AsParallel
+                     Let inputs As Object() =
+                         {x}.Join(paramsValue.Skip(1)) _
+                            .ToArray
+                     Select func.Invoke(Nothing, inputs)
+
+            Dim svr As String = LinqProvider _
+                .OpenQuery(source, type) _
+                .GetJson
+            Return New RequestStream(svr) ' 返回数据源信息
+        End Function
+
+        ''' <summary>
         ''' This node is alive
         ''' </summary>
         ''' <param name="CA"></param>

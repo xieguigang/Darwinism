@@ -88,6 +88,10 @@ Namespace TaskHost
             ''' The remote linq source reads done! Exit the iterator function.
             ''' </summary>
             ReadsDone = -1000L
+            ''' <summary>
+            ''' Linq select extension
+            ''' </summary>
+            [Select]
 #End Region
         End Enum
 

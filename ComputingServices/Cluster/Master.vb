@@ -92,6 +92,10 @@ Namespace Cluster
             Return out
         End Function
 
+        Public Iterator Function [Select](Of T, Tout)(source As IEnumerable(Of T), task As Func(Of T, Tout), args As Object()) As IEnumerable(Of Tout)
+
+        End Function
+
         Public Sub ScanTask()
             Call RunTask(AddressOf Scan)
         End Sub
