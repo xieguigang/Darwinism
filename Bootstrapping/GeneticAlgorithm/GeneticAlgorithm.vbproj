@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{177B57CD-1A21-4FD3-B32D-1D03FC0E47AC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>GeneticAlgorithm</RootNamespace>
-    <AssemblyName>GeneticAlgorithm</AssemblyName>
+    <RootNamespace>sciBasic.ComputingServices.Bootstrapping.GeneticAlgorithm</RootNamespace>
+    <AssemblyName>sciBasic.ComputingServices.Bootstrapping.GeneticAlgorithm</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>GeneticAlgorithm.xml</DocumentationFile>
+    <DocumentationFile>sciBasic.ComputingServices.Bootstrapping.GeneticAlgorithm.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>GeneticAlgorithm.xml</DocumentationFile>
+    <DocumentationFile>sciBasic.ComputingServices.Bootstrapping.GeneticAlgorithm.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -64,7 +64,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
+    <Compile Include="DistributeSupports.vb" />
+    <Compile Include="Protocol.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
