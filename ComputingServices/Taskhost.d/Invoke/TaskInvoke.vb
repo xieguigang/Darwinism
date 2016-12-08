@@ -137,9 +137,16 @@ Namespace TaskHost
             Return New RequestStream(svr)
         End Function
 
+        ''' <summary>
+        ''' This node is alive
+        ''' </summary>
+        ''' <param name="CA"></param>
+        ''' <param name="args"></param>
+        ''' <param name="remote"></param>
+        ''' <returns></returns>
         <Protocol(TaskProtocols.Handshake)>
         Private Function Handshake(CA&, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-
+            Return NetResponse.RFC_OK ' HTTP/200
         End Function
 
 #Region "IDisposable Support"

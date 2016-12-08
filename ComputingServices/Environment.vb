@@ -27,9 +27,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.Net
 Imports sciBASIC.ComputingServices.TaskHost
-Imports Remote = sciBASIC.ComputingServices.TaskHost.TaskHost
+Imports Remote = sciBASIC.ComputingServices.TaskHost.TaskRemote
 
 ''' <summary>
 ''' 分布式计算环境，因为这里是为了做高性能计算而构建的一个内部网络的计算集群，
@@ -37,15 +38,18 @@ Imports Remote = sciBASIC.ComputingServices.TaskHost.TaskHost
 ''' </summary>
 Public Module Environment
 
-    Dim remoteMachine As Remote
+    Dim cluster As Cluster.Master
 
     ''' <summary>
     ''' 扫描局域网内所有可用的计算节点
     ''' </summary>
     ''' <param name="port">The default port of the <see cref="TaskInvoke"/> cluster nodes is **1234**</param>
-    Public Function Start(Optional port% = 1234)
+    Public Sub Start(Optional port% = 1234)
+        cluster = New Cluster.Master(port)
+        cluster.ScanTask()
 
-    End Function
+        Call Thread.Sleep(1000)
+    End Sub
 
     ''' <summary>
     ''' Running this task sequence in distribution mode.(使用分布式的方式来执行这个任务集合序列)
