@@ -44,8 +44,8 @@ Public Module Environment
     ''' 扫描局域网内所有可用的计算节点
     ''' </summary>
     ''' <param name="port">The default port of the <see cref="TaskInvoke"/> cluster nodes is **1234**</param>
-    Public Sub Start(Optional port% = 1234)
-        cluster = New Cluster.Master(port)
+    Public Sub Start(netRange$, Optional port% = 1234)
+        cluster = New Cluster.Master(netRange, port)
         cluster.ScanTask()
 
         Call Thread.Sleep(1000)
