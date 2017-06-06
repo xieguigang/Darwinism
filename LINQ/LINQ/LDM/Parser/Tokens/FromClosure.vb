@@ -55,8 +55,8 @@ Namespace LDM.Statements.Tokens
         Sub New(tokens As ClosureTokens(), parent As LinqStatement)
             Call MyBase.New(TokenIcer.Tokens.From, tokens, parent)
 
-            Name = Source.Tokens(Scan0).TokenValue
-            TypeId = Source.Tokens(2).TokenValue
+            Name = Source.Tokens(Scan0).Value
+            TypeId = Source.Tokens(2).Value
         End Sub
 
         Public Overloads Function [GetType](defs As TypeRegistry) As Type

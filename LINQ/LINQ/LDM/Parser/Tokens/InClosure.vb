@@ -48,7 +48,7 @@ Namespace LDM.Statements.Tokens
 
         Sub New(tokens As ClosureTokens, parent As LinqStatement)
             Call MyBase.New(tokens, parent)
-            URI = tokens.Tokens.First.TokenValue.GetString
+            URI = tokens.Tokens.First.Value.GetString
         End Sub
 
         Public Overrides Function ToString() As String
@@ -145,7 +145,7 @@ Namespace LDM.Statements.Tokens
         Public Shared Function CreateObject(tokens As ClosureTokens(), parent As LinqStatement) As InClosure
             Dim source As ClosureTokens = Closure.GetTokens(TokenIcer.Tokens.In, tokens)
             If source.Tokens.Length = 1 AndAlso
-               source.Tokens(Scan0).TokenName = TokenIcer.Tokens.String Then
+               source.Tokens(Scan0).Name = TokenIcer.Tokens.String Then
                 Return New UriRef(source, parent)
             Else
                 Return New Reference(source, parent)

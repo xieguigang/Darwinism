@@ -42,7 +42,7 @@ Namespace LDM.Statements
             Dim closure As ClosureTokens
 
             For Each token As Token(Of TokenIcer.Tokens) In source
-                Select Case token.TokenName
+                Select Case token.Name
                     Case TokenIcer.Tokens.Imports,
                      TokenIcer.Tokens.In,
                      TokenIcer.Tokens.Let,
@@ -55,7 +55,7 @@ Namespace LDM.Statements
                         }
                         Call parts.Add(closure)
                         Call tmp.Clear()
-                        current = token.TokenName
+                        current = token.Name
                     Case TokenIcer.Tokens.From
                         current = TokenIcer.Tokens.From
                     Case TokenIcer.Tokens.WhiteSpace

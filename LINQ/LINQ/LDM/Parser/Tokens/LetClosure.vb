@@ -61,15 +61,15 @@ Namespace LDM.Statements.Tokens
         Sub New(token As ClosureTokens, parent As LinqStatement, Optional types As TypeRegistry = Nothing)
             Call MyBase.New(token, parent)
 
-            Name = Source.Tokens.First.TokenValue
+            Name = Source.Tokens.First.Value
 
             If __isEquals(Source.Tokens(1)) Then
-                Code = Source.Tokens.ToArray(Function(x) x.TokenValue).JoinBy(" ")
+                Code = Source.Tokens.ToArray(Function(x) x.Value).JoinBy(" ")
             Else
                 Dim sk As Integer
 
-                If Source.Tokens(1).TokenName = TokenIcer.Tokens.As Then
-                    Type = Source.Tokens(2).TokenValue
+                If Source.Tokens(1).Name = TokenIcer.Tokens.As Then
+                    Type = Source.Tokens(2).Value
                     sk = 4
 
                     If Not types Is Nothing Then
@@ -85,13 +85,13 @@ Namespace LDM.Statements.Tokens
                 End If
 
                 Dim expr = Source.Tokens.Skip(sk)
-                Code = expr.ToArray(Function(x) x.TokenValue).JoinBy(" ")
+                Code = expr.ToArray(Function(x) x.Value).JoinBy(" ")
                 Code = $"{Name} As {Type} = {Code}"
             End If
         End Sub
 
         Private Shared Function __isEquals(t As Token(Of TokenIcer.Tokens)) As Boolean
-            If t.TokenName = TokenIcer.Tokens.Code AndAlso String.Equals(t.TokenValue, "=") Then
+            If t.Name = TokenIcer.Tokens.Code AndAlso String.Equals(t.Value, "=") Then
                 Return True
             Else
                 Return False

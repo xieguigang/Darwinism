@@ -118,7 +118,7 @@ Namespace LDM.Statements.TokenIcer
         Public Function TrimWhiteSpace(source As IEnumerable(Of Token(Of Tokens))) As Token(Of Tokens)()
             Dim LQuery = (From x As Token(Of Tokens)
                           In source
-                          Where x.TokenName <> Tokens.WhiteSpace
+                          Where x.Name <> Tokens.WhiteSpace
                           Select x).ToArray
             Return LQuery
         End Function

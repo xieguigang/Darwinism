@@ -70,9 +70,9 @@ Namespace LDM.Statements.Tokens
             Dim list As New List(Of Token(Of TokenIcer.Tokens))
 
             For Each x In Source.Tokens
-                If x.TokenName <> TokenIcer.Tokens.Comma AndAlso
-                    x.TokenValue.Last = "," Then
-                    Dim a = New Token(Of TokenIcer.Tokens)(x.TokenName, Mid(x.TokenValue, 1, x.TokenValue.Length - 1))
+                If x.Name <> TokenIcer.Tokens.Comma AndAlso
+                    x.Value.Last = "," Then
+                    Dim a = New Token(Of TokenIcer.Tokens)(x.Name, Mid(x.Value, 1, x.Value.Length - 1))
                     Dim c As New Token(Of TokenIcer.Tokens)(TokenIcer.Tokens.Comma, ",")
 
                     list += a

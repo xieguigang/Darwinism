@@ -39,7 +39,7 @@ Namespace LDM.Statements.Tokens
 
         Sub New(tokens As ClosureTokens(), parent As LinqStatement)
             Call MyBase.New(TokenIcer.Tokens.Where, tokens, parent)
-            Code = Source.Tokens.ToArray(Function(x) x.TokenValue).JoinBy(" ")
+            Code = Source.Tokens.ToArray(Function(x) x.Value).JoinBy(" ")
         End Sub
 
         ''' <summary>
@@ -51,12 +51,12 @@ Namespace LDM.Statements.Tokens
         Public Shared Function CreateLinqWhere(Expr As String, type As Type, compiler As DynamicCompiler) As ITest
             Dim tokens As Token(Of TokenIcer.Tokens)() = TokenIcer.GetTokens(Expr)
             For Each x As Token(Of TokenIcer.Tokens) In tokens
-                If x.TokenName = TokenIcer.Tokens.VarRef Then
-                    x.TokenName = TokenIcer.Tokens.String
-                    x.TokenValue = obj
+                If x.Name = TokenIcer.Tokens.VarRef Then
+                    x.Name = TokenIcer.Tokens.String
+                    x.Value = obj
                 End If
             Next
-            Expr = String.Join(" ", tokens.ToArray(Function(x) x.TokenValue))
+            Expr = String.Join(" ", tokens.ToArray(Function(x) x.Value))
             Expr = GetCode(Expr, type)
 
             Dim project = compiler.Compile(Expr, Expr)

@@ -37,7 +37,7 @@ Namespace LDM.Statements
         Public Property Tokens As Token(Of TokenIcer.Tokens)()
 
         Public Overrides Function ToString() As String
-            Return $"[{Token}] {Tokens.ToArray(Function(x) x.TokenValue).JoinBy(" ")}"
+            Return $"[{Token}] {Tokens.ToArray(Function(x) x.Value).JoinBy(" ")}"
         End Function
 
         '''' <summary>
