@@ -36,7 +36,7 @@ Namespace SharedMemory
     ''' Shared the memory with the remote machine.
     ''' </summary>
     Public Class MemoryServices : Implements IDisposable
-        Implements ItaskDriver
+        Implements ITaskDriver
 
         ''' <summary>
         ''' Gets the memory data from remote machine.
@@ -90,7 +90,7 @@ Namespace SharedMemory
             Return __remote.GetJson
         End Function
 
-        Public Function Run() As Integer Implements ItaskDriver.Run
+        Public Function Run() As Integer Implements ITaskDriver.Run
             Return __localSvr.Run
         End Function
 

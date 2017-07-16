@@ -42,7 +42,7 @@ Namespace SharedMemory
     ''' 
     <Protocol(GetType(Protocols.MemoryProtocols))>
     Public Class SharedSvr : Implements IDisposable
-        Implements ItaskDriver
+        Implements ITaskDriver
 
         ReadOnly __localSvr As TcpSynchronizationServicesSocket
         ''' <summary>
@@ -118,7 +118,7 @@ Namespace SharedMemory
             Return __localSvr.ToString
         End Function
 
-        Public Function Run() As Integer Implements ItaskDriver.Run
+        Public Function Run() As Integer Implements ITaskDriver.Run
             Return __localSvr.Run
         End Function
 
