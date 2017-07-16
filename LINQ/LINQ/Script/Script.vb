@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sciBASIC.ComputingServices.Linq.Framework.DynamicCode
 Imports sciBASIC.ComputingServices.Linq.LDM.Statements
 Imports sciBASIC.ComputingServices.Linq.Script.Tokens
