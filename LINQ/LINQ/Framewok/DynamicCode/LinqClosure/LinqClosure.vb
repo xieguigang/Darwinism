@@ -35,6 +35,10 @@ Namespace Framework.DynamicCode
 
     Public Module LinqClosure
 
+        <Extension> Friend Function [As](Of T, V)(o As T) As V
+            Return DirectCast(CObj(o), V)
+        End Function
+
         <Extension>
         Public Function [GetType](assm As Assembly) As Type
             Dim types As Type() = assm.GetTypes
