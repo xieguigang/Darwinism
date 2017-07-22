@@ -28,6 +28,7 @@
 
 Imports System.Collections.Specialized
 Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.SecurityString.MD5Hash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sciBASIC.ComputingServices.TaskHost
@@ -81,7 +82,7 @@ Namespace Linq
         ''' <returns></returns>
         Public Function MoveNext(args As NameValueCollection) As String
             Dim uid As String = args(LinqAPI.uid)
-            Dim n As Integer = Scripting.CastInteger(args(LinqAPI.n))
+            Dim n As Integer = CastInteger(args(LinqAPI.n))
             Dim linq As LinqProvider = GetLinq(__uidMaps(uid))
             Dim source As Object = linq.Moves(n)
             Dim json As String = JsonContract.GetObjectJson(source, linq.BaseType)
