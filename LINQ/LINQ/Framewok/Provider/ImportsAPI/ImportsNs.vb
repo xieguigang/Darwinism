@@ -35,7 +35,7 @@ Namespace Framework.Provider.ImportsAPI
     ''' <summary>
     ''' 导入的命名空间
     ''' </summary>
-    Public Class ImportsNs : Inherits PackageNamespace
+    Public Class ImportsNs : Inherits PackageAttribute
 
         ''' <summary>
         ''' {namespace, typeinfo}
@@ -59,7 +59,7 @@ Namespace Framework.Provider.ImportsAPI
         Sub New()
         End Sub
 
-        Sub New(base As PackageNamespace)
+        Sub New(base As PackageAttribute)
             Call MyBase.New(base)
         End Sub
 

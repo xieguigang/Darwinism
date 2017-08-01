@@ -85,7 +85,7 @@ Namespace Framework.Provider.ImportsAPI
         Public Function Register(assm As Assembly) As Boolean
             Dim types As Type() = assm.GetTypes
             Dim LQuery = (From type As Type In types
-                          Let ns As PackageNamespace = GetEntry(type)
+                          Let ns As PackageAttribute = GetEntry(type)
                           Where Not ns Is Nothing
                           Select ns,
                               type).ToArray
