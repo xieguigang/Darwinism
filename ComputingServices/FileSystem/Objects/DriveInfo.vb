@@ -36,7 +36,7 @@ Namespace FileSystem
     ''' <summary>
     ''' Provides access to information on a drive.
     ''' </summary>
-    <ComVisible(True)> Public NotInheritable Class DriveInfo : Inherits ClassObject
+    <ComVisible(True)> Public NotInheritable Class DriveInfo : Inherits BaseClass
 
         Sub New(info As System.IO.DriveInfo)
             Me.AvailableFreeSpace = info.AvailableFreeSpace
