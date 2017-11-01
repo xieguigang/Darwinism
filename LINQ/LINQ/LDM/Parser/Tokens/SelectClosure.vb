@@ -51,7 +51,7 @@ Namespace LDM.Statements.Tokens
             Call MyBase.New(TokenIcer.Tokens.Select, tokens, parent)
 
             Dim stacks = __getTokens.Parsing(stackT).Args
-            Projects = stacks.ToArray(Function(x) x.ToString)
+            Projects = stacks.Select(Function(x) x.ToString).ToArray
         End Sub
 
         Private Shared ReadOnly Property stackT As StackTokens(Of TokenIcer.Tokens)

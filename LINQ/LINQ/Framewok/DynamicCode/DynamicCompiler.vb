@@ -96,7 +96,7 @@ Namespace Framework.DynamicCode
         ''' <param name="LinqClosure"></param>
         ''' <returns></returns>
         Public Function Compile(LinqClosure As String, Optional ByRef err As String = "") As IProject
-            Dim lstImports = ImportsNamespace.ToArray(Function(ns) "Imports " & ns)
+            Dim lstImports = ImportsNamespace.Select(Function(ns) "Imports " & ns).ToArray
             Dim code As String = lstImports.JoinBy(vbCrLf) & vbCrLf & LinqClosure
             Dim dll = CreateParameters(ReferenceList, EntityProvider.SDK)
             Dim assm As Assembly = CompileCode(code, dll, err)
@@ -106,8 +106,8 @@ Namespace Framework.DynamicCode
         Public Function Compile(Linq As LinqStatement, Optional ByRef err As String = "") As IProject
             Dim code As String = LinqClosure.BuildClosure(Linq.var.Name,
                                                           Linq.var.GetType(EntityProvider),
-                                                          Linq.PreDeclare.ToArray(Function(x) x.Code),
-                                                          Linq.AfterDeclare.ToArray(Function(x) x.Code),
+                                                          Linq.PreDeclare.Select(Function(x) x.Code),
+                                                          Linq.AfterDeclare.Select(Function(x) x.Code),
                                                           Linq.SelectClosure.Projects, Linq.Where.Code)
             Return Compile(code, err)
         End Function

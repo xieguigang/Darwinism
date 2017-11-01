@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::fc541a8c123893f5834257397c170a6d, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\Registry\TypeRegistry.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -142,19 +142,22 @@ Namespace Framework.Provider
                           Select x,
                               attr = DirectCast(attrs(Scan0), LinqEntity))
             Dim path As String = FileIO.FileSystem.GetFileInfo(assm.Location).Name  ' 方法的路径，类型的路径可能是变化的
-            Dim result As TypeEntry() = LQuery.ToArray(
-                Function(x) New TypeEntry With {
-                    .Func = x.x.Name,
-                    .name = x.attr.Type,
-                    .TypeId = New Scripting.MetaData.TypeInfo With {
-                        .assm = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name,
-                        .FullIdentity = x.attr.RefType.FullName
-                    },   ' 实体类型的信息
-                    .Repository = New Scripting.MetaData.TypeInfo With {
-                        .assm = path,
-                        .FullIdentity = x.x.DeclaringType.FullName
-                    }   ' 数据源的方法信息
-                })
+            Dim result As TypeEntry() = LQuery _
+                .Select(Function(x)
+                            Return New TypeEntry With {
+                                .Func = x.x.Name,
+                                .name = x.attr.Type,
+                                .TypeId = New Scripting.MetaData.TypeInfo With {
+                                    .assm = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name,
+                                    .FullIdentity = x.attr.RefType.FullName
+                                },   ' 实体类型的信息
+                                .Repository = New Scripting.MetaData.TypeInfo With {
+                                    .assm = path,
+                                    .FullIdentity = x.x.DeclaringType.FullName
+                                }   ' 数据源的方法信息
+                            }
+                        End Function) _
+                .ToArray
             Return result
         End Function
 

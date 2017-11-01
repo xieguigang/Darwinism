@@ -170,7 +170,7 @@ Namespace Asymmetric
         <Protocol(Protocols.Protocols.GetInstanceList)>
         Private Function GetInstanceList() As RequestStream
             Dim list As Microsoft.VisualBasic.Net.IPEndPoint() =
-                Me._instanceList.Values.ToArray(Function(svr) svr.Portal)
+                Me._instanceList.Values.Select(Function(svr) svr.Portal).ToArray
             Dim xml As String = list.GetXml
             Return New RequestStream(0, HTTP_RFC.RFC_OK, xml)
         End Function

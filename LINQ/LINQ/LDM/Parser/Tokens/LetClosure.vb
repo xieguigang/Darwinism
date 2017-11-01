@@ -64,7 +64,7 @@ Namespace LDM.Statements.Tokens
             Name = Source.Tokens.First.Value
 
             If __isEquals(Source.Tokens(1)) Then
-                Code = Source.Tokens.ToArray(Function(x) x.Value).JoinBy(" ")
+                Code = Source.Tokens.Select(Function(x) x.Value).JoinBy(" ")
             Else
                 Dim sk As Integer
 
@@ -85,7 +85,7 @@ Namespace LDM.Statements.Tokens
                 End If
 
                 Dim expr = Source.Tokens.Skip(sk)
-                Code = expr.ToArray(Function(x) x.Value).JoinBy(" ")
+                Code = expr.Select(Function(x) x.Value).JoinBy(" ")
                 Code = $"{Name} As {Type} = {Code}"
             End If
         End Sub
@@ -117,7 +117,7 @@ Namespace LDM.Statements.Tokens
                 End If
             Loop
 
-            Dim value = list.ToArray(Function(x) New LetClosure(x, parent, types))
+            Dim value = list.Select(Function(x) New LetClosure(x, parent, types)).ToArray
             Return value
         End Function
 
@@ -138,7 +138,7 @@ Namespace LDM.Statements.Tokens
                 End If
             Loop
 
-            Dim value = list.ToArray(Function(x) New LetClosure(x, parent, types))
+            Dim value = list.Select(Function(x) New LetClosure(x, parent, types)).ToArray
             Return value
         End Function
     End Module

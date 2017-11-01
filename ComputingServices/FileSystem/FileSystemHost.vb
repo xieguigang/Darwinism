@@ -252,7 +252,7 @@ Namespace FileSystem
         ''' <returns>A read-only collection of all available drives as System.IO.DriveInfo objects.</returns>
         <Protocol(FileSystemAPI.Drives)>
         Private Function Drives(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim lst = FileIO.FileSystem.Drives.ToArray(Function(x) x.GetJson)
+            Dim lst = FileIO.FileSystem.Drives.Select(Function(x) x.GetJson).ToArray
             Return New RequestStream(lst.GetJson)
         End Function
 

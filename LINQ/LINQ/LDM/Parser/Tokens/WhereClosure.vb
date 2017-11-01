@@ -39,7 +39,7 @@ Namespace LDM.Statements.Tokens
 
         Sub New(tokens As ClosureTokens(), parent As LinqStatement)
             Call MyBase.New(TokenIcer.Tokens.Where, tokens, parent)
-            Code = Source.Tokens.ToArray(Function(x) x.Value).JoinBy(" ")
+            Code = Source.Tokens.Select(Function(x) x.Value).JoinBy(" ")
         End Sub
 
         ''' <summary>
@@ -56,7 +56,7 @@ Namespace LDM.Statements.Tokens
                     x.Value = obj
                 End If
             Next
-            Expr = String.Join(" ", tokens.ToArray(Function(x) x.Value))
+            Expr = String.Join(" ", tokens.Select(Function(x) x.Value).ToArray)
             Expr = GetCode(Expr, type)
 
             Dim project = compiler.Compile(Expr, Expr)

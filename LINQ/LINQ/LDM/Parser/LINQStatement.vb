@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::59c15cf3e211b70eaa850f9fe702b92b, ..\sciBASIC.ComputingServices\LINQ\LINQ\LDM\Parser\LINQStatement.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -112,8 +112,8 @@ Namespace LDM.Statements
                 Dim code As String =
                     LinqClosure.BuildClosure(var.Name,
                                              var.TypeId,
-                                             PreDeclare.ToArray(Function(x) x.Code),
-                                             AfterDeclare.ToArray(Function(x) x.Code),
+                                             PreDeclare.Select(Function(x) x.Code).ToArray,
+                                             AfterDeclare.Select(Function(x) x.Code).ToArray,
                                              SelectClosure.Projects,
                                              Where.Code)
                 Return code
@@ -155,7 +155,7 @@ Namespace LDM.Statements
             }
 
             If String.IsNullOrEmpty(text) Then
-                statement._Text = String.Join(" ", source.ToArray(Function(x) x.Text))
+                statement._Text = String.Join(" ", source.Select(Function(x) x.Text).ToArray)
             End If
 
             Return __innerParser(tokens, types, statement)

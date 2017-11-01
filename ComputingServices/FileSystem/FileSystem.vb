@@ -91,7 +91,7 @@ Namespace FileSystem
                 Dim invoke As New AsynInvoke(_Portal)
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Dim array As String() = req.GetUTF8String.LoadObject(Of String())
-                Dim lst As DriveInfo() = array.ToArray(Function(s) s.LoadObject(Of DriveInfo))
+                Dim lst As DriveInfo() = array.Select(Function(s) s.LoadObject(Of DriveInfo)).ToArray
                 Return New ReadOnlyCollection(Of System.IO.DriveInfo)(CType(lst, IList(Of System.IO.DriveInfo)))
             End Get
         End Property

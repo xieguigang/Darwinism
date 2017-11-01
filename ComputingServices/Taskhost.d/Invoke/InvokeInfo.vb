@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::e3154a8dded79e2bcae1dfbc5bea0a74, ..\sciBASIC.ComputingServices\ComputingServices\Taskhost.d\Invoke\InvokeInfo.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2016 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -108,20 +108,20 @@ Namespace TaskHost
         ''' <param name="args">json</param>
         ''' <returns></returns>
         Public Shared Function GetParameters(method As MethodInfo, args As String()) As Object()
-            Dim params As Type() = method.GetParameters.ToArray(Function(x) x.ParameterType)
-            Dim values As Object() = args.ToArray(Function(x, idx) JsonContract.LoadObject(x, params(idx)))
+            Dim params As Type() = method.GetParameters.Select(Function(x) x.ParameterType).ToArray
+            Dim values As Object() = args.Select(Function(x, idx) JsonContract.LoadObject(x, params(idx))).ToArray
             Return values
         End Function
 
         Public Sub SetArgs(ParamArray args As Object())
-            Me.Parameters = args.ToArray(Function(x) New Argv(x))
+            Me.Parameters = args.Select(Function(x) New Argv(x)).ToArray
         End Sub
 
         Public Shared Function CreateObject(func As [Delegate], args As Object()) As InvokeInfo
             Dim type As Type = func.Method.DeclaringType
             Dim assm As Assembly = type.Assembly
             Dim name As String = func.Method.Name
-            Dim params As Argv() = args.ToArray(Function(x) New Argv(x))  ' 由于函数调用的参数的类型可能是基类，所以json序列化操作会存在问题，在这里使用这个新的参数构建模块来避免这个问题
+            Dim params As Argv() = args.Select(Function(x) New Argv(x)).ToArray   ' 由于函数调用的参数的类型可能是基类，所以json序列化操作会存在问题，在这里使用这个新的参数构建模块来避免这个问题
 
             Return New InvokeInfo With {
                 .assm = FileIO.FileSystem.GetFileInfo(assm.Location).Name,

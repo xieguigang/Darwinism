@@ -76,7 +76,7 @@ Namespace Framework.Provider.ImportsAPI
             Dim key As String = ns.ToLower
 
             If __nsList.ContainsKey(key) Then
-                Return __nsList(key).Modules.ToArray(Function(x) x.GetType)
+                Return __nsList(key).Modules.Select(Function(x) x.GetType).ToArray
             Else
                 Return New Type() {}
             End If

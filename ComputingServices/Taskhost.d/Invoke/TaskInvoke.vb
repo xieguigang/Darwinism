@@ -101,7 +101,7 @@ Namespace TaskHost
         ''' <returns></returns>
         Private Shared Function __invoke(params As InvokeInfo, ByRef value As Type) As Object
             Dim func As MethodInfo = params.GetMethod
-            Dim paramsValue As Object() = params.Parameters.ToArray(Function(arg) arg.GetValue)
+            Dim paramsValue As Object() = params.Parameters.Select(Function(arg) arg.GetValue).ToArray
             Dim x As Object = func.Invoke(Nothing, paramsValue)
             value = func.ReturnType
             Return x
@@ -153,7 +153,7 @@ Namespace TaskHost
         Private Function LinqSelect(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim params As InvokeInfo = JsonContract.LoadObject(Of InvokeInfo)(args.GetUTF8String) ' 得到远程函数指针信息
             Dim func As MethodInfo = params.GetMethod
-            Dim paramsValue As Object() = params.Parameters.ToArray(Function(arg) arg.GetValue)
+            Dim paramsValue As Object() = params.Parameters.Select(Function(arg) arg.GetValue).ToArray
             Dim source As IEnumerable = DirectCast(paramsValue(Scan0), IEnumerable)
             Dim type As Type = func.ReturnType
 
