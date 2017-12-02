@@ -104,11 +104,11 @@ Public Class RESTProvider : Inherits HttpServer
 
         Select Case url
             Case "/move_next.vb"
-                Call p.WriteLine(LinqProvider.MoveNext(args.requestParser()))
+                Call p.WriteLine(LinqProvider.MoveNext(args.QueryStringParameters))
             Case "/helps"
                 Call p.WriteLine(__helps)
             Case "/close.vb"
-                Call p.WriteLine(LinqProvider.Free(args.requestParser()))
+                Call p.WriteLine(LinqProvider.Free(args.QueryStringParameters))
             Case Else ' 打开linq查询
                 Dim Linq As LinqEntry = LinqProvider.OpenQuery(url, args)
                 Call p.outputStream.WriteLine(Linq.GetJson)
