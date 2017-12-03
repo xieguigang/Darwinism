@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95f49fcdbd0be0d1f6f4972725fc6951, ..\sciBASIC.ComputingServices\RQL\Repository\LinqAPI.vb"
+﻿#Region "Microsoft.VisualBasic::22586192046998227a38d880c5be5068, ..\sciBASIC.ComputingServices\RQL\Repository\LinqAPI.vb"
 
     ' Author:
     ' 

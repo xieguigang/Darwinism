@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c76025e9fe5c6010c1a38050ed59838b, ..\sciBASIC.ComputingServices\LINQ\LINQ\APP\Program.vb"
+﻿#Region "Microsoft.VisualBasic::9c265c0ee6f7456eee307ab41d5c6764, ..\sciBASIC.ComputingServices\LINQ\LINQ\APP\Program.vb"
 
     ' Author:
     ' 
@@ -46,4 +46,3 @@ Module Program
         Return 0
     End Function
 End Module
-

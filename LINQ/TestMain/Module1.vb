@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b73d4049cd06306a2eb6ef987c504b, ..\sciBASIC.ComputingServices\LINQ\TestMain\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::6c1651c14c37d67dda951eb5f148917d, ..\sciBASIC.ComputingServices\LINQ\TestMain\Module1.vb"
 
     ' Author:
     ' 
@@ -157,4 +157,3 @@ Module Module1
         Dim n = p.ParseExpression("$($(test2 pp $rt) -> test_func par1 $ffjhg par2 $dee) -> test3 p3 $($(test5 de) -> test4 ppp $gr)")
     End Sub
 End Module
-

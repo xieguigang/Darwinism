@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02586dc19378e7a8117eec6568f4eb82, ..\sciBASIC.ComputingServices\LINQ\LINQ\LDM\TokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::38534fcef87a58ef76662d8389586f1f, ..\sciBASIC.ComputingServices\LINQ\LINQ\LDM\TokenIcer.vb"
 
     ' Author:
     ' 
@@ -124,5 +124,3 @@ Namespace LDM.Statements.TokenIcer
         End Function
     End Module
 End Namespace
-
-

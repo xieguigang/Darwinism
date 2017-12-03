@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7891e72e7d28353bed76decf7188d042, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\SDK_PATH.vb"
+﻿#Region "Microsoft.VisualBasic::7baaa5a3f64428d04e206b51a2f51236, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\SDK_PATH.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' .NET Framework的Reference Assembly文件夹的位置
@@ -66,4 +65,3 @@ Module SDK_PATH
         End Get
     End Property
 End Module
-

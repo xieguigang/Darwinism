@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4156be6e90875658dc7f74f528e589fe, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\Objects\DriveInfo.vb"
+﻿#Region "Microsoft.VisualBasic::9ef10319ded16d07938b6505bba5683c, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\Objects\DriveInfo.vb"
 
     ' Author:
     ' 

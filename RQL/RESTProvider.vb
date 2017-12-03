@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c951da0c0b9797f3290e55bcbd9b1a1, ..\sciBASIC.ComputingServices\RQL\RESTProvider.vb"
+﻿#Region "Microsoft.VisualBasic::e007d8676498801a770335eff8178619, ..\sciBASIC.ComputingServices\RQL\RESTProvider.vb"
 
     ' Author:
     ' 
@@ -126,4 +126,3 @@ Public Class RESTProvider : Inherits HttpServer
     Public Overrides Sub handleOtherMethod(p As HttpProcessor)
     End Sub
 End Class
-

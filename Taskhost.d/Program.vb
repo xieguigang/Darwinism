@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f14b2e70fbbc2b07d7ca4f54af272165, ..\sciBASIC.ComputingServices\Examples\ServerCloud\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a1c102abac445c4617fc5ca2ea899f5c, ..\sciBASIC.ComputingServices\Taskhost.d\Program.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@ Module Program
         Return New TaskInvoke(port).Run()  ' No more code needs on your cloud server, just needs 2 lines code to running your task host.
     End Function
 End Module
-

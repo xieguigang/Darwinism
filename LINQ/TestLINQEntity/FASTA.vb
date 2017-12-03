@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ff13fa4bd46b2ae6dfd0d04ad1ec416, ..\sciBASIC.ComputingServices\LINQ\TestLINQEntity\FASTA.vb"
+﻿#Region "Microsoft.VisualBasic::314b9fb80708456544dca1e2a006ac3d, ..\sciBASIC.ComputingServices\LINQ\TestLINQEntity\FASTA.vb"
 
     ' Author:
     ' 
@@ -385,4 +385,3 @@ Public Class FASTA : Inherits File
         Return e.Generate
     End Operator
 End Class
-

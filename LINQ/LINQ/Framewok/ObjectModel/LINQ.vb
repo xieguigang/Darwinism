@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dcbf0a3fbbc9fc28690b3392f0e4ffc, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\ObjectModel\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::8dcbf0a3fbbc9fc28690b3392f0e4ffc, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\ObjectModel\LINQ.vb"
 
     ' Author:
     ' 

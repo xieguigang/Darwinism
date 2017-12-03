@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::945b81b873bf49a5c24c9ce9144d11f4, ..\sciBASIC.ComputingServices\LINQ\TestLINQEntity\File.vb"
+﻿#Region "Microsoft.VisualBasic::c04bc9961a98e6bbdc5decd89a2bef34, ..\sciBASIC.ComputingServices\LINQ\TestLINQEntity\File.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Public Class File : Implements IDisposable
         Return GetType(System.String)
     End Function
 End Class
-

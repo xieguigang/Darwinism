@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd64663d7e9a65ed54ad5a17d803e34d, ..\sciBASIC.ComputingServices\ComputingServices\Taskhost.d\Object\ShadowsCopy.vb"
+﻿#Region "Microsoft.VisualBasic::d73b4e69eb6584ee608a3cb5eaae3f95, ..\sciBASIC.ComputingServices\ComputingServices\Taskhost.d\Object\ShadowsCopy.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74261a99b8377e239a907217443cd6bf, ..\sciBASIC.ComputingServices\Examples\local\Program.vb"
+﻿#Region "Microsoft.VisualBasic::b8081d21dcc0f6a0b935f495194eecd7, ..\sciBASIC.ComputingServices\Examples\local\Program.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Module Program
         Dim resulkt = info.Invoke(Nothing)
     End Sub
 End Module
-

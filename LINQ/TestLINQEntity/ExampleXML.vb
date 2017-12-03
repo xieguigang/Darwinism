@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e93c0444ee61bcd224faf4ce96be0f1, ..\sciBASIC.ComputingServices\LINQ\TestLINQEntity\ExampleXML.vb"
+﻿#Region "Microsoft.VisualBasic::835865f0e113f7e6f3f966462751dcfc, ..\sciBASIC.ComputingServices\LINQ\TestLINQEntity\ExampleXML.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Public Class member
     <Xml.Serialization.XmlAttribute> Public Property name As String
     <Xml.Serialization.XmlElement> Public Property summary As String
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b175dd2863ef5f18cef06a39ffe111fa, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\ImportsAPI\ImportsNs.vb"
+﻿#Region "Microsoft.VisualBasic::ebdf4c087c6c5e3e08e1686f9bd712df, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\ImportsAPI\ImportsNs.vb"
 
     ' Author:
     ' 

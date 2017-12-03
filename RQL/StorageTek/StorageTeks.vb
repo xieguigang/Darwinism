@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2bc0b197bb0fbcf59f760873691bf62, ..\sciBASIC.ComputingServices\RQL\StorageTek\StorageTeks.vb"
+﻿#Region "Microsoft.VisualBasic::ebb40df87e60993346cb906951d1412c, ..\sciBASIC.ComputingServices\RQL\StorageTek\StorageTeks.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Namespace StorageTek
 

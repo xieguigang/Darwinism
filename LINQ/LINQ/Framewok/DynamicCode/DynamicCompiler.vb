@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fd6018333550a86d13cdb470a4f7250, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\DynamicCode\DynamicCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::dddc8069df021678502ca3d3bd821c93, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\DynamicCode\DynamicCompiler.vb"
 
     ' Author:
     ' 
