@@ -256,7 +256,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
     <ProjectReference Include="..\ComputingServices\ComputingServices.vbproj">
       <Project>{87383048-1b31-49b7-9fb7-0ded1b80ace8}</Project>
