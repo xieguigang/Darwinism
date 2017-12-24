@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::715e3ab225fabd35a0f4ca9d16b36d29, ..\sciBASIC.ComputingServices\Bootstrapping\GeneticAlgorithm\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::2209c5e6c4751ff4545c47ab0f06cf41, ..\sciBASIC.ComputingServices\Bootstrapping\GeneticAlgorithm\Protocol.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -56,4 +56,3 @@ Public Module Protocol
             observation.x.Last)
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9d46c2af65da98e4f5282ab5935faad, ..\sciBASIC.ComputingServices\GAF_distribute_computing\Demo\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c8132cea4e9fbd7231c5e680eaa87731, ..\sciBASIC.ComputingServices\GAF_distribute_computing\Demo\Program.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -33,4 +33,3 @@ Module Program
     End Sub
 
 End Module
-
