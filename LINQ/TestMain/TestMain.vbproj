@@ -150,7 +150,7 @@
       <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
       <Name>SMRUCC.WebCloud.HTTPInternal</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+    <ProjectReference Include="..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
     </ProjectReference>
