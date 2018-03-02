@@ -1,35 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::930afb3dd9623c6c97c883eb80c87741, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\Protocols\FileOpen.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Protocols.Reflection
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FileSystem.Protocols
@@ -117,18 +117,18 @@ Namespace FileSystem.Protocols
 
         Sub New(raw As Byte())
             Dim buf As Byte() = New Byte(INT32 - 1) {}
-            Dim p As Integer = Scan0
+            Dim p As int = Scan0
             Dim handleLen As Integer
             Dim bufferLen As Integer
 
-            Call Array.ConstrainedCopy(raw, p.Move(INT32), buf, Scan0, INT32) : length = BitConverter.ToInt32(buf, Scan0)
-            Call Array.ConstrainedCopy(raw, p.Move(INT32), buf, Scan0, INT32) : offset = BitConverter.ToInt32(buf, Scan0)
-            Call Array.ConstrainedCopy(raw, p.Move(INT32), buf, Scan0, INT32) : handleLen = BitConverter.ToInt32(buf, Scan0)
-            Call Array.ConstrainedCopy(raw, p.Move(INT32), buf, Scan0, INT32) : bufferLen = BitConverter.ToInt32(buf, Scan0)
+            Call Array.ConstrainedCopy(raw, p + INT32, buf, Scan0, INT32) : length = BitConverter.ToInt32(buf, Scan0)
+            Call Array.ConstrainedCopy(raw, p + INT32, buf, Scan0, INT32) : offset = BitConverter.ToInt32(buf, Scan0)
+            Call Array.ConstrainedCopy(raw, p + INT32, buf, Scan0, INT32) : handleLen = BitConverter.ToInt32(buf, Scan0)
+            Call Array.ConstrainedCopy(raw, p + INT32, buf, Scan0, INT32) : bufferLen = BitConverter.ToInt32(buf, Scan0)
 
             buf = New Byte(handleLen - 1) {}
-            Call Array.ConstrainedCopy(raw, p.Move(handleLen), buf, Scan0, handleLen)
-            Dim json As String = System.Text.Encoding.UTF8.GetString(buf)
+            Call Array.ConstrainedCopy(raw, p + handleLen, buf, Scan0, handleLen)
+            Dim json As String = Encoding.UTF8.GetString(buf)
             Handle = json.LoadObject(Of FileHandle)
             buffer = New Byte(bufferLen - 1) {}
             Call Array.ConstrainedCopy(raw, p, buffer, Scan0, bufferLen)
@@ -144,15 +144,15 @@ Namespace FileSystem.Protocols
                                                  INT32 +  ' buffer length
                                                  handle.Length +
                                                  buffer.Length - 1) {}
-            Dim p As Integer = Scan0
+            Dim p As int = Scan0
             Dim handleLen As Byte() = BitConverter.GetBytes(handle.Length)
             Dim bufferLen As Byte() = BitConverter.GetBytes(buffer.Length)
 
-            Call Array.ConstrainedCopy(length, Scan0, chunkBuffer, p.Move(INT32), INT32)
-            Call Array.ConstrainedCopy(offset, Scan0, chunkBuffer, p.Move(INT32), INT32)
-            Call Array.ConstrainedCopy(handleLen, Scan0, chunkBuffer, p.Move(INT32), INT32)
-            Call Array.ConstrainedCopy(bufferLen, Scan0, chunkBuffer, p.Move(INT32), INT32)
-            Call Array.ConstrainedCopy(handle, Scan0, chunkBuffer, p.Move(handle.Length), handle.Length)
+            Call Array.ConstrainedCopy(length, Scan0, chunkBuffer, p + INT32, INT32)
+            Call Array.ConstrainedCopy(offset, Scan0, chunkBuffer, p + INT32, INT32)
+            Call Array.ConstrainedCopy(handleLen, Scan0, chunkBuffer, p + INT32, INT32)
+            Call Array.ConstrainedCopy(bufferLen, Scan0, chunkBuffer, p + INT32, INT32)
+            Call Array.ConstrainedCopy(handle, Scan0, chunkBuffer, p + handle.Length, handle.Length)
             Call Array.ConstrainedCopy(buffer, Scan0, chunkBuffer, p, buffer.Length)
 
             Return chunkBuffer
