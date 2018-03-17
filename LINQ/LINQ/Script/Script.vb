@@ -46,7 +46,7 @@ Namespace Script
         Dim __script As New List(Of TokenBase)
 
         Sub New(script As String, runtime As DynamicsRuntime)
-            Dim lines As String() = script.lTokens
+            Dim lines As String() = script.LineTokens
 
             For Each line As String In lines
                 Dim tokens = TokenIcer.GetTokens(line.Trim)
