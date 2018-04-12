@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports r = System.Text.RegularExpressions.Regex
 
-Module TextParsers
+Public Module TextParsers
 
     Const DateTimePattern$ = "\d+[-]\d+[-]\d+ \d+[:]\d+[:]\d+ \+\d+ [A-Z]+"
 
@@ -16,14 +16,14 @@ Module TextParsers
 
         For Each line As String In lines
             Dim time$ = r.Match(line, DateTimePattern, RegexICMul).Value
-            Dim t = Mid(line, time.Length).StringSplit("\s+")
+            Dim t = Mid(line, time.Length + 1S).StringSplit("\s+")
 
             Yield New Bucket With {
                 .meta = New Dictionary(Of String, String) From {
                     {NameOf(Bucket.CreationTime), time},
-                    {NameOf(Bucket.Region), t(0)},
-                    {NameOf(Bucket.StorageClass), t(1)},
-                    {NameOf(Bucket.BucketName), t(2)}
+                    {NameOf(Bucket.Region), t(1)},
+                    {NameOf(Bucket.StorageClass), t(2)},
+                    {NameOf(Bucket.BucketName), t(3)}
                 }
             }
         Next
@@ -41,15 +41,15 @@ Module TextParsers
         For Each line As String In lines
             Dim time$ = r.Match(line, DateTimePattern, RegexICMul).Value
             ' 假设在文件的路径之中不会存在连续的多个空格
-            Dim t = Mid(line, time.Length).StringSplit("\s{2,}")
+            Dim t = Mid(line, time.Length + 1S).StringSplit("\s{2,}")
 
             Yield New [Object] With {
                 .meta = New Dictionary(Of String, String) From {
                     {NameOf([Object].LastModifiedTime), time},
-                    {NameOf([Object].Size), t(0)},
-                    {NameOf([Object].StorageClass), t(1)},
-                    {NameOf([Object].ETAG), t(2)},
-                    {NameOf([Object].ObjectName), t(3)}
+                    {NameOf([Object].Size), t(1)},
+                    {NameOf([Object].StorageClass), t(2)},
+                    {NameOf([Object].ETAG), t(3)},
+                    {NameOf([Object].ObjectName), t(4)}
                 }
             }
         Next

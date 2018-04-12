@@ -25,7 +25,7 @@ Public Class Bucket : Inherits MetaData
 
     Public ReadOnly Property BucketName As String
         Get
-            Return Mid(getValue(), Protocol.Length)
+            Return Mid(getValue(), Protocol.Length + 1)
         End Get
     End Property
 
