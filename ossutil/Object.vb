@@ -1,4 +1,7 @@
-﻿Public Class [Object] : Inherits MetaData
+﻿''' <summary>
+''' File/Directory object
+''' </summary>
+Public Class [Object] : Inherits MetaData
 
     Public ReadOnly Property LastModifiedTime As String
         Get

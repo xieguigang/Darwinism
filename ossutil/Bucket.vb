@@ -3,6 +3,8 @@
 ''' </summary>
 Public Class Bucket : Inherits MetaData
 
+    Public Const Protocol$ = "oss://"
+
     Public ReadOnly Property CreationTime As String
         Get
             Return getValue()
@@ -23,9 +25,13 @@ Public Class Bucket : Inherits MetaData
 
     Public ReadOnly Property BucketName As String
         Get
-            Return getValue()
+            Return Mid(getValue(), Protocol.Length)
         End Get
     End Property
+
+    Public Function URI(path As String) As String
+        Return $"oss://{BucketName}/{path}"
+    End Function
 
     Public Overrides Function ToString() As String
         Return {CreationTime, Region, StorageClass, BucketName}.JoinBy(vbTab)
