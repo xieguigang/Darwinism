@@ -57,7 +57,9 @@ Public Class FileSystem
         If Me.Bucket Is Nothing Then
             Throw New InvalidExpressionException($"Bucket name `{bucket}` is invalid or invalid ossfs credential info!")
         Else
-            Objects = driver.ListObjects(Me.Bucket.URI(directory)).ToArray
+            Objects = driver _
+                .ListObjects(Me.Bucket.URI(directory)) _
+                .ToArray
             tree = FilesTree(Objects, Me.Bucket.BucketName)
         End If
     End Sub
