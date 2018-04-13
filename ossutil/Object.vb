@@ -34,6 +34,6 @@ Public Class [Object] : Inherits MetaData
     End Property
 
     Public Overrides Function ToString() As String
-        Return {LastModifiedTime, Size, StorageClass, ETAG, ObjectName}.JoinBy(vbTab)
+        Return ObjectName
     End Function
 End Class

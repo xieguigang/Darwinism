@@ -36,7 +36,7 @@ Public Class FileSystem
         Else
             Objects = driver.ListObjects(Me.Bucket.URI(directory)).ToArray
             CurrentDirectory = Objects.First
-            tree = FilesTree(Objects)
+            tree = FilesTree(Objects, Me.Bucket.BucketName)
         End If
     End Sub
 
@@ -52,10 +52,10 @@ Public Class FileSystem
         Me.Objects = objects
         Me.CurrentDirectory = objects(0)
 
-        tree = FilesTree(objects)
+        tree = FilesTree(objects, bucket.BucketName)
     End Sub
 
-    Private Shared Function FilesTree(objects As [Object]()) As Tree(Of [Object])
+    Private Shared Function FilesTree(objects As [Object](), bucketName$) As Tree(Of [Object])
         Dim tokenTuples = objects.Select(Function(obj)
                                              Dim path$() = obj.ObjectName _
                                                               .Split("/"c) _
@@ -67,8 +67,8 @@ Public Class FileSystem
                                  .ToArray
         Dim node As Tree(Of [Object])
         Dim key$
-        Dim root As New Tree(Of [Object]) With {
-            .Label = "/",
+        Dim root As New Tree(Of [Object])("/") With {
+            .Label = $"oss://{bucketName}",
             .Childs = New Dictionary(Of String, Tree(Of [Object]))
         }
 
@@ -83,7 +83,7 @@ Public Class FileSystem
                         node.Data = obj.obj
                     Else
                         If Not node.Childs.ContainsKey(key) Then
-                            Dim newNode As New Tree(Of [Object]) With {
+                            Dim newNode As New Tree(Of [Object])("/") With {
                                 .Label = key,
                                 .Childs = New Dictionary(Of String, Tree(Of [Object])),
                                 .Parent = node
@@ -101,7 +101,6 @@ Public Class FileSystem
                     End If
                 Next
             End With
-
         Next
 
         Return root
