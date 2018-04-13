@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports Microsoft.VisualBasic.Language
 
 Public Module Extensions
 
@@ -20,8 +19,6 @@ Public Module Extensions
     ''' 
     <Extension>
     Public Function ChangeFileSystemContext(current As Tree(Of [Object]), relativePath$(), Optional root$ = "/") As Tree(Of [Object])
-        Dim relWords As New List(Of String)
-
         For Each name As String In relativePath
             If name = "." Then
                 ' No change

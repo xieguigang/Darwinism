@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.GraphTheory
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
@@ -14,6 +15,12 @@ Public Class FileSystem
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CurrentDirectory As [Object]
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return tree.Data
+        End Get
+    End Property
+
     Public ReadOnly Property Bucket As Bucket
     Public ReadOnly Property Objects As [Object]()
 
@@ -36,7 +43,6 @@ Public Class FileSystem
         Else
             Objects = driver.ListObjects(Me.Bucket.URI(directory)).ToArray
             tree = FilesTree(Objects, Me.Bucket.BucketName)
-            CurrentDirectory = tree.Data
         End If
     End Sub
 
@@ -52,7 +58,6 @@ Public Class FileSystem
         Me.Objects = objects
 
         tree = FilesTree(objects, bucket.BucketName)
-        CurrentDirectory = tree.Data
     End Sub
 
     ''' <summary>
@@ -60,12 +65,10 @@ Public Class FileSystem
     ''' </summary>
     ''' <param name="bucket"></param>
     ''' <param name="objects"></param>
-    ''' <param name="currentDirectory"></param>
     ''' <param name="driver"></param>
-    Sub New(bucket As Bucket, objects As [Object](), currentDirectory As [Object], tree As Tree(Of [Object]), driver As CLI)
+    Sub New(bucket As Bucket, objects As [Object](), tree As Tree(Of [Object]), driver As CLI)
         Me.Bucket = bucket
         Me.Objects = objects
-        Me.CurrentDirectory = currentDirectory
         Me.driver = driver
         Me.tree = tree
     End Sub
@@ -137,21 +140,18 @@ Public Class FileSystem
     ''' 所有使用``/``起始的都是绝对路径
     ''' </remarks>
     Public Function ChangeDirectory(directory As String) As FileSystem
-        Dim target As [Object]
-        Dim path$()
-
-        directory = directory.StringReplace("[/]{2,}", "/").Trim("/"c)
-        path = directory.Split("/"c)
+        Dim target As Tree(Of [Object])
+        Dim path$() = directory.SplitPath
 
         If directory.First = "/" Then
             ' 绝对路径
-            target = tree.VisitTree(path).Data
+            target = tree.VisitTree(path)
         Else
             ' 相对路径
-            target = tree.ChangeFileSystemContext(path).Data
+            target = tree.ChangeFileSystemContext(path)
         End If
 
-        Return New FileSystem(Bucket, Objects, target, tree, driver)
+        Return New FileSystem(Bucket, Objects, target, driver)
     End Function
 
     Public Overrides Function ToString() As String
