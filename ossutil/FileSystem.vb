@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports ThinkVB.FileSystem.OSS.Model
 
 ''' <summary>
 ''' 对阿里云OSS文件系统进行抽象的线程不安全的OSS文件系统对象

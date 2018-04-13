@@ -2,7 +2,11 @@
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService
+Imports ThinkVB.FileSystem.OSS.Model
 
+''' <summary>
+''' ``ossutil`` CLI driver
+''' </summary>
 Public Class CLI : Inherits InteropService
 
     ReadOnly config$

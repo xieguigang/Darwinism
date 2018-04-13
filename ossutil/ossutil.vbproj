@@ -104,13 +104,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bucket.vb" />
+    <Compile Include="Model\Bucket.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="MetaData.vb" />
-    <Compile Include="Object.vb" />
+    <Compile Include="Model\MetaData.vb" />
+    <Compile Include="Model\Object.vb" />
     <Compile Include="FileSystem.vb" />
     <Compile Include="CLI.vb" />
-    <Compile Include="TextParsers.vb" />
+    <Compile Include="Model\TextParsers.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
