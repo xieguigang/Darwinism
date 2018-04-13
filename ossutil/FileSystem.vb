@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' 线程不安全的OSS文件系统对象
@@ -6,7 +7,7 @@
 Public Class FileSystem
 
     Dim driver As CLI
-    Dim tree As Tree(Of Dictionary(Of String, [Object]))
+    Dim tree As Tree(Of [Object])
 
     ''' <summary>
     ''' 在oss文件系统之中的当前的路径
@@ -54,7 +55,7 @@ Public Class FileSystem
         tree = FilesTree(objects)
     End Sub
 
-    Private Shared Function FilesTree(objects As [Object]()) As Tree(Of Dictionary(Of String, [Object]))
+    Private Shared Function FilesTree(objects As [Object]()) As Tree(Of [Object])
         Dim tokenTuples = objects.Select(Function(obj)
                                              Dim path$() = obj.ObjectName _
                                                               .Split("/"c) _
@@ -64,7 +65,46 @@ Public Class FileSystem
                                          End Function) _
                                  .OrderBy(Function(obj) obj.path.Length) _
                                  .ToArray
+        Dim node As Tree(Of [Object])
+        Dim key$
+        Dim root As New Tree(Of [Object]) With {
+            .Label = "/",
+            .Childs = New Dictionary(Of String, Tree(Of [Object]))
+        }
 
+        For Each obj As (path As String(), obj As [Object]) In tokenTuples
+            node = root
+
+            With obj.path
+                For i As Integer = 0 To .Length - 1
+                    key = .ByRef(i)
+
+                    If key.StringEmpty AndAlso i = .Length - 1 AndAlso obj.obj.IsDirectory Then
+                        node.Data = obj.obj
+                    Else
+                        If Not node.Childs.ContainsKey(key) Then
+                            Dim newNode As New Tree(Of [Object]) With {
+                                .Label = key,
+                                .Childs = New Dictionary(Of String, Tree(Of [Object])),
+                                .Parent = node
+                            }
+
+                            If i = .Length - 1 Then
+                                ' 这是一个新的文件节点
+                                newNode.Data = obj.obj
+                            End If
+
+                            node.Childs.Add(key, newNode)
+                        End If
+
+                        node = node.Childs(key)
+                    End If
+                Next
+            End With
+
+        Next
+
+        Return root
     End Function
 
     Public Overrides Function ToString() As String
