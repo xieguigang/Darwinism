@@ -200,12 +200,13 @@ Public Class FileSystem
         Return context
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function tempFile() As DefaultValue(Of String)
-        Return New DefaultValue(Of String) With {
-            .LazyValue = New Lazy(Of String)(Function() App.GetAppSysTempFile(".tmp", App.PID))
-        }
-    End Function
+    ReadOnly populateTempFile As Func(Of String) =
+        Function() As String
+            Return App.GetAppSysTempFile(".tmp", App.PID)
+        End Function
+    ReadOnly tempFile As New DefaultValue(Of String) With {
+        .LazyValue = New Lazy(Of String)(populateTempFile)
+    }
 
     ''' <summary>
     ''' Get file from OSS
@@ -216,7 +217,7 @@ Public Class FileSystem
     Public Function [Get](path$, Optional save$ = Nothing) As String
         Dim target As Tree(Of [Object]) = GetTarget(path)
 
-        With save Or tempFile()
+        With save Or tempFile
             driver.Copy(from:=target.QualifyName, [to]:= .ByRef)
             ' returns normalized local filesystem full path
             path = .GetFullPath
