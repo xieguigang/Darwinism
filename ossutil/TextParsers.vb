@@ -54,4 +54,11 @@ Public Module TextParsers
             }
         Next
     End Function
+
+    ' FinishWithError: Scanned 1 objects. Error num: 1. OK num: 0, Transfer size: 0.
+    ' Error: oss: service returned without a response body (404 Not Found), Bucket=bionovogene-xcms, Object=mz.biodeep.cn/data/upload/rawfiles/225/181/1761/T201710170947282738.mzXML!
+    '<Extension>
+    'Public Iterator Function PopulateErrors(stdout As String) As IEnumerable(Of String)
+
+    'End Function
 End Module

@@ -41,6 +41,14 @@ Public Class CLI : Inherits InteropService
     End Function
 
     Public Sub Copy(from$, to$)
-        Call RunProgram($"cp {from.CLIToken} {[to].CLIToken}").Run()
+        Dim stdout$ = RunProgram($"cp {from.CLIToken} {[to].CLIToken}").ShellExec
+
+        ' FinishWithError: Scanned 1 objects. Error num:  1. OK num: 0, Transfer size: 0.
+        ' Error: oss: service returned without a response body (404 Not Found), Bucket=bionovogene-xcms, Object=mz.biodeep.cn/data/upload/rawfiles/225/181/1761/T201710170947282738.mzXML!
+        If InStr(stdout, "FinishWithError:") > 0 Then
+#Disable Warning
+            Throw New ExecutionEngineException(stdout)
+#Enable Warning
+        End If
     End Sub
 End Class
