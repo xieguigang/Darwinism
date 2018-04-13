@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("aliyun ossutil CLI tool wrapper for .NET")>
+<Assembly: AssemblyTitle("Aliyun ossutil CLI tool wrapper for VB.NET")>
 <Assembly: AssemblyDescription("https://github.com/aliyun/ossutil")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyCompany("I@xieguigang.me")>
 <Assembly: AssemblyProduct("ossutil")>
-<Assembly: AssemblyCopyright("Copyright © 2018")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © ThinkVB 2018")>
+<Assembly: AssemblyTrademark("ThinkVB")>
 
 <Assembly: ComVisible(False)>
 
