@@ -1,13 +1,20 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 ''' <summary>
 ''' 对阿里云OSS文件系统进行抽象的线程不安全的OSS文件系统对象
 ''' </summary>
 Public Class FileSystem
 
+    ''' <summary>
+    ''' OSS cloud file system I/O driver
+    ''' </summary>
     Dim driver As CLI
+    ''' <summary>
+    ''' The tree graph of the <see cref="Objects"/>
+    ''' </summary>
     Dim tree As Tree(Of [Object])
 
     ''' <summary>
@@ -21,7 +28,15 @@ Public Class FileSystem
         End Get
     End Property
 
+    ''' <summary>
+    ''' File system root entry/device entry
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Bucket As Bucket
+    ''' <summary>
+    ''' Jump points
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Objects As [Object]()
 
     ''' <summary>
@@ -139,20 +154,85 @@ Public Class FileSystem
     ''' <remarks>
     ''' 所有使用``/``起始的都是绝对路径
     ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ChangeDirectory(directory As String) As FileSystem
-        Dim target As Tree(Of [Object])
-        Dim path$() = directory.SplitPath
+        Return New FileSystem(Bucket, Objects, GetTarget(path:=directory), driver)
+    End Function
 
-        If directory.First = "/" Then
+    Private Function GetTarget(path As String) As Tree(Of [Object])
+        If path.First = "/"c Then
             ' 绝对路径
-            target = tree.VisitTree(path)
+            Return tree.VisitTree(path.SplitPath)
         Else
             ' 相对路径
-            target = tree.ChangeFileSystemContext(path)
+            Return tree.ChangeFileSystemContext(path.SplitPath)
+        End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function tempFile() As DefaultValue(Of String)
+        Return New DefaultValue(Of String) With {
+            .LazyValue = New Lazy(Of String)(Function() App.GetAppSysTempFile(".tmp", App.PID))
+        }
+    End Function
+
+    ''' <summary>
+    ''' Get file from OSS
+    ''' </summary>
+    ''' <param name="path$">远程对象的相对路径或者绝对路径，要求这个远程对象必须要存在</param>
+    ''' <param name="save$"></param>
+    ''' <returns></returns>
+    Public Function [Get](path$, Optional save$ = Nothing) As String
+        Dim target As Tree(Of [Object]) = GetTarget(path)
+
+        With save Or tempFile()
+            driver.Copy(from:=target.QualifyName, [to]:= .ByRef)
+            ' returns normalized local filesystem full path
+            path = .GetFullPath
+        End With
+
+        Return path
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="local$"></param>
+    ''' <param name="remote$">不要求远程对象必须要存在</param>
+    Public Sub Put(local$, remote$)
+        Dim context As List(Of String)
+
+        remote = remote _
+            .Replace("\", "/") _
+            .StringReplace("[/]{2,}", "/")
+
+        If remote.First = "/"c Then
+            ' 绝对路径
+            ' 不进行任何处理？？
+            context = New List(Of String)
+        Else
+            ' 需要将相对路径转换为绝对路径
+            context = CurrentDirectory.ObjectName _
+                                      .SplitPath _
+                                      .Skip(2) _
+                                      .AsList
         End If
 
-        Return New FileSystem(Bucket, Objects, target, driver)
-    End Function
+        For Each name As String In remote.SplitPath
+            If name = "." Then
+                ' 不进行任何处理
+            ElseIf name = ".." Then
+                ' 访问父目录
+                context.Pop()
+            Else
+                context += name
+            End If
+        Next
+
+        remote = Bucket.URI(context.JoinBy("/"))
+        driver.Copy(from:=local, [to]:=remote)
+    End Sub
 
     Public Overrides Function ToString() As String
         Return CurrentDirectory.ToString
