@@ -161,13 +161,43 @@ Public Class FileSystem
     End Function
 
     Private Function GetTarget(path As String) As Tree(Of [Object])
+        ' context已经是一个经过归一化处理的完整路径了
+        Dim context$() = GetContext(tree.Data, path)
+        ' 绝对路径从root开始访问
+        Return tree.BacktrackingRoot.VisitTree(context)
+    End Function
+
+    Private Shared Function GetContext(current As [Object], path$) As String()
+        Dim context As List(Of String)
+
+        path = path _
+            .Replace("\", "/") _
+            .StringReplace("[/]{2,}", "/")
+
         If path.First = "/"c Then
             ' 绝对路径
-            Return tree.VisitTree(path.SplitPath)
+            ' 不进行任何处理？？
+            context = New List(Of String)
         Else
-            ' 相对路径
-            Return tree.ChangeFileSystemContext(path.SplitPath)
+            ' 需要将相对路径转换为绝对路径
+            context = current.ObjectName _
+                             .SplitPath _
+                             .Skip(2) _
+                             .AsList
         End If
+
+        For Each name As String In path.SplitPath
+            If name = "." Then
+                ' 不进行任何处理
+            ElseIf name = ".." Then
+                ' 访问父目录
+                context.Pop()
+            Else
+                context += name
+            End If
+        Next
+
+        Return context
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -201,36 +231,9 @@ Public Class FileSystem
     ''' <param name="local$"></param>
     ''' <param name="remote$">不要求远程对象必须要存在</param>
     Public Sub Put(local$, remote$)
-        Dim context As List(Of String)
-
-        remote = remote _
-            .Replace("\", "/") _
-            .StringReplace("[/]{2,}", "/")
-
-        If remote.First = "/"c Then
-            ' 绝对路径
-            ' 不进行任何处理？？
-            context = New List(Of String)
-        Else
-            ' 需要将相对路径转换为绝对路径
-            context = CurrentDirectory.ObjectName _
-                                      .SplitPath _
-                                      .Skip(2) _
-                                      .AsList
-        End If
-
-        For Each name As String In remote.SplitPath
-            If name = "." Then
-                ' 不进行任何处理
-            ElseIf name = ".." Then
-                ' 访问父目录
-                context.Pop()
-            Else
-                context += name
-            End If
-        Next
-
-        remote = Bucket.URI(context.JoinBy("/"))
+        Dim context = GetContext(path:=remote, current:=CurrentDirectory)
+        remote = context.JoinBy("/")
+        remote = Bucket.URI(remote)
         driver.Copy(from:=local, [to]:=remote)
     End Sub
 
