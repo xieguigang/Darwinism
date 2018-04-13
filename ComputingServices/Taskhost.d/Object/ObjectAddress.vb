@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c204ce452087e28df3bc1db32db57438, ..\sciBASIC.ComputingServices\ComputingServices\Taskhost.d\Object\ObjectAddress.vb"
+﻿#Region "Microsoft.VisualBasic::c204ce452087e28df3bc1db32db57438, ComputingServices\Taskhost.d\Object\ObjectAddress.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ObjectAddress
+    ' 
+    '         Properties: HashCode, TypeId
+    ' 
+    '         Function: [AddressOf], ReferenceAddress, (+2 Overloads) ReferenceEquals, ToString
+    ' 
+    '         Sub: __initHashCode, (+2 Overloads) Dispose
+    ' 
+    '         Operators: (+3 Overloads) <>, (+3 Overloads) =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

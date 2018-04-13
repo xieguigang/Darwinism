@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::59253114aa9e8b8df373f94adde3ab9d, ..\sciBASIC.ComputingServices\ComputingServices\Asymmetric\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::59253114aa9e8b8df373f94adde3ab9d, ComputingServices\Asymmetric\Protocols.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Protocols
+    ' 
+    ' 
+    '         Enum Protocols
+    ' 
+    '             GetInstanceList, GetLoad, NodeRegister, ShutdownInstance
+    ' 
+    ' 
+    ' 
+    '         Class RegisterPost
+    ' 
+    '             Properties: IPAddress, ProtocolEntry, uid
+    ' 
+    '             Function: FolkInstance, GetInstanceList, GetLoad
+    ' 
+    '  
+    ' 
+    '     Function: GetPostData, NodeRegister
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

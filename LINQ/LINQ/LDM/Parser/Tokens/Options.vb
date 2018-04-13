@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::08adc1044cef7c15b9c3b86e75d6a8cf, ..\sciBASIC.ComputingServices\LINQ\LINQ\LDM\Parser\Tokens\Options.vb"
+﻿#Region "Microsoft.VisualBasic::08adc1044cef7c15b9c3b86e75d6a8cf, LINQ\LINQ\LDM\Parser\Tokens\Options.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Options
+    ' 
+    '         Properties: OptionList
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f7f24491a91013d9f03e104100a02eb1, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\ImportsAPI\APIProvider.vb"
+﻿#Region "Microsoft.VisualBasic::f7f24491a91013d9f03e104100a02eb1, LINQ\LINQ\Framewok\Provider\ImportsAPI\APIProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class APIProvider
+    ' 
+    '         Properties: DefaultFile, Packages
+    ' 
+    '         Function: [GetType], Load, LoadDefault, (+2 Overloads) Register, (+2 Overloads) Save
+    ' 
+    '         Sub: (+2 Overloads) Dispose, Install, Save
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

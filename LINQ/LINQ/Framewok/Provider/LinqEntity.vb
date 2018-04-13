@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7c9ca529f995f24db314efccdb89a6ec, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\LinqEntity.vb"
+﻿#Region "Microsoft.VisualBasic::7c9ca529f995f24db314efccdb89a6ec, LINQ\LINQ\Framewok\Provider\LinqEntity.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LinqEntity
+    ' 
+    '         Properties: ILinqEntity, RefType, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetEntityType, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

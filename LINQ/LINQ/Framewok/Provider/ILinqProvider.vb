@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9c5ff7d13cc92f64d605c0848b13aa56, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\ILinqProvider.vb"
+﻿#Region "Microsoft.VisualBasic::9c5ff7d13cc92f64d605c0848b13aa56, LINQ\LINQ\Framewok\Provider\ILinqProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Module RegistryReader
+    ' 
+    '         Function: GetHandle, GetResource
+    ' 
+    '     Class DelegateProvider
+    ' 
+    '         Properties: MethodInfo
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetLinqResource, ToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

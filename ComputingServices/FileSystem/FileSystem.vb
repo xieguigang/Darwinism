@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::078167e6e1d95ef0f101b2ef7ac3d6c8, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\FileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::078167e6e1d95ef0f101b2ef7ac3d6c8, ComputingServices\FileSystem\FileSystem.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class FileSystem
+    ' 
+    '         Properties: CurrentDirectory, Drives, Portal
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: DirectoryExists, FileExists, (+2 Overloads) FindInFiles, (+2 Overloads) GetDirectories, GetDirectoryInfo
+    '                   GetDriveInfo, GetFileInfo, (+2 Overloads) GetFiles, GetParentPath, GetTempFileName
+    '                   (+2 Overloads) OpenFileHandle, (+2 Overloads) OpenTextFieldParser, (+2 Overloads) OpenTextFileReader, (+2 Overloads) OpenTextFileWriter, ReadAllBytes
+    '                   (+2 Overloads) ReadAllText, ToString
+    ' 
+    '         Sub: (+2 Overloads) CopyDirectory, (+2 Overloads) CopyFile, CreateDirectory, DeleteDirectory, DeleteFile
+    '              (+2 Overloads) MoveDirectory, (+2 Overloads) MoveFile, RenameDirectory, RenameFile, WriteAllBytes
+    '              (+2 Overloads) WriteAllText
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

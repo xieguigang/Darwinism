@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::77f30e80f19b76467dd9d67b8b2122ee, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\Protocols\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::77f30e80f19b76467dd9d67b8b2122ee, ComputingServices\FileSystem\Protocols\Protocols.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module API
+    ' 
+    '         Properties: ProtocolEntry
+    ' 
+    '         Function: GetSetLength, GetSetReadPosition, OpenHandle
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

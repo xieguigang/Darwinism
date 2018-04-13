@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f2d20170af117038f17c99b2997bfba2, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\Protocols\FileSystemAPI.vb"
+﻿#Region "Microsoft.VisualBasic::f2d20170af117038f17c99b2997bfba2, ComputingServices\FileSystem\Protocols\FileSystemAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum FileSystemAPI
+    ' 
+    '         CloseHandle, CombinePath, CopyDirectory, CopyFile, CreateDirectory
+    '         CurrentDirectory, DeleteDirectory, DeleteFile, DirectoryExists, Drives
+    '         FileExists, FilePosition, FileStreamLength, FindInFiles, Flush
+    '         GetDirectories, GetDirectoryInfo, GetDriveInfo, GetFileInfo, GetFiles
+    '         GetFileStreamInfo, GetName, GetParentPath, GetTempFileName, MoveDirectory
+    '         MoveFile, OpenHandle, ReadBuffer, RenameDirectory, RenameFile
+    '         StreamLock, StreamSeek, WriteBuffer
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

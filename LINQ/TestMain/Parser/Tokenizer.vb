@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::cf74eccb4985e74bbad7865a4dce631f, ..\sciBASIC.ComputingServices\LINQ\TestMain\Parser\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::cf74eccb4985e74bbad7865a4dce631f, LINQ\TestMain\Parser\Tokenizer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Tokenizer
+    ' 
+    '         Properties: Current, IsChar, IsComma, IsDot, IsInvalid
+    '                     IsNumber, IsOperator, IsSpace
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetNextToken, GetNumber, GetOperator, GetString
+    ' 
+    '         Sub: MoveNext
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

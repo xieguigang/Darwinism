@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0edc3b4a1d711d4cd70ef8b7cce3593c, ..\sciBASIC.ComputingServices\ComputingServices\Taskhost.d\Invoke\Return.vb"
+﻿#Region "Microsoft.VisualBasic::0edc3b4a1d711d4cd70ef8b7cce3593c, ComputingServices\Taskhost.d\Invoke\Return.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Rtvl
+    ' 
+    '         Properties: errCode, ex, value
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: CreateObject, (+2 Overloads) GetValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

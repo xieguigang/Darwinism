@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::dd58e30438275c2208816761646ae480, ..\sciBASIC.ComputingServices\ComputingServices\Asymmetric\Instance.vb"
+﻿#Region "Microsoft.VisualBasic::dd58e30438275c2208816761646ae480, ComputingServices\Asymmetric\Instance.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Instance
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: __handleException, __returnPortal, Run
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

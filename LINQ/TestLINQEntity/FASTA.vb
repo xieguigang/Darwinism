@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::314b9fb80708456544dca1e2a006ac3d, ..\sciBASIC.ComputingServices\LINQ\TestLINQEntity\FASTA.vb"
+﻿#Region "Microsoft.VisualBasic::314b9fb80708456544dca1e2a006ac3d, LINQ\TestLINQEntity\FASTA.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,33 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FASTA2
+    ' 
+    '     Properties: SourceFile
+    ' 
+    '     Function: AddRange, Distinct, Find, GetCollection, GetEntityType
+    '               GetEnumerator, GetEnumerator1, (+2 Overloads) Query, Query2, Read
+    '               Take, ToString
+    ' 
+    '     Sub: Add, AppendToFile, Save, Split
+    ' 
+    ' Class FASTA
+    ' 
+    '     Properties: Title
+    ' 
+    '     Function: Equals, Generate, IsProtein, Load, Parse
+    '               Reverse, ToString
+    ' 
+    '     Sub: Save
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7f3b058d81060f8dcdd1d39d58fce8d8, ..\sciBASIC.ComputingServices\LINQ\LINQ\LDM\Parser\ParserAPI\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::7f3b058d81060f8dcdd1d39d58fce8d8, LINQ\LINQ\LDM\Parser\ParserAPI\Tokenizer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Tokenizer
+    ' 
+    '         Properties: Current, IsChar, IsComma, IsDot, IsInvalid
+    '                     IsNumber, IsOperator, IsParens, IsSpace
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetNextToken, GetNumber, GetOperator, GetString, ToString
+    ' 
+    '         Sub: DirectlyMoveNext, MoveNext
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

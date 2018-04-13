@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c3b2bdae269fbc69e00db1143aaed3a4, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\FileStream\FileStream.vb"
+﻿#Region "Microsoft.VisualBasic::c3b2bdae269fbc69e00db1143aaed3a4, ComputingServices\FileSystem\FileStream\FileStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class RemoteFileStream
+    ' 
+    '         Properties: CanRead, CanSeek, CanWrite, FileHandle, Handle
+    '                     hashInfo, Info, IsAsync, Length, Name
+    '                     Position
+    ' 
+    '         Constructor: (+8 Overloads) Sub New
+    ' 
+    '         Function: BeginRead, BeginWrite, EndRead, FlushAsync, Read
+    '                   ReadAsync, ReadByte, Seek, WriteAsync
+    ' 
+    '         Sub: __lock, Dispose, EndWrite, Finalize, (+2 Overloads) Flush
+    '              Lock, SetLength, Unlock, Write, WriteByte
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d6a49d5c8bf0f4d1bcd3efa1a71e9989, ..\sciBASIC.ComputingServices\ComputingServices\Asymmetric\Parasitifer.vb"
+﻿#Region "Microsoft.VisualBasic::d6a49d5c8bf0f4d1bcd3efa1a71e9989, ComputingServices\Asymmetric\Parasitifer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Parasitifer
+    ' 
+    '         Properties: Portal
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __getIPAddress, FolkInstance, GetInstanceList, GetLoad, SystemLoad
+    ' 
+    '         Sub: __register, (+2 Overloads) Dispose, Run
+    ' 
+    '         Class Instance
+    ' 
+    '             Properties: Portal, Process
+    ' 
+    '             Constructor: (+2 Overloads) Sub New
+    '             Function: Serialize, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

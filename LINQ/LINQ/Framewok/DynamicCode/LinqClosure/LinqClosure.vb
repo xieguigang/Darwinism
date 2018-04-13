@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9a0709d97d0222b5867d6286286d41a4, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\DynamicCode\LinqClosure\LinqClosure.vb"
+﻿#Region "Microsoft.VisualBasic::9a0709d97d0222b5867d6286286d41a4, LINQ\LINQ\Framewok\DynamicCode\LinqClosure\LinqClosure.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,33 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module LinqClosure
+    ' 
+    '         Function: [As], [GetType], __getProjects, __property, (+2 Overloads) BuildClosure
+    '                   GetProjectAbstract
+    '         Class __project
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Project, ToString
+    ' 
+    '         Delegate Function
+    ' 
+    ' 
+    ' 
+    '     Class Linq
+    ' 
+    '         Function: Project
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

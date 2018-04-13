@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4667ebdd0b8d1e5a0b2058d9a3f5af1f, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\Registry\TypeEntry.vb"
+﻿#Region "Microsoft.VisualBasic::4667ebdd0b8d1e5a0b2058d9a3f5af1f, LINQ\LINQ\Framewok\Provider\Registry\TypeEntry.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TypeEntry
+    ' 
+    '         Properties: Func, name, Repository, TypeId
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: [GetType], ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

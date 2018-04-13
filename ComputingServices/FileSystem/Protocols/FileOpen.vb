@@ -1,28 +1,76 @@
-﻿#Region "Microsoft.VisualBasic::930afb3dd9623c6c97c883eb80c87741, ..\sciBASIC.ComputingServices\ComputingServices\FileSystem\Protocols\FileOpen.vb"
+﻿#Region "Microsoft.VisualBasic::0d8ef0f0ddb5f1296d8c296ce0b4bb84, ComputingServices\FileSystem\Protocols\FileOpen.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class RenameArgs
+    ' 
+    '         Properties: [New], old
+    ' 
+    '     Class DeleteArgs
+    ' 
+    '         Properties: [option], obj
+    ' 
+    '     Class FileOpen
+    ' 
+    '         Properties: Access, Mode
+    ' 
+    '         Function: OpenHandle, ToString
+    ' 
+    '     Class ReadBuffer
+    ' 
+    '         Properties: length, offset
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: (+2 Overloads) CreateBuffer
+    ' 
+    '     Interface IReadWriteBuffer
+    ' 
+    '         Properties: length, offset
+    ' 
+    '     Class WriteStream
+    ' 
+    '         Properties: buffer, Handle, length, offset
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: CreateBuffer, Serialize
+    ' 
+    '     Class FileStreamPosition
+    ' 
+    '         Properties: Position
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

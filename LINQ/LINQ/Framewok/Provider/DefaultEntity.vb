@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::816e393c806226d625e716542a09081b, ..\sciBASIC.ComputingServices\LINQ\LINQ\Framewok\Provider\DefaultEntity.vb"
+﻿#Region "Microsoft.VisualBasic::816e393c806226d625e716542a09081b, LINQ\LINQ\Framewok\Provider\DefaultEntity.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module DefaultEntity
+    ' 
+    '         Function: GetDouble, GetInt32, GetInt64
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
