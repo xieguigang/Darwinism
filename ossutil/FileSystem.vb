@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
-''' 线程不安全的OSS文件系统对象
+''' 对阿里云OSS文件系统进行抽象的线程不安全的OSS文件系统对象
 ''' </summary>
 Public Class FileSystem
 
@@ -35,8 +35,8 @@ Public Class FileSystem
             Throw New InvalidExpressionException($"Bucket name `{bucket}` is invalid or invalid ossfs credential info!")
         Else
             Objects = driver.ListObjects(Me.Bucket.URI(directory)).ToArray
-            CurrentDirectory = Objects.First
             tree = FilesTree(Objects, Me.Bucket.BucketName)
+            CurrentDirectory = tree.Data
         End If
     End Sub
 
@@ -50,9 +50,24 @@ Public Class FileSystem
         Me.driver = driver
         Me.Bucket = bucket
         Me.Objects = objects
-        Me.CurrentDirectory = objects(0)
 
         tree = FilesTree(objects, bucket.BucketName)
+        CurrentDirectory = tree.Data
+    End Sub
+
+    ''' <summary>
+    ''' Clone
+    ''' </summary>
+    ''' <param name="bucket"></param>
+    ''' <param name="objects"></param>
+    ''' <param name="currentDirectory"></param>
+    ''' <param name="driver"></param>
+    Sub New(bucket As Bucket, objects As [Object](), currentDirectory As [Object], tree As Tree(Of [Object]), driver As CLI)
+        Me.Bucket = bucket
+        Me.Objects = objects
+        Me.CurrentDirectory = currentDirectory
+        Me.driver = driver
+        Me.tree = tree
     End Sub
 
     Private Shared Function FilesTree(objects As [Object](), bucketName$) As Tree(Of [Object])
@@ -69,7 +84,12 @@ Public Class FileSystem
         Dim key$
         Dim root As New Tree(Of [Object])("/") With {
             .Label = $"oss://{bucketName}",
-            .Childs = New Dictionary(Of String, Tree(Of [Object]))
+            .Childs = New Dictionary(Of String, Tree(Of [Object])),
+            .Data = New [Object] With {
+                .meta = New Dictionary(Of String, String) From {
+                    {NameOf([Object].ObjectName), "/"}
+                }
+            }
         }
 
         For Each obj As (path As String(), obj As [Object]) In tokenTuples
@@ -106,7 +126,35 @@ Public Class FileSystem
         Return root
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="directory">
+    ''' 相对路径或者绝对路径
+    ''' </param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 所有使用``/``起始的都是绝对路径
+    ''' </remarks>
+    Public Function ChangeDirectory(directory As String) As FileSystem
+        Dim target As [Object]
+        Dim path$()
+
+        directory = directory.StringReplace("[/]{2,}", "/").Trim("/"c)
+        path = directory.Split("/"c)
+
+        If directory.First = "/" Then
+            ' 绝对路径
+            target = tree.VisitTree(path).Data
+        Else
+            ' 相对路径
+            target = tree.ChangeFileSystemContext(path).Data
+        End If
+
+        Return New FileSystem(Bucket, Objects, target, tree, driver)
+    End Function
+
     Public Overrides Function ToString() As String
-        Return $"{CurrentDirectory} @ {Bucket.BucketName}"
+        Return CurrentDirectory.ToString
     End Function
 End Class

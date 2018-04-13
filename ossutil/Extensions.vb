@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 
 Public Module Extensions
@@ -13,36 +14,30 @@ Public Module Extensions
     ''' 
     ''' </summary>
     ''' <param name="current$">Current path</param>
-    ''' <param name="rel$">Relative path</param>
-    ''' <param name="root">Root name</param>
+    ''' <param name="relativePath$">Relative path</param>
+    ''' <param name="root">Root name.(必须是绝对路径)</param>
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function ChangeFileSystemContext(current$, root$, rel$) As String
-        Dim currentTokens = current.SplitPath.AsList
-        Dim relTokens$() = rel.SplitPath
+    Public Function ChangeFileSystemContext(current As Tree(Of [Object]), relativePath$(), Optional root$ = "/") As Tree(Of [Object])
         Dim relWords As New List(Of String)
 
-        For Each word In relWords
-            If word = "." Then
+        For Each name As String In relativePath
+            If name = "." Then
                 ' No change
-            ElseIf word = ".." Then
+            ElseIf name = ".." Then
                 ' Parent directory
-                currentTokens.Pop()
+                current = current.Parent
             Else
-                relWords += word
+                current = current.Childs(name)
             End If
         Next
 
-        current = currentTokens.JoinBy("/")
-        rel = relWords.JoinBy("/")
-
         ' 防止通过..操作进行越权
-        If InStr(current, root) = 0 Then
-            current = root & "/" & current
+        If InStr(current.QualifyName, root) = 0 Then
+            current = current.BacktrackingRoot
         End If
 
-        Dim path$ = (current & "/" & rel).StringReplace("[/]{2,}", "/")
-        Return path
+        Return current
     End Function
 End Module

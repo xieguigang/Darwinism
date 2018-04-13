@@ -34,6 +34,6 @@ Public Class Bucket : Inherits MetaData
     End Function
 
     Public Overrides Function ToString() As String
-        Return {CreationTime, Region, StorageClass, BucketName}.JoinBy(vbTab)
+        Return $"{BucketName} @ {Region}"
     End Function
 End Class
