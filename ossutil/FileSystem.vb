@@ -278,7 +278,7 @@ Public Class FileSystem
     End Function
 
     ''' <summary>
-    ''' 
+    ''' File upload from local filesystem
     ''' </summary>
     ''' <param name="local$"></param>
     ''' <param name="remote$">不要求远程对象必须要存在</param>
