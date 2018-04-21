@@ -6,7 +6,7 @@
 */
 class Graphics {
 
-    svg: HTMLElement;
+    svg: SVGElement;
     container: HTMLElement;
 
     /**
@@ -15,17 +15,8 @@ class Graphics {
      * @param div div id
     */
     constructor(div: string) {
-        this.svg = document.createElement("svg");
-        this.svg.setAttribute("version", "1.1");
-        this.svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        this.svg.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
-        this.svg.setAttribute("xmlns:cc", "http://creativecommons.org/ns#");
-        this.svg.setAttribute("xmlns:rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-        this.svg.setAttribute("xmlns:svg", "http://www.w3.org/2000/svg");
-        this.svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-
+        this.svg = svgNode("svg", { "version": "1.1" });
         this.container = document.getElementById(div);
-        this.container.appendChild(document.createComment('?xml version="1.0" encoding="utf-8"?'));
         this.container.appendChild(this.svg);
 
         console.log(div);
@@ -48,19 +39,19 @@ class Graphics {
     }
 
     drawRectangle(rect: Rectangle, border: Pen = new Pen(Color.Black(), 1), fill: Color = null, id: string = null, className: string = null): Graphics {
-        var node = document.createElement("rect");
+        var attrs = {
+            "x": rect.left.toString(),
+            "y": rect.top.toString(),
+            "width": rect.width.toString(),
+            "height": rect.height.toString()
+        };
 
-        if (id) node.id = id;
-        if (className) node.className = className;
+        if (id) attrs["id"] = id;
+        if (className) attrs["class"] = className;
+        if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        node.setAttribute("x", rect.left.toString());
-        node.setAttribute("y", rect.top.toString());
-        node.setAttribute("width", rect.width.toString());
-        node.setAttribute("height", rect.height.toString());
+        var node = svgNode("rect", attrs);
 
-        if (fill) {
-            node.setAttribute("fill", fill.ToHtmlColor());
-        }
         if (border) {
             node.style.stroke = border.color.ToHtmlColor();
             node.style.strokeWidth = border.width.toString();

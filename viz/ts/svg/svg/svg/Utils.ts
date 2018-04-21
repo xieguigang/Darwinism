@@ -27,4 +27,21 @@ var $ = (fn: any) => {
     }
 };
 
+/**
+ * https://stackoverflow.com/questions/20539196/creating-svg-elements-dynamically-with-javascript-inside-html
+*/
+function svgNode(n: string, v: any = null): SVGElement {
+    var node = document.createElementNS("http://www.w3.org/2000/svg", n);
+    var name = "";
 
+    if (v) {
+        for (var p in v) {
+            name = p.replace(/[A-Z]/g, function (m, p, o, s) {
+                return "-" + m.toLowerCase();
+            });
+            node.setAttributeNS(null, name, v[p]);
+        }
+    }
+
+    return node;
+}
