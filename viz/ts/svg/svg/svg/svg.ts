@@ -33,12 +33,44 @@ class Graphics {
         return this;
     }
 
-    drawLine(pen: Pen, a: Point, b: Point, id: string = null, className: string = null): Graphics {
+    /**
+     * Draw a basic svg line shape
+     * 
+     * @param pen Defines the line border: color and line width
+    */
+    drawLine(pen: Pen, a: Point, b: Point,
+        id: string = null,
+        className: string = null): Graphics {
+
+        var attrs = {
+            "x1": a.x.toString(),
+            "y1": a.y.toString(),
+            "x2": b.x.toString(),
+            "y2": b.y.toString(),
+            "stroke": pen.color.ToHtmlColor()
+        };
+
+        if (id) attrs["id"] = id;
+        if (className) attrs["class"] = className;
+
+        var node = svgNode("line", attrs);
+
+        node.style.strokeWidth = pen.width.toString();
+
+        this.svg.appendChild(node);
 
         return this;
     }
 
-    drawRectangle(rect: Rectangle, border: Pen = new Pen(Color.Black(), 1), fill: Color = null, id: string = null, className: string = null): Graphics {
+    /**
+     * Draw a basic svg rectangle shape
+    */
+    drawRectangle(rect: Rectangle,
+        border: Pen = new Pen(Color.Black(), 1),
+        fill: Color = null,
+        id: string = null,
+        className: string = null): Graphics {
+
         var attrs = {
             "x": rect.left.toString(),
             "y": rect.top.toString(),
