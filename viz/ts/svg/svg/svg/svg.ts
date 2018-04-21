@@ -18,6 +18,11 @@ class Graphics {
     constructor(div: string) {
         this.svg = document.createElement("svg");
         this.container = document.getElementById(div);
+
+        console.log(div);
+        console.log(this.svg);
+        console.log(this.container);
+
         this.container.appendChild(this.svg);
     }
 
