@@ -25,6 +25,7 @@ class Graphics {
         this.svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
         this.container = document.getElementById(div);
+        this.container.appendChild(document.createComment('?xml version="1.0" encoding="utf-8"?'));
         this.container.appendChild(this.svg);
 
         console.log(div);
