@@ -39,7 +39,7 @@ class Graphics {
      * 
      * @param pen Defines the line border: color and line width
     */
-    drawLine(pen: Pen, a: Canvas.Point, b: Canvas.Point,
+    drawLine(pen: Canvas.Pen, a: Canvas.Point, b: Canvas.Point,
         id: string = null,
         className: string = null): Graphics {
 
@@ -60,8 +60,8 @@ class Graphics {
     }
 
     drawCircle(center: Canvas.Point, radius: number,
-        border: Pen = new Pen(Color.Black(), 1),
-        fill: Color = null,
+        border: Canvas.Pen = new Canvas.Pen(Canvas.Color.Black(), 1),
+        fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
 
@@ -85,8 +85,8 @@ class Graphics {
      * Draw a basic svg rectangle shape
     */
     drawRectangle(rect: Canvas.Rectangle,
-        border: Pen = new Pen(Color.Black(), 1),
-        fill: Color = null,
+        border: Canvas.Pen = new Canvas.Pen(Canvas.Color.Black(), 1),
+        fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
 

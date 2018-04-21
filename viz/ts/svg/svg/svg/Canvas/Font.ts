@@ -1,40 +1,43 @@
-class Font implements ICSSStyle {
+namespace Canvas {
 
-    size: string;
-    family: string;
-    bold: boolean;
-    italic: boolean;
+    export class Font implements ICSSStyle {
 
-    constructor(family: string,
-        size: any = "12px",
-        bold: boolean = false,
-        italic: boolean = false) {
+        size: string;
+        family: string;
+        bold: boolean;
+        italic: boolean;
 
-        this.size = size;
-        this.family = family;
-        this.bold = bold;
-        this.italic = italic;
-    }
+        constructor(family: string,
+            size: any = "12px",
+            bold: boolean = false,
+            italic: boolean = false) {
 
-    Styling(node: SVGElement): SVGElement {
-        var styles = [];
+            this.size = size;
+            this.family = family;
+            this.bold = bold;
+            this.italic = italic;
+        }
 
-        if (this.bold) styles.push("bold");
-        if (this.italic) styles.push("italic");
+        Styling(node: SVGElement): SVGElement {
+            var styles = [];
 
-        node.style.fontFamily = this.family;
-        node.style.fontSize = this.size;
-        node.style.fontStyle = styles.join(" ");
+            if (this.bold) styles.push("bold");
+            if (this.italic) styles.push("italic");
 
-        return node;
-    }
+            node.style.fontFamily = this.family;
+            node.style.fontSize = this.size;
+            node.style.fontStyle = styles.join(" ");
 
-    CSSStyle(): string {
-        var styles = [];
+            return node;
+        }
 
-        if (this.bold) styles.push("bold");
-        if (this.italic) styles.push("italic");
+        CSSStyle(): string {
+            var styles = [];
 
-        return `font: ${styles.join(" ")} ${this.size} "${this.family}"`;
+            if (this.bold) styles.push("bold");
+            if (this.italic) styles.push("italic");
+
+            return `font: ${styles.join(" ")} ${this.size} "${this.family}"`;
+        }
     }
 }
