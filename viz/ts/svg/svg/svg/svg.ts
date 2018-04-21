@@ -1,5 +1,6 @@
 ﻿/// <reference path="Utils.ts"/>
 /// <reference path="Canvas/Canvas.ts"/>
+/// <reference path="Canvas/Pen.ts"/>
 
 /**
  * 提供类似于VB.NET之中的Graphics对象的模拟
@@ -38,7 +39,7 @@ class Graphics {
      * 
      * @param pen Defines the line border: color and line width
     */
-    drawLine(pen: Pen, a: Point, b: Point,
+    drawLine(pen: Pen, a: Canvas.Point, b: Canvas.Point,
         id: string = null,
         className: string = null): Graphics {
 
@@ -58,7 +59,7 @@ class Graphics {
         return this;
     }
 
-    drawCircle(center: Point, radius: number,
+    drawCircle(center: Canvas.Point, radius: number,
         border: Pen = new Pen(Color.Black(), 1),
         fill: Color = null,
         id: string = null,
@@ -83,7 +84,7 @@ class Graphics {
     /**
      * Draw a basic svg rectangle shape
     */
-    drawRectangle(rect: Rectangle,
+    drawRectangle(rect: Canvas.Rectangle,
         border: Pen = new Pen(Color.Black(), 1),
         fill: Color = null,
         id: string = null,
