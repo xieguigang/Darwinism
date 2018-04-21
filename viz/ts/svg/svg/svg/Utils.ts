@@ -6,6 +6,9 @@ function componentToHex(c) {
     return hex.length == 1 ? "0" + hex : hex;
 }
 
+/**
+ * jQuery equivalent on document ready handler.
+*/
 var $ = (fn: any) => {
 
     // Sanity check

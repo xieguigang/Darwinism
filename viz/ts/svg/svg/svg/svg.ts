@@ -17,22 +17,29 @@ class Graphics {
     */
     constructor(div: string) {
         this.svg = document.createElement("svg");
+        this.svg.setAttribute("version", "1.1");
+        this.svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        this.svg.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
+        this.svg.setAttribute("xmlns:cc", "http://creativecommons.org/ns#");
+        this.svg.setAttribute("xmlns:rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        this.svg.setAttribute("xmlns:svg", "http://www.w3.org/2000/svg");
+        this.svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+
         this.container = document.getElementById(div);
+        this.container.appendChild(this.svg);
 
         console.log(div);
         console.log(this.svg);
         console.log(this.container);
-
-        this.container.appendChild(this.svg);
     }
 
     size(width: number, height: number): Graphics {
-        this.svg.setAttribute("width", width.toString())
-        this.svg.setAttribute("height", height.toString());
+        this.svg.setAttribute("width", width.toString() + "px");
+        this.svg.setAttribute("height", height.toString() + "px");
         return this;
     }
 
-    drawLine(pen: Pen, a: Point, b: Point): Graphics {
+    drawLine(pen: Pen, a: Point, b: Point, id: string = null, className: string = null): Graphics {
 
         return this;
     }
@@ -40,8 +47,8 @@ class Graphics {
     drawRectangle(rect: Rectangle, border: Pen = new Pen(Color.Black(), 1), fill: Color = null, id: string = null, className: string = null): Graphics {
         var node = document.createElement("rect");
 
-        node.id = id;
-        node.className = className;
+        if (id) node.id = id;
+        if (className) node.className = className;
 
         node.setAttribute("x", rect.left.toString());
         node.setAttribute("y", rect.top.toString());
