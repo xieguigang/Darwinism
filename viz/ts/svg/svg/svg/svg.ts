@@ -46,17 +46,13 @@ class Graphics {
             "x1": a.x.toString(),
             "y1": a.y.toString(),
             "x2": b.x.toString(),
-            "y2": b.y.toString(),
-            "stroke": pen.color.ToHtmlColor()
+            "y2": b.y.toString()
         };
 
         if (id) attrs["id"] = id;
         if (className) attrs["class"] = className;
 
-        var node = svgNode("line", attrs);
-
-        node.style.strokeWidth = pen.width.toString();
-
+        var node = pen.Styling(svgNode("line", attrs));
         this.svg.appendChild(node);
 
         return this;
@@ -78,13 +74,7 @@ class Graphics {
         if (className) attrs["class"] = className;
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        var node = svgNode("circle", attrs);
-
-        if (border) {
-            node.style.stroke = border.color.ToHtmlColor();
-            node.style.strokeWidth = border.width.toString();
-        }
-
+        var node = border.Styling(svgNode("circle", attrs));
         this.svg.appendChild(node);
 
         return this;
@@ -110,13 +100,7 @@ class Graphics {
         if (className) attrs["class"] = className;
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        var node = svgNode("rect", attrs);
-
-        if (border) {
-            node.style.stroke = border.color.ToHtmlColor();
-            node.style.strokeWidth = border.width.toString();
-        }
-
+        var node = border.Styling(svgNode("rect", attrs));
         this.svg.appendChild(node);
 
         return this;

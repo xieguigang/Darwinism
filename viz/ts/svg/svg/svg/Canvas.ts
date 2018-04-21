@@ -1,9 +1,14 @@
 /// <reference path="Utils.ts"/>
 
+interface ICSSStyle {
+    Styling(node: SVGElement): SVGElement;
+    CSSStyle(): string;
+}
+
 /**
  * The css border style
 */
-class Pen {
+class Pen implements ICSSStyle {
 
     color: Color;
     width: number;
@@ -17,6 +22,13 @@ class Pen {
     constructor(color: Color, width: number = 1) {
         this.color = color;
         this.width = width;
+    }
+
+    Styling(node: SVGElement): SVGElement {
+        node.style.stroke = this.color.ToHtmlColor();
+        node.style.strokeWidth = this.width.toString();
+
+        return node;
     }
 
     CSSStyle(): string {
@@ -134,5 +146,46 @@ class Rectangle {
 
     Size(): Size {
         return new Size(this.width, this.height);
+    }
+}
+
+class Font implements ICSSStyle {
+
+    size: string;
+    family: string;
+    bold: boolean;
+    italic: boolean;
+
+    constructor(family: string,
+        size: any = "12px",
+        bold: boolean = false,
+        italic: boolean = false) {
+
+        this.size = size;
+        this.family = family;
+        this.bold = bold;
+        this.italic = italic;
+    }
+
+    Styling(node: SVGElement): SVGElement {
+        var styles = [];
+
+        if (this.bold) styles.push("bold");
+        if (this.italic) styles.push("italic");
+
+        node.style.fontFamily = this.family;
+        node.style.fontSize = this.size;
+        node.style.fontStyle = styles.join(" ");
+
+        return node;
+    }
+
+    CSSStyle(): string {
+        var styles = [];
+
+        if (this.bold) styles.push("bold");
+        if (this.italic) styles.push("italic");
+
+        return `font: ${styles.join(" ")} ${this.size} "${this.family}"`;
     }
 }
