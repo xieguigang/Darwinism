@@ -13,7 +13,7 @@ class Graphics {
      * 创建一个SVG画布对象
      * 
      * @param div div id
-    */ 
+    */
     constructor(div: string) {
         this.svg = document.createElement("svg");
         this.container = document.getElementById(div);
@@ -24,8 +24,19 @@ class Graphics {
 
     }
 
-    drawRectangle(rect: Rectangle, border: Pen, fill: Color = null) {
+    drawRectangle(rect: Rectangle, border: Pen = new Pen(Color.Black(), 1), fill: Color = null) {
+        var node = document.createElement("rect");
+        node.setAttribute("x", rect.left.toString());
+        node.setAttribute("y", rect.top.toString());
+        node.setAttribute("width", rect.width.toString());
+        node.setAttribute("height", rect.height.toString());
 
+        if (fill) {
+            var color = fill.ToHtmlColor();
+            node.setAttribute("fill", color);
+        }
+
+        this.svg.appendChild(node);
     }
 }
 
@@ -50,6 +61,10 @@ class Color {
         this.r = r;
         this.g = g;
         this.b = b;
+    }
+
+    static Black(): Color {
+        return new Color(0, 0, 0);
     }
 
     ToHtmlColor(): string {
