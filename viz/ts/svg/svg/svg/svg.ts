@@ -3,7 +3,6 @@
 
 /**
  * 提供类似于VB.NET之中的Graphics对象的模拟
- * 
 */
 class Graphics {
 
@@ -33,6 +32,9 @@ class Graphics {
         console.log(this.container);
     }
 
+    /**
+     * Set the size value of the svg canvas
+    */
     size(width: number, height: number): Graphics {
         this.svg.setAttribute("width", width.toString() + "px");
         this.svg.setAttribute("height", height.toString() + "px");

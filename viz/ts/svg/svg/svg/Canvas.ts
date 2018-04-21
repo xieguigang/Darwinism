@@ -1,10 +1,19 @@
 /// <reference path="Utils.ts"/>
 
+/**
+ * The css border style
+*/
 class Pen {
 
     color: Color;
     width: number;
 
+    /**
+     * Create a new css border style for svg rectangle, line, etc.
+     * 
+     * @param color The border color
+     * @param width The border width
+    */
     constructor(color: Color, width: number = 1) {
         this.color = color;
         this.width = width;
@@ -15,6 +24,9 @@ class Pen {
     }
 }
 
+/**
+ * RGB color data model
+*/
 class Color {
 
     r: number;
@@ -77,6 +89,9 @@ class Color {
     }
 }
 
+/**
+ * The object location data model 
+*/
 class Point {
 
     x: number;
