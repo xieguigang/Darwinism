@@ -35,9 +35,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Canvas.ts" />
     <TypeScriptCompile Include="svg.ts" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
+    <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="Utils.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
 */
 function componentToHex(c) {

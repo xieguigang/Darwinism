@@ -1,4 +1,4 @@
-﻿/// <reference path="Utils.ts"/>
+/// <reference path="Utils.ts"/>
 /// <reference path="Canvas.ts"/>
 
 /**
