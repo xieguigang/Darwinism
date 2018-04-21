@@ -13,7 +13,7 @@ class Graphics {
      * 创建一个SVG画布对象
      * 
      * @param div div id
-    */ 
+    */
     constructor(div: string) {
         this.svg = document.createElement("svg");
         this.container = document.getElementById(div);
@@ -50,6 +50,27 @@ class Color {
         this.r = r;
         this.g = g;
         this.b = b;
+    }
+
+    /**
+     * https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+    */
+    static FromHtmlColor(htmlColor: string): Color {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        var hex = htmlColor;
+        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+
+        hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+        return result ? new Color(
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16)
+        ) : null;
     }
 
     ToHtmlColor(): string {
