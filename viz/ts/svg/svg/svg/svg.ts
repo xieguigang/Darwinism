@@ -1,4 +1,4 @@
-/// <reference path="Utils.ts"/>
+﻿/// <reference path="Utils.ts"/>
 /// <reference path="Canvas.ts"/>
 
 /**
@@ -56,6 +56,34 @@ class Graphics {
         var node = svgNode("line", attrs);
 
         node.style.strokeWidth = pen.width.toString();
+
+        this.svg.appendChild(node);
+
+        return this;
+    }
+
+    drawCircle(center: Point, radius: number,
+        border: Pen = new Pen(Color.Black(), 1),
+        fill: Color = null,
+        id: string = null,
+        className: string = null): Graphics {
+
+        var attrs = {
+            "cx": center.x.toString(),
+            "cy": center.y.toString(),
+            "r": radius
+        };
+
+        if (id) attrs["id"] = id;
+        if (className) attrs["class"] = className;
+        if (fill) attrs["fill"] = fill.ToHtmlColor();
+
+        var node = svgNode("circle", attrs);
+
+        if (border) {
+            node.style.stroke = border.color.ToHtmlColor();
+            node.style.strokeWidth = border.width.toString();
+        }
 
         this.svg.appendChild(node);
 
