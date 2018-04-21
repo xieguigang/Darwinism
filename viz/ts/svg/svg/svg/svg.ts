@@ -20,12 +20,39 @@ class Graphics {
         this.container.appendChild(this.svg);
     }
 
-    drawLine(pen: Pen, a: Point, b: Point) {
-
+    size(width: number, height: number): Graphics {
+        this.svg.setAttribute("width", width.toString())
+        this.svg.setAttribute("height", height.toString());
+        return this;
     }
 
-    drawRectangle(rect: Rectangle, border: Pen, fill: Color = null) {
+    drawLine(pen: Pen, a: Point, b: Point): Graphics {
 
+        return this;
+    }
+
+    drawRectangle(rect: Rectangle, border: Pen = new Pen(Color.Black(), 1), fill: Color = null, id: string = null, className: string = null): Graphics {
+        var node = document.createElement("rect");
+
+        node.id = id;
+        node.className = className;
+
+        node.setAttribute("x", rect.left.toString());
+        node.setAttribute("y", rect.top.toString());
+        node.setAttribute("width", rect.width.toString());
+        node.setAttribute("height", rect.height.toString());
+
+        if (fill) {
+            node.setAttribute("fill", fill.ToHtmlColor());
+        }
+        if (border) {
+            node.style.stroke = border.color.ToHtmlColor();
+            node.style.strokeWidth = border.width.toString();
+        }
+
+        this.svg.appendChild(node);
+
+        return this;
     }
 }
 
@@ -37,6 +64,10 @@ class Pen {
     constructor(color: Color, width: number = 1) {
         this.color = color;
         this.width = width;
+    }
+
+    CSSStyle(): string {
+        return `stroke-width:${this.width};stroke:${this.color.ToHtmlColor()};`;
     }
 }
 
@@ -71,6 +102,26 @@ class Color {
             parseInt(result[2], 16),
             parseInt(result[3], 16)
         ) : null;
+    }
+
+    static Black(): Color {
+        return new Color(0, 0, 0);
+    }
+
+    static White(): Color {
+        return new Color(255, 255, 255);
+    }
+
+    static Red(): Color {
+        return new Color(255, 0, 0);
+    }
+
+    static Green(): Color {
+        return new Color(0, 255, 0);
+    }
+
+    static Blue(): Color {
+        return new Color(0, 0, 255);
     }
 
     ToHtmlColor(): string {
