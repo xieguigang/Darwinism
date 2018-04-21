@@ -1,5 +1,5 @@
 ﻿/// <reference path="Utils.ts"/>
-/// <reference path="Canvas.ts"/>
+/// <reference path="Canvas/Canvas.ts"/>
 
 /**
  * 提供类似于VB.NET之中的Graphics对象的模拟
