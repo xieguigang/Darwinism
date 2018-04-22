@@ -113,6 +113,16 @@ Public Class FileSystem
     End Sub
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="bucket$"></param>
+    ''' <param name="directory$"></param>
+    ''' <param name="driver$">The executable file location</param>
+    Sub New(bucket$, directory$, driver$)
+        Call Me.New(bucket, directory, New CLI(driver))
+    End Sub
+
+    ''' <summary>
     ''' 测试用
     ''' </summary>
     ''' <param name="bucket"></param>
