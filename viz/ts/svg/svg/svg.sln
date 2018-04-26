@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "svg", "svg\svg.njsproj", "{8C2DAE18-8B11-4B37-A4EC-0234D7FCCF2A}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "thinkChart", "thinkChart\thinkChart.njsproj", "{F3C0F5AB-B554-4EF8-9DF0-482240FE020D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8C2DAE18-8B11-4B37-A4EC-0234D7FCCF2A} = {8C2DAE18-8B11-4B37-A4EC-0234D7FCCF2A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{8C2DAE18-8B11-4B37-A4EC-0234D7FCCF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C2DAE18-8B11-4B37-A4EC-0234D7FCCF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C2DAE18-8B11-4B37-A4EC-0234D7FCCF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3C0F5AB-B554-4EF8-9DF0-482240FE020D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C0F5AB-B554-4EF8-9DF0-482240FE020D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C0F5AB-B554-4EF8-9DF0-482240FE020D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C0F5AB-B554-4EF8-9DF0-482240FE020D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
