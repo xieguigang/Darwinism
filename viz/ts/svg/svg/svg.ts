@@ -7,8 +7,12 @@
 */
 class Graphics {
 
-    svg: SVGElement;
-    container: HTMLElement;
+    private svg: SVGElement;
+    private container: HTMLElement;
+    /**
+     * The css z-index layer order
+    */
+    private z: number;
 
     /**
      * 创建一个SVG画布对象
@@ -20,9 +24,9 @@ class Graphics {
         this.container = document.getElementById(div);
         this.container.appendChild(this.svg);
 
-        console.log(div);
-        console.log(this.svg);
-        console.log(this.container);
+        // console.log(div);
+        // console.log(this.svg);
+        // console.log(this.container);
     }
 
     /**
@@ -65,7 +69,8 @@ class Graphics {
             "x1": a.x.toString(),
             "y1": a.y.toString(),
             "x2": b.x.toString(),
-            "y2": b.y.toString()
+            "y2": b.y.toString(),
+            "z-index": ++this.z
         };
 
         if (id) attrs["id"] = id;
@@ -86,7 +91,8 @@ class Graphics {
         var attrs = {
             "cx": center.x.toString(),
             "cy": center.y.toString(),
-            "r": radius
+            "r": radius,
+            "z-index": ++this.z
         };
 
         if (id) attrs["id"] = id;
@@ -117,7 +123,8 @@ class Graphics {
             "cx": center.x,
             "cy": center.y,
             "rx": rx,
-            "ry": ry
+            "ry": ry,
+            "z-index": ++this.z
         };
 
         if (id) attrs["id"] = id;
@@ -143,7 +150,8 @@ class Graphics {
             "x": rect.left.toString(),
             "y": rect.top.toString(),
             "width": rect.width.toString(),
-            "height": rect.height.toString()
+            "height": rect.height.toString(),
+            "z-index": ++this.z
         };
 
         if (id) attrs["id"] = id;
@@ -156,6 +164,10 @@ class Graphics {
         return this;
     }
 
+    /**
+     * The ``<path>`` SVG element is the generic element to define a shape. 
+     * All the basic shapes can be created with a path element.
+    */
     drawPath(path: Canvas.Path,
         border: Canvas.Pen = Canvas.Pen.Black(),
         fill: Canvas.Color = null,
@@ -163,7 +175,8 @@ class Graphics {
         className: string = null): Graphics {
 
         var attrs = {
-            "d": path.d()
+            "d": path.d(),
+            "z-index": ++this.z
         };
 
         if (id) attrs["id"] = id;
