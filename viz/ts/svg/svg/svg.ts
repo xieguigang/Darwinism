@@ -35,6 +35,24 @@ class Graphics {
     }
 
     /**
+     * The viewBox attribute allows you to specify that a given set of graphics stretch to 
+     * fit a particular container element.
+     *
+     * The value of the viewBox attribute is a list of four numbers min-x, min-y, width and 
+     * height, separated by whitespace and/or a comma, which specify a rectangle in user 
+     * space which should be mapped to the bounds of the viewport established by the given 
+     * element, taking into account attribute preserveAspectRatio.
+     *
+     * Negative values for width or height are not permitted and a value of zero disables 
+     * rendering of the element.
+    */
+    viewBox(minX: number, minY: number, width: number, height: number): Graphics {
+        var box: string = `${minX} ${minY} ${width} ${height}`;
+        this.svg.setAttribute("viewBox", box);
+        return this;
+    }
+
+    /**
      * Draw a basic svg line shape
      * 
      * @param pen Defines the line border: color and line width
@@ -60,7 +78,7 @@ class Graphics {
     }
 
     drawCircle(center: Canvas.Point, radius: number,
-        border: Canvas.Pen = new Canvas.Pen(Canvas.Color.Black(), 1),
+        border: Canvas.Pen = Canvas.Pen.Black(),
         fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
@@ -90,7 +108,7 @@ class Graphics {
      * degree angle), but it can be rotated by using the ``transform`` attribute.
     */
     drawEllipse(center: Canvas.Point, rx: number, ry: number,
-        border: Canvas.Pen = new Canvas.Pen(Canvas.Color.Black(), 1),
+        border: Canvas.Pen = Canvas.Pen.Black(),
         fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
@@ -106,7 +124,7 @@ class Graphics {
         if (className) attrs["class"] = className;
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        var node = border.Styling(svgNode("circle", attrs));
+        var node = border.Styling(svgNode("ellipse", attrs));
         this.svg.appendChild(node);
 
         return this;
@@ -116,7 +134,7 @@ class Graphics {
      * Draw a basic svg rectangle shape
     */
     drawRectangle(rect: Canvas.Rectangle,
-        border: Canvas.Pen = new Canvas.Pen(Canvas.Color.Black(), 1),
+        border: Canvas.Pen = Canvas.Pen.Black(),
         fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
@@ -133,6 +151,26 @@ class Graphics {
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
         var node = border.Styling(svgNode("rect", attrs));
+        this.svg.appendChild(node);
+
+        return this;
+    }
+
+    drawPath(path: Canvas.Path,
+        border: Canvas.Pen = Canvas.Pen.Black(),
+        fill: Canvas.Color = null,
+        id: string = null,
+        className: string = null): Graphics {
+
+        var attrs = {
+            "d": path.d()
+        };
+
+        if (id) attrs["id"] = id;
+        if (className) attrs["class"] = className;
+        if (fill) attrs["fill"] = fill.ToHtmlColor();
+
+        var node = border.Styling(svgNode("path", attrs));
         this.svg.appendChild(node);
 
         return this;
