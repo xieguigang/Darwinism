@@ -35,8 +35,13 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Canvas.ts" />
+    <TypeScriptCompile Include="Canvas/Canvas.ts" />
+    <TypeScriptCompile Include="Canvas/Color.ts" />
+    <TypeScriptCompile Include="Canvas/Font.ts" />
+    <TypeScriptCompile Include="Canvas/HTMLColors.ts" />
+    <TypeScriptCompile Include="Canvas/Pen.ts" />
     <TypeScriptCompile Include="svg.ts" />
+    <Content Include="test.html" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <TypeScriptCompile Include="test.ts" />
