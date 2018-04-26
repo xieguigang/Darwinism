@@ -82,6 +82,37 @@ class Graphics {
     }
 
     /**
+     * The ``<ellipse>`` element is an SVG basic shape, used to create ellipses 
+     * based on a center coordinate, and both their x and y radius.
+     * 
+     * @description Note: Ellipses are unable to specify the exact orientation of 
+     * the ellipse (if, for example, you wanted to draw an ellipse tilted at a 45 
+     * degree angle), but it can be rotated by using the ``transform`` attribute.
+    */
+    drawEllipse(center: Canvas.Point, rx: number, ry: number,
+        border: Canvas.Pen = new Canvas.Pen(Canvas.Color.Black(), 1),
+        fill: Canvas.Color = null,
+        id: string = null,
+        className: string = null): Graphics {
+
+        var attrs = {
+            "cx": center.x,
+            "cy": center.y,
+            "rx": rx,
+            "ry": ry
+        };
+
+        if (id) attrs["id"] = id;
+        if (className) attrs["class"] = className;
+        if (fill) attrs["fill"] = fill.ToHtmlColor();
+
+        var node = border.Styling(svgNode("circle", attrs));
+        this.svg.appendChild(node);
+
+        return this;
+    }
+
+    /**
      * Draw a basic svg rectangle shape
     */
     drawRectangle(rect: Canvas.Rectangle,
