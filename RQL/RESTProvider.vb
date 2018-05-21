@@ -144,4 +144,8 @@ Public Class RESTProvider : Inherits HttpServer
 
     Public Overrides Sub handleOtherMethod(p As HttpProcessor)
     End Sub
+
+    Public Overrides Sub handlePUTMethod(p As HttpProcessor, inputData As MemoryStream)
+        Throw New NotImplementedException()
+    End Sub
 End Class
