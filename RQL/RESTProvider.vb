@@ -139,7 +139,7 @@ Public Class RESTProvider : Inherits HttpServer
     End Sub
 
     Protected Overrides Function __httpProcessor(client As TcpClient) As HttpProcessor
-        Return New HttpProcessor(client, Me)
+        Return New HttpProcessor(client, Me, 128 * 1024 * 1024)
     End Function
 
     Public Overrides Sub handleOtherMethod(p As HttpProcessor)
