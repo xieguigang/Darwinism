@@ -115,8 +115,8 @@ Namespace FileSystem
                 Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.Drives)
                 Dim invoke As New AsynInvoke(_Portal)
                 Dim rep As RequestStream = invoke.SendMessage(req)
-                Dim array As String() = req.GetUTF8String.LoadObject(Of String())
-                Dim lst As DriveInfo() = array.Select(Function(s) s.LoadObject(Of DriveInfo)).ToArray
+                Dim array As String() = req.GetUTF8String.LoadJSON(Of String())
+                Dim lst As DriveInfo() = array.Select(Function(s) s.LoadJSON(Of DriveInfo)).ToArray
                 Return New ReadOnlyCollection(Of System.IO.DriveInfo)(CType(lst, IList(Of System.IO.DriveInfo)))
             End Get
         End Property
@@ -1444,7 +1444,7 @@ Namespace FileSystem
             Dim req As RequestStream = Protocols.API.OpenHandle(file, mode, access)
             Dim invoke As New AsynInvoke(portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
-            Return rep.GetUTF8String.LoadObject(Of FileStreamInfo)
+            Return rep.GetUTF8String.LoadJSON(Of FileStreamInfo)
         End Function
 
         ' Exceptions:

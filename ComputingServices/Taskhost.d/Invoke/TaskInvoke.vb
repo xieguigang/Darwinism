@@ -134,7 +134,7 @@ Namespace TaskHost
 
         <Protocol(TaskProtocols.Invoke)>
         Private Function Invoke(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim params As InvokeInfo = JsonContract.LoadObject(Of InvokeInfo)(args.GetUTF8String)
+            Dim params As InvokeInfo = JsonContract.LoadJSON(Of InvokeInfo)(args.GetUTF8String)
             Dim value As Rtvl = Invoke(params)
             Return New RequestStream(value.GetJson)
         End Function
@@ -155,7 +155,7 @@ Namespace TaskHost
         ''' <returns></returns>
         <Protocol(TaskProtocols.InvokeLinq)>
         Private Function InvokeLinq(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim params As InvokeInfo = JsonContract.LoadObject(Of InvokeInfo)(args.GetUTF8String) ' 得到远程函数指针信息
+            Dim params As InvokeInfo = JsonContract.LoadJSON(Of InvokeInfo)(args.GetUTF8String) ' 得到远程函数指针信息
             Dim type As Type = Nothing
             Dim value As Object = __invoke(params, type)
             Dim source As IEnumerable = DirectCast(value, IEnumerable)
@@ -172,7 +172,7 @@ Namespace TaskHost
         ''' <returns></returns>
         <Protocol(TaskProtocols.Select)>
         Private Function LinqSelect(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim params As InvokeInfo = JsonContract.LoadObject(Of InvokeInfo)(args.GetUTF8String) ' 得到远程函数指针信息
+            Dim params As InvokeInfo = JsonContract.LoadJSON(Of InvokeInfo)(args.GetUTF8String) ' 得到远程函数指针信息
             Dim func As MethodInfo = params.GetMethod
             Dim paramsValue As Object() = params.Parameters.Select(Function(arg) arg.GetValue).ToArray
             Dim source As IEnumerable = DirectCast(paramsValue(Scan0), IEnumerable)

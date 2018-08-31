@@ -95,7 +95,7 @@ Namespace API
 
         Private Shared Function __innerQuery(url As String) As LinqEntry
             Dim source As String = url.GetRequest
-            Dim linq As LinqEntry = source.LoadObject(Of LinqEntry)
+            Dim linq As LinqEntry = source.LoadJSON(Of LinqEntry)
             Return linq
         End Function
 

@@ -177,7 +177,7 @@ Namespace FileSystem.Protocols
             buf = New Byte(handleLen - 1) {}
             Call Array.ConstrainedCopy(raw, p + handleLen, buf, Scan0, handleLen)
             Dim json As String = Encoding.UTF8.GetString(buf)
-            Handle = json.LoadObject(Of FileHandle)
+            Handle = json.LoadJSON(Of FileHandle)
             buffer = New Byte(bufferLen - 1) {}
             Call Array.ConstrainedCopy(raw, p, buffer, Scan0, bufferLen)
         End Sub
