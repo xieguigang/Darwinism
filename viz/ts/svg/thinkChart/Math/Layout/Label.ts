@@ -1,6 +1,13 @@
-﻿namespace Layout {
+﻿/// <reference path="../../../../build/svg.d.ts"/>
 
-    export class Label {
+namespace Layout {
 
+    export class Label extends Canvas.Rectangle {
+
+        public text: string;
+
+        public toString() {
+            return this.text;
+        }
     }
 }
