@@ -6,7 +6,7 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "../dist",
-    "outFile": "../../build/linq.js",
+    "outFile": "../3DApp.js",
     "declaration": true
   },
   "exclude": [
