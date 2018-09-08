@@ -1,7 +1,7 @@
 var fs = require('fs');
 var compressor = require('yuicompressor');
-var src = "Projector.js";
-var out = "Projector.min.js";
+var src = "CanvasRenderer.js";
+var out = "CanvasRenderer.min.js";
 
 compressor.compress(src, {
     charset: 'utf8'
