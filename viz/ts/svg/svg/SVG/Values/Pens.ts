@@ -1,7 +1,6 @@
 ﻿namespace Canvas {
 
     export class Pens {
-
         //#region "pens"
 
         /**
