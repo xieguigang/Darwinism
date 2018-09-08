@@ -5,9 +5,9 @@ namespace Canvas {
     */
     export class Color {
 
-        r: number;
-        g: number;
-        b: number;
+        public r: number;
+        public g: number;
+        public b: number;
 
         constructor(r: number, g: number, b: number) {
             this.r = r;
@@ -18,9 +18,9 @@ namespace Canvas {
         /**
          * https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
         */
-        static FromHtmlColor(htmlColor: string): Color {
+        public static FromHtmlColor(htmlColor: string): Color {
             // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-            var hex = htmlColor;
+            var hex: string = htmlColor;
             var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 
             hex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -36,11 +36,15 @@ namespace Canvas {
             ) : null;
         }
 
-        ToHtmlColor(): string {
-            return "#" + componentToHex(this.r) + componentToHex(this.g) + componentToHex(this.b);
+        public ToHtmlColor(): string {
+            var r = Utils.componentToHex(this.r);
+            var g = Utils.componentToHex(this.g);
+            var b = Utils.componentToHex(this.b);
+
+            return `#${r}${g}${b}`;
         }
 
-        ToRGBColor(): string {
+        public ToRGBColor(): string {
             return `rgb(${this.r},${this.g},${this.b})`;
         }
 

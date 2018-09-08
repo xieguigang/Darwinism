@@ -20,7 +20,7 @@ class Graphics {
      * @param div div id
     */
     constructor(div: string) {
-        this.svg = svgNode("svg", { "version": "1.1" });
+        this.svg = Utils.svgNode("svg", { "version": "1.1" });
         this.container = document.getElementById(div);
         this.container.appendChild(this.svg);
     }
@@ -72,7 +72,7 @@ class Graphics {
         if (id) attrs["id"] = id;
         if (className) attrs["class"] = className;
 
-        var node = pen.Styling(svgNode("line", attrs));
+        var node = pen.Styling(Utils.svgNode("line", attrs));
         this.svg.appendChild(node);
 
         return this;
@@ -95,7 +95,7 @@ class Graphics {
         if (className) attrs["class"] = className;
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        var node = border.Styling(svgNode("circle", attrs));
+        var node = border.Styling(Utils.svgNode("circle", attrs));
         this.svg.appendChild(node);
 
         return this;
@@ -127,7 +127,7 @@ class Graphics {
         if (className) attrs["class"] = className;
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        var node = border.Styling(svgNode("ellipse", attrs));
+        var node = border.Styling(Utils.svgNode("ellipse", attrs));
         this.svg.appendChild(node);
 
         return this;
@@ -154,7 +154,7 @@ class Graphics {
         if (className) attrs["class"] = className;
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        var node = border.Styling(svgNode("rect", attrs));
+        var node = border.Styling(Utils.svgNode("rect", attrs));
         this.svg.appendChild(node);
 
         return this;
@@ -179,7 +179,7 @@ class Graphics {
         if (className) attrs["class"] = className;
         if (fill) attrs["fill"] = fill.ToHtmlColor();
 
-        var node = border.Styling(svgNode("path", attrs));
+        var node = border.Styling(Utils.svgNode("path", attrs));
         this.svg.appendChild(node);
 
         return this;
