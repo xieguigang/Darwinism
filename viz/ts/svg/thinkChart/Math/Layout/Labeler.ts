@@ -44,8 +44,8 @@
             var w = this.weights;
             var m = lab.length,
                 ener = 0,
-                dx = lab[index].x - anc[index].x,
-                dy = anc[index].y - lab[index].y,
+                dx = lab[index].left - anc[index].x,
+                dy = anc[index].y - lab[index].top,
                 dist = Math.sqrt(dx * dx + dy * dy),
                 overlap = true,
                 amount = 0;
@@ -62,25 +62,25 @@
             else if (dx < 0 && dy < 0) { ener += 2 * w.orient; }
             else { ener += 3 * w.orient; }
 
-            var x21 = lab[index].x,
-                y21 = lab[index].y - lab[index].height + 2.0,
-                x22 = lab[index].x + lab[index].width,
-                y22 = lab[index].y + 2.0;
+            var x21 = lab[index].left,
+                y21 = lab[index].top - lab[index].height + 2.0,
+                x22 = lab[index].left + lab[index].width,
+                y22 = lab[index].top + 2.0;
             var x11, x12, y11, y12, x_overlap, y_overlap, overlap_area;
 
             for (var i = 0; i < m; i++) {
                 if (i != index) {
 
                     // penalty for intersection of leader lines
-                    overlap = Math2D.Geometry.intersect(anc[index].x, lab[index].x, anc[i].x, lab[i].x,
-                        anc[index].y, lab[index].y, anc[i].y, lab[i].y);
+                    overlap = Math2D.Geometry.intersect(anc[index].x, lab[index].left, anc[i].x, lab[i].left,
+                        anc[index].y, lab[index].top, anc[i].y, lab[i].top);
                     if (overlap) ener += w.inter;
 
                     // penalty for label-label overlap
-                    x11 = lab[i].x;
-                    y11 = lab[i].y - lab[i].height + 2.0;
-                    x12 = lab[i].x + lab[i].width;
-                    y12 = lab[i].y + 2.0;
+                    x11 = lab[i].left;
+                    y11 = lab[i].top - lab[i].height + 2.0;
+                    x12 = lab[i].left + lab[i].width;
+                    y12 = lab[i].top + 2.0;
                     x_overlap = Math.max(0, Math.min(x12, x22) - Math.max(x11, x21));
                     y_overlap = Math.max(0, Math.min(y12, y22) - Math.max(y11, y21));
                     overlap_area = x_overlap * y_overlap;
@@ -168,22 +168,22 @@
             var c = Math.cos(angle);
 
             // translate label (relative to anchor at origin):
-            lab[i].x -= anc[i].x
-            lab[i].y -= anc[i].y
+            lab[i].left -= anc[i].x
+            lab[i].top -= anc[i].y
 
             // rotate label
-            var x_new = lab[i].x * c - lab[i].y * s,
-                y_new = lab[i].x * s + lab[i].y * c;
+            var x_new = lab[i].left * c - lab[i].top * s,
+                y_new = lab[i].left * s + lab[i].top * c;
 
             // translate label back
-            lab[i].x = x_new + anc[i].x
-            lab[i].y = y_new + anc[i].y
+            lab[i].left = x_new + anc[i].x
+            lab[i].top = y_new + anc[i].y
 
             // hard wall boundaries
-            if (lab[i].x > w) lab[i].x = x_old;
-            if (lab[i].x < 0) lab[i].x = x_old;
-            if (lab[i].y > h) lab[i].y = y_old;
-            if (lab[i].y < 0) lab[i].y = y_old;
+            if (lab[i].left > this.w) lab[i].left = x_old;
+            if (lab[i].left < 0) lab[i].left = x_old;
+            if (lab[i].top > this.h) lab[i].top = y_old;
+            if (lab[i].top < 0) lab[i].top = y_old;
 
             // new energy
             var new_energy = this.energy_function(i, lab, anc)
@@ -195,8 +195,8 @@
                 this.acc += 1;
             } else {
                 // move back to old coordinates
-                lab[i].x = x_old;
-                lab[i].y = y_old;
+                lab[i].left = x_old;
+                lab[i].top = y_old;
                 this.rej += 1;
             }
 
