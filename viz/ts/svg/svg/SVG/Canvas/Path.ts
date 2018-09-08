@@ -8,7 +8,7 @@ namespace Canvas {
 
         private pathStack: string[];
 
-        constructor() {
+        public constructor() {
             this.pathStack = [];
         }
 
@@ -154,7 +154,7 @@ namespace Canvas {
             return this;
         }
 
-        d(): string {
+        public d(): string {
             return this.pathStack.join(" ");
         }
     }

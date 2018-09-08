@@ -40,7 +40,7 @@
     <TypeScriptCompile Include="Canvas/Canvas.ts" />
     <TypeScriptCompile Include="Canvas/Color.ts" />
     <TypeScriptCompile Include="Canvas/Font.ts" />
-    <TypeScriptCompile Include="Canvas/HTMLColors.ts" />
+    <TypeScriptCompile Include="Values\HTMLColors.ts" />
     <TypeScriptCompile Include="Canvas/Pen.ts" />
     <TypeScriptCompile Include="Values\Pens.ts">
       <SubType>Code</SubType>
