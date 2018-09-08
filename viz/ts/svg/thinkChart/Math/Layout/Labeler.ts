@@ -2,8 +2,8 @@
 
     export class Labeler {
 
-        private lab = [];
-        private anc = [];
+        private lab: Label[] = [];
+        private anc: Anchor[] = [];
         private w = 1; // box width
         private h = 1; // box width
 
@@ -12,20 +12,14 @@
         private acc = 0;
         private rej = 0;
 
-        //#region "weights"
-        private w_len = 0.2; // leader line length 
-        private w_inter = 1.0; // leader line intersection
-        private w_lab2 = 30.0; // label-label overlap
-        private w_lab_anc = 30.0; // label-anchor overlap
-        private w_orient = 3.0; // orientation bias
-        //#endregion
-
         //#region ""
+        private weights: Weights;
         private energy_function: (index: number) => number;
         private schedule_function: (currT: number, initialT: number, nsweeps: number) => number;
         //#endregion
 
         public constructor(
+            weights: Weights = new Weights(),
             energy: (index: number) => number = null,
             schedule: (currT: number, initialT: number, nsweeps: number) => number = Labeler.cooling_schedule) {
 
