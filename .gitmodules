@@ -1,0 +1,3 @@
+[submodule "viz/ts/TsLinq"]
+	path = viz/ts/TsLinq
+	url = https://github.com/GCModeller-Cloud/data.ts.git
