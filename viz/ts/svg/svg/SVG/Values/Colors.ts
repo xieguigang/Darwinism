@@ -1,7 +1,6 @@
 ﻿namespace Canvas {
 
     export class Brushes {
-        //region "colors"
 
         /**
          * Black (#000000) 
@@ -2396,7 +2395,5 @@
         static White(): Color {
             return Color.FromHtmlColor(Canvas.White);
         }
-
-        //endregion
     }
 }
