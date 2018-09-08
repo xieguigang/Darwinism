@@ -1,13 +1,17 @@
-declare var container: HTMLDivElement;
-declare var camera: THREE.PerspectiveCamera;
-declare var scene: THREE.Scene;
-declare var renderer: THREE.CanvasRenderer;
-declare var group: THREE.Group;
-declare var mouseX: number, mouseY: number;
-declare var windowHalfX: number;
-declare var windowHalfY: number;
-declare function init(): void;
-declare function onWindowResize(): void;
-declare function onDocumentMouseMove(event: any): void;
-declare function animate(): void;
-declare function render(): void;
+declare class threeApp {
+    container: HTMLDivElement;
+    camera: THREE.PerspectiveCamera;
+    scene: THREE.Scene;
+    renderer: THREE.CanvasRenderer;
+    group: THREE.Group;
+    mouseX: number;
+    mouseY: number;
+    windowHalfX: number;
+    windowHalfY: number;
+    constructor(containerId?: string);
+    init(): void;
+    onWindowResize(): void;
+    onDocumentMouseMove(event: MouseEvent): void;
+    animate(): void;
+    render(): void;
+}
