@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script type="text/javascript" src="./bin/svg.js"></script>
+</head>
+
+<body>
+    <div id="test-svg" style="width:100%; height: 100%;"></div>
+</body>
+
+<script>
 /// <reference path="svg.ts"/>
 
 $(function () {
@@ -7,5 +20,6 @@ $(function () {
         .drawRectangle(new Canvas.Rectangle(10, 20, 200, 300))
         .drawLine(new Canvas.Pen(Canvas.Color.Red(), 5), new Canvas.Point(100, 200), new Canvas.Point(500, 600));
 });
+</script>
 
-
+</html>
