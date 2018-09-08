@@ -9,6 +9,7 @@ class Graphics {
 
     private svg: SVGElement;
     private container: HTMLElement;
+
     /**
      * The css z-index layer order
     */
@@ -19,7 +20,7 @@ class Graphics {
      * 
      * @param div div id
     */
-    constructor(div: string) {
+    public constructor(div: string) {
         this.svg = Utils.svgNode("svg", { "version": "1.1" });
         this.container = document.getElementById(div);
         this.container.appendChild(this.svg);
@@ -28,7 +29,7 @@ class Graphics {
     /**
      * Set the size value of the svg canvas
     */
-    size(width: number, height: number): Graphics {
+    public size(width: number, height: number): Graphics {
         this.svg.setAttribute("width", width.toString() + "px");
         this.svg.setAttribute("height", height.toString() + "px");
         return this;
@@ -46,7 +47,7 @@ class Graphics {
      * Negative values for width or height are not permitted and a value of zero disables 
      * rendering of the element.
     */
-    viewBox(minX: number, minY: number, width: number, height: number): Graphics {
+    public viewBox(minX: number, minY: number, width: number, height: number): Graphics {
         var box: string = `${minX} ${minY} ${width} ${height}`;
         this.svg.setAttribute("viewBox", box);
         return this;
@@ -57,7 +58,7 @@ class Graphics {
      * 
      * @param pen Defines the line border: color and line width
     */
-    drawLine(pen: Canvas.Pen, a: Canvas.Point, b: Canvas.Point,
+    public drawLine(pen: Canvas.Pen, a: Canvas.Point, b: Canvas.Point,
         id: string = null,
         className: string = null): Graphics {
 
@@ -78,8 +79,8 @@ class Graphics {
         return this;
     }
 
-    drawCircle(center: Canvas.Point, radius: number,
-        border: Canvas.Pen = Canvas.Pen.Black(),
+    public drawCircle(center: Canvas.Point, radius: number,
+        border: Canvas.Pen = Canvas.Pens.Black(),
         fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
@@ -109,8 +110,8 @@ class Graphics {
      * the ellipse (if, for example, you wanted to draw an ellipse tilted at a 45 
      * degree angle), but it can be rotated by using the ``transform`` attribute.
     */
-    drawEllipse(center: Canvas.Point, rx: number, ry: number,
-        border: Canvas.Pen = Canvas.Pen.Black(),
+    public drawEllipse(center: Canvas.Point, rx: number, ry: number,
+        border: Canvas.Pen = Canvas.Pens.Black(),
         fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
@@ -136,8 +137,8 @@ class Graphics {
     /**
      * Draw a basic svg rectangle shape
     */
-    drawRectangle(rect: Canvas.Rectangle,
-        border: Canvas.Pen = Canvas.Pen.Black(),
+    public drawRectangle(rect: Canvas.Rectangle,
+        border: Canvas.Pen = Canvas.Pens.Black(),
         fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
@@ -164,8 +165,8 @@ class Graphics {
      * The ``<path>`` SVG element is the generic element to define a shape. 
      * All the basic shapes can be created with a path element.
     */
-    drawPath(path: Canvas.Path,
-        border: Canvas.Pen = Canvas.Pen.Black(),
+    public drawPath(path: Canvas.Path,
+        border: Canvas.Pen = Canvas.Pens.Black(),
         fill: Canvas.Color = null,
         id: string = null,
         className: string = null): Graphics {
