@@ -57,10 +57,16 @@
             // label orientation bias
             dx /= dist;
             dy /= dist;
-            if (dx > 0 && dy > 0) { ener += 0 * w.orient; }
-            else if (dx < 0 && dy > 0) { ener += 1 * w.orient; }
-            else if (dx < 0 && dy < 0) { ener += 2 * w.orient; }
-            else { ener += 3 * w.orient; }
+
+            if (dx > 0 && dy > 0) {
+                ener += 0 * w.orient;
+            } else if (dx < 0 && dy > 0) {
+                ener += 1 * w.orient;
+            } else if (dx < 0 && dy < 0) {
+                ener += 2 * w.orient;
+            } else {
+                ener += 3 * w.orient;
+            }
 
             var x21 = lab[index].left,
                 y21 = lab[index].top - lab[index].height + 2.0,
@@ -72,8 +78,10 @@
                 if (i != index) {
 
                     // penalty for intersection of leader lines
-                    overlap = Math2D.Geometry.intersect(anc[index].x, lab[index].left, anc[i].x, lab[i].left,
-                        anc[index].y, lab[index].top, anc[i].y, lab[i].top);
+                    overlap = Math2D.Geometry.intersect(
+                        anc[index].x, lab[index].left, anc[i].x, lab[i].left,
+                        anc[index].y, lab[index].top, anc[i].y, lab[i].top
+                    );
                     if (overlap) ener += w.inter;
 
                     // penalty for label-label overlap
@@ -96,15 +104,15 @@
                 y_overlap = Math.max(0, Math.min(y12, y22) - Math.max(y11, y21));
                 overlap_area = x_overlap * y_overlap;
                 ener += (overlap_area * w.lab_anc);
-
             }
+
             return ener;
         }
 
         /**
          * Monte Carlo translation move
         */
-        mcmove(currT: number) {
+        private mcmove(currT: number) {
             var lab = this.lab;
             var anc = this.anc;
 
@@ -147,7 +155,7 @@
         /**
          * Monte Carlo rotation move
         */
-        mcrotate(currT: number) {
+        private mcrotate(currT: number) {
             var lab = this.lab;
             var anc = this.anc;
 
@@ -199,7 +207,6 @@
                 lab[i].top = y_old;
                 this.rej += 1;
             }
-
         }
 
         /**
@@ -212,8 +219,11 @@
 
             for (var i = 0; i < nsweeps; i++) {
                 for (var j = 0; j < m; j++) {
-                    if (Math.random() < 0.5) { this.mcmove(currT); }
-                    else { this.mcrotate(currT); }
+                    if (Math.random() < 0.5) {
+                        this.mcmove(currT);
+                    } else {
+                        this.mcrotate(currT);
+                    }
                 }
                 currT = this.schedule_function(currT, initialT, nsweeps);
             }
@@ -221,32 +231,36 @@
             return this;
         }
 
-        width(x) {
-            // users insert graph width
-            if (!arguments.length) return w;
-            w = x;
-            return labeler;
+        /**
+         * users insert graph width
+        */
+        public width(x: number): Labeler {
+            this.w = x;
+            return this;
         }
 
-        height(x) {
-            // users insert graph height
-            if (!arguments.length) return h;
-            h = x;
-            return labeler;
+        /**
+         * users insert graph height
+        */
+        public height(x: number): Labeler {
+            this.h = x;
+            return this;
         }
 
-        label(x) {
-            // users insert label positions
-            if (!arguments.length) return lab;
-            lab = x;
-            return labeler;
+        /**
+         * users insert label positions
+        */
+        public label(x: Label[]): Labeler {
+            this.lab = x;
+            return this;
         }
 
-        anchor(x) {
-            // users insert anchor positions
-            if (!arguments.length) return anc;
-            anc = x;
-            return labeler;
+        /**
+         * users insert anchor positions
+        */
+        public anchor(x: Anchor[]): Labeler {
+            this.anc = x;
+            return this;
         }
     }
 }
