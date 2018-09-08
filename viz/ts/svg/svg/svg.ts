@@ -23,10 +23,6 @@ class Graphics {
         this.svg = svgNode("svg", { "version": "1.1" });
         this.container = document.getElementById(div);
         this.container.appendChild(this.svg);
-
-        // console.log(div);
-        // console.log(this.svg);
-        // console.log(this.container);
     }
 
     /**

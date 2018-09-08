@@ -5,8 +5,8 @@ namespace Canvas {
     */
     export class Pen implements ICSSStyle {
 
-        color: Color;
-        width: number;
+       public color: Color;
+       public width: number;
 
         /**
          * Create a new css border style for svg rectangle, line, etc.
