@@ -5,7 +5,8 @@
     "lib": [ "dom", "es5", "dom.iterable", "scripthost" ],
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "outFile": "bin/svg.js"
+    "outFile": "bin/svg.js",
+    "declaration": true
   },
   "exclude": [
     "node_modules"
