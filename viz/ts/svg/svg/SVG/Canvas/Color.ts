@@ -37,9 +37,9 @@ namespace Canvas {
         }
 
         public ToHtmlColor(): string {
-            var r = Utils.componentToHex(this.r);
-            var g = Utils.componentToHex(this.g);
-            var b = Utils.componentToHex(this.b);
+            var r = SvgUtils.componentToHex(this.r);
+            var g = SvgUtils.componentToHex(this.g);
+            var b = SvgUtils.componentToHex(this.b);
 
             return `#${r}${g}${b}`;
         }

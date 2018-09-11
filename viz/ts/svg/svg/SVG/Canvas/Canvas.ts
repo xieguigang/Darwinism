@@ -1,4 +1,4 @@
-/// <reference path="../Utils.ts"/>
+/// <reference path="../SvgUtils.ts"/>
 
 /**
  * SVG画布元素
