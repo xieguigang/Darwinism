@@ -2,20 +2,27 @@
 
     export class Labeler {
 
-        private lab: Label[] = [];
-        private anc: Anchor[] = [];
-        private w = 1; // box width
-        private h = 1; // box width
+        public lab: Label[] = [];
+        public anc: Anchor[] = [];
 
-        private max_move = 5.0;
-        private max_angle = 0.5;
-        private acc = 0;
-        private rej = 0;
+        //#region "box size"
+
+        /**
+         * box width
+        */
+        private w: number = 1;
+        /**
+         * box height
+        */
+        private h: number = 1;
+
+        //#endregion
 
         //#region ""
         private weights: Weights;
-        private energy_function: (index: number, lab: Label[], anc: Anchor[]) => number;
-        private schedule_function: (currT: number, initialT: number, nsweeps: number) => number;
+
+        public readonly energy_function: (index: number, lab: Label[], anc: Anchor[]) => number;
+        public readonly schedule_function: (currT: number, initialT: number, nsweeps: number) => number;
         //#endregion
 
         public constructor(
@@ -38,7 +45,7 @@
         /**
          * energy function, tailored for label placement
         */
-        energy(index: number): number {
+        private energy(index: number): number {
             var lab = this.lab;
             var anc = this.anc;
             var w = this.weights;
@@ -109,120 +116,23 @@
             return ener;
         }
 
-        /**
-         * Monte Carlo translation move
-        */
-        private mcmove(currT: number) {
-            var lab = this.lab;
-            var anc = this.anc;
-
-            // select a random label
-            var i = Math.floor(Math.random() * lab.length);
-
-            // save old coordinates
-            var x_old = lab[i].left;
-            var y_old = lab[i].top;
-
-            // old energy
-            var old_energy = this.energy_function(i, lab, anc);
-
-            // random translation
-            lab[i].left += (Math.random() - 0.5) * this.max_move;
-            lab[i].top += (Math.random() - 0.5) * this.max_move;
-
-            // hard wall boundaries
-            if (lab[i].left > this.w) lab[i].left = x_old;
-            if (lab[i].left < 0) lab[i].left = x_old;
-            if (lab[i].top > this.h) lab[i].top = y_old;
-            if (lab[i].top < 0) lab[i].top = y_old;
-
-            // new energy
-            var new_energy = this.energy_function(i, lab, anc);
-
-            // delta E
-            var delta_energy = new_energy - old_energy;
-
-            if (Math.random() < Math.exp(-delta_energy / currT)) {
-                this.acc += 1;
-            } else {
-                // move back to old coordinates
-                lab[i].left = x_old;
-                lab[i].top = y_old;
-                this.rej += 1;
-            }
-        }
-
-        /**
-         * Monte Carlo rotation move
-        */
-        private mcrotate(currT: number) {
-            var lab = this.lab;
-            var anc = this.anc;
-
-            // select a random label
-            var i = Math.floor(Math.random() * lab.length);
-
-            // save old coordinates
-            var x_old = lab[i].left;
-            var y_old = lab[i].top;
-
-            // old energy
-            var old_energy = this.energy_function(i, lab, anc);
-
-            // random angle
-            var angle = (Math.random() - 0.5) * this.max_angle;
-
-            var s = Math.sin(angle);
-            var c = Math.cos(angle);
-
-            // translate label (relative to anchor at origin):
-            lab[i].left -= anc[i].x
-            lab[i].top -= anc[i].y
-
-            // rotate label
-            var x_new = lab[i].left * c - lab[i].top * s,
-                y_new = lab[i].left * s + lab[i].top * c;
-
-            // translate label back
-            lab[i].left = x_new + anc[i].x
-            lab[i].top = y_new + anc[i].y
-
-            // hard wall boundaries
-            if (lab[i].left > this.w) lab[i].left = x_old;
-            if (lab[i].left < 0) lab[i].left = x_old;
-            if (lab[i].top > this.h) lab[i].top = y_old;
-            if (lab[i].top < 0) lab[i].top = y_old;
-
-            // new energy
-            var new_energy = this.energy_function(i, lab, anc)
-
-            // delta E
-            var delta_energy = new_energy - old_energy;
-
-            if (Math.random() < Math.exp(-delta_energy / currT)) {
-                this.acc += 1;
-            } else {
-                // move back to old coordinates
-                lab[i].left = x_old;
-                lab[i].top = y_old;
-                this.rej += 1;
-            }
-        }
+        //#region "public interface"
 
         /**
          * main simulated annealing function
         */
         public start(nsweeps: number): Labeler {
-            var m = this.lab.length,
+            var m: number = this.lab.length,
                 currT = 1.0,
                 initialT = 1.0;
+            var monteCarlo = new MonteCarlo(this.w, this.h, this);
 
             for (var i = 0; i < nsweeps; i++) {
                 for (var j = 0; j < m; j++) {
                     if (Math.random() < 0.5) {
-                        this.mcmove(currT);
+                        monteCarlo.Move(currT);
                     } else {
-                        this.mcrotate(currT);
+                        monteCarlo.Rotate(currT);
                     }
                 }
                 currT = this.schedule_function(currT, initialT, nsweeps);
@@ -262,5 +172,7 @@
             this.anc = x;
             return this;
         }
+
+        //#endregion
     }
 }

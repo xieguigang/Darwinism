@@ -53,6 +53,9 @@
     <TypeScriptCompile Include="Math\Layout\Anchor.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Math\Layout\MonteCarlo.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Math\Layout\Weights.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
