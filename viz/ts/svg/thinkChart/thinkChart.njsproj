@@ -62,6 +62,9 @@
     <TypeScriptCompile Include="Math\AxisTicks.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Math\Vector.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Math\" />
