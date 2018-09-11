@@ -1,5 +1,8 @@
 /// <reference path="../Utils.ts"/>
 
+/**
+ * SVG画布元素
+*/
 namespace Canvas {
 
     /**
@@ -25,46 +28,61 @@ namespace Canvas {
     */
     export class Point {
 
-        x: number;
-        y: number;
+        public x: number;
+        public y: number;
 
-        constructor(x: number, y: number) {
+        public constructor(x: number, y: number) {
             this.x = x;
             this.y = y;
+        }
+
+        public toString(): string {
+            return `[${this.x}, ${this.y}]`;
         }
     }
 
     export class Size {
 
-        width: number;
-        height: number;
+        public width: number;
+        public height: number;
 
-        constructor(width: number, height: number) {
+        public constructor(width: number, height: number) {
             this.width = width;
             this.height = height;
         }
+
+        public toString(): string {
+            return `[${this.width}, ${this.height}]`;
+        }
     }
 
+    /**
+     * 表示一个二维平面上的矩形区域
+    */
     export class Rectangle {
 
-        left: number;
-        top: number;
-        width: number;
-        height: number;
+        public left: number;
+        public top: number;
+        public width: number;
+        public height: number;
 
-        constructor(x: number, y: number, width: number, height: number) {
+        public constructor(x: number, y: number, width: number, height: number) {
             this.left = x;
             this.top = y;
             this.width = width;
             this.height = height;
         }
 
-        Location(): Point {
+        public Location(): Point {
             return new Point(this.left, this.top);
         }
 
-        Size(): Size {
+        public Size(): Size {
             return new Size(this.width, this.height);
+        }
+
+        public toString(): string {
+            return `Size: ${this.Size().toString()} @ ${this.Location().toString()}`;
         }
     }
 }

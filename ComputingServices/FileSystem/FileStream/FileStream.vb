@@ -127,7 +127,7 @@ Namespace FileSystem.IO
                 Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.GetFileStreamInfo, handle)
                 Dim invoke As New AsynInvoke(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(req)
-                _Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadObject)
+                _Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadJSON)
                 _Name = handle.FileName
             End Set
         End Property
@@ -187,7 +187,7 @@ Namespace FileSystem.IO
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.GetFileStreamInfo, handle)
             Dim invoke As New AsynInvoke(remote.Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
-            Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadObject)
+            Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadJSON)
             Name = handle.FileName
         End Sub
 

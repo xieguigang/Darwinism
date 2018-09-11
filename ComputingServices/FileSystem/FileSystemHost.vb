@@ -121,7 +121,7 @@ Namespace FileSystem
 
         <Protocol(FileSystemAPI.Flush)>
         Private Function Flush(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim handle = args.GetUTF8String.LoadObject(Of ReadBuffer)
+            Dim handle = args.GetUTF8String.LoadJSON(Of ReadBuffer)
             Dim uid As String = handle.Handle
             If OpenedHandles.ContainsKey(uid) Then
                 Dim stream As FileStream = OpenedHandles(uid)
@@ -134,7 +134,7 @@ Namespace FileSystem
 
         <Protocol(FileSystemAPI.ReadBuffer)>
         Private Function ReadBuffer(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim handle = args.GetUTF8String.LoadObject(Of ReadBuffer)
+            Dim handle = args.GetUTF8String.LoadJSON(Of ReadBuffer)
             Dim uid As String = handle.Handle
             If OpenedHandles.ContainsKey(uid) Then
                 Dim stream As FileStream = OpenedHandles(uid)
@@ -164,7 +164,7 @@ Namespace FileSystem
 
         <Protocol(FileSystemAPI.OpenHandle)>
         Private Function OpenFileHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim params As FileOpen = JsonContract.LoadObject(Of FileOpen)(args.GetUTF8String)
+            Dim params As FileOpen = JsonContract.LoadJSON(Of FileOpen)(args.GetUTF8String)
             Dim stream As FileStream = params.OpenHandle
             Dim handle = FileStreamInfo.GetInfo(stream)
             handle.FileName = params.FileName
@@ -174,7 +174,7 @@ Namespace FileSystem
 
         <Protocol(FileSystemAPI.GetFileStreamInfo)>
         Private Function GetStreamInfo(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim handle = args.GetUTF8String.LoadObject(Of FileHandle)
+            Dim handle = args.GetUTF8String.LoadJSON(Of FileHandle)
             Dim uid As String = handle.Handle
             If OpenedHandles.ContainsKey(uid) Then
                 Dim stream As FileStream = OpenedHandles(uid)
@@ -189,7 +189,7 @@ Namespace FileSystem
 
         <Protocol(FileSystemAPI.CloseHandle)>
         Private Function CloseHandle(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim handle = args.GetUTF8String.LoadObject(Of FileHandle)
+            Dim handle = args.GetUTF8String.LoadJSON(Of FileHandle)
             Dim uid As String = handle.Handle
             If OpenedHandles.ContainsKey(uid) Then
                 Dim stream As FileStream = OpenedHandles(uid)

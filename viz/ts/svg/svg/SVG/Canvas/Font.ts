@@ -2,10 +2,10 @@ namespace Canvas {
 
     export class Font implements ICSSStyle {
 
-        size: string;
-        family: string;
-        bold: boolean;
-        italic: boolean;
+        public size: string;
+        public family: string;
+        public bold: boolean;
+        public italic: boolean;
 
         constructor(family: string,
             size: any = "12px",
@@ -18,7 +18,7 @@ namespace Canvas {
             this.italic = italic;
         }
 
-        Styling(node: SVGElement): SVGElement {
+        public Styling(node: SVGElement): SVGElement {
             var styles = [];
 
             if (this.bold) styles.push("bold");
@@ -31,7 +31,7 @@ namespace Canvas {
             return node;
         }
 
-        CSSStyle(): string {
+        public CSSStyle(): string {
             var styles = [];
 
             if (this.bold) styles.push("bold");

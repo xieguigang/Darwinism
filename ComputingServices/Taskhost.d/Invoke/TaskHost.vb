@@ -137,7 +137,7 @@ Namespace TaskHost
             Dim value As String = JsonContract.GetJson(info)
             Dim req As RequestStream = New RequestStream(ProtocolEntry, TaskProtocols.Invoke, value)
             Dim rep As RequestStream = New AsynInvoke(_remote).SendMessage(req)
-            Dim rtvl As Rtvl = JsonContract.LoadObject(Of Rtvl)(rep.GetUTF8String)
+            Dim rtvl As Rtvl = JsonContract.LoadJSON(Of Rtvl)(rep.GetUTF8String)
             Return rtvl
         End Function
 
@@ -164,7 +164,7 @@ Namespace TaskHost
             Dim jparam As String = params.GetJson
             Dim req As New RequestStream(ProtocolEntry, TaskProtocols.InvokeLinq, jparam)
             Dim rep As RequestStream = New AsynInvoke(_remote).SendMessage(req)
-            Dim svr As IPEndPoint = rep.GetUTF8String.LoadObject(Of IPEndPoint)
+            Dim svr As IPEndPoint = rep.GetUTF8String.LoadJSON(Of IPEndPoint)
             Return New ILinq(Of T)(svr)
         End Function
 
@@ -173,7 +173,7 @@ Namespace TaskHost
             Dim jparam As String = params.GetJson
             Dim req As New RequestStream(ProtocolEntry, TaskProtocols.Select, jparam)
             Dim rep As RequestStream = New AsynInvoke(_remote).SendMessage(req)
-            Dim svr As IPEndPoint = rep.GetUTF8String.LoadObject(Of IPEndPoint)
+            Dim svr As IPEndPoint = rep.GetUTF8String.LoadJSON(Of IPEndPoint)
             Return New ILinq(Of Tout)(svr)
         End Function
     End Class
