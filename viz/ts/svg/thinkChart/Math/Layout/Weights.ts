@@ -23,5 +23,8 @@
         */
         public orient: number = 3.0;
 
+        public toString(): string {
+            return JSON.stringify(this);
+        }
     }
 }

@@ -5,7 +5,9 @@
     "lib": [ "dom", "es5", "dom.iterable", "scripthost" ],
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "outFile": "bin/thinkChart.js"
+    "outDir": "obj",
+    "outFile": "bin/ThinkChart.js",
+    "declaration": true
   },
   "exclude": [
     "node_modules"
