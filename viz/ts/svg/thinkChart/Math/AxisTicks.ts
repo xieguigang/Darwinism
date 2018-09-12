@@ -7,7 +7,7 @@ namespace Math2D {
      * 
      * > http://austinclemens.com/blog/2016/01/09/an-algorithm-for-creating-a-graphs-axes/
     */
-    export function NiceAxisTicks(min: number, max: number, ticks: number = 10, decimalDigits: number = 2): number[] {
+    export function NiceAxisTicks(min: number, max: number, nTicks: number = 10, decimalDigits: number = 2): number[] {
 
         // First, get the minimum and maximum of the series, toggle the zero_flag variable 
         // if 0 Is between Then the min And max, And Get the range Of the data.
@@ -30,13 +30,13 @@ namespace Math2D {
         // Next, define ‘nice’ numbers. You could change this if you’d like to include other 
         // possibilities, but I decided I would allow counting by 
         // 1s, 2s, 5s, 10s, 15s, 25s, and 75s. This will make a bit more sense below.
-        var niceTicks = [0.1, 0.2, 0.5, 1, 0.15, 0.25, 0.75];
+        var niceTicks: number[] = [0.1, 0.2, 0.5, 1, 0.15, 0.25, 0.75];
 
         // This next part is a bit of path dependence – I had an algorithm where the number of 
         // ticks was more central and I kept that framework but I probably wouldn’t do it this 
         // way again. I get a naive value for the distance between ticks and determine the place 
         // value of this distance.
-        var steps: number = range / (ticks - 1);
+        var steps: number = range / (nTicks - 1);
         var rounded: number;
         var digits: number;
 
@@ -75,7 +75,7 @@ namespace Math2D {
 
         var minSteps: number;
         var stepArray = new List<number>();
-        var candidateArray = new List<number[]>();
+        var candidateArray = new List<List<number>>();
 
         // Loop through candidate steps and generate an axis based on each step length.
         for (var i: number = 0; i < candidateSteps.Count; i++) {
@@ -112,32 +112,32 @@ namespace Math2D {
             // (.15 for example, is great in certain cases, but probably 
             // shouldn’t be liked as much by the function as .1). 
             // The array with the lowest score ‘wins’.
-            candidateArray.Add(stepArray.ToArray());
+            candidateArray.Add(stepArray);
             // End If
         }
 
         // 通过分别计算ticks的数量差值，是否容纳了输入的[min,max]范围来判断是否合适
-        var maxSteps = new Vector(candidateArray.Max(candidate => candidate.length));
-        var dSteps: Vector = maxSteps.Subtract(candidateArray.Select(candidate => Math.abs(candidate.length - ticks)));
-        var dMin: Vector = inputRange.Length - candidateArray.Select(candidate => Math.abs(candidate.Min() - inputRange.Min()));
-        var dMax: Vector = inputRange.Length - candidateArray.Select(candidate => Math.abs(candidate.Max() - inputRange.Max()));
+        var maxSteps = new MathV.Vector(candidateArray.Max(candidate => candidate.Count));
+        var dSteps: MathV.Vector = maxSteps.Subtract(candidateArray.Select(candidate => Math.abs(candidate.Count - nTicks)));
+        var dMin: MathV.Vector = MathV.Subtract(inputRange.Length, candidateArray.Select(candidate => Math.abs(candidate.Min() - inputRange.min)));
+        var dMax: MathV.Vector = MathV.Subtract(inputRange.Length, candidateArray.Select(candidate => Math.abs(candidate.Max() - inputRange.max)));
 
         dSteps = dSteps.Divide(dSteps.Max());
         dMin = dMin.Divide(dMin.Max());
         dMax = dMax.Divide(dMax.Max());
 
         var scores = (dSteps.Multiply(0.8)).Add(dMin.Multiply(0.1)).Add(dMax.Multiply(0.1));
-        var tickArray: number[] = candidateArray[Which.Max(scores)];
+        var ticks: number[] = candidateArray[Which.Max(scores)];
 
         // 2018-2-1
         // 如果数值是 1E-10 这样子的小数的话，在这里直接使用Round或导致返回的ticks全部都是零的bugs
         // 在这里加个开关，如果小于零就不在进行round了
         if (decimalDigits >= 0) {
-            for (var i: number = 0; i < tickArray.length; i++) {
-                tickArray[i] = Math.round(tickArray(i), decimalDigits);
+            for (var i: number = 0; i < ticks.length; i++) {
+                ticks[i] = parseFloat(ticks[i].toFixed(decimalDigits));
             }
         }
 
-        return tickArray;
+        return ticks;
     }
 }

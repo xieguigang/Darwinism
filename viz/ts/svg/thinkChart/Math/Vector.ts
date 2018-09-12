@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../../build/linq.d.ts"/>
 
-namespace Math2D {
+namespace MathV {
 
     export class Vector extends IEnumerator<number> {
 
