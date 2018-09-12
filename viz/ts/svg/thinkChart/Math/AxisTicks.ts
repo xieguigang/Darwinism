@@ -126,7 +126,9 @@ namespace Math2D {
         dMin = dMin.Divide(dMin.Max());
         dMax = dMax.Divide(dMax.Max());
 
-        var scores = (dSteps.Multiply(0.8)).Add(dMin.Multiply(0.1)).Add(dMax.Multiply(0.1));
+        var scores = (dSteps.Multiply(0.8))
+            .Add(dMin.Multiply(0.1))
+            .Add(dMax.Multiply(0.1));
         var ticks: number[] = candidateArray[Which.Max(scores)];
 
         // 2018-2-1
