@@ -117,16 +117,16 @@ namespace Math2D {
         }
 
         // 通过分别计算ticks的数量差值，是否容纳了输入的[min,max]范围来判断是否合适
-        var maxSteps = candidateArray.Max(candidate => candidate.length);
-        var dSteps = maxSteps - candidateArray.Select(candidate => Math.abs(candidate.length - ticks));
-        var dMin = inputRange.Length - candidateArray.Select(candidate => Math.abs(candidate.Min() - inputRange.Min()));
-        var dMax = inputRange.Length - candidateArray.Select(candidate => Math.abs(candidate.Max() - inputRange.Max()));
+        var maxSteps = new Vector(candidateArray.Max(candidate => candidate.length));
+        var dSteps: Vector = maxSteps.Subtract(candidateArray.Select(candidate => Math.abs(candidate.length - ticks)));
+        var dMin: Vector = inputRange.Length - candidateArray.Select(candidate => Math.abs(candidate.Min() - inputRange.Min()));
+        var dMax: Vector = inputRange.Length - candidateArray.Select(candidate => Math.abs(candidate.Max() - inputRange.Max()));
 
-        dSteps = dSteps / dSteps.Max();
-        dMin = dMin / dMin.Max();
-        dMax = dMax / dMax.Max();
+        dSteps = dSteps.Divide(dSteps.Max());
+        dMin = dMin.Divide(dMin.Max());
+        dMax = dMax.Divide(dMax.Max());
 
-        var scores = dSteps * 0.8 + dMin * 0.1 + dMax * 0.1;
+        var scores = (dSteps.Multiply(0.8)).Add(dMin.Multiply(0.1)).Add(dMax.Multiply(0.1));
         var tickArray: number[] = candidateArray[Which.Max(scores)];
 
         // 2018-2-1
