@@ -78,7 +78,7 @@ Namespace FileSystem
         ''' <param name="port"></param>
         Sub New(port As Integer)
             Dim protocols As New ProtocolHandler(Me)
-            __host = New TcpSynchronizationServicesSocket(port)
+            __host = New TcpServicesSocket(port)
             __host.Responsehandler = AddressOf protocols.HandleRequest
             Call RunTask(AddressOf __host.Run)
         End Sub

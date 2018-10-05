@@ -64,14 +64,14 @@ Namespace SharedMemory
     Public Class SharedSvr : Implements IDisposable
         Implements ITaskDriver
 
-        ReadOnly __localSvr As TcpSynchronizationServicesSocket
+        ReadOnly __localSvr As TcpServicesSocket
         ''' <summary>
         ''' 这个是提供给远程主机读取使用的
         ''' </summary>
         ReadOnly __variables As New Dictionary(Of HashValue)
 
         Sub New(local As Integer)
-            __localSvr = New TcpSynchronizationServicesSocket(local)
+            __localSvr = New TcpServicesSocket(local)
             __localSvr.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
         End Sub
 

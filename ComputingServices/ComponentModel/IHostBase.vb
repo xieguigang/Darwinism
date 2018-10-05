@@ -49,10 +49,10 @@ Imports Microsoft.VisualBasic.Net.Abstract
 
 Namespace ComponentModel
 
-    Public MustInherit Class IHostBase : Inherits IMasterBase(Of TcpSynchronizationServicesSocket)
+    Public MustInherit Class IHostBase : Inherits IMasterBase(Of TcpServicesSocket)
 
         Sub New(portal As Integer)
-            __host = New TcpSynchronizationServicesSocket(portal)
+            __host = New TcpServicesSocket(portal)
         End Sub
 
         Sub New()
