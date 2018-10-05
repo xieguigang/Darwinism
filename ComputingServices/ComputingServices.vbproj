@@ -207,10 +207,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Asymmetric\Instance.vb" />
-    <Compile Include="Asymmetric\Protocols.vb" />
-    <Compile Include="Asymmetric\Parasitifer.vb" />
-    <Compile Include="Asymmetric\Master.vb" />
     <Compile Include="Cluster\Master.vb" />
     <Compile Include="ComponentModel\IRemote.vb" />
     <Compile Include="ComponentModel\IHostBase.vb" />
