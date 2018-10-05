@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::7182b9666930cdd483b68fba5b04f627, ComputingServices\FileSystem\FileSystemHost.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FileSystemHost
-    ' 
-    '         Properties: OpenedHandles, Portal
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CloseHandle, CombinePath, CopyDirectory, CopyFile, CreateDirectory
-    '                   CurrentDirectory, DeleteDirectory, DeleteFile, DirectoryExists, Drives
-    '                   FileExists, FindInFiles, Flush, GetDirectories, GetDirectoryInfo
-    '                   GetDriveInfo, GetFileInfo, GetFiles, GetName, GetParentPath
-    '                   GetSetLength, GetSetPosition, GetStreamInfo, GetTempFileName, Lock
-    '                   MoveDirectory, MoveFile, OpenFileHandle, ReadBuffer, RenameDirectory
-    '                   RenameFile, Seek, WriteBuffer
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FileSystemHost
+' 
+'         Properties: OpenedHandles, Portal
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CloseHandle, CombinePath, CopyDirectory, CopyFile, CreateDirectory
+'                   CurrentDirectory, DeleteDirectory, DeleteFile, DirectoryExists, Drives
+'                   FileExists, FindInFiles, Flush, GetDirectories, GetDirectoryInfo
+'                   GetDriveInfo, GetFileInfo, GetFiles, GetName, GetParentPath
+'                   GetSetLength, GetSetPosition, GetStreamInfo, GetTempFileName, Lock
+'                   MoveDirectory, MoveFile, OpenFileHandle, ReadBuffer, RenameDirectory
+'                   RenameFile, Seek, WriteBuffer
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sciBASIC.ComputingServices.ComponentModel
@@ -85,7 +86,7 @@ Namespace FileSystem
 
         Public Overrides ReadOnly Property Portal As IPEndPoint
             Get
-                Return New IPEndPoint(AsynInvoke.LocalIPAddress, __host.LocalPort)
+                Return New IPEndPoint(TcpRequest.LocalIPAddress, __host.LocalPort)
             End Get
         End Property
 

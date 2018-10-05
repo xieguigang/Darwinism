@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::302584d24e6d72ed8aa618e3c6d210d0, ComputingServices\SharedMemory\Protocols.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Protocols
-    ' 
-    ' 
-    '         Enum MemoryProtocols
-    ' 
-    '             [TypeOf], Read, Write
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: ProtocolEntry
-    ' 
-    '     Function: [TypeOf], (+3 Overloads) ReadValue, (+2 Overloads) WriteValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Protocols
+' 
+' 
+'         Enum MemoryProtocols
+' 
+'             [TypeOf], Read, Write
+' 
+' 
+' 
+'  
+' 
+'     Properties: ProtocolEntry
+' 
+'     Function: [TypeOf], (+3 Overloads) ReadValue, (+2 Overloads) WriteValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -91,7 +92,7 @@ Namespace SharedMemory
         <Extension>
         Public Function ReadValue(remote As IPEndPoint, name As String, type As Type) As Object
             Dim req As RequestStream = ReadValue(name)
-            Dim rep As RequestStream = New AsynInvoke(remote).SendMessage(req)
+            Dim rep As RequestStream = New TcpRequest(remote).SendMessage(req)
             Return JsonContract.LoadObject(rep.GetUTF8String, type)
         End Function
 
@@ -103,7 +104,7 @@ Namespace SharedMemory
         <Extension>
         Public Function WriteValue(remote As IPEndPoint, name As String, value As Object) As Boolean
             Dim req As RequestStream = WriteValue(name, value)
-            Dim rep As RequestStream = New AsynInvoke(remote).SendMessage(req)
+            Dim rep As RequestStream = New TcpRequest(remote).SendMessage(req)
             Return rep.Protocol = HTTP_RFC.RFC_OK
         End Function
     End Module

@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::c3b2bdae269fbc69e00db1143aaed3a4, ComputingServices\FileSystem\FileStream\FileStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class RemoteFileStream
-    ' 
-    '         Properties: CanRead, CanSeek, CanWrite, FileHandle, Handle
-    '                     hashInfo, Info, IsAsync, Length, Name
-    '                     Position
-    ' 
-    '         Constructor: (+8 Overloads) Sub New
-    ' 
-    '         Function: BeginRead, BeginWrite, EndRead, FlushAsync, Read
-    '                   ReadAsync, ReadByte, Seek, WriteAsync
-    ' 
-    '         Sub: __lock, Dispose, EndWrite, Finalize, (+2 Overloads) Flush
-    '              Lock, SetLength, Unlock, Write, WriteByte
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class RemoteFileStream
+' 
+'         Properties: CanRead, CanSeek, CanWrite, FileHandle, Handle
+'                     hashInfo, Info, IsAsync, Length, Name
+'                     Position
+' 
+'         Constructor: (+8 Overloads) Sub New
+' 
+'         Function: BeginRead, BeginWrite, EndRead, FlushAsync, Read
+'                   ReadAsync, ReadByte, Seek, WriteAsync
+' 
+'         Sub: __lock, Dispose, EndWrite, Finalize, (+2 Overloads) Flush
+'              Lock, SetLength, Unlock, Write, WriteByte
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports System.Threading
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sciBASIC.ComputingServices.FileSystem.FileSystem
 Imports sciBASIC.ComputingServices.FileSystem.Protocols
@@ -125,7 +126,7 @@ Namespace FileSystem.IO
                 Dim handle As FileHandle = Nothing
                 Call FileURI.FileStreamParser(value, FileSystem, handle)
                 Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.GetFileStreamInfo, handle)
-                Dim invoke As New AsynInvoke(FileSystem)
+                Dim invoke As New TcpRequest(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 _Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadJSON)
                 _Name = handle.FileName
@@ -185,7 +186,7 @@ Namespace FileSystem.IO
         <SecuritySafeCritical> Public Sub New(handle As FileHandle, remote As FileSystem)
             Call MyBase.New(remote)
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.GetFileStreamInfo, handle)
-            Dim invoke As New AsynInvoke(remote.Portal)
+            Dim invoke As New TcpRequest(remote.Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Info = rep.LoadObject(Of FileStreamInfo)(AddressOf LoadJSON)
             Name = handle.FileName
@@ -975,7 +976,7 @@ Namespace FileSystem.IO
         Public Overrides ReadOnly Property Length As Long
             Get
                 Dim args = Protocols.GetSetLength(FileStreamPosition.GET, FileHandle)
-                Dim invoke As New AsynInvoke(FileSystem)
+                Dim invoke As New TcpRequest(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(args)
                 Return CTypeDynamic(Of Long)(rep.GetUTF8String)
             End Get
@@ -1010,13 +1011,13 @@ Namespace FileSystem.IO
         Public Overrides Property Position As Long
             Get
                 Dim args = Protocols.GetSetReadPosition(FileStreamPosition.GET, FileHandle)
-                Dim invoke As New AsynInvoke(FileSystem)
+                Dim invoke As New TcpRequest(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(args)
                 Return CTypeDynamic(Of Long)(rep.GetUTF8String)
             End Get
             Set(value As Long)
                 Dim args = Protocols.GetSetReadPosition(value, FileHandle)
-                Dim invoke As New AsynInvoke(FileSystem)
+                Dim invoke As New TcpRequest(FileSystem)
                 Dim rep As RequestStream = invoke.SendMessage(args)
             End Set
         End Property
@@ -1057,7 +1058,7 @@ Namespace FileSystem.IO
         ''' </summary>
         Public Overrides Sub Flush()
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.Flush, FileHandle)
-            Dim invoke As New AsynInvoke(FileSystem)
+            Dim invoke As New TcpRequest(FileSystem)
             Call invoke.SendMessage(req)
         End Sub
 
@@ -1099,7 +1100,7 @@ Namespace FileSystem.IO
         Private Sub __lock(position As Long, length As Long, lock As Boolean)
             Dim args As New LockArgs(FileHandle) With {.Lock = lock, .length = length, .position = position}
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.StreamLock, args)
-            Dim invoke As New AsynInvoke(FileSystem)
+            Dim invoke As New TcpRequest(FileSystem)
             Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
@@ -1139,7 +1140,7 @@ Namespace FileSystem.IO
         <SecuritySafeCritical>
         Public Overrides Sub SetLength(value As Long)
             Dim args = Protocols.GetSetLength(value, FileHandle)
-            Dim invoke As New AsynInvoke(FileSystem)
+            Dim invoke As New TcpRequest(FileSystem)
             Dim rep As RequestStream = invoke.SendMessage(args)
         End Sub
 
@@ -1178,7 +1179,7 @@ Namespace FileSystem.IO
                 .offset = offset
             }
             Dim req As New RequestStream(ProtocolEntry, FileSystemAPI.WriteBuffer, args)
-            Dim invoke As New AsynInvoke(FileSystem)
+            Dim invoke As New TcpRequest(FileSystem)
             Call invoke.SendMessage(req)
         End Sub
 
@@ -1205,7 +1206,7 @@ Namespace FileSystem.IO
         <SecuritySafeCritical>
         Protected Overrides Sub Dispose(disposing As Boolean)
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.CloseHandle, FileHandle)
-            Dim invoke As New AsynInvoke(FileSystem)
+            Dim invoke As New TcpRequest(FileSystem)
             Call invoke.SendMessage(req)
         End Sub
 
@@ -1365,7 +1366,7 @@ Namespace FileSystem.IO
             }
             Dim req As RequestStream =
                 New RequestStream(ProtocolEntry, FileSystemAPI.ReadBuffer, args.GetJson)
-            Dim invoke As New AsynInvoke(FileSystem)
+            Dim invoke As New TcpRequest(FileSystem)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Call System.Array.ConstrainedCopy(rep.ChunkBuffer, Scan0, array, offset, count)
             Return rep.Protocol ' 在host的协议里面会将读函数的返回值放在protocol属性里面返回
@@ -1453,7 +1454,7 @@ Namespace FileSystem.IO
                 .offset = offset,
                 .origin = origin
             }
-            Dim invoke As New AsynInvoke(FileSystem)
+            Dim invoke As New TcpRequest(FileSystem)
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.StreamSeek, args)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Dim l As Long = BitConverter.ToInt64(rep.ChunkBuffer, Scan0)

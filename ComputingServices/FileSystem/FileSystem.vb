@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::078167e6e1d95ef0f101b2ef7ac3d6c8, ComputingServices\FileSystem\FileSystem.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FileSystem
-    ' 
-    '         Properties: CurrentDirectory, Drives, Portal
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: DirectoryExists, FileExists, (+2 Overloads) FindInFiles, (+2 Overloads) GetDirectories, GetDirectoryInfo
-    '                   GetDriveInfo, GetFileInfo, (+2 Overloads) GetFiles, GetParentPath, GetTempFileName
-    '                   (+2 Overloads) OpenFileHandle, (+2 Overloads) OpenTextFieldParser, (+2 Overloads) OpenTextFileReader, (+2 Overloads) OpenTextFileWriter, ReadAllBytes
-    '                   (+2 Overloads) ReadAllText, ToString
-    ' 
-    '         Sub: (+2 Overloads) CopyDirectory, (+2 Overloads) CopyFile, CreateDirectory, DeleteDirectory, DeleteFile
-    '              (+2 Overloads) MoveDirectory, (+2 Overloads) MoveFile, RenameDirectory, RenameFile, WriteAllBytes
-    '              (+2 Overloads) WriteAllText
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FileSystem
+' 
+'         Properties: CurrentDirectory, Drives, Portal
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: DirectoryExists, FileExists, (+2 Overloads) FindInFiles, (+2 Overloads) GetDirectories, GetDirectoryInfo
+'                   GetDriveInfo, GetFileInfo, (+2 Overloads) GetFiles, GetParentPath, GetTempFileName
+'                   (+2 Overloads) OpenFileHandle, (+2 Overloads) OpenTextFieldParser, (+2 Overloads) OpenTextFileReader, (+2 Overloads) OpenTextFileWriter, ReadAllBytes
+'                   (+2 Overloads) ReadAllText, ToString
+' 
+'         Sub: (+2 Overloads) CopyDirectory, (+2 Overloads) CopyFile, CreateDirectory, DeleteDirectory, DeleteFile
+'              (+2 Overloads) MoveDirectory, (+2 Overloads) MoveFile, RenameDirectory, RenameFile, WriteAllBytes
+'              (+2 Overloads) WriteAllText
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sciBASIC.ComputingServices.FileSystem.Protocols
 
@@ -95,13 +96,13 @@ Namespace FileSystem
         Public Property CurrentDirectory As String
             Get
                 Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.CurrentDirectory)
-                Dim invoke As New AsynInvoke(_Portal)
+                Dim invoke As New TcpRequest(_Portal)
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Return req.GetUTF8String
             End Get
             Set(value As String)
                 Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.CurrentDirectory, value)
-                Dim invoke As New AsynInvoke(_Portal)
+                Dim invoke As New TcpRequest(_Portal)
                 Call invoke.SendMessage(req)
             End Set
         End Property
@@ -113,7 +114,7 @@ Namespace FileSystem
         Public ReadOnly Property Drives As ReadOnlyCollection(Of System.IO.DriveInfo)
             Get
                 Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.Drives)
-                Dim invoke As New AsynInvoke(_Portal)
+                Dim invoke As New TcpRequest(_Portal)
                 Dim rep As RequestStream = invoke.SendMessage(req)
                 Dim array As String() = req.GetUTF8String.LoadJSON(Of String())
                 Dim lst As DriveInfo() = array.Select(Function(s) s.LoadJSON(Of DriveInfo)).ToArray
@@ -381,7 +382,7 @@ Namespace FileSystem
         ''' <param name="directory"></param>
         Public Sub CreateDirectory(directory As String)
             Dim req As New RequestStream(ProtocolEntry, FileSystemAPI.CreateDirectory, directory)
-            Dim invoke As New AsynInvoke(Portal)
+            Dim invoke As New TcpRequest(Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
         '
@@ -439,7 +440,7 @@ Namespace FileSystem
                 .option = onDirectoryNotEmpty
             }
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.DeleteDirectory, op)
-            Dim invoke As New AsynInvoke(Portal)
+            Dim invoke As New TcpRequest(Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
@@ -484,7 +485,7 @@ Namespace FileSystem
         ''' <param name="file"></param>
         Public Sub DeleteFile(file As String)
             Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.DeleteFile, file)
-            Dim invoke As New AsynInvoke(Portal)
+            Dim invoke As New TcpRequest(Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
@@ -743,7 +744,7 @@ Namespace FileSystem
                 .[New] = newName
             }
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.RenameDirectory, rename)
-            Dim invoke As New AsynInvoke(Portal)
+            Dim invoke As New TcpRequest(Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
         '
@@ -798,7 +799,7 @@ Namespace FileSystem
              .[New] = newName
          }
             Dim req As RequestStream = RequestStream.CreateProtocol(ProtocolEntry, FileSystemAPI.RenameFile, rename)
-            Dim invoke As New AsynInvoke(Portal)
+            Dim invoke As New TcpRequest(Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
         End Sub
 
@@ -937,7 +938,7 @@ Namespace FileSystem
         ''' <returns></returns>
         Public Function DirectoryExists(directory As String) As Boolean
             Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.DirectoryExists, directory)
-            Dim invoke As New AsynInvoke(Portal)
+            Dim invoke As New TcpRequest(Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
             If rep.ChunkBuffer.First = 1 Then
                 Return True
@@ -967,7 +968,7 @@ Namespace FileSystem
         ''' <returns></returns>
         Public Function FileExists(file As String) As Boolean
             Dim req As RequestStream = New RequestStream(ProtocolEntry, FileSystemAPI.FileExists, file)
-            Dim invoke As New AsynInvoke(Portal)
+            Dim invoke As New TcpRequest(Portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
             If rep.ChunkBuffer.First = 1 Then
                 Return True
@@ -1442,7 +1443,7 @@ Namespace FileSystem
         ''' <returns></returns>
         Public Shared Function OpenFileHandle(file As String, mode As FileMode, access As FileAccess, portal As IPEndPoint) As FileStreamInfo
             Dim req As RequestStream = Protocols.API.OpenHandle(file, mode, access)
-            Dim invoke As New AsynInvoke(portal)
+            Dim invoke As New TcpRequest(portal)
             Dim rep As RequestStream = invoke.SendMessage(req)
             Return rep.GetUTF8String.LoadJSON(Of FileStreamInfo)
         End Function

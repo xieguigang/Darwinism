@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::6d610043418b5db5f6d54508e852b17f, ComputingServices\Taskhost.d\Protocols.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Protocols
-    ' 
-    ' 
-    '         Enum TaskProtocols
-    ' 
-    '             [Select], Handshake, InvokeLinq, MoveNext, NodeLoad
-    '             RemoteFileSystem, Reset
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: ProtocolEntry
-    ' 
-    '     Function: GetPortal, LinqReset, Shell
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Protocols
+' 
+' 
+'         Enum TaskProtocols
+' 
+'             [Select], Handshake, InvokeLinq, MoveNext, NodeLoad
+'             RemoteFileSystem, Reset
+' 
+' 
+' 
+'  
+' 
+'     Properties: ProtocolEntry
+' 
+'     Function: GetPortal, LinqReset, Shell
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports sciBASIC.ComputingServices.ComponentModel
 
 Namespace TaskHost
@@ -121,8 +122,7 @@ Namespace TaskHost
 #End Region
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long =
-            New Protocol(GetType(TaskProtocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(TaskProtocols)).EntryPoint
 
         ''' <summary>
         ''' Resets remote data source by <see cref="IEnumerator.Reset"/>
@@ -133,7 +133,7 @@ Namespace TaskHost
         End Function
 
         <Extension> Public Function GetPortal(Of Tsvr As IServicesSocket)(master As IMasterBase(Of Tsvr)) As IPEndPoint
-            Dim ip As String = If(EnvironmentLocal, AsynInvoke.LocalIPAddress, GetMyIPAddress())
+            Dim ip As String = If(EnvironmentLocal, TcpRequest.LocalIPAddress, GetMyIPAddress())
             Dim port As Integer = master.__host.LocalPort
             Return New IPEndPoint(ip, port)
         End Function
