@@ -1,6 +1,5 @@
-﻿
+﻿Imports Darwinism.Docker.Captures
 
-Imports Docker.Captures
 ''' <summary>
 ''' Docker commands
 ''' </summary>
