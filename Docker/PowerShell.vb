@@ -9,8 +9,7 @@ Imports System.Text
 Public Class PowerShell
 
     ''' <summary>
-    ''' Takes script text as input and runs it, then converts 
-    ''' the results to a string to return to the user 
+    ''' Takes script text as input and runs it, then converts the results to a string to return to the user 
     ''' </summary>
     ''' <param name="scriptText"></param>
     ''' <returns></returns>
@@ -31,21 +30,36 @@ Public Class PowerShell
         Return out.ToString()
     End Function
 
-    Public Function RunPSScript(ps As String) As Collection(Of PSObject)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ps"></param>
+    ''' <param name="outString">
+    ''' add an extra command to transform the script output objects 
+    ''' into nicely formatted strings remove this line to get the 
+    ''' actual objects that the script returns. For example, the script 
+    ''' ``Get-Process`` returns a collection of <see cref="Process"/>
+    ''' instances.
+    ''' </param>
+    ''' <returns></returns>
+    Public Function RunPSScript(ps$, Optional outString As Boolean = True) As Collection(Of PSObject)
         ' create Powershell runspace 
         Using myRunSpace As Runspace = RunspaceFactory.CreateRunspace()
             ' open it 
             Call myRunSpace.Open()
 
-            ' create a pipeline and feed it the script text 
             With myRunSpace.CreatePipeline()
+                ' create a pipeline and feed it the script text 
                 Call .Commands.AddScript(ps)
-                ' add an extra command to transform the script output objects 
-                ' into nicely formatted strings remove this line to get the 
-                ' actual objects that the script returns. For example, the script 
-                ' "Get-Process" returns a collection of System.Diagnostics.Process 
-                ' instances.
-                Call .Commands.Add("Out-String")
+
+                If outString Then
+                    ' add an extra command to transform the script output objects 
+                    ' into nicely formatted strings remove this line to get the 
+                    ' actual objects that the script returns. For example, the script 
+                    ' "Get-Process" returns a collection of System.Diagnostics.Process 
+                    ' instances.
+                    Call .Commands.Add("Out-String")
+                End If
 
                 ' execute the script 
                 Return .Invoke()

@@ -82,12 +82,15 @@ Public Module Commands
 
     ' Run 'docker COMMAND --help' for more information on a command.
 
+    ReadOnly ps As New PowerShell
+
     ''' <summary>
     ''' Search the Docker Hub for images
     ''' </summary>
     ''' <param name="term"></param>
     ''' <returns></returns>
     Public Function Search(term As String) As Captures.Search()
+        Dim summary = ps.RunScript($"docker search {term}")
 
     End Function
 End Module
