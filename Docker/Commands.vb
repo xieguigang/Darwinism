@@ -86,6 +86,12 @@ Public Module Commands
 
     ReadOnly powershell As New PowerShell
 
+    Public Iterator Function CommandHistory() As IEnumerable(Of String)
+        For Each line As String In powershell.logs
+            Yield line
+        Next
+    End Function
+
     ''' <summary>
     ''' Search the Docker Hub for images
     ''' </summary>
@@ -141,7 +147,7 @@ Public Module Commands
         Dim options As New StringBuilder
 
         If Not mount Is Nothing Then
-            Call options.AppendLine(mount.ToString)
+            Call options.AppendLine($"-v {mount}")
         End If
 
         Return powershell($"docker run {options} {container} {command}")

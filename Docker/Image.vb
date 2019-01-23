@@ -66,6 +66,6 @@ Public Class Mount
     ''' </summary>
     ''' <returns></returns>
     Public Overrides Function ToString() As String
-        Return $"{local}:{virtual}"
+        Return $"{local.GetDirectoryFullPath}:{virtual}"
     End Function
 End Class

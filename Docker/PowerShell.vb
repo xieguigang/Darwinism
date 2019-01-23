@@ -9,6 +9,8 @@ Imports System.Text
 ''' </summary>
 Public Class PowerShell
 
+    Friend ReadOnly logs As New List(Of String)
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -39,6 +41,8 @@ Public Class PowerShell
         For Each obj As PSObject In results
             out.AppendLine(obj.ToString())
         Next
+
+        Call logs.Add(scriptText)
 
         ' return the results of the script that has 
         ' now been converted to text 
