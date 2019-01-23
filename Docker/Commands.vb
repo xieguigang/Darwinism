@@ -121,4 +121,22 @@ Public Module Commands
                             }
                         End Function)
     End Function
+
+    ''' <summary>
+    ''' Stop one or more running containers
+    ''' </summary>
+    ''' <param name="containers"></param>
+    Public Sub [Stop](ParamArray containers As String())
+        For Each id As String In containers
+            Call powershell.RunScript($"docker stop {id}")
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Run a command in a new container
+    ''' </summary>
+    ''' <param name="command"></param>
+    Public Sub Run(container As Image, command$)
+        Call powershell.RunScript($"docker run {container} {command}")
+    End Sub
 End Module

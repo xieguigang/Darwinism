@@ -1,4 +1,5 @@
-﻿
+﻿Imports System.Runtime.CompilerServices
+
 ''' <summary>
 ''' Docker image name
 ''' </summary>
@@ -26,7 +27,13 @@ Public Class Image
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"{Publisher}/{Package}"
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(img As Image) As String
+        Return img.ToString
+    End Operator
 End Class
