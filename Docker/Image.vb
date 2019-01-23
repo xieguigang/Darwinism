@@ -13,8 +13,8 @@ Public Class Image
             Dim user$, name$
 
             If .Length = 1 Then
-                user = .ElementAt(0)
-                name = user
+                user = Nothing
+                name = .ElementAt(0)
             Else
                 user = .ElementAt(0)
                 name = .ElementAt(1)
@@ -29,7 +29,11 @@ Public Class Image
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return $"{Publisher}/{Package}"
+        If Publisher.StringEmpty Then
+            Return Package
+        Else
+            Return $"{Publisher}/{Package}"
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
