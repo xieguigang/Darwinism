@@ -23,11 +23,17 @@ Public Class Environment
         Return Me
     End Function
 
+    Const InvalidMount$ = "Shared Drive argument is presented, but value is invalid, -v option will be ignored!"
+
     Public Function GetDockerCommand(command As String) As String
         Dim options As New StringBuilder
 
-        If Not [Shared] Is Nothing AndAlso [Shared].IsValid Then
-            Call options.AppendLine($"-v {[Shared]}")
+        If Not [Shared] Is Nothing Then
+            If [Shared].IsValid Then
+                Call options.AppendLine($"-v {[Shared]}")
+            Else
+                Call InvalidMount.Warning
+            End If
         End If
 
         Return $"docker run {options} {container} {command}"
