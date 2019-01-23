@@ -92,12 +92,17 @@ Public Module Commands
     ''' <param name="term"></param>
     ''' <returns></returns>
     Public Iterator Function Search(term As String) As IEnumerable(Of Captures.Search)
-        Dim summary = ps.RunScript($"docker search {term}").LineTokens
-        Dim header = r.Matches(summary(Scan0), "\S+\s+").ToArray
+        Dim summary$() = ps _
+            .RunScript($"docker search {term}") _
+            .Trim _
+            .LineTokens
+        Dim header = r.Matches(summary(Scan0), "(\S+\s+)|(\S+)").ToArray
         Dim fieldLength%() = header.Select(AddressOf Len).ToArray
 
         For Each line As String In summary.Skip(1)
-            Dim tokens = FormattedParser.FieldParser(line, fieldLength)
+            Dim tokens$() = FormattedParser _
+                .FieldParser(line, fieldLength) _
+                .ToArray
 
             Yield New Captures.Search With {
                 .NAME = Image.ParseEntry(tokens(0)),

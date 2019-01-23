@@ -9,8 +9,15 @@ Public Class Image
 
     Public Shared Function ParseEntry(text As String) As Image
         With text.Trim.Split("/"c)
-            Dim user = .ElementAt(0)
-            Dim name = .ElementAt(1)
+            Dim user$, name$
+
+            If .Length = 1 Then
+                user = .ElementAt(0)
+                name = user
+            Else
+                user = .ElementAt(0)
+                name = .ElementAt(1)
+            End If
 
             Return New Image With {
                 .Package = name,
