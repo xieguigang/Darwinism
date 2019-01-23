@@ -1,4 +1,5 @@
 ﻿Imports Darwinism
+Imports Darwinism.Docker.Arguments
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
@@ -14,7 +15,7 @@ Module Module1
 
 
         Call Console.WriteLine(Docker.Run("centos", "echo ""hello world"""))
-        Call Console.WriteLine(Docker.Run("centos", "ls -l /mnt/ntfs", New Docker.Mount With {.local = "D:\test", .virtual = "/mnt/ntfs"}))
+        Call Console.WriteLine(Docker.Run("centos", "ls -l /mnt/ntfs", New Mount With {.local = "D:\test", .virtual = "/mnt/ntfs"}))
 
         For Each line In Docker.CommandHistory
             Call Console.WriteLine(line)

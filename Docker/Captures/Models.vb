@@ -1,4 +1,6 @@
-﻿Namespace Captures
+﻿Imports Darwinism.Docker.Arguments
+
+Namespace Captures
 
     Public Structure Search
         Dim NAME As Image

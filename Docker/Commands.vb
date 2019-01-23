@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Darwinism.Docker.Arguments
 Imports Darwinism.Docker.Captures
 
 ''' <summary>
