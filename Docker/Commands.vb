@@ -1,4 +1,6 @@
-﻿
+﻿Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
+
 ''' <summary>
 ''' Docker commands
 ''' </summary>
@@ -89,8 +91,21 @@ Public Module Commands
     ''' </summary>
     ''' <param name="term"></param>
     ''' <returns></returns>
-    Public Function Search(term As String) As Captures.Search()
-        Dim summary = ps.RunScript($"docker search {term}")
+    Public Iterator Function Search(term As String) As IEnumerable(Of Captures.Search)
+        Dim summary = ps.RunScript($"docker search {term}").LineTokens
+        Dim header = r.Matches(summary(Scan0), "\S+\s+").ToArray
+        Dim fieldLength%() = header.Select(AddressOf Len).ToArray
 
+        For Each line As String In summary.Skip(1)
+            Dim tokens = FormattedParser.FieldParser(line, fieldLength)
+
+            Yield New Captures.Search With {
+                .NAME = Image.ParseEntry(tokens(0)),
+                .DESCRIPTION = tokens(1).Trim,
+                .STARS = tokens(2).Trim,
+                .OFFICIAL = tokens(3).Trim,
+                .AUTOMATED = tokens(4).Trim
+            }
+        Next
     End Function
 End Module
