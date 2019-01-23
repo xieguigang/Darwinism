@@ -1,4 +1,4 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
 Imports Darwinism.Docker.Arguments
 Imports Darwinism.Docker.Captures
 
@@ -144,13 +144,13 @@ Public Module Commands
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
     ''' </summary>
     ''' <param name="command"></param>
+    ''' <remarks>
+    ''' 这个方法能够自定义的参数比较有限,如果需要更加复杂的使用方法,可以使用<see cref="Environment"/>对象
+    ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function Run(container As Image, command$, Optional mount As Mount = Nothing) As String
-        Dim options As New StringBuilder
-
-        If Not mount Is Nothing Then
-            Call options.AppendLine($"-v {mount}")
-        End If
-
-        Return powershell($"docker run {options} {container} {command}")
+        Return powershell(New Environment(container).Mount(mount).GetDockerCommand(command))
     End Function
 End Module

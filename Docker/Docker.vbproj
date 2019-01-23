@@ -97,6 +97,7 @@
     <Compile Include="Captures\Models.vb" />
     <Compile Include="Captures\ParserHelpers.vb" />
     <Compile Include="Arguments\Image.vb" />
+    <Compile Include="Environment.vb" />
     <Compile Include="PowerShell.vb" />
     <Compile Include="Commands.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
