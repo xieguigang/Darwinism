@@ -136,7 +136,7 @@ Public Module Commands
     ''' Run a command in a new container
     ''' </summary>
     ''' <param name="command"></param>
-    Public Sub Run(container As Image, command$)
-        Call powershell.RunScript($"docker run {container} {command}")
-    End Sub
+    Public Function Run(container As Image, command$) As String
+        Return powershell($"docker run {container} {command}")
+    End Function
 End Module

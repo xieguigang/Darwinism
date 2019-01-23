@@ -12,6 +12,9 @@ Module Module1
 
         Call Console.WriteLine(Docker.Search("centos").ToArray.GetJson)
 
+
+        Call Console.WriteLine(Docker.Run("centos", "echo ""hello world"""))
+
         Pause()
     End Sub
 

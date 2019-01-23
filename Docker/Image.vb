@@ -37,6 +37,11 @@ Public Class Image
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Widening Operator CType(repo As String) As Image
+        Return ParseEntry(repo)
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(img As Image) As String
         Return img.ToString
     End Operator
