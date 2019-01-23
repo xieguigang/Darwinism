@@ -69,7 +69,7 @@ Public Class Environment
 
     Const InvalidMount$ = "Shared Drive argument is presented, but value is invalid, -v option will be ignored!"
 
-    Public Function GetDockerCommand(command As String) As String
+    Public Function CreateDockerCommand(command As String) As String
         Dim options As New StringBuilder
 
         If Not [Shared] Is Nothing Then

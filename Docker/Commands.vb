@@ -194,7 +194,7 @@ Public Module Commands
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Run(container As Image, command$, Optional mount As Mount = Nothing) As String
-        Return powershell(New Environment(container).Mount(mount).GetDockerCommand(command))
+        Return powershell(New Environment(container).Mount(mount).CreateDockerCommand(command))
     End Function
 End Module
 
