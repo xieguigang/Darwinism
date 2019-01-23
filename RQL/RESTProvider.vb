@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e007d8676498801a770335eff8178619, RQL\RESTProvider.vb"
+﻿#Region "Microsoft.VisualBasic::50cf4cbc7b580227f0a1b72563164690, RQL\RESTProvider.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Function: __helps, __httpProcessor, AddLinq
     ' 
-    '     Sub: __apiInvoke, handleGETRequest, handleOtherMethod, handlePOSTRequest
+    '     Sub: __apiInvoke, handleGETRequest, handleOtherMethod, handlePOSTRequest, handlePUTMethod
     ' 
     ' /********************************************************************************/
 

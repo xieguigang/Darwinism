@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3447da10c11a58d70bb9d90fa11002d8, ossutil\FileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::21f8a0bb59e9dbf2c148074809fc089f, ossutil\FileSystem.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Properties: Bucket, CurrentDirectory, Objects
     ' 
-    '     Constructor: (+3 Overloads) Sub New
+    '     Constructor: (+4 Overloads) Sub New
     ' 
     '     Function: [Get], ChangeDirectory, FilesTree, GetContext, GetTarget
     '               ToString
@@ -303,4 +303,3 @@ Public Class FileSystem
         Return CurrentDirectory.ToString
     End Function
 End Class
-

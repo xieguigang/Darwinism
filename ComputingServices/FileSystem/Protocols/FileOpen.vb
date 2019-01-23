@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d8ef0f0ddb5f1296d8c296ce0b4bb84, ComputingServices\FileSystem\Protocols\FileOpen.vb"
+﻿#Region "Microsoft.VisualBasic::c1e3b03d28c68af91c9706c25a0400bf, ComputingServices\FileSystem\Protocols\FileOpen.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a53b3dc0b746c38ae6628439468545ca, ossutil\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::50f4de2be262a991c69e0e03c6aecf58, ossutil\Extensions.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Public Module Extensions
         Return current
     End Function
 End Module
-
