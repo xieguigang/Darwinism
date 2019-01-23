@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Text
-Imports r = System.Text.RegularExpressions.Regex
+﻿
 
+Imports Docker.Captures
 ''' <summary>
 ''' Docker commands
 ''' </summary>
@@ -84,33 +84,42 @@ Public Module Commands
 
     ' Run 'docker COMMAND --help' for more information on a command.
 
-    ReadOnly ps As New PowerShell
+    ReadOnly powershell As New PowerShell
 
     ''' <summary>
     ''' Search the Docker Hub for images
     ''' </summary>
     ''' <param name="term"></param>
     ''' <returns></returns>
-    Public Iterator Function Search(term As String) As IEnumerable(Of Captures.Search)
-        Dim summary$() = ps _
-            .RunScript($"docker search {term}") _
-            .Trim _
-            .LineTokens
-        Dim header = r.Matches(summary(Scan0), "(\S+\s+)|(\S+)").ToArray
-        Dim fieldLength%() = header.Select(AddressOf Len).ToArray
+    Public Function Search(term As String) As IEnumerable(Of Search)
+        Return powershell($"docker search {term}") _
+            .ParseTable(Function(tokens)
+                            Return New Search With {
+                                .NAME = Image.ParseEntry(tokens(0)),
+                                .DESCRIPTION = tokens(1).Trim,
+                                .STARS = tokens(2).Trim,
+                                .OFFICIAL = tokens(3).Trim,
+                                .AUTOMATED = tokens(4).Trim
+                            }
+                        End Function)
+    End Function
 
-        For Each line As String In summary.Skip(1)
-            Dim tokens$() = FormattedParser _
-                .FieldParser(line, fieldLength) _
-                .ToArray
-
-            Yield New Captures.Search With {
-                .NAME = Image.ParseEntry(tokens(0)),
-                .DESCRIPTION = tokens(1).Trim,
-                .STARS = tokens(2).Trim,
-                .OFFICIAL = tokens(3).Trim,
-                .AUTOMATED = tokens(4).Trim
-            }
-        Next
+    ''' <summary>
+    ''' List containers
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function PS() As IEnumerable(Of Container)
+        Return powershell("docker ps") _
+            .ParseTable(Function(tokens)
+                            Return New Container With {
+                                .CONTAINER_ID = tokens(0).Trim,
+                                .IMAGE = Image.ParseEntry(tokens(1)),
+                                .COMMAND = tokens(2).Trim,
+                                .CREATED = tokens(3).Trim,
+                                .STATUS = tokens(4).Trim,
+                                .PORTS = tokens(5),
+                                .NAMES = tokens(6).Trim
+                            }
+                        End Function)
     End Function
 End Module

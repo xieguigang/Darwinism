@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Captures\Models.vb" />
+    <Compile Include="Captures\ParserHelpers.vb" />
     <Compile Include="Image.vb" />
     <Compile Include="PowerShell.vb" />
     <Compile Include="Commands.vb" />

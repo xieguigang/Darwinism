@@ -1,12 +1,20 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.Management.Automation
 Imports System.Management.Automation.Runspaces
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 ''' <summary>
 ''' PowerShell interface to VB.NET
 ''' </summary>
 Public Class PowerShell
+
+    Default Public ReadOnly Property EVal(command As String) As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return RunScript(scriptText:=command)
+        End Get
+    End Property
 
     ''' <summary>
     ''' Takes script text as input and runs it, then converts the results to a string to return to the user 

@@ -7,6 +7,8 @@ Module Module1
 
         Call Console.WriteLine(ps.RunScript("docker ps"))
 
+        Call Console.WriteLine(Docker.PS.ToArray.GetJson)
+
         Call Console.WriteLine(Docker.Search("centos").ToArray.GetJson)
 
         Pause()
