@@ -9,10 +9,17 @@ Imports System.Text
 ''' </summary>
 Public Class PowerShell
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="command">
+    ''' 会自动将回车符替换为空格
+    ''' </param>
+    ''' <returns></returns>
     Default Public ReadOnly Property EVal(command As String) As String
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return RunScript(scriptText:=command)
+            Return RunScript(scriptText:=command.TrimNewLine)
         End Get
     End Property
 
