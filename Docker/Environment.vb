@@ -42,9 +42,9 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Darwinism.Docker.Arguments
-Imports Microsoft.VisualBasic.CommandLine.InteropService
 
 ''' <summary>
 ''' The container environment module for ``docker run ...``
@@ -216,9 +216,9 @@ Public Class Environment
     Const InvalidMount$ = "Shared Drive argument is presented, but value is invalid, -v option will be ignored!"
 
     ''' <summary>
-    ''' 
+    ''' Create a docker run command for running command ``app arguments``
     ''' </summary>
-    ''' <param name="command"></param>
+    ''' <param name="command">``app arguments``</param>
     ''' <param name="workdir">Working directory inside the container</param>
     ''' <param name="portForward">Publish a container's port(s) to the host</param>
     ''' <returns></returns>
@@ -243,3 +243,21 @@ Public Class Environment
     End Function
 End Class
 
+Public Class DockerAppDriver
+
+    ReadOnly docker As Environment
+    ReadOnly powershell As New PowerShell
+    ReadOnly appHome$
+    ReadOnly appName$
+
+    Sub New(container As Image, app$, Optional mount As Mount = Nothing, Optional home$ = Nothing)
+        docker = New Environment(container).Mount([shared]:=mount)
+        appHome = home
+        appName = app
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Shell(args$, Optional workdir$ = Nothing) As String
+        Return powershell(docker.CreateDockerCommand($"{appHome}/{appName} {args}", workdir:=workdir))
+    End Function
+End Class
