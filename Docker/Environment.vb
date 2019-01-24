@@ -44,6 +44,7 @@
 
 Imports System.Text
 Imports Darwinism.Docker.Arguments
+Imports Microsoft.VisualBasic.CommandLine.InteropService
 
 ''' <summary>
 ''' The container environment module for ``docker run ...``
