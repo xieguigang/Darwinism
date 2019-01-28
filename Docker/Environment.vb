@@ -243,6 +243,9 @@ Public Class Environment
     End Function
 End Class
 
+''' <summary>
+''' 通过这个模块来运行某一个Docker container之中的命令行命令
+''' </summary>
 Public Class DockerAppDriver
 
     ReadOnly docker As Environment
@@ -250,6 +253,13 @@ Public Class DockerAppDriver
     ReadOnly appHome$
     ReadOnly appName$
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="container">Docker容器的``image ID``</param>
+    ''' <param name="app">可执行文件的文件名</param>
+    ''' <param name="mount"></param>
+    ''' <param name="home">应用程序的文件夹目录路径</param>
     Sub New(container As Image, app$, Optional mount As Mount = Nothing, Optional home$ = Nothing)
         docker = New Environment(container).Mount([shared]:=mount)
         appHome = home
