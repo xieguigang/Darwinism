@@ -46,6 +46,11 @@ Imports ThinkVB.FileSystem.OSS.Model
 Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Friend Function populateTempFile() As String
+        Return App.GetAppSysTempFile(".tmp", App.PID)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IsDirectory(obj As [Object]) As Boolean
         Return obj.ObjectName.Last = "/"c AndAlso obj.Size = 0

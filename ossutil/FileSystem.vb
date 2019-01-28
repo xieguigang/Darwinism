@@ -88,6 +88,8 @@ Public Class FileSystem
     ''' <returns></returns>
     Public ReadOnly Property Objects As [Object]()
 
+    Const InvalidConfig$ = "Bucket name `{0}` is invalid or invalid ossfs credential info!"
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -103,7 +105,7 @@ Public Class FileSystem
                           .FirstOrDefault
 
         If Me.Bucket Is Nothing Then
-            Throw New InvalidExpressionException($"Bucket name `{bucket}` is invalid or invalid ossfs credential info!")
+            Throw New InvalidExpressionException(String.Format(InvalidConfig, bucket))
         Else
             Objects = driver _
                 .ListObjects(Me.Bucket.URI(directory)) _
@@ -150,15 +152,17 @@ Public Class FileSystem
     End Sub
 
     Private Shared Function FilesTree(objects As [Object](), bucketName$) As Tree(Of [Object])
-        Dim tokenTuples = objects.Select(Function(obj)
-                                             Dim path$() = obj.ObjectName _
-                                                              .Split("/"c) _
-                                                              .Skip(3) _
-                                                              .ToArray
-                                             Return (path:=path, [Object]:=obj)
-                                         End Function) _
-                                 .OrderBy(Function(obj) obj.path.Length) _
-                                 .ToArray
+        Dim tokenTuples = objects _
+            .Select(Function(obj)
+                        Dim path$() = obj.ObjectName _
+                            .Split("/"c) _
+                            .Skip(3) _
+                            .ToArray
+
+                        Return (path:=path, [Object]:=obj)
+                    End Function) _
+            .OrderBy(Function(obj) obj.path.Length) _
+            .ToArray
         Dim node As Tree(Of [Object])
         Dim key$
         Dim root As New Tree(Of [Object])("/") With {
@@ -242,9 +246,9 @@ Public Class FileSystem
         Else
             ' 需要将相对路径转换为绝对路径
             context = current.ObjectName _
-                             .SplitPath _
-                             .Skip(2) _
-                             .AsList
+                .SplitPath _
+                .Skip(2) _
+                .AsList
         End If
 
         For Each name As String In path.SplitPath
@@ -261,13 +265,10 @@ Public Class FileSystem
         Return context
     End Function
 
-    ReadOnly populateTempFile As Func(Of String) =
-        Function() As String
-            Return App.GetAppSysTempFile(".tmp", App.PID)
-        End Function
-    ReadOnly tempFile As New DefaultValue(Of String) With {
-        .lazy = New Lazy(Of String)(populateTempFile)
-    }
+    ''' <summary>
+    ''' 获取得到临时文件路径
+    ''' </summary>
+    Shared tempFile As New DefaultValue(Of String)(AddressOf populateTempFile, isLazy:=False)
 
     ''' <summary>
     ''' Get file from OSS
