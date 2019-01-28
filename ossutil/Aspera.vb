@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 
 ''' <summary>
@@ -22,6 +23,11 @@ Public Class Aspera : Inherits InteropService
     Sub New(server$, Optional bin$ = "ascp")
         Call MyBase.New(bin)
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function IsAsperaProtocol(url As String) As Boolean
+        Return InStr(url, "fasp://", CompareMethod.Text) = 1
+    End Function
 
     ''' <summary>
     ''' 单位都是MB
