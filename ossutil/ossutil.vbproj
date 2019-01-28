@@ -173,8 +173,9 @@
     <Compile Include="Model\MetaData.vb" />
     <Compile Include="Model\Object.vb" />
     <Compile Include="FileSystem.vb" />
-    <Compile Include="CLI.vb" />
+    <Compile Include="OSS\CLI.vb" />
     <Compile Include="Model\TextParsers.vb" />
+    <Compile Include="Aspera.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -220,5 +221,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

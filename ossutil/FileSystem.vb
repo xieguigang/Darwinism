@@ -266,7 +266,7 @@ Public Class FileSystem
             Return App.GetAppSysTempFile(".tmp", App.PID)
         End Function
     ReadOnly tempFile As New DefaultValue(Of String) With {
-        .LazyValue = New Lazy(Of String)(populateTempFile)
+        .lazy = New Lazy(Of String)(populateTempFile)
     }
 
     ''' <summary>
