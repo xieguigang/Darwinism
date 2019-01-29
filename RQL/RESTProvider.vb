@@ -134,7 +134,7 @@ Public Class RESTProvider : Inherits HttpServer
         End Select
     End Sub
 
-    Public Overrides Sub handlePOSTRequest(p As HttpProcessor, inputData As MemoryStream)
+    Public Overrides Sub handlePOSTRequest(p As HttpProcessor, inputData$)
         Call p.writeFailure("Method not allowed!")
     End Sub
 
@@ -145,7 +145,7 @@ Public Class RESTProvider : Inherits HttpServer
     Public Overrides Sub handleOtherMethod(p As HttpProcessor)
     End Sub
 
-    Public Overrides Sub handlePUTMethod(p As HttpProcessor, inputData As MemoryStream)
+    Public Overrides Sub handlePUTMethod(p As HttpProcessor, inputData$)
         Throw New NotImplementedException()
     End Sub
 End Class
