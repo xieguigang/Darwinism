@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a2960bb9fc0b201511bd1d6d607762e, LINQ\LINQ\LDM\Parser\ParserAPI\TokenPriority.vb"
+﻿#Region "Microsoft.VisualBasic::d3e231ca93e0718797dd1973841292dd, LINQ\LINQ\LDM\Parser\ParserAPI\TokenPriority.vb"
 
     ' Author:
     ' 

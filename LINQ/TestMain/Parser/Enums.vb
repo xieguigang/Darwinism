@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e172424164cc415f035295ce627774ef, LINQ\TestMain\Parser\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::0e91753e7abc8c1e4ded3338af2790c3, LINQ\TestMain\Parser\Enums.vb"
 
     ' Author:
     ' 

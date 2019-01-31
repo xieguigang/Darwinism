@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c5ff7d13cc92f64d605c0848b13aa56, LINQ\LINQ\Framewok\Provider\ILinqProvider.vb"
+﻿#Region "Microsoft.VisualBasic::9acfa44be9588becd290eab8e587a850, LINQ\LINQ\Framewok\Provider\ILinqProvider.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cfff02686c4a7cbf074b34ede1d7f50, LINQ\LINQ\LDM\Parser\Tokens\WhereClosure.vb"
+﻿#Region "Microsoft.VisualBasic::ab1f33712514629ec5f2475adfeb3534, LINQ\LINQ\LDM\Parser\Tokens\WhereClosure.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::818ceae909cb9e972a33ac881e939577, ComputingServices\FileSystem\Protocols\FileStreamInfo.vb"
+﻿#Region "Microsoft.VisualBasic::972387fdd3296832e8c2ce0ad5d79fe5, ComputingServices\FileSystem\Protocols\FileStreamInfo.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9162357c45ed1b0a942d2d4038f8ed4c, ComputingServices\Taskhost.d\Linq\LinqProvider.vb"
+﻿#Region "Microsoft.VisualBasic::95496139167a3b11530bef7278fc680a, ComputingServices\Taskhost.d\Linq\LinqProvider.vb"
 
     ' Author:
     ' 

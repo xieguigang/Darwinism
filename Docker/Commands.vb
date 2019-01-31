@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d3c0c8248a9fb467b5ca5dc28eeec56, Docker\Commands.vb"
+﻿#Region "Microsoft.VisualBasic::e46484d6f3e67c755d8c84fdcc1f7f17, Docker\Commands.vb"
 
     ' Author:
     ' 
@@ -197,4 +197,3 @@ Public Module Commands
         Return powershell(New Environment(container).Mount(mount).CreateDockerCommand(command))
     End Function
 End Module
-

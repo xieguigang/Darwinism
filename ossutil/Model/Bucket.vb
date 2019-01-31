@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ddaea783aa68f59d5652027e1989b00, ossutil\Model\Bucket.vb"
+﻿#Region "Microsoft.VisualBasic::bcd0e3eaa9ec60e7fef31497b3782439, ossutil\Model\Bucket.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcc363fe68f5e6c8a1a769f010151de6, Centos\Bash.vb"
+﻿#Region "Microsoft.VisualBasic::82ea5ca72423797bea3a5123b7e82144, Centos\Bash.vb"
 
     ' Author:
     ' 
@@ -42,4 +42,3 @@
 Public Class Bash
 
 End Class
-

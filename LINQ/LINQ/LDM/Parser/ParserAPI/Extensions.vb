@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e94be86c97798ea0d4158954c7dad3f9, LINQ\LINQ\LDM\Parser\ParserAPI\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ee8da83a6e3a317fb6d9d059e3997788, LINQ\LINQ\LDM\Parser\ParserAPI\Extensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f50344c2f2eac58abf75bc349ddffe7c, LINQ\LINQ\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4d58e1befbea158c7c9319b1d8adf3ef, LINQ\LINQ\Extensions.vb"
 
     ' Author:
     ' 

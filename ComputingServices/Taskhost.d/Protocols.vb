@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8845f33dc55882b22d52aa0a96e9a961, ComputingServices\Taskhost.d\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::fa83edfe7f64a5afde0ec295eb81ae44, ComputingServices\Taskhost.d\Protocols.vb"
 
     ' Author:
     ' 

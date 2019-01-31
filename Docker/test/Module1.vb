@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aed8e1b5166c93d413c5b527b974623c, Docker\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::d3d37a19a2dec6b62f31fa6da5d95335, Docker\test\Module1.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Module Module1
     End Sub
 
 End Module
-

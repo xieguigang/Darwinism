@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6a49d5c8bf0f4d1bcd3efa1a71e9989, ComputingServices\Asymmetric\Parasitifer.vb"
+﻿#Region "Microsoft.VisualBasic::44a8068c53cea5cb701fcdda03bce70f, ComputingServices\Asymmetric\Parasitifer.vb"
 
     ' Author:
     ' 

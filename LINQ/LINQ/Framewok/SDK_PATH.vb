@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7baaa5a3f64428d04e206b51a2f51236, LINQ\LINQ\Framewok\SDK_PATH.vb"
+﻿#Region "Microsoft.VisualBasic::0b1a947598a23b4bb691bd7d48f34e92, LINQ\LINQ\Framewok\SDK_PATH.vb"
 
     ' Author:
     ' 

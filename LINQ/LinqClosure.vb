@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::882be07b09bc05562c2372620f92b2da, LINQ\LinqClosure.vb"
+﻿#Region "Microsoft.VisualBasic::27d98e6109f60dfeacc76506aabb2b9d, LINQ\LinqClosure.vb"
 
     ' Author:
     ' 

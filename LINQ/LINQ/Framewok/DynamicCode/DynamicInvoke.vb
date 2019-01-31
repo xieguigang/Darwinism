@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3af26b7fbc6d4690e1f6aef1dbf93306, LINQ\LINQ\Framewok\DynamicCode\DynamicInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::e2e99233cb8694f503a056e6cd62ee67, LINQ\LINQ\Framewok\DynamicCode\DynamicInvoke.vb"
 
     ' Author:
     ' 

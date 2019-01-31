@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5efc7517b0bffb4b14886a39aaa44b71, ossutil\Model\TextParsers.vb"
+﻿#Region "Microsoft.VisualBasic::513159c138f0794d63c64ea019d4ab2f, ossutil\Model\TextParsers.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c1f98717068dc3c91de95e4cb5192e2, LINQ\LINQ\Script\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::513a4da3f565bd9d4a650332649307e7, LINQ\LINQ\Script\Variable.vb"
 
     ' Author:
     ' 

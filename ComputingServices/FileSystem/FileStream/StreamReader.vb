@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16fec107a775847447e871a02c81e271, ComputingServices\FileSystem\FileStream\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::53e4fec7197998879fdd88b885dd6c57, ComputingServices\FileSystem\FileStream\StreamReader.vb"
 
     ' Author:
     ' 

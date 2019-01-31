@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7919a133cdb009b0a35a0758873d49a, LINQ\LINQ\LDM\Expression\LetClosure.vb"
+﻿#Region "Microsoft.VisualBasic::e75f82e850fc7732f68f2e22858ff7e2, LINQ\LINQ\LDM\Expression\LetClosure.vb"
 
     ' Author:
     ' 

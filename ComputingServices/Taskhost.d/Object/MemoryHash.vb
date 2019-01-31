@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c8ec8c834d972cd23c189e272d4acb4, ComputingServices\Taskhost.d\Object\MemoryHash.vb"
+﻿#Region "Microsoft.VisualBasic::771b5ce8e29d1551adf7ec59ad4385e4, ComputingServices\Taskhost.d\Object\MemoryHash.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba8ff923e20521891e809f24b3f4c1bc, LINQ\TestMain\Parser\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::b5eff41b1ef22f00120aa351810ffda4, LINQ\TestMain\Parser\Parser.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dea7be9c9d31d3f899a0e5e3c1cf4b45, Docker\Captures\Models.vb"
+﻿#Region "Microsoft.VisualBasic::a58853903388e980e7f1087951fabc35, Docker\Captures\Models.vb"
 
     ' Author:
     ' 

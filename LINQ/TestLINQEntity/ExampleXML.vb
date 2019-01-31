@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::835865f0e113f7e6f3f966462751dcfc, LINQ\TestLINQEntity\ExampleXML.vb"
+﻿#Region "Microsoft.VisualBasic::f13ccaf2e2cec401b9f2c278b53e375f, LINQ\TestLINQEntity\ExampleXML.vb"
 
     ' Author:
     ' 

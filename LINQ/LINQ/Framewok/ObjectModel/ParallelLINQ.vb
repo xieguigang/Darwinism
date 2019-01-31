@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b88dd16a99ec7e573a9c42ce1b49d66e, LINQ\LINQ\Framewok\ObjectModel\ParallelLINQ.vb"
+﻿#Region "Microsoft.VisualBasic::b5ed01fb96f3c5ce71119ef496ea8f97, LINQ\LINQ\Framewok\ObjectModel\ParallelLINQ.vb"
 
     ' Author:
     ' 

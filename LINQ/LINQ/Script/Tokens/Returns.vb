@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c435e7c252015ac504b0f81b9664ad5, LINQ\LINQ\Script\Tokens\Returns.vb"
+﻿#Region "Microsoft.VisualBasic::171052e0050ac84faf5ffac25f72716d, LINQ\LINQ\Script\Tokens\Returns.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::816e393c806226d625e716542a09081b, LINQ\LINQ\Framewok\Provider\DefaultEntity.vb"
+﻿#Region "Microsoft.VisualBasic::302cbe0ed2a3c7e44f8c749c997571e7, LINQ\LINQ\Framewok\Provider\DefaultEntity.vb"
 
     ' Author:
     ' 

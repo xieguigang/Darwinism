@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97c5f94cdee8264d441f6e161b874171, LINQ\TestMain\Parser\Token.vb"
+﻿#Region "Microsoft.VisualBasic::ed8eb27a7cb92d7b3259a7d87e2ee1dd, LINQ\TestMain\Parser\Token.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e32f273ade4ab09c8b93574cee29babc, Docker\PowerShell.vb"
+﻿#Region "Microsoft.VisualBasic::55f46f3ae0858ecd0ffcfe754b6b7f98, Docker\PowerShell.vb"
 
     ' Author:
     ' 
@@ -127,4 +127,3 @@ Public Class PowerShell
         End Using
     End Function
 End Class
-

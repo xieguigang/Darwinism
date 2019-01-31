@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca7500dfad19f9232893f6b3c7082a6b, LINQ\LINQ\Framewok\Provider\Registry\TypeRegistry.vb"
+﻿#Region "Microsoft.VisualBasic::c39bd12aa91ca074ef1e3b66376790c3, LINQ\LINQ\Framewok\Provider\Registry\TypeRegistry.vb"
 
     ' Author:
     ' 

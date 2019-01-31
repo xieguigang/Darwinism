@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cc78d7fc9adff74806ea12686bd6bee, ComputingServices\FileSystem\FileStream\BaseStream.vb"
+﻿#Region "Microsoft.VisualBasic::988e2ae63e295935369ebce713e46dd1, ComputingServices\FileSystem\FileStream\BaseStream.vb"
 
     ' Author:
     ' 

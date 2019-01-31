@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e38622ff57282861f41790c6f7568544, LINQ\LINQ\LDM\Parser\ClosureParser.vb"
+﻿#Region "Microsoft.VisualBasic::035b2ce5f4e8d054ac3f9afdbc7e13e3, LINQ\LINQ\LDM\Parser\ClosureParser.vb"
 
     ' Author:
     ' 

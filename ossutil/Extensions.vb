@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f4de2be262a991c69e0e03c6aecf58, ossutil\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::43820d7efd8354108c932cf4755bd1ca, ossutil\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: ChangeFileSystemContext, IsDirectory
+    '     Function: ChangeFileSystemContext, IsDirectory, populateTempFile
     ' 
     ' /********************************************************************************/
 

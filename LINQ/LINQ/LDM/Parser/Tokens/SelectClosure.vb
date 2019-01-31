@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a94e857a6ab9f9db8295bb3944779326, LINQ\LINQ\LDM\Parser\Tokens\SelectClosure.vb"
+﻿#Region "Microsoft.VisualBasic::68e28c20e7dbc6222ede94e4ecfebe7b, LINQ\LINQ\LDM\Parser\Tokens\SelectClosure.vb"
 
     ' Author:
     ' 

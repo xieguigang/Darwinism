@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a0709d97d0222b5867d6286286d41a4, LINQ\LINQ\Framewok\DynamicCode\LinqClosure\LinqClosure.vb"
+﻿#Region "Microsoft.VisualBasic::8002b73374338081a055badc20092ec6, LINQ\LINQ\Framewok\DynamicCode\LinqClosure\LinqClosure.vb"
 
     ' Author:
     ' 

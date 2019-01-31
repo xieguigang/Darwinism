@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcc89e7db6cf8b328765175458ebed86, Docker\Captures\ParserHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::74784b0092cb12655aaae522a50b49d4, Docker\Captures\ParserHelpers.vb"
 
     ' Author:
     ' 
@@ -64,6 +64,3 @@ Namespace Captures
         End Function
     End Module
 End Namespace
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60c68524a035c61f01d7927c4b87b710, LINQ\LINQ\LDM\Expression\SelectClosure.vb"
+﻿#Region "Microsoft.VisualBasic::37787fc233a1e2e80449d74607f33b61, LINQ\LINQ\LDM\Expression\SelectClosure.vb"
 
     ' Author:
     ' 

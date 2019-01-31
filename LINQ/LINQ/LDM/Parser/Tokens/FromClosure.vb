@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2ae09b174d9f647ee687887cf86f1cf, LINQ\LINQ\LDM\Parser\Tokens\FromClosure.vb"
+﻿#Region "Microsoft.VisualBasic::4a4845aad3415e9723db3d6fecf21094, LINQ\LINQ\LDM\Parser\Tokens\FromClosure.vb"
 
     ' Author:
     ' 

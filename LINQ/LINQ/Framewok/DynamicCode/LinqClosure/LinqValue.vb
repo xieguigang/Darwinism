@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b41a5c7af0df7a0d0e000f48a339598, LINQ\LINQ\Framewok\DynamicCode\LinqClosure\LinqValue.vb"
+﻿#Region "Microsoft.VisualBasic::72a5a61a69520ff69b25b54f22aa6681, LINQ\LINQ\Framewok\DynamicCode\LinqClosure\LinqValue.vb"
 
     ' Author:
     ' 

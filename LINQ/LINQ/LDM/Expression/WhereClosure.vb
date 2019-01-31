@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5659906a133278df957624702b46cee, LINQ\LINQ\LDM\Expression\WhereClosure.vb"
+﻿#Region "Microsoft.VisualBasic::43bd9270fa1280ad3e6b7a6ce2cd906f, LINQ\LINQ\LDM\Expression\WhereClosure.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2d20170af117038f17c99b2997bfba2, ComputingServices\FileSystem\Protocols\FileSystemAPI.vb"
+﻿#Region "Microsoft.VisualBasic::25a2e448b3ecd884a4b8878d797fe957, ComputingServices\FileSystem\Protocols\FileSystemAPI.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77f30e80f19b76467dd9d67b8b2122ee, ComputingServices\FileSystem\Protocols\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::aca05c9a4d4b828005757006ecd85b3b, ComputingServices\FileSystem\Protocols\Protocols.vb"
 
     ' Author:
     ' 
