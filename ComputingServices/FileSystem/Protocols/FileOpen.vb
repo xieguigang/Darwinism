@@ -165,7 +165,7 @@ Namespace FileSystem.Protocols
 
         Sub New(raw As Byte())
             Dim buf As Byte() = New Byte(INT32 - 1) {}
-            Dim p As int = Scan0
+            Dim p As VBInteger = Scan0
             Dim handleLen As Integer
             Dim bufferLen As Integer
 
@@ -192,7 +192,7 @@ Namespace FileSystem.Protocols
                                                  INT32 +  ' buffer length
                                                  handle.Length +
                                                  buffer.Length - 1) {}
-            Dim p As int = Scan0
+            Dim p As VBInteger = Scan0
             Dim handleLen As Byte() = BitConverter.GetBytes(handle.Length)
             Dim bufferLen As Byte() = BitConverter.GetBytes(buffer.Length)
 
