@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::c39bd12aa91ca074ef1e3b66376790c3, LINQ\LINQ\Framewok\Provider\Registry\TypeRegistry.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TypeRegistry
-    ' 
-    '         Properties: DefaultFile, SDK, typeDefs
-    ' 
-    '         Function: __parsingEntry, Find, GetHandle, Load, LoadAssembly
-    '                   LoadDefault, ParsingEntry, Register, Save
-    ' 
-    '         Sub: InstallCurrent
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TypeRegistry
+' 
+'         Properties: DefaultFile, SDK, typeDefs
+' 
+'         Function: __parsingEntry, Find, GetHandle, Load, LoadAssembly
+'                   LoadDefault, ParsingEntry, Register, Save
+' 
+'         Sub: InstallCurrent
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports System.Reflection
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports sciBASIC.ComputingServices.Linq.Framework.Provider
 
@@ -59,7 +60,7 @@ Namespace Framework.Provider
     ''' (起始这个模块就是相当于一个类型缓存而已，因为程序可以直接读取dll文件里面的内容，但是直接读取的方法会造成性能下降，所以需要使用这个对象来缓存所需要的类型数据) 
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TypeRegistry : Inherits ITextFile
+    Public Class TypeRegistry : Implements IFileReference
         Implements IDisposable
 
         <XmlElement> Public Property typeDefs As TypeEntry()
@@ -232,13 +233,47 @@ NEWLY:          Dim nlibs As New TypeRegistry With {
         End Function
 
         Public Shared ReadOnly Property DefaultFile As String = App.ProductSharedDIR & "/Linq.Entity.Xml"
+        Public Property FilePath As String Implements IFileReference.FilePath
 
         Public Shared Function LoadDefault() As TypeRegistry
             Return TypeRegistry.Load(DefaultFile)
         End Function
 
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return Me.GetXml.SaveTo(getPath(FilePath), throwEx:=False, encoding:=Encoding)
+        Public Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
+            Return Me.GetXml.SaveTo(FilePath Or Me.FilePath.When(FilePath.StringEmpty), throwEx:=False, encoding:=Encoding)
         End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                    Call Save()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace
