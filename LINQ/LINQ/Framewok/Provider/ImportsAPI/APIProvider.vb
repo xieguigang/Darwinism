@@ -136,12 +136,12 @@ Namespace Framework.Provider.ImportsAPI
             Next
         End Sub
 
-        Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Function Save(Path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Return Me.GetJson.SaveTo(If(String.IsNullOrEmpty(Path), DefaultFile, Path), encoding)
         End Function
 
-        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(Path, encoding.CodePage)
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
         End Function
 
         Public Shared Function LoadDefault() As APIProvider
