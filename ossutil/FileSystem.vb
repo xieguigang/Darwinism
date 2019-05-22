@@ -268,7 +268,7 @@ Public Class FileSystem
     ''' <summary>
     ''' 获取得到临时文件路径
     ''' </summary>
-    Shared tempFile As New DefaultValue(Of String)(AddressOf populateTempFile, isLazy:=False)
+    Shared tempFile As New [Default](Of  String)(AddressOf populateTempFile, isLazy:=False)
 
     ''' <summary>
     ''' Get file from OSS
