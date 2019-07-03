@@ -13,7 +13,18 @@ var __extends = (this && this.__extends) || (function () {
 var viz;
 (function (viz) {
     var chart = /** @class */ (function () {
-        function chart() {
+        function chart(displayId, size, margin) {
+            if (size === void 0) { size = [900, 600]; }
+            if (margin === void 0) { margin = new Canvas.Margin(20, 20, 30, 30); }
+            this.displayId = displayId;
+            this.size = size;
+            this.margin = margin;
+            if (Array.isArray(size)) {
+                this.size = new Canvas.Size(size[0], size[1]);
+            }
+            else {
+                this.size = size;
+            }
         }
         return chart;
     }());

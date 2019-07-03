@@ -2,7 +2,10 @@
 /// <reference path="../viz/ts/build/svg.d.ts" />
 declare namespace viz {
     abstract class chart {
-        size: Canvas.Size;
+        displayId: string;
+        size: Canvas.Size | [number, number];
+        margin: Canvas.Margin;
+        constructor(displayId: string, size?: Canvas.Size | [number, number], margin?: Canvas.Margin);
     }
 }
 declare namespace viz {
