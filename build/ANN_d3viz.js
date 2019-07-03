@@ -9,6 +9,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /// <reference path="../ts/build/linq.d.ts" />
+/// <reference path="../ts/build/svg.d.ts" />
 var viz;
 (function (viz) {
     var chart = /** @class */ (function () {

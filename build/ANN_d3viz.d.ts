@@ -1,7 +1,8 @@
 /// <reference path="../viz/ts/build/linq.d.ts" />
+/// <reference path="../viz/ts/build/svg.d.ts" />
 declare namespace viz {
     abstract class chart {
-        size: any;
+        size: Canvas.Size;
     }
 }
 declare namespace viz {
