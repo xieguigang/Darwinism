@@ -1,1 +1,1 @@
-﻿console.log('Hello world');
+﻿/// <reference path="../ts/build/linq.d.ts" />
