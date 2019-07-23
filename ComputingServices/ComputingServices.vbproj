@@ -231,6 +231,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Taskhost.d\Invoke\JSON\Argument.vb" />
+    <Compile Include="Taskhost.d\Invoke\RemoteCall.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
     <Compile Include="Linq\LinqPool.vb" />
     <Compile Include="Linq\ILinq%28Of T%29.vb" />

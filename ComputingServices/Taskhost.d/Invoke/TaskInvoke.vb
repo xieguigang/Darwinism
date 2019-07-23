@@ -82,48 +82,10 @@ Namespace TaskHost
 
         Public ReadOnly Property LinqProvider As LinqPool = New LinqPool
 
-        ''' <summary>
-        ''' Invoke the function on the remote server.(远程服务器上面通过这个方法执行函数调用)
-        ''' </summary>
-        ''' <param name="params"></param>
-        ''' <returns></returns>
-        Public Shared Function Invoke(params As InvokeInfo) As Rtvl
-            Dim rtvl As Rtvl
-
-            Try
-                Dim rtvlType As Type = Nothing
-                Dim value As Object = __invoke(params, rtvlType)
-                rtvl = New Rtvl(value, rtvlType)
-            Catch ex As Exception
-                ex = New Exception(params.GetJson, ex)
-                rtvl = New Rtvl(ex)
-            End Try
-
-            Return rtvl
-        End Function
-
-        ''' <summary>
-        ''' A common function of invoke the method on the remote machine
-        ''' </summary>
-        ''' <param name="params">远程主机上面的函数指针</param>
-        ''' <param name="value">value's <see cref="system.type"/></param>
-        ''' <returns></returns>
-        Private Shared Function __invoke(params As InvokeInfo, ByRef value As Type) As Object
-            Dim func As MethodInfo = params.GetMethod
-            Dim paramsValue As Object() = params.parameters.Select(Function(arg) arg.GetValue).ToArray
-            Dim x As Object = func.Invoke(Nothing, paramsValue)
-            value = func.ReturnType
-            Return x
-        End Function
-
-        Public Shared Function TryInvoke(info As InvokeInfo) As Object
-            Return __invoke(info, Nothing)
-        End Function
-
         <Protocol(TaskProtocols.Invoke)>
         Private Function Invoke(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim params As InvokeInfo = JsonContract.LoadJSON(Of InvokeInfo)(args.GetUTF8String)
-            Dim value As Rtvl = Invoke(params)
+            Dim value As Rtvl = RemoteCall.Invoke(params)
             Return New RequestStream(value.GetJson)
         End Function
 
@@ -144,10 +106,9 @@ Namespace TaskHost
         <Protocol(TaskProtocols.InvokeLinq)>
         Private Function InvokeLinq(CA As Long, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim params As InvokeInfo = JsonContract.LoadJSON(Of InvokeInfo)(args.GetUTF8String) ' 得到远程函数指针信息
-            Dim type As Type = Nothing
-            Dim value As Object = __invoke(params, type)
+            Dim value As Object = RemoteCall.doCall(params)
             Dim source As IEnumerable = DirectCast(value, IEnumerable)
-            Dim svr As String = LinqProvider.OpenQuery(source, type).GetJson   ' 返回数据源信息
+            Dim svr As String = LinqProvider.OpenQuery(source, value.GetType).GetJson   ' 返回数据源信息
             Return New RequestStream(svr)
         End Function
 
