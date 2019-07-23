@@ -13,6 +13,9 @@ Module Module1
         Dim exceptionInvoke = InvokeInfo.CreateObject(exceptionTask, {"Here is the exception message..."})
         Dim exceptionResult As Rtvl = RemoteCall.Invoke(exceptionInvoke)
 
+        ' throw exception at here
+        exceptionResult.GetValue()
+
         Pause()
     End Sub
 
