@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sciBASIC.ComputingServices.TaskHost
 
-Module RemoteCall
+Public Module RemoteCall
 
     ''' <summary>
     ''' Invoke the function on the remote server.(远程服务器上面通过这个方法执行函数调用)
