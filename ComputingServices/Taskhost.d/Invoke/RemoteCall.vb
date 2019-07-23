@@ -16,11 +16,11 @@ Public Module RemoteCall
         Dim rtvl As Rtvl
 
         Try
-            Dim value As Object = doCall(params)
+            Dim resultType As Type = Nothing
+            Dim value As Object = doCall(params, resultType)
 
-            rtvl = New Rtvl(value)
+            rtvl = New Rtvl(value, resultType)
         Catch ex As Exception
-            ex = New Exception(params.GetJson, ex)
             rtvl = New Rtvl(ex)
         End Try
 
@@ -34,12 +34,15 @@ Public Module RemoteCall
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function doCall(params As InvokeInfo) As Object
+    Public Function doCall(params As InvokeInfo, Optional ByRef rtvlType As Type = Nothing) As Object
         Dim func As MethodInfo = params.GetMethod
         Dim paramsValue As Object() = params.parameters _
             .Select(Function(arg) arg.GetValue) _
             .ToArray
-        Dim value As Object = func.Invoke(Nothing, paramsValue)
+        Dim value As Object
+
+        value = func.Invoke(Nothing, paramsValue)
+        rtvlType = func.ReturnType
 
         Return value
     End Function

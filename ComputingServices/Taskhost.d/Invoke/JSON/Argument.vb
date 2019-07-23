@@ -30,12 +30,12 @@ Namespace TaskHost
         ''' <summary>
         ''' Creates the function remote calls one of its parameter value. 
         ''' </summary>
-        ''' <param name="o"></param>
-        Sub New(o As Object, Optional type As Type = Nothing)
-            type = If(type, o.GetType)
+        ''' <param name="obj"></param>
+        Sub New(obj As Object, Optional type As Type = Nothing)
+            type = If(type, obj.GetType)
 
             Me.type = type.FullName
-            Me.value = JsonContract.GetObjectJson(o, type)
+            Me.value = JsonContract.GetObjectJson(type, obj, indent:=False)
         End Sub
 
         Public Overrides Function ToString() As String
