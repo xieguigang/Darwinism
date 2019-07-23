@@ -52,7 +52,10 @@ Namespace TaskHost
     ''' <summary>
     ''' The returns value.(远端调用的函数返回)
     ''' </summary>
-    Public Class Rtvl(Of T)
+    ''' <remarks>
+    ''' 因为在远端是一个通用的计算结果,所以没有办法使用泛型
+    ''' </remarks>
+    Public Class Rtvl
 
         ''' <summary>
         ''' 200 OK
@@ -71,7 +74,7 @@ Namespace TaskHost
         ''' The result value in json string format 
         ''' </summary>
         ''' <returns></returns>
-        Public Property info As T
+        Public Property info As Argument
 
         Sub New()
         End Sub
@@ -83,24 +86,20 @@ Namespace TaskHost
 
         Sub New(value As Object, type As Type)
             errCode = HTTP_RFC.RFC_OK
-            info = JsonContract.GetObjectJson(value, type)
+            info = New Argument(value, type)
         End Sub
 
         ''' <summary>
-        ''' If the remote execute raising a exception, then a exception will be throw from this function.
+        ''' If the remote execute raising a exception, 
+        ''' then a exception will be throw from this function.
         ''' </summary>
-        ''' <param name="type"></param>
         ''' <returns></returns>
-        Public Function GetValue(type As Type) As Object
+        Public Function GetValue() As Object
             If errCode <> HTTP_RFC.RFC_OK Then
-                Throw New Exception(ex)
+                Throw message.Exception
+            Else
+                Return info.GetValue()
             End If
-            Return LoadObject(value, type)
-        End Function
-
-        Public Function GetValue(func As [Delegate]) As Object
-            Dim type As Type = func.Method.ReturnType
-            Return GetValue(type)
         End Function
 
         Public Shared Function CreateObject(Of T)(x As T) As Rtvl

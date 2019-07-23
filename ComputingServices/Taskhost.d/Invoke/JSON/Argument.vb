@@ -31,8 +31,8 @@ Namespace TaskHost
         ''' Creates the function remote calls one of its parameter value. 
         ''' </summary>
         ''' <param name="o"></param>
-        Sub New(o As Object)
-            Dim type As Type = o.GetType
+        Sub New(o As Object, Optional type As Type = Nothing)
+            type = If(type, o.GetType)
 
             Me.type = type.FullName
             Me.value = JsonContract.GetObjectJson(o, type)
