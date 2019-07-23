@@ -207,21 +207,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cluster\Master.vb" />
-    <Compile Include="ComponentModel\IRemote.vb" />
-    <Compile Include="ComponentModel\IHostBase.vb" />
-    <Compile Include="Extensions.vb" />
-    <Compile Include="FileSystem\Objects\DirectoryInfo.vb" />
-    <Compile Include="FileSystem\Objects\DriveInfo.vb" />
-    <Compile Include="FileSystem\Protocols\FileHandle.vb" />
-    <Compile Include="FileSystem\Protocols\FileURI.vb" />
-    <Compile Include="FileSystem\Protocols\NetTransfer.vb" />
-    <Compile Include="FileSystem\Protocols\FileStreamInfo.vb" />
-    <Compile Include="FileSystem\Protocols\FileSystemAPI.vb" />
-    <Compile Include="FileSystem\Protocols\FileOpen.vb" />
-    <Compile Include="FileSystem\Protocols\Protocols.vb" />
-    <Compile Include="FileSystem\FileSystemHost.vb" />
-    <Compile Include="FileSystem\FileSystem.vb" />
     <Compile Include="Environment.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -238,10 +223,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SharedMemory\Protocols.vb" />
-    <Compile Include="SharedMemory\SharedSvr.vb" />
-    <Compile Include="SharedMemory\HashValue.vb" />
-    <Compile Include="SharedMemory\MemoryServices.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
     <Compile Include="Taskhost.d\Linq\LinqPool.vb" />
     <Compile Include="Taskhost.d\Linq\ILinq%28Of T%29.vb" />
