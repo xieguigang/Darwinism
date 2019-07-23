@@ -224,12 +224,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Taskhost.d\Invoke\JSON\Argument.vb" />
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
     <Compile Include="Linq\LinqPool.vb" />
     <Compile Include="Linq\ILinq%28Of T%29.vb" />
     <Compile Include="Linq\LinqProvider.vb" />
-    <Compile Include="Taskhost.d\Invoke\Return.vb" />
-    <Compile Include="Taskhost.d\Invoke\InvokeInfo.vb" />
+    <Compile Include="Taskhost.d\Invoke\JSON\Return.vb" />
+    <Compile Include="Taskhost.d\Invoke\JSON\InvokeInfo.vb" />
     <Compile Include="Taskhost.d\Extensions.vb" />
     <Compile Include="Taskhost.d\NamespaceDoc.vb" />
     <Compile Include="Taskhost.d\Object\MemoryHash.vb" />

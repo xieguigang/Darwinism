@@ -99,7 +99,7 @@ Namespace TaskHost
             Dim method = type.GetMethod(name, bindingAttr:=PublicShared)
             Dim info As New InvokeInfo With {
                 .assm = FileIO.FileSystem.GetFileInfo(type.Assembly.Location).Name,
-                .Name = method.Name,
+                .name = method.Name,
                 .fullIdentity = type.FullName
             }
             Return info
