@@ -59,7 +59,6 @@ Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
-Imports sciBASIC.ComputingServices.ComponentModel
 
 Namespace TaskHost
 

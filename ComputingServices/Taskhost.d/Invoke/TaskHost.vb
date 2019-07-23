@@ -49,8 +49,6 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sciBASIC.ComputingServices.ComponentModel
-Imports sciBASIC.ComputingServices.FileSystem
 
 Namespace TaskHost
 
@@ -59,12 +57,9 @@ Namespace TaskHost
     ''' (由于是远程调用，所以运行的环境可能会很不一样，所以在设计程序的时候请尽量
     ''' 避免或者不要使用模块变量，以免出现难以调查的BUG)
     ''' </summary>
-    Public Class TaskRemote : Implements IRemoteSupport
-        Implements INamedValue
+    Public Class TaskRemote : Implements INamedValue
 
         Dim _remote As IPEndPoint
-
-        Public ReadOnly Property FileSystem As FileSystemHost Implements IRemoteSupport.FileSystem
 
         Private Property Key As String Implements INamedValue.Key
             Get
@@ -94,7 +89,6 @@ Namespace TaskHost
 
         Sub New(remote As IPEndPoint)
             _remote = remote
-            FileSystem = New FileSystemHost(GetFirstAvailablePort)
         End Sub
 
         Sub New(remote As String, port As Integer)

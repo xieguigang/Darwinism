@@ -56,43 +56,30 @@ Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Win32
-Imports sciBASIC.ComputingServices.ComponentModel
-Imports sciBASIC.ComputingServices.FileSystem
 
 Namespace TaskHost
 
     ''' <summary>
     ''' Running on the server cluster nodes.
     ''' </summary>
-    <Protocol(GetType(TaskProtocols))> Public Class TaskInvoke : Inherits IHostBase
-        Implements IRemoteSupport
+    <Protocol(GetType(TaskProtocols))> Public Class TaskInvoke
         Implements IDisposable
+
+        Dim host As TcpServicesSocket
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="port">You can suing function <see cref="GetFirstAvailablePort"/> to initialize this server object.</param>
         Sub New(Optional port As Integer = 1234)
-            Call MyBase.New(port)
-            __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
-            FileSystem = New FileSystemHost(GetFirstAvailablePort)
+            host = New TcpServicesSocket(port)
+            host.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         End Sub
 
         Public Function Run() As Integer
-            Return __host.Run()
+            Return host.Run()
         End Function
 
-        Public Overrides ReadOnly Property Portal As IPEndPoint
-            Get
-                Return Me.GetPortal
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' 远程文件系统
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property FileSystem As FileSystemHost Implements IRemoteSupport.FileSystem
         Public ReadOnly Property LinqProvider As LinqPool = New LinqPool
 
         ''' <summary>

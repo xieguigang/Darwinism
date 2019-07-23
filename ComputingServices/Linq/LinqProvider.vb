@@ -54,7 +54,6 @@ Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.InputHandler
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sciBASIC.ComputingServices.ComponentModel
 
 Namespace TaskHost
 
@@ -63,12 +62,13 @@ Namespace TaskHost
     ''' </summary>
     ''' 
     <Protocol(GetType(TaskProtocols))>
-    Public Class LinqProvider : Inherits IHostBase
+    Public Class LinqProvider
         Implements IDisposable
 
         ReadOnly _arrayType As Type
         ReadOnly _type As Type
         ReadOnly _source As Iterator
+        ReadOnly _host As TcpServicesSocket
 
         ''' <summary>
         ''' 
@@ -76,21 +76,20 @@ Namespace TaskHost
         ''' <param name="source"></param>
         ''' <param name="type">Element's <see cref="System.Type">type</see> in the <paramref name="source"/></param>
         Sub New(source As IEnumerable, type As Type)
-            Call MyBase.New(GetFirstAvailablePort(-1))
+            _host = New TcpServicesSocket(GetFirstAvailablePort(-1))
+            _host.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
 
             _type = type
             _source = New Iterator(source)
-            __host.Responsehandler = AddressOf New ProtocolHandler(Me).HandleRequest
             _arrayType = type.MakeArrayType
-
-            __svrTask = __svrThread.BeginInvoke(Nothing, Nothing)  ' 避免崩溃的情况产生
+            _svrTask = _svrThread.BeginInvoke(Nothing, Nothing)  ' 避免崩溃的情况产生
         End Sub
 
         ''' <summary>
         ''' 使用线程可能会在出现错误的时候导致应用程序崩溃，所以在这里使用begineInvoke好了
         ''' </summary>
-        Dim __svrThread As Action = Sub() Call __host.Run()
-        Dim __svrTask As IAsyncResult
+        Dim _svrThread As Action = Sub() Call _host.Run()
+        Dim _svrTask As IAsyncResult
 
         ''' <summary>
         ''' 当前的这个数据源服务是否已经正确的开启了？
@@ -112,9 +111,9 @@ Namespace TaskHost
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Portal As IPEndPoint
+        Public ReadOnly Property Portal As IPEndPoint
             Get
-                Return Me.GetPortal
+                Return New IPEndPoint(IPAddress, _host.LocalPort)
             End Get
         End Property
 
@@ -174,7 +173,7 @@ Namespace TaskHost
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call _source.Free
-                    Call __host.Free
+                    Call _host.Free
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
