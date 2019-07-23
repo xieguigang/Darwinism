@@ -100,7 +100,7 @@ Namespace TaskHost
             Dim info As New InvokeInfo With {
                 .assm = FileIO.FileSystem.GetFileInfo(type.Assembly.Location).Name,
                 .Name = method.Name,
-                .FullIdentity = type.FullName
+                .fullIdentity = type.FullName
             }
             Return info
         End Function

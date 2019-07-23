@@ -122,7 +122,7 @@ Namespace TaskHost
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{assm}!{FullIdentity}::{Name}"
+            Return $"{assm}!{fullIdentity}::{Name}"
         End Function
 
         ''' <summary>
@@ -145,13 +145,15 @@ Namespace TaskHost
             Dim type As Type = func.Method.DeclaringType
             Dim assm As Assembly = type.Assembly
             Dim name As String = func.Method.Name
-            Dim params As Argv() = args.Select(Function(x) New Argv(x)).ToArray   ' 由于函数调用的参数的类型可能是基类，所以json序列化操作会存在问题，在这里使用这个新的参数构建模块来避免这个问题
+            ' 由于函数调用的参数的类型可能是基类，所以json序列化操作会存在问题，
+            ' 在这里使用这个新的参数构建模块来避免这个问题
+            Dim params As Argv() = args.Select(Function(x) New Argv(x)).ToArray
 
             Return New InvokeInfo With {
                 .assm = FileIO.FileSystem.GetFileInfo(assm.Location).Name,
                 .Name = name,
                 .Parameters = params,
-                .FullIdentity = type.FullName
+                .fullIdentity = type.FullName
             }
         End Function
     End Class

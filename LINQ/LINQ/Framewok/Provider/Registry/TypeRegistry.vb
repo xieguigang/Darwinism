@@ -169,11 +169,11 @@ Namespace Framework.Provider
                                 .name = x.attr.Type,
                                 .TypeId = New Scripting.MetaData.TypeInfo With {
                                     .assm = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name,
-                                    .FullIdentity = x.attr.RefType.FullName
+                                    .fullIdentity = x.attr.RefType.FullName
                                 },   ' 实体类型的信息
                                 .Repository = New Scripting.MetaData.TypeInfo With {
                                     .assm = path,
-                                    .FullIdentity = x.x.DeclaringType.FullName
+                                    .fullIdentity = x.x.DeclaringType.FullName
                                 }   ' 数据源的方法信息
                             }
                         End Function) _
