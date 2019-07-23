@@ -207,6 +207,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistributeServices\CenterController.vb" />
+    <Compile Include="DistributeServices\Registry.vb" />
+    <Compile Include="DistributeServices\GridNode.vb" />
+    <Compile Include="DistributeServices\NamespaceDoc.vb" />
     <Compile Include="Environment.vb" />
     <Compile Include="Linq\NamespaceDoc.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
