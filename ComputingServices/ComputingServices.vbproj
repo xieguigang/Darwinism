@@ -208,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Environment.vb" />
+    <Compile Include="Linq\NamespaceDoc.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -224,9 +225,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Taskhost.d\Invoke\TaskInvoke.vb" />
-    <Compile Include="Taskhost.d\Linq\LinqPool.vb" />
-    <Compile Include="Taskhost.d\Linq\ILinq%28Of T%29.vb" />
-    <Compile Include="Taskhost.d\Linq\LinqProvider.vb" />
+    <Compile Include="Linq\LinqPool.vb" />
+    <Compile Include="Linq\ILinq%28Of T%29.vb" />
+    <Compile Include="Linq\LinqProvider.vb" />
     <Compile Include="Taskhost.d\Invoke\Return.vb" />
     <Compile Include="Taskhost.d\Invoke\InvokeInfo.vb" />
     <Compile Include="Taskhost.d\Extensions.vb" />
