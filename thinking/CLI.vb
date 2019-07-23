@@ -24,9 +24,11 @@ Imports sciBASIC.ComputingServices.TaskHost
     ''' </summary>
     ''' <param name="args"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' Use for create parallel in multiple-process mode
+    ''' </remarks>
     <ExportAPI("/slave")>
-    <Description("Program running in slave mode")>
+    <Description("Program running in slave mode, apply for the multiple-process parallel.")>
     <Usage("/slave /application <json_base64> /arguments <memory_mapfile> /out <memory_mapfile>")>
     Public Function Slave(args As CommandLine) As Integer
         Dim endpointJSON$ = args("/application").Base64Decode
