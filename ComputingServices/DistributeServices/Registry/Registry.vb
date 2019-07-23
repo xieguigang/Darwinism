@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 
 Namespace DistributeServices
@@ -9,6 +10,8 @@ Namespace DistributeServices
     ''' <remarks>
     ''' 在这个对象中,还会存在一个网络服务用来动态的自动添加和删除网络中的计算节点
     ''' </remarks>
+    ''' 
+    <Protocol(GetType(RegistryProtocols))>
     Public Class Registry : Implements IEnumerable(Of IPEndPoint)
 
         ''' <summary>
