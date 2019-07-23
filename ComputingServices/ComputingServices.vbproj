@@ -230,6 +230,7 @@
     <Compile Include="Taskhost.d\Invoke\Return.vb" />
     <Compile Include="Taskhost.d\Invoke\InvokeInfo.vb" />
     <Compile Include="Taskhost.d\Extensions.vb" />
+    <Compile Include="Taskhost.d\NamespaceDoc.vb" />
     <Compile Include="Taskhost.d\Object\MemoryHash.vb" />
     <Compile Include="Taskhost.d\Object\ShadowsCopy.vb" />
     <Compile Include="Taskhost.d\Object\ObjectAddress.vb" />
