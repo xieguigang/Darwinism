@@ -131,12 +131,6 @@ Namespace TaskHost
             Return New RequestStream(ProtocolEntry, TaskProtocols.Reset)
         End Function
 
-        <Extension> Public Function GetPortal(Of Tsvr As IServicesSocket)(master As IMasterBase(Of Tsvr)) As IPEndPoint
-            Dim ip As String = If(EnvironmentLocal, TcpRequest.LocalIPAddress, GetMyIPAddress())
-            Dim port As Integer = master.__host.LocalPort
-            Return New IPEndPoint(ip, port)
-        End Function
-
         Public Function Shell(exe As String, args As String) As Integer
             Dim proc As New IORedirect(exe, args)
             Return proc.Run

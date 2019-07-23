@@ -7,7 +7,7 @@ Namespace DistributeServices
     ''' </summary>
     Public Class CenterController
 
-        ReadOnly registry As New Registry
+        ReadOnly registry As Registry
 
         ''' <summary>
         ''' 当前注册的计算节点数量
