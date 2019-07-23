@@ -3,7 +3,7 @@
 Namespace DistributeServices
 
     <HideModuleName>
-    Public Module Extensions
+    Public Module Protocol
 
         <Extension>
         Friend Iterator Function GetIPAddressList(IPrange As String) As IEnumerable(Of String)

@@ -208,8 +208,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DistributeServices\CenterController.vb" />
-    <Compile Include="DistributeServices\Extensions.vb" />
-    <Compile Include="DistributeServices\Registry.vb" />
+    <Compile Include="DistributeServices\Registry\Protocol.vb" />
+    <Compile Include="DistributeServices\Registry\Registry.vb" />
     <Compile Include="DistributeServices\GridNode.vb" />
     <Compile Include="DistributeServices\NamespaceDoc.vb" />
     <Compile Include="Environment.vb" />
