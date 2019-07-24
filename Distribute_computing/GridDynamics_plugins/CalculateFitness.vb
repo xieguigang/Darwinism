@@ -94,7 +94,30 @@ Public Module CalculateFitness
     ''' <param name="trainingSet$"></param>
     ''' <returns></returns>
     Public Function SlaveProcess(genomes$, trainingSet$) As NamedValue(Of Double)()
+        Dim grids As GridMatrix() = New StreamReader(CommandLine.OpenForRead(genomes)).ReadToEnd.LoadJSON(Of GridMatrix())
+        Dim trainingData = New StreamReader(CommandLine.OpenForRead(trainingSet)) _
+            .ReadToEnd _
+            .LoadJSON(Of NamedValue(Of Double())()) _
+            .Select(Function(d)
+                        Return New TrainingSet With {
+                            .targetID = d.Name,
+                            .Y = d.Description,
+                            .X = d.Value
+                        }
+                    End Function) _
+            .ToArray
+        Dim outputFitness As New List(Of NamedValue(Of Double))
+        Dim model As GridSystem
 
+        For Each snapshot As GridMatrix In grids
+            model = snapshot.CreateSystem
+            outputFitness += New NamedValue(Of Double) With {
+                .Name = Genome.ToString(model),
+                .Value = New Genome(model, 0, 0, False).LabelGroupAverage(trainingData, parallel:=False)
+            }
+        Next
+
+        Return outputFitness
     End Function
 
     Public Function DistributionComputing()
