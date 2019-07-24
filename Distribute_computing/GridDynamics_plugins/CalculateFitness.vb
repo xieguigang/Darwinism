@@ -32,7 +32,7 @@ Public Module CalculateFitness
         ' 在这里folk出多条进程进行并行计算
         ' 这个方法可以极大的提升程序在Linux平台上面的计算效率
         Dim compute As [Delegate] = New Func(Of String, String, NamedValue(Of Double)())(AddressOf SlaveProcess)
-        Dim slave = CLI.thinking.FromEnvironment(App.HOME)
+        Dim slave = CLI.Think.FromEnvironment(App.HOME)
         Dim folks As New List(Of SlaveTask)
         Dim trainingSet = DirectCast(comparator.evaluateFitness, Environment) _
             .GetTrainingSet() _
