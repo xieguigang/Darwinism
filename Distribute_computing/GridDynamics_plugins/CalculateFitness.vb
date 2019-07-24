@@ -31,6 +31,7 @@ Public Module CalculateFitness
         Dim folks As New List(Of SlaveTask)
         Dim trainingSet = DirectCast(comparator.evaluateFitness, Environment) _
             .GetTrainingSet() _
+            .ToArray _
             .writeMemory
 
         For Each block As Genome() In partitions
