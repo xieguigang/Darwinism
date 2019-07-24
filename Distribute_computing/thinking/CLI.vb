@@ -29,10 +29,9 @@ Imports sciBASIC.ComputingServices.TaskHost
     ''' </remarks>
     <ExportAPI("/slave")>
     <Description("Program running in slave mode, apply for the multiple-process parallel.")>
-    <Usage("/slave /application <json_base64> /arguments <memory_mapfile> /out <memory_mapfile>")>
+    <Usage("/slave /application <invokeinfo/json_base64> /out <memory_mapfile>")>
     Public Function Slave(args As CommandLine) As Integer
         Dim endpointJSON$ = args("/application").Base64Decode
-        Dim parametersJSON$ = args.OpenStreamInput("/arguments").ReadToEnd
 
         ' 在slave模式下,不会产生任何在终端上的信息输出
         VBDebugger.Mute = True
