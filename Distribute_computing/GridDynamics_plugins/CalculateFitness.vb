@@ -12,12 +12,16 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports sciBASIC.ComputingServices.TaskHost
 
-Public Structure SlaveTask
-    Dim output As String
-    Dim task As AsyncHandle(Of Integer)
-End Structure
+Public Class SlaveTask
+    Public Property output As String
+    Public Property task As AsyncHandle(Of Integer)
+End Class
 
 Public Module CalculateFitness
+
+    Dim staticInputMemory As String()
+    Dim staticOutputMemory As String()
+    Dim staticTrainingSet$
 
     <Plugin("GA/multiple_process")>
     Public Iterator Function MultipleProcessParallel(comparator As FitnessPool(Of Genome), source As IEnumerable(Of Genome)) As IEnumerable(Of NamedValue(Of Double))
@@ -33,26 +37,37 @@ Public Module CalculateFitness
         Dim trainingSet = DirectCast(comparator.evaluateFitness, Environment) _
             .GetTrainingSet() _
             .ToArray _
-            .writeMemory
+            .writeMemory(staticTrainingSet)
+        Dim index As Integer = Scan0
+
+        staticTrainingSet = trainingSet
+
+        If staticInputMemory.IsNullOrEmpty Then
+            staticInputMemory = New String(partitions.Length - 1) {}
+            staticOutputMemory = New String(partitions.Length - 1) {}
+        End If
 
         For Each block As Genome() In partitions
             ' 将数据写入内存
             Dim inputs As String = block _
                 .Select(Function(g) g.CreateSnapshot()) _
                 .ToArray _
-                .writeMemory
+                .writeMemory(staticInputMemory(index))
             Dim application = Base64Codec.Base64String(InvokeInfo.CreateObject(compute, {inputs, trainingSet}).GetJson)
             Dim output = inputs _
                 .Select(Function(null)
                             Return New NamedValue(Of Double) With {
-                                .Name = New String("-"c, 32),
+                                .Name = New String("-"c, 1024),
                                 .Value = 0,
                                 .Description = .Name
                             }
                         End Function) _
                 .ToArray _
-                .writeMemory
+                .writeMemory(staticOutputMemory(index))
 
+            staticInputMemory(index) = inputs
+            staticOutputMemory(index) = output
+            index += 1
             folks += New SlaveTask With {
                 .output = output,
                 .task = New AsyncHandle(Of Integer)(Function() slave.Slave(application, output)).Run
@@ -62,14 +77,17 @@ Public Module CalculateFitness
         Do While folks > 0
             Dim success = folks.FirstOrDefault(Function(folk) folk.task.IsCompleted)
 
-            If success.output Is Nothing Then
+            If success Is Nothing Then
                 Thread.Sleep(1)
                 Continue Do
+            Else
+                folks -= success
             End If
 
             Using reader As New StreamReader(CommandLine.OpenForRead(success.output))
-                Dim result = reader.ReadToEnd
-                Dim dataset = result.LoadJSON(Of NamedValue(Of Double)())
+                Dim result = reader.ReadToEnd.Split(ASCII.NUL)
+                Dim returns As Rtvl = result(Scan0).LoadJSON(Of Rtvl)
+                Dim dataset = returns.info.value.LoadJSON(Of NamedValue(Of Double)())
 
                 For Each fitness As NamedValue(Of Double) In dataset
                     Yield fitness
@@ -79,14 +97,14 @@ Public Module CalculateFitness
     End Function
 
     <Extension>
-    Private Function writeMemory(Of T)(dataset As T) As String
-        Dim ref$ = App.GetNextUniqueName($"memory://GA_dataset/{App.PID}_")
+    Private Function writeMemory(Of T)(dataset As T, staticFile$) As String
+        Dim ref$ = staticFile Or App.GetNextUniqueName($"memory://GA_dataset/{App.PID}_").AsDefault
         Dim json As String = dataset.GetJson
         Dim jsonBytes As Byte() = Encodings.UTF8WithoutBOM _
             .CodePage _
             .GetBytes(json)
 
-        Using writer = CommandLine.OpenForWrite(ref, size:=jsonBytes.Length)
+        Using writer = CommandLine.OpenForWrite(ref, size:=jsonBytes.Length * 10)
             Call writer.Write(jsonBytes, Scan0, jsonBytes.Length)
         End Using
 

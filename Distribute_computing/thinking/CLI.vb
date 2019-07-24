@@ -33,6 +33,9 @@ Imports sciBASIC.ComputingServices.TaskHost
     <Usage("/slave /application <invokeinfo/json_base64> /out <memory_mapfile>")>
     Public Function Slave(args As CommandLine) As Integer
         Dim endpointJSON$ = args("/application").Base64Decode
+
+        VBDebugger.Mute = True
+
         Dim invokeInfo As InvokeInfo = endpointJSON.LoadJSON(Of InvokeInfo)
         Dim result As Rtvl = RemoteCall.Invoke(invokeInfo)
         Dim resultJSON = result.GetJson
@@ -40,6 +43,7 @@ Imports sciBASIC.ComputingServices.TaskHost
 
         Using output As StreamWriter = args.OpenStreamOutput("/out", size:=jsonBytes.Length)
             Call output.BaseStream.Write(jsonBytes, Scan0, jsonBytes.Length)
+            Call output.BaseStream.Write({CByte(0)}, Scan0, 1)
         End Using
 
         Return 0
