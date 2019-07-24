@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports sciBASIC.ComputingServices
 Imports sciBASIC.ComputingServices.TaskHost
 
@@ -38,9 +39,11 @@ Imports sciBASIC.ComputingServices.TaskHost
 
         Dim invokeInfo As InvokeInfo = endpointJSON.LoadJSON(Of InvokeInfo)
         Dim result As Rtvl = RemoteCall.Invoke(invokeInfo)
+        Dim resultJSON = result.GetJson
+        Dim jsonBytes As Byte() = Encodings.UTF8WithoutBOM.CodePage.GetBytes(resultJSON)
 
-        Using output As StreamWriter = args.OpenStreamOutput("/out")
-            Call output.WriteLine(result)
+        Using output As StreamWriter = args.OpenStreamOutput("/out", size:=jsonBytes.Length)
+            Call output.BaseStream.Write(jsonBytes, Scan0, jsonBytes.Length)
         End Using
 
         Return 0

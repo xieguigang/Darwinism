@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports sciBASIC.ComputingServices.TaskHost
 
 Public Structure SlaveTask
@@ -80,12 +81,23 @@ Public Module CalculateFitness
     <Extension>
     Private Function writeMemory(Of T)(dataset As T) As String
         Dim ref$ = App.GetNextUniqueName($"memory://GA_dataset/{App.PID}_")
+        Dim json As String = dataset.GetJson
+        Dim jsonBytes As Byte() = Encodings.UTF8WithoutBOM _
+            .CodePage _
+            .GetBytes(json)
 
-        Using writer As New StreamWriter(CommandLine.OpenForWrite(ref))
-            Call writer.WriteLine(dataset.GetJson)
+        Using writer = CommandLine.OpenForWrite(ref, size:=jsonBytes.Length)
+            Call writer.Write(jsonBytes, Scan0, jsonBytes.Length)
         End Using
 
         Return ref
+    End Function
+
+    Private Function readJSON(Of T)(file As String) As T
+        Dim jsonStr$ = New StreamReader(CommandLine.OpenForRead(file)).ReadToEnd.Replace(ASCII.NUL, "")
+        Dim obj As T = jsonStr.LoadJSON(Of T)
+
+        Return obj
     End Function
 
     ''' <summary>
@@ -95,10 +107,8 @@ Public Module CalculateFitness
     ''' <param name="trainingSet$"></param>
     ''' <returns></returns>
     Public Function SlaveProcess(genomes$, trainingSet$) As NamedValue(Of Double)()
-        Dim grids As GridMatrix() = New StreamReader(CommandLine.OpenForRead(genomes)).ReadToEnd.LoadJSON(Of GridMatrix())
-        Dim trainingData = New StreamReader(CommandLine.OpenForRead(trainingSet)) _
-            .ReadToEnd _
-            .LoadJSON(Of NamedValue(Of Double())()) _
+        Dim grids As GridMatrix() = readJSON(Of GridMatrix())(genomes)
+        Dim trainingData = readJSON(Of NamedValue(Of Double())())(trainingSet) _
             .Select(Function(d)
                         Return New TrainingSet With {
                             .targetID = d.Name,
