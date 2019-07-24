@@ -33,10 +33,6 @@ Imports sciBASIC.ComputingServices.TaskHost
     <Usage("/slave /application <invokeinfo/json_base64> /out <memory_mapfile>")>
     Public Function Slave(args As CommandLine) As Integer
         Dim endpointJSON$ = args("/application").Base64Decode
-
-        ' 在slave模式下,不会产生任何在终端上的信息输出
-        VBDebugger.Mute = True
-
         Dim invokeInfo As InvokeInfo = endpointJSON.LoadJSON(Of InvokeInfo)
         Dim result As Rtvl = RemoteCall.Invoke(invokeInfo)
         Dim resultJSON = result.GetJson
