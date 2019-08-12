@@ -15,7 +15,7 @@ Public Module VectorIOExtensions
         Dim ms As MemoryStream
         Dim buffers As New List(Of MemoryStream)
 
-        ' chunksize int
+        ' chunksize int (校验用)
         ' chunks int
         ' index1 long length1 long
         ' index2 long length2 long
@@ -56,4 +56,37 @@ Public Module VectorIOExtensions
             Next
         End Using
     End Sub
+
+    <Extension>
+    Public Function LoadVector(reads As Stream) As Vector
+        Dim data As New List(Of Double)
+
+        Using reader As New BinaryDataReader(reads)
+            Dim chunkSize = reader.ReadInt32
+            Dim chunks = reader.ReadInt32
+            Dim offset, size As Long
+            Dim buffer As MemoryStream
+
+            For i As Integer = 0 To chunks - 1
+                offset = reader.ReadInt64
+                size = reader.ReadInt64
+
+                reader.Mark()
+                ' goback to original
+                reader.Seek(-(4 + 4 + 16 * i), SeekOrigin.Current)
+                ' then goto data offset
+                reader.Seek(offset, SeekOrigin.Current)
+                ' read gzip data chunk and then ungzip
+                buffer = reader.ReadBytes(size).UnGzipStream
+                ' back to doubles
+                data += buffer.ToArray _
+                    .Split(8) _
+                    .Select(Function(bytes)
+                                Return BitConverter.ToDouble(bytes, Scan0)
+                            End Function)
+            Next
+        End Using
+
+        Return New Vector(data)
+    End Function
 End Module
