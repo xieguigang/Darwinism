@@ -18,7 +18,7 @@ Module Module1
             .A = vec,
             .C = vec.Sequence _
                 .Select(Function(null)
-                            Return New Correlation With {.B = vec, .BC = 9999999}
+                            Return New Correlation With {.B = vec, .BC = -99}
                         End Function) _
                 .ToArray
         }
@@ -35,7 +35,7 @@ Module Module1
 
         End Using
 
-        Dim X As Vector = Replicate(1.0E-200, vec.Length).AsVector
+        Dim X As Vector = Replicate(1.0, vec.Length).AsVector
 
         Dim result1 = grid.Evaluate(X)
         Dim result2 = grid.Evaluate(X)
