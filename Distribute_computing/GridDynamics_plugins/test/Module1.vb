@@ -14,11 +14,22 @@ Module Module1
             Call vec.Serialize(file)
         End Using
 
+        Dim vecNew As Vector
+
         Using file = filePath.Open
 
-            Dim vecNew As Vector = file.LoadVector
+            vecNew = file.LoadVector
 
         End Using
+
+
+        Dim oldSum = vec.Sum
+        Dim newSum = vecNew.Sum
+
+        Console.WriteLine(oldSum = newSum)
+
+        Pause()
+
     End Sub
 
 End Module
