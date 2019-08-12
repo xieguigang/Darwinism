@@ -129,7 +129,7 @@ Public Module CalculateFitness
         Dim grids As GridMatrix() = readJSON(Of GridMatrix())(genomes)
         Dim trainingData = readJSON(Of NamedValue(Of Double())())(trainingSet) _
             .Select(Function(d)
-                        Return New TrainingSet With {
+                        Return New TrainingSet(Nothing) With {
                             .targetID = d.Name,
                             .Y = d.Description,
                             .X = d.Value

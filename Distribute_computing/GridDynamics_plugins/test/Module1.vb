@@ -11,7 +11,7 @@ Module Module1
     End Sub
 
     Sub testGrid()
-        Dim vec As Vector = 22500.Sequence.Select(Function(i) CDbl(i)).AsVector
+        Dim vec As Vector = 500.Sequence.Select(Function(i) -CDbl(i)).AsVector
         Dim filePath$ = "./test_grid.dat"
         Dim grid As New GridSystem With {
             .AC = -999999,
