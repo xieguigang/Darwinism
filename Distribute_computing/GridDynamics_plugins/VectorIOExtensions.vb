@@ -1,0 +1,59 @@
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Net.Http
+
+Public Module VectorIOExtensions
+
+    <Extension>
+    Public Sub Serialize(vec As Vector, save As Stream, Optional chunkSize% = 1024)
+        Dim chunks = vec.Array.Split(chunkSize)
+        Dim bytes As Byte()
+        Dim ms As MemoryStream
+        Dim buffers As New List(Of MemoryStream)
+
+        ' chunksize int
+        ' chunks int
+        ' index1 long length1 long
+        ' index2 long length2 long
+        ' ...
+        ' gzipchunk1 bytes
+        ' gzipchunk2 bytes
+        ' ...
+
+        For Each chunk As Double() In chunks
+            bytes = chunk _
+                .Select(AddressOf BitConverter.GetBytes) _
+                .IteratesALL _
+                .ToArray
+            ' 对一个chunk做gzip压缩
+            ms = New MemoryStream(bytes).GZipStream
+            buffers += ms
+        Next
+
+        Using writer As New BinaryDataWriter(save)
+            writer.Write(chunkSize)
+            writer.Write(buffers.Count)
+
+            Dim index As New List(Of (offset&, size&))
+            Dim offset As Long = 8 + (8 + 8) * buffers.Count
+
+            For Each chunk As MemoryStream In buffers
+                index += (offset, chunk.Length)
+                offset += chunk.Length
+            Next
+
+            For Each offsetIndex In index
+                Call writer.Write(offsetIndex.offset)
+                Call writer.Write(offsetIndex.size)
+            Next
+
+            For Each chunk As MemoryStream In buffers
+                Call writer.Write(chunk)
+            Next
+        End Using
+    End Sub
+End Module
