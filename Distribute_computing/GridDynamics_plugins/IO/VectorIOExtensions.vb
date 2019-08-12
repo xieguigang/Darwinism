@@ -34,27 +34,28 @@ Public Module VectorIOExtensions
             buffers += ms
         Next
 
-        Using writer As New BinaryDataWriter(save)
-            writer.Write(chunkSize)
-            writer.Write(buffers.Count)
+        Dim writer As New BinaryDataWriter(save)
+        writer.Write(chunkSize)
+        writer.Write(buffers.Count)
 
-            Dim index As New List(Of (offset&, size&))
-            Dim offset As Long = 8 + (8 + 8) * buffers.Count
+        Dim index As New List(Of (offset&, size&))
+        Dim offset As Long = 8 + (8 + 8) * buffers.Count
 
-            For Each chunk As MemoryStream In buffers
-                index += (offset, chunk.Length)
-                offset += chunk.Length
-            Next
+        For Each chunk As MemoryStream In buffers
+            index += (offset, chunk.Length)
+            offset += chunk.Length
+        Next
 
-            For Each offsetIndex In index
-                Call writer.Write(offsetIndex.offset)
-                Call writer.Write(offsetIndex.size)
-            Next
+        For Each offsetIndex In index
+            Call writer.Write(offsetIndex.offset)
+            Call writer.Write(offsetIndex.size)
+        Next
 
-            For Each chunk As MemoryStream In buffers
-                Call writer.Write(chunk)
-            Next
-        End Using
+        For Each chunk As MemoryStream In buffers
+            Call writer.Write(chunk)
+        Next
+
+        Call writer.Flush()
     End Sub
 
     <Extension>

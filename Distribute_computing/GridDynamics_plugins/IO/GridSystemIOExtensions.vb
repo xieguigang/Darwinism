@@ -22,9 +22,13 @@ Public Module GridSystemIOExtensions
             Call writer.Write(B.Length)      ' i64
             Call writer.Write(B)             ' bytes
 
+            Call A.Dispose()
+            Call B.Dispose()
+
             For Each factor In grid.C.Select(Function(cor) cor.B.PopVectorStream(chunkSize))
                 Call writer.Write(factor.Length) ' i64
                 Call writer.Write(factor)        ' bytes
+                Call factor.Dispose()
             Next
         End Using
     End Sub
@@ -36,6 +40,7 @@ Public Module GridSystemIOExtensions
         Return ms
     End Function
 
+    <Extension>
     Public Function LoadGridSystem(stream As Stream) As GridSystem
         Using reader As New BinaryDataReader(stream)
             Dim width% = reader.ReadInt32
