@@ -73,7 +73,7 @@ Public Module VectorIOExtensions
 
                 reader.Mark()
                 ' goback to original
-                reader.Seek(-(4 + 4 + 16 * i), SeekOrigin.Current)
+                reader.Seek(-(4 + 4 + 16 * (i + 1)), SeekOrigin.Current)
                 ' then goto data offset
                 reader.Seek(offset, SeekOrigin.Current)
                 ' read gzip data chunk and then ungzip
@@ -84,6 +84,8 @@ Public Module VectorIOExtensions
                     .Select(Function(bytes)
                                 Return BitConverter.ToDouble(bytes, Scan0)
                             End Function)
+
+                reader.Reset()
             Next
         End Using
 

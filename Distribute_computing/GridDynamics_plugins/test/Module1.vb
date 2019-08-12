@@ -13,6 +13,12 @@ Module Module1
         Using file = filePath.Open
             Call vec.Serialize(file)
         End Using
+
+        Using file = filePath.Open
+
+            Dim vecNew As Vector = file.LoadVector
+
+        End Using
     End Sub
 
 End Module
