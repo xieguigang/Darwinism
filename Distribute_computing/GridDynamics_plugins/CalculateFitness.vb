@@ -4,6 +4,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Plugin
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.Net.Http
@@ -34,7 +35,7 @@ Public Module CalculateFitness
         Dim compute As [Delegate] = New Func(Of String, String, NamedValue(Of Double)())(AddressOf SlaveProcess)
         Dim slave = CLI.Think.FromEnvironment(App.HOME)
         Dim folks As New List(Of SlaveTask)
-        Dim trainingSet = DirectCast(comparator.evaluateFitness, Environment) _
+        Dim trainingSet = DirectCast(comparator.evaluateFitness, Environment(Of GridSystem, Genome)) _
             .GetTrainingSet() _
             .ToArray _
             .writeMemory(staticTrainingSet)
@@ -50,7 +51,7 @@ Public Module CalculateFitness
         For Each block As Genome() In partitions
             ' 将数据写入内存
             Dim inputs As String = block _
-                .Select(Function(g) g.CreateSnapshot()) _
+                .Select(Function(g) g.chromosome.CreateSnapshot(Nothing)) _
                 .ToArray _
                 .writeMemory(staticInputMemory(index))
             Dim application = Base64Codec.Base64String(InvokeInfo.CreateObject(compute, {inputs, trainingSet}).GetJson)
@@ -141,7 +142,7 @@ Public Module CalculateFitness
         For Each snapshot As GridMatrix In grids
             model = snapshot.CreateSystem
             outputFitness += New NamedValue(Of Double) With {
-                .Name = Genome.ToString(model),
+                .Name = GridSystem.ToString(model),
                 .Value = New Genome(model, 0, 0, False).LabelGroupAverage(trainingData, parallel:=False)
             }
         Next
