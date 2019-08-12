@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 
 ''' <summary>
@@ -9,6 +10,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Public Class PopulationZip
 
     ReadOnly target$
+    ReadOnly index As VBInteger = Scan0
 
     ''' <summary>
     ''' The target zip file
@@ -19,7 +21,7 @@ Public Class PopulationZip
     End Sub
 
     Public Sub Add(genome As GridSystem)
-        Dim temp = App.GetAppSysTempFile(".grid", App.PID, "population_")
+        Dim temp = App.GetAppSysTempFile($".grid/{++index}", App.PID, "population_")
 
         Using file As FileStream = temp.Open
             Call genome.Serialize(file, chunkSize:=2048)
