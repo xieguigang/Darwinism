@@ -39,7 +39,7 @@ Public Class PopulationZip
     End Sub
 
     Public Function GetIndividual(i As Integer) As GridSystem
-        Dim buffer As MemoryStream = ZipStreamReader.LoadZipArchive(target, {CStr(i)}).FirstOrDefault
+        Dim buffer As MemoryStream = ZipStreamReader.GetZipSubStream(target, CStr(i))
 
         If buffer Is Nothing Then
             Throw New MissingMemberException(i)
