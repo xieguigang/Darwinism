@@ -35,4 +35,16 @@ Public Class PopulationZip
 
         Call temp.DeleteFile
     End Sub
+
+    Public Function GetIndividual(i As Integer) As GridSystem
+        Dim buffer As MemoryStream = ZipStreamReader.LoadZipArchive(target, {CStr(i)}).FirstOrDefault
+
+        If buffer Is Nothing Then
+            Throw New MissingMemberException(i)
+        Else
+            Using buffer
+                Return buffer.LoadGridSystem
+            End Using
+        End If
+    End Function
 End Class
