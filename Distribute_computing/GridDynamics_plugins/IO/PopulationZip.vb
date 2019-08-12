@@ -11,20 +11,22 @@ Public Class PopulationZip
 
     ReadOnly target$
     ReadOnly index As VBInteger = Scan0
+    ReadOnly chunkSize%
 
     ''' <summary>
     ''' The target zip file
     ''' </summary>
     ''' <param name="target$"></param>
-    Sub New(target$)
+    Sub New(target$, Optional chunkSize% = 10240)
         Me.target = target
+        Me.chunkSize = chunkSize
     End Sub
 
     Public Sub Add(genome As GridSystem)
         Dim temp = App.GetAppSysTempFile($".grid/{++index}", App.PID, "population_")
 
         Using file As FileStream = temp.Open
-            Call genome.Serialize(file, chunkSize:=2048)
+            Call genome.Serialize(file, chunkSize:=chunkSize)
         End Using
 
         Call ZipLib.AddToArchive(
