@@ -10,7 +10,10 @@ Public Module GridSystemIOExtensions
     <Extension>
     Public Sub Serialize(grid As GridSystem, save As Stream, Optional chunkSize% = 1024)
         Dim A As Stream = grid.A.PopVectorStream(chunkSize)
-        Dim B As Stream = grid.C.Select(Function(cor) cor.BC).AsVector.PopVectorStream(chunkSize)
+        Dim B As Stream = grid.C _
+            .Select(Function(cor) cor.BC) _
+            .AsVector _
+            .PopVectorStream(chunkSize)
 
         Call save.Seek(Scan0, SeekOrigin.Begin)
 
@@ -25,7 +28,11 @@ Public Module GridSystemIOExtensions
             Call A.Dispose()
             Call B.Dispose()
 
-            For Each factor In grid.C.Select(Function(cor) cor.B.PopVectorStream(chunkSize))
+            For Each factor As MemoryStream In grid.C _
+                .Select(Function(cor)
+                            Return cor.B.PopVectorStream(chunkSize)
+                        End Function)
+
                 Call writer.Write(factor.Length) ' i64
                 Call writer.Write(factor)        ' bytes
                 Call factor.Dispose()
