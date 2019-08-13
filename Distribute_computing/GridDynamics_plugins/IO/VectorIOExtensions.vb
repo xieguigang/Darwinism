@@ -4,7 +4,6 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Net.Http
 
 Public Module VectorIOExtensions
 
@@ -30,7 +29,7 @@ Public Module VectorIOExtensions
                 .IteratesALL _
                 .ToArray
             ' 对一个chunk做gzip压缩
-            ms = New MemoryStream(bytes).GZipStream
+            ms = New MemoryStream(bytes) '.GZipStream
             buffers += ms
         Next
 
@@ -66,7 +65,7 @@ Public Module VectorIOExtensions
             Dim chunkSize = reader.ReadInt32
             Dim chunks = reader.ReadInt32
             Dim offset, size As Long
-            Dim buffer As MemoryStream
+            Dim buffer As Byte()
 
             For i As Integer = 0 To chunks - 1
                 offset = reader.ReadInt64
@@ -78,7 +77,7 @@ Public Module VectorIOExtensions
                 ' then goto data offset
                 reader.Seek(offset, SeekOrigin.Current)
                 ' read gzip data chunk and then ungzip
-                buffer = reader.ReadBytes(size).UnGzipStream
+                buffer = reader.ReadBytes(size) '.UnGzipStream
                 ' back to doubles
                 data += buffer.ToArray _
                     .Split(8) _
