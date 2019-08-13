@@ -2,6 +2,7 @@
 Imports GridDynamics_plugins
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
@@ -33,7 +34,10 @@ Module Program
         Dim popSize = args("/popsize") Or 50
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.minError_DeepGrid.Xml"
         Dim seed As GridMatrix = Nothing
-        Dim cacheZip = out.TrimSuffix & ".cache.zip"
+        Dim cacheZip = out.ParentPath & $"/.{out.BaseName}/"
+        Dim diskCaches As LoopArray(Of String) = 5.Sequence _
+            .Select(Function(i) $"{cacheZip}/cache_{(i + 666).ToHexString}.zip") _
+            .ToArray
 
         If Not in$.FileExists Then
             Call "No input file was found!".PrintException
@@ -66,7 +70,7 @@ Module Program
 
         ' 在种群范围内不进行并行计算
         ' 只对蛋白genome内部进行并行化计算
-        Dim zip As New PopulationZip(cacheZip, rate, truncate)
+        Dim zip As New PopulationZip(diskCaches.Next, rate, truncate)
         Dim population As Population(Of Genome) = New Genome(chromesome, rate, truncate).InitialPopulation(New Population(Of Genome)(zip, False) With {.capacitySize = popSize})
         Call "Initialize environment".__DEBUG_ECHO
         Dim fitness As Fitness(Of Genome) = New Environment(Of GridSystem, Genome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
@@ -75,7 +79,7 @@ Module Program
             population:=population,
             fitnessFunc:=fitness,
             replacementStrategy:=Strategies.Naive,
-            createPopulation:=Function() New PopulationZip(cacheZip.TrimSuffix & "_" & Now.ToBinary & ".zip", rate, truncate)
+            createPopulation:=Function() New PopulationZip(diskCaches.Next, rate, truncate)
         )
         Call "Load driver".__DEBUG_ECHO
 

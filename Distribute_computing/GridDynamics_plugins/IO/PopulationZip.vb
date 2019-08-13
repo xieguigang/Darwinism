@@ -48,6 +48,8 @@ Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
         Me.chunkSize = chunkSize
         Me.mutationRate = mutationRate
         Me.truncate = truncate
+
+        Call target.DeleteFile
     End Sub
 
     Public Overloads Sub Add(genome As GridSystem)
@@ -95,7 +97,7 @@ Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
         Dim tempZip As String = App.GetAppSysTempFile(".zip", App.PID)
 
         Using zip As ZipArchive = ZipFile.Open(target, ZipArchiveMode.Read)
-            Dim orderEntries = zip.Entries.OrderBy(Function(e) fitness(index(e.Name))).ToArray
+            Dim orderEntries = zip.Entries.OrderBy(Function(e) fitness(indexHashMaps(e.Name))).ToArray
             Dim i As VBInteger = Scan0
 
             Using temporder As ZipArchive = ZipFile.Open(tempZip, ZipArchiveMode.Create)
@@ -105,8 +107,6 @@ Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
                     Using a = entry.Open, b = newEntry.Open
                         Call a.CopyTo(b)
                     End Using
-
-                    Call entry.Delete()
                 Next
             End Using
         End Using
