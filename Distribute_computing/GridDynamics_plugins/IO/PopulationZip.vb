@@ -17,7 +17,7 @@ Public Class PopulationZip
     ''' The target zip file
     ''' </summary>
     ''' <param name="target$"></param>
-    Sub New(target$, Optional chunkSize% = 10240)
+    Sub New(target$, Optional chunkSize% = 20480)
         Me.target = target
         Me.chunkSize = chunkSize
     End Sub
