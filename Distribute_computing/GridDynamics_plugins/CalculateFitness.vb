@@ -143,7 +143,7 @@ Public Module CalculateFitness
             model = snapshot.CreateSystem
             outputFitness += New NamedValue(Of Double) With {
                 .Name = GridSystem.ToString(model),
-                .Value = New Genome(model, 0, 0, False).LabelGroupAverage(trainingData, parallel:=False)
+                .Value = New Genome(model, 0, 0).LabelGroupAverage(trainingData, parallel:=False)
             }
         Next
 
