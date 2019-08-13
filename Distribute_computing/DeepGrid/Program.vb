@@ -23,7 +23,7 @@ Module Program
     ''' <returns></returns>
     <ExportAPI("/run")>
     <Description("Run a deep grid dynamics network model.")>
-    <Usage("/run /trainingSet <trainingSet.Xml> [/validate <validateSet.Xml> /model <model.Xml> /truncate <default=1000> /rate <default=0.5> /popsize <default=50> /out <model_output.Xml>]")>
+    <Usage("/run /trainingSet <trainingSet.Xml> [/validateSet <validateSet.Xml> /model <model.Xml> /truncate <default=1000> /rate <default=0.5> /popsize <default=50> /out <model_output.Xml>]")>
     Public Function RunGrid(args As CommandLine) As Integer
         Dim in$ = args <= "/trainingSet"
         Dim validates$ = args <= "/validate"
@@ -71,7 +71,12 @@ Module Program
         Call "Initialize environment".__DEBUG_ECHO
         Dim fitness As Fitness(Of Genome) = New Environment(Of GridSystem, Genome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
         Call "Create algorithm engine".__DEBUG_ECHO
-        Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
+        Dim ga As New GeneticAlgorithm(Of Genome)(
+            population:=population,
+            fitnessFunc:=fitness,
+            replacementStrategy:=Strategies.Naive,
+            createPopulation:=Function() New PopulationZip(cacheZip.TrimSuffix & "_" & Now.ToBinary & ".zip", rate, truncate)
+        )
         Call "Load driver".__DEBUG_ECHO
 
         Dim takeBestSnapshot = Sub(best As Genome, error#)
