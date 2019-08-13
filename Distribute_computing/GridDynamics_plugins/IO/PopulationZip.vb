@@ -2,16 +2,19 @@
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 
 ''' <summary>
 ''' 使用zip压缩的形式，将population保存为临时文件
 ''' </summary>
-Public Class PopulationZip
+Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
 
     ReadOnly target$
     ReadOnly index As VBInteger = Scan0
     ReadOnly chunkSize%
+
+    ReadOnly mutationRate As Double, truncate As Double
 
     ''' <summary>
     ''' The target zip file
@@ -22,7 +25,15 @@ Public Class PopulationZip
         Me.chunkSize = chunkSize
     End Sub
 
-    Public Sub Add(genome As GridSystem)
+    Public Overrides ReadOnly Property Count As Integer
+
+    Default Public Overrides ReadOnly Property Item(index As Integer) As Genome
+        Get
+            Return New Genome(GetIndividual(index), mutationRate, truncate)
+        End Get
+    End Property
+
+    Public Overloads Sub Add(genome As GridSystem)
         Dim temp = App.GetAppSysTempFile($".grid/{++index}", App.PID, "population_")
 
         Using file As FileStream = temp.Open
@@ -38,6 +49,18 @@ Public Class PopulationZip
         )
 
         Call temp.DeleteFile
+    End Sub
+
+    Public Overrides Sub Add(chr As Genome)
+        Call Add(chr.chromosome)
+    End Sub
+
+    Public Overrides Sub Trim(capacitySize As Integer)
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Overrides Sub OrderBy(fitness As Func(Of Genome, Double))
+        Throw New NotImplementedException()
     End Sub
 
     Public Function GetIndividual(i As Integer) As GridSystem
