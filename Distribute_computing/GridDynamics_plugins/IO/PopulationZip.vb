@@ -1,7 +1,9 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 
@@ -11,27 +13,36 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
 
     ReadOnly target$
-    ReadOnly index As VBInteger = Scan0
     ReadOnly chunkSize%
 
     ReadOnly mutationRate As Double, truncate As Double
+
+    Dim index As VBInteger = Scan0
+
+    Public Overrides ReadOnly Property Count As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return index
+        End Get
+    End Property
+
+    Default Public Overrides ReadOnly Property Item(index As Integer) As Genome
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return New Genome(GetIndividual(index), mutationRate, truncate)
+        End Get
+    End Property
 
     ''' <summary>
     ''' The target zip file
     ''' </summary>
     ''' <param name="target$"></param>
-    Sub New(target$, Optional chunkSize% = 20480)
+    Sub New(target$, mutationRate As Double, truncate As Double, Optional chunkSize% = 20480)
         Me.target = target
         Me.chunkSize = chunkSize
+        Me.mutationRate = mutationRate
+        Me.truncate = truncate
     End Sub
-
-    Public Overrides ReadOnly Property Count As Integer
-
-    Default Public Overrides ReadOnly Property Item(index As Integer) As Genome
-        Get
-            Return New Genome(GetIndividual(index), mutationRate, truncate)
-        End Get
-    End Property
 
     Public Overloads Sub Add(genome As GridSystem)
         Dim temp = App.GetAppSysTempFile($".grid/{++index}", App.PID, "population_")
@@ -51,12 +62,27 @@ Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
         Call temp.DeleteFile
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Sub Add(chr As Genome)
         Call Add(chr.chromosome)
     End Sub
 
     Public Overrides Sub Trim(capacitySize As Integer)
-        Throw New NotImplementedException()
+        If capacitySize = Count Then
+            Return
+        End If
+
+        ' 将capacitysize后面的序号的genome全部删除
+        Dim names = (Count - capacitySize).Sequence _
+            .Select(Function(i) i + capacitySize) _
+            .Select(Function(i) CStr(i)) _
+            .ToArray
+
+        index = capacitySize
+
+        Using zip As ZipArchive = ZipFile.Open(target, ZipArchiveMode.Update)
+            Call zip.DeleteItems(names)
+        End Using
     End Sub
 
     Public Overrides Sub OrderBy(fitness As Func(Of Genome, Double))
