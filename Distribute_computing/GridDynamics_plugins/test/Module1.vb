@@ -26,7 +26,7 @@ Module Module1
                 .ToArray
         }
 
-        Dim pop As New PopulationZip(filePath)
+        Dim pop As New PopulationZip(filePath, 0, 0)
 
         Call pop.Add(grid)
         Call pop.Add(grid)

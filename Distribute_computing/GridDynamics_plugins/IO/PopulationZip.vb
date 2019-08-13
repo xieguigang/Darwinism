@@ -18,6 +18,10 @@ Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
     ReadOnly mutationRate As Double, truncate As Double
 
     Dim index As VBInteger = Scan0
+    ''' <summary>
+    ''' [index => md5]
+    ''' </summary>
+    Dim indexHashMaps As New Dictionary(Of String, String)
 
     Public Overrides ReadOnly Property Count As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -29,7 +33,9 @@ Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
     Default Public Overrides ReadOnly Property Item(index As Integer) As Genome
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return New Genome(GetIndividual(index), mutationRate, truncate)
+            Dim genome As New Genome(GetIndividual(index), mutationRate, truncate)
+            indexHashMaps(index.ToString) = genome.ToString
+            Return genome
         End Get
     End Property
 
@@ -85,8 +91,28 @@ Public Class PopulationZip : Inherits PopulationCollection(Of Genome)
         End Using
     End Sub
 
-    Public Overrides Sub OrderBy(fitness As Func(Of Genome, Double))
-        Throw New NotImplementedException()
+    Public Overrides Sub OrderBy(fitness As Func(Of String, Double))
+        Dim tempZip As String = App.GetAppSysTempFile(".zip", App.PID)
+
+        Using zip As ZipArchive = ZipFile.Open(target, ZipArchiveMode.Read)
+            Dim orderEntries = zip.Entries.OrderBy(Function(e) fitness(index(e.Name))).ToArray
+            Dim i As VBInteger = Scan0
+
+            Using temporder As ZipArchive = ZipFile.Open(tempZip, ZipArchiveMode.Create)
+                For Each entry In orderEntries
+                    Dim newEntry = temporder.CreateEntry(++i, CompressionLevel.Fastest)
+
+                    Using a = entry.Open, b = newEntry.Open
+                        Call a.CopyTo(b)
+                    End Using
+
+                    Call entry.Delete()
+                Next
+            End Using
+        End Using
+
+        Call target.DeleteFile
+        Call tempZip.FileMove(target)
     End Sub
 
     Public Function GetIndividual(i As Integer) As GridSystem
