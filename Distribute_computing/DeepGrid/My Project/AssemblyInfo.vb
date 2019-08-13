@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("DeepGrid")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("DeepGrid")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("Run a Deep Grid Dynamics model")>
+<Assembly: AssemblyDescription("Run a Deep Grid Dynamics model")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
+<Assembly: AssemblyProduct("MLkit")>
+<Assembly: AssemblyCopyright("Copyright © sciBASIC.NET 2019")>
+<Assembly: AssemblyTrademark("sciBASIC.NET")>
 
 <Assembly: ComVisible(False)>
 
