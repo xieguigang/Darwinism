@@ -357,6 +357,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ProtocolBuffers\Model\BufferModel.vb" />
+    <Compile Include="ProtocolBuffers\Model\ImportsHandler.vb" />
     <Compile Include="ProtocolBuffers\Model\Parser.vb" />
     <Compile Include="ProtocolBuffers\BufferReader.vb" />
     <Compile Include="ProtocolBuffers\BufferWriter.vb" />
