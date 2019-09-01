@@ -236,3 +236,4 @@ _Pvt_Extensions
 .fake/
 /viz/ts/build
 /build
+*.map
