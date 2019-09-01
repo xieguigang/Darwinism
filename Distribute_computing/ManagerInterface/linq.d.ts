@@ -294,6 +294,10 @@ declare class IEnumerator<T> extends LINQIterator<T> {
     */
     OrderByDescending(key: (e: T) => number): IEnumerator<T>;
     /**
+     * Split a sequence by elements count
+    */
+    Split(size: number): IEnumerator<T[]>;
+    /**
      * 取出序列之中的前n个元素
     */
     Take(n: number): IEnumerator<T>;

@@ -17,12 +17,13 @@ enum nodeStatus {
 }
 
 enum protocols {
-    return_initialize_data
+    return_initialize_data,
+    log_events
 }
 
 interface message {
     protocol: protocols;
-    msg: GridNode[]
+    msg: GridNode[] | string;
 }
 
 module app {
@@ -52,16 +53,31 @@ module app {
 
         switch (msg.protocol) {
             case protocols.return_initialize_data:
-                drawInterface(msg.msg);
+                drawInterface(<GridNode[]>msg.msg);
                 break;
+            case protocols.log_events:
+                logEvents(<string>msg.msg);
             default:
                 throw `not implements: ${msg.protocol}`;
         }
     }
 
+    function logEvents(event: string) {
+
+    }
+
     function drawInterface(data: GridNode[]) {
         // 5个节点一行？
-        let matrix = $ts("#grid");
+        let matrix: HTMLBodyElement = <any>$ts("#grid");
+        let columns: number = 5;
+        let mat: IEnumerator<GridNode[]> = $ts(data).Split(columns);
+
+        for (let mrow of mat.ToArray(false)) {
+            let row = $ts("<tr>");
+
+            // row
+            matrix.appendChild(row);
+        }
     }
 }
 

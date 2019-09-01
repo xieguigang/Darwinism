@@ -908,6 +908,27 @@ var IEnumerator = /** @class */ (function (_super) {
         return Enumerable.OrderByDescending(this.sequence, key);
     };
     /**
+     * Split a sequence by elements count
+    */
+    IEnumerator.prototype.Split = function (size) {
+        var seq = [];
+        var row = [];
+        for (var _i = 0, _a = this.sequence; _i < _a.length; _i++) {
+            var element = _a[_i];
+            if (row.length < size) {
+                row.push(element);
+            }
+            else {
+                seq.push(row);
+                row = [];
+            }
+        }
+        if (row.length > 0) {
+            seq.push(row);
+        }
+        return new IEnumerator(seq);
+    };
+    /**
      * 取出序列之中的前n个元素
     */
     IEnumerator.prototype.Take = function (n) {
@@ -924,7 +945,8 @@ var IEnumerator = /** @class */ (function (_super) {
     */
     IEnumerator.prototype.Reverse = function () {
         var rseq = this.ToArray().reverse();
-        return new IEnumerator(rseq);
+        var seq = new IEnumerator(rseq);
+        return seq;
     };
     /**
      * Returns elements from a sequence as long as a specified condition is true.
@@ -5935,16 +5957,16 @@ var TypeScript;
         garbageCollect.handler = getHandler();
         function getHandler() {
             if (typeof window.require === "function") {
-                var require = window.require;
+                var require_1 = window.require;
                 try {
-                    require("v8").setFlagsFromString('--expose_gc');
+                    require_1("v8").setFlagsFromString('--expose_gc');
                     if (window.global != null) {
-                        var global = window.global;
-                        if (typeof global.gc == "function") {
-                            return global.gc;
+                        var global_1 = window.global;
+                        if (typeof global_1.gc == "function") {
+                            return global_1.gc;
                         }
                     }
-                    var vm = require("vm");
+                    var vm = require_1("vm");
                     if (vm != null) {
                         if (typeof vm.runInNewContext == "function") {
                             var k = vm.runInNewContext("gc");
@@ -5979,9 +6001,9 @@ var TypeScript;
             //    }
             //}
             if (typeof window.global !== 'undefined') {
-                var global = window.global;
-                if (global.gc) {
-                    return global.gc;
+                var global_2 = window.global;
+                if (global_2.gc) {
+                    return global_2.gc;
                 }
             }
             //if (typeof Duktape == 'object') {
