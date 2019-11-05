@@ -81,7 +81,7 @@ Namespace TaskHost
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{assm}!{fullIdentity}::{name}"
+            Return $"{assembly}!{fullName}::{name}"
         End Function
 
         ''' <summary>
@@ -105,10 +105,10 @@ Namespace TaskHost
             Dim params As Argument() = args.Select(Function(arg) New Argument(arg)).ToArray
 
             Return New InvokeInfo With {
-                .assm = assm.Location.FileName,
+                .assembly = assm.Location.FileName,
                 .name = name,
                 .parameters = params,
-                .fullIdentity = type.FullName
+                .fullName = type.FullName
             }
         End Function
     End Class

@@ -168,12 +168,12 @@ Namespace Framework.Provider
                                 .Func = x.x.Name,
                                 .name = x.attr.Type,
                                 .TypeId = New Scripting.MetaData.TypeInfo With {
-                                    .assm = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name,
-                                    .fullIdentity = x.attr.RefType.FullName
+                                    .assembly = FileIO.FileSystem.GetFileInfo(x.attr.RefType.Assembly.Location).Name,
+                                    .fullName = x.attr.RefType.FullName
                                 },   ' 实体类型的信息
                                 .Repository = New Scripting.MetaData.TypeInfo With {
-                                    .assm = path,
-                                    .fullIdentity = x.x.DeclaringType.FullName
+                                    .assembly = path,
+                                    .fullName = x.x.DeclaringType.FullName
                                 }   ' 数据源的方法信息
                             }
                         End Function) _
