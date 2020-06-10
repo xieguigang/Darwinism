@@ -69,7 +69,7 @@ Namespace TaskHost
                 _local = value
 
                 If _local Then
-                    _IPAddress = TcpRequest.LocalIPAddress
+                    _IPAddress = LocalIPAddress
                 Else
                     _IPAddress = GetMyIPAddress()
                 End If
