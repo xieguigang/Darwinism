@@ -73,11 +73,11 @@ Namespace LDM.Statements.Tokens
         ''' <param name="Expr">必须是符合VisualBasic语法的逻辑表达式</param>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        Public Shared Function CreateLinqWhere(Expr As String, type As Type, compiler As DynamicCompiler) As ITest
+        Public Shared Function CreateLinqWhere(Expr As String, type As Type, compiler As DynamicCompiler) As Predicate(Of Object)
             Dim tokens As Token(Of TokenIcer.Tokens)() = TokenIcer.GetTokens(Expr)
             For Each x As Token(Of TokenIcer.Tokens) In tokens
-                If x.Name = TokenIcer.Tokens.VarRef Then
-                    x.Name = TokenIcer.Tokens.String
+                If x.name = TokenIcer.Tokens.VarRef Then
+                    x.name = TokenIcer.Tokens.String
                     x.Value = obj
                 End If
             Next
@@ -95,11 +95,6 @@ Namespace LDM.Statements.Tokens
 
             Public project As IProject
 
-            ''' <summary>
-            ''' <see cref="ITest"/>
-            ''' </summary>
-            ''' <param name="x"></param>
-            ''' <returns></returns>
             Public Function Test(x As Object) As Boolean
                 Dim value = project(x)
                 Return value.IsTrue
@@ -112,7 +107,5 @@ Namespace LDM.Statements.Tokens
             Dim code As String = LinqClosure.BuildClosure(obj, type, Nothing, Nothing, {obj}, where)
             Return code
         End Function
-
-        Public Delegate Function ITest(x As Object) As Boolean
     End Class
 End Namespace

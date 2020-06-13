@@ -101,7 +101,7 @@ Namespace StorageTek
 
         Public Function LinqWhere(where As String, compiler As DynamicCompiler) As IEnumerable
             Dim type As Type = Me.GetType
-            Dim test As ITest = WhereClosure.CreateLinqWhere(where, type, compiler)
+            Dim test As Predicate(Of Object) = WhereClosure.CreateLinqWhere(where, type, compiler)
             Dim LQuery = (From x As Object In GetRepository() Where True = test(x) Select x)
             Return LQuery
         End Function
