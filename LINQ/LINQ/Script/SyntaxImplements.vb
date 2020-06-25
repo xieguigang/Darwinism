@@ -10,5 +10,9 @@ Namespace Script
         Public Function PopulateQueryExpressions(tokens As IEnumerable(Of Token)) As IEnumerable(Of Expression)
 
         End Function
+
+        Public Function ParseExpression(tokens As IEnumerable(Of Token)) As Expression
+
+        End Function
     End Module
 End Namespace

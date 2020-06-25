@@ -121,7 +121,7 @@
     <Compile Include="Runtime\Registry.vb" />
     <Compile Include="Runtime\Symbol.vb" />
     <Compile Include="Runtime\Environment.vb" />
-    <Compile Include="Script\Builders\Module1.vb" />
+    <Compile Include="Script\Builders\BinaryBuilder.vb" />
     <Compile Include="Script\SyntaxImplements.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -81,6 +81,8 @@ Namespace Language
                 Else
                     Return Nothing
                 End If
+            ElseIf c = ASCII.CR OrElse c = ASCII.LF Then
+                Return New Token(Tokens.Terminator, vbCrLf)
             ElseIf c = "<"c OrElse c = ">"c OrElse c = "="c Then
                 Return createToken(bufferNext:=c)
             ElseIf c = "["c OrElse c = "("c Then
