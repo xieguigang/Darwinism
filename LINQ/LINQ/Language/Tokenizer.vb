@@ -33,7 +33,10 @@ Namespace Language
             Loop
         End Function
 
-        ReadOnly keywords As Index(Of String) = {"select", "from", "let", "as", "distinct", "group", "by", "order"}
+        ReadOnly keywords As Index(Of String) = {
+            "imports",
+            "select", "from", "let", "as", "distinct", "group", "by", "order"
+        }
         ReadOnly operators As Index(Of String) = {"+", "-", "*", "/", "\", "%", "=", "<>", ">", "<", ">=", "<="}
         ReadOnly literal As Index(Of String) = {"true", "false"}
         ReadOnly logicals As Index(Of String) = {"not", "and", "or"}
@@ -67,7 +70,11 @@ Namespace Language
                 If buffer <> 0 Then
                     Return createToken()
                 End If
+            ElseIf c = "["c OrElse c = "("c OrElse c = ")"c OrElse c = "]"c Then
+
             End If
+
+            Return Nothing
         End Function
 
         Private Function createToken() As Token

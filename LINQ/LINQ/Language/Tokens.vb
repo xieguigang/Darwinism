@@ -17,6 +17,8 @@
         [Integer]
         [Boolean]
 
+        Comma
+
         Comment
     End Enum
 End Namespace
