@@ -1,4 +1,4 @@
-﻿Namespace Interpreter.Expressions
+﻿Namespace Interpreter.Query
 
     Public Class AggregateExpression
 

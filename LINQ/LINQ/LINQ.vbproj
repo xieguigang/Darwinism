@@ -89,8 +89,8 @@
     <Compile Include="Interpreter\Executable.vb" />
     <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
     <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
-    <Compile Include="Interpreter\Expressions\AggregateExpression.vb" />
-    <Compile Include="Interpreter\Expressions\ProjectionExpression.vb" />
+    <Compile Include="Interpreter\Query\AggregateExpression.vb" />
+    <Compile Include="Interpreter\Query\ProjectionExpression.vb" />
     <Compile Include="Interpreter\Expressions\Literals.vb" />
     <Compile Include="Interpreter\Expressions\SymbolReference.vb" />
     <Compile Include="Interpreter\Program.vb" />
