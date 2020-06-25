@@ -11,7 +11,6 @@
 Option Strict On
 Option Explicit On
 
-Imports System
 
 Namespace My.Resources
     
@@ -22,83 +21,42 @@ Namespace My.Resources
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
-     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-     Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"), _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+     Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(), _
+     Global.Microsoft.VisualBasic.HideModuleNameAttribute()> _
     Friend Module Resources
-        
+
         Private resourceMan As Global.System.Resources.ResourceManager
-        
+
         Private resourceCulture As Global.System.Globalization.CultureInfo
-        
+
         '''<summary>
         '''  Returns the cached ResourceManager instance used by this class.
         '''</summary>
-        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)> _
         Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("sciBASIC.ComputingServices.Linq.Resources", GetType(Resources).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("LINQ.Resources", GetType(Resources).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
             End Get
         End Property
-        
+
         '''<summary>
         '''  Overrides the current thread's CurrentUICulture property for all
         '''  resource lookups using this strongly typed resource class.
         '''</summary>
-        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)> _
         Friend Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
             End Get
-            Set
+            Set(ByVal value As Global.System.Globalization.CultureInfo)
                 resourceCulture = value
             End Set
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to                     GNU GENERAL PUBLIC LICENSE
-        '''                       Version 3, 29 June 2007
-        '''
-        ''' Copyright (C) 2007 Free Software Foundation, Inc. &lt;http://fsf.org/&gt;
-        ''' Everyone is permitted to copy and distribute verbatim copies
-        ''' of this license document, but changing it is not allowed.
-        '''
-        '''                            Preamble
-        '''
-        '''  The GNU General Public License is a free, copyleft license for
-        '''software and other kinds of works.
-        '''
-        '''  The licenses for most software and other practical works are designed
-        '''to [rest of string was truncated]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property gpl() As String
-            Get
-                Return ResourceManager.GetString("gpl", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to This program is free software: you can redistribute it and/or modify
-        '''it under the terms of the GNU General Public License as published by
-        '''the Free Software Foundation, either version 3 of the License, or
-        '''any later version.
-        '''
-        '''This program is distributed in the hope that it will be useful,
-        '''but WITHOUT ANY WARRANTY; without even the implied warranty of
-        '''MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        '''GNU General Public License for more details.
-        '''
-        '''You should have received a copy of the GNU  [rest of string was truncated]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property license() As String
-            Get
-                Return ResourceManager.GetString("license", resourceCulture)
-            End Get
         End Property
     End Module
 End Namespace

@@ -2,34 +2,34 @@
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
-' 有关程序集的常规信息通过下列特性集
-' 控制。更改这些特性值可修改
-' 与程序集关联的信息。
+' General Information about an assembly is controlled through the following
+' set of attributes. Change these attribute values to modify the information
+' associated with an assembly.
 
-' 查看程序集特性的值
+' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("LINQ Script: Universal Object Query Framework")> 
-<Assembly: AssemblyDescription("Universal Object Query Framework")>
-<Assembly: AssemblyCompany("xieguigang")>
-<Assembly: AssemblyProduct("Microsoft.VisualBasic.Linq")>
-<Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com. 2014")>
-<Assembly: AssemblyTrademark("GCModeller")> 
+<Assembly: AssemblyTitle("LINQ")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("LINQ")>
+<Assembly: AssemblyCopyright("Copyright ©  2020")>
+<Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
-'如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-<Assembly: Guid("285ededb-67b7-4760-8a15-ba5e605661a5")> 
+'The following GUID is for the ID of the typelib if this project is exposed to COM
+<Assembly: Guid("81dd5767-6c7c-4f1f-8e5b-98e6d2fadba8")>
 
-' 程序集的版本信息由下面四个值组成: 
+' Version information for an assembly consists of the following four values:
 '
-'      主版本
-'      次版本
-'      生成号
-'      修订号
+'      Major Version
+'      Minor Version
+'      Build Number
+'      Revision
 '
-' 可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
-' 方法是按如下所示使用“*”: 
-' <Assembly: AssemblyVersion("1.0.*")> 
+' You can specify all the values or you can default the Build and Revision Numbers
+' by using the '*' as shown below:
+' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.2.422")> 
-<Assembly: AssemblyFileVersion("2.2.0.0")> 
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>
