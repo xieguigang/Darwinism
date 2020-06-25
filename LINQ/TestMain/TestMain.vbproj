@@ -150,10 +150,6 @@
       <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
       <Name>SMRUCC.WebCloud.HTTPInternal</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\ComputingServices\ComputingServices.vbproj">
       <Project>{87383048-1b31-49b7-9fb7-0ded1b80ace8}</Project>
       <Name>ComputingServices</Name>
@@ -162,9 +158,9 @@
       <Project>{bc922a27-9bc3-4e7e-be3d-55fc03fb4160}</Project>
       <Name>RQL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LINQ\Linq.vbproj">
+    <ProjectReference Include="..\LINQ\LINQ.vbproj">
       <Project>{0a9b9fa6-e12d-48fd-b979-9f021a591e69}</Project>
-      <Name>Linq</Name>
+      <Name>LINQ</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
