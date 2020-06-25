@@ -1,15 +1,22 @@
 ﻿Namespace Language
 
     Public Enum Tokens
-        keywordLet
-        keywordAs
-        keywordFrom
-        keywordSelect
-        keywordGroup
-        keywordBy
-        keywordOrder
+        Invalid
+
         keyword
 
+        Open
+        Close
+
+        [Operator]
+
+        Interpolation
         Literal
+
+        Number
+        [Integer]
+        [Boolean]
+
+        Comment
     End Enum
 End Namespace
