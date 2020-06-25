@@ -10,6 +10,8 @@
 
         [Operator]
 
+        Symbol
+
         Interpolation
         Literal
 

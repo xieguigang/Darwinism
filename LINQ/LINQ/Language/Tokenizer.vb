@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Language
 
-    Public Class Tokenizer
+    Friend Class Tokenizer
 
         Dim buffer As New CharBuffer
         Dim text As CharPtr
@@ -28,6 +28,10 @@ Namespace Language
 
             Do While text
                 If Not token = walkChar(++text) Is Nothing Then
+                    If buffer <> 0 Then
+                        Yield createToken(Nothing)
+                    End If
+
                     Yield token
                 End If
             Loop
@@ -68,18 +72,40 @@ Namespace Language
                 Return Nothing
             ElseIf c = " "c OrElse c = ASCII.TAB Then
                 If buffer <> 0 Then
-                    Return createToken()
+                    Return createToken(Nothing)
+                Else
+                    Return Nothing
                 End If
-            ElseIf c = "["c OrElse c = "("c OrElse c = ")"c OrElse c = "]"c Then
-
+            ElseIf c = "<"c OrElse c = ">"c OrElse c = "="c Then
+                Return createToken(bufferNext:=c)
+            ElseIf c = "["c OrElse c = "("c Then
+                Return New Token(Tokens.Open, c)
+            ElseIf c = ")"c OrElse c = "]"c Then
+                Return New Token(Tokens.Close, c)
+            ElseIf c Like operators Then
+                Return New Token(Tokens.Operator, c)
+            ElseIf c = ","c Then
+                Return New Token(Tokens.Comma, c)
+            Else
+                buffer += c
             End If
 
             Return Nothing
         End Function
 
-        Private Function createToken() As Token
+        Private Function createToken(bufferNext As Char?) As Token
             Dim text As String = buffer.PopAllChars.CharString
             Dim textLower As String = text.ToLower
+
+            If Not bufferNext Is Nothing Then
+                Dim test As String = text & bufferNext.Value
+
+                If test Like operators Then
+                    Return New Token(Tokens.Operator, test)
+                Else
+                    buffer += bufferNext
+                End If
+            End If
 
             If textLower Like keywords Then
                 Return New Token(Tokens.keyword, text)

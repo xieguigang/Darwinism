@@ -86,6 +86,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Language\Extensions.vb" />
     <Compile Include="Language\Tokenizer.vb" />
     <Compile Include="Language\Token.vb" />
     <Compile Include="Language\Tokens.vb" />
