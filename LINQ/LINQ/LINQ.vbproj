@@ -89,6 +89,8 @@
     <Compile Include="Interpreter\Executable.vb" />
     <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
     <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
+    <Compile Include="Interpreter\Expressions\AggregateExpression.vb" />
+    <Compile Include="Interpreter\Expressions\ProjectionExpression.vb" />
     <Compile Include="Interpreter\Expressions\Literals.vb" />
     <Compile Include="Interpreter\Expressions\SymbolReference.vb" />
     <Compile Include="Interpreter\Program.vb" />
@@ -113,6 +115,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Runtime\Symbol.vb" />
     <Compile Include="Runtime\Environment.vb" />
     <Compile Include="Script\SyntaxImplements.vb" />
   </ItemGroup>
