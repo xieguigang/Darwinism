@@ -1,12 +1,15 @@
-﻿Public Enum Tokens
-    keywordLet
-    keywordAs
-    keywordFrom
-    keywordSelect
-    keywordGroup
-    keywordBy
-    keywordOrder
-    keyword
+﻿Namespace Language
 
-    Literal
-End Enum
+    Public Enum Tokens
+        keywordLet
+        keywordAs
+        keywordFrom
+        keywordSelect
+        keywordGroup
+        keywordBy
+        keywordOrder
+        keyword
+
+        Literal
+    End Enum
+End Namespace

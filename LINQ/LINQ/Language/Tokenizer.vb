@@ -1,3 +1,6 @@
-﻿Public Class Tokenizer
+﻿Namespace Language
 
-End Class
+    Public Class Tokenizer
+
+    End Class
+End Namespace
