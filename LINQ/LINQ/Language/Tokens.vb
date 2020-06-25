@@ -11,6 +11,7 @@
         [Operator]
 
         Symbol
+        Reference
 
         Interpolation
         Literal

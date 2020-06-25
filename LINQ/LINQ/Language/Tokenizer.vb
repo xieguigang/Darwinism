@@ -35,11 +35,15 @@ Namespace Language
                     Yield token
                 End If
             Loop
+
+            If buffer > 0 Then
+                Yield createToken(Nothing)
+            End If
         End Function
 
         ReadOnly keywords As Index(Of String) = {
             "imports",
-            "select", "from", "let", "as", "distinct", "group", "by", "order",
+            "select", "from", "in", "let", "as", "distinct", "group", "by", "order", "aggregate ",
             "where"
         }
         ReadOnly operators As Index(Of String) = {"+", "-", "*", "/", "\", "%", "=", "<>", ">", "<", ">=", "<=", "^"}
@@ -87,6 +91,8 @@ Namespace Language
                 Return New Token(Tokens.Operator, c)
             ElseIf c = ","c Then
                 Return New Token(Tokens.Comma, c)
+            ElseIf c = "."c Then
+                Return New Token(Tokens.Reference, c)
             Else
                 buffer += c
             End If
@@ -96,7 +102,14 @@ Namespace Language
 
         Private Function createToken(bufferNext As Char?) As Token
             Dim text As String = buffer.PopAllChars.CharString
-            Dim textLower As String = text.ToLower
+            Dim textLower As String
+
+            If escapes.comment Then
+                escapes.comment = False
+                Return New Token(Tokens.Comment, text)
+            Else
+                textLower = text.ToLower
+            End If
 
             If Not bufferNext Is Nothing Then
                 Dim test As String = text & bufferNext.Value
@@ -120,6 +133,8 @@ Namespace Language
                 Return New Token(Tokens.Integer, text)
             ElseIf textLower.IsNumeric Then
                 Return New Token(Tokens.Number, text)
+            ElseIf textLower.IsPattern("[a-z_][a-z_0-9]*") Then
+                Return New Token(Tokens.Symbol, text)
             Else
                 Return New Token(Tokens.Invalid, text)
             End If
