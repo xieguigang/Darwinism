@@ -7,7 +7,7 @@ Namespace Script
     Public Module SyntaxImplements
 
         <Extension>
-        Public Function PopulateQueryExpressions(tokens As IEnumerable(Of Token)) As Expression
+        Public Function PopulateQueryExpressions(tokens As IEnumerable(Of Token)) As IEnumerable(Of Expression)
 
         End Function
     End Module

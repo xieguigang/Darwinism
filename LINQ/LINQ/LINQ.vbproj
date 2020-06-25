@@ -86,6 +86,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interpreter\Executable.vb" />
+    <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
+    <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
+    <Compile Include="Interpreter\Expressions\Literals.vb" />
+    <Compile Include="Interpreter\Expressions\SymbolReference.vb" />
+    <Compile Include="Interpreter\Program.vb" />
     <Compile Include="Interpreter\Expressions\Expression.vb" />
     <Compile Include="Interpreter\QueryInterpreter.vb" />
     <Compile Include="Language\Extensions.vb" />
