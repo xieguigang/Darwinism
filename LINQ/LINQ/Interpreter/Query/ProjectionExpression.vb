@@ -1,6 +1,6 @@
 ﻿Namespace Interpreter.Query
 
-    Public Class ProjectionExpression
+    Public Class ProjectionExpression : Inherits QueryExpression
 
     End Class
 End Namespace
