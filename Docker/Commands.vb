@@ -1,53 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::e46484d6f3e67c755d8c84fdcc1f7f17, Docker\Commands.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Commands
-    ' 
-    '     Function: CommandHistory, PS, Run, Search
-    ' 
-    '     Sub: [Stop]
-    ' 
-    ' /********************************************************************************/
+' Module Commands
+' 
+'     Function: CommandHistory, PS, Run, Search
+' 
+'     Sub: [Stop]
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Darwinism.Docker.Arguments
 Imports Darwinism.Docker.Captures
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
 ''' Docker commands
 ''' </summary>
+''' 
+<Package("docker", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
+<RTypeExport("image", GetType(Image))>
+<RTypeExport("mount", GetType(Mount))>
 Public Module Commands
 
     ' PS C:\Users\lipidsearch> docker
@@ -141,6 +148,8 @@ Public Module Commands
     ''' </summary>
     ''' <param name="term"></param>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("search")>
     Public Function Search(term As String) As IEnumerable(Of Search)
         Return powershell($"docker search {term}") _
             .ParseTable(Function(tokens)
@@ -158,6 +167,8 @@ Public Module Commands
     ''' List containers
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <ExportAPI("ps")>
     Public Function PS() As IEnumerable(Of Container)
         Return powershell("docker ps") _
             .ParseTable(Function(tokens)
@@ -177,6 +188,8 @@ Public Module Commands
     ''' Stop one or more running containers
     ''' </summary>
     ''' <param name="containers"></param>
+    ''' 
+    <ExportAPI("stop")>
     Public Sub [Stop](ParamArray containers As String())
         For Each id As String In containers
             Call powershell.RunScript($"docker stop {id}")
@@ -193,6 +206,7 @@ Public Module Commands
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
+    <ExportAPI("run")>
     Public Function Run(container As Image, command$, Optional mount As Mount = Nothing) As String
         Return powershell(New Environment(container).Mount(mount).CreateDockerCommand(command))
     End Function
