@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::d5466c8ba1989dd3b6c0f344dace5c19, Docker\Environment.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Environment
-    ' 
-    '     Properties: [Shared], container
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateDockerCommand, (+2 Overloads) Mount
-    ' 
-    ' Class DockerAppDriver
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Shell
-    ' 
-    ' /********************************************************************************/
+' Class Environment
+' 
+'     Properties: [Shared], container
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CreateDockerCommand, (+2 Overloads) Mount
+' 
+' Class DockerAppDriver
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: Shell
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Darwinism.Docker.Arguments
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' The container environment module for ``docker run ...``
@@ -201,7 +202,7 @@ Public Class Environment
     '                                        container(s)
     '   -w, --workdir string                 Working directory inside the container
 
-    Public ReadOnly Property [Shared] As Mount
+    Public ReadOnly Property [Shared] As Mount()
     Public ReadOnly Property container As Image
 
     Sub New(container As Image)
@@ -209,11 +210,11 @@ Public Class Environment
     End Sub
 
     Public Function Mount(local$, virtual$) As Environment
-        _Shared = New Mount With {.local = local, .virtual = virtual}
+        _Shared = _Shared.JoinIterates(New Mount With {.local = local, .virtual = virtual}).ToArray
         Return Me
     End Function
 
-    Public Function Mount([shared] As Mount) As Environment
+    Public Function Mount(ParamArray [shared] As Mount()) As Environment
         _Shared = [shared]
         Return Me
     End Function
@@ -231,11 +232,13 @@ Public Class Environment
         Dim options As New StringBuilder
 
         If Not [Shared] Is Nothing Then
-            If [Shared].IsValid Then
-                Call options.AppendLine($"-v {[Shared]}")
-            Else
-                Call InvalidMount.Warning
-            End If
+            For Each map As Mount In [Shared]
+                If map.IsValid Then
+                    Call options.AppendLine($"-v {map}")
+                Else
+                    Call InvalidMount.Warning
+                End If
+            Next
         End If
         If Not workdir.StringEmpty Then
             Call options.AppendLine($"--workdir=""{workdir}""")
@@ -266,7 +269,7 @@ Public Class DockerAppDriver
     ''' <param name="mount"></param>
     ''' <param name="home">应用程序的文件夹目录路径</param>
     Sub New(container As Image, app$, Optional mount As Mount = Nothing, Optional home$ = Nothing)
-        docker = New Environment(container).Mount([shared]:=mount)
+        docker = New Environment(container).Mount(mount)
         appHome = home
         appName = app
     End Sub

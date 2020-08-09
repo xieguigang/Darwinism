@@ -207,7 +207,15 @@ Public Module Commands
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     <ExportAPI("run")>
-    Public Function Run(container As Image, command$, Optional mount As Mount = Nothing) As String
-        Return powershell(New Environment(container).Mount(mount).CreateDockerCommand(command))
+    Public Function Run(container As Image, command$,
+                        Optional workdir As String = Nothing,
+                        Optional mount As Mount() = Nothing,
+                        Optional portForward As PortForward = Nothing) As String
+
+        Dim cli As String = New Environment(container) _
+            .Mount(mount) _
+            .CreateDockerCommand(command, workdir, portForward)
+
+        Return powershell(cli)
     End Function
 End Module

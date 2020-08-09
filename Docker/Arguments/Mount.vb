@@ -75,7 +75,7 @@ Namespace Arguments
         Public ReadOnly Property IsValid As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Not local.StringEmpty AndAlso Not virtual.StringEmpty
+                Return (local.FileExists OrElse local.DirectoryExists) AndAlso Not virtual.StringEmpty
             End Get
         End Property
 
