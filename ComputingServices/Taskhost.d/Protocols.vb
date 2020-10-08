@@ -117,7 +117,7 @@ Namespace TaskHost
 #End Region
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(TaskProtocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New ProtocolAttribute(GetType(TaskProtocols)).EntryPoint
 
         ''' <summary>
         ''' Resets remote data source by <see cref="IEnumerator.Reset"/>
