@@ -136,6 +136,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Centos\Centos.vbproj">
+      <Project>{04f7d21b-53e8-4107-a5e0-d28e3f70efde}</Project>
+      <Name>Centos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Docker.vbproj">
       <Project>{b028826a-e615-4f26-b192-b9b0a997696a}</Project>
       <Name>Docker</Name>
