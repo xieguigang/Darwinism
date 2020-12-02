@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bash.vb" />
+    <Compile Include="Commands\ls.vb" />
     <Compile Include="PuTTY.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
