@@ -72,7 +72,8 @@ Module Module1
     Sub testPuTTY()
         Dim ssh As New PuTTY("xcms", "12345", "192.168.1.253")
 
-        Call Console.WriteLine(ssh.Shell("ls", "-l /bin"))
+        Call Console.WriteLine(ssh.Shell("ls", "-l /mnt/smb/tmp/test_watcher/p+n/neg/mzML"))
+        Call Console.WriteLine(ssh.Shell("Rscript", "-e \""biodeep::run.Deconvolution(raw = '/mnt/smb/tmp/test_watcher/p+n/neg/mzML');\"""))
 
         Pause()
     End Sub
