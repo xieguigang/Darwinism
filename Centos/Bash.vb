@@ -58,4 +58,10 @@ Public Module Bash
         Return ssh.Run(script)
     End Function
 
+    <ExportAPI("exec")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function exec(ssh As PuTTY, command As String, Optional arguments As String = Nothing) As String
+        Return ssh.Shell(command, arguments)
+    End Function
+
 End Module
