@@ -41,7 +41,7 @@ Public Class PuTTY
 
     Public Function Shell(command As String, Optional arguments As String = Nothing) As String
         Dim cmdl As String = If(arguments.StringEmpty, command, $"{command} {arguments}")
-        Dim cli As String = $"{endpoint} -P {port} -l {user} -pw ""{password}"" bash -c ""{cmdl}"""
+        Dim cli As String = $"{user}@{endpoint} -P {port} -pw ""{password}"" bash -c ""{cmdl}"""
         Dim std_out As String = CommandLine.Call(plink, cli)
 
         Return std_out
