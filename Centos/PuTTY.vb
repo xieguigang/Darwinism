@@ -35,7 +35,7 @@ Public Class PuTTY
     ''' </remarks>
     Public Function Run(bash As String) As String
         Dim cli As String = $"{endpoint} -P {port} -l {user} -pw ""{password}"" -batch /bin/bash ""{bash}"""
-        Dim std_out As String = [Call](plink, cli)
+        Dim std_out As String = PipelineProcess.[Call](plink, cli)
 
         Return std_out
     End Function
@@ -43,15 +43,17 @@ Public Class PuTTY
     Public Function Shell(command As String, Optional arguments As String = Nothing) As String
         Dim cmdl As String = If(arguments.StringEmpty, command, $"{command} {arguments}")
         Dim cli As String = $"{user}@{endpoint} -P {port} -pw ""{password}"" -batch {cmdl}"
-        ' Dim std_out As String = CommandLine.Call(plink, cli)
+        Dim std_out As String = PipelineProcess.Call(plink, cli)
 
-        With New IORedirectFile(plink, cli)
-            Dim std_out As String
+        'With New IORedirectFile(plink, cli, isShellCommand:=Not plink.FileExists)
+        '    Dim std_out As String
 
-            Call .Run()
-            std_out = .StandardOutput
+        '    Call .Run()
+        '    std_out = .StandardOutput
 
-            Return std_out
-        End With
+        '    Return std_out
+        'End With
+
+        Return std_out
     End Function
 End Class
