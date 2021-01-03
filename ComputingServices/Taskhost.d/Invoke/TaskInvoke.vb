@@ -153,7 +153,7 @@ Namespace TaskHost
 
         <Protocol(TaskProtocols.NodeLoad)>
         Private Function GetNodeLoad(CA&, args As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Return RequestStream.CreatePackage(TaskManager.ProcessUsage)
+            ' Return RequestStream.CreatePackage(TaskManager.ProcessUsage)
         End Function
 
 #Region "IDisposable Support"
