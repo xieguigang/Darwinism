@@ -64,6 +64,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Protocols.vb" />
+    <Compile Include="IPCSocket.vb" />
+    <Compile Include="IDelegate.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -104,6 +107,14 @@
     <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\sciBASIC#\mime\application%25json\application.json.vbproj">
+      <Project>{32228818-26f1-44df-8d40-347136c743cd}</Project>
+      <Name>application.json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Microsoft.VisualBasic.Network.vbproj">
+      <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
+      <Name>Microsoft.VisualBasic.Network</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

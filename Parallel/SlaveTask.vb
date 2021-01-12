@@ -1,33 +1,29 @@
 ﻿Imports System.IO
-Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.BSON
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Public Class SlaveTask
 
-    Dim toBuffers As New Dictionary(Of Type, Func(Of Object, Stream))
-    Dim fromBuffer As New Dictionary(Of Type, Func(Of Stream, Object))
-
-    Sub New()
-    End Sub
-
-    Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As SlaveTask
-        toBuffers(GetType(T)) = Function(obj) streamAs(obj)
-        Return Me
-    End Function
-
-    Public Function Emit(Of T)(fromStream As Func(Of Stream, T)) As SlaveTask
-        fromBuffer(GetType(T)) = Function(buf) fromStream(buf)
-        Return Me
-    End Function
-
     Public Function RunTask(entry As [Delegate], ParamArray parameters As Object()) As Object
+        Dim target As New IDelegate(entry)
+        Dim result As Object = Nothing
+        Dim host As New IPCSocket With {
+            .handlePOSTResult = Sub(buf)
+                                    result = BSONFormat.Load(buf).CreateObject(entry.Method.ReturnType)
+                                End Sub,
+            .nargs = parameters.Length,
+            .handleGetArgument = Function(i)
+                                     Dim type As Type = parameters(i).GetType
+                                     Dim element = type.GetJsonElement(parameters(i), New JSONSerializerOptions)
 
+                                     Return BSONFormat.GetBuffer(element)
+                                 End Function
+        }
+
+        Call host.Run()
+
+        Return result
     End Function
-
-End Class
-
-Public Class IDelegate
-
-    Public Property name As String
-    Public Property type As typeinfo
 
 End Class
