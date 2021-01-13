@@ -64,9 +64,9 @@ Public Class SlaveTask
         Call New Thread(AddressOf host.Run).Start()
         Call Thread.Sleep(100)
 
-        If Not debugPort Is Nothing Then
-            Pause()
-        End If
+        'If Not debugPort Is Nothing Then
+        '    Pause()
+        'End If
 
         Call CommandLine.Call(processor, builder(processor, host.HostPort))
 
