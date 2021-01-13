@@ -11,6 +11,9 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
+    <PackageProjectUrl>https://github.com/xieguigang/Darwinism</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
