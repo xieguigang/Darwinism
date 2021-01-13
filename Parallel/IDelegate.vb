@@ -29,19 +29,17 @@ Public Class IDelegate
 
     Public Function GetMethod() As MethodInfo
         Dim type As Type = Me.type.GetType(knownFirst:=True, searchPath:={filepath})
-        Dim methods As MethodInfo()
 
 #If netcore5 = 1 Then
         Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
 #End If
-        methods = type.GetMethods _
-            .Where(Function(m) m.IsStatic AndAlso m.Name = name) _
-            .ToArray
 
-        If methods.IsNullOrEmpty Then
-            Return Nothing
-        Else
-            Return methods(Scan0)
-        End If
+        For Each method As MethodInfo In CType(type, System.Reflection.TypeInfo).DeclaredMethods
+            If method.IsStatic AndAlso method.Name = name Then
+                Return method
+            End If
+        Next
+
+        Return Nothing
     End Function
 End Class

@@ -76,8 +76,6 @@ Public Class SlaveTask
         '    Pause()
         'End If
 
-        Pause()
-
 #If netcore5 = 0 Then
         Call CommandLine.Call(processor, builder(processor, host.HostPort),, dotnet:=False)
 #Else

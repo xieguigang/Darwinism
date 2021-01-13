@@ -20,6 +20,7 @@ Public Class TaskBuilder : Implements ITaskDriver
 
     Public Function Run() As Integer Implements ITaskDriver.Run
         Dim task As IDelegate = GetMethod()
+        Dim api As MethodInfo = task.GetMethod
         Dim n As Integer = GetArgumentValueNumber()
         Dim args As New List(Of Object)
 
@@ -27,7 +28,6 @@ Public Class TaskBuilder : Implements ITaskDriver
             args.Add(GetArgumentValue(i))
         Next
 
-        Dim api As MethodInfo = task.GetMethod
         Dim params As ParameterInfo() = api.GetParameters
 
         For i As Integer = n To params.Length - 1
