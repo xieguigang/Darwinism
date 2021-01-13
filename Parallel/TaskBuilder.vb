@@ -1,5 +1,8 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -55,9 +58,10 @@ Public Class TaskBuilder : Implements ITaskDriver
     Private Function GetArgumentValue(i As Integer) As Object
         Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i)))
         Dim stream As New ObjectStream(resp.ChunkBuffer)
+        Dim type As Type = stream.type.GetType
 
         If stream.method = StreamMethods.BSON Then
-
+            Return BSONFormat.Load(stream.stream).CreateObject(type)
         Else
             Throw New NotImplementedException
         End If
@@ -70,6 +74,11 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Sub PostFinished(result As Object)
+        Dim type As Type = result.GetType
+        Dim element = type.GetJsonElement(result, New JSONSerializerOptions)
+        Dim buf As Stream = BSONFormat.GetBuffer(element)
+        Dim request As New RequestStream(IPCSocket.Protocol, Protocols.PostResult, New StreamPipe(buf).Read)
 
+        Call New TcpRequest(masterPort).SendMessage(request)
     End Sub
 End Class
