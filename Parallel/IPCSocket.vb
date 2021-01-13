@@ -11,7 +11,7 @@ Public Class IPCSocket : Implements ITaskDriver
 
     Public Shared ReadOnly Property Protocol As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
-    ReadOnly socket As New TcpServicesSocket(GetFirstAvailablePort)
+    ReadOnly socket As TcpServicesSocket
     ReadOnly target As IDelegate
 
     Public ReadOnly Property HostPort As Integer
@@ -24,7 +24,8 @@ Public Class IPCSocket : Implements ITaskDriver
     Public Property nargs As Integer
     Public Property handleGetArgument As Func(Of Integer, ObjectStream)
 
-    Sub New(target As IDelegate)
+    Sub New(target As IDelegate, Optional debug As Integer? = Nothing)
+        Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()))
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         Me.target = target
     End Sub

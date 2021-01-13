@@ -58,7 +58,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     Private Function GetArgumentValue(i As Integer) As Object
         Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i)))
         Dim stream As New ObjectStream(resp.ChunkBuffer)
-        Dim type As Type = stream.type.GetType
+        Dim type As Type = stream.type.GetType(knownFirst:=True)
 
         If stream.method = StreamMethods.BSON Then
             Return BSONFormat.Load(stream.stream).CreateObject(type)
@@ -76,7 +76,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     Private Sub PostFinished(result As Object)
         Dim type As Type = result.GetType
         Dim element = type.GetJsonElement(result, New JSONSerializerOptions)
-        Dim buf As Stream = BSONFormat.GetBuffer(element)
+        Dim buf As Stream = BSONFormat.SafeGetBuffer(element)
         Dim request As New RequestStream(IPCSocket.Protocol, Protocols.PostResult, New StreamPipe(buf).Read)
 
         Call New TcpRequest(masterPort).SendMessage(request)

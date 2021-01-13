@@ -25,7 +25,7 @@ Public Class IDelegate
     End Sub
 
     Public Function GetMethod() As MethodInfo
-        Dim type As Type = Me.type.GetType(searchPath:={filepath})
+        Dim type As Type = Me.type.GetType(knownFirst:=True, searchPath:={filepath})
         Dim methods As MethodInfo() = type.GetMethods.Where(Function(m) m.IsStatic AndAlso m.Name = name).ToArray
 
         If methods.IsNullOrEmpty Then

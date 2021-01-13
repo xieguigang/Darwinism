@@ -13,10 +13,12 @@ Public Class SlaveTask
     ReadOnly fromBuffer As New Dictionary(Of Type, Func(Of Stream, Object))
     ReadOnly processor As InteropService
     ReadOnly builder As ISlaveTask
+    ReadOnly debugPort As Integer?
 
-    Sub New(processor As InteropService, cli As ISlaveTask)
+    Sub New(processor As InteropService, cli As ISlaveTask, Optional debugPort As Integer? = Nothing)
         Me.builder = cli
         Me.processor = processor
+        Me.debugPort = debugPort
     End Sub
 
     Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As SlaveTask
@@ -44,7 +46,7 @@ Public Class SlaveTask
             Return New ObjectStream(New TypeInfo(type), StreamMethods.Emit, toBuffers(type)(param))
         Else
             Dim element = type.GetJsonElement(param, New JSONSerializerOptions)
-            Dim buf As Stream = BSONFormat.GetBuffer(element)
+            Dim buf As Stream = BSONFormat.SafeGetBuffer(element)
 
             Return New ObjectStream(New TypeInfo(type), StreamMethods.BSON, buf)
         End If
@@ -53,7 +55,7 @@ Public Class SlaveTask
     Public Function RunTask(entry As [Delegate], ParamArray parameters As Object()) As Object
         Dim target As New IDelegate(entry)
         Dim result As Object = Nothing
-        Dim host As New IPCSocket(target) With {
+        Dim host As New IPCSocket(target, debugPort) With {
             .handlePOSTResult = Sub(buf) result = handlePOST(buf, entry.Method.ReturnType),
             .nargs = parameters.Length,
             .handleGetArgument = Function(i) handleGET(parameters(i))
@@ -61,6 +63,11 @@ Public Class SlaveTask
 
         Call New Thread(AddressOf host.Run).Start()
         Call Thread.Sleep(100)
+
+        If Not debugPort Is Nothing Then
+            Pause()
+        End If
+
         Call CommandLine.Call(processor, builder(processor, host.HostPort))
 
         Return result
