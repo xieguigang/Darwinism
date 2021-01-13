@@ -35,6 +35,8 @@ Public Class TaskBuilder : Implements ITaskDriver
             End If
         Next
 
+        ' send debug message
+        Call New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
         Call PostFinished(api.Invoke(Nothing, args.ToArray))
 
         Return 0

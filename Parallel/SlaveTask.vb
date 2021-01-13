@@ -31,7 +31,9 @@ Public Class SlaveTask
         Return Me
     End Function
 
-    Private Function handlePOST(buf As Stream, type As Type) As Object
+    Private Function handlePOST(buf As Stream, type As Type, debugCode As Integer) As Object
+        Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
+
         If fromBuffer.ContainsKey(type) Then
             Return fromBuffer(type)(buf)
         Else
@@ -39,8 +41,10 @@ Public Class SlaveTask
         End If
     End Function
 
-    Private Function handleGET(param As Object) As ObjectStream
+    Private Function handleGET(param As Object, i As Integer, debugCode As Integer) As ObjectStream
         Dim type As Type = param.GetType
+
+        Call Console.WriteLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
 
         If toBuffers.ContainsKey(type) Then
             Return New ObjectStream(New TypeInfo(type, fullpath:=True), StreamMethods.Emit, toBuffers(type)(param))
@@ -55,11 +59,15 @@ Public Class SlaveTask
     Public Function RunTask(entry As [Delegate], ParamArray parameters As Object()) As Object
         Dim target As New IDelegate(entry)
         Dim result As Object = Nothing
-        Dim host As New IPCSocket(target, debugPort) With {
-            .handlePOSTResult = Sub(buf) result = handlePOST(buf, entry.Method.ReturnType),
+        Dim host As IPCSocket = Nothing
+
+        host = New IPCSocket(target, debugPort) With {
+            .handlePOSTResult = Sub(buf) result = handlePOST(buf, entry.Method.ReturnType, host.GetHashCode),
             .nargs = parameters.Length,
-            .handleGetArgument = Function(i) handleGET(parameters(i))
+            .handleGetArgument = Function(i) handleGET(parameters(i), i, host.GetHashCode)
         }
+
+        Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] port:{host.HostPort}")
 
         Call New Thread(AddressOf host.Run).Start()
         Call Thread.Sleep(100)

@@ -63,6 +63,7 @@ Public Class IPCSocket : Implements ITaskDriver
 
     <Protocol(Protocols.GetTask)>
     Public Function GetTask(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Call Console.WriteLine($"[{GetHashCode.ToHexString}] get parallel task entry.")
         Return New DataPipe(Encoding.UTF8.GetBytes(target.GetJson))
     End Function
 
@@ -73,6 +74,12 @@ Public Class IPCSocket : Implements ITaskDriver
         Dim pipe As New DataPipe(buf)
 
         Return pipe
+    End Function
+
+    <Protocol(Protocols.PostStart)>
+    Public Function PostStart(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Call Console.WriteLine($"[{GetHashCode.ToHexString}] started!")
+        Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
     End Function
 
     <Protocol(Protocols.GetArgumentNumber)>

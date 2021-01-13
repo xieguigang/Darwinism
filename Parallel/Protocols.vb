@@ -2,5 +2,6 @@
     GetTask
     GetArgumentNumber
     GetArgumentByIndex
+    PostStart
     PostResult
 End Enum
