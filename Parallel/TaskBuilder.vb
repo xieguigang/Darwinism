@@ -1,5 +1,8 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class TaskBuilder : Implements ITaskDriver
 
@@ -11,7 +14,7 @@ Public Class TaskBuilder : Implements ITaskDriver
 
     Public Function Run() As Integer Implements ITaskDriver.Run
         Dim task As IDelegate = GetMethod()
-        Dim n As Integer
+        Dim n As Integer = GetArgumentValueNumber()
         Dim args As New List(Of Object)
 
         For i As Integer = 0 To n - 1
@@ -34,12 +37,30 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return 0
     End Function
 
-    Private Function GetMethod() As IDelegate
+    Private Function GetArgumentValueNumber() As Integer
+        Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentNumber))
+        Dim n As Integer = BitConverter.ToInt32(resp.ChunkBuffer, Scan0)
 
+        Return n
+    End Function
+
+    Private Function GetMethod() As IDelegate
+        Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetTask))
+        Dim json As String = resp.GetUTF8String
+        Dim target As IDelegate = json.LoadJSON(Of IDelegate)
+
+        Return target
     End Function
 
     Private Function GetArgumentValue(i As Integer) As Object
+        Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i)))
+        Dim stream As New ObjectStream(resp.ChunkBuffer)
 
+        If stream.method = StreamMethods.BSON Then
+
+        Else
+            Throw New NotImplementedException
+        End If
     End Function
 
     Private Function PostError(err As Exception) As Integer

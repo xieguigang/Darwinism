@@ -9,6 +9,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 <Protocol(GetType(Protocols))>
 Public Class IPCSocket : Implements ITaskDriver
 
+    Public Shared ReadOnly Property Protocol As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
+
     ReadOnly socket As New TcpServicesSocket(GetFirstAvailablePort)
     ReadOnly target As IDelegate
 
@@ -20,7 +22,7 @@ Public Class IPCSocket : Implements ITaskDriver
 
     Public Property handlePOSTResult As Action(Of Stream)
     Public Property nargs As Integer
-    Public Property handleGetArgument As Func(Of Integer, Stream)
+    Public Property handleGetArgument As Func(Of Integer, ObjectStream)
 
     Sub New(target As IDelegate)
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
@@ -39,8 +41,8 @@ Public Class IPCSocket : Implements ITaskDriver
     <Protocol(Protocols.GetArgumentByIndex)>
     Public Function GetArgumentByIndex(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim i As Integer = BitConverter.ToInt32(request.ChunkBuffer, Scan0)
-        Dim buf As Stream = _handleGetArgument(i)
-        Dim pipe As New StreamPipe(buf)
+        Dim buf As ObjectStream = _handleGetArgument(i)
+        Dim pipe As New DataPipe(buf)
 
         Return pipe
     End Function

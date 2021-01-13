@@ -3,6 +3,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Public Delegate Function ISlaveTask(processor As InteropService, port As Integer) As String
 
@@ -36,16 +37,16 @@ Public Class SlaveTask
         End If
     End Function
 
-    Private Function handleGET(param As Object) As Stream
+    Private Function handleGET(param As Object) As ObjectStream
         Dim type As Type = param.GetType
 
         If toBuffers.ContainsKey(type) Then
-            Return toBuffers(type)(param)
+            Return New ObjectStream(New TypeInfo(type), StreamMethods.Emit, toBuffers(type)(param))
         Else
             Dim element = type.GetJsonElement(param, New JSONSerializerOptions)
             Dim buf As Stream = BSONFormat.GetBuffer(element)
 
-            Return buf
+            Return New ObjectStream(New TypeInfo(type), StreamMethods.BSON, buf)
         End If
     End Function
 

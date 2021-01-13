@@ -64,8 +64,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StreamMethods.vb" />
     <Compile Include="TaskBuilder.vb" />
-    <Compile Include="ProtocolStream.vb" />
+    <Compile Include="ObjectStream.vb" />
     <Compile Include="Protocols.vb" />
     <Compile Include="IPCSocket.vb" />
     <Compile Include="IDelegate.vb" />

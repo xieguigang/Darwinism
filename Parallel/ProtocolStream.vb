@@ -1,3 +1,0 @@
-﻿Module ProtocolStream
-
-End Module
