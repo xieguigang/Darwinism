@@ -1,10 +1,12 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 <Protocol(GetType(Protocols))>
 Public Class IPCSocket : Implements ITaskDriver
@@ -29,6 +31,31 @@ Public Class IPCSocket : Implements ITaskDriver
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         Me.target = target
     End Sub
+
+    Private Function GetFirstAvailablePort() As Integer
+#If netcore5 = 1 Then
+        ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
+        Dim BEGIN_PORT = randf.NextInteger(MAX_PORT - 1)
+        Dim stdout As String = CommandLine.Call("/bin/bash", "-c ""netstat -tulpn""")
+        Dim usedPorts As Index(Of Integer) = stdout.LineTokens _
+            .Select(Function(line) line.StringSplit("\s+").ElementAt(3)) _
+            .Where(Function(n) n.IsPattern(".+[:]\d+")) _
+            .Select(Function(i) Integer.Parse(i.Split(":"c).Last)) _
+            .Indexing
+
+        For i As Integer = BEGIN_PORT To MAX_PORT - 1
+            If Not i Like usedPorts Then
+                Return i
+            End If
+        Next
+
+        Return -1
+#Else
+        ' PlatformNotSupportedException: The information requested is unavailable on the current platform.
+        ' on UNIX .net 5
+        Return TCPExtensions.GetFirstAvailablePort()
+#End If
+    End Function
 
     Public Function Run() As Integer Implements ITaskDriver.Run
         Return socket.Run
