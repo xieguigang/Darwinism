@@ -52,7 +52,7 @@ Public Class SlaveTask
     Public Function RunTask(entry As [Delegate], ParamArray parameters As Object()) As Object
         Dim target As New IDelegate(entry)
         Dim result As Object = Nothing
-        Dim host As New IPCSocket With {
+        Dim host As New IPCSocket(target) With {
             .handlePOSTResult = Sub(buf) result = handlePOST(buf, entry.Method.ReturnType),
             .nargs = parameters.Length,
             .handleGetArgument = Function(i) handleGET(parameters(i))

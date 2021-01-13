@@ -4,11 +4,13 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 <Protocol(GetType(Protocols))>
 Public Class IPCSocket : Implements ITaskDriver
 
     ReadOnly socket As New TcpServicesSocket(GetFirstAvailablePort)
+    ReadOnly target As IDelegate
 
     Public ReadOnly Property HostPort As Integer
         Get
@@ -20,12 +22,18 @@ Public Class IPCSocket : Implements ITaskDriver
     Public Property nargs As Integer
     Public Property handleGetArgument As Func(Of Integer, Stream)
 
-    Sub New()
-        socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
+    Sub New(target As IDelegate)
+        Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
+        Me.target = target
     End Sub
 
     Public Function Run() As Integer Implements ITaskDriver.Run
         Return socket.Run
+    End Function
+
+    <Protocol(Protocols.GetTask)>
+    Public Function GetTask(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Return New DataPipe(Encoding.UTF8.GetBytes(target.GetJson))
     End Function
 
     <Protocol(Protocols.GetArgumentByIndex)>

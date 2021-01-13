@@ -64,7 +64,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BufferBuilder.vb" />
+    <Compile Include="TaskBuilder.vb" />
     <Compile Include="ProtocolStream.vb" />
     <Compile Include="Protocols.vb" />
     <Compile Include="IPCSocket.vb" />
