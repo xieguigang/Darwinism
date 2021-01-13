@@ -43,12 +43,12 @@ Public Class SlaveTask
         Dim type As Type = param.GetType
 
         If toBuffers.ContainsKey(type) Then
-            Return New ObjectStream(New TypeInfo(type), StreamMethods.Emit, toBuffers(type)(param))
+            Return New ObjectStream(New TypeInfo(type, fullpath:=True), StreamMethods.Emit, toBuffers(type)(param))
         Else
             Dim element = type.GetJsonElement(param, New JSONSerializerOptions)
             Dim buf As Stream = BSONFormat.SafeGetBuffer(element)
 
-            Return New ObjectStream(New TypeInfo(type), StreamMethods.BSON, buf)
+            Return New ObjectStream(New TypeInfo(type, fullpath:=True), StreamMethods.BSON, buf)
         End If
     End Function
 
