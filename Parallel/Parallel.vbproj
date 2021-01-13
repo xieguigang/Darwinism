@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BufferBuilder.vb" />
+    <Compile Include="ProtocolStream.vb" />
     <Compile Include="Protocols.vb" />
     <Compile Include="IPCSocket.vb" />
     <Compile Include="IDelegate.vb" />
