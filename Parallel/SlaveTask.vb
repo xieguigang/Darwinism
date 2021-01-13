@@ -76,11 +76,15 @@ Public Class SlaveTask
         '    Pause()
         'End If
 
+        Pause()
+
 #If netcore5 = 0 Then
         Call CommandLine.Call(processor, builder(processor, host.HostPort),, dotnet:=False)
 #Else
         Call CommandLine.Call(processor, builder(processor, host.HostPort),, dotnet:=True)
 #End If
+
+        Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
 
         Return result
     End Function

@@ -1,4 +1,7 @@
 ﻿Imports System.Reflection
+#If netcore5 = 1 Then
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
+#End If
 Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Public Class IDelegate
@@ -26,7 +29,14 @@ Public Class IDelegate
 
     Public Function GetMethod() As MethodInfo
         Dim type As Type = Me.type.GetType(knownFirst:=True, searchPath:={filepath})
-        Dim methods As MethodInfo() = type.GetMethods.Where(Function(m) m.IsStatic AndAlso m.Name = name).ToArray
+        Dim methods As MethodInfo()
+
+#If netcore5 = 1 Then
+        Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
+#End If
+        methods = type.GetMethods _
+            .Where(Function(m) m.IsStatic AndAlso m.Name = name) _
+            .ToArray
 
         If methods.IsNullOrEmpty Then
             Return Nothing

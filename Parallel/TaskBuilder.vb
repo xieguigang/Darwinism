@@ -1,5 +1,8 @@
 ﻿Imports System.IO
 Imports System.Reflection
+#If netcore5 = 1 Then
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
+#End If
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
@@ -61,6 +64,10 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i)))
         Dim stream As New ObjectStream(resp.ChunkBuffer)
         Dim type As Type = stream.type.GetType(knownFirst:=True)
+
+#If netcore5 = 1 Then
+        Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
+#End If
 
         If stream.method = StreamMethods.BSON Then
             Return BSONFormat.Load(stream.stream).CreateObject(type)

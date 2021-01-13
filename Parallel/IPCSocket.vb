@@ -34,6 +34,10 @@ Public Class IPCSocket : Implements ITaskDriver
 
     Private Function GetFirstAvailablePort() As Integer
 #If netcore5 = 1 Then
+        If Not "/bin/bash".FileExists Then
+            Return TCPExtensions.GetFirstAvailablePort()
+        End If
+
         ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
         Dim BEGIN_PORT = randf.NextInteger(MAX_PORT - 1)
         Dim stdout As String = CommandLine.Call("/bin/bash", "-c ""netstat -tulpn""")
