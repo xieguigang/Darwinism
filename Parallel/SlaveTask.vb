@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.InteropService
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -60,9 +61,10 @@ Public Class SlaveTask
         Dim target As New IDelegate(entry)
         Dim result As Object = Nothing
         Dim host As IPCSocket = Nothing
+        Dim resultType As Type = entry.Method.ReturnType
 
         host = New IPCSocket(target, debugPort) With {
-            .handlePOSTResult = Sub(buf) result = handlePOST(buf, entry.Method.ReturnType, host.GetHashCode),
+            .handlePOSTResult = Sub(buf) result = handlePOST(buf, resultType, host.GetHashCode),
             .nargs = parameters.Length,
             .handleGetArgument = Function(i) handleGET(parameters(i), i, host.GetHashCode)
         }
@@ -72,20 +74,43 @@ Public Class SlaveTask
         Call New Thread(AddressOf host.Run).Start()
         Call Thread.Sleep(100)
 
+        Dim resultStream As MemoryStream
+        Dim commandlineArgvs As String = builder(processor, host.HostPort)
+
         'If Not debugPort Is Nothing Then
         '    Pause()
         'End If
 
 #If netcore5 = 0 Then
-        Call CommandLine.Call(processor, builder(processor, host.HostPort),, dotnet:=False)
+        resultStream = CommandLine.CallDotNetCorePipeline(processor, commandlineArgvs)
 #Else
-        Call CommandLine.Call(processor, builder(processor, host.HostPort),, dotnet:=True)
+        resultStream = CommandLine.CallDotNetCorePipeline(processor, commandlineArgvs)
 #End If
 
         Call host.Stop()
         Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
 
+        result = decomposingStdoutput(resultStream, resultType, host.GetHashCode)
+        resultStream.Dispose()
+
         Return result
+    End Function
+
+    Private Function decomposingStdoutput(buffer As MemoryStream, type As Type, host As Integer) As Object
+        Using reader As New StreamReader(buffer)
+            Do While reader.ReadLine <> TaskBuilder.streamDelimiter
+            Loop
+
+            Dim dataSize As Integer = Integer.Parse(reader.ReadLine)
+            Dim chunkBuffer As Byte() = New Byte(dataSize - 1) {}
+
+            buffer.Seek(buffer.Length - dataSize, SeekOrigin.Begin)
+            buffer.Read(chunkBuffer, Scan0, chunkBuffer.Length)
+
+            Using resultBuffer As New MemoryStream(chunkBuffer)
+                Return handlePOST(resultBuffer, type, host)
+            End Using
+        End Using
     End Function
 
 End Class

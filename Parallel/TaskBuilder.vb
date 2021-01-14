@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Reflection
+Imports System.Text
 #If netcore5 = 1 Then
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
 #End If
@@ -8,6 +9,7 @@ Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class TaskBuilder : Implements ITaskDriver
@@ -16,6 +18,10 @@ Public Class TaskBuilder : Implements ITaskDriver
 
     Sub New(port As Integer)
         masterPort = port
+    End Sub
+
+    Shared Sub New()
+        Console.Out.NewLine = vbLf
     End Sub
 
     Public Function Run() As Integer Implements ITaskDriver.Run
@@ -40,7 +46,8 @@ Public Class TaskBuilder : Implements ITaskDriver
 
         ' send debug message
         Call New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
-        Call PostFinished(api.Invoke(Nothing, args.ToArray))
+        ' Call PostFinished(api.Invoke(Nothing, args.ToArray))
+        Call PostStdOut(api.Invoke(Nothing, args.ToArray))
 
         Return 0
     End Function
@@ -83,6 +90,8 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return 500
     End Function
 
+    Friend Const streamDelimiter As String = "------endoftext------"
+
     ''' <summary>
     ''' 将结果数据写到标准输出上
     ''' </summary>
@@ -91,11 +100,14 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim type As Type = result.GetType
         Dim element = type.GetJsonElement(result, New JSONSerializerOptions)
         Dim buf As MemoryStream = BSONFormat.SafeGetBuffer(element)
+        Dim bufferSize As String = buf.Length
+        Dim outstream As Stream = Console.OpenStandardOutput
 
-        Call Console.Out.Flush()
+        Call Console.WriteLine(streamDelimiter)
+        Call Console.WriteLine(bufferSize)
+        Call Console.Write(vbCrLf)
 
-        Using stdout As New BinaryWriter(Console.OpenStandardOutput)
-            Call stdout.Write(New Byte(32 - 1) {})
+        Using stdout As New BinaryWriter(outstream)
             Call stdout.Write(buf.ToArray)
             Call stdout.Flush()
         End Using
