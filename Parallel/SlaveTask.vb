@@ -91,6 +91,7 @@ Public Class SlaveTask
         Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
 
         result = decomposingStdoutput(resultStream, resultType, host.GetHashCode)
+        resultStream.Close()
         resultStream.Dispose()
 
         Return result

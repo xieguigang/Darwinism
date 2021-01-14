@@ -78,10 +78,10 @@ Public Class IPCSocket : Implements ITaskDriver
     <Protocol(Protocols.GetArgumentByIndex)>
     Public Function GetArgumentByIndex(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim i As Integer = BitConverter.ToInt32(request.ChunkBuffer, Scan0)
-        Dim buf As ObjectStream = _handleGetArgument(i)
-        Dim pipe As New DataPipe(buf)
 
-        Return pipe
+        Using buf As ObjectStream = _handleGetArgument(i)
+            Return New DataPipe(buf)
+        End Using
     End Function
 
     <Protocol(Protocols.PostStart)>
