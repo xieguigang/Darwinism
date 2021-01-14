@@ -17,10 +17,10 @@ Module Module1
             Pause()
         Else
             Console.WriteLine("pointer:")
-            Dim p As Integer = Console.ReadLine
+            Dim p As String = Console.ReadLine
             Console.WriteLine("region size:")
             Dim size As Integer = Console.ReadLine
-            Dim mem_p As New UnmanageMemoryRegion With {.pointer = p, .size = size}
+            Dim mem_p As New UnmanageMemoryRegion With {.memoryFile = p, .size = size}
 
             Dim obj As vec = MapObject.FromPointer(mem_p).GetObject(GetType(vec))
 

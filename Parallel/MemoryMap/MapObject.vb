@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.IO.MemoryMappedFiles
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
@@ -10,30 +11,25 @@ Public Class MapObject : Implements IDisposable
 
     Private disposedValue As Boolean
 
-    Dim hMem As IntPtr
+    Dim hMem As String
     Dim size As Integer
 
     Private Sub New()
     End Sub
 
     Public Function GetObject(type As Type) As Object
-        Dim buffer As Byte() = New Byte(size - 1) {}
         Dim obj As Object
+        Dim memory As MemoryMappedFile = MemoryMappedFile.OpenExisting(hMem)
+        Dim view As MemoryMappedViewStream = memory.CreateViewStream
 
-        Call Marshal.Copy(hMem, buffer, Scan0, buffer.Length)
-
-        Using buf As New MemoryStream(buffer)
-            obj = BSONFormat.Load(buf).CreateObject(type)
-        End Using
-
-        Erase buffer
+        obj = BSONFormat.Load(view).CreateObject(type)
 
         Return obj
     End Function
 
     Public Shared Function FromPointer(mem As UnmanageMemoryRegion) As MapObject
         Return New MapObject With {
-            .hMem = New IntPtr(mem.pointer),
+            .hMem = mem.memoryFile,
             .size = mem.size
         }
     End Function
@@ -41,13 +37,24 @@ Public Class MapObject : Implements IDisposable
     Public Shared Function FromObject(obj As Object) As MapObject
         Dim type As Type = obj.GetType
         Dim element = type.GetJsonElement(obj, New JSONSerializerOptions)
-        Dim buffer As Byte() = BSONFormat.SafeGetBuffer(element).ToArray
-        Dim hMem As IntPtr = Marshal.AllocHGlobal(CInt(buffer.Length))
-        Dim bufferSize As Integer = buffer.Length
+        Dim bufferSize As Integer
+        Dim hMem As String = App.GetNextUniqueName($"mem_{type.Name}_")
 
-        Call Marshal.Copy(buffer, Scan0, hMem, buffer.Length)
+        Static mapFiles As New Dictionary(Of String, MemoryMappedFile)
 
-        Erase buffer
+        Using ms As MemoryStream = BSONFormat.SafeGetBuffer(element)
+            Dim buffer As Byte() = ms.ToArray
+
+            bufferSize = buffer.Length
+
+            Dim hMemFile As MemoryMappedFile = MemoryMappedFile.CreateNew(hMem, bufferSize)
+            Dim view As MemoryMappedViewStream = hMemFile.CreateViewStream
+
+            Call mapFiles.Add(hMem, hMemFile)
+            Call view.Write(buffer, Scan0, bufferSize)
+
+            Erase buffer
+        End Using
 
         Return New MapObject With {
             .hMem = hMem,
@@ -83,7 +90,7 @@ Public Class MapObject : Implements IDisposable
 
     Public Shared Narrowing Operator CType(map As MapObject) As UnmanageMemoryRegion
         Return New UnmanageMemoryRegion With {
-            .pointer = map.hMem.ToInt32,
+            .memoryFile = map.hMem,
             .size = map.size
         }
     End Operator
