@@ -82,6 +82,7 @@ Public Class SlaveTask
         Call CommandLine.Call(processor, builder(processor, host.HostPort),, dotnet:=True)
 #End If
 
+        Call host.Stop()
         Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
 
         Return result

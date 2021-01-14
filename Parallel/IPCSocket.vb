@@ -61,6 +61,10 @@ Public Class IPCSocket : Implements ITaskDriver
 #End If
     End Function
 
+    Public Sub [Stop]()
+        Call socket.Dispose()
+    End Sub
+
     Public Function Run() As Integer Implements ITaskDriver.Run
         Return socket.Run
     End Function

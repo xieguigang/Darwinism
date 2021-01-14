@@ -61,7 +61,8 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Function GetArgumentValue(i As Integer) As Object
-        Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i)))
+        Dim request As New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i))
+        Dim resp = New TcpRequest(masterPort).SendMessage(request)
         Dim stream As New ObjectStream(resp.ChunkBuffer)
         Dim type As Type = stream.type.GetType(knownFirst:=True)
 
@@ -81,6 +82,24 @@ Public Class TaskBuilder : Implements ITaskDriver
 
         Return 500
     End Function
+
+    ''' <summary>
+    ''' 将结果数据写到标准输出上
+    ''' </summary>
+    ''' <param name="result"></param>
+    Private Sub PostStdOut(result As Object)
+        Dim type As Type = result.GetType
+        Dim element = type.GetJsonElement(result, New JSONSerializerOptions)
+        Dim buf As MemoryStream = BSONFormat.SafeGetBuffer(element)
+
+        Call Console.Out.Flush()
+
+        Using stdout As New BinaryWriter(Console.OpenStandardOutput)
+            Call stdout.Write(New Byte(32 - 1) {})
+            Call stdout.Write(buf.ToArray)
+            Call stdout.Flush()
+        End Using
+    End Sub
 
     Private Sub PostFinished(result As Object)
         Dim type As Type = result.GetType
