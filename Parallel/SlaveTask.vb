@@ -69,9 +69,9 @@ Public Class SlaveTask
             .handleGetArgument = Function(i) handleGET(parameters(i), i, host.GetHashCode)
         }
 
-        Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] port:{host.HostPort}")
+        Call Microsoft.VisualBasic.Parallel.RunTask(AddressOf host.Run)
 
-        Call New Thread(AddressOf host.Run).Start()
+        Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] port:{host.HostPort}")
         Call Thread.Sleep(100)
 
         Dim resultStream As MemoryStream
