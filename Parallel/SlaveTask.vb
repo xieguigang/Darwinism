@@ -74,36 +74,43 @@ Public Class SlaveTask
         Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] port:{host.HostPort}")
         Call Thread.Sleep(100)
 
-        Dim resultStream As MemoryStream
+        ' Dim resultStream As MemoryStream
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
 
         'If Not debugPort Is Nothing Then
-        '    Pause()
+        ' Console.WriteLine(commandlineArgvs)
+        ' Pause()
         'End If
 
 #If netcore5 = 0 Then
         resultStream = CommandLine.CallDotNetCorePipeline(processor, commandlineArgvs)
 #Else
-        resultStream = CommandLine.CallDotNetCorePipeline(processor, commandlineArgvs)
+        Call CommandLine.Call(processor, commandlineArgvs, dotnet:=True)
 #End If
 
         Call host.Stop()
+        ' Call Console.WriteLine(If(result Is Nothing, "null", result.ToString))
         Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
 
-        result = decomposingStdoutput(resultStream, resultType, host.GetHashCode)
-        resultStream.Close()
-        resultStream.Dispose()
+        ' result = decomposingStdoutput(resultStream, resultType, host.GetHashCode)
+        ' resultStream.Close()
+        ' resultStream.Dispose()
 
         Return result
     End Function
 
     Private Function decomposingStdoutput(buffer As MemoryStream, type As Type, host As Integer) As Object
         Using reader As New StreamReader(buffer)
-            Do While reader.ReadLine <> TaskBuilder.streamDelimiter
+            Dim str As Value(Of String) = ""
+
+            Do While (str = reader.ReadLine) <> TaskBuilder.streamDelimiter
+                ' Call Console.WriteLine($"[{host.ToHexString}] {str.Value}")
             Loop
 
             Dim dataSize As Integer = Integer.Parse(reader.ReadLine)
             Dim chunkBuffer As Byte() = New Byte(dataSize - 1) {}
+
+            Call Console.WriteLine($"[{host.ToHexString}] chunksize: {dataSize}/{buffer.Length}")
 
             buffer.Seek(buffer.Length - dataSize, SeekOrigin.Begin)
             buffer.Read(chunkBuffer, Scan0, chunkBuffer.Length)

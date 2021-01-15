@@ -20,10 +20,6 @@ Public Class TaskBuilder : Implements ITaskDriver
         masterPort = port
     End Sub
 
-    Shared Sub New()
-        Console.Out.NewLine = vbLf
-    End Sub
-
     Public Function Run() As Integer Implements ITaskDriver.Run
         Dim task As IDelegate = GetMethod()
         Dim api As MethodInfo = task.GetMethod
@@ -33,6 +29,9 @@ Public Class TaskBuilder : Implements ITaskDriver
         For i As Integer = 0 To n - 1
             args.Add(GetArgumentValue(i))
         Next
+
+        Call Console.WriteLine("run task:")
+        Call Console.WriteLine(task.GetJson(indent:=False, simpleDict:=True))
 
         Dim params As ParameterInfo() = api.GetParameters
 
@@ -46,8 +45,9 @@ Public Class TaskBuilder : Implements ITaskDriver
 
         ' send debug message
         Call New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
-        ' Call PostFinished(api.Invoke(Nothing, args.ToArray))
-        Call PostStdOut(api.Invoke(Nothing, args.ToArray))
+        Call PostFinished(api.Invoke(Nothing, args.ToArray))
+        ' Call PostStdOut(api.Invoke(Nothing, args.ToArray))
+        Call Console.WriteLine("job done!")
 
         Return 0
     End Function
@@ -119,6 +119,7 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim buf As Stream = BSONFormat.SafeGetBuffer(element)
         Dim request As New RequestStream(IPCSocket.Protocol, Protocols.PostResult, New StreamPipe(buf).Read)
 
+        Call Console.WriteLine($"post result: {type.GetObjectJson(result, indent:=False)}")
         Call New TcpRequest(masterPort).SendMessage(request)
     End Sub
 End Class
