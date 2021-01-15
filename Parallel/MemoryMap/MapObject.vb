@@ -47,6 +47,7 @@ Public Class MapObject : Implements IDisposable
 
             bufferSize = buffer.Length
 
+            ' 20210115 MemoryMappedFile.CreateNew not working on unix .net 5
             Dim hMemFile As MemoryMappedFile = MemoryMappedFile.CreateNew(hMem, bufferSize)
             Dim view As MemoryMappedViewStream = hMemFile.CreateViewStream
 
