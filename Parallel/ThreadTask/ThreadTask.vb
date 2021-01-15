@@ -34,12 +34,21 @@ Public Class ThreadTask(Of TOut)
         Return -1
     End Function
 
+    Public Overrides Function ToString() As String
+        Dim free$ = threads.Where(Function(t) t Is Nothing).Count
+        Dim running$ = threads.Where(Function(t) t IsNot Nothing AndAlso Not t.IsCompleted).Count
+        Dim finished$ = threads.Where(Function(t) t IsNot Nothing AndAlso t.IsCompleted).Count
+
+        Return $"[free: {free}, running: {running}, finished: {finished}]"
+    End Function
+
     Public Iterator Function RunParallel() As IEnumerable(Of TOut)
         Do While taskList.Count > 0
             Dim i As Integer = GetEmptyThread()
 
             If i > -1 Then
                 threads(i) = New AsyncHandle(Of TOut)(taskList.Dequeue).Run
+                Call Console.WriteLine($"{ToString()} submit new task on thread [{i + 1}]!")
             End If
 
             Dim j As Integer = GetCompleteThread()
@@ -47,6 +56,7 @@ Public Class ThreadTask(Of TOut)
             If j > -1 Then
                 Yield threads(j).GetValue
                 threads(j) = Nothing
+                Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done!")
             End If
         Loop
 
@@ -56,6 +66,7 @@ Public Class ThreadTask(Of TOut)
             If j > -1 Then
                 Yield threads(j).GetValue
                 threads(j) = Nothing
+                Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done!")
             End If
         Loop
     End Function
