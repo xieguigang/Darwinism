@@ -40,8 +40,9 @@ Public Class ThreadTask(Of TOut)
         Dim free$ = threads.Where(Function(t) t Is Nothing).Count
         Dim running$ = threads.Where(Function(t) t IsNot Nothing AndAlso Not t.IsCompleted).Count
         Dim finished$ = threads.Where(Function(t) t IsNot Nothing AndAlso t.IsCompleted).Count
+        Dim delta As Integer = size - taskList.Count
 
-        Return $"[free: {free}, running: {running}, finished: {finished}, progress: {CInt((size - taskList.Count) / size * 100)}%]"
+        Return $"[free: {free}, running: {running}, finished: {finished}, progress: {delta} - {CInt(delta / size * 100)}%]"
     End Function
 
     Public Iterator Function RunParallel() As IEnumerable(Of TOut)
