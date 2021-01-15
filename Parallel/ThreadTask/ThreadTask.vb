@@ -4,9 +4,11 @@ Public Class ThreadTask(Of TOut)
 
     Dim taskList As Queue(Of Func(Of TOut))
     Dim threads As AsyncHandle(Of TOut)()
+    Dim size As Integer
 
     Sub New(task As IEnumerable(Of Func(Of TOut)))
         Me.taskList = New Queue(Of Func(Of TOut))(task)
+        Me.size = Me.taskList.Count
     End Sub
 
     Public Function WithDegreeOfParallelism(n_threads As Integer) As ThreadTask(Of TOut)
@@ -39,7 +41,7 @@ Public Class ThreadTask(Of TOut)
         Dim running$ = threads.Where(Function(t) t IsNot Nothing AndAlso Not t.IsCompleted).Count
         Dim finished$ = threads.Where(Function(t) t IsNot Nothing AndAlso t.IsCompleted).Count
 
-        Return $"[free: {free}, running: {running}, finished: {finished}]"
+        Return $"[free: {free}, running: {running}, finished: {finished}, progress: {CInt((size - taskList.Count) / size * 100)}%]"
     End Function
 
     Public Iterator Function RunParallel() As IEnumerable(Of TOut)
