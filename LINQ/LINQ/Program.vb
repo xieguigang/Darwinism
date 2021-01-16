@@ -19,7 +19,7 @@ Module Program
         Dim result As JavaScriptObject() = query.Exec(env)
         Dim table As DataFrame = result.CreateTableDataSet
         Dim text As String()() = table _
-            .AsMatrix _
+            .csv _
             .Select(Function(c) c.ToArray) _
             .ToArray
 

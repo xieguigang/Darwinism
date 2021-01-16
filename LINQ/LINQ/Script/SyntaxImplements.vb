@@ -131,6 +131,10 @@ Namespace Script
                             fields.Add(New NamedValue(Of Expression)(item.ToString, item))
                         End If
                     End With
+                ElseIf TypeOf item Is MemberReference Then
+                    With DirectCast(item, MemberReference)
+                        fields.Add(New NamedValue(Of Expression)(.memberName, item))
+                    End With
                 Else
                     fields.Add(New NamedValue(Of Expression)(item.ToString, item))
                 End If

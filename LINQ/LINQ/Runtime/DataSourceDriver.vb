@@ -12,11 +12,11 @@ Namespace Runtime
     Public Class DataFrameDriver : Inherits DataSourceDriver
 
         Public Overrides Iterator Function ReadFromUri(uri As String) As IEnumerable(Of Object)
-            Dim dataframe As DataFrame = DataFrame.Load(uri)
+            Dim dataframe As DataFrame = DataFrame.Load(uri).MeasureTypeSchema
             Dim obj As JavaScriptObject
             Dim headers As String() = dataframe.HeadTitles
 
-            For Each row As RowObject In dataframe.Rows
+            For Each row As Object() In dataframe.EnumerateRowObjects
                 obj = New JavaScriptObject
 
                 For i As Integer = 0 To headers.Length - 1

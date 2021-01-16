@@ -6,8 +6,8 @@ Namespace Interpreter.Expressions
 
     Public Class MemberReference : Inherits Expression
 
-        ReadOnly symbol As Expression
-        ReadOnly memberName As String
+        Friend ReadOnly symbol As Expression
+        Friend ReadOnly memberName As String
 
         Sub New(symbol As Expression, memberName As Expression)
             Me.symbol = symbol
