@@ -59,7 +59,14 @@ Namespace Script
 
         <Extension>
         Public Function ParseExpression(tokenList As Token()) As Expression
-            If tokenList(Scan0).isKeywordFrom OrElse tokenList(Scan0).isKeywordAggregate OrElse tokenList(Scan0).isKeyword("let") Then
+            If tokenList.Length = 1 AndAlso (
+                tokenList(Scan0).name = Tokens.Boolean OrElse
+                tokenList(Scan0).name = Tokens.Integer OrElse
+                tokenList(Scan0).name = Tokens.Number OrElse
+                tokenList(Scan0).name = Tokens.Literal) Then
+
+                Return New Literals(t:=tokenList(Scan0))
+            ElseIf tokenList(Scan0).isKeywordFrom OrElse tokenList(Scan0).isKeywordAggregate OrElse tokenList(Scan0).isKeyword("let") Then
                 ' declare new symbol
                 Dim name As String = tokenList(1).text
                 Dim type As String = "any"
@@ -69,6 +76,8 @@ Namespace Script
                 End If
 
                 Return New SymbolDeclare With {.symbolName = name, .type = type}
+            ElseIf tokenList(Scan0).isKeyword("where") Then
+                Return New WhereFilter(ParseExpression(tokenList.Skip(1).ToArray))
             End If
 
             Dim blocks = tokenList.SplitByTopLevelStack.ToArray
