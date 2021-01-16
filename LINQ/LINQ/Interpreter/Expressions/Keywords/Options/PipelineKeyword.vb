@@ -20,6 +20,10 @@ Namespace Interpreter.Expressions
                 bin.right = FixLiteral(bin.right)
             ElseIf TypeOf expr Is Literals Then
                 expr = New SymbolReference(DirectCast(expr, Literals).value)
+            ElseIf TypeOf expr Is FuncEval Then
+                DirectCast(expr, FuncEval).parameters = DirectCast(expr, FuncEval).parameters _
+                    .Select(AddressOf FixLiteral) _
+                    .ToArray
             End If
 
             Return expr

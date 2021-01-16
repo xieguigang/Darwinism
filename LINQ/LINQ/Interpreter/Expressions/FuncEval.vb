@@ -31,7 +31,7 @@ Namespace Interpreter.Expressions
                 args.Add(item.Exec(context))
             Next
 
-            Dim result As Object = invoke(args.ToArray)
+            Dim result As Object = DirectCast(invoke, Callable).Evaluate(args.ToArray)
 
             Return result
         End Function
