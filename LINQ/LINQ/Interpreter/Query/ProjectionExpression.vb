@@ -4,6 +4,12 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 
 Namespace Interpreter.Query
 
+    Public Class Options
+        Public Property OrderBy As OrderBy
+        Public Property Distinct As Boolean
+
+    End Class
+
     ''' <summary>
     ''' from ... select ...
     ''' </summary>
@@ -12,10 +18,12 @@ Namespace Interpreter.Query
         Dim sequence As Expression
         Dim symbol As SymbolDeclare
         Dim executeQueue As Expression()
+        Dim opt As Options
 
-        Sub New(symbol As SymbolDeclare, sequence As Expression, exec As IEnumerable(Of Expression))
+        Sub New(symbol As SymbolDeclare, sequence As Expression, exec As IEnumerable(Of Expression), opt As Options)
             Me.executeQueue = exec.ToArray
             Me.symbol = symbol
+            Me.opt = opt
             Me.sequence = sequence
         End Sub
 

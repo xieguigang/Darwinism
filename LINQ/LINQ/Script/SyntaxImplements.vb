@@ -27,7 +27,15 @@ Namespace Script
             Dim i As Integer = 0
             Dim seq As Expression = blocks.GetSequence(offset:=i)
             Dim exec As Expression() = blocks.Skip(i).PopulateExpressions.ToArray
-            Dim proj As New ProjectionExpression(symbolExpr, seq, exec)
+            Dim opt As New Options With {
+                .OrderBy = exec _
+                    .Where(Function(t) TypeOf t Is OrderBy) _
+                    .FirstOrDefault
+            }
+            Dim execProgram As Expression() = exec _
+                .Where(Function(t) Not TypeOf t Is OrderBy) _
+                .ToArray
+            Dim proj As New ProjectionExpression(symbolExpr, seq, execProgram, opt)
 
             Return proj
         End Function
