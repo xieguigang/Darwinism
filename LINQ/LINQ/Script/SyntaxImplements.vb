@@ -63,13 +63,11 @@ Namespace Script
             Dim seq As Expression = blocks.GetSequence(offset:=i)
             Dim exec As Expression() = blocks.Skip(i).PopulateExpressions.ToArray
             Dim proj As Expression = exec.Where(Function(t) TypeOf t Is OutputProjection).FirstOrDefault
-            Dim opt As New Options With {
-                .OrderBy = exec _
-                    .Where(Function(t) TypeOf t Is OrderBy) _
-                    .FirstOrDefault
-            }
+            Dim opt As New Options(exec.Where(Function(t) TypeOf t Is PipelineKeyword))
             Dim execProgram As Expression() = exec _
-                .Where(Function(t) Not TypeOf t Is OrderBy AndAlso Not TypeOf t Is OutputProjection) _
+                .Where(Function(t)
+                           Return (Not TypeOf t Is PipelineKeyword) AndAlso (Not TypeOf t Is OutputProjection)
+                       End Function) _
                 .ToArray
             Dim Linq As New ProjectionExpression(symbolExpr, seq, execProgram, proj, opt)
 

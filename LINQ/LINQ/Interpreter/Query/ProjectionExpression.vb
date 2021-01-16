@@ -6,8 +6,33 @@ Imports Microsoft.VisualBasic.My.JavaScript
 Namespace Interpreter.Query
 
     Public Class Options
-        Public Property OrderBy As OrderBy
-        Public Property Distinct As Boolean
+
+        Dim pipeline As PipelineKeyword()
+
+        Sub New(pipeline As IEnumerable(Of Expression))
+            Me.pipeline = pipeline _
+                .Select(Function(l) DirectCast(l, PipelineKeyword)) _
+                .ToArray
+        End Sub
+
+        Public Function RunOptionPipeline(output As IEnumerable(Of JavaScriptObject), env As Environment) As IEnumerable(Of JavaScriptObject)
+            Dim raw As JavaScriptObject() = output.ToArray
+            Dim allNames As String() = raw(Scan0).GetNames
+
+            For Each name As String In allNames
+                If Not env.HasSymbol(name) Then
+                    Call env.AddSymbol(name, "any")
+                End If
+            Next
+
+            output = raw
+
+            For Each line As PipelineKeyword In pipeline
+                output = line.Exec(output, env)
+            Next
+
+            Return output
+        End Function
 
     End Class
 
@@ -59,11 +84,7 @@ Namespace Interpreter.Query
                 End If
             Next
 
-            If Not opt.OrderBy Is Nothing Then
-                projections = opt.OrderBy.Sort(projections, closure).AsList
-            End If
-
-            Return projections.ToArray
+            Return opt.RunOptionPipeline(projections, env).ToArray
         End Function
     End Class
 End Namespace

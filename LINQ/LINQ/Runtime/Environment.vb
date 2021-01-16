@@ -27,6 +27,16 @@ Namespace Runtime
             Me.parent = parent
         End Sub
 
+        Public Function HasSymbol(name As String) As Boolean
+            If symbols.ContainsKey(name) Then
+                Return True
+            ElseIf Not parent Is Nothing Then
+                Return parent.HasSymbol(name)
+            Else
+                Return False
+            End If
+        End Function
+
         Public Function AddSymbol(name As String, type As String) As Symbol
             Dim newSymbol As New Symbol With {
                 .SymbolKey = name,
