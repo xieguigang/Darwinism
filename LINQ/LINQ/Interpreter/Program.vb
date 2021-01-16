@@ -16,7 +16,7 @@ Namespace Interpreter
         End Function
 
         Public Shared Function CreateProgram(script As String) As Program
-            Return New Program(Language.GetTokens(script).PopulateQueryExpressions)
+            Return New Program(Language.GetTokens(script).PopulateQueryExpression)
         End Function
 
     End Class

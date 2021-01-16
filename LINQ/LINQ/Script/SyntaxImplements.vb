@@ -7,7 +7,9 @@ Namespace Script
     Public Module SyntaxImplements
 
         <Extension>
-        Public Function PopulateQueryExpressions(tokens As IEnumerable(Of Token)) As IEnumerable(Of Expression)
+        Public Function PopulateQueryExpression(tokens As IEnumerable(Of Token)) As Expression
+            Dim blocks = tokens.SplitByTopLevelStack.ToArray
+
 
         End Function
 

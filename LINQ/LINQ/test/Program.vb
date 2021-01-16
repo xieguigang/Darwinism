@@ -1,4 +1,6 @@
-﻿Public Module Program
+﻿Imports LINQ.Script
+
+Public Module Program
 
     Sub Main()
         Call parserTest()
@@ -11,6 +13,8 @@ where x > 5
 select x ^ 2 
 "
         Dim tokens = LINQ.Language.GetTokens(script).ToArray
+        Dim query = tokens.PopulateQueryExpression
+
 
         Pause()
     End Sub
