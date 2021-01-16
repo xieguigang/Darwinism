@@ -94,7 +94,11 @@ Namespace Language
             ElseIf c = ","c Then
                 Return New Token(Tokens.Comma, c)
             ElseIf c = "."c Then
-                Return New Token(Tokens.Reference, c)
+                If Not buffer.isInteger Then
+                    Return New Token(Tokens.Reference, c)
+                Else
+                    buffer += c
+                End If
             Else
                 buffer += c
             End If

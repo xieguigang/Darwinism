@@ -9,8 +9,43 @@ Namespace Script
     Public Module SyntaxImplements
 
         <Extension>
+        Private Function IsNumeric(t As Token) As Boolean
+            Return t.name = Tokens.Integer OrElse t.name = Tokens.Number
+        End Function
+
+        <Extension>
+        Private Function JoinOperators(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token)
+            Dim list As New List(Of Token)(tokenList)
+            Dim t As Token
+
+            For i As Integer = 0 To list.Count - 1
+                If i >= list.Count Then
+                    Exit For
+                Else
+                    t = list(i)
+                End If
+
+                If t = (Tokens.Operator, "-") AndAlso list(i + 1).isNumeric Then
+                    t = New Token(list(i + 1).name, -Val(list(i + 1).text))
+                    list.RemoveAt(i + 1)
+                    list.RemoveAt(i)
+                    list.Insert(i, t)
+                ElseIf t = (Tokens.Operator, ">") OrElse t = (Tokens.Operator, "<") Then
+                    If list(i + 1) = (Tokens.Operator, "=") OrElse list(i + 1) = (Tokens.Operator, ">") Then
+                        t = New Token(Tokens.Operator, t.text & list(i + 1).text)
+                        list.RemoveAt(i + 1)
+                        list.RemoveAt(i)
+                        list.Insert(i, t)
+                    End If
+                End If
+            Next
+
+            Return list
+        End Function
+
+        <Extension>
         Public Function PopulateQueryExpression(tokens As IEnumerable(Of Token)) As Expression
-            Dim blocks = tokens.SplitByTopLevelStack.ToArray
+            Dim blocks = tokens.JoinOperators.SplitByTopLevelStack.ToArray
 
             If blocks(Scan0).First.isKeywordFrom Then
                 Return blocks(Scan0).CreateProjectionQuery(blocks.Skip(1).ToArray)
