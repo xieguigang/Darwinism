@@ -27,6 +27,10 @@ Namespace Runtime
             Me.parent = parent
         End Sub
 
+        Public Function FindInvoke(name As String) As Callable
+            Return InternalInvoke.FindInvoke(name)
+        End Function
+
         Public Function HasSymbol(name As String) As Boolean
             If symbols.ContainsKey(name) Then
                 Return True

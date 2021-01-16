@@ -158,6 +158,7 @@
     <Compile Include="Interpreter\Executable.vb" />
     <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
     <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
+    <Compile Include="Interpreter\Expressions\FuncEval.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\Options\TakeItems.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\Options\PipelineKeyword.vb" />
     <Compile Include="Interpreter\Expressions\MemberReference.vb" />
@@ -196,6 +197,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Runtime\Callable.vb" />
+    <Compile Include="Runtime\InternalInvoke.vb" />
+    <Compile Include="Runtime\Math.vb" />
     <Compile Include="Runtime\DataFrameExtensions.vb" />
     <Compile Include="Runtime\DataSourceDriver.vb" />
     <Compile Include="Runtime\Registry.vb" />
