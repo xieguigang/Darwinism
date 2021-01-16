@@ -4,7 +4,7 @@ Namespace Interpreter.Expressions
 
     Public Class BinaryExpression : Inherits Expression
 
-        Friend ReadOnly left, right As Expression
+        Friend left, right As Expression
         Dim op As String
 
         Public ReadOnly Property LikeValueAssign As Boolean
