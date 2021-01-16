@@ -5,16 +5,22 @@ Imports Microsoft.VisualBasic.Language
 Module StackParser
 
     <Extension>
-    Private Function isKeywordFrom(t As Token) As Boolean
+    Friend Function isKeywordFrom(t As Token) As Boolean
         Return isKeyword(t, "from")
     End Function
 
-    Private Function isKeyword(t As Token, text As String) As Boolean
+    <Extension>
+    Friend Function isKeywordAggregate(t As Token) As Boolean
+        Return isKeyword(t, "aggregate")
+    End Function
+
+    <Extension>
+    Friend Function isKeyword(t As Token, text As String) As Boolean
         Return t.name = Tokens.keyword AndAlso t.text.TextEquals(text)
     End Function
 
     <Extension>
-    Private Function isKeywordSelect(t As Token) As Boolean
+    Friend Function isKeywordSelect(t As Token) As Boolean
         Return isKeyword(t, "select")
     End Function
 
@@ -30,7 +36,20 @@ Module StackParser
 
     <Extension>
     Public Iterator Function SplitByTopLevelStack(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
-        For Each block In tokenList.DoSplitByTopLevelStack
+        For Each block In tokenList.DoSplitByTopLevelStack(Function(t)
+                                                               Return t.name = Tokens.keyword AndAlso Not t.text.TextEquals("as")
+                                                           End Function)
+            If Not block.All(Function(t) t.name = Tokens.Terminator) Then
+                Yield block
+            End If
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function SplitParameters(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
+        For Each block In tokenList.DoSplitByTopLevelStack(Function(t)
+                                                               Return t.name = Tokens.Comma
+                                                           End Function)
             If Not block.All(Function(t) t.name = Tokens.Terminator) Then
                 Yield block
             End If
@@ -43,12 +62,12 @@ Module StackParser
     ''' <param name="tokenList"></param>
     ''' <returns></returns>
     <Extension>
-    Private Iterator Function DoSplitByTopLevelStack(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
+    Private Iterator Function DoSplitByTopLevelStack(tokenList As IEnumerable(Of Token), delimiter As Func(Of Token, Boolean)) As IEnumerable(Of Token())
         Dim block As New List(Of Token)
         Dim stack As New Stack(Of String)
 
         For Each item As Token In tokenList.Where(Function(t) t.name <> Tokens.Terminator AndAlso t.name <> Tokens.Comment)
-            If item.name = Tokens.keyword AndAlso Not item.text.TextEquals("as") Then
+            If delimiter(item) Then
                 If stack.Count > 0 Then
                     block.Add(item)
                 Else

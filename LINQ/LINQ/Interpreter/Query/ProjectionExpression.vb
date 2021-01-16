@@ -13,8 +13,10 @@ Namespace Interpreter.Query
         Dim symbol As SymbolDeclare
         Dim executeQueue As Expression()
 
-        Sub New(exec As IEnumerable(Of Expression))
-            executeQueue = exec.ToArray
+        Sub New(symbol As SymbolDeclare, sequence As Expression, exec As IEnumerable(Of Expression))
+            Me.executeQueue = exec.ToArray
+            Me.symbol = symbol
+            Me.sequence = sequence
         End Sub
 
         Public Overrides Function Exec(env As Environment) As Object
