@@ -11,6 +11,7 @@ Module BinaryBuilder
         New String() {"^"},
         New String() {"/", "*", "%"},
         New String() {"+", "-"},
+        New String() {"&"},
         New String() {"and", "or"}
     }
 

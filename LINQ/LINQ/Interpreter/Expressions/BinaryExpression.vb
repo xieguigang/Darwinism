@@ -24,8 +24,8 @@ Namespace Interpreter.Expressions
         End Sub
 
         Public Overrides Function Exec(env As Environment) As Object
-            Dim x As Double = left.Exec(env)
-            Dim y As Double = right.Exec(env)
+            Dim x As Object = left.Exec(env)
+            Dim y As Object = right.Exec(env)
 
             Select Case op
                 Case "+" : Return x + y
@@ -36,6 +36,8 @@ Namespace Interpreter.Expressions
                 Case ">" : Return x > y
                 Case "<" : Return x < y
                 Case "=" : Return x = y
+
+                Case "&" : Return x & y
 
                 Case ">=" : Return x >= y
                 Case "<=" : Return x <= y

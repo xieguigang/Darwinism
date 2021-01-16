@@ -46,7 +46,7 @@ Namespace Language
             "select", "from", "in", "let", "as", "distinct", "group", "by", "order", "aggregate",
             "where", "take", "skip", "into"
         }
-        ReadOnly operators As Index(Of String) = {"+", "-", "*", "/", "\", "%", "=", "<>", ">", "<", ">=", "<=", "^"}
+        ReadOnly operators As Index(Of String) = {"+", "-", "*", "/", "\", "%", "=", "<>", ">", "<", ">=", "<=", "^", "&"}
         ReadOnly literal As Index(Of String) = {"true", "false"}
         ReadOnly logicals As Index(Of String) = {"not", "and", "or"}
 
