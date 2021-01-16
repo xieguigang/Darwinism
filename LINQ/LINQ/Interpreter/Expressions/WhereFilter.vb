@@ -1,11 +1,8 @@
 ﻿Imports LINQ.Runtime
 
-Namespace Interpreter.Query
+Namespace Interpreter.Expressions
 
-    ''' <summary>
-    ''' aggregate ... into ...
-    ''' </summary>
-    Public Class AggregateExpression : Inherits QueryExpression
+    Public Class WhereFilter : Inherits Expression
 
         Public Overrides Function Exec(env As Environment) As Object
             Throw New NotImplementedException()

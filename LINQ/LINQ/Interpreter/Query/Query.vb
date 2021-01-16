@@ -1,6 +1,8 @@
-﻿Namespace Interpreter.Query
+﻿Imports LINQ.Interpreter.Expressions
 
-    Public MustInherit Class QueryExpression
+Namespace Interpreter.Query
+
+    Public MustInherit Class QueryExpression : Inherits Expression
 
     End Class
 End Namespace

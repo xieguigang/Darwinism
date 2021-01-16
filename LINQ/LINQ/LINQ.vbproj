@@ -129,6 +129,8 @@
     <Compile Include="Interpreter\Executable.vb" />
     <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
     <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
+    <Compile Include="Interpreter\Expressions\WhereFilter.vb" />
+    <Compile Include="Interpreter\Expressions\SymbolDeclare.vb" />
     <Compile Include="Interpreter\Query\AggregateExpression.vb" />
     <Compile Include="Interpreter\Query\Query.vb" />
     <Compile Include="Interpreter\Query\DataSoruce.vb" />
