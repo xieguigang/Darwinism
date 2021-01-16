@@ -25,13 +25,11 @@ Namespace Interpreter.Query
                 End If
             Next
 
-            output = raw
-
             For Each line As PipelineKeyword In pipeline
-                output = line.Exec(output, env)
+                raw = line.Exec(raw, env).ToArray
             Next
 
-            Return output
+            Return raw
         End Function
 
     End Class
