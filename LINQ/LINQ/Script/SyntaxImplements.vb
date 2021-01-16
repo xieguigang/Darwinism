@@ -27,17 +27,18 @@ Namespace Script
             Dim i As Integer = 0
             Dim seq As Expression = blocks.GetSequence(offset:=i)
             Dim exec As Expression() = blocks.Skip(i).PopulateExpressions.ToArray
+            Dim proj As Expression = exec.Where(Function(t) TypeOf t Is OutputProjection).FirstOrDefault
             Dim opt As New Options With {
                 .OrderBy = exec _
                     .Where(Function(t) TypeOf t Is OrderBy) _
                     .FirstOrDefault
             }
             Dim execProgram As Expression() = exec _
-                .Where(Function(t) Not TypeOf t Is OrderBy) _
+                .Where(Function(t) Not TypeOf t Is OrderBy AndAlso Not TypeOf t Is OutputProjection) _
                 .ToArray
-            Dim proj As New ProjectionExpression(symbolExpr, seq, execProgram, opt)
+            Dim Linq As New ProjectionExpression(symbolExpr, seq, execProgram, proj, opt)
 
-            Return proj
+            Return Linq
         End Function
 
         <Extension>

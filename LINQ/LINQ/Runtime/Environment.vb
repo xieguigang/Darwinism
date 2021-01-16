@@ -31,8 +31,10 @@ Namespace Runtime
         Public Function FindSymbol(name As String) As Symbol
             If symbols.ContainsKey(name) Then
                 Return symbols(name)
-            Else
+            ElseIf Not parent Is Nothing Then
                 Return parent.FindSymbol(name)
+            Else
+                Throw New MissingPrimaryKeyException(name)
             End If
         End Function
 

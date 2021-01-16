@@ -14,8 +14,9 @@ Namespace Interpreter.Expressions
             Dim symbol As Symbol = env.FindSymbol(symbolName)
 
             If symbol Is Nothing Then
+                Throw New MissingPrimaryKeyException(symbolName)
             Else
-
+                Return symbol.value
             End If
         End Function
 

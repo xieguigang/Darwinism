@@ -17,7 +17,7 @@ Namespace Interpreter.Expressions
         End Sub
 
         Public Overrides Function Exec(env As Environment) As Object
-            Throw New NotImplementedException()
+            Return filter.Exec(env)
         End Function
 
         Public Overrides Function ToString() As String

@@ -24,7 +24,21 @@ Namespace Interpreter.Expressions
         End Sub
 
         Public Overrides Function Exec(env As Environment) As Object
-            Throw New NotImplementedException()
+            Dim x As Double = left.Exec(env)
+            Dim y As Double = right.Exec(env)
+
+            Select Case op
+                Case "+" : Return x + y
+                Case "-" : Return x - y
+                Case "*" : Return x * y
+                Case "/" : Return x / y
+                Case "^" : Return x ^ y
+                Case ">" : Return x > y
+                Case "<" : Return x < y
+                Case "=" : Return x = y
+                Case Else
+                    Throw New NotImplementedException
+            End Select
         End Function
 
         Public Overrides Function ToString() As String

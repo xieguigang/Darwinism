@@ -1,6 +1,7 @@
 ﻿Imports LINQ.Interpreter.Expressions
 Imports LINQ.Runtime
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Interpreter.Query
 
@@ -19,12 +20,14 @@ Namespace Interpreter.Query
         Dim symbol As SymbolDeclare
         Dim executeQueue As Expression()
         Dim opt As Options
+        Dim project As OutputProjection
 
-        Sub New(symbol As SymbolDeclare, sequence As Expression, exec As IEnumerable(Of Expression), opt As Options)
+        Sub New(symbol As SymbolDeclare, sequence As Expression, exec As IEnumerable(Of Expression), proj As OutputProjection, opt As Options)
             Me.executeQueue = exec.ToArray
             Me.symbol = symbol
             Me.opt = opt
             Me.sequence = sequence
+            Me.project = proj
         End Sub
 
         Private Iterator Function GetSequenceObjects(env As Environment) As IEnumerable(Of Object)
@@ -52,24 +55,33 @@ Namespace Interpreter.Query
         End Function
 
         Public Overrides Function Exec(env As Environment) As Object
-            Dim projections As New List(Of Object)
+            Dim projections As New List(Of JavaScriptObject)
             Dim closure As New Environment(parent:=env)
+            Dim skipVal As Boolean
 
             Call closure.AddSymbol(symbol.symbolName, symbol.type)
 
             For Each item As Object In GetSequenceObjects(env)
-                closure.FindSymbol(symbol.name).value = item
+                closure.FindSymbol(symbol.symbolName).value = item
 
                 For Each line As Expression In executeQueue
                     If TypeOf line Is WhereFilter Then
-                        Dim result As Boolean = line.Exec(closure)
+                        skipVal = Not DirectCast(line.Exec(closure), Boolean)
 
-                        If Not result Then
+                        If skipVal Then
                             Exit For
                         End If
                     End If
                 Next
+
+                If Not skipVal Then
+                    projections.Add(project.Exec(closure))
+                End If
             Next
+
+            If Not opt.OrderBy Is Nothing Then
+                projections = opt.OrderBy.Sort(projections, closure).AsList
+            End If
 
             Return projections.ToArray
         End Function

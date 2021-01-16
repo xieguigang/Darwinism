@@ -1,5 +1,6 @@
 ﻿Imports LINQ.Runtime
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Interpreter.Expressions
 
@@ -18,7 +19,13 @@ Namespace Interpreter.Expressions
         End Sub
 
         Public Overrides Function Exec(env As Environment) As Object
-            Throw New NotImplementedException()
+            Dim obj As New JavaScriptObject
+
+            For Each field In fields
+                obj(field.Name) = field.Value.Exec(env)
+            Next
+
+            Return obj
         End Function
 
         Public Overrides Function ToString() As String
