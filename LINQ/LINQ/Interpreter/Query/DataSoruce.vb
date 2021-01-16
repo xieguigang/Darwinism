@@ -16,11 +16,13 @@ Namespace Interpreter.Query
 
         Public MustOverride Function PopulatesData() As IEnumerable(Of Object)
 
-        Public Shared Function CreateDataSet(query As QueryExpression, env As Environment) As DataSet
+        Public Shared Function CreateDataSet(query As QueryExpression, context As ExecutableContext) As DataSet
+            Dim env As Environment = context.env
+
             If query.IsURISource Then
                 Return New URIIteratorDriver(query, query.GetSeqValue(Nothing), env)
             Else
-                Dim seqVal As Object = query.GetSeqValue(env)
+                Dim seqVal As Object = query.GetSeqValue(context)
 
                 If TypeOf seqVal Is String Then
                     Return New URIIteratorDriver(query, seqVal, env)

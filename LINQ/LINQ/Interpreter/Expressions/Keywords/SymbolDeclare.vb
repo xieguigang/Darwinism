@@ -13,7 +13,7 @@ Namespace Interpreter.Expressions
             End Get
         End Property
 
-        Public Overrides Function Exec(env As Environment) As Object
+        Public Overrides Function Exec(context As ExecutableContext) As Object
             Throw New NotImplementedException()
         End Function
 

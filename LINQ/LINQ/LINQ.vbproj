@@ -155,7 +155,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interpreter\Executable.vb" />
+    <Compile Include="Interpreter\ExecutableContext.vb" />
     <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
     <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
     <Compile Include="Interpreter\Expressions\FuncEval.vb" />

@@ -10,11 +10,11 @@ Namespace Interpreter.Expressions
             Me.seq = seq.ToArray
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
+        Public Overrides Function Exec(context As ExecutableContext) As Object
             Dim list As New List(Of Object)
 
             For Each item In seq
-                list.Add(item.Exec(env))
+                list.Add(item.Exec(context))
             Next
 
             Return list.ToArray

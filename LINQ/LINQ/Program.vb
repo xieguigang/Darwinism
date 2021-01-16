@@ -1,4 +1,5 @@
-﻿Imports LINQ.Interpreter.Query
+﻿Imports LINQ.Interpreter
+Imports LINQ.Interpreter.Query
 Imports LINQ.Runtime
 Imports LINQ.Script
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
@@ -16,7 +17,7 @@ Module Program
         Dim tokens = LINQ.Language.GetTokens(file.ReadAllText).ToArray
         Dim query As ProjectionExpression = tokens.PopulateQueryExpression
         Dim env As New GlobalEnvironment(New Registry)
-        Dim result As JavaScriptObject() = query.Exec(env)
+        Dim result As JavaScriptObject() = query.Exec(New ExecutableContext With {.env = env, .throwError = True})
         Dim table As DataFrame = result.CreateTableDataSet
         Dim text As String()() = table _
             .csv _

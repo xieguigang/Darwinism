@@ -22,12 +22,12 @@ Namespace Interpreter.Query
             Me.executeQueue = execQueue.ToArray
         End Sub
 
-        Public Function GetSeqValue(env As Environment) As Object
-            Return sequence.Exec(env)
+        Public Function GetSeqValue(context As ExecutableContext) As Object
+            Return sequence.Exec(context)
         End Function
 
-        Protected Function GetDataSet(env As Environment) As DataSet
-            Return DataSet.CreateDataSet(Me, env)
+        Protected Function GetDataSet(context As ExecutableContext) As DataSet
+            Return DataSet.CreateDataSet(Me, context)
         End Function
     End Class
 End Namespace

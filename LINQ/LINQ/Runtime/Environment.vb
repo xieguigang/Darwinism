@@ -58,7 +58,7 @@ Namespace Runtime
             ElseIf Not parent Is Nothing Then
                 Return parent.FindSymbol(name)
             Else
-                Throw New MissingPrimaryKeyException(name)
+                Return Nothing
             End If
         End Function
 

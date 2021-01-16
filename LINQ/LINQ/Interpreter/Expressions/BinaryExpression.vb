@@ -23,9 +23,9 @@ Namespace Interpreter.Expressions
             Me.op = op
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
-            Dim x As Object = left.Exec(env)
-            Dim y As Object = right.Exec(env)
+        Public Overrides Function Exec(context As ExecutableContext) As Object
+            Dim x As Object = left.Exec(context)
+            Dim y As Object = right.Exec(context)
 
             Select Case op
                 Case "+" : Return x + y

@@ -169,6 +169,11 @@ Namespace Script
         End Function
 
         <Extension>
+        Private Function IsClosure(tokenList As Token()) As Boolean
+            Return tokenList(Scan0).name = Tokens.Open AndAlso tokenList.Last.name = Tokens.Close
+        End Function
+
+        <Extension>
         Public Function ParseExpression(tokenList As Token()) As Expression
             If tokenList.Length = 1 Then
                 Return tokenList(Scan0).ParseToken
@@ -188,6 +193,12 @@ Namespace Script
                         .Skip(1) _
                         .Take(tokenList.Length - 2) _
                         .ToArray
+                End If
+            ElseIf blocks.Length = 2 Then
+                Dim name As Expression = ParseExpression(blocks(Scan0))
+
+                If TypeOf name Is SymbolReference AndAlso blocks(1).IsClosure Then
+                    Return New FuncEval(name, blocks(1).Skip(1).Take(blocks(1).Length - 2).GetParameters)
                 End If
             End If
 

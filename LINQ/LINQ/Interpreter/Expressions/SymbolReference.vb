@@ -10,11 +10,15 @@ Namespace Interpreter.Expressions
             Me.symbolName = name
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
-            Dim symbol As Symbol = env.FindSymbol(symbolName)
+        Public Overrides Function Exec(context As ExecutableContext) As Object
+            Dim symbol As Symbol = context.env.FindSymbol(symbolName)
 
             If symbol Is Nothing Then
-                Throw New MissingPrimaryKeyException(symbolName)
+                If context.throwError Then
+                    Throw New MissingPrimaryKeyException(symbolName)
+                Else
+                    Return Nothing
+                End If
             Else
                 Return symbol.value
             End If

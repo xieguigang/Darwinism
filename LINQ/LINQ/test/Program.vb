@@ -3,6 +3,7 @@ Imports LINQ.Runtime
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports LINQ.Interpreter.Query
 Imports Microsoft.VisualBasic.My.JavaScript
+Imports LINQ.Interpreter
 
 Public Module Program
 
@@ -27,7 +28,7 @@ order by y
         Dim query As ProjectionExpression = tokens.PopulateQueryExpression
         Dim env As New GlobalEnvironment(New Registry, New NamedValue(Of Object)("y", 1))
 
-        Dim result As JavaScriptObject() = query.Exec(env)
+        Dim result As JavaScriptObject() = query.Exec(New ExecutableContext With {.env = env, .throwError = True})
         Dim table = result.CreateTableDataSet
 
         Pause()

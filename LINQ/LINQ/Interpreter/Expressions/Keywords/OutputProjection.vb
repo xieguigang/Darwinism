@@ -18,11 +18,11 @@ Namespace Interpreter.Expressions
             Me.fields = fields.ToArray
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
+        Public Overrides Function Exec(context As ExecutableContext) As Object
             Dim obj As New JavaScriptObject
 
             For Each field In fields
-                obj(field.Name) = field.Value.Exec(env)
+                obj(field.Name) = field.Value.Exec(context)
             Next
 
             Return obj

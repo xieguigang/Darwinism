@@ -16,8 +16,8 @@ Namespace Interpreter.Expressions
             Me.filter = filter
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
-            Return filter.Exec(env)
+        Public Overrides Function Exec(context As ExecutableContext) As Object
+            Return filter.Exec(context)
         End Function
 
         Public Overrides Function ToString() As String

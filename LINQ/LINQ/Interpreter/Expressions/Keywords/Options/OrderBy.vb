@@ -18,19 +18,21 @@ Namespace Interpreter.Expressions
             Me.key = FixLiteral(key)
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
-            Return key.Exec(env)
+        Public Overrides Function Exec(context As ExecutableContext) As Object
+            Return key.Exec(context)
         End Function
 
-        Private Function GetOrderKey(obj As JavaScriptObject, env As Environment) As Object
+        Private Function GetOrderKey(obj As JavaScriptObject, context As ExecutableContext) As Object
+            Dim env As Environment = context.env
+
             For Each key As String In obj
                 env.FindSymbol(key).value = obj(key)
             Next
 
-            Return Exec(env)
+            Return Exec(context)
         End Function
 
-        Public Overrides Function Exec(result As IEnumerable(Of JavaScriptObject), env As Environment) As IEnumerable(Of JavaScriptObject)
+        Public Overrides Function Exec(result As IEnumerable(Of JavaScriptObject), context As ExecutableContext) As IEnumerable(Of JavaScriptObject)
             Dim raw As JavaScriptObject() = result.ToArray
             Dim keys As Object()
             Dim i As Integer()
@@ -42,7 +44,7 @@ Namespace Interpreter.Expressions
             Else
                 keys = raw _
                     .Select(Function(obj)
-                                Return GetOrderKey(obj, env)
+                                Return GetOrderKey(obj, context)
                             End Function) _
                     .ToArray
             End If

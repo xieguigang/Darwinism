@@ -21,8 +21,8 @@ Namespace Interpreter.Expressions
             End If
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
-            Dim symbol As Object = Me.symbol.Exec(env)
+        Public Overrides Function Exec(context As ExecutableContext) As Object
+            Dim symbol As Object = Me.symbol.Exec(context)
 
             If symbol Is Nothing Then
                 Throw New NullReferenceException

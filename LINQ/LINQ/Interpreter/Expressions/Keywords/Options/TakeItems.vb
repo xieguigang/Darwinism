@@ -18,12 +18,12 @@ Namespace Interpreter.Expressions
             Me.n = n
         End Sub
 
-        Public Overrides Function Exec(result As IEnumerable(Of JavaScriptObject), env As Environment) As IEnumerable(Of JavaScriptObject)
-            Return result.Take(count:=CInt(Exec(env)))
+        Public Overrides Function Exec(result As IEnumerable(Of JavaScriptObject), context As ExecutableContext) As IEnumerable(Of JavaScriptObject)
+            Return result.Take(count:=CInt(Exec(context)))
         End Function
 
-        Public Overrides Function Exec(env As Environment) As Object
-            Return n.Exec(env)
+        Public Overrides Function Exec(context As ExecutableContext) As Object
+            Return n.Exec(context)
         End Function
     End Class
 End Namespace

@@ -15,9 +15,10 @@ Namespace Interpreter.Query
                 .ToArray
         End Sub
 
-        Public Function RunOptionPipeline(output As IEnumerable(Of JavaScriptObject), env As Environment) As IEnumerable(Of JavaScriptObject)
+        Public Function RunOptionPipeline(output As IEnumerable(Of JavaScriptObject), context As ExecutableContext) As IEnumerable(Of JavaScriptObject)
             Dim raw As JavaScriptObject() = output.ToArray
             Dim allNames As String() = raw(Scan0).GetNames
+            Dim env As Environment = context.env
 
             For Each name As String In allNames
                 If Not env.HasSymbol(name) Then
@@ -26,7 +27,7 @@ Namespace Interpreter.Query
             Next
 
             For Each line As PipelineKeyword In pipeline
-                raw = line.Exec(raw, env).ToArray
+                raw = line.Exec(raw, context).ToArray
             Next
 
             Return raw
@@ -52,20 +53,24 @@ Namespace Interpreter.Query
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="env"></param>
+        ''' <param name="context"></param>
         ''' <returns>
         ''' array of <see cref="JavaScriptObject"/>
         ''' </returns>
-        Public Overrides Function Exec(env As Environment) As Object
+        Public Overrides Function Exec(context As ExecutableContext) As Object
             Dim projections As New List(Of JavaScriptObject)
-            Dim closure As New Environment(parent:=env)
+            Dim env As Environment = context.env
+            Dim closure As New ExecutableContext With {
+                .env = New Environment(parent:=env),
+                .throwError = context.throwError
+            }
             Dim skipVal As Boolean
-            Dim dataset As DataSet = GetDataSet(env)
+            Dim dataset As DataSet = GetDataSet(context)
 
-            Call closure.AddSymbol(symbol.symbolName, symbol.type)
+            Call closure.env.AddSymbol(symbol.symbolName, symbol.type)
 
             For Each item As Object In dataset.PopulatesData()
-                closure.FindSymbol(symbol.symbolName).value = item
+                closure.env.FindSymbol(symbol.symbolName).value = item
 
                 For Each line As Expression In executeQueue
                     If TypeOf line Is WhereFilter Then
@@ -82,7 +87,7 @@ Namespace Interpreter.Query
                 End If
             Next
 
-            Return opt.RunOptionPipeline(projections, env).ToArray
+            Return opt.RunOptionPipeline(projections, context).ToArray
         End Function
     End Class
 End Namespace

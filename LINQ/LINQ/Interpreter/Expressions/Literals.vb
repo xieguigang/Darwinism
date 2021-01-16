@@ -30,7 +30,7 @@ Namespace Interpreter.Expressions
             End Select
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
+        Public Overrides Function Exec(context As ExecutableContext) As Object
             Return value
         End Function
 

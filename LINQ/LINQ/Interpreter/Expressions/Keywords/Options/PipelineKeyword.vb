@@ -5,7 +5,7 @@ Namespace Interpreter.Expressions
 
     Public MustInherit Class PipelineKeyword : Inherits KeywordExpression
 
-        Public MustOverride Overloads Function Exec(result As IEnumerable(Of JavaScriptObject), env As Environment) As IEnumerable(Of JavaScriptObject)
+        Public MustOverride Overloads Function Exec(result As IEnumerable(Of JavaScriptObject), context As ExecutableContext) As IEnumerable(Of JavaScriptObject)
 
         ''' <summary>
         ''' 将字符串常量表示转换为变量引用

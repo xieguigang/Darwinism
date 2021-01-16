@@ -6,11 +6,11 @@ Namespace Interpreter.Expressions
 
         Public ReadOnly Property name As String
             Get
-                Return MyClass.GetType.Name
+                Return MyClass.GetType.Name.ToLower
             End Get
         End Property
 
-        Public MustOverride Function Exec(env As Environment) As Object
+        Public MustOverride Function Exec(context As ExecutableContext) As Object
 
     End Class
 End Namespace
