@@ -36,6 +36,11 @@ Namespace Interpreter.Expressions
                 Case ">" : Return x > y
                 Case "<" : Return x < y
                 Case "=" : Return x = y
+
+                Case ">=" : Return x >= y
+                Case "<=" : Return x <= y
+                Case "<>" : Return x <> y
+
                 Case Else
                     Throw New NotImplementedException
             End Select

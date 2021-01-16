@@ -1,4 +1,5 @@
 ﻿Imports LINQ.Runtime
+Imports Microsoft.VisualBasic.My.JavaScript
 Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace Interpreter.Expressions
@@ -23,6 +24,13 @@ Namespace Interpreter.Expressions
         Public Overrides Function Exec(env As Environment) As Object
             Dim symbol As Object = Me.symbol.Exec(env)
 
+            If symbol Is Nothing Then
+                Throw New NullReferenceException
+            End If
+
+            If TypeOf symbol Is JavaScriptObject Then
+                Return DirectCast(symbol, JavaScriptObject)(memberName)
+            End If
 
             Throw New NotImplementedException()
         End Function

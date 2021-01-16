@@ -13,7 +13,7 @@
 
         Public Function GetReader(type As String) As DataSourceDriver
             If type = "row" Then
-                Return New CsvDataFrameDriver
+                Return New DataFrameDriver
             Else
                 Throw New MissingPrimaryKeyException
             End If

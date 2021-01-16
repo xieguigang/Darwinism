@@ -9,7 +9,7 @@ Namespace Runtime
 
     End Class
 
-    Public Class CsvDataFrameDriver : Inherits DataSourceDriver
+    Public Class DataFrameDriver : Inherits DataSourceDriver
 
         Public Overrides Iterator Function ReadFromUri(uri As String) As IEnumerable(Of Object)
             Dim dataframe As DataFrame = DataFrame.Load(uri)
