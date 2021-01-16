@@ -52,12 +52,11 @@ Namespace Language
 
         Private Function walkChar(c As Char) As Token
             If escapes.string Then
-                buffer += c
-
                 If c = escapes.strWrapper Then
                     escapes.string = False
                     Return New Token(Tokens.Literal, buffer.PopAllChars.CharString)
                 Else
+                    buffer += c
                     Return Nothing
                 End If
             ElseIf escapes.comment Then
