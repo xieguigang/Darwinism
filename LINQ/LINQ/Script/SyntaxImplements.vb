@@ -58,14 +58,24 @@ Namespace Script
         End Function
 
         <Extension>
-        Public Function ParseExpression(tokenList As Token()) As Expression
-            If tokenList.Length = 1 AndAlso (
-                tokenList(Scan0).name = Tokens.Boolean OrElse
-                tokenList(Scan0).name = Tokens.Integer OrElse
-                tokenList(Scan0).name = Tokens.Number OrElse
-                tokenList(Scan0).name = Tokens.Literal) Then
+        Private Function ParseToken(t As Token) As Expression
+            If t.name = Tokens.Symbol Then
+                Return New SymbolReference(t.text)
+            ElseIf t.name = Tokens.Boolean OrElse
+                t.name = Tokens.Integer OrElse
+                t.name = Tokens.Number OrElse
+                t.name = Tokens.Literal Then
 
-                Return New Literals(t:=tokenList(Scan0))
+                Return New Literals(t)
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
+        <Extension>
+        Public Function ParseExpression(tokenList As Token()) As Expression
+            If tokenList.Length = 1 Then
+                Return tokenList(Scan0).ParseToken
             ElseIf tokenList(Scan0).isKeywordFrom OrElse tokenList(Scan0).isKeywordAggregate OrElse tokenList(Scan0).isKeyword("let") Then
                 ' declare new symbol
                 Dim name As String = tokenList(1).text
@@ -90,7 +100,7 @@ Namespace Script
                 End If
             End If
 
-            Throw New NotImplementedException
+            Return tokenList.ParseBinary
         End Function
 
         <Extension>

@@ -6,6 +6,10 @@ Namespace Interpreter.Expressions
 
         Dim symbolName As String
 
+        Sub New(name As String)
+            Me.symbolName = name
+        End Sub
+
         Public Overrides Function Exec(env As Environment) As Object
             Dim symbol As Symbol = env.FindSymbol(symbolName)
 

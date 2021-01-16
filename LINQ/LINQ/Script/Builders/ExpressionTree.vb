@@ -2,10 +2,11 @@
 Imports LINQ.Interpreter.Expressions
 Imports LINQ.Language
 
-Module BinaryBuilder
+Module ExpressionTree
 
     <Extension>
-    Public Function ParseBinary(tokenList As Token()) As Expression
+    Public Function ParseTree(tokenList As Token()) As Expression
 
     End Function
+
 End Module
