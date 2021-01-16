@@ -38,7 +38,7 @@ Module StackParser
     Public Function SplitByTopLevelStack(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
         Return tokenList _
             .DoSplitByTopLevelStack(Function(t)
-                                        Return t.name = Tokens.keyword AndAlso Not t.text.TextEquals("as")
+                                        Return t.name = Tokens.keyword AndAlso Not t.text.TextEquals("as") AndAlso Not t.text.TextEquals("by")
                                     End Function, True, True, False)
     End Function
 

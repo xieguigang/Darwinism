@@ -2,23 +2,26 @@
 
 Namespace Interpreter.Expressions
 
-    Public Class SymbolDeclare : Inherits KeywordExpression
-
-        Public Property symbolName As String
-        Public Property type As String
+    Public Class OrderBy : Inherits KeywordExpression
 
         Public Overrides ReadOnly Property keyword As String
             Get
-                Return "Let"
+                Return "Order By"
             End Get
         End Property
+
+        Dim key As Expression
+
+        Sub New(key As Expression)
+            Me.key = key
+        End Sub
 
         Public Overrides Function Exec(env As Environment) As Object
             Throw New NotImplementedException()
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"let {symbolName} as {type}"
+            Return $"order by {key}"
         End Function
     End Class
 End Namespace

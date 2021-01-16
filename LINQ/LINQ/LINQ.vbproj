@@ -129,6 +129,8 @@
     <Compile Include="Interpreter\Executable.vb" />
     <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
     <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
+    <Compile Include="Interpreter\Expressions\Keywords\KeywordExpression.vb" />
+    <Compile Include="Interpreter\Expressions\Keywords\OrderBy.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\OutputProjection.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\WhereFilter.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\SymbolDeclare.vb" />
