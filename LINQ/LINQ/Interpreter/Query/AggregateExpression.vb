@@ -1,4 +1,5 @@
-﻿Imports LINQ.Runtime
+﻿Imports LINQ.Interpreter.Expressions
+Imports LINQ.Runtime
 
 Namespace Interpreter.Query
 
@@ -6,6 +7,10 @@ Namespace Interpreter.Query
     ''' aggregate ... into ...
     ''' </summary>
     Public Class AggregateExpression : Inherits QueryExpression
+
+        Sub New(symbol As SymbolDeclare, sequence As Expression, exec As IEnumerable(Of Expression))
+            Call MyBase.New(symbol, sequence, exec)
+        End Sub
 
         Public Overrides Function Exec(env As Environment) As Object
             Throw New NotImplementedException()

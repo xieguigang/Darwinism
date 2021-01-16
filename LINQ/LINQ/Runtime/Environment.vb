@@ -13,6 +13,16 @@ Namespace Runtime
             End Get
         End Property
 
+        Public ReadOnly Property GlobalEnvir As GlobalEnvironment
+            Get
+                If parent Is Nothing Then
+                    Return Me
+                Else
+                    Return parent.GlobalEnvir
+                End If
+            End Get
+        End Property
+
         Sub New(parent As Environment)
             Me.parent = parent
         End Sub
@@ -58,5 +68,9 @@ Namespace Runtime
 
             Me.registry = registry
         End Sub
+
+        Public Function GetDriverByCode(code As String) As DataSourceDriver
+            Return registry.GetReader(code)
+        End Function
     End Class
 End Namespace

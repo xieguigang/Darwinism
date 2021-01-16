@@ -10,6 +10,14 @@
                     Throw New MissingPrimaryKeyException
             End Select
         End Function
+
+        Public Function GetReader(type As String) As DataSourceDriver
+            If type = "row" Then
+                Return New CsvDataFrameDriver
+            Else
+                Throw New MissingPrimaryKeyException
+            End If
+        End Function
     End Class
 End Namespace
 
