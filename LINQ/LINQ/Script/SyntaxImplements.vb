@@ -161,6 +161,8 @@ Namespace Script
                 Return tokenList.Skip(1).GetProjection
             ElseIf tokenList(Scan0).isKeyword("order") Then
                 Return New OrderBy(ParseExpression(tokenList.Skip(2).ToArray))
+            ElseIf tokenList(Scan0).isKeyword("take") Then
+                Return New TakeItems(ParseExpression(tokenList.Skip(1).ToArray))
             Else
                 Throw New SyntaxErrorException
             End If
