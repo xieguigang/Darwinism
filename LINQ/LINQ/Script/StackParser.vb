@@ -35,22 +35,32 @@ Module StackParser
     End Function
 
     <Extension>
-    Public Iterator Function SplitByTopLevelStack(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
-        For Each block In tokenList.DoSplitByTopLevelStack(Function(t)
-                                                               Return t.name = Tokens.keyword AndAlso Not t.text.TextEquals("as")
-                                                           End Function)
-            If Not block.All(Function(t) t.name = Tokens.Terminator) Then
-                Yield block
-            End If
-        Next
+    Public Function SplitByTopLevelStack(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
+        Return tokenList _
+            .DoSplitByTopLevelStack(Function(t)
+                                        Return t.name = Tokens.keyword AndAlso Not t.text.TextEquals("as")
+                                    End Function)
     End Function
 
     <Extension>
-    Public Iterator Function SplitParameters(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
-        For Each block In tokenList.DoSplitByTopLevelStack(Function(t)
-                                                               Return t.name = Tokens.Comma
-                                                           End Function)
-            If Not block.All(Function(t) t.name = Tokens.Terminator) Then
+    Public Function SplitParameters(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
+        Return tokenList _
+            .DoSplitByTopLevelStack(Function(t)
+                                        Return t.name = Tokens.Comma
+                                    End Function)
+    End Function
+
+    <Extension>
+    Public Iterator Function SplitOperators(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
+        For Each block As Token() In tokenList _
+            .DoSplitByTopLevelStack(Function(t)
+                                        Return t.name = Tokens.Operator
+                                    End Function)
+
+            If block(Scan0).name = Tokens.Operator Then
+                Yield {block(Scan0)}
+                Yield block.Skip(1).ToArray
+            Else
                 Yield block
             End If
         Next
