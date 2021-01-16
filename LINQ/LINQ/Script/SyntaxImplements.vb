@@ -88,6 +88,8 @@ Namespace Script
                 Return New SymbolDeclare With {.symbolName = name, .type = type}
             ElseIf tokenList(Scan0).isKeyword("where") Then
                 Return New WhereFilter(ParseExpression(tokenList.Skip(1).ToArray))
+            ElseIf tokenList(Scan0).isKeyword("in") Then
+                Return ParseExpression(tokenList.Skip(1).ToArray)
             End If
 
             Dim blocks = tokenList.SplitByTopLevelStack.ToArray

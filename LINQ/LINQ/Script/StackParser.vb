@@ -78,7 +78,7 @@ Module StackParser
 
         For Each item As Token In tokenList.Where(Function(t) t.name <> Tokens.Terminator AndAlso t.name <> Tokens.Comment)
             If delimiter(item) Then
-                If stack.Count > 0 Then
+                If stack.Count > 1 Then
                     block.Add(item)
                 Else
                     If block > 0 Then
@@ -87,6 +87,12 @@ Module StackParser
 
                     block.Add(item)
                 End If
+
+                If stack.Count > 0 Then
+                    stack.Pop()
+                End If
+
+                stack.Push(item.text)
             ElseIf item.name = Tokens.Open Then
                 stack.Push(item.text)
 
@@ -115,12 +121,20 @@ Module StackParser
                         Yield block.PopAll
                     End If
                 End If
+
+                If stack.Count = 1 AndAlso "([{".IndexOf(stack.Peek) = -1 Then
+                    stack.Pop()
+                End If
             Else
                 block.Add(item)
             End If
         Next
 
-        If stack.Count > 0 Then
+        If stack.Count = 1 AndAlso "([{".IndexOf(stack.Peek) = -1 Then
+            If block > 0 Then
+                Yield block.PopAll
+            End If
+        ElseIf stack.Count > 0 Then
             Throw New SyntaxErrorException
         ElseIf block > 0 Then
             Yield block.PopAll
