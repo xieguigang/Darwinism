@@ -14,8 +14,9 @@ Namespace Interpreter.Expressions
         Dim key As Expression
         Dim desc As Boolean
 
-        Sub New(key As Expression)
+        Sub New(key As Expression, desc As Boolean)
             Me.key = FixLiteral(key)
+            Me.desc = desc
         End Sub
 
         Public Overrides Function Exec(context As ExecutableContext) As Object

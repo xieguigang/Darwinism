@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports LINQ.Language
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Module StackParser
@@ -36,9 +37,11 @@ Module StackParser
 
     <Extension>
     Public Function SplitByTopLevelStack(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Token())
+        Static ignores As Index(Of String) = {"as", "by", "descending", "ascending"}
+
         Return tokenList _
             .DoSplitByTopLevelStack(Function(t)
-                                        Return t.name = Tokens.keyword AndAlso Not t.text.TextEquals("as") AndAlso Not t.text.TextEquals("by")
+                                        Return t.name = Tokens.keyword AndAlso (Not t.text.ToLower Like ignores)
                                     End Function, True, True, False)
     End Function
 

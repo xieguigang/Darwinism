@@ -44,7 +44,8 @@ Namespace Language
         ReadOnly keywords As Index(Of String) = {
             "imports",
             "select", "from", "in", "let", "as", "distinct", "group", "by", "order", "aggregate",
-            "where", "take", "skip", "into"
+            "where", "take", "skip", "into",
+            "descending", "ascending"
         }
         ReadOnly operators As Index(Of String) = {"+", "-", "*", "/", "\", "%", "=", "<>", ">", "<", ">=", "<=", "^", "&"}
         ReadOnly literal As Index(Of String) = {"true", "false"}

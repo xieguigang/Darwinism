@@ -1,9 +1,9 @@
-﻿Imports LINQ.Script
-Imports LINQ.Runtime
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports LINQ.Interpreter
 Imports LINQ.Interpreter.Query
+Imports LINQ.Runtime
+Imports LINQ.Script
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.My.JavaScript
-Imports LINQ.Interpreter
 
 Public Module Program
 
@@ -11,7 +11,7 @@ Public Module Program
     Dim test = From x As Double In {(1 + y) * 8, 2, 3, 4, 5, 6, 7, 8, 9}
                Where x ^ 3 > (5 * x)
                Select x = x ^ 2 + 99, y = x * 2
-               Order By y
+               Order By y Ascending
 
     Sub Main()
         Call parserTest()

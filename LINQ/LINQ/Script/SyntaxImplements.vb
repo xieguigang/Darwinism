@@ -2,7 +2,9 @@
 Imports LINQ.Interpreter.Expressions
 Imports LINQ.Interpreter.Query
 Imports LINQ.Language
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Script
 
@@ -43,9 +45,29 @@ Namespace Script
             Return list
         End Function
 
+        ReadOnly sortOrders As Index(Of String) = {"descending", "ascending"}
+
         <Extension>
-        Public Function PopulateQueryExpression(tokens As IEnumerable(Of Token)) As Expression
-            Dim blocks = tokens.JoinOperators.SplitByTopLevelStack.ToArray
+        Public Function PopulateQueryExpression(tokenList As IEnumerable(Of Token)) As Expression
+            Dim blocks As List(Of Token()) = tokenList _
+                .JoinOperators _
+                .SplitByTopLevelStack _
+                .ToList
+
+            For i As Integer = 1 To blocks.Count - 1
+                If i >= blocks.Count Then
+                    Exit For
+                End If
+
+                If blocks(i).Length = 1 AndAlso blocks(i)(Scan0).name = Tokens.keyword Then
+                    If blocks(i)(Scan0).text.ToLower Like sortOrders Then
+                        blocks(i - 1) = blocks(i - 1) _
+                            .JoinIterates(blocks(i)) _
+                            .ToArray
+                        blocks.RemoveAt(i)
+                    End If
+                End If
+            Next
 
             If blocks(Scan0).First.isKeywordFrom Then
                 Return blocks(Scan0).CreateProjectionQuery(blocks.Skip(1).ToArray)
@@ -160,7 +182,15 @@ Namespace Script
             ElseIf tokenList(Scan0).isKeyword("select") Then
                 Return tokenList.Skip(1).GetProjection
             ElseIf tokenList(Scan0).isKeyword("order") Then
-                Return New OrderBy(ParseExpression(tokenList.Skip(2).ToArray))
+                Dim sortKey = tokenList.Skip(2).ToArray
+                Dim desc As Boolean
+
+                If sortKey.Last.name = Tokens.keyword AndAlso sortKey.Last.text.ToLower Like sortOrders Then
+                    desc = sortKey.Last.text.TextEquals("descending")
+                    sortKey = sortKey.Take(sortKey.Length - 1).ToArray
+                End If
+
+                Return New OrderBy(ParseExpression(sortKey), desc)
             ElseIf tokenList(Scan0).isKeyword("take") Then
                 Return New TakeItems(ParseExpression(tokenList.Skip(1).ToArray))
             Else
