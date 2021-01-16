@@ -28,6 +28,8 @@ Module BinaryBuilder
 
         If shrinks = 3 Then
             Return New BinaryExpression(shrinks(0), shrinks(2), shrinks(1))
+        ElseIf shrinks = 1 Then
+            Return shrinks(Scan0)
         Else
             Throw New SyntaxErrorException
         End If

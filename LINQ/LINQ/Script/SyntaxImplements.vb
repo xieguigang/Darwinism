@@ -2,6 +2,7 @@
 Imports LINQ.Interpreter.Expressions
 Imports LINQ.Interpreter.Query
 Imports LINQ.Language
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Script
 
@@ -73,6 +74,14 @@ Namespace Script
         End Function
 
         <Extension>
+        Private Function GetProjection(tokenList As IEnumerable(Of Token)) As Expression
+            Dim values As Expression() = tokenList.GetParameters.ToArray
+            Dim fields As New List(Of NamedValue(Of Expression))
+
+            Return New OutputProjection(fields)
+        End Function
+
+        <Extension>
         Public Function ParseExpression(tokenList As Token()) As Expression
             If tokenList.Length = 1 Then
                 Return tokenList(Scan0).ParseToken
@@ -91,7 +100,7 @@ Namespace Script
             ElseIf tokenList(Scan0).isKeyword("in") Then
                 Return ParseExpression(tokenList.Skip(1).ToArray)
             ElseIf tokenList(Scan0).isKeyword("select") Then
-
+                Return tokenList.Skip(1).GetProjection
             End If
 
             Dim blocks = tokenList.SplitByTopLevelStack.ToArray
@@ -113,7 +122,7 @@ Namespace Script
         End Function
 
         <Extension>
-        Private Function GetVector(tokenList As IEnumerable(Of Token)) As Expression
+        Private Iterator Function GetParameters(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Expression)
             Dim blocks As Token()() = tokenList _
                 .SplitParameters _
                 .Select(Function(b)
@@ -124,7 +133,15 @@ Namespace Script
                             End If
                         End Function) _
                 .ToArray
-            Dim elements As Expression() = blocks.Select(AddressOf ParseExpression).ToArray
+
+            For Each block As Token() In blocks
+                Yield ParseExpression(block)
+            Next
+        End Function
+
+        <Extension>
+        Private Function GetVector(tokenList As IEnumerable(Of Token)) As Expression
+            Dim elements As Expression() = tokenList.GetParameters.ToArray
             Dim vec As New ArrayExpression(elements)
 
             Return vec
