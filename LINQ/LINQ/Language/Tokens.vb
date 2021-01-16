@@ -16,7 +16,13 @@
         Symbol
         Reference
 
+        ''' <summary>
+        ''' the string interpolation
+        ''' </summary>
         Interpolation
+        ''' <summary>
+        ''' the string literal
+        ''' </summary>
         Literal
 
         Number

@@ -56,6 +56,8 @@ Module BinaryBuilder
         For Each block As Token() In blocks.Where(Function(b) Not b.IsNullOrEmpty)
             If block.Length = 1 AndAlso block(Scan0).name = Tokens.Operator Then
                 Yield block(Scan0).text
+            ElseIf block.Length = 3 AndAlso block(1).name = Tokens.Reference Then
+                Yield New MemberReference(ParseToken(block(0)), ParseToken(block(2)))
             Else
                 Yield block.ParseExpression
             End If

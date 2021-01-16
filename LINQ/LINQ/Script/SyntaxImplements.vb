@@ -68,7 +68,7 @@ Namespace Script
         End Function
 
         <Extension>
-        Private Function ParseToken(t As Token) As Expression
+        Friend Function ParseToken(t As Token) As Expression
             If t.name = Tokens.Symbol Then
                 Return New SymbolReference(t.text)
             ElseIf t.name = Tokens.Boolean OrElse

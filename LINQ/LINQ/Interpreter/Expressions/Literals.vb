@@ -24,6 +24,7 @@ Namespace Interpreter.Expressions
                 Case Tokens.Boolean : value = t.text.ParseBoolean
                 Case Tokens.Integer : value = t.text.ParseInteger
                 Case Tokens.Number : value = t.text.ParseDouble
+                Case Tokens.Literal : value = t.text
                 Case Else
                     Throw New InvalidCastException
             End Select
