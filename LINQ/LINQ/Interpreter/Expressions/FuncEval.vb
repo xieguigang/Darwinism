@@ -16,11 +16,11 @@ Namespace Interpreter.Expressions
             Dim invoke As Object = func.Exec(New ExecutableContext With {.env = context.env, .throwError = False})
 
             If invoke Is Nothing Then
-                Throw New NullReferenceException
-            ElseIf TypeOf invoke Is String Then
-                invoke = context.env.FindInvoke(invoke)
-            ElseIf TypeOf invoke Is SymbolReference Then
-                invoke = context.env.FindInvoke(DirectCast(invoke, SymbolReference).symbolName)
+                If TypeOf func Is Literals Then
+                    invoke = context.env.FindInvoke(func.Exec(Nothing))
+                ElseIf TypeOf func Is SymbolReference Then
+                    invoke = context.env.FindInvoke(DirectCast(func, SymbolReference).symbolName)
+                End If
             Else
                 Throw New NotImplementedException
             End If

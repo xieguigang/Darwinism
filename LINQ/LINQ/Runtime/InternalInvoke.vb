@@ -4,7 +4,7 @@ Namespace Runtime
 
     Public Class InternalInvoke
 
-        Shared ReadOnly invokes As Dictionary(Of String, Callable)
+        Shared ReadOnly invokes As New Dictionary(Of String, Callable)
 
         Shared Sub New()
             Call loadInternal(Of Math)()
