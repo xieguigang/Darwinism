@@ -159,6 +159,7 @@
     <Compile Include="Interpreter\Expressions\BinaryExpression.vb" />
     <Compile Include="Interpreter\Expressions\ArrayExpression.vb" />
     <Compile Include="Interpreter\Expressions\FuncEval.vb" />
+    <Compile Include="Interpreter\Expressions\Keywords\Options\SkipItems.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\Options\TakeItems.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\Options\PipelineKeyword.vb" />
     <Compile Include="Interpreter\Expressions\MemberReference.vb" />

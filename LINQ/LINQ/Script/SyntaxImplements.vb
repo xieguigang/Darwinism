@@ -193,6 +193,8 @@ Namespace Script
                 Return New OrderBy(ParseExpression(sortKey), desc)
             ElseIf tokenList(Scan0).isKeyword("take") Then
                 Return New TakeItems(ParseExpression(tokenList.Skip(1).ToArray))
+            ElseIf tokenList(Scan0).isKeyword("skip") Then
+                Return New SkipItems(ParseExpression(tokenList.Skip(1).ToArray))
             Else
                 Throw New SyntaxErrorException
             End If

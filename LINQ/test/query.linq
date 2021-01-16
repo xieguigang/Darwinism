@@ -9,5 +9,7 @@ SELECT x.LipidIon,
 	   x.Formula,
 	   x.PeakQuality,
 	   x."m-Score"
+	   
+SKIP 100
 ORDER BY pow("m-Score", PeakQuality) DESCENDING
 TAKE 15
