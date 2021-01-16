@@ -1,4 +1,7 @@
 ﻿Imports LINQ.Script
+Imports LINQ.Runtime
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports LINQ.Interpreter.Query
 
 Public Module Program
 
@@ -20,8 +23,10 @@ select x = x ^ 2+99 , y = x*2
 order by y
 "
         Dim tokens = LINQ.Language.GetTokens(script).ToArray
-        Dim query = tokens.PopulateQueryExpression
+        Dim query As ProjectionExpression = tokens.PopulateQueryExpression
+        Dim env As New GlobalEnvironment(New Registry, New NamedValue(Of Object)("y", 1))
 
+        Dim result = query.Exec(env)
 
         Pause()
     End Sub

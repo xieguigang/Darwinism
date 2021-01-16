@@ -27,9 +27,7 @@ Namespace Interpreter.Query
             Me.sequence = sequence
         End Sub
 
-        Public Overrides Function Exec(env As Environment) As Object
-            Dim projections As New List(Of Object)
-            Dim closure As New Environment(parent:=env)
+        Private Iterator Function GetSequenceObjects(env As Environment) As IEnumerable(Of Object)
             Dim seqList As Object = sequence.Exec(env)
 
             If seqList Is Nothing Then
@@ -37,14 +35,29 @@ Namespace Interpreter.Query
             Else
                 Dim type As Type = seqList.GetType
 
-                If Not type.IsArray AndAlso Not type.ImplementInterface(GetType(IEnumerable)) Then
+                If type.IsArray Then
+                    Dim a As Array = seqList
+
+                    For i As Integer = 0 To a.Length - 1
+                        Yield a.GetValue(i)
+                    Next
+                ElseIf type.ImplementInterface(GetType(IEnumerable)) Then
+                    For Each obj As Object In DirectCast(seqList, IEnumerable)
+                        Yield obj
+                    Next
+                Else
                     Throw New InvalidExpressionException("target object value is not a sequence!")
                 End If
             End If
+        End Function
+
+        Public Overrides Function Exec(env As Environment) As Object
+            Dim projections As New List(Of Object)
+            Dim closure As New Environment(parent:=env)
 
             Call closure.AddSymbol(symbol.symbolName, symbol.type)
 
-            For Each item As Object In DirectCast(seqList, IEnumerable)
+            For Each item As Object In GetSequenceObjects(env)
                 closure.FindSymbol(symbol.name).value = item
 
                 For Each line As Expression In executeQueue
