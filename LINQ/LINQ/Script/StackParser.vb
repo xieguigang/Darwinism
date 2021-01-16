@@ -39,7 +39,7 @@ Module StackParser
         Return tokenList _
             .DoSplitByTopLevelStack(Function(t)
                                         Return t.name = Tokens.keyword AndAlso Not t.text.TextEquals("as")
-                                    End Function)
+                                    End Function, True, True, False)
     End Function
 
     <Extension>
@@ -47,7 +47,7 @@ Module StackParser
         Return tokenList _
             .DoSplitByTopLevelStack(Function(t)
                                         Return t.name = Tokens.Comma
-                                    End Function)
+                                    End Function, False, False, False)
     End Function
 
     <Extension>
@@ -55,7 +55,7 @@ Module StackParser
         For Each block As Token() In tokenList _
             .DoSplitByTopLevelStack(Function(t)
                                         Return t.name = Tokens.Operator
-                                    End Function)
+                                    End Function, True, False, True)
 
             If block(Scan0).name = Tokens.Operator Then
                 Yield {block(Scan0)}
@@ -72,7 +72,11 @@ Module StackParser
     ''' <param name="tokenList"></param>
     ''' <returns></returns>
     <Extension>
-    Private Iterator Function DoSplitByTopLevelStack(tokenList As IEnumerable(Of Token), delimiter As Func(Of Token, Boolean)) As IEnumerable(Of Token())
+    Private Iterator Function DoSplitByTopLevelStack(tokenList As IEnumerable(Of Token),
+                                                     delimiter As Func(Of Token, Boolean),
+                                                     isParentStack As Boolean,
+                                                     pushStack As Boolean,
+                                                     popOnClearStack As Boolean) As IEnumerable(Of Token())
         Dim block As New List(Of Token)
         Dim stack As New Stack(Of String)
 
@@ -82,24 +86,30 @@ Module StackParser
                     block.Add(item)
                 Else
                     If block > 0 Then
-                        Yield block.PopAll
+                        If popOnClearStack AndAlso stack.Count <> 0 Then
+                            ' do nothing
+                        Else
+                            Yield block.PopAll
+                        End If
                     End If
 
                     block.Add(item)
                 End If
 
-                If stack.Count > 0 Then
-                    stack.Pop()
-                End If
+                If pushStack Then
+                    If stack.Count > 0 Then
+                        stack.Pop()
+                    End If
 
-                stack.Push(item.text)
+                    stack.Push(item.text)
+                End If
             ElseIf item.name = Tokens.Open Then
                 stack.Push(item.text)
 
                 If stack.Count > 1 Then
                     block.Add(item)
                 Else
-                    If block > 0 Then
+                    If isParentStack AndAlso block > 0 Then
                         Yield block.PopAll
                     End If
 
@@ -112,12 +122,12 @@ Module StackParser
                     Throw New SyntaxErrorException
                 End If
 
-                If stack.Count > 1 Then
+                If stack.Count > 1 OrElse (stack.Count = 1 AndAlso "([{".IndexOf(stack.Peek) > -1) Then
                     block.Add(item)
                 Else
                     block.Add(item)
 
-                    If block > 0 Then
+                    If isParentStack AndAlso block > 0 Then
                         Yield block.PopAll
                     End If
                 End If

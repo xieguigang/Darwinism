@@ -90,6 +90,8 @@ Namespace Script
                 Return New WhereFilter(ParseExpression(tokenList.Skip(1).ToArray))
             ElseIf tokenList(Scan0).isKeyword("in") Then
                 Return ParseExpression(tokenList.Skip(1).ToArray)
+            ElseIf tokenList(Scan0).isKeyword("select") Then
+
             End If
 
             Dim blocks = tokenList.SplitByTopLevelStack.ToArray
@@ -99,6 +101,11 @@ Namespace Script
 
                 If tokenList.First = (Tokens.Open, "[") OrElse tokenList.First = (Tokens.Open, "{") Then
                     Return tokenList.Skip(1).Take(tokenList.Length - 2).GetVector
+                ElseIf tokenList.First = (Tokens.Open, "(") Then
+                    tokenList = tokenList _
+                        .Skip(1) _
+                        .Take(tokenList.Length - 2) _
+                        .ToArray
                 End If
             End If
 
@@ -107,7 +114,16 @@ Namespace Script
 
         <Extension>
         Private Function GetVector(tokenList As IEnumerable(Of Token)) As Expression
-            Dim blocks = tokenList.SplitParameters.Select(Function(b) If(b.Length = 1, b, b.Skip(1).ToArray)).ToArray
+            Dim blocks As Token()() = tokenList _
+                .SplitParameters _
+                .Select(Function(b)
+                            If b(Scan0).name = Tokens.Comma Then
+                                Return b.Skip(1).ToArray
+                            Else
+                                Return b
+                            End If
+                        End Function) _
+                .ToArray
             Dim elements As Expression() = blocks.Select(AddressOf ParseExpression).ToArray
             Dim vec As New ArrayExpression(elements)
 

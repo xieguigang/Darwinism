@@ -18,5 +18,9 @@ Namespace Interpreter.Expressions
 
             End If
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"&{symbolName}"
+        End Function
     End Class
 End Namespace

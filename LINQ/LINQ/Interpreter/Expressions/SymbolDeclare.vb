@@ -10,5 +10,9 @@ Namespace Interpreter.Expressions
         Public Overrides Function Exec(env As Environment) As Object
             Throw New NotImplementedException()
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"let {symbolName} as {type}"
+        End Function
     End Class
 End Namespace
