@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.csv.IO
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports any = Microsoft.VisualBasic.Scripting
@@ -7,6 +8,7 @@ Namespace Runtime
 
     Public Module DataFrameExtensions
 
+        <Extension>
         Public Function CreateTableDataSet(output As JavaScriptObject()) As DataFrame
             Dim allNames As String() = output.Select(Function(obj) obj.GetNames).IteratesALL.Distinct.ToArray
             Dim dataset As New DataFrame(allNames)

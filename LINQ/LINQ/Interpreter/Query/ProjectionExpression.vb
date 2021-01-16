@@ -54,6 +54,13 @@ Namespace Interpreter.Query
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="env"></param>
+        ''' <returns>
+        ''' array of <see cref="JavaScriptObject"/>
+        ''' </returns>
         Public Overrides Function Exec(env As Environment) As Object
             Dim projections As New List(Of JavaScriptObject)
             Dim closure As New Environment(parent:=env)
