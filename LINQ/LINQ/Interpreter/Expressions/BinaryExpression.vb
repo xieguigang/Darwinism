@@ -4,8 +4,18 @@ Namespace Interpreter.Expressions
 
     Public Class BinaryExpression : Inherits Expression
 
-        Dim left, right As Expression
+        Friend ReadOnly left, right As Expression
         Dim op As String
+
+        Public ReadOnly Property LikeValueAssign As Boolean
+            Get
+                If op <> "=" Then
+                    Return False
+                Else
+                    Return TypeOf left Is SymbolReference
+                End If
+            End Get
+        End Property
 
         Sub New(left As Expression, right As Expression, op As String)
             Me.left = left

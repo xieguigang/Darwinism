@@ -78,14 +78,26 @@ Namespace Script
             Dim values As Expression() = tokenList.GetParameters.ToArray
             Dim fields As New List(Of NamedValue(Of Expression))
 
+            For Each item As Expression In values
+                If TypeOf item Is BinaryExpression Then
+                    With DirectCast(item, BinaryExpression)
+                        If .LikeValueAssign Then
+                            fields.Add(New NamedValue(Of Expression)(DirectCast(.left, SymbolReference).symbolName, .right))
+                        Else
+                            fields.Add(New NamedValue(Of Expression)(item.ToString, item))
+                        End If
+                    End With
+                Else
+                    fields.Add(New NamedValue(Of Expression)(item.ToString, item))
+                End If
+            Next
+
             Return New OutputProjection(fields)
         End Function
 
         <Extension>
-        Public Function ParseExpression(tokenList As Token()) As Expression
-            If tokenList.Length = 1 Then
-                Return tokenList(Scan0).ParseToken
-            ElseIf tokenList(Scan0).isKeywordFrom OrElse tokenList(Scan0).isKeywordAggregate OrElse tokenList(Scan0).isKeyword("let") Then
+        Private Function ParseKeywordExpression(tokenList As Token()) As Expression
+            If tokenList(Scan0).isKeywordFrom OrElse tokenList(Scan0).isKeywordAggregate OrElse tokenList(Scan0).isKeyword("let") Then
                 ' declare new symbol
                 Dim name As String = tokenList(1).text
                 Dim type As String = "any"
@@ -101,6 +113,17 @@ Namespace Script
                 Return ParseExpression(tokenList.Skip(1).ToArray)
             ElseIf tokenList(Scan0).isKeyword("select") Then
                 Return tokenList.Skip(1).GetProjection
+            Else
+                Throw New SyntaxErrorException
+            End If
+        End Function
+
+        <Extension>
+        Public Function ParseExpression(tokenList As Token()) As Expression
+            If tokenList.Length = 1 Then
+                Return tokenList(Scan0).ParseToken
+            ElseIf tokenList(Scan0).name = Tokens.keyword Then
+                Return tokenList.ParseKeywordExpression
             End If
 
             Dim blocks = tokenList.SplitByTopLevelStack.ToArray

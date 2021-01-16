@@ -4,7 +4,7 @@ Namespace Interpreter.Expressions
 
     Public Class SymbolReference : Inherits Expression
 
-        Dim symbolName As String
+        Friend ReadOnly symbolName As String
 
         Sub New(name As String)
             Me.symbolName = name
