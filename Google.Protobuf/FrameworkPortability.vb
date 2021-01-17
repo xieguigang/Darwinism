@@ -30,7 +30,6 @@
 ' OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #End Region
 
-Imports System
 Imports System.Text.RegularExpressions
 
 Namespace Google.Protobuf
