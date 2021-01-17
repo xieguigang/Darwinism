@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <RootNamespace></RootNamespace>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyTitle>CodeGenerator</AssemblyTitle>
+    <Description>Generates C# code from a .proto file</Description>
+    <Copyright>Peter Hultqvist 2015</Copyright>
+    <AssemblyVersion>2015.10.13</AssemblyVersion>
+    <FileVersion>2015.10.13</FileVersion>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ConsolePause>False</ConsolePause>
+    <Commandlineparameters>--fix-nameclash ../../../TestProgram/ProtoSpec/LocalFeatures.proto --no-generate-imported --output ../../../TestProgram/Generated/GeneratedLocal.cs --ctor --utc --skip-default</Commandlineparameters>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ConsolePause>False</ConsolePause>
+    <Commandlineparameters>--fix-nameclash ../../../TestProgram/ProtoSpec/ImportAll.proto --ctor --utc --output ../../../TestProgram/Generated/Generated.vb</Commandlineparameters>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+    <OutputType>Library</OutputType>
+    <AssemblyName>Google.Protobuf</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BuildTests|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;BUILD_TESTS</DefineConstants>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ProtocolParser\**" />
+    <EmbeddedResource Remove="ProtocolParser\**" />
+    <None Remove="ProtocolParser\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj" />
+  </ItemGroup>
+</Project>
