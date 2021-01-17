@@ -30,7 +30,6 @@
 ' OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #End Region
 
-Imports System
 Imports System.IO
 
 Namespace Google.Protobuf
@@ -54,11 +53,15 @@ Namespace Google.Protobuf
         End Function
 
         Friend Shared Function TruncatedMessage() As InvalidProtocolBufferException
-            Return New InvalidProtocolBufferException("While parsing a protocol message, the input ended unexpectedly " & "in the middle of a field.  This could mean either than the " & "input has been truncated or that an embedded message " & "misreported its own length.")
+            Return New InvalidProtocolBufferException("While parsing a protocol message, the input ended unexpectedly " &
+                                                      "in the middle of a field.  This could mean either than the " &
+                                                      "input has been truncated or that an embedded message " &
+                                                      "misreported its own length.")
         End Function
 
         Friend Shared Function NegativeSize() As InvalidProtocolBufferException
-            Return New InvalidProtocolBufferException("CodedInputStream encountered an embedded string or message " & "which claimed to have negative size.")
+            Return New InvalidProtocolBufferException("CodedInputStream encountered an embedded string or message " &
+                                                      "which claimed to have negative size.")
         End Function
 
         Friend Shared Function MalformedVarint() As InvalidProtocolBufferException
@@ -81,15 +84,18 @@ Namespace Google.Protobuf
         End Function
 
         Friend Shared Function RecursionLimitExceeded() As InvalidProtocolBufferException
-            Return New InvalidProtocolBufferException("Protocol message had too many levels of nesting.  May be malicious.  " & "Use CodedInputStream.SetRecursionLimit() to increase the depth limit.")
+            Return New InvalidProtocolBufferException("Protocol message had too many levels of nesting.  May be malicious.  " &
+                                                      "Use CodedInputStream.SetRecursionLimit() to increase the depth limit.")
         End Function
 
         Friend Shared Function JsonRecursionLimitExceeded() As InvalidProtocolBufferException
-            Return New InvalidProtocolBufferException("Protocol message had too many levels of nesting.  May be malicious.  " & "Use JsonParser.Settings to increase the depth limit.")
+            Return New InvalidProtocolBufferException("Protocol message had too many levels of nesting.  May be malicious.  " &
+                                                      "Use JsonParser.Settings to increase the depth limit.")
         End Function
 
         Friend Shared Function SizeLimitExceeded() As InvalidProtocolBufferException
-            Return New InvalidProtocolBufferException("Protocol message was too large.  May be malicious.  " & "Use CodedInputStream.SetSizeLimit() to increase the size limit.")
+            Return New InvalidProtocolBufferException("Protocol message was too large.  May be malicious.  " &
+                                                      "Use CodedInputStream.SetSizeLimit() to increase the size limit.")
         End Function
 
         Friend Shared Function InvalidMessageStreamTag() As InvalidProtocolBufferException
