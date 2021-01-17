@@ -1,4 +1,7 @@
-﻿Namespace Google.Protobuf.WellKnownTypes
+﻿Imports Microsoft.VisualBasic.Language
+Imports pbr = Google.Protobuf.Reflection
+
+Namespace Google.Protobuf.WellKnownTypes
 #Region "Messages"
 
     ''' <summary>

@@ -2,7 +2,6 @@
 ' source: google/protobuf/wrappers.proto
 #Region "Designer generated code"
 
-Imports Microsoft.VisualBasic.Language
 Imports pbr = Google.Protobuf.Reflection
 
 Namespace Google.Protobuf.WellKnownTypes
