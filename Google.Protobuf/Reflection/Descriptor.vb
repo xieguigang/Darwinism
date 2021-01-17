@@ -2,12 +2,13 @@
 ' source: google/protobuf/descriptor.proto
 #Region "Designer generated code"
 
+Imports Microsoft.VisualBasic.Language
 Imports pbc = Google.Protobuf.Collections
 
 Namespace Google.Protobuf.Reflection
 
     ''' <summary>Holder for reflection information generated from google/protobuf/descriptor.proto</summary>
-    Friend Partial Module DescriptorReflection
+    Partial Friend Module DescriptorReflection
 
 #Region "Descriptor"
         ''' <summary>File descriptor for google/protobuf/descriptor.proto</summary>
@@ -31,7 +32,7 @@ Namespace Google.Protobuf.Reflection
     '''  The protocol compiler can output a FileDescriptorSet containing the .proto
     '''  files it parses.
     ''' </summary>
-    Friend NotInheritable Partial Class FileDescriptorSet
+    Partial Friend NotInheritable Class FileDescriptorSet
         Implements IMessageType(Of FileDescriptorSet)
 
         Private Shared ReadOnly _parser As MessageParserType(Of FileDescriptorSet) = New MessageParserType(Of FileDescriptorSet)(Function() New FileDescriptorSet())
@@ -142,33 +143,25 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         file_.AddEntriesFrom(input, _repeated_file_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  Describes a complete .proto file.
     ''' </summary>
-    Friend NotInheritable Partial Class FileDescriptorProto
+    Partial Friend NotInheritable Class FileDescriptorProto
         Implements IMessageType(Of FileDescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of FileDescriptorProto) = New MessageParserType(Of FileDescriptorProto)(Function() New FileDescriptorProto())
@@ -569,32 +562,32 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         Package = input.ReadString()
-                        Exit Select
+
                     Case 26
                         dependency_.AddEntriesFrom(input, _repeated_dependency_codec)
-                        Exit Select
+
                     Case 34
                         messageType_.AddEntriesFrom(input, _repeated_messageType_codec)
-                        Exit Select
+
                     Case 42
                         enumType_.AddEntriesFrom(input, _repeated_enumType_codec)
-                        Exit Select
+
                     Case 50
                         service_.AddEntriesFrom(input, _repeated_service_codec)
-                        Exit Select
+
                     Case 58
                         extension_.AddEntriesFrom(input, _repeated_extension_codec)
-                        Exit Select
+
                     Case 66
 
                         If options_ Is Nothing Then
@@ -602,7 +595,7 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case 74
 
                         If sourceCodeInfo_ Is Nothing Then
@@ -610,35 +603,27 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(sourceCodeInfo_)
-                        Exit Select
+
                     Case 82, 80
                         publicDependency_.AddEntriesFrom(input, _repeated_publicDependency_codec)
-                        Exit Select
+
                     Case 90, 88
                         weakDependency_.AddEntriesFrom(input, _repeated_weakDependency_codec)
-                        Exit Select
+
                     Case 98
                         Syntax = input.ReadString()
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  Describes a message type.
     ''' </summary>
-    Friend NotInheritable Partial Class DescriptorProto
+    Partial Friend NotInheritable Class DescriptorProto
         Implements IMessageType(Of DescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of DescriptorProto) = New MessageParserType(Of DescriptorProto)(Function() New DescriptorProto())
@@ -946,29 +931,29 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         field_.AddEntriesFrom(input, _repeated_field_codec)
-                        Exit Select
+
                     Case 26
                         nestedType_.AddEntriesFrom(input, _repeated_nestedType_codec)
-                        Exit Select
+
                     Case 34
                         enumType_.AddEntriesFrom(input, _repeated_enumType_codec)
-                        Exit Select
+
                     Case 42
                         extensionRange_.AddEntriesFrom(input, _repeated_extensionRange_codec)
-                        Exit Select
+
                     Case 50
                         extension_.AddEntriesFrom(input, _repeated_extension_codec)
-                        Exit Select
+
                     Case 58
 
                         If options_ Is Nothing Then
@@ -976,16 +961,16 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case 66
                         oneofDecl_.AddEntriesFrom(input, _repeated_oneofDecl_codec)
-                        Exit Select
+
                     Case 74
                         reservedRange_.AddEntriesFrom(input, _repeated_reservedRange_codec)
-                        Exit Select
+
                     Case 82
                         reservedName_.AddEntriesFrom(input, _repeated_reservedName_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -995,8 +980,8 @@ Namespace Google.Protobuf.Reflection
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the DescriptorProto message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
-            Friend NotInheritable Partial Class ExtensionRange
+        Partial Public NotInheritable Class Types
+            Partial Friend NotInheritable Class ExtensionRange
                 Implements IMessageType(Of ExtensionRange)
 
                 Private Shared ReadOnly _parser As MessageParserType(Of ExtensionRange) = New MessageParserType(Of ExtensionRange)(Function() New ExtensionRange())
@@ -1148,30 +1133,22 @@ Namespace Google.Protobuf.Reflection
 
                 <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
                 Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-                    Dim tag As UInteger
+                    Dim tag As New Value(Of UInteger)
 
-                    While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+                    While ((tag = input.ReadTag())) <> 0
 
-                        Select Case tag
+                        Select Case tag.Value
                             Case 8
                                 Start = input.ReadInt32()
-                                Exit Select
+
                             Case 16
                                 [End] = input.ReadInt32()
-                                Exit Select
+
                             Case Else
                                 input.SkipLastField()
                         End Select
                     End While
                 End Sub
-
-                Private Class CSharpImpl
-                    <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-                    Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                        target = value
-                        Return value
-                    End Function
-                End Class
             End Class
 
             ''' <summary>
@@ -1179,7 +1156,7 @@ Namespace Google.Protobuf.Reflection
             '''  fields or extension ranges in the same message. Reserved ranges may
             '''  not overlap.
             ''' </summary>
-            Friend NotInheritable Partial Class ReservedRange
+            Partial Friend NotInheritable Class ReservedRange
                 Implements IMessageType(Of ReservedRange)
 
                 Private Shared ReadOnly _parser As MessageParserType(Of ReservedRange) = New MessageParserType(Of ReservedRange)(Function() New ReservedRange())
@@ -1335,39 +1312,23 @@ Namespace Google.Protobuf.Reflection
 
                 <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
                 Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-                    Dim tag As UInteger
+                    Dim tag As New Value(Of UInteger)
 
-                    While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+                    While ((tag = input.ReadTag())) <> 0
 
-                        Select Case tag
+                        Select Case tag.Value
                             Case 8
                                 Start = input.ReadInt32()
-                                Exit Select
+
                             Case 16
                                 [End] = input.ReadInt32()
-                                Exit Select
+
                             Case Else
                                 input.SkipLastField()
                         End Select
                     End While
                 End Sub
-
-                Private Class CSharpImpl
-                    <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-                    Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                        target = value
-                        Return value
-                    End Function
-                End Class
             End Class
-        End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
         End Class
 #End Region
 
@@ -1376,7 +1337,7 @@ Namespace Google.Protobuf.Reflection
     ''' <summary>
     '''  Describes a field within a message.
     ''' </summary>
-    Friend NotInheritable Partial Class FieldDescriptorProto
+    Partial Friend NotInheritable Class FieldDescriptorProto
         Implements IMessageType(Of FieldDescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of FieldDescriptorProto) = New MessageParserType(Of FieldDescriptorProto)(Function() New FieldDescriptorProto())
@@ -1798,32 +1759,32 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         Extendee = input.ReadString()
-                        Exit Select
+
                     Case 24
                         Number = input.ReadInt32()
-                        Exit Select
+
                     Case 32
                         label_ = CType(input.ReadEnum(), Global.Google.Protobuf.Reflection.FieldDescriptorProto.Types.Label)
-                        Exit Select
+
                     Case 40
                         type_ = CType(input.ReadEnum(), Global.Google.Protobuf.Reflection.FieldDescriptorProto.Types.Type)
-                        Exit Select
+
                     Case 50
                         TypeName = input.ReadString()
-                        Exit Select
+
                     Case 58
                         DefaultValue = input.ReadString()
-                        Exit Select
+
                     Case 66
 
                         If options_ Is Nothing Then
@@ -1831,13 +1792,13 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case 72
                         OneofIndex = input.ReadInt32()
-                        Exit Select
+
                     Case 82
                         JsonName = input.ReadString()
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -1847,7 +1808,7 @@ Namespace Google.Protobuf.Reflection
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the FieldDescriptorProto message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
+        Partial Public NotInheritable Class Types
             Friend Enum Type
                 ''' <summary>
                 '''  0 is reserved for errors.
@@ -1929,14 +1890,6 @@ Namespace Google.Protobuf.Reflection
                 Repeated = 3
             End Enum
         End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
 #End Region
 
     End Class
@@ -1944,7 +1897,7 @@ Namespace Google.Protobuf.Reflection
     ''' <summary>
     '''  Describes a oneof.
     ''' </summary>
-    Friend NotInheritable Partial Class OneofDescriptorProto
+    Partial Friend NotInheritable Class OneofDescriptorProto
         Implements IMessageType(Of OneofDescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of OneofDescriptorProto) = New MessageParserType(Of OneofDescriptorProto)(Function() New OneofDescriptorProto())
@@ -2100,14 +2053,14 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
 
                         If options_ Is Nothing Then
@@ -2115,26 +2068,18 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  Describes an enum type.
     ''' </summary>
-    Friend NotInheritable Partial Class EnumDescriptorProto
+    Partial Friend NotInheritable Class EnumDescriptorProto
         Implements IMessageType(Of EnumDescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of EnumDescriptorProto) = New MessageParserType(Of EnumDescriptorProto)(Function() New EnumDescriptorProto())
@@ -2311,17 +2256,17 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         value_.AddEntriesFrom(input, _repeated_value_codec)
-                        Exit Select
+
                     Case 26
 
                         If options_ Is Nothing Then
@@ -2329,26 +2274,18 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  Describes a value within an enum.
     ''' </summary>
-    Friend NotInheritable Partial Class EnumValueDescriptorProto
+    Partial Friend NotInheritable Class EnumValueDescriptorProto
         Implements IMessageType(Of EnumValueDescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of EnumValueDescriptorProto) = New MessageParserType(Of EnumValueDescriptorProto)(Function() New EnumValueDescriptorProto())
@@ -2534,17 +2471,17 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 16
                         Number = input.ReadInt32()
-                        Exit Select
+
                     Case 26
 
                         If options_ Is Nothing Then
@@ -2552,26 +2489,18 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  Describes a service.
     ''' </summary>
-    Friend NotInheritable Partial Class ServiceDescriptorProto
+    Partial Friend NotInheritable Class ServiceDescriptorProto
         Implements IMessageType(Of ServiceDescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of ServiceDescriptorProto) = New MessageParserType(Of ServiceDescriptorProto)(Function() New ServiceDescriptorProto())
@@ -2748,17 +2677,17 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
                 Select Case tag
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         method_.AddEntriesFrom(input, _repeated_method_codec)
-                        Exit Select
+
                     Case 26
 
                         If options_ Is Nothing Then
@@ -2766,26 +2695,18 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  Describes a method of a service.
     ''' </summary>
-    Friend NotInheritable Partial Class MethodDescriptorProto
+    Partial Friend NotInheritable Class MethodDescriptorProto
         Implements IMessageType(Of MethodDescriptorProto)
 
         Private Shared ReadOnly _parser As MessageParserType(Of MethodDescriptorProto) = New MessageParserType(Of MethodDescriptorProto)(Function() New MethodDescriptorProto())
@@ -3068,20 +2989,20 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         InputType = input.ReadString()
-                        Exit Select
+
                     Case 26
                         OutputType = input.ReadString()
-                        Exit Select
+
                     Case 34
 
                         If options_ Is Nothing Then
@@ -3089,29 +3010,21 @@ Namespace Google.Protobuf.Reflection
                         End If
 
                         input.ReadMessage(options_)
-                        Exit Select
+
                     Case 40
                         ClientStreaming = input.ReadBool()
-                        Exit Select
+
                     Case 48
                         ServerStreaming = input.ReadBool()
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
-    Friend NotInheritable Partial Class FileOptions
+    Partial Friend NotInheritable Class FileOptions
         Implements IMessageType(Of FileOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of FileOptions) = New MessageParserType(Of FileOptions)(Function() New FileOptions())
@@ -3713,56 +3626,56 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         JavaPackage = input.ReadString()
-                        Exit Select
+
                     Case 66
                         JavaOuterClassname = input.ReadString()
-                        Exit Select
+
                     Case 72
                         optimizeFor_ = CType(input.ReadEnum(), Global.Google.Protobuf.Reflection.FileOptions.Types.OptimizeMode)
-                        Exit Select
+
                     Case 80
                         JavaMultipleFiles = input.ReadBool()
-                        Exit Select
+
                     Case 90
                         GoPackage = input.ReadString()
-                        Exit Select
+
                     Case 128
                         CcGenericServices = input.ReadBool()
-                        Exit Select
+
                     Case 136
                         JavaGenericServices = input.ReadBool()
-                        Exit Select
+
                     Case 144
                         PyGenericServices = input.ReadBool()
-                        Exit Select
+
                     Case 160
                         JavaGenerateEqualsAndHash = input.ReadBool()
-                        Exit Select
+
                     Case 184
                         Deprecated = input.ReadBool()
-                        Exit Select
+
                     Case 216
                         JavaStringCheckUtf8 = input.ReadBool()
-                        Exit Select
+
                     Case 248
                         CcEnableArenas = input.ReadBool()
-                        Exit Select
+
                     Case 290
                         ObjcClassPrefix = input.ReadString()
-                        Exit Select
+
                     Case 298
                         CsharpNamespace = input.ReadString()
-                        Exit Select
+
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -3772,7 +3685,7 @@ Namespace Google.Protobuf.Reflection
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the FileOptions message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
+        Partial Public NotInheritable Class Types
             ''' <summary>
             '''  Generated classes can be optimized for speed or code size.
             ''' </summary>
@@ -3794,19 +3707,11 @@ Namespace Google.Protobuf.Reflection
                 LiteRuntime = 3
             End Enum
         End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
 #End Region
 
     End Class
 
-    Friend NotInheritable Partial Class MessageOptions
+    Partial Friend NotInheritable Class MessageOptions
         Implements IMessageType(Of MessageOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of MessageOptions) = New MessageParserType(Of MessageOptions)(Function() New MessageOptions())
@@ -4090,42 +3995,34 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 8
                         MessageSetWireFormat = input.ReadBool()
-                        Exit Select
+
                     Case 16
                         NoStandardDescriptorAccessor = input.ReadBool()
-                        Exit Select
+
                     Case 24
                         Deprecated = input.ReadBool()
-                        Exit Select
+
                     Case 56
                         MapEntry = input.ReadBool()
-                        Exit Select
+
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
-    Friend NotInheritable Partial Class FieldOptions
+    Partial Friend NotInheritable Class FieldOptions
         Implements IMessageType(Of FieldOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of FieldOptions) = New MessageParserType(Of FieldOptions)(Function() New FieldOptions())
@@ -4475,32 +4372,32 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 8
                         ctype_ = CType(input.ReadEnum(), Global.Google.Protobuf.Reflection.FieldOptions.Types.CType)
-                        Exit Select
+
                     Case 16
                         Packed = input.ReadBool()
-                        Exit Select
+
                     Case 24
                         Deprecated = input.ReadBool()
-                        Exit Select
+
                     Case 40
                         Lazy = input.ReadBool()
-                        Exit Select
+
                     Case 48
                         jstype_ = CType(input.ReadEnum(), Global.Google.Protobuf.Reflection.FieldOptions.Types.JSType)
-                        Exit Select
+
                     Case 80
                         Weak = input.ReadBool()
-                        Exit Select
+
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -4510,7 +4407,7 @@ Namespace Google.Protobuf.Reflection
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the FieldOptions message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
+        Partial Public NotInheritable Class Types
             Friend Enum [CType]
                 ''' <summary>
                 '''  Default mode.
@@ -4541,19 +4438,11 @@ Namespace Google.Protobuf.Reflection
                 JsNumber = 2
             End Enum
         End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
 #End Region
 
     End Class
 
-    Friend NotInheritable Partial Class OneofOptions
+    Partial Friend NotInheritable Class OneofOptions
         Implements IMessageType(Of OneofOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of OneofOptions) = New MessageParserType(Of OneofOptions)(Function() New OneofOptions())
@@ -4666,30 +4555,22 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
-    Friend NotInheritable Partial Class EnumOptions
+    Partial Friend NotInheritable Class EnumOptions
         Implements IMessageType(Of EnumOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of EnumOptions) = New MessageParserType(Of EnumOptions)(Function() New EnumOptions())
@@ -4871,36 +4752,28 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 16
                         AllowAlias = input.ReadBool()
-                        Exit Select
+
                     Case 24
                         Deprecated = input.ReadBool()
-                        Exit Select
+
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
-    Friend NotInheritable Partial Class EnumValueOptions
+    Partial Friend NotInheritable Class EnumValueOptions
         Implements IMessageType(Of EnumValueOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of EnumValueOptions) = New MessageParserType(Of EnumValueOptions)(Function() New EnumValueOptions())
@@ -5049,33 +4922,25 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 8
                         Deprecated = input.ReadBool()
-                        Exit Select
+
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
-    Friend NotInheritable Partial Class ServiceOptions
+    Partial Friend NotInheritable Class ServiceOptions
         Implements IMessageType(Of ServiceOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of ServiceOptions) = New MessageParserType(Of ServiceOptions)(Function() New ServiceOptions())
@@ -5224,33 +5089,25 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 264
                         Deprecated = input.ReadBool()
-                        Exit Select
+
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
-    Friend NotInheritable Partial Class MethodOptions
+    Partial Friend NotInheritable Class MethodOptions
         Implements IMessageType(Of MethodOptions)
 
         Private Shared ReadOnly _parser As MessageParserType(Of MethodOptions) = New MessageParserType(Of MethodOptions)(Function() New MethodOptions())
@@ -5399,30 +5256,22 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 264
                         Deprecated = input.ReadBool()
-                        Exit Select
+
                     Case 7994
                         uninterpretedOption_.AddEntriesFrom(input, _repeated_uninterpretedOption_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
@@ -5433,7 +5282,7 @@ Namespace Google.Protobuf.Reflection
     '''  or produced by Descriptor::CopyTo()) will never have UninterpretedOptions
     '''  in them.
     ''' </summary>
-    Friend NotInheritable Partial Class UninterpretedOption
+    Partial Friend NotInheritable Class UninterpretedOption
         Implements IMessageType(Of UninterpretedOption)
 
         Private Shared ReadOnly _parser As MessageParserType(Of UninterpretedOption) = New MessageParserType(Of UninterpretedOption)(Function() New UninterpretedOption())
@@ -5728,32 +5577,32 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 18
                         name_.AddEntriesFrom(input, _repeated_name_codec)
-                        Exit Select
+
                     Case 26
                         IdentifierValue = input.ReadString()
-                        Exit Select
+
                     Case 32
                         PositiveIntValue = input.ReadUInt64()
-                        Exit Select
+
                     Case 40
                         NegativeIntValue = input.ReadInt64()
-                        Exit Select
+
                     Case 49
                         DoubleValue = input.ReadDouble()
-                        Exit Select
+
                     Case 58
                         StringValue = input.ReadBytes()
-                        Exit Select
+
                     Case 66
                         AggregateValue = input.ReadString()
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -5763,7 +5612,7 @@ Namespace Google.Protobuf.Reflection
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the UninterpretedOption message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
+        Partial Public NotInheritable Class Types
             ''' <summary>
             '''  The name of the uninterpreted option.  Each string represents a segment in
             '''  a dot-separated name.  is_extension is true iff a segment represents an
@@ -5771,7 +5620,7 @@ Namespace Google.Protobuf.Reflection
             '''  E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false] } represents
             '''  "foo.(bar.baz).qux".
             ''' </summary>
-            Friend NotInheritable Partial Class NamePart
+            Partial Friend NotInheritable Class NamePart
                 Implements IMessageType(Of NamePart)
 
                 Private Shared ReadOnly _parser As MessageParserType(Of NamePart) = New MessageParserType(Of NamePart)(Function() New NamePart())
@@ -5923,39 +5772,23 @@ Namespace Google.Protobuf.Reflection
 
                 <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
                 Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-                    Dim tag As UInteger
+                    Dim tag As New Value(Of UInteger)
 
-                    While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+                    While ((tag = input.ReadTag())) <> 0
 
-                        Select Case tag
+                        Select Case tag.Value
                             Case 10
                                 NamePart_ = input.ReadString()
-                                Exit Select
+
                             Case 16
                                 IsExtension = input.ReadBool()
-                                Exit Select
+
                             Case Else
                                 input.SkipLastField()
                         End Select
                     End While
                 End Sub
-
-                Private Class CSharpImpl
-                    <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-                    Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                        target = value
-                        Return value
-                    End Function
-                End Class
             End Class
-        End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
         End Class
 #End Region
 
@@ -5965,7 +5798,7 @@ Namespace Google.Protobuf.Reflection
     '''  Encapsulates information about the original source file from which a
     '''  FileDescriptorProto was generated.
     ''' </summary>
-    Friend NotInheritable Partial Class SourceCodeInfo
+    Partial Friend NotInheritable Class SourceCodeInfo
         Implements IMessageType(Of SourceCodeInfo)
 
         Private Shared ReadOnly _parser As MessageParserType(Of SourceCodeInfo) = New MessageParserType(Of SourceCodeInfo)(Function() New SourceCodeInfo())
@@ -6120,14 +5953,14 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         location_.AddEntriesFrom(input, _repeated_location_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -6137,8 +5970,8 @@ Namespace Google.Protobuf.Reflection
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the SourceCodeInfo message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
-            Friend NotInheritable Partial Class Location
+        Partial Public NotInheritable Class Types
+            Partial Friend NotInheritable Class Location
                 Implements IMessageType(Of Location)
 
                 Private Shared ReadOnly _parser As MessageParserType(Of Location) = New MessageParserType(Of Location)(Function() New Location())
@@ -6426,48 +6259,32 @@ Namespace Google.Protobuf.Reflection
 
                 <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
                 Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-                    Dim tag As UInteger
+                    Dim tag As New Value(Of UInteger)
 
-                    While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+                    While ((tag = input.ReadTag())) <> 0
 
                         Select Case tag
                             Case 10, 8
                                 path_.AddEntriesFrom(input, _repeated_path_codec)
-                                Exit Select
+
                             Case 18, 16
                                 span_.AddEntriesFrom(input, _repeated_span_codec)
-                                Exit Select
+
                             Case 26
                                 LeadingComments = input.ReadString()
-                                Exit Select
+
                             Case 34
                                 TrailingComments = input.ReadString()
-                                Exit Select
+
                             Case 50
                                 leadingDetachedComments_.AddEntriesFrom(input, _repeated_leadingDetachedComments_codec)
-                                Exit Select
+
                             Case Else
                                 input.SkipLastField()
                         End Select
                     End While
                 End Sub
-
-                Private Class CSharpImpl
-                    <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-                    Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                        target = value
-                        Return value
-                    End Function
-                End Class
             End Class
-        End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
         End Class
 #End Region
 
@@ -6478,7 +6295,7 @@ Namespace Google.Protobuf.Reflection
     '''  file. A GeneratedCodeInfo message is associated with only one generated
     '''  source file, but may contain references to different source .proto files.
     ''' </summary>
-    Friend NotInheritable Partial Class GeneratedCodeInfo
+    Partial Friend NotInheritable Class GeneratedCodeInfo
         Implements IMessageType(Of GeneratedCodeInfo)
 
         Private Shared ReadOnly _parser As MessageParserType(Of GeneratedCodeInfo) = New MessageParserType(Of GeneratedCodeInfo)(Function() New GeneratedCodeInfo())
@@ -6592,14 +6409,14 @@ Namespace Google.Protobuf.Reflection
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         annotation_.AddEntriesFrom(input, _repeated_annotation_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -6609,8 +6426,8 @@ Namespace Google.Protobuf.Reflection
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the GeneratedCodeInfo message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
-            Friend NotInheritable Partial Class Annotation
+        Partial Public NotInheritable Class Types
+            Partial Friend NotInheritable Class Annotation
                 Implements IMessageType(Of Annotation)
 
                 Private Shared ReadOnly _parser As MessageParserType(Of Annotation) = New MessageParserType(Of Annotation)(Function() New Annotation())
@@ -6824,45 +6641,29 @@ Namespace Google.Protobuf.Reflection
 
                 <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
                 Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-                    Dim tag As UInteger
+                    Dim tag As New Value(Of UInteger)
 
-                    While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+                    While ((tag = input.ReadTag())) <> 0
 
-                        Select Case tag
+                        Select Case tag.Value
                             Case 10, 8
                                 path_.AddEntriesFrom(input, _repeated_path_codec)
-                                Exit Select
+
                             Case 18
                                 SourceFile = input.ReadString()
-                                Exit Select
+
                             Case 24
                                 Begin = input.ReadInt32()
-                                Exit Select
+
                             Case 32
                                 [End] = input.ReadInt32()
-                                Exit Select
+
                             Case Else
                                 input.SkipLastField()
                         End Select
                     End While
                 End Sub
-
-                Private Class CSharpImpl
-                    <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-                    Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                        target = value
-                        Return value
-                    End Function
-                End Class
             End Class
-        End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
         End Class
 #End Region
 

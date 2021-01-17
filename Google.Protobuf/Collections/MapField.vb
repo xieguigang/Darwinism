@@ -31,6 +31,7 @@
 #End Region
 
 Imports Google.Protobuf.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports System
 Imports System.Collections
 Imports System.Collections.Generic
@@ -640,13 +641,13 @@ Namespace Google.Protobuf.Collections
                 End Sub
 
                 Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-                    Dim tag As UInteger
+                    Dim tag As New Value(Of UInteger)
 
-                    While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+                    While ((tag = input.ReadTag())) <> 0
 
-                        If tag = codec.keyCodec.Tag Then
+                        If tag.Value = codec.keyCodec.Tag Then
                             Key = codec.keyCodec.Read(input)
-                        ElseIf tag = codec.valueCodec.Tag Then
+                        ElseIf tag.Value = codec.valueCodec.Tag Then
                             Value = codec.valueCodec.Read(input)
                         Else
                             input.SkipLastField()
@@ -674,14 +675,6 @@ Namespace Google.Protobuf.Collections
                         Return Nothing
                     End Get
                 End Property
-
-                Private Class CSharpImpl
-                    <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-                    Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                        target = value
-                        Return value
-                    End Function
-                End Class
             End Class
         End Class
 

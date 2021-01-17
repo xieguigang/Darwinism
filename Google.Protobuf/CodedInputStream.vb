@@ -30,9 +30,8 @@
 ' OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #End Region
 
-Imports System
-Imports System.Collections.Generic
 Imports System.IO
+Imports Microsoft.VisualBasic.Language
 
 Namespace Google.Protobuf
     ''' <summary>
@@ -333,14 +332,14 @@ Namespace Google.Protobuf
             ' Optimize for the incredibly common case of having at least two bytes left in the buffer,
             ' and those two bytes being enough to get the tag. This will be true for fields up to 4095.
             If bufferPos + 2 <= bufferSizeField Then
-                Dim tmp As Integer = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))
+                Dim tmp As i32 = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))
 
                 If tmp < 128 Then
                     lastTagField = CUInt(tmp)
                 Else
                     Dim result = tmp And &H7F
 
-                    If CSharpImpl.__Assign(tmp, buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
+                    If (tmp = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
                         result = result Or tmp << 7
                         lastTagField = CUInt(result)
                     Else
@@ -644,7 +643,7 @@ Namespace Google.Protobuf
         ''' buffer overflow.
         ''' </summary>
         Private Function SlowReadRawVarint32() As UInteger
-            Dim tmp As Integer = ReadRawByte()
+            Dim tmp As i32 = ReadRawByte()
 
             If tmp < 128 Then
                 Return tmp
@@ -652,21 +651,21 @@ Namespace Google.Protobuf
 
             Dim result = tmp And &H7F
 
-            If (CSharpImpl.__Assign(tmp, ReadRawByte())) < 128 Then
+            If (tmp = ReadRawByte()) < 128 Then
                 result = result Or tmp << 7
             Else
                 result = result Or (tmp And &H7F) << 7
 
-                If (CSharpImpl.__Assign(tmp, ReadRawByte())) < 128 Then
+                If (tmp = ReadRawByte()) < 128 Then
                     result = result Or tmp << 14
                 Else
                     result = result Or (tmp And &H7F) << 14
 
-                    If (CSharpImpl.__Assign(tmp, ReadRawByte())) < 128 Then
+                    If (tmp = ReadRawByte()) < 128 Then
                         result = result Or tmp << 21
                     Else
                         result = result Or (tmp And &H7F) << 21
-                        result = result Or (CSharpImpl.__Assign(tmp, ReadRawByte())) << 28
+                        result = result Or (tmp = ReadRawByte()) << 28
 
                         If tmp >= 128 Then
                             ' Discard upper 32 bits.
@@ -697,7 +696,7 @@ Namespace Google.Protobuf
                 Return SlowReadRawVarint32()
             End If
 
-            Dim tmp As Integer = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))
+            Dim tmp As i32 = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))
 
             If tmp < 128 Then
                 Return tmp
@@ -705,21 +704,21 @@ Namespace Google.Protobuf
 
             Dim result = tmp And &H7F
 
-            If CSharpImpl.__Assign(tmp, buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
+            If (tmp = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
                 result = result Or tmp << 7
             Else
                 result = result Or (tmp And &H7F) << 7
 
-                If CSharpImpl.__Assign(tmp, buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
+                If (tmp = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
                     result = result Or tmp << 14
                 Else
                     result = result Or (tmp And &H7F) << 14
 
-                    If CSharpImpl.__Assign(tmp, buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
+                    If (tmp = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) < 128 Then
                         result = result Or tmp << 21
                     Else
                         result = result Or (tmp And &H7F) << 21
-                        result = result Or CSharpImpl.__Assign(tmp, buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) << 28
+                        result = result Or (tmp = buffer(Math.Min(Threading.Interlocked.Increment(bufferPos), bufferPos - 1))) << 28
 
                         If tmp >= 128 Then
                             ' Discard upper 32 bits.
@@ -1068,7 +1067,7 @@ Namespace Google.Protobuf
 
                 ' Read all the rest of the bytes we need.
                 Dim sizeLeft = size - (originalBufferSize - originalBufferPos)
-                Dim chunks As List(Of Byte()) = New List(Of Byte())()
+                Dim chunks As New List(Of Byte())()
 
                 While sizeLeft > 0
                     Dim chunk = New Byte(Math.Min(sizeLeft, buffer.Length) - 1) {}
@@ -1174,15 +1173,6 @@ Namespace Google.Protobuf
                 End While
             End If
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-
 #End Region
     End Class
 End Namespace

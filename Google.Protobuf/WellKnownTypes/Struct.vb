@@ -2,6 +2,7 @@
 ' source: google/protobuf/struct.proto
 #Region "Designer generated code"
 
+Imports Microsoft.VisualBasic.Language
 Imports pbc = Google.Protobuf.Collections
 Imports pbr = Google.Protobuf.Reflection
 
@@ -168,27 +169,19 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         fields_.AddEntriesFrom(input, _map_fields_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
@@ -512,24 +505,24 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 8
                         kind_ = input.ReadEnum()
                         kindCase_ = KindOneofCase.NullValue
-                        Exit Select
+
                     Case 17
                         NumberValue = input.ReadDouble()
-                        Exit Select
+
                     Case 26
                         StringValue = input.ReadString()
-                        Exit Select
+
                     Case 32
                         BoolValue = input.ReadBool()
-                        Exit Select
+
                     Case 42
                         Dim subBuilder As Global.Google.Protobuf.WellKnownTypes.Struct = New Global.Google.Protobuf.WellKnownTypes.Struct()
 
@@ -539,7 +532,7 @@ Namespace Google.Protobuf.WellKnownTypes
 
                         input.ReadMessage(subBuilder)
                         StructValue = subBuilder
-                        Exit Select
+
                     Case 50
                         Dim subBuilder As Global.Google.Protobuf.WellKnownTypes.ListValue = New Global.Google.Protobuf.WellKnownTypes.ListValue()
 
@@ -549,20 +542,12 @@ Namespace Google.Protobuf.WellKnownTypes
 
                         input.ReadMessage(subBuilder)
                         ListValue = subBuilder
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
@@ -683,27 +668,19 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         values_.AddEntriesFrom(input, _repeated_values_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
 #End Region

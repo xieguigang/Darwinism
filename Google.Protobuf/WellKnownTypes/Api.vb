@@ -2,6 +2,7 @@
 ' source: google/protobuf/api.proto
 #Region "Designer generated code"
 
+Imports Microsoft.VisualBasic.Language
 Imports pbc = Google.Protobuf.Collections
 Imports pbr = Google.Protobuf.Reflection
 
@@ -342,23 +343,23 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         methods_.AddEntriesFrom(input, _repeated_methods_codec)
-                        Exit Select
+
                     Case 26
                         options_.AddEntriesFrom(input, _repeated_options_codec)
-                        Exit Select
+
                     Case 34
                         Version = input.ReadString()
-                        Exit Select
+
                     Case 42
 
                         If sourceContext_ Is Nothing Then
@@ -366,26 +367,18 @@ Namespace Google.Protobuf.WellKnownTypes
                         End If
 
                         input.ReadMessage(sourceContext_)
-                        Exit Select
+
                     Case 50
                         mixins_.AddEntriesFrom(input, _repeated_mixins_codec)
-                        Exit Select
+
                     Case 56
                         syntax_ = CType(input.ReadEnum(), Global.Google.Protobuf.WellKnownTypes.Syntax)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
@@ -698,45 +691,37 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         RequestTypeUrl = input.ReadString()
-                        Exit Select
+
                     Case 24
                         RequestStreaming = input.ReadBool()
-                        Exit Select
+
                     Case 34
                         ResponseTypeUrl = input.ReadString()
-                        Exit Select
+
                     Case 40
                         ResponseStreaming = input.ReadBool()
-                        Exit Select
+
                     Case 50
                         options_.AddEntriesFrom(input, _repeated_options_codec)
-                        Exit Select
+
                     Case 56
                         syntax_ = CType(input.ReadEnum(), Global.Google.Protobuf.WellKnownTypes.Syntax)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
@@ -975,30 +960,22 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         Root = input.ReadString()
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
 #End Region

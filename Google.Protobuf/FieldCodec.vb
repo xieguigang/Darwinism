@@ -31,6 +31,7 @@
 #End Region
 
 Imports Google.Protobuf.WellKnownTypes
+Imports Microsoft.VisualBasic.Language
 Imports System
 Imports System.Collections.Generic
 
@@ -259,12 +260,12 @@ Namespace Google.Protobuf
             Friend Shared Function Read(Of T)(input As CodedInputStream, codec As FieldCodecType(Of T)) As T
                 Dim length As Integer = input.ReadLength()
                 Dim oldLimit = input.PushLimit(length)
-                Dim tag As UInteger
+                Dim tag As New Value(Of UInteger)
                 Dim value = codec.DefaultValue
 
-                While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+                While (tag = input.ReadTag()) <> 0
 
-                    If tag = codec.Tag Then
+                    If tag.Value = codec.Tag Then
                         value = codec.Read(input)
                     Else
                         input.SkipLastField()
@@ -285,14 +286,6 @@ Namespace Google.Protobuf
                 Dim fieldLength = codec.CalculateSizeWithTag(value)
                 Return CodedOutputStream.ComputeLengthSize(fieldLength) + fieldLength
             End Function
-
-            Private Class CSharpImpl
-                <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-                Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                    target = value
-                    Return value
-                End Function
-            End Class
         End Class
     End Module
 

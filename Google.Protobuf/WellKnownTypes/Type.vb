@@ -2,6 +2,7 @@
 ' source: google/protobuf/type.proto
 #Region "Designer generated code"
 
+Imports Microsoft.VisualBasic.Language
 Imports pbc = Google.Protobuf.Collections
 Imports pbr = Google.Protobuf.Reflection
 
@@ -305,23 +306,23 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         fields_.AddEntriesFrom(input, _repeated_fields_codec)
-                        Exit Select
+
                     Case 26
                         oneofs_.AddEntriesFrom(input, _repeated_oneofs_codec)
-                        Exit Select
+
                     Case 34
                         options_.AddEntriesFrom(input, _repeated_options_codec)
-                        Exit Select
+
                     Case 42
 
                         If sourceContext_ Is Nothing Then
@@ -329,29 +330,21 @@ Namespace Google.Protobuf.WellKnownTypes
                         End If
 
                         input.ReadMessage(sourceContext_)
-                        Exit Select
+
                     Case 48
                         syntax_ = CType(input.ReadEnum(), Global.Google.Protobuf.WellKnownTypes.Syntax)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  A single field of a message type.
     ''' </summary>
-    Public NotInheritable Partial Class Field
+    Partial Public NotInheritable Class Field
         Implements IMessageType(Of Field)
 
         Private Shared ReadOnly _parser As MessageParserType(Of Field) = New MessageParserType(Of Field)(Function() New Field())
@@ -756,41 +749,41 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 8
                         kind_ = CType(input.ReadEnum(), Global.Google.Protobuf.WellKnownTypes.Field.Types.Kind)
-                        Exit Select
+
                     Case 16
                         cardinality_ = CType(input.ReadEnum(), Global.Google.Protobuf.WellKnownTypes.Field.Types.Cardinality)
-                        Exit Select
+
                     Case 24
                         Number = input.ReadInt32()
-                        Exit Select
+
                     Case 34
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 50
                         TypeUrl = input.ReadString()
-                        Exit Select
+
                     Case 56
                         OneofIndex = input.ReadInt32()
-                        Exit Select
+
                     Case 64
                         Packed = input.ReadBool()
-                        Exit Select
+
                     Case 74
                         options_.AddEntriesFrom(input, _repeated_options_codec)
-                        Exit Select
+
                     Case 82
                         JsonName = input.ReadString()
-                        Exit Select
+
                     Case 90
                         DefaultValue = input.ReadString()
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
@@ -800,7 +793,7 @@ Namespace Google.Protobuf.WellKnownTypes
 #Region "Nested types"
         ''' <summary>Container for nested types declared in the Field message type.</summary>
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
-        Public NotInheritable Partial Class Types
+        Partial Public NotInheritable Class Types
             ''' <summary>
             '''  Basic field types.
             ''' </summary>
@@ -928,14 +921,6 @@ Namespace Google.Protobuf.WellKnownTypes
                 Repeated = 3
             End Enum
         End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
 #End Region
 
     End Class
@@ -943,7 +928,7 @@ Namespace Google.Protobuf.WellKnownTypes
     ''' <summary>
     '''  Enum type definition.
     ''' </summary>
-    Public NotInheritable Partial Class [Enum]
+    Partial Public NotInheritable Class [Enum]
         Implements IMessageType(Of [Enum])
 
         Private Shared ReadOnly _parser As MessageParserType(Of [Enum]) = New MessageParserType(Of [Enum])(Function() New [Enum]())
@@ -1178,20 +1163,20 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
                         enumvalue_.AddEntriesFrom(input, _repeated_enumvalue_codec)
-                        Exit Select
+
                     Case 26
                         options_.AddEntriesFrom(input, _repeated_options_codec)
-                        Exit Select
+
                     Case 34
 
                         If sourceContext_ Is Nothing Then
@@ -1199,29 +1184,21 @@ Namespace Google.Protobuf.WellKnownTypes
                         End If
 
                         input.ReadMessage(sourceContext_)
-                        Exit Select
+
                     Case 40
                         syntax_ = CType(input.ReadEnum(), Global.Google.Protobuf.WellKnownTypes.Syntax)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  Enum value definition.
     ''' </summary>
-    Public NotInheritable Partial Class EnumValue
+    Partial Public NotInheritable Class EnumValue
         Implements IMessageType(Of EnumValue)
 
         Private Shared ReadOnly _parser As MessageParserType(Of EnumValue) = New MessageParserType(Of EnumValue)(Function() New EnumValue())
@@ -1399,40 +1376,32 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 16
                         Number = input.ReadInt32()
-                        Exit Select
+
                     Case 26
                         options_.AddEntriesFrom(input, _repeated_options_codec)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
     ''' <summary>
     '''  A protocol buffer option, which can be attached to a message, field,
     '''  enumeration, etc.
     ''' </summary>
-    Public NotInheritable Partial Class [Option]
+    Partial Public NotInheritable Class [Option]
         Implements IMessageType(Of [Option])
 
         Private Shared ReadOnly _parser As MessageParserType(Of [Option]) = New MessageParserType(Of [Option])(Function() New [Option]())
@@ -1592,14 +1561,14 @@ Namespace Google.Protobuf.WellKnownTypes
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute>
         Public Sub MergeFrom(input As CodedInputStream) Implements IMessage.MergeFrom
-            Dim tag As UInteger
+            Dim tag As New Value(Of UInteger)
 
-            While (CSharpImpl.__Assign(tag, input.ReadTag())) <> 0
+            While ((tag = input.ReadTag())) <> 0
 
-                Select Case tag
+                Select Case tag.Value
                     Case 10
                         Name = input.ReadString()
-                        Exit Select
+
                     Case 18
 
                         If value_ Is Nothing Then
@@ -1607,20 +1576,12 @@ Namespace Google.Protobuf.WellKnownTypes
                         End If
 
                         input.ReadMessage(value_)
-                        Exit Select
+
                     Case Else
                         input.SkipLastField()
                 End Select
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
 #End Region

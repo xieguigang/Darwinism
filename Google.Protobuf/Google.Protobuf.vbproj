@@ -62,6 +62,6 @@
     <Folder Include="My Project\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj" />
+    <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj" />
   </ItemGroup>
 </Project>
