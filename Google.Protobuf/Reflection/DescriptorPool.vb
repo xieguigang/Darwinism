@@ -70,7 +70,7 @@ Namespace Google.Protobuf.Reflection
         ''' <summary>
         ''' Finds a symbol of the given name within the pool.
         ''' </summary>
-        ''' <typeparamname="T">The type of symbol to look for</typeparam>
+        ''' <typeparam name="T">The type of symbol to look for</typeparam>
         ''' <param name="fullName">Fully-qualified name to look up</param>
         ''' <returns>The symbol with the given name and type,
         ''' or null if the symbol doesn't exist or has the wrong type</returns>

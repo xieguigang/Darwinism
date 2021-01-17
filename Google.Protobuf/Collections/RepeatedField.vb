@@ -44,7 +44,7 @@ Namespace Google.Protobuf.Collections
     ''' This implementation does not generally prohibit the use of types which are not
     ''' supported by Protocol Buffers but nor does it guarantee that all operations will work in such cases.
     ''' </remarks>
-    ''' <typeparamname="T">The element type of the repeated field.</typeparam>
+    ''' <typeparam name="T">The element type of the repeated field.</typeparam>
     Public NotInheritable Class RepeatedField(Of T)
         Implements IList(Of T), IList, IDeepCloneable(Of RepeatedField(Of T)), IEquatable(Of RepeatedField(Of T))
 

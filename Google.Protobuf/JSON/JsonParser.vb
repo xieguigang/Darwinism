@@ -350,7 +350,7 @@ _Select0_CaseDefault:
         ''' <summary>
         ''' Parses <paramrefname="json"/> into a new message.
         ''' </summary>
-        ''' <typeparamname="T">The type of message to create.</typeparam>
+        ''' <typeparam name="T">The type of message to create.</typeparam>
         ''' <param name="json">The JSON to parse.</param>
         ''' <exception cref="InvalidJsonException">The JSON does not comply with RFC 7159</exception>
         ''' <exception cref="InvalidProtocolBufferException">The JSON does not represent a Protocol Buffers message correctly</exception>
@@ -362,7 +362,7 @@ _Select0_CaseDefault:
         ''' <summary>
         ''' Parses JSON read from <paramrefname="jsonReader"/> into a new message.
         ''' </summary>
-        ''' <typeparamname="T">The type of message to create.</typeparam>
+        ''' <typeparam name="T">The type of message to create.</typeparam>
         ''' <param name="jsonReader">Reader providing the JSON to parse.</param>
         ''' <exception cref="InvalidJsonException">The JSON does not comply with RFC 7159</exception>
         ''' <exception cref="InvalidProtocolBufferException">The JSON does not represent a Protocol Buffers message correctly</exception>

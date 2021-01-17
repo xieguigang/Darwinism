@@ -41,7 +41,7 @@ Namespace Google.Protobuf
     ''' it is simpler to keep this as a separate interface.
     ''' </para>
     ''' </remarks>
-    ''' <typeparamname="T">The type itself, returned by the <see cref="Clone"/> method.</typeparam>
+    ''' <typeparam name="T">The type itself, returned by the <see cref="Clone"/> method.</typeparam>
     Public Interface IDeepCloneable(Of T)
         ''' <summary>
         ''' Creates a deep clone of this object.

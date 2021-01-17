@@ -187,7 +187,7 @@ Namespace Google.Protobuf.Reflection
         ''' Finds a type (message, enum, service or extension) in the file by name. Does not find nested types.
         ''' </summary>
         ''' <param name="name">The unqualified type name to look for.</param>
-        ''' <typeparamname="T">The type of descriptor to look for</typeparam>
+        ''' <typeparam name="T">The type of descriptor to look for</typeparam>
         ''' <returns>The type's descriptor, or null if not found.</returns>
         Public Function FindTypeByName(Of T As {Class, IDescriptor})(name As String) As T
             ' Don't allow looking up nested types.  This will make optimization

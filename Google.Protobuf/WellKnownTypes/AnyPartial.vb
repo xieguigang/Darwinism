@@ -61,7 +61,7 @@ Namespace Google.Protobuf.WellKnownTypes
         ''' Unpacks the content of this Any message into the target message type,
         ''' which must match the type URL within this Any message.
         ''' </summary>
-        ''' <typeparamname="T">The type of message to unpack the content into.</typeparam>
+        ''' <typeparam name="T">The type of message to unpack the content into.</typeparam>
         ''' <returns>The unpacked message.</returns>
         ''' <exception cref="InvalidProtocolBufferException">The target message type doesn't match the type URL in this message</exception>
         Public Function Unpack(Of T As {IMessage, New})() As T

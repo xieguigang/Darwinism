@@ -43,8 +43,8 @@ Namespace Google.Protobuf.Collections
     ''' <summary>
     ''' Representation of a map field in a Protocol Buffer message.
     ''' </summary>
-    ''' <typeparamname="TKey">Key type in the map. Must be a type supported by Protocol Buffer map keys.</typeparam>
-    ''' <typeparamname="TValue">Value type in the map. Must be a type supported by Protocol Buffers.</typeparam>
+    ''' <typeparam name="TKey">Key type in the map. Must be a type supported by Protocol Buffer map keys.</typeparam>
+    ''' <typeparam name="TValue">Value type in the map. Must be a type supported by Protocol Buffers.</typeparam>
     ''' <remarks>
     ''' <para>
     ''' For string keys, the equality comparison is provided by <see cref="StringComparer.Ordinal"/>.

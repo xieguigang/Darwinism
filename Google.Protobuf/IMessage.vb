@@ -72,7 +72,7 @@ Namespace Google.Protobuf
     ''' where the type parameter is expected to be the same type as
     ''' the implementation class.
     ''' </summary>
-    ''' <typeparamname="T">The message type.</typeparam>
+    ''' <typeparam name="T">The message type.</typeparam>
     Public Interface IMessageType(Of T As IMessageType(Of T))
         Inherits IMessage, IEquatable(Of T), IDeepCloneable(Of T)
         ''' <summary>
