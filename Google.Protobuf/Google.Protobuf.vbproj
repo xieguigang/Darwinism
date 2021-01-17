@@ -47,6 +47,8 @@
     <StartupObject />
     <OutputType>Library</OutputType>
     <AssemblyName>Google.Protobuf</AssemblyName>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BuildTests|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
