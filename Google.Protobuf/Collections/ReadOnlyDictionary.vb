@@ -30,12 +30,10 @@
 ' OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #End Region
 
-Imports System
-Imports System.Collections
-Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
 
 Namespace Google.Protobuf.Collections
+
     ''' <summary>
     ''' Read-only wrapper around another dictionary.
     ''' </summary>

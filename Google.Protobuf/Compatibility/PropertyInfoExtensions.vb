@@ -34,20 +34,22 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
 Namespace Google.Protobuf.Compatibility
+
     ''' <summary>
     ''' Extension methods for <see cref="PropertyInfo"/>, effectively providing
     ''' the familiar members from previous desktop framework versions while
     ''' targeting the newer releases, .NET Core etc.
     ''' </summary>
     Friend Module PropertyInfoExtensions
+
         ''' <summary>
         ''' Returns the public getter of a property, or null if there is no such getter
         ''' (either because it's read-only, or the getter isn't public).
         ''' </summary>
         <Extension()>
         Friend Function GetGetMethod(target As PropertyInfo) As MethodInfo
-#If DOTNET35
-            var method = target.GetGetMethod();
+#If DOTNET35 Then
+            Dim method = target.GetGetMethod()
 #Else
             Dim method = target.GetMethod
 #End If
@@ -60,8 +62,8 @@ Namespace Google.Protobuf.Compatibility
         ''' </summary>
         <Extension()>
         Friend Function GetSetMethod(target As PropertyInfo) As MethodInfo
-#If DOTNET35
-            var method = target.GetSetMethod();
+#If DOTNET35 Then
+            Dim method = target.GetSetMethod()
 #Else
             Dim method = target.SetMethod
 #End If

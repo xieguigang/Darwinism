@@ -31,6 +31,7 @@
 #End Region
 
 Namespace Google.Protobuf
+
     ''' <summary>
     ''' A message type that has a custom string format for diagnostic purposes.
     ''' </summary>
@@ -53,6 +54,7 @@ Namespace Google.Protobuf
     ''' </remarks>
     Public Interface ICustomDiagnosticMessage
         Inherits IMessage
+
         ''' <summary>
         ''' Returns a string representation of this object, for diagnostic purposes.
         ''' </summary>

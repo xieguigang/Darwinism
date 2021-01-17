@@ -30,12 +30,13 @@
 ' OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #End Region
 
-Imports System
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
-#If Not DOTNET35
+#If Not DOTNET35 Then
+
 Namespace Google.Protobuf.Compatibility
+
     ''' <summary>
     ''' Provides extension methods on Type that just proxy to TypeInfo.
     ''' These are used to support the new type system from .NET 4.5, without
@@ -45,6 +46,7 @@ Namespace Google.Protobuf.Compatibility
     ''' evaluate each new use appropriately.
     ''' </summary>
     Friend Module TypeExtensions
+
         ''' <summary>
         ''' See https://msdn.microsoft.com/en-us/library/system.type.isassignablefrom
         ''' </summary>
