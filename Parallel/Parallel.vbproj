@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -103,14 +103,15 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IpcParallel\IDelegate.vb" />
+    <Compile Include="IpcParallel\IPCSocket.vb" />
+    <Compile Include="IpcParallel\ObjectStream.vb" />
+    <Compile Include="IpcParallel\Protocols.vb" />
+    <Compile Include="IpcParallel\SlaveTask.vb" />
+    <Compile Include="IpcParallel\StreamMethods.vb" />
+    <Compile Include="IpcParallel\TaskBuilder.vb" />
     <Compile Include="MemoryMap\UnmanageMemoryRegion.vb" />
     <Compile Include="MemoryMap\MapObject.vb" />
-    <Compile Include="StreamMethods.vb" />
-    <Compile Include="TaskBuilder.vb" />
-    <Compile Include="ObjectStream.vb" />
-    <Compile Include="Protocols.vb" />
-    <Compile Include="IPCSocket.vb" />
-    <Compile Include="IDelegate.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -126,7 +127,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SlaveTask.vb" />
+    <Compile Include="ThreadTask\ThreadTask.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -161,5 +162,6 @@
       <Name>Microsoft.VisualBasic.Network</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

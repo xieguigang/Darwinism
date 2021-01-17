@@ -83,7 +83,7 @@ Public Class SlaveTask
         'End If
 
 #If netcore5 = 0 Then
-        resultStream = CommandLine.CallDotNetCorePipeline(processor, commandlineArgvs)
+        Call CommandLine.Call(processor, commandlineArgvs)
 #Else
         Call CommandLine.Call(processor, commandlineArgvs, dotnet:=True)
 #End If
