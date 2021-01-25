@@ -12,17 +12,11 @@ Public Module BatchTasks
     ''' thread task. Any positive value that greater than 1 will be parallel task.
     ''' (小于等于零表示非并行化，单线程任务)
     ''' </param>
-    ''' <param name="smart">Smart mode CPU load threshold, if the <paramref name="parallel"/> 
-    ''' parameter value is less than or equals to 1, then this parameter will be disabled.
-    ''' </param>
     ''' <returns>
     ''' Returns the total executation time for running this task collection.
     ''' (返回任务的执行的总时长)
     ''' </returns>
-    Public Function SelfFolks&(CLI As IEnumerable(Of String),
-                               Optional parallel% = 0,
-                               Optional smart# = 0)
-
+    Public Function SelfFolks(CLI As IEnumerable(Of String), Optional parallel% = 0) As Long
         Dim sw As Stopwatch = Stopwatch.StartNew
 
         If parallel <= 0 Then
