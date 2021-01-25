@@ -19,6 +19,14 @@ Public Class ThreadTask(Of TOut)
         Me.size = Me.taskList.Count
     End Sub
 
+    Public Shared Function CreateThreads(Of T)(items As IEnumerable(Of T), task As Func(Of T, Func(Of TOut))) As ThreadTask(Of TOut)
+        Return New ThreadTask(Of TOut)(items.Select(task))
+    End Function
+
+    Public Shared Function CreateThreads(Of T)(items As IEnumerable(Of T), task As Func(Of T, TOut)) As ThreadTask(Of TOut)
+        Return New ThreadTask(Of TOut)(items.Select(Function(i) New Func(Of TOut)(Function() task(i))))
+    End Function
+
     ''' <summary>
     ''' You can controls the parallel tasks number from this parameter, smaller or equals to ZERO means auto 
     ''' config the thread number, If want single thread, not parallel, set this value to 1, and positive 
