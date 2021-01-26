@@ -57,7 +57,7 @@ Public Class SlaveTask
         End If
     End Function
 
-    Public Function RunTask(entry As [Delegate], ParamArray parameters As Object()) As Object
+    Public Function RunTask(Of T)(entry As [Delegate], ParamArray parameters As Object()) As T
         Dim target As New IDelegate(entry)
         Dim result As Object = Nothing
         Dim host As IPCSocket = Nothing
@@ -78,8 +78,8 @@ Public Class SlaveTask
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
 
         'If Not debugPort Is Nothing Then
-        ' Console.WriteLine(commandlineArgvs)
-        ' Pause()
+        '    Console.WriteLine(commandlineArgvs)
+        '    Pause()
         'End If
 
 #If netcore5 = 0 Then

@@ -23,6 +23,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     Public Function Run() As Integer Implements ITaskDriver.Run
         Dim task As IDelegate = GetMethod()
         Dim api As MethodInfo = task.GetMethod
+        Dim target As Object = task.GetMethodTarget
         Dim n As Integer = GetArgumentValueNumber()
         Dim args As New List(Of Object)
 
@@ -45,8 +46,8 @@ Public Class TaskBuilder : Implements ITaskDriver
 
         ' send debug message
         Call New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
-        Call PostFinished(api.Invoke(Nothing, args.ToArray))
-        ' Call PostStdOut(api.Invoke(Nothing, args.ToArray))
+        Call PostFinished(api.Invoke(target, args.ToArray))
+        ' Call PostStdOut(api.Invoke(target, args.ToArray))
         Call Console.WriteLine("job done!")
 
         Return 0

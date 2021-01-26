@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 #If netcore5 = 1 Then
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
 #End If
@@ -27,18 +28,40 @@ Public Class IDelegate
         Call Me.New(target.Method)
     End Sub
 
+    Public Function GetMethodTarget() As Object
+        Dim type As Type = provideType()
+
+        If VBLanguage.IsValidVBSymbolName(name) Then
+            Return Nothing
+        Else
+            Return Activator.CreateInstance(type)
+        End If
+    End Function
+
+    Private Function provideType() As Type
+        Return type.GetType(knownFirst:=True, searchPath:={filepath})
+    End Function
+
     Public Function GetMethod() As MethodInfo
-        Dim type As Type = Me.type.GetType(knownFirst:=True, searchPath:={filepath})
+        Dim type As Type = provideType()
 
 #If netcore5 = 1 Then
         Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
 #End If
 
-        For Each method As MethodInfo In CType(type, System.Reflection.TypeInfo).DeclaredMethods
-            If method.IsStatic AndAlso method.Name = name Then
-                Return method
-            End If
-        Next
+        If Not VBLanguage.IsValidVBSymbolName(name) Then
+            For Each method As MethodInfo In CType(type, System.Reflection.TypeInfo).DeclaredMethods
+                If (Not method.IsStatic) AndAlso method.Name = name Then
+                    Return method
+                End If
+            Next
+        Else
+            For Each method As MethodInfo In CType(type, System.Reflection.TypeInfo).DeclaredMethods
+                If method.IsStatic AndAlso method.Name = name Then
+                    Return method
+                End If
+            Next
+        End If
 
         Return Nothing
     End Function
