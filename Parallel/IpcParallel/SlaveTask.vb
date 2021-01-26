@@ -10,8 +10,8 @@ Public Delegate Function ISlaveTask(processor As InteropService, port As Integer
 
 Public Class SlaveTask
 
-    ReadOnly toBuffers As New Dictionary(Of Type, Func(Of Object, Stream))
-    ReadOnly fromBuffer As New Dictionary(Of Type, Func(Of Stream, Object))
+    ReadOnly toBuffers As New Dictionary(Of Type, toBuffer)
+    ReadOnly loadBuffers As New Dictionary(Of Type, loadBuffer)
     ReadOnly processor As InteropService
     ReadOnly builder As ISlaveTask
     ReadOnly debugPort As Integer?
@@ -32,15 +32,15 @@ Public Class SlaveTask
     End Function
 
     Public Function Emit(Of T)(fromStream As Func(Of Stream, T)) As SlaveTask
-        fromBuffer(GetType(T)) = Function(buf) fromStream(buf)
+        loadBuffers(GetType(T)) = Function(buf) fromStream(buf)
         Return Me
     End Function
 
     Private Function handlePOST(buf As Stream, type As Type, debugCode As Integer) As Object
         Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
 
-        If fromBuffer.ContainsKey(type) Then
-            Return fromBuffer(type)(buf)
+        If loadBuffers.ContainsKey(type) Then
+            Return loadBuffers(type)(buf)
         Else
             Return BSONFormat.Load(buf).CreateObject(type)
         End If
