@@ -87,7 +87,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Function PostError(err As Exception) As Integer
-
+        Call PostFinished(New IPCError(err))
 
         Return 500
     End Function
@@ -100,7 +100,12 @@ Public Class TaskBuilder : Implements ITaskDriver
                 buffer:=New StreamPipe(buf).Read
             )
 
-            Call Console.WriteLine($"post result...")
+            If TypeOf result Is IPCError Then
+                Call Console.WriteLine($"post error...")
+            Else
+                Call Console.WriteLine($"post result...")
+            End If
+
             Call New TcpRequest(masterPort).SendMessage(request)
         End Using
     End Sub
