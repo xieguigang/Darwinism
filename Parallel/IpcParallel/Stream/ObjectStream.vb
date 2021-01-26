@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
@@ -13,6 +14,12 @@ Public Class ObjectStream : Inherits RawStream
     Public Property method As StreamMethods
     Public Property stream As Byte()
     Public Property type As TypeInfo
+
+    Public ReadOnly Property isPrimitive As Boolean
+        Get
+            Return DataFramework.IsPrimitive(type.GetType(knownFirst:=True))
+        End Get
+    End Property
 
     Sub New(type As TypeInfo, method As StreamMethods, stream As Stream)
         Me.method = method
@@ -36,6 +43,10 @@ Public Class ObjectStream : Inherits RawStream
             stream = read.ReadBytes(size)
         End Using
     End Sub
+
+    Public Function openMemoryBuffer() As MemoryStream
+        Return New MemoryStream(stream)
+    End Function
 
     Public Overrides Function Serialize() As Byte()
         Using ms As New MemoryStream

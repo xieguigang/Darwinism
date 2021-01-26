@@ -2,63 +2,40 @@
 Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.BSON
-Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Public Delegate Function ISlaveTask(processor As InteropService, port As Integer) As String
 
 Public Class SlaveTask
 
-    ReadOnly toBuffers As New Dictionary(Of Type, toBuffer)
-    ReadOnly loadBuffers As New Dictionary(Of Type, loadBuffer)
     ReadOnly processor As InteropService
     ReadOnly builder As ISlaveTask
     ReadOnly debugPort As Integer?
+    ReadOnly streamBuf As New StreamEmit
 
     Sub New(processor As InteropService, cli As ISlaveTask, Optional debugPort As Integer? = Nothing)
         Me.builder = cli
         Me.processor = processor
         Me.debugPort = debugPort
-
-        For Each [handle] In EmitHandler.PopulatePrimitiveHandles
-            toBuffers(handle.target) = handle.emit
-        Next
     End Sub
 
     Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As SlaveTask
-        toBuffers(GetType(T)) = Function(obj) streamAs(obj)
+        Call streamBuf.Emit(streamAs)
         Return Me
     End Function
 
     Public Function Emit(Of T)(fromStream As Func(Of Stream, T)) As SlaveTask
-        loadBuffers(GetType(T)) = Function(buf) fromStream(buf)
+        Call streamBuf.Emit(fromStream)
         Return Me
     End Function
 
     Private Function handlePOST(buf As Stream, type As Type, debugCode As Integer) As Object
         Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
-
-        If loadBuffers.ContainsKey(type) Then
-            Return loadBuffers(type)(buf)
-        Else
-            Return BSONFormat.Load(buf).CreateObject(type)
-        End If
+        Return streamBuf.handleCreate(buf, type, StreamMethods.Auto)
     End Function
 
     Private Function handleGET(param As Object, i As Integer, debugCode As Integer) As ObjectStream
-        Dim type As Type = param.GetType
-
         Call Console.WriteLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
-
-        If toBuffers.ContainsKey(type) Then
-            Return New ObjectStream(New TypeInfo(type, fullpath:=True), StreamMethods.Emit, toBuffers(type)(param))
-        Else
-            Dim element = type.GetJsonElement(param, New JSONSerializerOptions)
-            Dim buf As Stream = BSONFormat.SafeGetBuffer(element)
-
-            Return New ObjectStream(New TypeInfo(type, fullpath:=True), StreamMethods.BSON, buf)
-        End If
+        Return streamBuf.handleSerialize(param)
     End Function
 
     Public Function RunTask(Of T)(entry As [Delegate], ParamArray parameters As Object()) As T
@@ -102,27 +79,4 @@ Public Class SlaveTask
 
         Return result
     End Function
-
-    Private Function decomposingStdoutput(buffer As MemoryStream, type As Type, host As Integer) As Object
-        Using reader As New StreamReader(buffer)
-            Dim str As Value(Of String) = ""
-
-            Do While (str = reader.ReadLine) <> TaskBuilder.streamDelimiter
-                ' Call Console.WriteLine($"[{host.ToHexString}] {str.Value}")
-            Loop
-
-            Dim dataSize As Integer = Integer.Parse(reader.ReadLine)
-            Dim chunkBuffer As Byte() = New Byte(dataSize - 1) {}
-
-            Call Console.WriteLine($"[{host.ToHexString}] chunksize: {dataSize}/{buffer.Length}")
-
-            buffer.Seek(buffer.Length - dataSize, SeekOrigin.Begin)
-            buffer.Read(chunkBuffer, Scan0, chunkBuffer.Length)
-
-            Using resultBuffer As New MemoryStream(chunkBuffer)
-                Return handlePOST(resultBuffer, type, host)
-            End Using
-        End Using
-    End Function
-
 End Class

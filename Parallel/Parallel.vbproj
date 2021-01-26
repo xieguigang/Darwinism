@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="IpcParallel\IDelegate.vb" />
     <Compile Include="IpcParallel\IPCSocket.vb" />
+    <Compile Include="IpcParallel\Stream\StreamEmit.vb" />
     <Compile Include="IpcParallel\Stream\EmitHandler.vb" />
     <Compile Include="IpcParallel\Stream\ObjectStream.vb" />
     <Compile Include="IpcParallel\Protocols.vb" />

@@ -1,20 +1,18 @@
 ﻿Imports System.IO
 Imports System.Reflection
-Imports System.Text
 #If netcore5 = 1 Then
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
 #End If
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class TaskBuilder : Implements ITaskDriver
 
     ReadOnly masterPort As Integer
+    ReadOnly emit As New StreamEmit
 
     Sub New(port As Integer)
         masterPort = port
@@ -46,9 +44,14 @@ Public Class TaskBuilder : Implements ITaskDriver
 
         ' send debug message
         Call New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
-        Call PostFinished(api.Invoke(target, args.ToArray))
-        ' Call PostStdOut(api.Invoke(target, args.ToArray))
-        Call Console.WriteLine("job done!")
+
+        Try
+            Call PostFinished(api.Invoke(target, args.ToArray))
+        Catch ex As Exception
+            Call PostError(ex)
+        Finally
+            Call Console.WriteLine("job done!")
+        End Try
 
         Return 0
     End Function
@@ -78,11 +81,9 @@ Public Class TaskBuilder : Implements ITaskDriver
         Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
 #End If
 
-        If stream.method = StreamMethods.BSON Then
-            Return BSONFormat.Load(stream.stream).CreateObject(type)
-        Else
-            Throw New NotImplementedException
-        End If
+        Using buf As MemoryStream = stream.openMemoryBuffer
+            Return emit.handleCreate(buf, type, stream.method)
+        End Using
     End Function
 
     Private Function PostError(err As Exception) As Integer
@@ -91,36 +92,16 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return 500
     End Function
 
-    Friend Const streamDelimiter As String = "------endoftext------"
-
-    ''' <summary>
-    ''' 将结果数据写到标准输出上
-    ''' </summary>
-    ''' <param name="result"></param>
-    Private Sub PostStdOut(result As Object)
-        Dim type As Type = result.GetType
-        Dim element = type.GetJsonElement(result, New JSONSerializerOptions)
-        Dim buf As MemoryStream = BSONFormat.SafeGetBuffer(element)
-        Dim bufferSize As String = buf.Length
-        Dim outstream As Stream = Console.OpenStandardOutput
-
-        Call Console.WriteLine(streamDelimiter)
-        Call Console.WriteLine(bufferSize)
-        Call Console.Write(vbCrLf)
-
-        Using stdout As New BinaryWriter(outstream)
-            Call stdout.Write(buf.ToArray)
-            Call stdout.Flush()
-        End Using
-    End Sub
-
     Private Sub PostFinished(result As Object)
-        Dim type As Type = result.GetType
-        Dim element = type.GetJsonElement(result, New JSONSerializerOptions)
-        Dim buf As Stream = BSONFormat.SafeGetBuffer(element)
-        Dim request As New RequestStream(IPCSocket.Protocol, Protocols.PostResult, New StreamPipe(buf).Read)
+        Using buf As Stream = emit.handleSerialize(result).openMemoryBuffer
+            Dim request As New RequestStream(
+                protocolCategory:=IPCSocket.Protocol,
+                protocol:=Protocols.PostResult,
+                buffer:=New StreamPipe(buf).Read
+            )
 
-        Call Console.WriteLine($"post result: {type.GetObjectJson(result, indent:=False)}")
-        Call New TcpRequest(masterPort).SendMessage(request)
+            Call Console.WriteLine($"post result...")
+            Call New TcpRequest(masterPort).SendMessage(request)
+        End Using
     End Sub
 End Class
