@@ -1,12 +1,16 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+#If netcore5 = 1 Then
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+#End If
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
+#If netcore5 = 1 Then
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+#End If
 
 <Protocol(GetType(Protocols))>
 Public Class IPCSocket : Implements ITaskDriver

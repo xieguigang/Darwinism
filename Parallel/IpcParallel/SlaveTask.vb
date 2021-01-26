@@ -77,10 +77,10 @@ Public Class SlaveTask
         ' Dim resultStream As MemoryStream
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
 
-        'If Not debugPort Is Nothing Then
-        '    Console.WriteLine(commandlineArgvs)
-        '    Pause()
-        'End If
+        If Not debugPort Is Nothing Then
+            Console.WriteLine(commandlineArgvs)
+            Pause()
+        End If
 
 #If netcore5 = 0 Then
         Call CommandLine.Call(processor, commandlineArgvs)
