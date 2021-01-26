@@ -124,10 +124,11 @@
   <ItemGroup>
     <Compile Include="IpcParallel\IDelegate.vb" />
     <Compile Include="IpcParallel\IPCSocket.vb" />
-    <Compile Include="IpcParallel\ObjectStream.vb" />
+    <Compile Include="IpcParallel\Stream\EmitHandler.vb" />
+    <Compile Include="IpcParallel\Stream\ObjectStream.vb" />
     <Compile Include="IpcParallel\Protocols.vb" />
     <Compile Include="IpcParallel\SlaveTask.vb" />
-    <Compile Include="IpcParallel\StreamMethods.vb" />
+    <Compile Include="IpcParallel\Stream\StreamMethods.vb" />
     <Compile Include="IpcParallel\TaskBuilder.vb" />
     <Compile Include="MemoryMap\UnmanageMemoryRegion.vb" />
     <Compile Include="MemoryMap\MapObject.vb" />

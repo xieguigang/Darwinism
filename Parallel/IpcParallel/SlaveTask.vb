@@ -20,6 +20,10 @@ Public Class SlaveTask
         Me.builder = cli
         Me.processor = processor
         Me.debugPort = debugPort
+
+        For Each [handle] In EmitHandler.PopulatePrimitiveHandles
+            toBuffers(handle.target) = handle.emit
+        Next
     End Sub
 
     Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As SlaveTask
