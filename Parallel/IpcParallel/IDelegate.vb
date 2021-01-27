@@ -65,4 +65,8 @@ Public Class IDelegate
 
         Return Nothing
     End Function
+
+    Public Overrides Function ToString() As String
+        Return $"{type}::{name}"
+    End Function
 End Class
