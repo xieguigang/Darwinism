@@ -70,7 +70,6 @@ Public Class SlaveTask
         Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] port:{host.HostPort}")
         Call Thread.Sleep(100)
 
-        ' Dim resultStream As MemoryStream
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
 
         'If Not debugPort Is Nothing Then
@@ -85,12 +84,7 @@ Public Class SlaveTask
 #End If
 
         Call host.Stop()
-        ' Call Console.WriteLine(If(result Is Nothing, "null", result.ToString))
         Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
-
-        ' result = decomposingStdoutput(resultStream, resultType, host.GetHashCode)
-        ' resultStream.Close()
-        ' resultStream.Dispose()
 
         If TypeOf result Is IPCError Then
             If ignoreError Then
