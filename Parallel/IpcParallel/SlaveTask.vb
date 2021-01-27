@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Parallel.IpcStream
 
@@ -10,13 +11,18 @@ Public Class SlaveTask
     ReadOnly processor As InteropService
     ReadOnly builder As ISlaveTask
     ReadOnly debugPort As Integer?
+    ReadOnly ignoreError As Boolean
 
     Friend ReadOnly streamBuf As New StreamEmit
 
-    Sub New(processor As InteropService, cli As ISlaveTask, Optional debugPort As Integer? = Nothing)
+    Sub New(processor As InteropService, cli As ISlaveTask,
+            Optional debugPort As Integer? = Nothing,
+            Optional ignoreError As Boolean = False)
+
         Me.builder = cli
         Me.processor = processor
         Me.debugPort = debugPort
+        Me.ignoreError = ignoreError
     End Sub
 
     Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As SlaveTask
@@ -87,7 +93,20 @@ Public Class SlaveTask
         ' resultStream.Dispose()
 
         If TypeOf result Is IPCError Then
-            Throw IPCError.CreateError(DirectCast(result, IPCError))
+            If ignoreError Then
+                With DirectCast(result, IPCError)
+                    For Each msg As String In .GetAllErrorMessages
+                        Call Console.WriteLine($"[error] {msg}")
+                    Next
+                    For Each frame As StackFrame In .GetSourceTrace
+                        Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] {frame.ToString}")
+                    Next
+                End With
+
+                Return App.LogException(IPCError.CreateError(DirectCast(result, IPCError)))
+            Else
+                Throw IPCError.CreateError(DirectCast(result, IPCError))
+            End If
         Else
             Return result
         End If
