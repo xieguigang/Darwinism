@@ -13,11 +13,25 @@ Public Class IPCError
     Sub New(ex As Exception)
         exceptionName = ex.GetType.Name
         message = ex.Message
-        stackTrace = {StackFrame.Parser(ex.StackTrace)}
+        stackTrace = ExceptionData.ParseStackTrace(ex.StackTrace)
 
         If Not ex.InnerException Is Nothing Then
             inner = New IPCError(ex.InnerException)
         End If
     End Sub
+
+    Public Iterator Function GetAllErrorMessages() As IEnumerable(Of String)
+        If Not inner Is Nothing Then
+            For Each msg As String In inner.GetAllErrorMessages
+                Yield msg
+            Next
+        End If
+
+        Yield $"{exceptionName}: {message}"
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"{exceptionName}: {message}"
+    End Function
 
 End Class
