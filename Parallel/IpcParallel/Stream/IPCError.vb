@@ -32,11 +32,21 @@ Namespace IpcStream
             Yield $"{exceptionName}: {message}"
         End Function
 
+        Public Function GetSourceTrace() As StackFrame()
+            If Not inner Is Nothing Then
+                Return inner.GetSourceTrace
+            Else
+                Return stackTrace
+            End If
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{exceptionName}: {message}"
         End Function
 
         Public Shared Function CreateError(err As IPCError) As Exception
+            Dim messages As String() = err.GetAllErrorMessages.ToArray
+            Dim trace As StackFrame() = err.GetSourceTrace
 
         End Function
 

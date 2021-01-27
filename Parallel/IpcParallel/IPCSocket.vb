@@ -29,7 +29,7 @@ Public Class IPCSocket : Implements ITaskDriver
     End Property
 
     Public Property handlePOSTResult As Action(Of Stream)
-    Public Property handleError As Action(Of Stream)
+    Public Property handleError As Action(Of IPCError)
     Public Property nargs As Integer
     Public Property handleGetArgument As Func(Of Integer, ObjectStream)
     Public Property host As SlaveTask
