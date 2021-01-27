@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac67a2d7b864535f49200d76e6ac21b, Examples\AnalysisExample\AnalysisTools.vb"
+﻿#Region "Microsoft.VisualBasic::3e29b77c6523cdb17354151e4fcb01f0, Examples\AnalysisExample\AnalysisTools.vb"
 
     ' Author:
     ' 

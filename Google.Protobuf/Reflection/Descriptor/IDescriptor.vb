@@ -1,4 +1,46 @@
-﻿#Region "Copyright notice and license"
+﻿#Region "Microsoft.VisualBasic::4679f0bfa99b1f868af83c9d0943a751, Google.Protobuf\Reflection\Descriptor\IDescriptor.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Interface IDescriptor
+    ' 
+    '         Properties: File, FullName, Name
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Copyright notice and license"
 ' Protocol Buffers - Google's data interchange format
 ' Copyright 2008 Google Inc.  All rights reserved.
 ' https://developers.google.com/protocol-buffers/
@@ -51,3 +93,4 @@ Namespace Google.Protobuf.Reflection
         ReadOnly Property File As FileDescriptor
     End Interface
 End Namespace
+

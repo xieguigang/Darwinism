@@ -1,4 +1,67 @@
-﻿#Region "Copyright notice and license"
+﻿#Region "Microsoft.VisualBasic::b3c1b9e44f4b060529b848b800c95e2f, Google.Protobuf\JSON\JsonFormatter.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class JsonFormatter
+    ' 
+    '         Properties: [Default], DiagnosticOnly
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Format, IsDefaultValue, ToCamelCase, ToCamelCaseForFieldMask, ToDiagnosticString
+    '                   WriteMessageFields
+    ' 
+    '         Sub: Format, HexEncodeUtf16CodeUnit, WriteAny, WriteDiagnosticOnlyAny, WriteDictionary
+    '              WriteDuration, WriteFieldMask, WriteList, WriteMessage, WriteNull
+    '              WriteString, WriteStruct, WriteStructFieldValue, WriteTimestamp, WriteValue
+    '              WriteWellKnownTypeValue
+    '         Class Settings
+    ' 
+    '             Properties: [Default], FormatDefaultValues, TypeRegistry
+    ' 
+    '             Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Class OriginalEnumValueHelper
+    ' 
+    '             Function: GetNameMapping, GetOriginalName
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Copyright notice and license"
 ' Protocol Buffers - Google's data interchange format
 ' Copyright 2015 Google Inc.  All rights reserved.
 ' https://developers.google.com/protocol-buffers/
@@ -798,3 +861,4 @@ Namespace Google.Protobuf
         End Class
     End Class
 End Namespace
+

@@ -1,4 +1,47 @@
-﻿Imports Microsoft.VisualBasic.Parallel.Tasks
+﻿#Region "Microsoft.VisualBasic::c970e504d23e8ca06d6e00adf594cff8, Parallel\ThreadTask\ThreadTask.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class ThreadTask
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) CreateThreads, GetCompleteThread, GetEmptyThread, RunParallel, ToString
+    '               WithDegreeOfParallelism
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Parallel.Tasks
 
 ''' <summary>
 ''' Using parallel linq that may stuck the program when a linq task partion wait a long time task to complete. 
@@ -103,3 +146,4 @@ Public Class ThreadTask(Of TOut)
     End Function
 
 End Class
+

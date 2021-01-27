@@ -1,4 +1,62 @@
-﻿#Region "Copyright notice and license"
+﻿#Region "Microsoft.VisualBasic::fde4bfa48902ebd65cea5388360268f4, Google.Protobuf\JSON\JsonParser.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class JsonParser
+    ' 
+    '         Properties: [Default]
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: IsGoogleProtobufValueField, NewMessageForField, (+4 Overloads) Parse, ParseMapKey, ParseNumericString
+    '                   ParseSingleNumberValue, ParseSingleStringValue, ParseSingleValue, ToSnakeCase
+    ' 
+    '         Sub: CheckInteger, (+3 Overloads) Merge, MergeAny, MergeDuration, MergeField
+    '              MergeFieldMask, MergeMapField, MergeRepeatedField, MergeStruct, MergeStructValue
+    '              MergeTimestamp, MergeWellKnownTypeAnyBody, MergeWrapperField, ValidateInfinityAndNan
+    '         Class Settings
+    ' 
+    '             Properties: [Default], RecursionLimit, TypeRegistry
+    ' 
+    '             Constructor: (+3 Overloads) Sub New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Copyright notice and license"
 ' Protocol Buffers - Google's data interchange format
 ' Copyright 2015 Google Inc.  All rights reserved.
 ' https://developers.google.com/protocol-buffers/
@@ -926,3 +984,4 @@ _Select0_CaseDefault:
         End Class
     End Class
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c084f8933afb3e9e9d920f49327edb32, ossutil\Aspera.vb"
+﻿#Region "Microsoft.VisualBasic::e3ecf2143a05f268f224d1006073aa3f, ossutil\Aspera.vb"
 
     ' Author:
     ' 
@@ -152,4 +152,3 @@ Public Class Aspera : Inherits InteropService
         Return MyBase.RunProgram(getCLI(server & remote, local)).Run
     End Function
 End Class
-

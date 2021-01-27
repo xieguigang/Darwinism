@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74784b0092cb12655aaae522a50b49d4, Docker\Captures\ParserHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::8de1799af471ac1b38838a4de69d16af, Docker\Captures\ParserHelpers.vb"
 
     ' Author:
     ' 

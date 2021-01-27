@@ -1,4 +1,61 @@
-﻿#Region "Copyright notice and license"
+﻿#Region "Microsoft.VisualBasic::101131e8c4d888b4f87b14eb88374c45, Google.Protobuf\Stream\ByteString.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ByteString
+    ' 
+    '         Properties: Empty, IsEmpty, Length
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AttachBytes, (+3 Overloads) CopyFrom, CopyFromUtf8, CreateCodedInput, (+2 Overloads) Equals
+    '                   FromBase64, GetEnumerator, GetEnumerator1, GetHashCode, ToBase64
+    '                   ToByteArray, ToString, ToStringUtf8
+    ' 
+    '         Sub: CopyTo, WriteRawBytesTo, WriteTo
+    ' 
+    '         Operators: <>, =
+    '         Class Unsafe
+    ' 
+    '             Function: FromBytes, GetBuffer
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Copyright notice and license"
 ' Protocol Buffers - Google's data interchange format
 ' Copyright 2008 Google Inc.  All rights reserved.
 ' https://developers.google.com/protocol-buffers/
@@ -322,3 +379,4 @@ Namespace Google.Protobuf
         End Sub
     End Class
 End Namespace
+
