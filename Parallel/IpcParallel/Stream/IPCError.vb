@@ -48,6 +48,7 @@ Namespace IpcStream
             Dim messages As String() = err.GetAllErrorMessages.ToArray
             Dim trace As StackFrame() = err.GetSourceTrace
 
+            Return New IPCException(messages, trace)
         End Function
 
     End Class
