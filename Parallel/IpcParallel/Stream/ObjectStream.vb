@@ -19,7 +19,7 @@ Namespace IpcStream
 
         Public ReadOnly Property isPrimitive As Boolean
             Get
-                Return DataFramework.IsPrimitive(type.GetType(knownFirst:=True))
+                Return DataFramework.IsPrimitive(GetUnderlyingType)
             End Get
         End Property
 
@@ -45,6 +45,10 @@ Namespace IpcStream
                 stream = read.ReadBytes(size)
             End Using
         End Sub
+
+        Public Function GetUnderlyingType() As Type
+            Return type.GetType(knownFirst:=True)
+        End Function
 
         Public Function openMemoryBuffer() As MemoryStream
             Return New MemoryStream(stream)

@@ -29,6 +29,12 @@ Namespace IpcStream
             Return Me
         End Function
 
+        Public Function handleCreate(stream As ObjectStream) As Object
+            Using buf As Stream = stream.openMemoryBuffer
+                Return handleCreate(buf, stream.GetUnderlyingType, stream.method)
+            End Using
+        End Function
+
         Public Function handleCreate(buf As Stream, type As Type, emit As StreamMethods) As Object
             If emit = StreamMethods.Auto Then
                 If loadBuffers.ContainsKey(type) Then
