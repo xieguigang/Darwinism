@@ -8,6 +8,8 @@ Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Parallel.IpcStream
+
 #If netcore5 = 1 Then
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 #End If

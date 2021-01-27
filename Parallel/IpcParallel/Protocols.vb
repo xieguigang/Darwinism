@@ -4,4 +4,5 @@
     GetArgumentByIndex
     PostStart
     PostResult
+    PostError
 End Enum

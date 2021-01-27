@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.InteropService
-Imports Microsoft.VisualBasic.Language
+Imports Parallel.IpcStream
 
 Public Delegate Function ISlaveTask(processor As InteropService, port As Integer) As String
 

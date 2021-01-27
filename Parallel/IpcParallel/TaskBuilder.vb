@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Parallel.IpcStream
 
 Public Class TaskBuilder : Implements ITaskDriver
 
@@ -46,7 +47,7 @@ Public Class TaskBuilder : Implements ITaskDriver
         Call New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
 
         Try
-            Call PostFinished(api.Invoke(target, args.ToArray))
+            Call PostFinished(api.Invoke(target, args.ToArray), Protocols.PostResult)
         Catch ex As Exception
             Call PostError(ex)
         Finally
@@ -87,16 +88,16 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Function PostError(err As Exception) As Integer
-        Call PostFinished(New IPCError(err))
+        Call PostFinished(New IPCError(err), Protocols.PostError)
 
         Return 500
     End Function
 
-    Private Sub PostFinished(result As Object)
+    Private Sub PostFinished(result As Object, protocol As Protocols)
         Using buf As Stream = emit.handleSerialize(result).openMemoryBuffer
             Dim request As New RequestStream(
                 protocolCategory:=IPCSocket.Protocol,
-                protocol:=Protocols.PostResult,
+                protocol:=protocol,
                 buffer:=New StreamPipe(buf).Read
             )
 

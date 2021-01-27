@@ -48,7 +48,7 @@ Public Module BatchTasks
     Public Sub Invoke(tasks As Action(), numOfThreads As Integer)
         Dim getTask As Func(Of Action, Func(Of Integer)) =
             Function(task)
-                Return AddressOf New invokeHelper With {
+                Return AddressOf New TaskInvokeHelper With {
                     .task = task
                 }.RunTask
             End Function
@@ -59,14 +59,4 @@ Public Module BatchTasks
             .RunParallel() _
             .ToArray
     End Sub
-
-    Private Structure invokeHelper
-
-        Dim task As Action
-
-        Public Function RunTask() As Integer
-            Call task()
-            Return 0
-        End Function
-    End Structure
 End Module

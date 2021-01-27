@@ -1,37 +1,40 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 
-Public Class IPCError
+Namespace IpcStream
 
-    Public Property message As String
-    Public Property stackTrace As StackFrame()
-    Public Property inner As IPCError
-    Public Property exceptionName As String
+    Public Class IPCError
 
-    Sub New()
-    End Sub
+        Public Property message As String
+        Public Property stackTrace As StackFrame()
+        Public Property inner As IPCError
+        Public Property exceptionName As String
 
-    Sub New(ex As Exception)
-        exceptionName = ex.GetType.Name
-        message = ex.Message
-        stackTrace = ExceptionData.ParseStackTrace(ex.StackTrace)
+        Sub New()
+        End Sub
 
-        If Not ex.InnerException Is Nothing Then
-            inner = New IPCError(ex.InnerException)
-        End If
-    End Sub
+        Sub New(ex As Exception)
+            exceptionName = ex.GetType.Name
+            message = ex.Message
+            stackTrace = ExceptionData.ParseStackTrace(ex.StackTrace)
 
-    Public Iterator Function GetAllErrorMessages() As IEnumerable(Of String)
-        If Not inner Is Nothing Then
-            For Each msg As String In inner.GetAllErrorMessages
-                Yield msg
-            Next
-        End If
+            If Not ex.InnerException Is Nothing Then
+                inner = New IPCError(ex.InnerException)
+            End If
+        End Sub
 
-        Yield $"{exceptionName}: {message}"
-    End Function
+        Public Iterator Function GetAllErrorMessages() As IEnumerable(Of String)
+            If Not inner Is Nothing Then
+                For Each msg As String In inner.GetAllErrorMessages
+                    Yield msg
+                Next
+            End If
 
-    Public Overrides Function ToString() As String
-        Return $"{exceptionName}: {message}"
-    End Function
+            Yield $"{exceptionName}: {message}"
+        End Function
 
-End Class
+        Public Overrides Function ToString() As String
+            Return $"{exceptionName}: {message}"
+        End Function
+
+    End Class
+End Namespace

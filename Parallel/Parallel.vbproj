@@ -150,6 +150,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ThreadTask\BatchTasks.vb" />
+    <Compile Include="ThreadTask\TaskInvokeHelper.vb" />
     <Compile Include="ThreadTask\ThreadTask.vb" />
   </ItemGroup>
   <ItemGroup>
