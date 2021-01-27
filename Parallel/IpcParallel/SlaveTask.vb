@@ -10,7 +10,8 @@ Public Class SlaveTask
     ReadOnly processor As InteropService
     ReadOnly builder As ISlaveTask
     ReadOnly debugPort As Integer?
-    ReadOnly streamBuf As New StreamEmit
+
+    Friend ReadOnly streamBuf As New StreamEmit
 
     Sub New(processor As InteropService, cli As ISlaveTask, Optional debugPort As Integer? = Nothing)
         Me.builder = cli
@@ -45,9 +46,17 @@ Public Class SlaveTask
         Dim resultType As Type = entry.Method.ReturnType
 
         host = New IPCSocket(target, debugPort) With {
-            .handlePOSTResult = Sub(buf) result = handlePOST(buf, resultType, host.GetHashCode),
+            .host = Me,
+            .handlePOSTResult =
+                Sub(buf)
+                    result = handlePOST(buf, resultType, host.GetHashCode)
+                End Sub,
             .nargs = parameters.Length,
-            .handleGetArgument = Function(i) handleGET(parameters(i), i, host.GetHashCode)
+            .handleGetArgument =
+                Function(i)
+                    Return handleGET(parameters(i), i, host.GetHashCode)
+                End Function,
+            .handleError = Sub(ex) result = ex
         }
 
         Call Microsoft.VisualBasic.Parallel.RunTask(AddressOf host.Run)
@@ -58,10 +67,10 @@ Public Class SlaveTask
         ' Dim resultStream As MemoryStream
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
 
-        If Not debugPort Is Nothing Then
-            Console.WriteLine(commandlineArgvs)
-            Pause()
-        End If
+        'If Not debugPort Is Nothing Then
+        '    Console.WriteLine(commandlineArgvs)
+        '    Pause()
+        'End If
 
 #If netcore5 = 0 Then
         Call CommandLine.Call(processor, commandlineArgvs)
@@ -77,6 +86,10 @@ Public Class SlaveTask
         ' resultStream.Close()
         ' resultStream.Dispose()
 
-        Return result
+        If TypeOf result Is IPCError Then
+            Throw IPCError.CreateError(DirectCast(result, IPCError))
+        Else
+            Return result
+        End If
     End Function
 End Class

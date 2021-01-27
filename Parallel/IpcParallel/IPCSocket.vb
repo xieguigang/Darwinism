@@ -29,8 +29,10 @@ Public Class IPCSocket : Implements ITaskDriver
     End Property
 
     Public Property handlePOSTResult As Action(Of Stream)
+    Public Property handleError As Action(Of Stream)
     Public Property nargs As Integer
     Public Property handleGetArgument As Func(Of Integer, ObjectStream)
+    Public Property host As SlaveTask
 
     Sub New(target As IDelegate, Optional debug As Integer? = Nothing)
         Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()))
@@ -99,6 +101,15 @@ Public Class IPCSocket : Implements ITaskDriver
     <Protocol(Protocols.GetArgumentNumber)>
     Public Function GetArgumentNumber(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Return New DataPipe(BitConverter.GetBytes(nargs))
+    End Function
+
+    <Protocol(Protocols.PostError)>
+    Public Function PostError(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
+        Using ms As New MemoryStream(request.ChunkBuffer)
+            Call _handleError(host.streamBuf.handleCreate(ms, GetType(IPCError), StreamMethods.Auto))
+        End Using
+
+        Return New DataPipe(Encoding.ASCII.GetBytes("OK!"))
     End Function
 
     <Protocol(Protocols.PostResult)>

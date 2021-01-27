@@ -36,5 +36,9 @@ Namespace IpcStream
             Return $"{exceptionName}: {message}"
         End Function
 
+        Public Shared Function CreateError(err As IPCError) As Exception
+
+        End Function
+
     End Class
 End Namespace
