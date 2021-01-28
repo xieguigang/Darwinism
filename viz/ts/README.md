@@ -1,1 +1,0 @@
-TypeScript library for machine learning data visualization.
