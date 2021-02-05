@@ -66,6 +66,25 @@ Public Class PuTTY
         Me.plink = plink
         Me.port = port
         Me.debug = debug
+
+        Call cacheServerKey()
+    End Sub
+
+    ''' <summary>
+    ''' try to fix problem of 
+    ''' 
+    ''' ```
+    ''' D:\web\RWeb>plink pipeline_submit@192.168.0.254 -P 22 -pw "pipeline_submit123" -batch qsub -cwd -e "/mnt/smb3/tmp/GCMS_autoTest/error" -o "/mnt/smb3/tmp/GCMS_autoTest/stdout" /mnt/smb2/.auto//GC-MS/auto_f1803b4671326cc1491b2cd8b7b9e7d3.sh
+    ''' The server's host key is not cached in the registry. You
+    ''' have no guarantee that the server Is the computer you
+    ''' think it Is.
+    ''' The server 's ssh-ed25519 key fingerprint is:
+    ''' ssh-ed25519 255 58:66:53:3d:3f:6c:a9:fb:8c:ad:af:bd:8c:dc:57:16
+    ''' Connection abandoned.
+    ''' ```
+    ''' </summary>
+    Private Sub cacheServerKey()
+        Call Console.WriteLine(PipelineProcess.Call(plink, $"-ssh {user}@{endpoint} -P {port} -pw ""{password}"" -batch exit"))
     End Sub
 
     Public Overrides Function ToString() As String
