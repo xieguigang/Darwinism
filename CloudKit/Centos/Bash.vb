@@ -42,22 +42,57 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
 
-<Package("bash")>
+''' <summary>
+''' An automation pipeline toolkit build for cloud computing
+''' </summary>
+<Package("bash", Category:=APICategories.UtilityTools)>
 Public Module Bash
 
+    Sub New()
+        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of PuTTY)(Function(ssh) ssh.ToString)
+    End Sub
+
+    ''' <summary>
+    ''' Create a new remote linux ssh session
+    ''' </summary>
+    ''' <param name="user$"></param>
+    ''' <param name="password$"></param>
+    ''' <param name="endpoint$"></param>
+    ''' <param name="port%"></param>
+    ''' <param name="plink"></param>
+    ''' <returns></returns>
     <ExportAPI("ssh")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function ssh(user$, password$, Optional endpoint$ = "127.0.0.1", Optional port% = 22, Optional plink As String = "plink") As PuTTY
-        Return New PuTTY(user, password, endpoint, port, plink)
+    Public Function ssh(user$, password$,
+                        Optional endpoint$ = "127.0.0.1",
+                        Optional port% = 22,
+                        Optional plink As String = "plink",
+                        Optional debug As Boolean = False) As PuTTY
+
+        Return New PuTTY(user, password, endpoint, port, plink, debug)
     End Function
 
+    ''' <summary>
+    ''' Run a script on remote linux server session.
+    ''' </summary>
+    ''' <param name="ssh">remote linux ssh session</param>
+    ''' <param name="script"></param>
+    ''' <returns></returns>
     <ExportAPI("run")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function run(ssh As PuTTY, script As String) As String
         Return ssh.Run(script)
     End Function
 
+    ''' <summary>
+    ''' Execute a command on remote linux server session.
+    ''' </summary>
+    ''' <param name="ssh">remote linux ssh session</param>
+    ''' <param name="command"></param>
+    ''' <param name="arguments"></param>
+    ''' <returns></returns>
     <ExportAPI("exec")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function exec(ssh As PuTTY, command As String, Optional arguments As String = Nothing) As String

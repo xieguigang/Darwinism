@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Centos")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("Centos Toolkit")>
+<Assembly: AssemblyDescription("An automation pipeline toolkit build for cloud computing")>
+<Assembly: AssemblyCompany("SMRUCC")>
 <Assembly: AssemblyProduct("Centos")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
+<Assembly: AssemblyCopyright("Copyright © SMRUCC 2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
