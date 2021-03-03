@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8F215850-6439-0311-0352-B0720952E0CE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>Rpc</AssemblyName>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <GenerateDocumentation>true</GenerateDocumentation>
+    <DocumentationFile>Rpc.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>Rpc.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.vb" />
+    <Compile Include="BindingProtocols\TaskBuilders\BaseRpcBind.vb" />
+    <Compile Include="BindingProtocols\TaskBuilders\BaseTaskBuilder.vb" />
+    <Compile Include="BindingProtocols\call_args.vb" />
+    <Compile Include="BindingProtocols\call_result.vb" />
+    <Compile Include="BindingProtocols\ConnectorExtensions.vb" />
+    <Compile Include="BindingProtocols\TaskBuilders\PortMapper.vb" />
+    <Compile Include="BindingProtocols\mapping.vb" />
+    <Compile Include="BindingProtocols\TaskBuilders\RpcBindV3.vb" />
+    <Compile Include="BindingProtocols\TransportSemantics.vb" />
+    <Compile Include="BindingProtocols\ProtocolName.vb" />
+    <Compile Include="BindingProtocols\ProtocolFamily.vb" />
+    <Compile Include="BindingProtocols\rpcbs_addr.vb" />
+    <Compile Include="BindingProtocols\rpcbs_rmtcall.vb" />
+    <Compile Include="BindingProtocols\rpcb_stat.vb" />
+    <Compile Include="BindingProtocols\rpcb_stat_byvers.vb" />
+    <Compile Include="BindingProtocols\netbuf.vb" />
+    <Compile Include="BindingProtocols\rpcb_entry.vb" />
+    <Compile Include="BindingProtocols\rpcb_rmtcallres.vb" />
+    <Compile Include="BindingProtocols\rpcb_rmtcallargs.vb" />
+    <Compile Include="Connectors\UdpSession.vb" />
+    <Compile Include="Connectors\IRpcSession.vb" />
+    <Compile Include="Connectors\ITicketOwner.vb" />
+    <Compile Include="Connectors\TcpSession.vb" />
+    <Compile Include="Connectors\Ticket.vb" />
+    <Compile Include="Connectors\ITicket.vb" />
+    <Compile Include="Exceptions\AuthenticateException.vb" />
+    <Compile Include="Exceptions\ReplyException.vb" />
+    <Compile Include="Exceptions\RpcException.vb" />
+    <Compile Include="Exceptions\Exceptions.vb" />
+    <Compile Include="MessageProtocol\body.vb" />
+    <Compile Include="MessageProtocol\reply_stat.vb" />
+    <Compile Include="MessageProtocol\msg_type.vb" />
+    <Compile Include="MessageProtocol\reject_stat.vb" />
+    <Compile Include="MessageProtocol\accept_stat.vb" />
+    <Compile Include="MessageProtocol\auth_stat.vb" />
+    <Compile Include="MessageProtocol\rpc_msg.vb" />
+    <Compile Include="MessageProtocol\call_body.vb" />
+    <Compile Include="MessageProtocol\reply_body.vb" />
+    <Compile Include="MessageProtocol\accepted_reply.vb" />
+    <Compile Include="MessageProtocol\rejected_reply.vb" />
+    <Compile Include="MessageProtocol\mismatch_info.vb" />
+    <Compile Include="MessageProtocol\auth_flavor.vb" />
+    <Compile Include="MessageProtocol\opaque_auth.vb" />
+    <Compile Include="BindingProtocols\rpcb.vb" />
+    <Compile Include="BindingProtocols\TaskBuilders\RpcBindV4.vb" />
+    <Compile Include="Toolkit.vb" />
+    <Compile Include="TcpStreaming\TcpWriter.vb" />
+    <Compile Include="TcpStreaming\TcpReader.vb" />
+    <Compile Include="UdpDatagrams\UdpReader.vb" />
+    <Compile Include="UdpDatagrams\UdpWriter.vb" />
+    <Compile Include="Connectors\TcpClientWrapper.vb" />
+    <Compile Include="Connectors\UdpClientWrapper.vb" />
+    <Compile Include="IMsgReader.vb" />
+    <Compile Include="BindingProtocols\Protocol.vb" />
+    <Compile Include="RpcClient.vb" />
+    <Compile Include="IRpcClient.vb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
+      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
+      <Name>BinaryData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
