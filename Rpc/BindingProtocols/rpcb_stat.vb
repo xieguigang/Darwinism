@@ -1,5 +1,5 @@
-﻿Imports Xdr
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Data.IO.Xdr
 
 Namespace Rpc.BindingProtocols
     ''' <summary>

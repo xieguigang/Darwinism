@@ -1,5 +1,5 @@
 ﻿Imports System
-Imports Xdr
+Imports Microsoft.VisualBasic.Data.IO.Xdr
 
 Namespace Rpc.UdpDatagrams
     ''' <summary>

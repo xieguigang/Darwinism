@@ -127,4 +127,7 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic.Data.IO.Xdr" />
+  </ItemGroup>
 </Project>

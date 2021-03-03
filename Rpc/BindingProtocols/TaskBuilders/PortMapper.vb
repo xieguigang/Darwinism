@@ -1,6 +1,7 @@
 ﻿Imports System.Collections.Generic
 Imports System.Threading
 Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.Data.IO
 
 Namespace Rpc.BindingProtocols.TaskBuilders
     ''' <summary>
