@@ -49,8 +49,15 @@ Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
 #End If
 Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
+''' <summary>
+''' remote method handler
+''' </summary>
 Public Class IDelegate
 
+    ''' <summary>
+    ''' the function name
+    ''' </summary>
+    ''' <returns></returns>
     Public Property name As String
     Public Property type As TypeInfo
     ''' <summary>
@@ -62,6 +69,12 @@ Public Class IDelegate
     Sub New()
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="target">
+    ''' The name of this target method should be unique!
+    ''' </param>
     Sub New(target As MethodInfo)
         type = New TypeInfo(target.DeclaringType)
         name = target.Name
