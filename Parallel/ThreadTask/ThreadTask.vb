@@ -68,9 +68,9 @@ Namespace ThreadTask
             Me.size = Me.taskList.Count
         End Sub
 
-        Public Shared Function CreateThreads(Of T)(items As IEnumerable(Of T), task As Func(Of T, Func(Of TOut))) As ThreadTask(Of TOut)
-            Return New ThreadTask(Of TOut)(items.Select(task))
-        End Function
+        ''' <summary>
+        ''' Create a parallel thread task pool and then get the task result value
+        ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="items"></param>
         ''' <param name="task"></param>
@@ -81,8 +81,8 @@ Namespace ThreadTask
 
         ''' <summary>
         ''' Create a parallel thread task pool and then get the task result value
-        End Function
-
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
         ''' <param name="items"></param>
         ''' <param name="task"></param>
         ''' <returns></returns>
@@ -107,10 +107,6 @@ Namespace ThreadTask
             For i As Integer = 0 To threads.Length - 1
                 If threads(i) Is Nothing Then
                     Return i
-    Private Function GetEmptyThread() As Integer
-            For i As Integer = 0 To threads.Length - 1
-                If threads(i) Is Nothing Then
-                    Return i
                 End If
             Next
 
@@ -126,24 +122,20 @@ Namespace ThreadTask
 
             Return -1
         End Function
-        Next
-
-        Return -1
-        End Function
 
         ''' <summary>
         ''' view thread pool status
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
+            Dim free$ = threads.Where(Function(t) t Is Nothing).Count
+            Dim running$ = threads.Where(Function(t) t IsNot Nothing AndAlso Not t.IsCompleted).Count
+            Dim finished$ = threads.Where(Function(t) t IsNot Nothing AndAlso t.IsCompleted).Count
+            Dim delta As Integer = size - taskList.Count
 
             Return $"[free: {free}, running: {running}, finished: {finished}, progress: {delta} - {CInt(delta / size * 100)}%]"
         End Function
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <returns></returns>
         ''' <summary>
         ''' Run parallel task list
         ''' </summary>
