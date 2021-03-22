@@ -57,15 +57,33 @@ Public Class ThreadTask(Of TOut)
     Dim threads As AsyncHandle(Of TOut)()
     Dim size As Integer
 
+    ''' <summary>
+    ''' create parallel task pool from a given collection of task handler
+    ''' </summary>
+    ''' <param name="task"></param>
     Sub New(task As IEnumerable(Of Func(Of TOut)))
         Me.taskList = New Queue(Of Func(Of TOut))(task)
         Me.size = Me.taskList.Count
     End Sub
 
+    ''' <summary>
+    ''' Create a parallel thread task pool and then get the task result value
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="items"></param>
+    ''' <param name="task"></param>
+    ''' <returns></returns>
     Public Shared Function CreateThreads(Of T)(items As IEnumerable(Of T), task As Func(Of T, Func(Of TOut))) As ThreadTask(Of TOut)
         Return New ThreadTask(Of TOut)(items.Select(task))
     End Function
 
+    ''' <summary>
+    ''' Create a parallel thread task pool and then get the task result value
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="items"></param>
+    ''' <param name="task"></param>
+    ''' <returns></returns>
     Public Shared Function CreateThreads(Of T)(items As IEnumerable(Of T), task As Func(Of T, TOut)) As ThreadTask(Of TOut)
         Return New ThreadTask(Of TOut)(items.Select(Function(i) New Func(Of TOut)(Function() task(i))))
     End Function
@@ -83,6 +101,10 @@ Public Class ThreadTask(Of TOut)
         Return Me
     End Function
 
+    ''' <summary>
+    ''' get a index of thread which is idle
+    ''' </summary>
+    ''' <returns></returns>
     Private Function GetEmptyThread() As Integer
         For i As Integer = 0 To threads.Length - 1
             If threads(i) Is Nothing Then
@@ -93,6 +115,10 @@ Public Class ThreadTask(Of TOut)
         Return -1
     End Function
 
+    ''' <summary>
+    ''' get the index of the first thread which is run task job complete
+    ''' </summary>
+    ''' <returns></returns>
     Private Function GetCompleteThread() As Integer
         For i As Integer = 0 To threads.Length - 1
             If (Not threads(i) Is Nothing) AndAlso threads(i).IsCompleted Then
@@ -103,6 +129,10 @@ Public Class ThreadTask(Of TOut)
         Return -1
     End Function
 
+    ''' <summary>
+    ''' view thread pool status
+    ''' </summary>
+    ''' <returns></returns>
     Public Overrides Function ToString() As String
         Dim free$ = threads.Where(Function(t) t Is Nothing).Count
         Dim running$ = threads.Where(Function(t) t IsNot Nothing AndAlso Not t.IsCompleted).Count
@@ -113,7 +143,7 @@ Public Class ThreadTask(Of TOut)
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Run parallel task list
     ''' </summary>
     ''' <returns></returns>
     Public Iterator Function RunParallel() As IEnumerable(Of TOut)
