@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 #If netcore5 = 0 Then
-<Assembly: AssemblyTitle("Parallel")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("Parallel")>
-<Assembly: AssemblyCopyright("Copyright ©  2021")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("Darwinism HPC parallel library for VisualBasic on unix platform")>
+<Assembly: AssemblyDescription("Darwinism HPC parallel library for VisualBasic on unix platform")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
+<Assembly: AssemblyProduct("Darwinism")>
+<Assembly: AssemblyCopyright("Copyright © xieguigang 2021")>
+<Assembly: AssemblyTrademark("Darwinism")>
 
 <Assembly: ComVisible(False)>
 
