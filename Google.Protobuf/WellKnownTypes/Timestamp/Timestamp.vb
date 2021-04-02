@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92ab55f6195076392dbc956d317a198d, Google.Protobuf\WellKnownTypes\Timestamp\Timestamp.vb"
+﻿#Region "Microsoft.VisualBasic::2227ba9aabe8b2233d0314f2bb8328cd, Google.Protobuf\WellKnownTypes\Timestamp\Timestamp.vb"
 
     ' Author:
     ' 
@@ -293,4 +293,3 @@ Namespace Google.Protobuf.WellKnownTypes
 
 End Namespace
 #End Region
-

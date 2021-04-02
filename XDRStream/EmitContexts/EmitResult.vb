@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::706fbb594e121661e231fb34de656bbe, Data\BinaryData\BinaryData\XDR\EmitContexts\EmitResult.vb"
+﻿#Region "Microsoft.VisualBasic::9af54abd7d356066660442ad864d805d, XDRStream\EmitContexts\EmitResult.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Namespace Xdr
         Public [Error] As Exception = Nothing
     End Class
 End Namespace
-

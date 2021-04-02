@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31efd91ebe7082e0426ed0ec42efe732, LINQ\LINQ\Script\StackParser.vb"
+﻿#Region "Microsoft.VisualBasic::61c3a76f028efb879f257d53fda47346, LINQ\LINQ\Script\StackParser.vb"
 
     ' Author:
     ' 
@@ -196,4 +196,3 @@ Module StackParser
         End If
     End Function
 End Module
-

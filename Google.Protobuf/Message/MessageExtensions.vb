@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4715fe04a54620fc5c4cc016451e9baa, Google.Protobuf\Message\MessageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::18a0b3f772e9f502d5a29090d69dab03, Google.Protobuf\Message\MessageExtensions.vb"
 
     ' Author:
     ' 
@@ -198,4 +198,3 @@ Namespace Google.Protobuf
         End Function
     End Module
 End Namespace
-

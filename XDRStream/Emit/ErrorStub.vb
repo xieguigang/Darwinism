@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6da63e5707615687bc169b000d8cd3d, Data\BinaryData\BinaryData\XDR\Emit\ErrorStub.vb"
+﻿#Region "Microsoft.VisualBasic::9f1c5bd435208e44998ba47d9d196add, XDRStream\Emit\ErrorStub.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Namespace Xdr
         End Function
     End Module
 End Namespace
-

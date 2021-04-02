@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f903d960febc7de1e98623947cf32078, LINQ\LINQ\Interpreter\Expressions\Literals.vb"
+﻿#Region "Microsoft.VisualBasic::04597e5b4cb6c9351875ed36102270a5, LINQ\LINQ\Interpreter\Expressions\Literals.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports LINQ.Language
 Imports LINQ.Runtime

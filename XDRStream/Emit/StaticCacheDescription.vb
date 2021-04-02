@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b4087e1862e5a0af5c252092ad6880a, Data\BinaryData\BinaryData\XDR\Emit\StaticCacheDescription.vb"
+﻿#Region "Microsoft.VisualBasic::6fb92fc5fbdb8a8ed8db4e8e698d2cb3, XDRStream\Emit\StaticCacheDescription.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Namespace Xdr.Emit
         End Function
     End Class
 End Namespace
-

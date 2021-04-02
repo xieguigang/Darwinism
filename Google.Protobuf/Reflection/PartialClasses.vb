@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e678cc54f85660361e41a91a22c26eb, Google.Protobuf\Reflection\PartialClasses.vb"
+﻿#Region "Microsoft.VisualBasic::7cc6a5aa916c82733c435e04d35d9010, Google.Protobuf\Reflection\PartialClasses.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Namespace Google.Protobuf.Reflection
         End Sub
     End Class
 End Namespace
-

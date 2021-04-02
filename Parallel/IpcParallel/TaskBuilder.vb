@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88c85fda6cd5e5bf2705b987d084e35b, Parallel\IpcParallel\TaskBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9604f376dbb73bcef11d1602a8461d85, Parallel\IpcParallel\TaskBuilder.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: GetArgumentValue, GetArgumentValueNumber, GetMethod, PostError, Run
+    '     Function: FromStream, GetArgumentValue, GetArgumentValueNumber, GetMethod, GetParameters
+    '               PostError, Run
     ' 
     '     Sub: PostFinished
     ' 
@@ -192,4 +193,3 @@ Public Class TaskBuilder : Implements ITaskDriver
         End Using
     End Sub
 End Class
-

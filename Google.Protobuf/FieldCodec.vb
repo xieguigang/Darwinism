@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac04a8ecf8c4323b41fc361daf3bd688, Google.Protobuf\FieldCodec.vb"
+﻿#Region "Microsoft.VisualBasic::370b5a447c484484e508d32e2bf75164, Google.Protobuf\FieldCodec.vb"
 
     ' Author:
     ' 
@@ -341,4 +341,3 @@ Namespace Google.Protobuf
         End Class
     End Module
 End Namespace
-

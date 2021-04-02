@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9c9f765057d5f82049889558353172d, Data\BinaryData\BinaryData\XDR\Emit\DelegateCacheDescription.vb"
+﻿#Region "Microsoft.VisualBasic::ded2aa78b49627329748697d70684145, XDRStream\Emit\DelegateCacheDescription.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Namespace Xdr.Emit
         End Sub
     End Class
 End Namespace
-

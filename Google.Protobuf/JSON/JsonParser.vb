@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fde4bfa48902ebd65cea5388360268f4, Google.Protobuf\JSON\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::9553a8c545a433ed8b4bb0982c1dd284, Google.Protobuf\JSON\JsonParser.vb"
 
     ' Author:
     ' 
@@ -984,4 +984,3 @@ _Select0_CaseDefault:
         End Class
     End Class
 End Namespace
-

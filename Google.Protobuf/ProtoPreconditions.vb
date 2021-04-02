@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::421ba3327147b026fa6f677110c401f8, Google.Protobuf\ProtoPreconditions.vb"
+﻿#Region "Microsoft.VisualBasic::2a9330c5393e2ce58116b7eaed5f8593, Google.Protobuf\ProtoPreconditions.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace Google.Protobuf
         End Function
     End Module
 End Namespace
-

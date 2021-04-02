@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eeea47d5ebf98bf06d4ed5ef36bc7c84, Google.Protobuf\Stream\LimitedInputStream.vb"
+﻿#Region "Microsoft.VisualBasic::e55fe24040a03b68b3da244f6337ca30, Google.Protobuf\Stream\LimitedInputStream.vb"
 
     ' Author:
     ' 
@@ -157,4 +157,3 @@ Namespace Google.Protobuf
         End Sub
     End Class
 End Namespace
-

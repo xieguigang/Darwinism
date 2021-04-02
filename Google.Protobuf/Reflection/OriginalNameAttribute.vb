@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03cfd28c297917673a4b5aa6507c0b70, Google.Protobuf\Reflection\OriginalNameAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b6809876621909f5f97cbd363f2b3667, Google.Protobuf\Reflection\OriginalNameAttribute.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Namespace Google.Protobuf.Reflection
         End Sub
     End Class
 End Namespace
-

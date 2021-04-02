@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cfe904a40af6f24f82e3ac08cf64819, Google.Protobuf\Compatibility\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ff74a872a0976f4912ffe849c17f1b86, Google.Protobuf\Compatibility\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Namespace Google.Protobuf.Compatibility
     End Module
 End Namespace
 #End If
-

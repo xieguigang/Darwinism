@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92e0d36397439689f2072254ed18552f, Google.Protobuf\IDeepCloneable.vb"
+﻿#Region "Microsoft.VisualBasic::71de7e5b0bce6a5a65e935e4936a585c, Google.Protobuf\IDeepCloneable.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Namespace Google.Protobuf
         Function Clone() As T
     End Interface
 End Namespace
-

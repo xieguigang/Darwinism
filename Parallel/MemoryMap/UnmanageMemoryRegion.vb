@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6acbb61a90d0af778c8a2890cb493846, Parallel\MemoryMap\UnmanageMemoryRegion.vb"
+﻿#Region "Microsoft.VisualBasic::58e4deac6a48b0d96f6db35d0d715b02, Parallel\MemoryMap\UnmanageMemoryRegion.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@ Public Class UnmanageMemoryRegion
     Public Property size As Integer
 
 End Class
-

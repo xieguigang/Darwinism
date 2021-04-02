@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98408d81973ce7c09e7cd91f2032b049, Google.Protobuf\Reflection\TypeRegistry.vb"
+﻿#Region "Microsoft.VisualBasic::fb527c4a83e7a13b00bb4f28e9c1fe39, Google.Protobuf\Reflection\TypeRegistry.vb"
 
     ' Author:
     ' 
@@ -220,4 +220,3 @@ Namespace Google.Protobuf.Reflection
         End Class
     End Class
 End Namespace
-

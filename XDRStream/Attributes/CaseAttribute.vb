@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e82582233ab9370ed4a916d504f35ba8, Data\BinaryData\BinaryData\XDR\Attributes\CaseAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::8bf6e604a1921033488d4dfce0afe31a, XDRStream\Attributes\CaseAttribute.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-

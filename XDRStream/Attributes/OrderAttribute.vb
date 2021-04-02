@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d7e61d58408ced9cd1a94f5515eeb60, Data\BinaryData\BinaryData\XDR\Attributes\OrderAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::cc57f46cab28dde11e8a245ca2d43751, XDRStream\Attributes\OrderAttribute.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-

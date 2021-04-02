@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38acecf50c2f38152f7223817802f654, Google.Protobuf\WellKnownTypes\ValuePartial.vb"
+﻿#Region "Microsoft.VisualBasic::4c144ed6b284ca0e64566263bf34f18e, Google.Protobuf\WellKnownTypes\ValuePartial.vb"
 
     ' Author:
     ' 
@@ -142,4 +142,3 @@ Namespace Google.Protobuf.WellKnownTypes
         End Function
     End Class
 End Namespace
-

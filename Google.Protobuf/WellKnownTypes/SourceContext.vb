@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b66a64efc4edf5901e6d176e857b41d, Google.Protobuf\WellKnownTypes\SourceContext.vb"
+﻿#Region "Microsoft.VisualBasic::b283f9c018ed54f26bd27d2520634579, Google.Protobuf\WellKnownTypes\SourceContext.vb"
 
     ' Author:
     ' 
@@ -230,4 +230,3 @@ Namespace Google.Protobuf.WellKnownTypes
 
 End Namespace
 #End Region
-

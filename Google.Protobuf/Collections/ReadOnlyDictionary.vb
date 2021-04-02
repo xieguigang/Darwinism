@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48234e23c1f18b0bdd66cbafb0a54264, Google.Protobuf\Collections\ReadOnlyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::d0236fa546c5bac748ce7ae6d87fa037, Google.Protobuf\Collections\ReadOnlyDictionary.vb"
 
     ' Author:
     ' 
@@ -185,4 +185,3 @@ Namespace Google.Protobuf.Collections
         End Function
     End Class
 End Namespace
-

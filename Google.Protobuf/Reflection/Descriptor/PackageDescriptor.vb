@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a61d4ff7019452583742132d9af4c9ea, Google.Protobuf\Reflection\Descriptor\PackageDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::d26ecdb14046ed057860f303c0bbfd4f, Google.Protobuf\Reflection\Descriptor\PackageDescriptor.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Namespace Google.Protobuf.Reflection
         End Property
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4eceb34cb5299271c8c1b3c79a1cd958, Google.Protobuf\Message\IMessage.vb"
+﻿#Region "Microsoft.VisualBasic::081296e26d2715d9b245cd418544721f, Google.Protobuf\Message\IMessage.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace Google.Protobuf
     End Interface
 
 End Namespace
-

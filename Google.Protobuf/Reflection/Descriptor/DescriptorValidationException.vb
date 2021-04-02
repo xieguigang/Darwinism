@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f3c6c29a9bec7a8c2e4dfa93228e390, Google.Protobuf\Reflection\Descriptor\DescriptorValidationException.vb"
+﻿#Region "Microsoft.VisualBasic::9adea3ac5b6075b7dd3c14f273cca457, Google.Protobuf\Reflection\Descriptor\DescriptorValidationException.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Namespace Google.Protobuf.Reflection
         End Sub
     End Class
 End Namespace
-

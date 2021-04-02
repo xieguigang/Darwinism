@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fee2dc4bc3c5a9ea1655babde4bc3cd, Google.Protobuf\Reflection\Descriptor\FieldDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::a2296fe33c8bd460a495d653fb91baaa, Google.Protobuf\Reflection\Descriptor\FieldDescriptor.vb"
 
     ' Author:
     ' 
@@ -389,4 +389,3 @@ Namespace Google.Protobuf.Reflection
         End Function
     End Class
 End Namespace
-

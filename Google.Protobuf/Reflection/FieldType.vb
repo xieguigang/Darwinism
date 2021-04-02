@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d90539f97789602e0c01ea0452c536ff, Google.Protobuf\Reflection\FieldType.vb"
+﻿#Region "Microsoft.VisualBasic::bc80bc8d8a4419472abddc5d785c6c6a, Google.Protobuf\Reflection\FieldType.vb"
 
     ' Author:
     ' 
@@ -158,4 +158,3 @@ Namespace Google.Protobuf.Reflection
         [Enum]
     End Enum
 End Namespace
-

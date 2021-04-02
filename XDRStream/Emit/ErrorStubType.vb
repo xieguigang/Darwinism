@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aca7ad23e0d93dd7158815a5910f7457, Data\BinaryData\BinaryData\XDR\Emit\ErrorStubType.vb"
+﻿#Region "Microsoft.VisualBasic::9774f4ac569020172d1929ba2f311920, XDRStream\Emit\ErrorStubType.vb"
 
     ' Author:
     ' 
@@ -71,4 +71,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-

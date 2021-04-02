@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be836190f27e2289be3669c639d36b4, Data\BinaryData\BinaryData\XDR\MapException.vb"
+﻿#Region "Microsoft.VisualBasic::dd43497ae9f025e49ad38944da71bcd6, XDRStream\MapException.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Namespace Xdr
         End Function
     End Class
 End Namespace
-

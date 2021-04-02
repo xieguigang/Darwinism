@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5efc7517b0bffb4b14886a39aaa44b71, ossutil\Model\TextParsers.vb"
+﻿#Region "Microsoft.VisualBasic::5efc7517b0bffb4b14886a39aaa44b71, CloudKit\ossutil\Model\TextParsers.vb"
 
     ' Author:
     ' 

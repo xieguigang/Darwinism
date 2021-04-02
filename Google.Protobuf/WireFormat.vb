@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::007a45164e0e8c48c0ada6e013ddea09, Google.Protobuf\WireFormat.vb"
+﻿#Region "Microsoft.VisualBasic::0fc20b762aebbc8a889dc7f06695d2b8, Google.Protobuf\WireFormat.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Namespace Google.Protobuf
         End Function
     End Module
 End Namespace
-

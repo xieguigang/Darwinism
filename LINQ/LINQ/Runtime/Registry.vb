@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fee731c95a56785c1041665dbd0e9e3e, LINQ\LINQ\Runtime\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::a9a98461d77d59c3c0013190f451e6ad, LINQ\LINQ\Runtime\Registry.vb"
 
     ' Author:
     ' 
@@ -62,5 +62,3 @@ Namespace Runtime
         End Function
     End Class
 End Namespace
-
-

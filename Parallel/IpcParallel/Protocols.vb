@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc07e9e0f5612dfb6be46445cbdaad3c, Parallel\IpcParallel\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::b4f5d0bee04b0aae123b14d0fad73674, Parallel\IpcParallel\Protocols.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Public Enum Protocols
     PostResult
     PostError
 End Enum
-

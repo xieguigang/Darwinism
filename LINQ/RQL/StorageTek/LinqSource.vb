@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73f1ed0dd0d3dc2f8577ce1e60a5b5ef, RQL\StorageTek\LinqSource.vb"
+﻿#Region "Microsoft.VisualBasic::73f1ed0dd0d3dc2f8577ce1e60a5b5ef, LINQ\RQL\StorageTek\LinqSource.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b34a9134d5bda3ea760382bb122a5d71, RQL\Repository\LinqEntry.vb"
+﻿#Region "Microsoft.VisualBasic::b34a9134d5bda3ea760382bb122a5d71, LINQ\RQL\Repository\LinqEntry.vb"
 
     ' Author:
     ' 

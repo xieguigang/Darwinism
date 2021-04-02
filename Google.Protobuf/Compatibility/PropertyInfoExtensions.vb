@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1762a789ac6ff2f706f473651a5e8b44, Google.Protobuf\Compatibility\PropertyInfoExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::02c486a858d937b0b87c48a9479a274d, Google.Protobuf\Compatibility\PropertyInfoExtensions.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace Google.Protobuf.Compatibility
         End Function
     End Module
 End Namespace
-

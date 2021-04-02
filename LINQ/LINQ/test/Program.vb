@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8971cc8676ec56ef9d772b356fc6741a, LINQ\LINQ\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::6fde37c8f4df7549a619d5aa3e8dda33, LINQ\LINQ\test\Program.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ order by y
         Pause()
     End Sub
 End Module
-

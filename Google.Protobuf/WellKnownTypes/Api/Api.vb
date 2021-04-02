@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36d75ac949272a5f7a305a5793e707e5, Google.Protobuf\WellKnownTypes\Api\Api.vb"
+﻿#Region "Microsoft.VisualBasic::6b8b4721d3924148a404fa3ab27a9a24, Google.Protobuf\WellKnownTypes\Api\Api.vb"
 
     ' Author:
     ' 
@@ -414,4 +414,3 @@ Namespace Google.Protobuf.WellKnownTypes
 
 End Namespace
 #End Region
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03bcb1a7e27da1e1468666ba627e8ca7, Google.Protobuf\WellKnownTypes\Wrappers\Wrappers.vb"
+﻿#Region "Microsoft.VisualBasic::3dd296b7620a8b996f71586b7648a71c, Google.Protobuf\WellKnownTypes\Wrappers\Wrappers.vb"
 
     ' Author:
     ' 
@@ -73,4 +73,3 @@ Namespace Google.Protobuf.WellKnownTypes
 
 End Namespace
 #End Region
-

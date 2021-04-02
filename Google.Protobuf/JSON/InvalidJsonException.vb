@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63b489f4a0dc653b6466d15ef68b4a99, Google.Protobuf\JSON\InvalidJsonException.vb"
+﻿#Region "Microsoft.VisualBasic::5df10fe3935ff18d977c388dac5122a0, Google.Protobuf\JSON\InvalidJsonException.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Namespace Google.Protobuf
         End Sub
     End Class
 End Namespace
-

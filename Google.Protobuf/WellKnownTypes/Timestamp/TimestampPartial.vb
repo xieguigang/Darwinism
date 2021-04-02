@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fca3d0fedbef4a470e2eda59cda98968, Google.Protobuf\WellKnownTypes\Timestamp\TimestampPartial.vb"
+﻿#Region "Microsoft.VisualBasic::118f71f1efc25dfbcbe9f84cad8bfafd, Google.Protobuf\WellKnownTypes\Timestamp\TimestampPartial.vb"
 
     ' Author:
     ' 
@@ -267,4 +267,3 @@ Namespace Google.Protobuf.WellKnownTypes
         End Function
     End Class
 End Namespace
-

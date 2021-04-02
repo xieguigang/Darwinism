@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e17baf51b7aafafaef66def170f88de8, Google.Protobuf\InvalidProtocolBufferException.vb"
+﻿#Region "Microsoft.VisualBasic::2551141d9297debcc25cfcd1533f07d4, Google.Protobuf\InvalidProtocolBufferException.vb"
 
     ' Author:
     ' 
@@ -148,4 +148,3 @@ Namespace Google.Protobuf
         End Function
     End Class
 End Namespace
-

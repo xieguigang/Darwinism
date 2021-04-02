@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40d3ae64da41087ad69d5ff72007d0d6, LINQ\LINQ\Script\Builders\BinaryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::774fbb3c052bbc812dbe3f59a695355c, LINQ\LINQ\Script\Builders\BinaryBuilder.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Module BinaryBuilder
         Next
     End Function
 End Module
-

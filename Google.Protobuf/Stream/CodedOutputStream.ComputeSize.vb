@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a487c20f2e9b32a794ac62ca4f91dc86, Google.Protobuf\Stream\CodedOutputStream.ComputeSize.vb"
+﻿#Region "Microsoft.VisualBasic::a6ed0d89f4e88852b226d065eedfc94d, Google.Protobuf\Stream\CodedOutputStream.ComputeSize.vb"
 
     ' Author:
     ' 
@@ -320,4 +320,3 @@ Namespace Google.Protobuf
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ada7b8a809323e160746d9883d0d5ec, Data\BinaryData\BinaryData\XDR\EnumHelper.vb"
+﻿#Region "Microsoft.VisualBasic::693eb2a3a9132d4165de7d98fd907131, XDRStream\EnumHelper.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Namespace Xdr
         End Function
     End Class
 End Namespace
-

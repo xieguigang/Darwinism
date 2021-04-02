@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26a7ced845514f74af2c2e99d09d428d, Parallel\MemoryMap\MapObject.vb"
+﻿#Region "Microsoft.VisualBasic::1d940df528f4ea805c224c1e14fe7d99, Parallel\MemoryMap\MapObject.vb"
 
     ' Author:
     ' 
@@ -141,4 +141,3 @@ Public Class MapObject : Implements IDisposable
         }
     End Operator
 End Class
-

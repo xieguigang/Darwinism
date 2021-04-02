@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3661b9be7087920618c207ee09fdbfc0, Google.Protobuf\Reflection\Accessor\OneofAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::091b773f7051a64771b1508308f2e13d, Google.Protobuf\Reflection\Accessor\OneofAccessor.vb"
 
     ' Author:
     ' 
@@ -134,4 +134,3 @@ Namespace Google.Protobuf.Reflection
         End Function
     End Class
 End Namespace
-

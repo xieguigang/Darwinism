@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e11251c84ca0e564ea9cd940c1e84d19, Distribute_computing\GridDynamics_plugins\Think.vb"
+﻿#Region "Microsoft.VisualBasic::195ea346f5b749167e6e2474c5b72dba, Distribute_computing\GridDynamics_plugins\Think.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Public Function Slave(application As String, out As String) As Integer
 End Function
 End Class
 End Namespace
-

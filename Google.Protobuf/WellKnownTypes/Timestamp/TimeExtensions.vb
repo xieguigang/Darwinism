@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f0659d1e7ffa313eb51f3c230bcd0b7, Google.Protobuf\WellKnownTypes\Timestamp\TimeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8acfa759059483f8fa362e78bd8b2f67, Google.Protobuf\WellKnownTypes\Timestamp\TimeExtensions.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Namespace Google.Protobuf.WellKnownTypes
         End Function
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a0377124bbb4c08e17641b35f955111, Google.Protobuf\Reflection\Accessor\SingleFieldAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::48d60a145fea9f2a40937ed3ec20d7ba, Google.Protobuf\Reflection\Accessor\SingleFieldAccessor.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace Google.Protobuf.Reflection
         End Sub
     End Class
 End Namespace
-

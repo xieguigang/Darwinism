@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eba4374986d38a7d2892e1953bc7b70f, Data\BinaryData\BinaryData\XDR\EmitContexts\EmitContext.vb"
+﻿#Region "Microsoft.VisualBasic::91905138c9c5504cf1c4367e065cedb5, XDRStream\EmitContexts\EmitContext.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Namespace Xdr.EmitContexts
         End Function
     End Module
 End Namespace
-

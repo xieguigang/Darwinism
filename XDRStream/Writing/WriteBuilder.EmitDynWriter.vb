@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af1a372ac5207d90b3e37baaaa9079b6, Data\BinaryData\BinaryData\XDR\Writing\WriteBuilder.EmitDynWriter.vb"
+﻿#Region "Microsoft.VisualBasic::2e2c6dd8c6153509b6d949ad6c036af4, XDRStream\Writing\WriteBuilder.EmitDynWriter.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-

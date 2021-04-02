@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3a448b4191039e0e29d15c437f51c72, Google.Protobuf\WellKnownTypes\Struct\Struct.vb"
+﻿#Region "Microsoft.VisualBasic::0b92678551b9497b309663816051ab7a, Google.Protobuf\WellKnownTypes\Struct\Struct.vb"
 
     ' Author:
     ' 
@@ -200,4 +200,3 @@ Namespace Google.Protobuf.WellKnownTypes
 
 End Namespace
 #End Region
-

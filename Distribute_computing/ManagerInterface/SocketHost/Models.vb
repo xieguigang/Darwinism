@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bb214b64a415f80a6fda6931b9a08a7, Distribute_computing\ManagerInterface\SocketHost\Models.vb"
+﻿#Region "Microsoft.VisualBasic::99d911cc3167898ef7301db6bd6ac4e1, Distribute_computing\ManagerInterface\SocketHost\Models.vb"
 
     ' Author:
     ' 
@@ -42,4 +42,3 @@
 Public Class Models
 
 End Class
-

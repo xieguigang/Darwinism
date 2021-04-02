@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36588f403fe091d67737baddedfd90de, RQL\StorageTek\API.vb"
+﻿#Region "Microsoft.VisualBasic::36588f403fe091d67737baddedfd90de, LINQ\RQL\StorageTek\API.vb"
 
     ' Author:
     ' 

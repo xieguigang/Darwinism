@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d3fe5b059a8341d622fa9db9b52b065, Google.Protobuf\Reflection\GeneratedClrTypeInfo.vb"
+﻿#Region "Microsoft.VisualBasic::af7fa1d561408ac4a15ac765dd5c5bac, Google.Protobuf\Reflection\GeneratedClrTypeInfo.vb"
 
     ' Author:
     ' 
@@ -151,4 +151,3 @@ Namespace Google.Protobuf.Reflection
         End Sub
     End Class
 End Namespace
-

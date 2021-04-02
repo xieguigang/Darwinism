@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77659b98afc4085cbf44ed79c6054029, Google.Protobuf\WellKnownTypes\Duration.vb"
+﻿#Region "Microsoft.VisualBasic::a569a13cc7b75b8c8e7719f420966908, Google.Protobuf\WellKnownTypes\Duration.vb"
 
     ' Author:
     ' 
@@ -308,4 +308,3 @@ Namespace Google.Protobuf.WellKnownTypes
 
 End Namespace
 #End Region
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4c326bbc4f28a74d340afa1e16b46f6, Centos\Bash.vb"
+﻿#Region "Microsoft.VisualBasic::cd9315b80e68ea9400614fae6484fa09, CloudKit\Centos\Bash.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,7 @@
 
     ' Module Bash
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Function: exec, run, ssh
     ' 
     ' /********************************************************************************/

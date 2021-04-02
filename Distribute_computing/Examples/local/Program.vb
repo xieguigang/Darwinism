@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8081d21dcc0f6a0b935f495194eecd7, Examples\local\Program.vb"
+﻿#Region "Microsoft.VisualBasic::b8081d21dcc0f6a0b935f495194eecd7, Distribute_computing\Examples\local\Program.vb"
 
     ' Author:
     ' 

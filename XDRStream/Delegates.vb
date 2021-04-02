@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f212c520101918e343e9cc664a31306a, Data\BinaryData\BinaryData\XDR\Delegates.vb"
+﻿#Region "Microsoft.VisualBasic::9297d2f761722f9d9abbd430b8589306, XDRStream\Delegates.vb"
 
     ' Author:
     ' 
@@ -54,11 +54,9 @@
 
 #End Region
 
-
 Namespace Xdr
     Public Delegate Function ReadOneDelegate(Of T)(reader As Reader) As T
     Public Delegate Function ReadManyDelegate(Of T)(reader As Reader, len As UInteger) As T
     Public Delegate Sub WriteOneDelegate(Of T)(writer As Writer, item As T)
     Public Delegate Sub WriteManyDelegate(Of T)(writer As Writer, len As UInteger, item As T)
 End Namespace
-

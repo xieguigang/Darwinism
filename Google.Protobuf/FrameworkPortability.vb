@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::794c57b48872309cf56b77dab046cc65, Google.Protobuf\FrameworkPortability.vb"
+﻿#Region "Microsoft.VisualBasic::e27ada0fc6fb581cdbebce4202ad84e5, Google.Protobuf\FrameworkPortability.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Namespace Google.Protobuf
         Friend ReadOnly CompiledRegexWhereAvailable As RegexOptions = If([Enum].IsDefined(GetType(RegexOptions), 8), CType(8, RegexOptions), RegexOptions.None)
     End Module
 End Namespace
-

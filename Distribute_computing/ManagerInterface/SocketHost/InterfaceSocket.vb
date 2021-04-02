@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::287da013d27904029df82d3c839bc50a, Distribute_computing\ManagerInterface\SocketHost\InterfaceSocket.vb"
+﻿#Region "Microsoft.VisualBasic::082bffc693a3254965d104b55995274a, Distribute_computing\ManagerInterface\SocketHost\InterfaceSocket.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Public Class InterfaceSocket : Inherits WsProcessor
 
     End Sub
 End Class
-

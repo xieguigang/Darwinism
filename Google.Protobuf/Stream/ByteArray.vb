@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99171b0c9732a8c11dcf37568de2ddaa, Google.Protobuf\Stream\ByteArray.vb"
+﻿#Region "Microsoft.VisualBasic::a4c0c3e042dda9daf9bcfea730effec9, Google.Protobuf\Stream\ByteArray.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Namespace Google.Protobuf
         End Sub
     End Module
 End Namespace
-

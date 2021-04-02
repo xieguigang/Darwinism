@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d125c37a2d81976cafb2e6bb4cd022a, Data\BinaryData\BinaryData\XDR\Attributes\FixAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::bc087e4fbdf5ffd8e2b3e9a0a650b44c, XDRStream\Attributes\FixAttribute.vb"
 
     ' Author:
     ' 
@@ -66,4 +66,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-

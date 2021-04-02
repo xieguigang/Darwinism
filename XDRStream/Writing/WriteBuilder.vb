@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e686ed45971518f5d34a3e3fd2cb38b7, Data\BinaryData\BinaryData\XDR\Writing\WriteBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::6776afaa08f5c6cf2472d36d3f435a6a, XDRStream\Writing\WriteBuilder.vb"
 
     ' Author:
     ' 
@@ -101,4 +101,3 @@ Namespace Xdr
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb32c4f9fbae061cec0c4d0bac952549, Google.Protobuf\WellKnownTypes\DurationPartial.vb"
+﻿#Region "Microsoft.VisualBasic::934bbad329cbca9bbe7a048e8d45d2bf, Google.Protobuf\WellKnownTypes\DurationPartial.vb"
 
     ' Author:
     ' 
@@ -287,4 +287,3 @@ Namespace Google.Protobuf.WellKnownTypes
         End Sub
     End Class
 End Namespace
-

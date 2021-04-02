@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::749501dd78ea51f0213ff431813422ca, Google.Protobuf\WellKnownTypes\Wrappers\WrappersPartial.vb"
+﻿#Region "Microsoft.VisualBasic::903e1d127b48be70b8dc00a25dd7a203, Google.Protobuf\WellKnownTypes\Wrappers\WrappersPartial.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Namespace Google.Protobuf.WellKnownTypes
         Friend Const WrapperValueFieldNumber As Integer = Int32Value.ValueFieldNumber
     End Module
 End Namespace
-

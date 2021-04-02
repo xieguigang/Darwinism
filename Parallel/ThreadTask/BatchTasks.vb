@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::897cad592566b84641453e627667509c, Parallel\ThreadTask\BatchTasks.vb"
+﻿#Region "Microsoft.VisualBasic::dbfaa1b6961e402576b0aa4d7e10d13d, Parallel\ThreadTask\BatchTasks.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Module BatchTasks
+    '     Module BatchTasks
     ' 
-    '     Function: SelfFolks
+    '         Function: SelfFolks
     ' 
-    '     Sub: Invoke
+    '         Sub: Invoke
+    ' 
     ' 
     ' /********************************************************************************/
 

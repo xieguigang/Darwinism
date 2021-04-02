@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2355bf29771a422fab3f38724ab559bd, Data\BinaryData\BinaryData\XDR\Void.vb"
+﻿#Region "Microsoft.VisualBasic::eecb2765acc91f3257f503cdcd2a1645, XDRStream\Void.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Namespace Xdr
     ''' <summary>
     ''' Void
@@ -49,4 +48,3 @@ Namespace Xdr
     Public Structure Void
     End Structure
 End Namespace
-

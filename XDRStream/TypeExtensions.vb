@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f151b3ffd00dcc8fdb8a017dd0a15ba, Data\BinaryData\BinaryData\XDR\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f727f3e913f531db254d15b6f21a9ca7, XDRStream\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Namespace Xdr
         End Function
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4679f0bfa99b1f868af83c9d0943a751, Google.Protobuf\Reflection\Descriptor\IDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::f39f64ea2d6e431ba614239599869cab, Google.Protobuf\Reflection\Descriptor\IDescriptor.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Namespace Google.Protobuf.Reflection
         ReadOnly Property File As FileDescriptor
     End Interface
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04495aeb2ec95bc163bff7ad36f3acb8, Data\BinaryData\BinaryData\XDR\Reading\ReadBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::d66229b29dd2a345b4ae221436de8188, XDRStream\Reading\ReadBuilder.vb"
 
     ' Author:
     ' 
@@ -101,4 +101,3 @@ Namespace Xdr
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c443b173f450c3542b99627efe067598, Data\BinaryData\BinaryData\XDR\OpaqueType.vb"
+﻿#Region "Microsoft.VisualBasic::454cfeb124e1796e5a770afefe5697ee, XDRStream\OpaqueType.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace Xdr
     Public Enum OpaqueType
         One = 0
@@ -51,4 +50,3 @@ Namespace Xdr
         Var = 2
     End Enum
 End Namespace
-

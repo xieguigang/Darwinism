@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7e5d5558513409f3f728fd33f28bbe2, Distribute_computing\thinking\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::8856d7297ff1eb97a88cd888a0d46f21, Distribute_computing\thinking\CLI.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Imports sciBASIC.ComputingServices.TaskHost
         Return 0
     End Function
 End Module
-

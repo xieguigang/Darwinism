@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7cbb4b586290172266459ddb63244f0, Data\BinaryData\BinaryData\XDR\EmitContexts\SwitchModel.vb"
+﻿#Region "Microsoft.VisualBasic::0d596e2f4afb9e4f87e2d26c97bb8ead, XDRStream\EmitContexts\SwitchModel.vb"
 
     ' Author:
     ' 
@@ -174,4 +174,3 @@ Namespace Xdr.EmitContexts
         End Sub
     End Class
 End Namespace
-

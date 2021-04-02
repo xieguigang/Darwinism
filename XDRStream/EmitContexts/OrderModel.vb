@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::950940959274ac47a33d956210928806, Data\BinaryData\BinaryData\XDR\EmitContexts\OrderModel.vb"
+﻿#Region "Microsoft.VisualBasic::9a4a157e09c3aeebcddba38b88055f15, XDRStream\EmitContexts\OrderModel.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Namespace Xdr.EmitContexts
         End Sub
     End Class
 End Namespace
-

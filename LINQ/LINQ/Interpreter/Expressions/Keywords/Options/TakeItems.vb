@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cf4691a5ff2a83a5a764adafd47e5fd, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\TakeItems.vb"
+﻿#Region "Microsoft.VisualBasic::094b21167dcd85f47ff8710a93aa3ae2, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\TakeItems.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports LINQ.Runtime
 Imports Microsoft.VisualBasic.My.JavaScript

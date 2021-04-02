@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44a79abe670974eb405a5d4bca3ff755, Google.Protobuf\Collections\MapField.vb"
+﻿#Region "Microsoft.VisualBasic::091d6ba17dea23eab9d67309ce161389, Google.Protobuf\Collections\MapField.vb"
 
     ' Author:
     ' 
@@ -857,4 +857,3 @@ Namespace Google.Protobuf.Collections
         End Class
     End Class
 End Namespace
-

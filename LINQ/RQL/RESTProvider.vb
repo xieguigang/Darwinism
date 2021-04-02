@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd553a93cc90f92987add8b7a99d52b6, RQL\RESTProvider.vb"
+﻿#Region "Microsoft.VisualBasic::dd553a93cc90f92987add8b7a99d52b6, LINQ\RQL\RESTProvider.vb"
 
     ' Author:
     ' 

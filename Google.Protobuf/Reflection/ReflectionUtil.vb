@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c63784f6011d4ec788b8523f300bde4, Google.Protobuf\Reflection\ReflectionUtil.vb"
+﻿#Region "Microsoft.VisualBasic::93f3651bb031be5bfb8de94934f48e9d, Google.Protobuf\Reflection\ReflectionUtil.vb"
 
     ' Author:
     ' 
@@ -131,4 +131,3 @@ Namespace Google.Protobuf.Reflection
         End Function
     End Module
 End Namespace
-

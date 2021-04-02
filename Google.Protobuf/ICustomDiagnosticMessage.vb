@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea58a4473de8f05566c9a66ce77eb2de, Google.Protobuf\ICustomDiagnosticMessage.vb"
+﻿#Region "Microsoft.VisualBasic::85a637df5f263ddb8e3a2f5ea65ac4da, Google.Protobuf\ICustomDiagnosticMessage.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Namespace Google.Protobuf
         Function ToDiagnosticString() As String
     End Interface
 End Namespace
-

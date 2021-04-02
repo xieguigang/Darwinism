@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b28834e300186ade27b116682f21ce1, Data\BinaryData\BinaryData\XDR\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0b28834e300186ade27b116682f21ce1, XDRStream\NamespaceDoc.vb"
 
     ' Author:
     ' 

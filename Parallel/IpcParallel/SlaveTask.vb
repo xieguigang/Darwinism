@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::421ee975643ae542543f35de0068b5bc, Parallel\IpcParallel\SlaveTask.vb"
+﻿#Region "Microsoft.VisualBasic::c7901ef38489164efc1ff25498efb52f, Parallel\IpcParallel\SlaveTask.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' Class SlaveTask
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) Emit, handleGET, handlePOST, RunTask
+    '     Function: (+2 Overloads) Emit, GetValueFromStream, handleGET, handlePOST, RunTask
     ' 
     ' 
     ' 
@@ -186,4 +186,3 @@ Public Class SlaveTask
         End If
     End Function
 End Class
-

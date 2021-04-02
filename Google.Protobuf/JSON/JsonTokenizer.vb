@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de6c537a47e4e7e3f5237d6851ecc50, Google.Protobuf\JSON\JsonTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::41cc733c437f0801080eb0177ae48151, Google.Protobuf\JSON\JsonTokenizer.vb"
 
     ' Author:
     ' 
@@ -768,4 +768,3 @@ Namespace Google.Protobuf
         End Class
     End Class
 End Namespace
-

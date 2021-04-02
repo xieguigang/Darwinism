@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4ee7e8e39100435437b764ac5c3df7f, Google.Protobuf\Stream\CodedOutputStream.vb"
+﻿#Region "Microsoft.VisualBasic::791daf8c0e7e48277820bbcf61027079, Google.Protobuf\Stream\CodedOutputStream.vb"
 
     ' Author:
     ' 
@@ -715,4 +715,3 @@ Namespace Google.Protobuf
         End Property
     End Class
 End Namespace
-

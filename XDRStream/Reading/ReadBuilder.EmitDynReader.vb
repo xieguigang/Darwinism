@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7ca7ca1c9f2cd669436be7e5ed4e188, Data\BinaryData\BinaryData\XDR\Reading\ReadBuilder.EmitDynReader.vb"
+﻿#Region "Microsoft.VisualBasic::1dfec244271abcee4c1be81f631560be, XDRStream\Reading\ReadBuilder.EmitDynReader.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-

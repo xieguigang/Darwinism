@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::043e5bf23dadfd7c723b336c04ab4aca, Data\BinaryData\BinaryData\XDR\Attributes\SwitchAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::8add30dd3443f05e5e72b1f86fa2004e, XDRStream\Attributes\SwitchAttribute.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::640ff2a5bbd5f7c5670d60efa4a0585f, RQL\StorageTek\EntityProvider.vb"
+﻿#Region "Microsoft.VisualBasic::4a78e6e2ba51853e82ea495ba548192c, LINQ\RQL\StorageTek\EntityProvider.vb"
 
     ' Author:
     ' 

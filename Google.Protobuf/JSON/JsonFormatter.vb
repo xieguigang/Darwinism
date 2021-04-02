@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3c1b9e44f4b060529b848b800c95e2f, Google.Protobuf\JSON\JsonFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::822ce310a13c2d350e6b19e5f24521a6, Google.Protobuf\JSON\JsonFormatter.vb"
 
     ' Author:
     ' 
@@ -861,4 +861,3 @@ Namespace Google.Protobuf
         End Class
     End Class
 End Namespace
-

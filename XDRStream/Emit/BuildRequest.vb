@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecdb7d9b305fb129b4e7b0ac7ab18d36, Data\BinaryData\BinaryData\XDR\Emit\BuildRequest.vb"
+﻿#Region "Microsoft.VisualBasic::16c275f9aceb45a1411078547dec2c4c, XDRStream\Emit\BuildRequest.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Namespace Xdr
         Public Property Method As OpaqueType
     End Class
 End Namespace
-

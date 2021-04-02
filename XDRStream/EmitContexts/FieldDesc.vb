@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d37052787037d2d6a3d6bd4ce29511c1, Data\BinaryData\BinaryData\XDR\EmitContexts\FieldDesc.vb"
+﻿#Region "Microsoft.VisualBasic::bd1d3c2690355385cd74ddc37bb4425b, XDRStream\EmitContexts\FieldDesc.vb"
 
     ' Author:
     ' 
@@ -148,4 +148,3 @@ Namespace Xdr.EmitContexts
         End Function
     End Class
 End Namespace
-

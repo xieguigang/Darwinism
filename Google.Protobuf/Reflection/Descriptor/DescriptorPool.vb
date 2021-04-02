@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7975a46ee67f0010f242c38a10fa427a, Google.Protobuf\Reflection\Descriptor\DescriptorPool.vb"
+﻿#Region "Microsoft.VisualBasic::30aae81439e9e8cfab7b3b6897c8f3bf, Google.Protobuf\Reflection\Descriptor\DescriptorPool.vb"
 
     ' Author:
     ' 
@@ -369,4 +369,3 @@ Namespace Google.Protobuf.Reflection
         End Structure
     End Class
 End Namespace
-

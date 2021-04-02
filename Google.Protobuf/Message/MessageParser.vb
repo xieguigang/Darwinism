@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c6c61e1d3fa8fbcccaa7b3910b5e4be, Google.Protobuf\Message\MessageParser.vb"
+﻿#Region "Microsoft.VisualBasic::424b444ca681db51ee599a1f829640dc, Google.Protobuf\Message\MessageParser.vb"
 
     ' Author:
     ' 
@@ -171,4 +171,3 @@ Namespace Google.Protobuf
         End Function
     End Class
 End Namespace
-

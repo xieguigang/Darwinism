@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02749d238de87960cf94f44912df0e91, Google.Protobuf\JSON\JsonToken.vb"
+﻿#Region "Microsoft.VisualBasic::03f99d874addc6e598a646433d613f85, Google.Protobuf\JSON\JsonToken.vb"
 
     ' Author:
     ' 
@@ -263,4 +263,3 @@ Namespace Google.Protobuf
         End Function
     End Class
 End Namespace
-

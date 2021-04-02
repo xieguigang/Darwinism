@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55ed93fa0b6cf79b7f9b4a8a0d7975a7, Google.Protobuf\Reflection\Descriptor\EnumValueDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::efd90cc05773e5fbfb7f6f72fe7ae8a2, Google.Protobuf\Reflection\Descriptor\EnumValueDescriptor.vb"
 
     ' Author:
     ' 
@@ -126,4 +126,3 @@ Namespace Google.Protobuf.Reflection
         End Property
     End Class
 End Namespace
-

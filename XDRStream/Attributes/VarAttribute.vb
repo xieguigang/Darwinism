@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f93eeec3aac712957ec93b2f9ffe6df, Data\BinaryData\BinaryData\XDR\Attributes\VarAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b1d2e0b2e5588c54306391f33d5f8b2c, XDRStream\Attributes\VarAttribute.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Namespace Xdr
         End Sub
     End Class
 End Namespace
-
