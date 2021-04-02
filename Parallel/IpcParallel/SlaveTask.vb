@@ -53,6 +53,9 @@ Imports Parallel.IpcStream
 
 Public Delegate Function ISlaveTask(processor As InteropService, port As Integer) As String
 
+''' <summary>
+''' the master node of the slave node
+''' </summary>
 Public Class SlaveTask
 
     ReadOnly processor As InteropService
@@ -82,15 +85,30 @@ Public Class SlaveTask
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="buf">buffer is an <see cref="ObjectStream"/></param>
+    ''' <param name="type"></param>
+    ''' <param name="debugCode"></param>
+    ''' <returns></returns>
     Private Function handlePOST(buf As Stream, type As Type, debugCode As Integer) As Object
+        Dim obj As New ObjectStream(buf)
+        Dim socket As SocketRef = SocketRef.GetSocket(obj)
+
+        obj = socket.Open
+
         Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
-        Return streamBuf.handleCreate(buf, type, StreamMethods.Auto)
+
+        Using file As MemoryStream = obj.openMemoryBuffer
+            Return streamBuf.handleCreate(buf, type, obj.method)
+        End Using
     End Function
 
     Private Function handleGET(param As Object, i As Integer, debugCode As Integer) As ObjectStream
-        Dim socket As SocketRef = SocketRef.CreateReference
+        Dim socket As SocketRef = SocketRef.WriteBuffer(param, streamBuf)
         Call Console.WriteLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
-        Return streamBuf.handleSerialize(param)
+        Return streamBuf.handleSerialize(socket)
     End Function
 
     Public Function RunTask(Of T)(entry As [Delegate], ParamArray parameters As Object()) As T

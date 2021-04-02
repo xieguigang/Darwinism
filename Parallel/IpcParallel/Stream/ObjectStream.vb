@@ -86,7 +86,17 @@ Namespace IpcStream
         End Sub
 
         Sub New(raw As Byte())
-            Using read As New BinaryReader(New MemoryStream(raw))
+            Using file As New MemoryStream(raw)
+                Call LoadBuffer(file)
+            End Using
+        End Sub
+
+        Sub New(raw As Stream)
+            Call LoadBuffer(raw)
+        End Sub
+
+        Private Sub LoadBuffer(raw As Stream)
+            Using read As New BinaryReader(raw)
                 Dim methodi As Integer = read.ReadInt32
                 Dim size As Integer = read.ReadInt32
                 Dim chunk As Byte() = read.ReadBytes(size)

@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.MIME.application.json.BSON
 
 Namespace IpcStream
 
@@ -6,19 +7,38 @@ Namespace IpcStream
 
         Public Property address As String
 
+        ''' <summary>
+        ''' buffered object is <see cref="ObjectStream"/>
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <param name="emit"></param>
+        ''' <returns></returns>
         Public Shared Function WriteBuffer(target As Object, emit As StreamEmit) As SocketRef
             Dim stream As ObjectStream = emit.handleSerialize(target)
             Dim ref As SocketRef = CreateReference()
 
             Using file As Stream = ref.address.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-
+                Call stream.Serialize(file)
+                Call stream.Dispose()
             End Using
 
             Return ref
         End Function
 
+        Public Function Open() As ObjectStream
+            Using file As Stream = address.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return New ObjectStream(file)
+            End Using
+        End Function
+
         Public Overrides Function ToString() As String
             Return address
+        End Function
+
+        Public Shared Function GetSocket(stream As ObjectStream) As SocketRef
+            Using file As Stream = stream.openMemoryBuffer
+                Return BSONFormat.Load(file).CreateObject(GetType(SocketRef))
+            End Using
         End Function
 
         Public Shared Function CreateReference() As SocketRef

@@ -55,6 +55,9 @@ Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Parallel.IpcStream
 
+''' <summary>
+''' Run on slave node
+''' </summary>
 Public Class TaskBuilder : Implements ITaskDriver
 
     ReadOnly masterPort As Integer
@@ -117,10 +120,19 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return target
     End Function
 
+    ''' <summary>
+    ''' <see cref="SocketRef"/> -> target
+    ''' </summary>
+    ''' <param name="i"></param>
+    ''' <returns></returns>
     Private Function GetArgumentValue(i As Integer) As Object
         Dim request As New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i))
         Dim resp = New TcpRequest(masterPort).SendMessage(request)
         Dim stream As New ObjectStream(resp.ChunkBuffer)
+        Dim socket As SocketRef = SocketRef.GetSocket(stream)
+
+        stream = socket.Open
+
         Dim type As Type = stream.type.GetType(knownFirst:=True)
 
 #If netcore5 = 1 Then
@@ -139,11 +151,13 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Sub PostFinished(result As Object, protocol As Protocols)
-        Using buf As Stream = emit.handleSerialize(result).openMemoryBuffer
+        Dim socket As SocketRef = SocketRef.WriteBuffer(result, emit)
+
+        Using buf As ObjectStream = emit.handleSerialize(socket)
             Dim request As New RequestStream(
                 protocolCategory:=IPCSocket.Protocol,
                 protocol:=protocol,
-                buffer:=New StreamPipe(buf).Read
+                buffer:=buf.Serialize
             )
 
             If TypeOf result Is IPCError Then
