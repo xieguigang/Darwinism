@@ -88,6 +88,7 @@ Public Class SlaveTask
     End Function
 
     Private Function handleGET(param As Object, i As Integer, debugCode As Integer) As ObjectStream
+        Dim socket As SocketRef = SocketRef.CreateReference
         Call Console.WriteLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
         Return streamBuf.handleSerialize(param)
     End Function

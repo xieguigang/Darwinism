@@ -1,54 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::afd368cb2ea7bf946dcdfa3ed58b0c24, Parallel\IpcParallel\Stream\ObjectStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ObjectStream
-    ' 
-    '         Properties: isPrimitive, method, stream, type
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetUnderlyingType, openMemoryBuffer, Serialize
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ObjectStream
+' 
+'         Properties: isPrimitive, method, stream, type
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetUnderlyingType, openMemoryBuffer, Serialize
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
@@ -61,15 +63,18 @@ Namespace IpcStream
 
         Dim disposedValue As Boolean
 
-        Public Property method As StreamMethods
-        Public Property stream As Byte()
-        Public Property type As TypeInfo
+        <MessagePackMember(0)> Public Property method As StreamMethods
+        <MessagePackMember(1)> Public Property stream As Byte()
+        <MessagePackMember(2)> Public Property type As TypeInfo
 
         Public ReadOnly Property isPrimitive As Boolean
             Get
                 Return DataFramework.IsPrimitive(GetUnderlyingType)
             End Get
         End Property
+
+        Sub New()
+        End Sub
 
         Sub New(type As TypeInfo, method As StreamMethods, stream As Stream)
             Me.method = method
@@ -94,6 +99,23 @@ Namespace IpcStream
             End Using
         End Sub
 
+        Shared Sub New()
+            Call MsgPackSerializer.DefaultContext.RegisterSerializer(New TypeMsgPack)
+        End Sub
+
+        Private Class TypeMsgPack : Inherits SchemaProvider(Of TypeInfo)
+
+            Protected Overrides Iterator Function GetObjectSchema() As IEnumerable(Of (obj As Type, schema As Dictionary(Of String, NilImplication)))
+                Dim map As New Dictionary(Of String, NilImplication) From {
+                    {NameOf(TypeInfo.assembly), NilImplication.MemberDefault},
+                    {NameOf(TypeInfo.fullName), NilImplication.MemberDefault},
+                    {NameOf(TypeInfo.reference), NilImplication.MemberDefault}
+                }
+
+                Yield (GetType(TypeInfo), map)
+            End Function
+        End Class
+
         Public Function GetUnderlyingType() As Type
             Return type.GetType(knownFirst:=True)
         End Function
@@ -102,19 +124,16 @@ Namespace IpcStream
             Return New MemoryStream(stream)
         End Function
 
-        Public Overrides Function Serialize() As Byte()
-            Using ms As New MemoryStream
-                Dim json As Byte() = Encoding.UTF8.GetBytes(type.GetJson)
+        Public Overrides Sub Serialize(MS As Stream)
+            Dim json As Byte() = Encoding.UTF8.GetBytes(type.GetJson)
 
-                Call ms.Write(BitConverter.GetBytes(method), Scan0, RawStream.INT32)
-                Call ms.Write(BitConverter.GetBytes(json.Length), Scan0, RawStream.INT32)
-                Call ms.Write(json, Scan0, json.Length)
-                Call ms.Write(BitConverter.GetBytes(stream.Length), Scan0, RawStream.INT32)
-                Call ms.Write(stream, Scan0, stream.Length)
-
-                Return ms.ToArray
-            End Using
-        End Function
+            Call MS.Write(BitConverter.GetBytes(method), Scan0, RawStream.INT32)
+            Call MS.Write(BitConverter.GetBytes(json.Length), Scan0, RawStream.INT32)
+            Call MS.Write(json, Scan0, json.Length)
+            Call MS.Write(BitConverter.GetBytes(stream.Length), Scan0, RawStream.INT32)
+            Call MS.Write(stream, Scan0, stream.Length)
+            Call MS.Flush()
+        End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
