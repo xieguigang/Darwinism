@@ -111,6 +111,16 @@ Public Class SlaveTask
         Return streamBuf.handleSerialize(socket)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="entry"></param>
+    ''' <param name="parameters">
+    ''' the common parameter value between the parallel batches 
+    ''' can be handle by the pre-cached <see cref="SocketRef"/>.
+    ''' </param>
+    ''' <returns></returns>
     Public Function RunTask(Of T)(entry As [Delegate], ParamArray parameters As Object()) As T
         Dim target As New IDelegate(entry)
         Dim result As Object = Nothing
