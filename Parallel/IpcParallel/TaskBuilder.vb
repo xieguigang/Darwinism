@@ -67,22 +67,39 @@ Public Class TaskBuilder : Implements ITaskDriver
         masterPort = port
     End Sub
 
+    Private Iterator Function GetParameters(params As ParameterInfo(), n As Integer) As IEnumerable(Of Object)
+        For i As Integer = 0 To n - 1
+            Dim par As Object = GetArgumentValue(i)
+            Dim targetType As Type = params(i).ParameterType
+
+            If par.GetType.IsInheritsFrom(targetType) Then
+                Yield Conversion.CTypeDynamic(par, targetType)
+            ElseIf par.GetType Is GetType(SocketRef) Then
+                ' is a common parameter value between
+                ' the parallel batchs
+                Dim socket As SocketRef = DirectCast(par, SocketRef)
+
+                Using buffer As ObjectStream = socket.Open
+                    Yield FromStream(buffer)
+                End Using
+            Else
+                Yield par
+            End If
+        Next
+    End Function
+
     Public Function Run() As Integer Implements ITaskDriver.Run
         Dim task As IDelegate = GetMethod()
         Dim api As MethodInfo = task.GetMethod
+        Dim params As ParameterInfo() = api.GetParameters
         Dim target As Object = task.GetMethodTarget
         Dim n As Integer = GetArgumentValueNumber()
-        Dim args As New List(Of Object)
-
-        For i As Integer = 0 To n - 1
-            args.Add(GetArgumentValue(i))
-        Next
+        Dim args As New List(Of Object)(GetParameters(params, n))
 
         Call Console.WriteLine("run task:")
         Call Console.WriteLine(task.GetJson(indent:=False, simpleDict:=True))
 
-        Dim params As ParameterInfo() = api.GetParameters
-
+        ' fix for optional parameter values
         For i As Integer = n To params.Length - 1
             If Not params(i).IsOptional Then
                 Return PostError(New Exception($"missing parameter value for [{i}]{params(i).Name}!"))
@@ -120,6 +137,18 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return target
     End Function
 
+    Private Function FromStream(stream As ObjectStream) As Object
+        Dim type As Type = stream.type.GetType(knownFirst:=True)
+
+#If netcore5 = 1 Then
+        Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
+#End If
+
+        Using buf As MemoryStream = stream.openMemoryBuffer
+            Return emit.handleCreate(buf, type, stream.method)
+        End Using
+    End Function
+
     ''' <summary>
     ''' <see cref="SocketRef"/> -> target
     ''' </summary>
@@ -131,16 +160,8 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim stream As New ObjectStream(resp.ChunkBuffer)
         Dim socket As SocketRef = SocketRef.GetSocket(stream)
 
-        stream = socket.Open
-
-        Dim type As Type = stream.type.GetType(knownFirst:=True)
-
-#If netcore5 = 1 Then
-        Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
-#End If
-
-        Using buf As MemoryStream = stream.openMemoryBuffer
-            Return emit.handleCreate(buf, type, stream.method)
+        Using buffer As ObjectStream = socket.Open
+            Return FromStream(buffer)
         End Using
     End Function
 
