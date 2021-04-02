@@ -13,9 +13,15 @@ Namespace IpcStream
         ''' <param name="target"></param>
         ''' <param name="emit"></param>
         ''' <returns></returns>
-        Public Shared Function WriteBuffer(target As Object, emit As StreamEmit) As SocketRef
-            Dim stream As ObjectStream = emit.handleSerialize(target)
+        Public Shared Function WriteBuffer(target As Object, Optional emit As StreamEmit = Nothing) As SocketRef
+            Dim stream As ObjectStream
             Dim ref As SocketRef = CreateReference()
+
+            If emit Is Nothing Then
+                stream = New StreamEmit().handleSerialize(target)
+            Else
+                stream = emit.handleSerialize(target)
+            End If
 
             Using file As Stream = ref.address.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Call stream.Serialize(file)
