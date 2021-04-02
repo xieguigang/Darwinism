@@ -52,12 +52,12 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 #If netcore5 = 1 Then
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Linq
 #End If
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
 Imports Parallel.IpcStream
 
 #If netcore5 = 1 Then
