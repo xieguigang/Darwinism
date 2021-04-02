@@ -85,6 +85,10 @@ Public Class IDelegate
         Call Me.New(target.Method)
     End Sub
 
+    ''' <summary>
+    ''' is static or instance method?
+    ''' </summary>
+    ''' <returns></returns>
     Public Function GetMethodTarget() As Object
         Dim type As Type = provideType()
 

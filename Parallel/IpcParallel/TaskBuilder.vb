@@ -63,6 +63,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     ReadOnly masterPort As Integer
     ReadOnly emit As New StreamEmit
 
+    <DebuggerStepThrough>
     Sub New(port As Integer)
         masterPort = port
     End Sub

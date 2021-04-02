@@ -65,6 +65,7 @@ Public Class SlaveTask
 
     Friend ReadOnly streamBuf As New StreamEmit
 
+    <DebuggerStepThrough>
     Sub New(processor As InteropService, cli As ISlaveTask,
             Optional debugPort As Integer? = Nothing,
             Optional ignoreError As Boolean = False)
@@ -93,15 +94,18 @@ Public Class SlaveTask
     ''' <param name="debugCode"></param>
     ''' <returns></returns>
     Private Function handlePOST(buf As Stream, type As Type, debugCode As Integer) As Object
+        Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
+        Return GetValueFromStream(buf, type, streamBuf)
+    End Function
+
+    Friend Shared Function GetValueFromStream(buf As Stream, type As Type, streamBuf As StreamEmit) As Object
         Dim obj As New ObjectStream(buf)
         Dim socket As SocketRef = SocketRef.GetSocket(obj)
 
         obj = socket.Open
 
-        Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
-
         Using file As MemoryStream = obj.openMemoryBuffer
-            Return streamBuf.handleCreate(buf, type, obj.method)
+            Return streamBuf.handleCreate(file, type, obj.method)
         End Using
     End Function
 
