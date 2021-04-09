@@ -72,6 +72,7 @@ Public Class IPCSocket : Implements ITaskDriver
 
     ReadOnly socket As TcpServicesSocket
     ReadOnly target As IDelegate
+    ReadOnly verbose As Boolean
 
     Public ReadOnly Property HostPort As Integer
         Get
@@ -85,10 +86,11 @@ Public Class IPCSocket : Implements ITaskDriver
     Public Property handleGetArgument As Func(Of Integer, ObjectStream)
     Public Property host As SlaveTask
 
-    Sub New(target As IDelegate, Optional debug As Integer? = Nothing)
+    Sub New(target As IDelegate, Optional debug As Integer? = Nothing, Optional verbose As Boolean = False)
         Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()))
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         Me.target = target
+        Me.verbose = verbose
     End Sub
 
     Private Function GetFirstAvailablePort() As Integer
@@ -132,7 +134,10 @@ Public Class IPCSocket : Implements ITaskDriver
 
     <Protocol(Protocols.GetTask)>
     Public Function GetTask(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        Call Console.WriteLine($"[{GetHashCode.ToHexString}] get parallel task entry.")
+        If verbose Then
+            Call Console.WriteLine($"[{GetHashCode.ToHexString}] get parallel task entry.")
+        End If
+
         Return New DataPipe(Encoding.UTF8.GetBytes(target.GetJson))
     End Function
 
@@ -147,7 +152,10 @@ Public Class IPCSocket : Implements ITaskDriver
 
     <Protocol(Protocols.PostStart)>
     Public Function PostStart(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        Call Console.WriteLine($"[{GetHashCode.ToHexString}] started!")
+        If verbose Then
+            Call Console.WriteLine($"[{GetHashCode.ToHexString}] started!")
+        End If
+
         Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
     End Function
 

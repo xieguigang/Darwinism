@@ -62,18 +62,21 @@ Public Class SlaveTask
     ReadOnly builder As ISlaveTask
     ReadOnly debugPort As Integer?
     ReadOnly ignoreError As Boolean
+    ReadOnly verbose As Boolean
 
     Friend ReadOnly streamBuf As New StreamEmit
 
     <DebuggerStepThrough>
     Sub New(processor As InteropService, cli As ISlaveTask,
             Optional debugPort As Integer? = Nothing,
-            Optional ignoreError As Boolean = False)
+            Optional ignoreError As Boolean = False,
+            Optional verbose As Boolean = False)
 
         Me.builder = cli
         Me.processor = processor
         Me.debugPort = debugPort
         Me.ignoreError = ignoreError
+        Me.verbose = verbose
     End Sub
 
     Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As SlaveTask
@@ -94,7 +97,10 @@ Public Class SlaveTask
     ''' <param name="debugCode"></param>
     ''' <returns></returns>
     Private Function handlePOST(buf As Stream, type As Type, debugCode As Integer) As Object
-        Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
+        If verbose Then
+            Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
+        End If
+
         Return GetValueFromStream(buf, type, streamBuf)
     End Function
 
@@ -111,7 +117,11 @@ Public Class SlaveTask
 
     Private Function handleGET(param As Object, i As Integer, debugCode As Integer) As ObjectStream
         Dim socket As SocketRef = SocketRef.WriteBuffer(param, streamBuf)
-        Call Console.WriteLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
+
+        If verbose Then
+            Call Console.WriteLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
+        End If
+
         Return streamBuf.handleSerialize(socket)
     End Function
 
@@ -131,7 +141,7 @@ Public Class SlaveTask
         Dim host As IPCSocket = Nothing
         Dim resultType As Type = entry.Method.ReturnType
 
-        host = New IPCSocket(target, debugPort) With {
+        host = New IPCSocket(target, debugPort, verbose:=verbose) With {
             .host = Me,
             .handlePOSTResult =
                 Sub(buf)
@@ -146,9 +156,11 @@ Public Class SlaveTask
         }
 
         Call Microsoft.VisualBasic.Parallel.RunTask(AddressOf host.Run)
-
-        Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] port:{host.HostPort}")
         Call Thread.Sleep(100)
+
+        If verbose Then
+            Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] port:{host.HostPort}")
+        End If
 
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
 
@@ -164,7 +176,10 @@ Public Class SlaveTask
 #End If
 
         Call host.Stop()
-        Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
+
+        If verbose Then
+            Call Console.WriteLine($"[{host.GetHashCode.ToHexString}] thread exit...")
+        End If
 
         If TypeOf result Is IPCError Then
             If ignoreError Then
