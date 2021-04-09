@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::3cd47c9347dfb0bebb90110fe2139a7c, Parallel\IpcParallel\IPCSocket.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class IPCSocket
-    ' 
-    '     Properties: handleError, handleGetArgument, handlePOSTResult, host, HostPort
-    '                 nargs, Protocol
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetTask, PostError
-    '               PostResult, PostStart, Run
-    ' 
-    '     Sub: [Stop]
-    ' 
-    ' /********************************************************************************/
+' Class IPCSocket
+' 
+'     Properties: handleError, handleGetArgument, handlePOSTResult, host, HostPort
+'                 nargs, Protocol
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetTask, PostError
+'               PostResult, PostStart, Run
+' 
+'     Sub: [Stop]
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports Parallel.IpcStream
 
 #If netcore5 = 1 Then
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports System.Threading
 #End If
 
 <Protocol(GetType(Protocols))>
@@ -71,6 +72,7 @@ Public Class IPCSocket : Implements ITaskDriver
 
     ReadOnly socket As TcpServicesSocket
     ReadOnly target As IDelegate
+    ReadOnly verbose As Boolean
 
     Public ReadOnly Property HostPort As Integer
         Get
@@ -78,22 +80,31 @@ Public Class IPCSocket : Implements ITaskDriver
         End Get
     End Property
 
-    Public Property handlePOSTResult As Action(Of Stream)
-    Public Property handleError As Action(Of IPCError)
+    Public ReadOnly Property result As Object = Nothing
+
+    Public Property handlePOSTResult As Func(Of Stream, IPCSocket, Object)
     Public Property nargs As Integer
-    Public Property handleGetArgument As Func(Of Integer, ObjectStream)
+    Public Property handleGetArgument As Func(Of Integer, IPCSocket, ObjectStream)
     Public Property host As SlaveTask
 
-    Sub New(target As IDelegate, Optional debug As Integer? = Nothing)
+    Public ReadOnly Property handleSetResult As Boolean = False
+    Public ReadOnly Property socketExitCode As Integer
+
+    Sub New(target As IDelegate, Optional debug As Integer? = Nothing, Optional verbose As Boolean = False)
         Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()))
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         Me.target = target
+        Me.verbose = verbose
+        Me.result = Nothing
+        Me.handleSetResult = False
     End Sub
 
     Private Function GetFirstAvailablePort() As Integer
+        Call Thread.Sleep(randf.NextInteger(1000))
+
 #If netcore5 = 1 Then
         If Not "/bin/bash".FileExists Then
-            Return TCPExtensions.GetFirstAvailablePort()
+            Return TCPExtensions.GetFirstAvailablePort(-1)
         End If
 
         ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
@@ -115,7 +126,7 @@ Public Class IPCSocket : Implements ITaskDriver
 #Else
         ' PlatformNotSupportedException: The information requested is unavailable on the current platform.
         ' on UNIX .net 5
-        Return TCPExtensions.GetFirstAvailablePort()
+        Return TCPExtensions.GetFirstAvailablePort(-1)
 #End If
     End Function
 
@@ -124,12 +135,16 @@ Public Class IPCSocket : Implements ITaskDriver
     End Sub
 
     Public Function Run() As Integer Implements ITaskDriver.Run
-        Return socket.Run
+        _socketExitCode = socket.Run
+        Return socketExitCode
     End Function
 
     <Protocol(Protocols.GetTask)>
     Public Function GetTask(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        Call Console.WriteLine($"[{GetHashCode.ToHexString}] get parallel task entry.")
+        If verbose Then
+            Call Console.WriteLine($"[{GetHashCode.ToHexString}] get parallel task entry.")
+        End If
+
         Return New DataPipe(Encoding.UTF8.GetBytes(target.GetJson))
     End Function
 
@@ -137,14 +152,17 @@ Public Class IPCSocket : Implements ITaskDriver
     Public Function GetArgumentByIndex(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim i As Integer = BitConverter.ToInt32(request.ChunkBuffer, Scan0)
 
-        Using buf As ObjectStream = _handleGetArgument(i)
+        Using buf As ObjectStream = _handleGetArgument(i, Me)
             Return New DataPipe(buf)
         End Using
     End Function
 
     <Protocol(Protocols.PostStart)>
     Public Function PostStart(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        Call Console.WriteLine($"[{GetHashCode.ToHexString}] started!")
+        If verbose Then
+            Call Console.WriteLine($"[{GetHashCode.ToHexString}] started!")
+        End If
+
         Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
     End Function
 
@@ -156,7 +174,8 @@ Public Class IPCSocket : Implements ITaskDriver
     <Protocol(Protocols.PostError)>
     Public Function PostError(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Using ms As New MemoryStream(request.ChunkBuffer)
-            Call DirectCast(SlaveTask.GetValueFromStream(ms, GetType(IPCError), host.streamBuf), IPCError).DoCall(_handleError)
+            _result = DirectCast(SlaveTask.GetValueFromStream(ms, GetType(IPCError), host.streamBuf), IPCError)
+            _handleSetResult = True
         End Using
 
         Return New DataPipe(Encoding.ASCII.GetBytes("OK!"))
@@ -165,7 +184,8 @@ Public Class IPCSocket : Implements ITaskDriver
     <Protocol(Protocols.PostResult)>
     Public Function PostResult(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Using ms As New MemoryStream(request.ChunkBuffer)
-            Call _handlePOSTResult(ms)
+            _result = _handlePOSTResult(ms, Me)
+            _handleSetResult = True
         End Using
 
         Return New DataPipe(Encoding.ASCII.GetBytes("OK!"))
