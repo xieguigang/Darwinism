@@ -80,17 +80,23 @@ Public Class IPCSocket : Implements ITaskDriver
         End Get
     End Property
 
-    Public Property handlePOSTResult As Action(Of Stream)
-    Public Property handleError As Action(Of IPCError)
+    Public ReadOnly Property result As Object = Nothing
+
+    Public Property handlePOSTResult As Func(Of Stream, IPCSocket, Object)
     Public Property nargs As Integer
-    Public Property handleGetArgument As Func(Of Integer, ObjectStream)
+    Public Property handleGetArgument As Func(Of Integer, IPCSocket, ObjectStream)
     Public Property host As SlaveTask
+
+    Public ReadOnly Property handleSetResult As Boolean = False
+    Public ReadOnly Property socketExitCode As Integer
 
     Sub New(target As IDelegate, Optional debug As Integer? = Nothing, Optional verbose As Boolean = False)
         Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()))
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         Me.target = target
         Me.verbose = verbose
+        Me.result = Nothing
+        Me.handleSetResult = False
     End Sub
 
     Private Function GetFirstAvailablePort() As Integer
@@ -129,7 +135,8 @@ Public Class IPCSocket : Implements ITaskDriver
     End Sub
 
     Public Function Run() As Integer Implements ITaskDriver.Run
-        Return socket.Run
+        _socketExitCode = socket.Run
+        Return socketExitCode
     End Function
 
     <Protocol(Protocols.GetTask)>
@@ -145,7 +152,7 @@ Public Class IPCSocket : Implements ITaskDriver
     Public Function GetArgumentByIndex(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim i As Integer = BitConverter.ToInt32(request.ChunkBuffer, Scan0)
 
-        Using buf As ObjectStream = _handleGetArgument(i)
+        Using buf As ObjectStream = _handleGetArgument(i, Me)
             Return New DataPipe(buf)
         End Using
     End Function
@@ -167,7 +174,8 @@ Public Class IPCSocket : Implements ITaskDriver
     <Protocol(Protocols.PostError)>
     Public Function PostError(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Using ms As New MemoryStream(request.ChunkBuffer)
-            Call DirectCast(SlaveTask.GetValueFromStream(ms, GetType(IPCError), host.streamBuf), IPCError).DoCall(_handleError)
+            _result = DirectCast(SlaveTask.GetValueFromStream(ms, GetType(IPCError), host.streamBuf), IPCError)
+            _handleSetResult = True
         End Using
 
         Return New DataPipe(Encoding.ASCII.GetBytes("OK!"))
@@ -176,7 +184,8 @@ Public Class IPCSocket : Implements ITaskDriver
     <Protocol(Protocols.PostResult)>
     Public Function PostResult(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Using ms As New MemoryStream(request.ChunkBuffer)
-            Call _handlePOSTResult(ms)
+            _result = _handlePOSTResult(ms, Me)
+            _handleSetResult = True
         End Using
 
         Return New DataPipe(Encoding.ASCII.GetBytes("OK!"))
