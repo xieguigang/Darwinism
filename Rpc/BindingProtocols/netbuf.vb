@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fcc84acd31b708738eda919e966568e, Rpc\BindingProtocols\netbuf.vb"
+﻿#Region "Microsoft.VisualBasic::ffdbfff314cbbd439f5d9605be7da648, Rpc\BindingProtocols\netbuf.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Namespace Rpc.BindingProtocols
         Public buf As Byte()
     End Class
 End Namespace
-

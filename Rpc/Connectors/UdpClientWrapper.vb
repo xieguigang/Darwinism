@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae83e80bfb5a8df8c6cbf3cca890d88f, Rpc\Connectors\UdpClientWrapper.vb"
+﻿#Region "Microsoft.VisualBasic::0e46a4a5d2e6d4c63440cb8ae8c4dd62, Rpc\Connectors\UdpClientWrapper.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Namespace Rpc.Connectors
         End Sub
     End Class
 End Namespace
-

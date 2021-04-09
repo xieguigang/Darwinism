@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4194e470c8ec3f98103175893a3bcfc4, Rpc\BindingProtocols\ProtocolName.vb"
+﻿#Region "Microsoft.VisualBasic::d3c271bd4d7e47931e9d56ae2c6003a4, Rpc\BindingProtocols\ProtocolName.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Namespace Rpc.BindingProtocols
     ''' <summary>
     ''' Protocol name (rpcb_entry.r_nc_proto): This identifies a protocol within a family.
@@ -65,4 +64,3 @@ Namespace Rpc.BindingProtocols
         Public Const NC_ICMP As String = "icmp"
     End Module
 End Namespace
-

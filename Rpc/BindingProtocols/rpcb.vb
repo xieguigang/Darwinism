@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cde1ec0bd9b296bc5dfddcfa66ab1f45, Rpc\BindingProtocols\rpcb.vb"
+﻿#Region "Microsoft.VisualBasic::6497e581883477f797cd1dcde4296a11, Rpc\BindingProtocols\rpcb.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Namespace Rpc.BindingProtocols
         Public r_owner As String
     End Structure
 End Namespace
-

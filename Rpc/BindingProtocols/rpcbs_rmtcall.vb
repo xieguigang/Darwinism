@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ffa0485f2edfa2616ff7248e96649d4, Rpc\BindingProtocols\rpcbs_rmtcall.vb"
+﻿#Region "Microsoft.VisualBasic::4c0d0aa5a6ac02fc9576e0bb604ba151, Rpc\BindingProtocols\rpcbs_rmtcall.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Namespace Rpc.BindingProtocols
         Public netid As String
     End Class
 End Namespace
-

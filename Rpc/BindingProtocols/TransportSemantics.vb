@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f74e13a226a5afa9b873abd8be02b82d, Rpc\BindingProtocols\TransportSemantics.vb"
+﻿#Region "Microsoft.VisualBasic::8abd96f6c0ef44b08c8cb28884b15e68, Rpc\BindingProtocols\TransportSemantics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Namespace Rpc.BindingProtocols
     ''' <summary>
     ''' Transport semantics (rpcb_entry.r_nc_semantics): This represents the type of transport.
@@ -65,4 +64,3 @@ Namespace Rpc.BindingProtocols
         Public Const NC_TPI_RAW As ULong = 4
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18e6426cd429f1800568feab377d4a0b, Rpc\MessageProtocol\opaque_auth.vb"
+﻿#Region "Microsoft.VisualBasic::a8778148a4e31d9bbc52dae0df6c0976, Rpc\MessageProtocol\opaque_auth.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Namespace Rpc.MessageProtocol
         Public body As Byte()
     End Structure
 End Namespace
-

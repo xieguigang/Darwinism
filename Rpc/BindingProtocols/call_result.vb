@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c808964aaddb4e382ea67deae5b910d, Rpc\BindingProtocols\call_result.vb"
+﻿#Region "Microsoft.VisualBasic::03ff050c7d69ea60b7a7204035fd718d, Rpc\BindingProtocols\call_result.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Namespace Rpc.BindingProtocols
         Public res As Byte()
     End Class
 End Namespace
-

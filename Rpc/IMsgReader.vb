@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63bc1bbc685da2884db70965d158ee95, Rpc\IMsgReader.vb"
+﻿#Region "Microsoft.VisualBasic::f2ca360f71398e2a829f9e49d5585a1f, Rpc\IMsgReader.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,8 @@
 
 #End Region
 
-
 Namespace Rpc
     Friend Interface IMsgReader
         Sub CheckEmpty()
     End Interface
 End Namespace
-

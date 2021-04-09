@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7704e207ae0ce5c71aa683fccd1ff0a8, Rpc\Connectors\IRpcSession.vb"
+﻿#Region "Microsoft.VisualBasic::1ddd41e1bc96cbf4b6e78395ca71bc7a, Rpc\Connectors\IRpcSession.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Namespace Rpc.Connectors
         Event OnSended As Action(Of IRpcSession)
     End Interface
 End Namespace
-

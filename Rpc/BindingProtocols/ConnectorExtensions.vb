@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90c2c118cd42290ae3951ed1ae567db7, Rpc\BindingProtocols\ConnectorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e5588b71b9715e18e2f44f39c77e042d, Rpc\BindingProtocols\ConnectorExtensions.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Namespace Rpc.BindingProtocols
         End Function
     End Module
 End Namespace
-

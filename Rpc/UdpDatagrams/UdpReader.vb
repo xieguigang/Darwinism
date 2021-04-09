@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a923928be3e05696690ddeb8e1cce5c, Rpc\UdpDatagrams\UdpReader.vb"
+﻿#Region "Microsoft.VisualBasic::fefc384bbb2422b477c4270de9234f57, Rpc\UdpDatagrams\UdpReader.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Namespace Rpc.UdpDatagrams
         End Sub
     End Class
 End Namespace
-

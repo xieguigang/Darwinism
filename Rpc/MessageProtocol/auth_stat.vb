@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d3a878e5351e64a7151237182d91458, Rpc\MessageProtocol\auth_stat.vb"
+﻿#Region "Microsoft.VisualBasic::7b7a6d0f37de156391c6a901fbf48847, Rpc\MessageProtocol\auth_stat.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Namespace Rpc.MessageProtocol
         RPCSEC_GSS_CTXPROBLEM = 14
     End Enum
 End Namespace
-

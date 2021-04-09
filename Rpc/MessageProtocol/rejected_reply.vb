@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91fb29d3a9316ef2d51063e5cdcf81b7, Rpc\MessageProtocol\rejected_reply.vb"
+﻿#Region "Microsoft.VisualBasic::63a7b7513a469a29ada2ddc97a7ae21d, Rpc\MessageProtocol\rejected_reply.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Namespace Rpc.MessageProtocol
         Public astat As auth_stat
     End Class
 End Namespace
-

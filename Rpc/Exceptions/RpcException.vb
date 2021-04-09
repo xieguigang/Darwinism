@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c85e6230709bf64ec1bf2777d221f43, Rpc\Exceptions\RpcException.vb"
+﻿#Region "Microsoft.VisualBasic::0e95a10b7eeef55c1a5e09a64b449186, Rpc\Exceptions\RpcException.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Namespace Rpc
         End Sub
     End Class
 End Namespace
-

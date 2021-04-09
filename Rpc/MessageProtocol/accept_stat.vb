@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cab73729bbb9b74d42df93cc021ef94e, Rpc\MessageProtocol\accept_stat.vb"
+﻿#Region "Microsoft.VisualBasic::f85895fb3aed997dfe2b73a573816101, Rpc\MessageProtocol\accept_stat.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace Rpc.MessageProtocol
     ''' <summary>
     ''' Given that a call message was accepted, the following is the status of an attempt to call a remote procedure.
@@ -81,4 +80,3 @@ Namespace Rpc.MessageProtocol
         SYSTEM_ERR = 5
     End Enum
 End Namespace
-

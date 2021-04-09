@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9241b9d4021c483ccbda7a02cb6a4650, Rpc\Connectors\UdpSession.vb"
+﻿#Region "Microsoft.VisualBasic::14f21439dc2d2a8324d44249cffbd635, Rpc\Connectors\UdpSession.vb"
 
     ' Author:
     ' 
@@ -212,4 +212,3 @@ Namespace Rpc.Connectors
         End Sub
     End Class
 End Namespace
-

@@ -1,49 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::3cd47c9347dfb0bebb90110fe2139a7c, Parallel\IpcParallel\IPCSocket.vb"
+﻿#Region "Microsoft.VisualBasic::762bc5a2ac7fdb45934a6d6d89b2ab09, Parallel\IpcParallel\IPCSocket.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class IPCSocket
-' 
-'     Properties: handleError, handleGetArgument, handlePOSTResult, host, HostPort
-'                 nargs, Protocol
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetTask, PostError
-'               PostResult, PostStart, Run
-' 
-'     Sub: [Stop]
-' 
-' /********************************************************************************/
+    ' Class IPCSocket
+    ' 
+    '     Properties: handleGetArgument, handlePOSTResult, handleSetResult, host, HostPort
+    '                 nargs, Protocol, result, socketExitCode
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetTask, PostError
+    '               PostResult, PostStart, Run
+    ' 
+    '     Sub: [Stop]
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

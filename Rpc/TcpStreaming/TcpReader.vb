@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dff12a599ab6006cfb82ed0299e05fe, Rpc\TcpStreaming\TcpReader.vb"
+﻿#Region "Microsoft.VisualBasic::b43a3952755b4a3c1792e6daecb89e40, Rpc\TcpStreaming\TcpReader.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Namespace Rpc.TcpStreaming
         End Sub
     End Class
 End Namespace
-

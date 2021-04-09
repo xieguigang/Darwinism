@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bd7750f00177f0799029703b6194810, Rpc\MessageProtocol\reply_body.vb"
+﻿#Region "Microsoft.VisualBasic::4fbae78d156727bb507c8f4bd3319cb3, Rpc\MessageProtocol\reply_body.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Namespace Rpc.MessageProtocol
         Public rreply As rejected_reply
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b38f1431837ca95783f3aa7b059070c, Rpc\BindingProtocols\TaskBuilders\BaseTaskBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::1e9d6c6c0c23218b8562f5d016091a90, Rpc\BindingProtocols\TaskBuilders\BaseTaskBuilder.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         End Function
     End Class
 End Namespace
-

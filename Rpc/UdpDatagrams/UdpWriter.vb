@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::604605c1d68e2d09e7ae73df0fda9f0e, Rpc\UdpDatagrams\UdpWriter.vb"
+﻿#Region "Microsoft.VisualBasic::97b31e1a2228390af824b8d7ec289a55, Rpc\UdpDatagrams\UdpWriter.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Namespace Rpc.UdpDatagrams
         End Function
     End Class
 End Namespace
-

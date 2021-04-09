@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0aaefb69597acd71048a10ac6547da1, Rpc\MessageProtocol\mismatch_info.vb"
+﻿#Region "Microsoft.VisualBasic::84d2797e504b3b24da51cc30e29b226a, Rpc\MessageProtocol\mismatch_info.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Namespace Rpc.MessageProtocol
         Public high As UInteger
     End Class
 End Namespace
-

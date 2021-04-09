@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4563d59528ebf1bfdce192c729f47610, Rpc\MessageProtocol\auth_flavor.vb"
+﻿#Region "Microsoft.VisualBasic::8ca02b98ec4cda01bbeb49377ba9de20, Rpc\MessageProtocol\auth_flavor.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace Rpc.MessageProtocol
     ''' <summary>
     ''' Authentication flavor
@@ -76,4 +75,3 @@ Namespace Rpc.MessageProtocol
         RPCSEC_GSS = 6
     End Enum
 End Namespace
-

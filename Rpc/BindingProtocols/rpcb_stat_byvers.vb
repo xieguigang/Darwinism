@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::653b688dc0ed36b0b77d72d90e39c159, Rpc\BindingProtocols\rpcb_stat_byvers.vb"
+﻿#Region "Microsoft.VisualBasic::db624fd5fcb3954855677818410712d3, Rpc\BindingProtocols\rpcb_stat_byvers.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Namespace Rpc.BindingProtocols
         Public V4 As rpcb_stat
     End Class
 End Namespace
-

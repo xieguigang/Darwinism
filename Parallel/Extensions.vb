@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97ba65c8233cda19188f383166f0b14b, Parallel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6899da998f0554355d5fe6b72ae3dc0c, Parallel\Extensions.vb"
 
     ' Author:
     ' 
@@ -43,4 +43,3 @@
 Public Module Extensions
 
 End Module
-

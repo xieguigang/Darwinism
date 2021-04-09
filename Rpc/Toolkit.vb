@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0bc29541e517958c49a008a0ec35cab, Rpc\Toolkit.vb"
+﻿#Region "Microsoft.VisualBasic::d9fc60e97f8ac77fdc9bf9e8bdec53c4, Rpc\Toolkit.vb"
 
     ' Author:
     ' 
@@ -164,4 +164,3 @@ Namespace Rpc
         End Sub
     End Module
 End Namespace
-
