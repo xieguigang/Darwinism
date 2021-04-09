@@ -167,8 +167,8 @@ Namespace ThreadTask
 
                 If j > -1 Then
                     Yield threads(j).GetValue
+                    Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
                     threads(j) = Nothing
-                    Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done!")
                 End If
             Loop
 
@@ -177,8 +177,8 @@ Namespace ThreadTask
 
                 If j > -1 Then
                     Yield threads(j).GetValue
+                    Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
                     threads(j) = Nothing
-                    Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done!")
                 End If
             Loop
         End Function
