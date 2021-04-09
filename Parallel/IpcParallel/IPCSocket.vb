@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::3cd47c9347dfb0bebb90110fe2139a7c, Parallel\IpcParallel\IPCSocket.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class IPCSocket
-    ' 
-    '     Properties: handleError, handleGetArgument, handlePOSTResult, host, HostPort
-    '                 nargs, Protocol
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetTask, PostError
-    '               PostResult, PostStart, Run
-    ' 
-    '     Sub: [Stop]
-    ' 
-    ' /********************************************************************************/
+' Class IPCSocket
+' 
+'     Properties: handleError, handleGetArgument, handlePOSTResult, host, HostPort
+'                 nargs, Protocol
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetTask, PostError
+'               PostResult, PostStart, Run
+' 
+'     Sub: [Stop]
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports Parallel.IpcStream
 
 #If netcore5 = 1 Then
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports System.Threading
 #End If
 
 <Protocol(GetType(Protocols))>
@@ -91,9 +92,11 @@ Public Class IPCSocket : Implements ITaskDriver
     End Sub
 
     Private Function GetFirstAvailablePort() As Integer
+        Call Thread.Sleep(randf.NextInteger(1000))
+
 #If netcore5 = 1 Then
         If Not "/bin/bash".FileExists Then
-            Return TCPExtensions.GetFirstAvailablePort()
+            Return TCPExtensions.GetFirstAvailablePort(-1)
         End If
 
         ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
@@ -115,7 +118,7 @@ Public Class IPCSocket : Implements ITaskDriver
 #Else
         ' PlatformNotSupportedException: The information requested is unavailable on the current platform.
         ' on UNIX .net 5
-        Return TCPExtensions.GetFirstAvailablePort()
+        Return TCPExtensions.GetFirstAvailablePort(-1)
 #End If
     End Function
 
