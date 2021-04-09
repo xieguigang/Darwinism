@@ -100,7 +100,7 @@ Namespace ThreadTask
         ''' <param name="n_threads"></param>
         ''' <returns></returns>
         Public Function WithDegreeOfParallelism(n_threads As Integer) As ThreadTask(Of TOut)
-            threads = New AsyncHandle(Of TOut)(n_threads) {}
+            threads = New AsyncHandle(Of TOut)(n_threads - 1) {}
             Return Me
         End Function
 
