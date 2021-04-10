@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.Threading
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace ThreadTask
@@ -170,6 +171,8 @@ Namespace ThreadTask
                     Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
                     threads(j) = Nothing
                 End If
+
+                Call Thread.Sleep(1)
             Loop
 
             Do While Not threads.All(Function(t) t Is Nothing)
@@ -180,6 +183,8 @@ Namespace ThreadTask
                     Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
                     threads(j) = Nothing
                 End If
+
+                Call Thread.Sleep(1)
             Loop
         End Function
     End Class
