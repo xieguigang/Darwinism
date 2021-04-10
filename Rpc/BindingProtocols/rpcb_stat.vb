@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d50394e31b3ef3ad248cbe7f2570aee8, Rpc\BindingProtocols\rpcb_stat.vb"
+﻿#Region "Microsoft.VisualBasic::4d1e0b765a4526667133f55c9cab334e, Rpc\BindingProtocols\rpcb_stat.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Namespace Rpc.BindingProtocols
         Public rmtinfo As List(Of rpcbs_rmtcall)
     End Class
 End Namespace
-

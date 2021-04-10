@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27db7c8e9e48f67ab1be006a2cf35a0d, Rpc\MessageProtocol\reply_stat.vb"
+﻿#Region "Microsoft.VisualBasic::9fa5af60ab54598988899af92298a6c4, Rpc\MessageProtocol\reply_stat.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace Rpc.MessageProtocol
     ''' <summary>
     ''' A reply to a call message can take on two forms: the message was either accepted or rejected.
@@ -60,4 +59,3 @@ Namespace Rpc.MessageProtocol
         MSG_DENIED = 1
     End Enum
 End Namespace
-

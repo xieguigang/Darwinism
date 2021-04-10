@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76ccd68197ecb13e4206b4aeb7478c08, Rpc\BindingProtocols\rpcbs_addr.vb"
+﻿#Region "Microsoft.VisualBasic::103f104940d83e83099ba35c69655f86, Rpc\BindingProtocols\rpcbs_addr.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ Namespace Rpc.BindingProtocols
         Public netid As String
     End Class
 End Namespace
-

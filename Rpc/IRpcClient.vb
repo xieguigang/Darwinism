@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a38f8679e95b45f67426755b831a515c, Rpc\IRpcClient.vb"
+﻿#Region "Microsoft.VisualBasic::669a88225bdf5b200a70b0664ce5bda1, Rpc\IRpcClient.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Namespace Rpc
         Sub Close()
     End Interface
 End Namespace
-

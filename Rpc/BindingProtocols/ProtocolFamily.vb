@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0a77eb7c747563c67b59e9b92fb53bb, Rpc\BindingProtocols\ProtocolFamily.vb"
+﻿#Region "Microsoft.VisualBasic::c45b7b8efa66bdc94277dc10e6efce06, Rpc\BindingProtocols\ProtocolFamily.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Rpc.BindingProtocols
     ''' <summary>
@@ -142,4 +141,3 @@ Namespace Rpc.BindingProtocols
         Public Const NC_GOSIP As String = "gosip"
     End Module
 End Namespace
-

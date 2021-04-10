@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fd3f8dbe1913a55417ffeb6d0f73a2a, Rpc\MessageProtocol\body.vb"
+﻿#Region "Microsoft.VisualBasic::bd99e53c687276780aa4fb106404cec7, Rpc\MessageProtocol\body.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Namespace Rpc.MessageProtocol
         Public rbody As reply_body
     End Class
 End Namespace
-

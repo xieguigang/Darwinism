@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40e713d87003ae50324d5047ecf242a9, Rpc\MessageProtocol\call_body.vb"
+﻿#Region "Microsoft.VisualBasic::1fde0edb903700a2434d2a359f6875d1, Rpc\MessageProtocol\call_body.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Namespace Rpc.MessageProtocol
         Public verf As opaque_auth
     End Class
 End Namespace
-

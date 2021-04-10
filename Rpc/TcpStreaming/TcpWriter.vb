@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f46feb0257e6cbe942519e39c1c57801, Rpc\TcpStreaming\TcpWriter.vb"
+﻿#Region "Microsoft.VisualBasic::8700ec6d626b51d311a84dbf67bf7178, Rpc\TcpStreaming\TcpWriter.vb"
 
     ' Author:
     ' 
@@ -148,4 +148,3 @@ Namespace Rpc.TcpStreaming
         End Function
     End Class
 End Namespace
-

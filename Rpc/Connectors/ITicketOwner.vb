@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::633b0d110b6fd7992529570eb786c9ba, Rpc\Connectors\ITicketOwner.vb"
+﻿#Region "Microsoft.VisualBasic::26363800d6f6d11caf4ca25908b4081b, Rpc\Connectors\ITicketOwner.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@ Namespace Rpc.Connectors
         Sub RemoveTicket(ByVal ticket As ITicket)
     End Interface
 End Namespace
-

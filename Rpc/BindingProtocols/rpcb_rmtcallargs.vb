@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb29fa988f436f2366c3dbc089fa7344, Rpc\BindingProtocols\rpcb_rmtcallargs.vb"
+﻿#Region "Microsoft.VisualBasic::4083fbf912c7f2085145f8c3f8e8ab25, Rpc\BindingProtocols\rpcb_rmtcallargs.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Namespace Rpc.BindingProtocols
         Public args As Byte()
     End Class
 End Namespace
-

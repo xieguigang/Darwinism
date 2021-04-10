@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e147992baf842713336a08ed275e0487, Parallel\IpcParallel\Stream\StreamEmit.vb"
+﻿#Region "Microsoft.VisualBasic::fd22cd7fc0597f451c12b76376ad5261, Parallel\IpcParallel\Stream\StreamEmit.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Class StreamEmit
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Emit, (+2 Overloads) handleCreate, handleSerialize
+    '         Function: (+2 Overloads) Emit, getHandler, (+2 Overloads) handleCreate, handleSerialize
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,9 +42,12 @@
 #End Region
 
 Imports System.IO
+Imports System.Reflection
+Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace IpcStream
 
@@ -52,6 +55,7 @@ Namespace IpcStream
 
         ReadOnly toBuffers As New Dictionary(Of Type, toBuffer)
         ReadOnly loadBuffers As New Dictionary(Of Type, loadBuffer)
+        ReadOnly emitCache As New Dictionary(Of Type, IEmitStream)
 
         Sub New()
             For Each [handle] In EmitHandler.PopulatePrimitiveHandles
@@ -82,8 +86,17 @@ Namespace IpcStream
             If emit = StreamMethods.Auto Then
                 If loadBuffers.ContainsKey(type) Then
                     Return loadBuffers(type)(buf)
+                ElseIf emitCache.ContainsKey(type) Then
+                    Return emitCache(type).ReadBuffer(buf)
                 Else
-                    Return BSONFormat.Load(buf).CreateObject(type)
+                    Dim handler As IEmitStream = getHandler(type)
+
+                    If Not handler Is Nothing Then
+                        emitCache.Add(type, handler)
+                        Return emitCache(type).ReadBuffer(buf)
+                    Else
+                        Return BSONFormat.Load(buf).CreateObject(type)
+                    End If
                 End If
             ElseIf emit = StreamMethods.BSON Then
                 Return BSONFormat.Load(buf).CreateObject(type)
@@ -94,17 +107,50 @@ Namespace IpcStream
             End If
         End Function
 
+        Private Function getHandler(type As Type) As IEmitStream
+            Dim attr As EmitStreamAttribute = CType(type, System.Reflection.TypeInfo).GetCustomAttributes(Of EmitStreamAttribute).FirstOrDefault
+
+            If attr Is Nothing Then
+                Return Nothing
+            End If
+
+            type = attr.Handler
+
+            If Not type.ImplementInterface(Of IEmitStream) Then
+                Return Nothing
+            Else
+                Return Activator.CreateInstance(type)
+            End If
+        End Function
+
         Public Function handleSerialize(param As Object) As ObjectStream
             Dim type As Type = param.GetType
+            Dim method As StreamMethods
+            Dim typeinfo As New TypeInfo(type, fullpath:=True)
+            Dim buf As Stream
 
             If toBuffers.ContainsKey(type) Then
-                Return New ObjectStream(New TypeInfo(type, fullpath:=True), StreamMethods.Emit, toBuffers(type)(param))
+                method = StreamMethods.Emit
+                buf = toBuffers(type)(param)
+            ElseIf emitCache.ContainsKey(type) Then
+                method = StreamMethods.Auto
+                buf = emitCache(type).WriteBuffer(param)
             Else
-                Dim element = type.GetJsonElement(param, New JSONSerializerOptions)
-                Dim buf As Stream = BSONFormat.SafeGetBuffer(element)
+                Dim handler As IEmitStream = getHandler(type)
 
-                Return New ObjectStream(New TypeInfo(type, fullpath:=True), StreamMethods.BSON, buf)
+                If Not handler Is Nothing Then
+                    emitCache.Add(type, handler)
+                    method = StreamMethods.Auto
+                    buf = handler.WriteBuffer(param)
+                Else
+                    buf = type _
+                        .GetJsonElement(param, New JSONSerializerOptions) _
+                        .DoCall(AddressOf BSONFormat.SafeGetBuffer)
+                    method = StreamMethods.BSON
+                End If
             End If
+
+            Return New ObjectStream(typeinfo, method, buf)
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca46e903429fd589f431c9b903916103, Rpc\MessageProtocol\accepted_reply.vb"
+﻿#Region "Microsoft.VisualBasic::e01a4d61633bd5d6b1e005f89c152c05, Rpc\MessageProtocol\accepted_reply.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Namespace Rpc.MessageProtocol
         End Class
     End Class
 End Namespace
-

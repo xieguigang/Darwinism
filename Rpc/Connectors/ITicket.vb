@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16498068f3f11e71d3e79060915c9c87, Rpc\Connectors\ITicket.vb"
+﻿#Region "Microsoft.VisualBasic::8e8b5228e79a36c05c718af1ac98d87f, Rpc\Connectors\ITicket.vb"
 
     ' Author:
     ' 
@@ -54,4 +54,3 @@ Namespace Rpc.Connectors
         Sub BuildRpcMessage(ByVal bw As IByteWriter)
     End Interface
 End Namespace
-

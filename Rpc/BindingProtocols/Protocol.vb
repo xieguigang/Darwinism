@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c8e2339b4bd3e052a423136336f7d94, Rpc\BindingProtocols\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::3fd0c1078a5c1616f65bdb2d1c57de97, Rpc\BindingProtocols\Protocol.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace Rpc.BindingProtocols
     ''' <summary>
     ''' constants of port mapper protocol
@@ -60,4 +59,3 @@ Namespace Rpc.BindingProtocols
         UDP = 17
     End Enum
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f3cb0d1c9bf2c4a90e1d3d3c59d406f, Rpc\Connectors\TcpClientWrapper.vb"
+﻿#Region "Microsoft.VisualBasic::56816b31e3ebe28240fdc458329a2a7c, Rpc\Connectors\TcpClientWrapper.vb"
 
     ' Author:
     ' 
@@ -305,4 +305,3 @@ Namespace Rpc.Connectors
         End Sub
     End Class
 End Namespace
-

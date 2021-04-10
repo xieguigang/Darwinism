@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ada6af6ba575f1531a9879513ac3764c, Rpc\MessageProtocol\reject_stat.vb"
+﻿#Region "Microsoft.VisualBasic::cb4b4952e0eafdafc056b31e09294801, Rpc\MessageProtocol\reject_stat.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace Rpc.MessageProtocol
     ''' <summary>
     ''' Reasons why a call message was rejected
@@ -60,4 +59,3 @@ Namespace Rpc.MessageProtocol
         AUTH_ERROR = 1
     End Enum
 End Namespace
-

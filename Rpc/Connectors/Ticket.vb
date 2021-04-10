@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f2646d0a1f0e20fc35f82ef36a437ce, Rpc\Connectors\Ticket.vb"
+﻿#Region "Microsoft.VisualBasic::20a4f53dbbf2bdf65ad3d3dfccf0297b, Rpc\Connectors\Ticket.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Namespace Rpc.Connectors
         End Sub
     End Class
 End Namespace
-

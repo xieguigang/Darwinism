@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f9c5b374ef55a3be24c64965a97017b, Rpc\Exceptions\AuthenticateException.vb"
+﻿#Region "Microsoft.VisualBasic::48c2bdf3c92b618bdcde81c3d468fb1d, Rpc\Exceptions\AuthenticateException.vb"
 
     ' Author:
     ' 
@@ -77,4 +77,3 @@ Namespace Rpc
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fe15f75d20e135d78954f95827c63fa, Rpc\BindingProtocols\mapping.vb"
+﻿#Region "Microsoft.VisualBasic::0c0f35a4b3b9cc9c8acdc27061b76a71, Rpc\BindingProtocols\mapping.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Namespace Rpc.BindingProtocols
         End Function
     End Structure
 End Namespace
-

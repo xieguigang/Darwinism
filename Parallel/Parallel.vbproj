@@ -244,6 +244,7 @@
     <Compile Include="IpcParallel\IDelegate.vb" />
     <Compile Include="IpcParallel\IPCSocket.vb" />
     <Compile Include="IpcParallel\SocketBuffer\SocketRef.vb" />
+    <Compile Include="IpcParallel\Stream\EmitStreamAttribute.vb" />
     <Compile Include="IpcParallel\Stream\IPCException.vb" />
     <Compile Include="IpcParallel\Stream\IPCError.vb" />
     <Compile Include="IpcParallel\Stream\StreamEmit.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83ef946e184dbad5a96930778c907b05, Rpc\MessageProtocol\msg_type.vb"
+﻿#Region "Microsoft.VisualBasic::0f50fb6c9812d218fb61a417db9f1a23, Rpc\MessageProtocol\msg_type.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace Rpc.MessageProtocol
     ''' <summary>
     ''' message type
@@ -60,4 +59,3 @@ Namespace Rpc.MessageProtocol
         REPLY = 1
     End Enum
 End Namespace
-

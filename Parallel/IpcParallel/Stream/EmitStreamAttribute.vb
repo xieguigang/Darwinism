@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e95a10b7eeef55c1a5e09a64b449186, Rpc\Exceptions\RpcException.vb"
+﻿#Region "Microsoft.VisualBasic::649d6beaad89002ea8a513be53a3967f, Parallel\IpcParallel\Stream\EmitStreamAttribute.vb"
 
     ' Author:
     ' 
@@ -31,44 +31,43 @@
 
     ' Summaries:
 
-    '     Class RpcException
+    ' Class EmitStreamAttribute
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '     Properties: Handler
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Interface IEmitStream
+    ' 
+    '     Function: BufferInMemory, ReadBuffer, (+2 Overloads) WriteBuffer
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System
+Imports System.IO
 
-Namespace Rpc
+<AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=False)>
+Public Class EmitStreamAttribute : Inherits Attribute
+
+    Public ReadOnly Property Handler As Type
+
+    Sub New(handler As Type)
+        Me.Handler = handler
+    End Sub
+
+End Class
+
+Public Interface IEmitStream
+
     ''' <summary>
-    ''' Error associated with work on RPC protocol
+    ''' serialize into a memory stream buffer?
     ''' </summary>
-    Public Class RpcException
-        Inherits SystemException
-        ''' <summary>
-        ''' Error associated with work on RPC protocol
-        ''' </summary>
-        Public Sub New()
-        End Sub
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
+    Function BufferInMemory(obj As Object) As Boolean
+    Function WriteBuffer(obj As Object, file As Stream) As Boolean
+    Function WriteBuffer(obj As Object) As Stream
+    Function ReadBuffer(file As Stream) As Object
 
-        ''' <summary>
-        ''' Error associated with work on RPC protocol
-        ''' </summary>
-        ''' <paramname="message"></param>
-        Public Sub New(ByVal message As String)
-            MyBase.New(message)
-        End Sub
-
-        ''' <summary>
-        ''' Error associated with work on RPC protocol
-        ''' </summary>
-        ''' <paramname="message"></param>
-        ''' <paramname="innerEx"></param>
-        Public Sub New(ByVal message As String, ByVal innerEx As Exception)
-            MyBase.New(message, innerEx)
-        End Sub
-    End Class
-End Namespace
+End Interface

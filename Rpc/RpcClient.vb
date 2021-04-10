@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90eeddbc890118720072c91002474e3b, Rpc\RpcClient.vb"
+﻿#Region "Microsoft.VisualBasic::d7312dbb05793bd8941454dd896c4334, Rpc\RpcClient.vb"
 
     ' Author:
     ' 
@@ -208,4 +208,3 @@ Namespace Rpc
         End Sub
     End Class
 End Namespace
-
