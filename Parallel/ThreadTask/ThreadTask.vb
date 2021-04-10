@@ -61,6 +61,8 @@ Namespace ThreadTask
         Dim threads As AsyncHandle(Of TOut)()
         Dim size As Integer
 
+        ReadOnly startTicks As Double = App.ElapsedMilliseconds
+
         ''' <summary>
         ''' create parallel task pool from a given collection of task handler
         ''' </summary>
@@ -133,8 +135,9 @@ Namespace ThreadTask
             Dim free$ = threads.Where(Function(t) t Is Nothing).Count
             Dim running$ = threads.Where(Function(t) t IsNot Nothing AndAlso Not t.IsCompleted).Count
             Dim delta As Integer = size - taskList.Count
+            Dim deltaTimespan As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - startTicks)
 
-            Return $"[free: {free}, running: {running}, progress: {delta} - {CInt(delta / size * 100)}%]"
+            Return $"[free: {free}, running: {running}, progress: {delta} - {(delta / size * 100).ToString("F2")}%, {deltaTimespan.FormatTime}]"
         End Function
 
         ''' <summary>
@@ -161,7 +164,6 @@ Namespace ThreadTask
 
                 If i > -1 Then
                     threads(i) = New AsyncHandle(Of TOut)(taskList.Dequeue).Run
-                    Call Console.WriteLine($"{ToString()} submit new task on thread [{i + 1}]!")
                 End If
 
                 Dim j As Integer = GetCompleteThread()
