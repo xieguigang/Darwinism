@@ -296,6 +296,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
+      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
+      <Name>BinaryData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\sciBASIC#\Data\BinaryData\msgpack\MessagePack.vbproj">
       <Project>{c473d2d3-65b3-0220-32a8-1e0687d9ae6b}</Project>
       <Name>MessagePack</Name>
