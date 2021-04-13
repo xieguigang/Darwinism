@@ -11,7 +11,7 @@
     <AssemblyName>Taskhost.d</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -61,14 +61,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>./bin</OutputPath>
+    <OutputPath>..\..\build\</OutputPath>
     <DocumentationFile>Taskhost.d.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -97,6 +99,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -130,13 +133,33 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    <ProjectReference Include="..\..\..\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
+      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
+      <Name>BinaryData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ComputingServices\ComputingServices.vbproj">
-      <Project>{87383048-1b31-49b7-9fb7-0ded1b80ace8}</Project>
-      <Name>ComputingServices</Name>
+    <ProjectReference Include="..\..\..\sciBASIC#\Data\BinaryData\msgpack\MessagePack.vbproj">
+      <Project>{c473d2d3-65b3-0220-32a8-1e0687d9ae6b}</Project>
+      <Name>MessagePack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\sciBASIC#\mime\application%25json\application.json.vbproj">
+      <Project>{32228818-26f1-44df-8d40-347136c743cd}</Project>
+      <Name>application.json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Microsoft.VisualBasic.Network.vbproj">
+      <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
+      <Name>Microsoft.VisualBasic.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Parallel\Parallel.vbproj">
+      <Project>{085171ca-6a65-494c-9b4a-477d35bcbc90}</Project>
+      <Name>Parallel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HPC_cluster\HPC_cluster.vbproj">
+      <Project>{721a357e-8588-4b2b-9fbc-db25ac4b0b96}</Project>
+      <Name>HPC_cluster</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
