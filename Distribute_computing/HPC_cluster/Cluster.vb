@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Net
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Net
 
 ''' <summary>
 ''' 高性能计算集群，高性能计算集群采用将计算任务分配到集群的不同计算节点儿提高计算能力，
@@ -33,6 +34,23 @@ Public Class Cluster
     ''' 
     ''' </summary>
     Public Sub Deploy()
+        Dim deployBase As String = App.GetVariable("sockets")
+        Dim appBase As String = App.HOME.GetDirectoryFullPath
 
+        If deployBase.StringEmpty Then
+            Throw New InvalidOperationException($"you should set variable 'sockets' to a location on your clusters' share storage at first!")
+        Else
+            deployBase = $"{deployBase}/.deploy/"
+        End If
+
+        For Each assembly As Assembly In AppDomain.CurrentDomain.GetAssemblies
+            Dim dllFile As String = assembly.Location
+            Dim dllBase As String = dllFile.ParentPath.GetDirectoryFullPath
+            Dim relative As String = dllBase.Replace(appBase, "") & "/" & dllFile.FileName
+
+            If InStr(dllBase, appBase, CompareMethod.Text) > 0 Then
+                Call dllFile.FileCopy($"{deployBase}/{relative}")
+            End If
+        Next
     End Sub
 End Class
