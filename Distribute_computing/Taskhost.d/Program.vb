@@ -45,6 +45,7 @@ Imports System.ComponentModel
 Imports System.Net
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Parallel
 
 ''' <summary>
 ''' Running on the server cluster nodes
@@ -93,6 +94,7 @@ Module Program
         Dim socket As String = args <= "--socket"
         Dim imageName As String = args <= "--imageName"
 
+        Return New TaskBuilder(port:=master).Run
     End Function
 
 End Module
