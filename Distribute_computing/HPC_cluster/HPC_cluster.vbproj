@@ -124,6 +124,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\R-sharp\R#\R.vbproj">
+      <Project>{0c2eb77c-39f2-460d-a3f8-ce905f867637}</Project>
+      <Name>R</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
       <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
       <Name>BinaryData</Name>
@@ -143,6 +147,14 @@
     <ProjectReference Include="..\..\..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Microsoft.VisualBasic.Network.vbproj">
       <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
       <Name>Microsoft.VisualBasic.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CloudKit\Centos\Centos.vbproj">
+      <Project>{04f7d21b-53e8-4107-a5e0-d28e3f70efde}</Project>
+      <Name>Centos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CloudKit\Docker\Docker.vbproj">
+      <Project>{b028826a-e615-4f26-b192-b9b0a997696a}</Project>
+      <Name>Docker</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Parallel\Parallel.vbproj">
       <Project>{085171ca-6a65-494c-9b4a-477d35bcbc90}</Project>

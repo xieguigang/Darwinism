@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports HPC_cluster.CLI
 Imports Microsoft.VisualBasic.Net
 
 ''' <summary>
@@ -10,13 +11,16 @@ Imports Microsoft.VisualBasic.Net
 ''' 之间发生大量数据通讯的计算作业，比如一个节点的中间结果或影响到其它节点计算结果的情况。
 ''' </summary>
 ''' <remarks>
-''' This module only works on Linux server
+''' This module only works on Linux server.
+''' 
+''' 在这里假设每一个集群节点中的环境都是一致的
 ''' </remarks>
 Public Class Cluster
 
     ReadOnly remote As IPEndPoint
     ReadOnly userName As String
     ReadOnly imageName As String
+    ReadOnly localhost As String
 
     ''' <summary>
     ''' create a helper module for deploy environment via ``ssh`` and ``cluster node share storage``.
@@ -28,29 +32,24 @@ Public Class Cluster
         Me.remote = remote
         Me.userName = userName
         Me.imageName = imageName
+        Me.localhost = WebServiceUtils.LocalIPAddress
     End Sub
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    Public Sub Deploy()
-        Dim deployBase As String = App.GetVariable("sockets")
-        Dim appBase As String = App.HOME.GetDirectoryFullPath
+    Public Function RunTask(master As Integer)
+        Dim taskHost As Taskhost_d = Taskhost_d.FromEnvironment(App.HOME)
+        Dim socketStream As String = App.GetVariable("sockets")
 
-        If deployBase.StringEmpty Then
+        If socketStream.StringEmpty Then
             Throw New InvalidOperationException($"you should set variable 'sockets' to a location on your clusters' share storage at first!")
-        Else
-            deployBase = $"{deployBase}/.deploy/"
         End If
 
-        For Each assembly As Assembly In AppDomain.CurrentDomain.GetAssemblies
-            Dim dllFile As String = assembly.Location
-            Dim dllBase As String = dllFile.ParentPath.GetDirectoryFullPath
-            Dim relative As String = dllBase.Replace(appBase, "") & "/" & dllFile.FileName
+        Dim cli As String = taskHost.GetParallelCommandLine(
+            master:=remote.port,
+            host:=localhost,
+            socket:=socketStream,
+            imagename:=imageName
+        )
 
-            If InStr(dllBase, appBase, CompareMethod.Text) > 0 Then
-                Call dllFile.FileCopy($"{deployBase}/{relative}")
-            End If
-        Next
-    End Sub
+
+    End Function
 End Class
