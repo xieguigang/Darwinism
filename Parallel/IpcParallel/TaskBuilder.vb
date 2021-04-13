@@ -62,11 +62,13 @@ Imports Parallel.IpcStream
 Public Class TaskBuilder : Implements ITaskDriver
 
     ReadOnly masterPort As Integer
+    ReadOnly masterHost As String
     ReadOnly emit As New StreamEmit
 
     <DebuggerStepThrough>
-    Sub New(port As Integer)
+    Sub New(port As Integer, Optional master As String = "localhost")
         masterPort = port
+        masterHost = master
     End Sub
 
     Private Iterator Function GetParameters(params As ParameterInfo(), n As Integer) As IEnumerable(Of Object)
@@ -111,7 +113,7 @@ Public Class TaskBuilder : Implements ITaskDriver
         Next
 
         ' send debug message
-        Call New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
+        Call New TcpRequest(masterHost, masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
 
         Try
             Call PostFinished(api.Invoke(target, args.ToArray), Protocols.PostResult)
@@ -125,14 +127,14 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Function GetArgumentValueNumber() As Integer
-        Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentNumber))
+        Dim resp = New TcpRequest(masterHost, masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentNumber))
         Dim n As Integer = BitConverter.ToInt32(resp.ChunkBuffer, Scan0)
 
         Return n
     End Function
 
     Private Function GetMethod() As IDelegate
-        Dim resp = New TcpRequest(masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetTask))
+        Dim resp = New TcpRequest(masterHost, masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetTask))
         Dim json As String = resp.GetUTF8String
         Dim target As IDelegate = json.LoadJSON(Of IDelegate)
 
@@ -158,7 +160,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     ''' <returns></returns>
     Private Function GetArgumentValue(i As Integer) As Object
         Dim request As New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i))
-        Dim resp = New TcpRequest(masterPort).SendMessage(request)
+        Dim resp = New TcpRequest(masterHost, masterPort).SendMessage(request)
         Dim stream As New ObjectStream(resp.ChunkBuffer)
         Dim socket As SocketRef = SocketRef.GetSocket(stream)
 
@@ -189,7 +191,7 @@ Public Class TaskBuilder : Implements ITaskDriver
                 Call Console.WriteLine($"post result...")
             End If
 
-            Call New TcpRequest(masterPort).SendMessage(request)
+            Call New TcpRequest(masterHost, masterPort).SendMessage(request)
         End Using
     End Sub
 End Class

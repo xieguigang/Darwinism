@@ -46,6 +46,7 @@ Imports System.Net
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Parallel
+Imports Parallel.IpcStream
 
 ''' <summary>
 ''' Running on the server cluster nodes
@@ -94,7 +95,11 @@ Module Program
         Dim socket As String = args <= "--socket"
         Dim imageName As String = args <= "--imageName"
 
-        Return New TaskBuilder(port:=master).Run
+        If Not socket.StringEmpty Then
+            Call SocketRef.SetSocketPool(handle:=socket)
+        End If
+
+        Return New TaskBuilder(port:=master, master:=host).Run
     End Function
 
 End Module

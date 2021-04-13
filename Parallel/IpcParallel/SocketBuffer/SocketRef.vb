@@ -101,6 +101,7 @@ Namespace IpcStream
 
         Public Shared Sub SetSocketPool(handle As String)
             Call App.JoinVariable("sockets", handle)
+            Call handle.MakeDir
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
