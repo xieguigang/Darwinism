@@ -85,20 +85,37 @@ End Function
 
 ''' <summary>
 ''' ```bash
-''' /parallel
+''' /parallel --master &lt;port&gt; [--host &lt;localhost, default=localhost&gt; --socket &lt;tempdir&gt; --imageName &lt;docker_imageName&gt;]
 ''' ```
 ''' Run task parallel
 ''' </summary>
 '''
-
-Public Function Parallel() As Integer
-Dim cli = GetParallelCommandLine(internal_pipelineMode:=True)
+''' <param name="host"> The host location of the master node, default is localhost, means parallel computing on one host node, different host ip means cluster computing.
+''' </param>
+''' <param name="master"> The tcp port of the master node that opened to current parallel slave node.
+''' </param>
+''' <param name="socket"> A data location on shared storage of your cluster nodes if run parallel in cluster computing mode.
+''' </param>
+''' <param name="imageName"> The docker image name if your cluster application is deployed via docker.
+''' </param>
+Public Function Parallel(master As String, Optional host As String = "localhost", Optional socket As String = "", Optional imagename As String = "") As Integer
+Dim cli = GetParallelCommandLine(master:=master, host:=host, socket:=socket, imagename:=imagename, internal_pipelineMode:=True)
     Dim proc As IIORedirectAbstract = RunDotNetApp(cli)
     Return proc.Run()
 End Function
-Public Function GetParallelCommandLine(Optional internal_pipelineMode As Boolean = True) As String
+Public Function GetParallelCommandLine(master As String, Optional host As String = "localhost", Optional socket As String = "", Optional imagename As String = "", Optional internal_pipelineMode As Boolean = True) As String
     Dim CLI As New StringBuilder("/parallel")
     Call CLI.Append(" ")
+    Call CLI.Append("--master " & """" & master & """ ")
+    If Not host.StringEmpty Then
+            Call CLI.Append("--host " & """" & host & """ ")
+    End If
+    If Not socket.StringEmpty Then
+            Call CLI.Append("--socket " & """" & socket & """ ")
+    End If
+    If Not imagename.StringEmpty Then
+            Call CLI.Append("--imagename " & """" & imagename & """ ")
+    End If
      Call CLI.Append($"/@set --internal_pipeline={internal_pipelineMode.ToString.ToUpper()} ")
 
 

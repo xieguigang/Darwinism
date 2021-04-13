@@ -42,6 +42,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Net
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 
@@ -72,9 +73,25 @@ Module Program
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/parallel")>
-    <Usage("/parallel")>
+    <Usage("/parallel --master <port> [--host <localhost, default=localhost> --socket <tempdir> --imageName <docker_imageName>]")>
     <Description("Run task parallel")>
+    <Argument("--host", True, CLITypes.String, PipelineTypes.undefined,
+              AcceptTypes:={GetType(IPAddress)},
+              Description:="The host location of the master node, default is localhost, means parallel computing on one host node, different host ip means cluster computing.")>
+    <Argument("--master", False, CLITypes.Integer, PipelineTypes.undefined,
+              AcceptTypes:={GetType(Integer)},
+              Description:="The tcp port of the master node that opened to current parallel slave node.")>
+    <Argument("--socket", True, CLITypes.File, PipelineTypes.undefined,
+              AcceptTypes:={GetType(String)},
+              Description:="A data location on shared storage of your cluster nodes if run parallel in cluster computing mode.")>
+    <Argument("--imageName", True, CLITypes.String, PipelineTypes.undefined,
+              AcceptTypes:={GetType(String)},
+              Description:="The docker image name if your cluster application is deployed via docker.")>
     Public Function Parallel(args As CommandLine) As Integer
+        Dim master As Integer = args <= "--master"
+        Dim host As String = args("--host") Or "localhost"
+        Dim socket As String = args <= "--socket"
+        Dim imageName As String = args <= "--imageName"
 
     End Function
 
