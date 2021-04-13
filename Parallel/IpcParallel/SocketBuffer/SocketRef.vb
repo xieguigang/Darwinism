@@ -95,8 +95,12 @@ Namespace IpcStream
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateReference() As SocketRef
-            Return App.GetAppSysTempFile(".sock", App.PID.ToHexString, prefix:="Parallel")
+            Return App.CreateTempFilePath(App.GetVariable("sockets", App.SysTemp), ".sock", App.PID.ToHexString, prefix:="Parallel")
         End Function
+
+        Public Shared Sub SetSocketPool(handle As String)
+            Call App.JoinVariable("sockets", handle)
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(ref As String) As SocketRef
