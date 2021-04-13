@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports Darwinism.Centos
+Imports Darwinism.Docker
 Imports HPC_cluster.CLI
 Imports Microsoft.VisualBasic.Net
 
@@ -17,9 +18,8 @@ Imports Microsoft.VisualBasic.Net
 ''' </remarks>
 Public Class Cluster
 
-    ReadOnly remote As IPEndPoint
-    ReadOnly userName As String
-    ReadOnly imageName As String
+    ReadOnly ssh As SSH
+    ReadOnly docker As Environment
     ReadOnly localhost As String
 
     ''' <summary>
@@ -29,13 +29,21 @@ Public Class Cluster
     ''' <param name="userName"></param>
     ''' <param name="imageName"></param>
     Sub New(remote As IPEndPoint, userName As String, Optional imageName As String = Nothing)
-        Me.remote = remote
-        Me.userName = userName
-        Me.imageName = imageName
+        Me.ssh = New SSH(userName, Nothing, remote.ipAddress, remote.port)
         Me.localhost = WebServiceUtils.LocalIPAddress
+
+        If Not imageName.StringEmpty Then
+            Me.docker = New Environment(imageName)
+        End If
     End Sub
 
-    Public Function RunTask(master As Integer)
+    Sub New(ssh As SSH, docker As Environment)
+        Me.localhost = WebServiceUtils.LocalIPAddress
+        Me.ssh = ssh
+        Me.docker = docker
+    End Sub
+
+    Public Function RunTask(master As Integer) As String
         Dim taskHost As Taskhost_d = Taskhost_d.FromEnvironment(App.HOME)
         Dim socketStream As String = App.GetVariable("sockets")
 
@@ -44,12 +52,17 @@ Public Class Cluster
         End If
 
         Dim cli As String = taskHost.GetParallelCommandLine(
-            master:=remote.port,
+            master:=master,
             host:=localhost,
             socket:=socketStream,
-            imagename:=imageName
+            imagename:=docker?.container
         )
 
-
+        If docker Is Nothing Then
+            ' run on physical machine
+            Return ssh.Run($"{taskHost.Path} {cli}")
+        Else
+            Return ssh.Run(docker.CreateDockerCommand($"{taskHost.Path} {cli}"))
+        End If
     End Function
 End Class

@@ -210,11 +210,11 @@ Public Module Commands
     <ExportAPI("run")>
     Public Function Run(container As Image, command$,
                         Optional workdir As String = Nothing,
-                        Optional mount As Mount() = Nothing,
+                        Optional mounts As Mount() = Nothing,
                         Optional portForward As PortForward = Nothing) As String
 
         Dim cli As String = New Environment(container) _
-            .Mount(mount) _
+            .Mount(mounts) _
             .CreateDockerCommand(command, workdir, portForward)
 
         Return powershell(cli)

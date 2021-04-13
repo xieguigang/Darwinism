@@ -54,6 +54,16 @@ Namespace Arguments
         Public Property Publisher As String
         Public Property Package As String
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="text">
+        ''' accept image name reference in format like:
+        ''' 
+        ''' + ``imageName:tag``
+        ''' + ``user/imageName:tag``
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Function ParseEntry(text As String) As Image
             With text.Trim.Split("/"c)
                 Dim user$, name$
