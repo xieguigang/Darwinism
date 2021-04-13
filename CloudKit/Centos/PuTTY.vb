@@ -48,14 +48,9 @@ Imports Microsoft.VisualBasic.CommandLine
 ''' <summary>
 ''' PuTTY automation combine with the hyper-V virtual machine for windows server
 ''' </summary>
-Public Class PuTTY
+Public Class PuTTY : Inherits SSH
 
-    ReadOnly user As String
-    ReadOnly password As String
-    ReadOnly endpoint As String
-    ReadOnly port As Integer
     ReadOnly plink As String
-    ReadOnly debug As Boolean
 
     Sub New(user$, password$,
             Optional endpoint$ = "127.0.0.1",
@@ -63,14 +58,10 @@ Public Class PuTTY
             Optional plink As String = "plink",
             Optional debug As Boolean = False)
 
-        Me.user = user
-        Me.password = password
-        Me.endpoint = endpoint
-        Me.plink = plink
-        Me.port = port
-        Me.debug = debug
+        Call MyBase.New(user, password, endpoint, port, debug)
 
-        Call cacheServerKey()
+        Me.plink = plink
+        Me.cacheServerKey()
     End Sub
 
     ''' <summary>
@@ -90,10 +81,6 @@ Public Class PuTTY
         Call Console.WriteLine(PipelineProcess.Call(plink, $"-ssh {user}@{endpoint} -P {port} -pw ""{password}"" -batch exit"))
     End Sub
 
-    Public Overrides Function ToString() As String
-        Return $"ssh {user}@{endpoint}:{port}"
-    End Function
-
     ''' <summary>
     ''' Run a bash script in target virtual machine
     ''' </summary>
@@ -104,7 +91,7 @@ Public Class PuTTY
     ''' 
     ''' https://stackoverflow.com/questions/57778301/hyper-v-powershell-run-a-bash-command-in-linux-vm-and-get-output
     ''' </remarks>
-    Public Function Run(bash As String) As String
+    Public Overrides Function Run(bash As String) As String
         Dim cli As String = $"{endpoint} -P {port} -l {user} -pw ""{password}"" -batch /bin/bash ""{bash}"""
         Dim std_out As String = callPipeline(cli)
 
