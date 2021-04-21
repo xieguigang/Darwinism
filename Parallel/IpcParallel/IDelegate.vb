@@ -59,6 +59,10 @@ Public Class IDelegate
     ''' </summary>
     ''' <returns></returns>
     Public Property name As String
+    ''' <summary>
+    ''' the declared container type of the target method <see cref="name"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public Property type As TypeInfo
     ''' <summary>
     ''' the absolute path of the assembly module file that contains target delegate
@@ -103,6 +107,10 @@ Public Class IDelegate
         Return type.GetType(knownFirst:=True, searchPath:={filepath})
     End Function
 
+    ''' <summary>
+    ''' load method data from the delegate json data
+    ''' </summary>
+    ''' <returns></returns>
     Public Function GetMethod() As MethodInfo
         Dim type As Type = provideType()
 

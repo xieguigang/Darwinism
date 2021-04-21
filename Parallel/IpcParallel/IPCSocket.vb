@@ -61,6 +61,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Parallel.IpcStream
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
+''' <summary>
+''' IPC parallel socket for master node
+''' </summary>
 <Protocol(GetType(Protocols))>
 Public Class IPCSocket : Implements ITaskDriver
 
@@ -68,6 +71,10 @@ Public Class IPCSocket : Implements ITaskDriver
 
     ReadOnly socket As TcpServicesSocket
     ReadOnly target As IDelegate
+
+    ''' <summary>
+    ''' running in verbose(debug) mode?
+    ''' </summary>
     ReadOnly verbose As Boolean
 
     Public ReadOnly Property HostPort As Integer
@@ -84,6 +91,10 @@ Public Class IPCSocket : Implements ITaskDriver
     Public Property host As SlaveTask
 
     Public ReadOnly Property handleSetResult As Boolean = False
+    ''' <summary>
+    ''' error code of <see cref="TcpServicesSocket.Run()"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property socketExitCode As Integer
 
     Sub New(target As IDelegate, Optional debug As Integer? = Nothing, Optional verbose As Boolean = False)
@@ -130,11 +141,21 @@ Public Class IPCSocket : Implements ITaskDriver
         Call socket.Dispose()
     End Sub
 
+    ''' <summary>
+    ''' socket run
+    ''' </summary>
+    ''' <returns></returns>
     Public Function Run() As Integer Implements ITaskDriver.Run
         _socketExitCode = socket.Run
         Return socketExitCode
     End Function
 
+    ''' <summary>
+    ''' get task function
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(Protocols.GetTask)>
     Public Function GetTask(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         If verbose Then
@@ -144,6 +165,12 @@ Public Class IPCSocket : Implements ITaskDriver
         Return New DataPipe(Encoding.UTF8.GetBytes(target.GetJson))
     End Function
 
+    ''' <summary>
+    ''' get argument value by index
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(Protocols.GetArgumentByIndex)>
     Public Function GetArgumentByIndex(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Dim i As Integer = BitConverter.ToInt32(request.ChunkBuffer, Scan0)
@@ -153,6 +180,12 @@ Public Class IPCSocket : Implements ITaskDriver
         End Using
     End Function
 
+    ''' <summary>
+    ''' show a signal of task run
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(Protocols.PostStart)>
     Public Function PostStart(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         If verbose Then
@@ -162,11 +195,23 @@ Public Class IPCSocket : Implements ITaskDriver
         Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
     End Function
 
+    ''' <summary>
+    ''' get count of argument value input
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(Protocols.GetArgumentNumber)>
     Public Function GetArgumentNumber(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Return New DataPipe(BitConverter.GetBytes(nargs))
     End Function
 
+    ''' <summary>
+    ''' recive the error message from the slave node
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(Protocols.PostError)>
     Public Function PostError(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Using ms As New MemoryStream(request.ChunkBuffer)
@@ -177,6 +222,12 @@ Public Class IPCSocket : Implements ITaskDriver
         Return New DataPipe(Encoding.ASCII.GetBytes("OK!"))
     End Function
 
+    ''' <summary>
+    ''' recive the result data from the slave node
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="remoteAddress"></param>
+    ''' <returns></returns>
     <Protocol(Protocols.PostResult)>
     Public Function PostResult(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
         Using ms As New MemoryStream(request.ChunkBuffer)
