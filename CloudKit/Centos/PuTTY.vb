@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c61e4f141f5088cd1a456768317ea0e3, CloudKit\Centos\PuTTY.vb"
+﻿#Region "Microsoft.VisualBasic::96c5c2cfb372beb5e7fa8083a31004c7, CloudKit\Centos\PuTTY.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: callPipeline, Run, Shell, ToString
+    '     Function: callPipeline, Run, Shell
     ' 
     '     Sub: cacheServerKey
     ' 

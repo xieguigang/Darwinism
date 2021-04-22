@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a09e923bdeddc127b386c6f1ad992995, LINQ\LINQ\Runtime\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::1f5d8b88408af1f1f9a33a6e64bc4098, LINQ\LINQ\Runtime\Environment.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: AddSymbol, FindInvoke, FindSymbol, HasSymbol
-    ' 
-    '     Class GlobalEnvironment
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetDriverByCode
     ' 
     ' 
     ' /********************************************************************************/

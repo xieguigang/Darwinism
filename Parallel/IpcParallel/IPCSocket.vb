@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::762bc5a2ac7fdb45934a6d6d89b2ab09, Parallel\IpcParallel\IPCSocket.vb"
+﻿#Region "Microsoft.VisualBasic::86f16e26dbba5749a3fefa91e7705256, Parallel\IpcParallel\IPCSocket.vb"
 
     ' Author:
     ' 

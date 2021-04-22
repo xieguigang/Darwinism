@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfc2fc1bbd4499355ac023abb6cc48a0, LINQ\LINQ\Interpreter\Query\Query.vb"
+﻿#Region "Microsoft.VisualBasic::c17b9f4ba6163467b2124e29397af322, LINQ\LINQ\Interpreter\Query\Query.vb"
 
     ' Author:
     ' 

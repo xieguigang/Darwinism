@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cd6d6a4e9253d42d69cae2e21b60f99, Parallel\ThreadTask\ThreadTask.vb"
+﻿#Region "Microsoft.VisualBasic::36906f6f888b49976d9068b755c6ed70, Parallel\ThreadTask\ThreadTask.vb"
 
     ' Author:
     ' 

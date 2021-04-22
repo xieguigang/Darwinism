@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1d9219c7028e6a767f8b71ad4db5f8f, Parallel\IpcParallel\IDelegate.vb"
+﻿#Region "Microsoft.VisualBasic::5d76115216b9dae9ba847582caf5aa8c, Parallel\IpcParallel\IDelegate.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8856d7297ff1eb97a88cd888a0d46f21, Distribute_computing\thinking\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::8856d7297ff1eb97a88cd888a0d46f21, Distribute_computing\old\thinking\CLI.vb"
 
     ' Author:
     ' 

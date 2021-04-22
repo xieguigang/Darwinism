@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e018351fed63ad4d82247c482f3a151a, LINQ\LINQ\Interpreter\Query\DataSoruce.vb"
+﻿#Region "Microsoft.VisualBasic::8af4711d352fde1006be4a159d0cbe40, LINQ\LINQ\Interpreter\Query\DataSoruce\DataSoruce.vb"
 
     ' Author:
     ' 
@@ -35,16 +35,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateDataSet
-    ' 
-    '     Class SymbolIterator
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: PopulatesData
-    ' 
-    '     Class URIIteratorDriver
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: PopulatesData
     ' 
     ' 
     ' /********************************************************************************/

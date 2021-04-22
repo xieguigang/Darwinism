@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d911cc3167898ef7301db6bd6ac4e1, Distribute_computing\ManagerInterface\SocketHost\Models.vb"
+﻿#Region "Microsoft.VisualBasic::99d911cc3167898ef7301db6bd6ac4e1, Distribute_computing\old\ManagerInterface\SocketHost\Models.vb"
 
     ' Author:
     ' 

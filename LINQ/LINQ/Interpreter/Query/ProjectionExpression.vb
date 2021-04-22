@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50019b92504c345b50a55ccd476778d5, LINQ\LINQ\Interpreter\Query\ProjectionExpression.vb"
+﻿#Region "Microsoft.VisualBasic::b9d664122e63e0f360e0b26b2dec6a29, LINQ\LINQ\Interpreter\Query\ProjectionExpression.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,6 @@
 
     ' Summaries:
 
-    '     Class Options
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: RunOptionPipeline
-    ' 
     '     Class ProjectionExpression
     ' 
     '         Constructor: (+1 Overloads) Sub New
