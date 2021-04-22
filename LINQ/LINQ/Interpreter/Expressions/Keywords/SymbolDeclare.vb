@@ -46,6 +46,9 @@ Imports LINQ.Runtime
 
 Namespace Interpreter.Expressions
 
+    ''' <summary>
+    ''' declare a new temp symbol: ``LET x = ...``
+    ''' </summary>
     Public Class SymbolDeclare : Inherits KeywordExpression
 
         Public Property symbolName As String

@@ -44,6 +44,9 @@ Imports LINQ.Runtime
 
 Namespace Interpreter.Expressions
 
+    ''' <summary>
+    ''' the Linq expression
+    ''' </summary>
     Public MustInherit Class Expression
 
         Public ReadOnly Property name As String
@@ -52,6 +55,11 @@ Namespace Interpreter.Expressions
             End Get
         End Property
 
+        ''' <summary>
+        ''' Evaluate the expression
+        ''' </summary>
+        ''' <param name="context"></param>
+        ''' <returns></returns>
         Public MustOverride Function Exec(context As ExecutableContext) As Object
 
     End Class

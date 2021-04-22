@@ -49,6 +49,9 @@ Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Interpreter.Expressions
 
+    ''' <summary>
+    ''' data projection: ``SELECT &lt;fields>``
+    ''' </summary>
     Public Class OutputProjection : Inherits KeywordExpression
 
         Public Property fields As NamedValue(Of Expression)()

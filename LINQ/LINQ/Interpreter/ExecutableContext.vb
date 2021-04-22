@@ -44,8 +44,15 @@ Imports LINQ.Runtime
 
 Namespace Interpreter
 
+    ''' <summary>
+    ''' Execute context of LINQ query
+    ''' </summary>
     Public Class ExecutableContext
 
+        ''' <summary>
+        ''' Symbol and data environment
+        ''' </summary>
+        ''' <returns></returns>
         Public Property env As Environment
         Public Property throwError As Boolean = True
 

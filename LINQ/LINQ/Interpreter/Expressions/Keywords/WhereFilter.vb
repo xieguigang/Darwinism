@@ -47,6 +47,9 @@ Imports LINQ.Runtime
 
 Namespace Interpreter.Expressions
 
+    ''' <summary>
+    ''' data filter: ``WHERE &lt;condition>``
+    ''' </summary>
     Public Class WhereFilter : Inherits KeywordExpression
 
         Dim filter As Expression

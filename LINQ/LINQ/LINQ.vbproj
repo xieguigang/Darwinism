@@ -169,8 +169,9 @@
     <Compile Include="Interpreter\Expressions\Keywords\WhereFilter.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\SymbolDeclare.vb" />
     <Compile Include="Interpreter\Query\AggregateExpression.vb" />
+    <Compile Include="Interpreter\Query\Options.vb" />
     <Compile Include="Interpreter\Query\Query.vb" />
-    <Compile Include="Interpreter\Query\DataSoruce.vb" />
+    <Compile Include="Interpreter\Query\DataSoruce\DataSoruce.vb" />
     <Compile Include="Interpreter\Query\ProjectionExpression.vb" />
     <Compile Include="Interpreter\Expressions\Literals.vb" />
     <Compile Include="Interpreter\Expressions\SymbolReference.vb" />
