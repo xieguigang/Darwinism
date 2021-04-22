@@ -172,7 +172,7 @@
     <Compile Include="Interpreter\Query\DataSoruce\URIIteratorDriver.vb" />
     <Compile Include="Interpreter\Query\DataSoruce\SymbolIterator.vb" />
     <Compile Include="Interpreter\Query\Options.vb" />
-    <Compile Include="Interpreter\Query\Query.vb" />
+    <Compile Include="Interpreter\Query\QueryExpression.vb" />
     <Compile Include="Interpreter\Query\DataSoruce\DataSoruce.vb" />
     <Compile Include="Interpreter\Query\ProjectionExpression.vb" />
     <Compile Include="Interpreter\Expressions\Literals.vb" />
