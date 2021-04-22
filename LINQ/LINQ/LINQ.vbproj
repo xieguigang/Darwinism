@@ -169,6 +169,8 @@
     <Compile Include="Interpreter\Expressions\Keywords\WhereFilter.vb" />
     <Compile Include="Interpreter\Expressions\Keywords\SymbolDeclare.vb" />
     <Compile Include="Interpreter\Query\AggregateExpression.vb" />
+    <Compile Include="Interpreter\Query\DataSoruce\URIIteratorDriver.vb" />
+    <Compile Include="Interpreter\Query\DataSoruce\SymbolIterator.vb" />
     <Compile Include="Interpreter\Query\Options.vb" />
     <Compile Include="Interpreter\Query\Query.vb" />
     <Compile Include="Interpreter\Query\DataSoruce\DataSoruce.vb" />
@@ -200,6 +202,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Runtime\Callable.vb" />
+    <Compile Include="Runtime\DataFrameDriver.vb" />
+    <Compile Include="Runtime\GlobalEnvironment.vb" />
     <Compile Include="Runtime\InternalInvoke.vb" />
     <Compile Include="Runtime\Math.vb" />
     <Compile Include="Runtime\DataFrameExtensions.vb" />
