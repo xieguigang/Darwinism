@@ -62,14 +62,16 @@ Namespace ThreadTask
         Dim size As Integer
 
         ReadOnly startTicks As Double = App.ElapsedMilliseconds
+        ReadOnly debugMode As Boolean = False
 
         ''' <summary>
         ''' create parallel task pool from a given collection of task handler
         ''' </summary>
         ''' <param name="task"></param>
-        Sub New(task As IEnumerable(Of Func(Of TOut)))
+        Sub New(task As IEnumerable(Of Func(Of TOut)), Optional debugMode As Boolean = False)
             Me.taskList = New Queue(Of Func(Of TOut))(task)
             Me.size = Me.taskList.Count
+            Me.debugMode = debugMode
         End Sub
 
         ''' <summary>
@@ -145,7 +147,7 @@ Namespace ThreadTask
         ''' </summary>
         ''' <returns></returns>
         Public Function RunParallel() As IEnumerable(Of TOut)
-            If threads.Length = 1 Then
+            If threads.Length = 1 OrElse debugMode Then
                 Return SequenceTask()
             Else
                 Return ParallelTask()

@@ -142,7 +142,10 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Function FromStream(stream As ObjectStream) As Object
-        Dim type As Type = stream.type.GetType(knownFirst:=True)
+        Dim type As Type = stream.type.GetType(
+            knownFirst:=True,
+            searchPath:={stream.type.assembly}
+        )
 
 #If netcore5 = 1 Then
         Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
