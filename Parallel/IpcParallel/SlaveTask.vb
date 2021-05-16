@@ -168,28 +168,33 @@ RE0:
         End If
 
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
+        Dim stdout As String
 
         If Not debugPort Is Nothing Then
             Console.WriteLine(commandlineArgvs)
-            ' Pause()
+            Pause()
         End If
 
         If verbose Then
-            Call Console.WriteLine($"[{hostIndex.ToHexString}] {processor} {commandlineArgvs}")
+            Call Console.WriteLine($"[{hostIndex.ToHexString}] [EXEC] {processor} {commandlineArgvs}")
         End If
 
 #If netcore5 = 0 Then
-        Call CommandLine.Call(processor, commandlineArgvs)
+        stdout = CommandLine.Call(processor, commandlineArgvs)
 #Else
-        Call CommandLine.Call(processor, commandlineArgvs, dotnet:=True, debug:=Not debugPort Is Nothing)
+        stdout = CommandLine.Call(processor, commandlineArgvs, dotnet:=True, debug:=Not debugPort Is Nothing)
 #End If
 
         Call host.Stop()
 
         If Not host.handleSetResult Then
-            If verbose Then
-                Call Console.WriteLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] socket have non-ZERO exit status, retry...")
+            If verbose AndAlso host.socketExitCode <> 0 Then
+                Call Console.WriteLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] socket have non-ZERO exit status({host.socketExitCode}), retry...")
                 Call Console.WriteLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] {host.GetLastError}")
+            ElseIf verbose Then
+                Call Console.WriteLine($"[{Me.GetHashCode}] slave process echo:")
+                Call Console.WriteLine(stdout)
+                Call Console.WriteLine("--------- end echo ----------")
             End If
 
             GoTo RE0

@@ -78,6 +78,12 @@ Namespace IpcStream
             End Get
         End Property
 
+        Public ReadOnly Property IsNothing As Boolean
+            Get
+                Return type Is Nothing OrElse stream Is Nothing
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -107,10 +113,17 @@ Namespace IpcStream
                 Dim chunk As Byte() = read.ReadBytes(size)
                 Dim typeJson As String = chunk.UTF8String
 
-                size = read.ReadInt32
-                type = typeJson.LoadJSON(Of TypeInfo)
-                method = CType(methodi, StreamMethods)
-                stream = read.ReadBytes(size)
+                If chunk.IsNullOrEmpty AndAlso typeJson.StringEmpty Then
+                    ' target object is nothing
+                    type = Nothing
+                    method = StreamMethods.Auto
+                    stream = Nothing
+                Else
+                    size = read.ReadInt32
+                    type = typeJson.LoadJSON(Of TypeInfo)
+                    method = CType(methodi, StreamMethods)
+                    stream = read.ReadBytes(size)
+                End If
             End Using
         End Sub
 

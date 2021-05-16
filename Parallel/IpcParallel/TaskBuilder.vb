@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::899ab496ae35911ec94c1e11a823a3b9, Parallel\IpcParallel\TaskBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class TaskBuilder
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: FromStream, GetArgumentValue, GetArgumentValueNumber, GetMethod, GetParameters
-    '               PostError, Run
-    ' 
-    '     Sub: PostFinished
-    ' 
-    ' /********************************************************************************/
+' Class TaskBuilder
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: FromStream, GetArgumentValue, GetArgumentValueNumber, GetMethod, GetParameters
+'               PostError, Run
+' 
+'     Sub: PostFinished
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
 #End If
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
@@ -76,7 +77,9 @@ Public Class TaskBuilder : Implements ITaskDriver
             Dim par As Object = GetArgumentValue(i)
             Dim targetType As Type = params(i).ParameterType
 
-            If par.GetType.IsInheritsFrom(targetType) Then
+            If par Is Nothing Then
+                Yield par
+            ElseIf par.GetType.IsInheritsFrom(targetType) Then
                 Yield Conversion.CTypeDynamic(par, targetType)
             ElseIf par.GetType Is GetType(SocketRef) Then
                 ' is a common parameter value between
@@ -92,13 +95,16 @@ Public Class TaskBuilder : Implements ITaskDriver
         Next
     End Function
 
-    Public Function Run() As Integer Implements ITaskDriver.Run
+    Private Function Initialize(ByRef api As MethodInfo, ByRef target As Object, ByRef args As Object()) As Integer
         Dim task As IDelegate = GetMethod()
-        Dim api As MethodInfo = task.GetMethod
-        Dim params As ParameterInfo() = api.GetParameters
-        Dim target As Object = task.GetMethodTarget
+        Dim params As ParameterInfo()
+
+        api = task.GetMethod
+        params = api.GetParameters
+        target = task.GetMethodTarget
+
         Dim n As Integer = GetArgumentValueNumber()
-        Dim args As New List(Of Object)(GetParameters(params, n))
+        Dim argList As New List(Of Object)(GetParameters(params, n))
 
         Call Console.WriteLine("run task:")
         Call Console.WriteLine(task.GetJson(indent:=False, simpleDict:=True))
@@ -108,15 +114,36 @@ Public Class TaskBuilder : Implements ITaskDriver
             If Not params(i).IsOptional Then
                 Return PostError(New Exception($"missing parameter value for [{i}]{params(i).Name}!"))
             Else
-                args.Add(params(i).DefaultValue)
+                argList.Add(params(i).DefaultValue)
             End If
         Next
+
+        args = argList.ToArray
+
+        Return 0
+    End Function
+
+    Public Function Run() As Integer Implements ITaskDriver.Run
+        Dim api As MethodInfo = Nothing
+        Dim target As Object = Nothing
+        Dim args As Object() = Nothing
+
+        Try
+            Dim i As New Value(Of Integer)
+
+            If 0 <> (i = Initialize(api, target, args)) Then
+                Return i
+            End If
+        Catch ex As Exception
+            Call PostError(ex)
+            Return 500
+        End Try
 
         ' send debug message
         Call New TcpRequest(masterHost, masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
 
         Try
-            Call PostFinished(api.Invoke(target, args.ToArray), Protocols.PostResult)
+            Call PostFinished(api.Invoke(target, args), Protocols.PostResult)
         Catch ex As Exception
             Call PostError(ex)
         Finally
@@ -165,11 +192,17 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim request As New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i))
         Dim resp = New TcpRequest(masterHost, masterPort).SendMessage(request)
         Dim stream As New ObjectStream(resp.ChunkBuffer)
-        Dim socket As SocketRef = SocketRef.GetSocket(stream)
 
-        Using buffer As ObjectStream = socket.Open
-            Return FromStream(buffer)
-        End Using
+        If stream.IsNothing Then
+            ' 20210516 object value is nothing?
+            Return Nothing
+        Else
+            Dim socket As SocketRef = SocketRef.GetSocket(stream)
+
+            Using buffer As ObjectStream = socket.Open
+                Return FromStream(buffer)
+            End Using
+        End If
     End Function
 
     Private Function PostError(err As Exception) As Integer

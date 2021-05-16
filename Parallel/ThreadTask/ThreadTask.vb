@@ -146,6 +146,9 @@ Namespace ThreadTask
         ''' Run parallel task list
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' Threads count is 1 or debug mode will running in sequence mode
+        ''' </remarks>
         Public Function RunParallel() As IEnumerable(Of TOut)
             If threads.Length = 1 OrElse debugMode Then
                 Return SequenceTask()
