@@ -189,6 +189,7 @@ RE0:
         If Not host.handleSetResult Then
             If verbose Then
                 Call Console.WriteLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] socket have non-ZERO exit status, retry...")
+                Call Console.WriteLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] {host.GetLastError}")
             End If
 
             GoTo RE0
