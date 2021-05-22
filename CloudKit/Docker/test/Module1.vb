@@ -60,7 +60,7 @@ Module Module1
 
 
         Call Console.WriteLine(Docker.Run("centos", "echo ""hello world"""))
-        Call Console.WriteLine(Docker.Run("centos", "ls -l /mnt/ntfs", mount:={New Mount With {.local = "D:\test", .virtual = "/mnt/ntfs"}}))
+        Call Console.WriteLine(Docker.Run("centos", "ls -l /mnt/ntfs", mounts:={New Mount With {.local = "D:\test", .virtual = "/mnt/ntfs"}}))
 
         For Each line In Docker.CommandHistory
             Call Console.WriteLine(line)
