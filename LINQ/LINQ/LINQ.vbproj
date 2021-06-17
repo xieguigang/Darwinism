@@ -213,10 +213,10 @@
     <Compile Include="Runtime\Registry.vb" />
     <Compile Include="Runtime\Symbol.vb" />
     <Compile Include="Runtime\Environment.vb" />
-    <Compile Include="Script\Builders\BinaryBuilder.vb" />
-    <Compile Include="Script\Builders\ExpressionTree.vb" />
-    <Compile Include="Script\StackParser.vb" />
-    <Compile Include="Script\SyntaxImplements.vb" />
+    <Compile Include="Interpreter\Script\Builders\BinaryBuilder.vb" />
+    <Compile Include="Interpreter\Script\Builders\ExpressionTree.vb" />
+    <Compile Include="Interpreter\Script\StackParser.vb" />
+    <Compile Include="Interpreter\Script\SyntaxImplements.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
