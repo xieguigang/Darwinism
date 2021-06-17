@@ -204,12 +204,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Runtime\Callable.vb" />
-    <Compile Include="Runtime\DataFrameDriver.vb" />
+    <Compile Include="Runtime\Drivers\DataFrameDriver.vb" />
     <Compile Include="Runtime\GlobalEnvironment.vb" />
-    <Compile Include="Runtime\InternalInvoke.vb" />
-    <Compile Include="Runtime\Math.vb" />
+    <Compile Include="Runtime\Internal\InternalInvoke.vb" />
+    <Compile Include="Runtime\Internal\Math.vb" />
     <Compile Include="Runtime\DataFrameExtensions.vb" />
-    <Compile Include="Runtime\DataSourceDriver.vb" />
+    <Compile Include="Runtime\Drivers\DataSourceDriver.vb" />
     <Compile Include="Runtime\Registry.vb" />
     <Compile Include="Runtime\Symbol.vb" />
     <Compile Include="Runtime\Environment.vb" />
