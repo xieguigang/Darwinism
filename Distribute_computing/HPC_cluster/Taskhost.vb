@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52a28aab44d5e28b6d80ea6111871c5e, Distribute_computing\HPC_cluster\Taskhost.vb"
+﻿#Region "Microsoft.VisualBasic::2e8d9e242aa1480243ef5ae298fcd2b3, Distribute_computing\HPC_cluster\Taskhost.vb"
 
     ' Author:
     ' 
@@ -166,7 +166,3 @@ Return CLI.ToString()
 End Function
 End Class
 End Namespace
-
-
-
-

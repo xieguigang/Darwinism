@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b94dc34c0a02854f5331911e4ff94320, LINQ\LINQ\Script\Builders\ExpressionTree.vb"
+﻿#Region "Microsoft.VisualBasic::bf796cc0e55fc3ef8f77c2c2430299d3, LINQ\LINQ\Script\Builders\ExpressionTree.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module ExpressionTree
+    '     Module ExpressionTree
     ' 
-    '     Function: ParseTree
+    '         Function: ParseTree
+    ' 
     ' 
     ' /********************************************************************************/
 

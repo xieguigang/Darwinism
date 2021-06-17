@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f391032229f1414dd209760afbe605a, LINQ\LINQ\Runtime\Math.vb"
+﻿#Region "Microsoft.VisualBasic::2c73f67e2ead98087074c71607b21e5e, LINQ\LINQ\Runtime\Internal\Math.vb"
 
     ' Author:
     ' 

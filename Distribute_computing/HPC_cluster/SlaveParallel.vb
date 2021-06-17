@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748164cffccbe6c360c850c81f7d009f, Distribute_computing\HPC_cluster\SlaveParallel.vb"
+﻿#Region "Microsoft.VisualBasic::bf9ec6b534ad14cc077ed8a4e0cfad7e, Distribute_computing\HPC_cluster\SlaveParallel.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Public Class SlaveParallel
         Return cli
     End Function
 End Class
-

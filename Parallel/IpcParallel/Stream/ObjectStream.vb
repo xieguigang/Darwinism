@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::819f296d8ea634b4f9142b8cc2cbb41d, Parallel\IpcParallel\Stream\ObjectStream.vb"
+﻿#Region "Microsoft.VisualBasic::2e43fcbbe187b0aabe07e3f31fb5b895, Parallel\IpcParallel\Stream\ObjectStream.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ObjectStream
     ' 
-    '         Properties: isPrimitive, method, stream, type
+    '         Properties: IsNothing, isPrimitive, method, stream, type
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 

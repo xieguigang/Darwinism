@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cd572f89794247aa7a60e608fbb89f5, LINQ\LINQ\Interpreter\Query\Options.vb"
+﻿#Region "Microsoft.VisualBasic::03e9812fd9a9cf4d263c43fc47b7eac6, LINQ\LINQ\Interpreter\Query\Options.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports LINQ.Interpreter.Expressions
 Imports LINQ.Runtime

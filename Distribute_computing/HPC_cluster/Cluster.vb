@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::667cf461f26c7a4952024bc8ad44b4ee, Distribute_computing\HPC_cluster\Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::a330764d45c38e6f6363cd8cd9b4a805, Distribute_computing\HPC_cluster\Cluster.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Public Class Cluster
         End If
     End Function
 End Class
-

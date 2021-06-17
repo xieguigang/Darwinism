@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61c3a76f028efb879f257d53fda47346, LINQ\LINQ\Script\StackParser.vb"
+﻿#Region "Microsoft.VisualBasic::eb430db1738374b44566811a7d062d13, LINQ\LINQ\Script\StackParser.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,11 @@
 
     ' Summaries:
 
-    ' Module StackParser
+    '     Module StackParser
     ' 
-    '     Function: DoSplitByTopLevelStack, GetParentPair, isKeyword, isKeywordAggregate, isKeywordFrom
-    '               isKeywordSelect, SplitByTopLevelStack, SplitOperators, SplitParameters
+    '         Function: DoSplitByTopLevelStack, GetParentPair, isKeyword, isKeywordAggregate, isKeywordFrom
+    '                   isKeywordSelect, SplitByTopLevelStack, SplitOperators, SplitParameters
+    ' 
     ' 
     ' /********************************************************************************/
 

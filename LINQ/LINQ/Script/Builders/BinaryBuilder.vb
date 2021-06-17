@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::774fbb3c052bbc812dbe3f59a695355c, LINQ\LINQ\Script\Builders\BinaryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c4037e554a26529e91e78f3b46cacdb4, LINQ\LINQ\Script\Builders\BinaryBuilder.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Module BinaryBuilder
+    '     Module BinaryBuilder
     ' 
-    '     Function: ParseBinary, ShrinkTokens
+    '         Function: ParseBinary, ShrinkTokens
     ' 
-    '     Sub: JoinBinary
+    '         Sub: JoinBinary
+    ' 
     ' 
     ' /********************************************************************************/
 
