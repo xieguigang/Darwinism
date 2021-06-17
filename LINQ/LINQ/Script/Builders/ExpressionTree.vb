@@ -43,11 +43,14 @@ Imports System.Runtime.CompilerServices
 Imports LINQ.Interpreter.Expressions
 Imports LINQ.Language
 
-Module ExpressionTree
+Namespace Script.Builders
 
-    <Extension>
-    Public Function ParseTree(tokenList As Token()) As Expression
+    Module ExpressionTree
 
-    End Function
+        <Extension>
+        Public Function ParseTree(tokenList As Token()) As Expression
 
-End Module
+        End Function
+
+    End Module
+End Namespace
