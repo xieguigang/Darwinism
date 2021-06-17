@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="LINQ.Interpreter.ExecutableContext" Collapsed="true">
+    <Position X="4.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\ExecutableContext.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Program" Collapsed="true">
+    <Position X="6.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Interpreter\Program.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.QueryInterpreter" Collapsed="true">
+    <Position X="8" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\QueryInterpreter.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.ArrayExpression" Collapsed="true">
+    <Position X="14.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAQAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\ArrayExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.BinaryExpression" Collapsed="true">
+    <Position X="14.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIEAAAAAAAAAAAIABAAAAAIAAAAgAA=</HashCode>
+      <FileName>Interpreter\Expressions\BinaryExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.Expression" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Expression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.FuncEval" Collapsed="true">
+    <Position X="17" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAABEAAAAAAACAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\FuncEval.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.KeywordExpression" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\KeywordExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.OrderBy" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAABAAEAAAEAAABAAAAABBAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\Options\OrderBy.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.PipelineKeyword" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\Options\PipelineKeyword.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.SkipItems" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAABAAEAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\Options\SkipItems.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.TakeItems" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAABAAEAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\Options\TakeItems.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.OutputProjection" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAEAAAAAAABAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\OutputProjection.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.SymbolDeclare" Collapsed="true">
+    <Position X="7.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAABAAABABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\SymbolDeclare.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.WhereFilter" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAEAABAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Keywords\WhereFilter.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.Literals" Collapsed="true">
+    <Position X="11.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAABADAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\Literals.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.MemberReference" Collapsed="true">
+    <Position X="17" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAEAAAgAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\MemberReference.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Expressions.SymbolReference" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Expressions\SymbolReference.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Query.AggregateExpression" Collapsed="true">
+    <Position X="13.5" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Query\AggregateExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Query.DataSet" Collapsed="true">
+    <Position X="2.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAgAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Query\DataSoruce\DataSoruce.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Query.SymbolIterator" Collapsed="true">
+    <Position X="3.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Query\DataSoruce\SymbolIterator.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Query.URIIteratorDriver" Collapsed="true">
+    <Position X="1" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Query\DataSoruce\URIIteratorDriver.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Query.Options" Collapsed="true">
+    <Position X="4.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Interpreter\Query\Options.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Query.ProjectionExpression" Collapsed="true">
+    <Position X="11" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAABAAAAAIAAAAAAA=</HashCode>
+      <FileName>Interpreter\Query\ProjectionExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Interpreter.Query.QueryExpression" Collapsed="true">
+    <Position X="12.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAACAAAAAAAAAAAAAAAAQAAAAAAgIA=</HashCode>
+      <FileName>Interpreter\Query\QueryExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Language.Token" Collapsed="true">
+    <Position X="6.25" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Language\Token.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Language.Tokenizer" Collapsed="true">
+    <Position X="8" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAQAEAAAAAAAAAAAFAAEAAAAAAAAIAgBgAAAAAAA=</HashCode>
+      <FileName>Language\Tokenizer.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.My.MySettings" Collapsed="true">
+    <Position X="2.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.Callable" Collapsed="true">
+    <Position X="2.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAgAAAAAEAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Runtime\Callable.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.Environment" Collapsed="true">
+    <Position X="9" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAQAAAAgBAAAAAAAAEAQBAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Runtime\Environment.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.GlobalEnvironment" Collapsed="true">
+    <Position X="9" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Runtime\GlobalEnvironment.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.Registry" Collapsed="true">
+    <Position X="2.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Runtime\Registry.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.Symbol" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAABACAAAAAYAAAAAAA=</HashCode>
+      <FileName>Runtime\Symbol.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LINQ.Runtime.Drivers.DataFrameDriver" Collapsed="true">
+    <Position X="6" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Runtime\Drivers\DataFrameDriver.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.Drivers.DataSourceDriver" Collapsed="true">
+    <Position X="6" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Runtime\Drivers\DataSourceDriver.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.Internal.InternalInvoke" Collapsed="true">
+    <Position X="6.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQQAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Runtime\Internal\InternalInvoke.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LINQ.Runtime.Internal.Math" Collapsed="true">
+    <Position X="8" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAACQAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Runtime\Internal\Math.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="LINQ.Language.Tokens">
+    <Position X="16.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACCEEAAAIEAAAEAAAAABgAAAAQAAAAAAAAGACEA=</HashCode>
+      <FileName>Language\Tokens.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Module Name="LINQ.Script.Builders.BinaryBuilder" Collapsed="true">
+    <Position X="2.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAgAAAAAAAAAAQAAAAAAIAAAAAA=</HashCode>
+      <FileName>Interpreter\Script\Builders\BinaryBuilder.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Script.Builders.ExpressionTree" Collapsed="true">
+    <Position X="6.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interpreter\Script\Builders\ExpressionTree.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Script.StackParser" Collapsed="true">
+    <Position X="8" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAgABAAAAAAAAAAgAAAAAAgBAAAAKAAA=</HashCode>
+      <FileName>Interpreter\Script\StackParser.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Script.SyntaxImplements" Collapsed="true">
+    <Position X="9.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQABABABABAAAAABAAAACAgAIAAABAAAgIBAIAg=</HashCode>
+      <FileName>Interpreter\Script\SyntaxImplements.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Language.Extensions" Collapsed="true">
+    <Position X="8" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Language\Extensions.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.My.Resources.Resources" Collapsed="true">
+    <Position X="6.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.My.MySettingsProperty" Collapsed="true">
+    <Position X="2.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Program" Collapsed="true">
+    <Position X="4.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAEAAAA=</HashCode>
+      <FileName>Program.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="LINQ.Runtime.DataFrameExtensions" Collapsed="true">
+    <Position X="4.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Runtime\DataFrameExtensions.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
