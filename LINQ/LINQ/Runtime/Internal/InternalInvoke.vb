@@ -46,7 +46,7 @@
 
 Imports System.Reflection
 
-Namespace Runtime
+Namespace Runtime.Internal
 
     Public Class InternalInvoke
 

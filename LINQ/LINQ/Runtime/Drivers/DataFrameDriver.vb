@@ -43,12 +43,12 @@
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.My.JavaScript
 
-Namespace Runtime
+Namespace Runtime.Drivers
 
     Public Class DataFrameDriver : Inherits DataSourceDriver
 
         Public Overrides Iterator Function ReadFromUri(uri As String) As IEnumerable(Of Object)
-            Dim dataframe As DataFrame = dataframe.Load(uri).MeasureTypeSchema
+            Dim dataframe As DataFrame = DataFrame.Load(uri).MeasureTypeSchema
             Dim obj As JavaScriptObject
             Dim headers As String() = dataframe.HeadTitles
 

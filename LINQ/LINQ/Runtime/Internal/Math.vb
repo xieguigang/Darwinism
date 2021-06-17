@@ -42,7 +42,7 @@
 
 Imports stdnum = System.Math
 
-Namespace Runtime
+Namespace Runtime.Internal
 
     Friend Class Math
 
