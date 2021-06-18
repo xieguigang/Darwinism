@@ -72,6 +72,9 @@ Namespace Interpreter.Query
             Dim globalEnv As GlobalEnvironment = context.env.GlobalEnvir
             Dim registry As Registry = globalEnv.registry
 
+            For Each name As ImportDataDriver In attaches
+                Call registry.Register(driver:=name.dllName)
+            Next
         End Sub
 
         Public Function AddAttachDrivers(drivers As IEnumerable(Of ImportDataDriver)) As QueryExpression

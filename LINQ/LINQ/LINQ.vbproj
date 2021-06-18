@@ -205,6 +205,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Runtime\Callable.vb" />
+    <Compile Include="Runtime\Drivers\DriverFlagAttribute.vb" />
     <Compile Include="Runtime\Drivers\DataFrameDriver.vb" />
     <Compile Include="Runtime\GlobalEnvironment.vb" />
     <Compile Include="Runtime\Internal\InternalInvoke.vb" />

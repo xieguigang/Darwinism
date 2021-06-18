@@ -40,6 +40,7 @@
 
 #End Region
 
+Imports System.Reflection
 Imports LINQ.Runtime.Drivers
 
 Namespace Runtime
@@ -47,6 +48,28 @@ Namespace Runtime
     Public Class Registry
 
         ReadOnly drivers As New Dictionary(Of String, IDriverLoader)
+
+        Public Sub Register(driver As String)
+            Dim dll As String = getDllFile(driver)
+            Dim assembly As Assembly = Assembly.LoadFile(dll)
+
+            For Each type As Type In From m As Type
+                                     In assembly.GetTypes
+                                     Let flag As DriverFlagAttribute = m.GetCustomAttribute(Of DriverFlagAttribute)
+                                     Where Not flag Is Nothing
+                                     Select m
+
+                Dim flag As DriverFlagAttribute = type.GetCustomAttribute(Of DriverFlagAttribute)()
+
+                drivers(flag.type) = Function(args)
+                                         Return Activator.CreateInstance(type, {args})
+                                     End Function
+            Next
+        End Sub
+
+        Private Function getDllFile(driver As String) As String
+
+        End Function
 
         Public Function GetTypeCodeName(type As Type) As String
             Select Case type

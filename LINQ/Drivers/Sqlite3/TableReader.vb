@@ -41,6 +41,7 @@
 
 Imports LINQ.Runtime.Drivers
 
+<DriverFlag("table")>
 Public Class TableReader : Inherits DataSourceDriver
 
     Public Sub New(arguments() As String)
