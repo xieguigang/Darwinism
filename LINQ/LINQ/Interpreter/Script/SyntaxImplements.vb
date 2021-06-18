@@ -49,6 +49,7 @@ Imports LINQ.Language
 Imports LINQ.Script.Builders
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Script
@@ -98,6 +99,7 @@ Namespace Script
                 .JoinOperators _
                 .SplitByTopLevelStack _
                 .ToList
+            Dim import As New List(Of ImportDataDriver)
 
             For i As Integer = 1 To blocks.Count - 1
                 If i >= blocks.Count Then
@@ -111,8 +113,12 @@ Namespace Script
                             .ToArray
                         blocks.RemoveAt(i)
                     End If
+                ElseIf blocks(i)(Scan0) = (Tokens.keyword, "imports") Then
+                    import += New ImportDataDriver(blocks(1)(1).text)
                 End If
             Next
+
+            blocks = (From block In blocks Where block(Scan0) <> (Tokens.keyword, "imports")).AsList
 
             If blocks(Scan0).First.isKeywordFrom Then
                 Return blocks(Scan0).CreateProjectionQuery(blocks.Skip(1).ToArray)
