@@ -101,6 +101,10 @@ Namespace Script
                 .AsList
             Dim import As New List(Of ImportDataDriver)
 
+            If blocks(0)(Scan0) = (Tokens.keyword, "imports") Then
+                import += New ImportDataDriver(blocks(0)(1).text)
+            End If
+
             For i As Integer = 1 To blocks.Count - 1
                 If i >= blocks.Count Then
                     Exit For
@@ -114,7 +118,7 @@ Namespace Script
                         blocks.RemoveAt(i)
                     End If
                 ElseIf blocks(i)(Scan0) = (Tokens.keyword, "imports") Then
-                    import += New ImportDataDriver(blocks(1)(1).text)
+                    import += New ImportDataDriver(blocks(i)(1).text)
                 End If
             Next
 
