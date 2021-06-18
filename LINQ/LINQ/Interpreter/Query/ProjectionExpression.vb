@@ -98,7 +98,13 @@ Namespace Interpreter.Query
                 Next
 
                 If Not skipVal Then
-                    projections.Add(project.Exec(closure))
+                    If project Is Nothing Then
+                        ' 当SELECT投影操作为空的时候，默认不进行投影操作
+                        ' 即返回最原始的变量值
+                        projections.Add(item)
+                    Else
+                        projections.Add(project.Exec(closure))
+                    End If
                 End If
             Next
 
