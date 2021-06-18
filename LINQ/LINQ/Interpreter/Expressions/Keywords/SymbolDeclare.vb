@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::072cb6ae41a3b6174888b57bb609c38a, LINQ\LINQ\Interpreter\Expressions\Keywords\SymbolDeclare.vb"
+﻿#Region "Microsoft.VisualBasic::da28944790a219e92897ec35a5fe0e13, LINQ\LINQ\Interpreter\Expressions\Keywords\SymbolDeclare.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class SymbolDeclare
     ' 
-    '         Properties: keyword, symbolName, type
+    '         Properties: arguments, keyword, symbolName, type
     ' 
     '         Function: Exec, ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4037e554a26529e91e78f3b46cacdb4, LINQ\LINQ\Script\Builders\BinaryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c4037e554a26529e91e78f3b46cacdb4, LINQ\LINQ\Interpreter\Script\Builders\BinaryBuilder.vb"
 
     ' Author:
     ' 

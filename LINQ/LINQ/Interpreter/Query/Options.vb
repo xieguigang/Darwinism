@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03e9812fd9a9cf4d263c43fc47b7eac6, LINQ\LINQ\Interpreter\Query\Options.vb"
+﻿#Region "Microsoft.VisualBasic::58a8244873f3fb35cb8b0370172d7ec9, LINQ\LINQ\Interpreter\Query\Options.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Class Options
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: RunOptionPipeline
+    '         Function: RunOptionPipeline, ToString
     ' 
     ' 
     ' /********************************************************************************/

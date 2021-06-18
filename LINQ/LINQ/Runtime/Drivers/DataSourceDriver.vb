@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c1f0f5168103746a577bd5c8921a507, LINQ\LINQ\Runtime\Drivers\DataSourceDriver.vb"
+﻿#Region "Microsoft.VisualBasic::81cc4bb3a24f205dc47b7db13b4c0f7d, LINQ\LINQ\Runtime\Drivers\DataSourceDriver.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class DataSourceDriver
     ' 
-    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

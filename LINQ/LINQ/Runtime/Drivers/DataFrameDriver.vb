@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::044174265e2439437d9433d34b1d38e6, LINQ\LINQ\Runtime\Drivers\DataFrameDriver.vb"
+﻿#Region "Microsoft.VisualBasic::4038b3952bb34ff8167bb72c35c0619c, LINQ\LINQ\Runtime\Drivers\DataFrameDriver.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,7 @@
 
     '     Class DataFrameDriver
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ReadFromUri
     ' 
     ' 

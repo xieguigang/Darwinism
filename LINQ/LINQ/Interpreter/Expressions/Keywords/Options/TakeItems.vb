@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::094b21167dcd85f47ff8710a93aa3ae2, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\TakeItems.vb"
+﻿#Region "Microsoft.VisualBasic::e8b1900f81c66558565fff66bb11cf99, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\TakeItems.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: keyword
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Exec
+    '         Function: (+2 Overloads) Exec, ToString
     ' 
     ' 
     ' /********************************************************************************/

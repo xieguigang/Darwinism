@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab6301c864f94a35ede0a5a03a60263e, LINQ\LINQ\Runtime\GlobalEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::f52f81768990b5c04714f9db2d5f4672, LINQ\LINQ\Runtime\GlobalEnvironment.vb"
 
     ' Author:
     ' 

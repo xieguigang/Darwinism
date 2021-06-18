@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::550ac42be283838badad0e16ae7212fe, LINQ\LINQ\Interpreter\Query\DataSoruce\URIIteratorDriver.vb"
+﻿#Region "Microsoft.VisualBasic::60bcd17ad4a2f4d16c0a950a86be8c6b, LINQ\LINQ\Interpreter\Query\DataSoruce\URIIteratorDriver.vb"
 
     ' Author:
     ' 

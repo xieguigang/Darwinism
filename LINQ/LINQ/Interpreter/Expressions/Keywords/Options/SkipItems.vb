@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a47858251c0d09202512517202fe5de6, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\SkipItems.vb"
+﻿#Region "Microsoft.VisualBasic::50b33ca454fd3b8845e493d7457afd78, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\SkipItems.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: keyword
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Exec
+    '         Function: (+2 Overloads) Exec, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb430db1738374b44566811a7d062d13, LINQ\LINQ\Script\StackParser.vb"
+﻿#Region "Microsoft.VisualBasic::eb430db1738374b44566811a7d062d13, LINQ\LINQ\Interpreter\Script\StackParser.vb"
 
     ' Author:
     ' 
