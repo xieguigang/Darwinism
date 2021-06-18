@@ -57,7 +57,10 @@ Namespace Interpreter.Query
         End Sub
 
         Public Overrides Iterator Function PopulatesData() As IEnumerable(Of Object)
-            Dim driver As DataSourceDriver = env.GlobalEnvir.GetDriverByCode(symbolDeclare.type)
+            Dim driver As DataSourceDriver = env.GlobalEnvir.GetDriverByCode(
+                code:=symbolDeclare.type,
+                arguments:=symbolDeclare.arguments
+            )
 
             For Each item As Object In driver.ReadFromUri(uri)
                 Yield item

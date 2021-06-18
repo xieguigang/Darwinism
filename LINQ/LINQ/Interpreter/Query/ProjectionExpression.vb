@@ -76,6 +76,9 @@ Namespace Interpreter.Query
                 .env = New Environment(parent:=env),
                 .throwError = context.throwError
             }
+
+            Call LoadDrivers(context)
+
             Dim skipVal As Boolean
             Dim dataset As DataSet = GetDataSet(context)
 

@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::0124b5f27111e2adaadc328227661fb0, LINQ\LINQ\Runtime\Registry.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Registry
-    ' 
-    '         Function: GetReader, GetTypeCodeName
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Registry
+' 
+'         Function: GetReader, GetTypeCodeName
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,6 +45,8 @@ Imports LINQ.Runtime.Drivers
 Namespace Runtime
 
     Public Class Registry
+
+        ReadOnly drivers As New Dictionary(Of String, IDriverLoader)
 
         Public Function GetTypeCodeName(type As Type) As String
             Select Case type
@@ -55,12 +57,17 @@ Namespace Runtime
             End Select
         End Function
 
-        Public Function GetReader(type As String) As DataSourceDriver
+        Public Function GetReader(type As String, arguments As String()) As DataSourceDriver
             If type = "row" Then
                 Return New DataFrameDriver
+            ElseIf drivers.ContainsKey(type) Then
+                Return drivers(type)(arguments)
             Else
-                Throw New MissingPrimaryKeyException
+                Throw New MissingPrimaryKeyException(type)
             End If
         End Function
     End Class
+
+    Public Delegate Function IDriverLoader(arguments As String()) As DataSourceDriver
+
 End Namespace

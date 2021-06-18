@@ -66,7 +66,8 @@ Module Program
         Dim tokens As Token() = LINQ.Language.GetTokens(file.ReadAllText).ToArray
         Dim query As ProjectionExpression = tokens.PopulateQueryExpression
         Dim env As New GlobalEnvironment(New Registry)
-        Dim result As JavaScriptObject() = query.Exec(New ExecutableContext With {.env = env, .throwError = True})
+        Dim context As New ExecutableContext With {.env = env, .throwError = True}
+        Dim result As JavaScriptObject() = query.Exec(context)
         Dim table As DataFrame = result.CreateTableDataSet
         Dim output As String = args <= "/output"
 

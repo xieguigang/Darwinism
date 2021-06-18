@@ -48,7 +48,7 @@ Namespace Runtime
 
     Public Class GlobalEnvironment : Inherits Environment
 
-        Protected ReadOnly registry As Registry
+        Protected Friend ReadOnly registry As Registry
 
         Sub New(registry As Registry, ParamArray values As NamedValue(Of Object)())
             Call MyBase.New(Nothing)
@@ -65,8 +65,8 @@ Namespace Runtime
             Me.registry = registry
         End Sub
 
-        Public Function GetDriverByCode(code As String) As DataSourceDriver
-            Return registry.GetReader(code)
+        Public Function GetDriverByCode(code As String, arguments As String()) As DataSourceDriver
+            Return registry.GetReader(code, arguments)
         End Function
     End Class
 End Namespace
