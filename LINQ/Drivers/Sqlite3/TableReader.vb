@@ -40,6 +40,10 @@
 #End Region
 
 Imports LINQ.Runtime.Drivers
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
+Imports Microsoft.VisualBasic.My.JavaScript
 
 <DriverFlag("table")>
 Public Class TableReader : Inherits DataSourceDriver
@@ -48,8 +52,23 @@ Public Class TableReader : Inherits DataSourceDriver
         MyBase.New(arguments)
     End Sub
 
-    Public Overrides Function ReadFromUri(uri As String) As IEnumerable(Of Object)
-        Throw New NotImplementedException()
+    Public Overrides Iterator Function ReadFromUri(uri As String) As IEnumerable(Of Object)
+        Dim tableName As String = arguments(Scan0)
+        Dim sqlite As Sqlite3Database = Sqlite3Database.OpenFile(dbFile:=uri)
+        Dim rawRef As Sqlite3Table = sqlite.GetTable(tableName)
+        Dim rows As Sqlite3Row() = rawRef.EnumerateRows.ToArray
+        Dim schema As Schema = rawRef.SchemaDefinition.ParseSchema
+        Dim colnames As String() = schema.columns.Select(Function(c) c.Name).ToArray
+
+        For Each row As Sqlite3Row In rows
+            Dim jsObj As New JavaScriptObject
+
+            For i As Integer = 0 To colnames.Length - 1
+                jsObj(colnames(i)) = row.Item(i)
+            Next
+
+            Yield jsObj
+        Next
     End Function
 End Class
 
