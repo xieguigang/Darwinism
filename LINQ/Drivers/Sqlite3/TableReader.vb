@@ -56,11 +56,10 @@ Public Class TableReader : Inherits DataSourceDriver
         Dim tableName As String = arguments(Scan0)
         Dim sqlite As Sqlite3Database = Sqlite3Database.OpenFile(dbFile:=uri)
         Dim rawRef As Sqlite3Table = sqlite.GetTable(tableName)
-        Dim rows As Sqlite3Row() = rawRef.EnumerateRows.ToArray
         Dim schema As Schema = rawRef.SchemaDefinition.ParseSchema
         Dim colnames As String() = schema.columns.Select(Function(c) c.Name).ToArray
 
-        For Each row As Sqlite3Row In rows
+        For Each row As Sqlite3Row In rawRef.EnumerateRows
             Dim jsObj As New JavaScriptObject
 
             For i As Integer = 0 To colnames.Length - 1
