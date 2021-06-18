@@ -44,6 +44,12 @@ Namespace Runtime.Drivers
 
     Public MustInherit Class DataSourceDriver
 
+        Protected ReadOnly arguments As String()
+
+        Sub New(arguments As String())
+            Me.arguments = arguments
+        End Sub
+
         Public MustOverride Function ReadFromUri(uri As String) As IEnumerable(Of Object)
 
     End Class

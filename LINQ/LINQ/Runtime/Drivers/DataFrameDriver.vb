@@ -47,6 +47,10 @@ Namespace Runtime.Drivers
 
     Public Class DataFrameDriver : Inherits DataSourceDriver
 
+        Public Sub New()
+            MyBase.New(Nothing)
+        End Sub
+
         Public Overrides Iterator Function ReadFromUri(uri As String) As IEnumerable(Of Object)
             Dim dataframe As DataFrame = DataFrame.Load(uri).MeasureTypeSchema
             Dim obj As JavaScriptObject
