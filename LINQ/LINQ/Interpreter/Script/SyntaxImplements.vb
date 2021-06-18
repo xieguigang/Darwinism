@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::de349ecee86e889bc5d654c56be0427b, LINQ\LINQ\Script\SyntaxImplements.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module SyntaxImplements
-    ' 
-    '         Function: CreateAggregateQuery, CreateProjectionQuery, GetParameters, GetProjection, GetSequence
-    '                   GetVector, IsClosure, IsNumeric, JoinOperators, ParseExpression
-    '                   ParseKeywordExpression, ParseToken, PopulateExpressions, PopulateQueryExpression
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module SyntaxImplements
+' 
+'         Function: CreateAggregateQuery, CreateProjectionQuery, GetParameters, GetProjection, GetSequence
+'                   GetVector, IsClosure, IsNumeric, JoinOperators, ParseExpression
+'                   ParseKeywordExpression, ParseToken, PopulateExpressions, PopulateQueryExpression
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,7 +98,7 @@ Namespace Script
             Dim blocks As List(Of Token()) = tokenList _
                 .JoinOperators _
                 .SplitByTopLevelStack _
-                .ToList
+                .AsList
             Dim import As New List(Of ImportDataDriver)
 
             For i As Integer = 1 To blocks.Count - 1
@@ -121,9 +121,9 @@ Namespace Script
             blocks = (From block In blocks Where block(Scan0) <> (Tokens.keyword, "imports")).AsList
 
             If blocks(Scan0).First.isKeywordFrom Then
-                Return blocks(Scan0).CreateProjectionQuery(blocks.Skip(1).ToArray)
+                Return blocks(Scan0).CreateProjectionQuery(blocks.Skip(1).ToArray).AddAttachDrivers(import)
             ElseIf blocks(Scan0).First.isKeywordAggregate Then
-                Return blocks(Scan0).CreateAggregateQuery(blocks.Skip(1).ToArray)
+                Return blocks(Scan0).CreateAggregateQuery(blocks.Skip(1).ToArray).AddAttachDrivers(import)
             Else
                 Throw New SyntaxErrorException
             End If

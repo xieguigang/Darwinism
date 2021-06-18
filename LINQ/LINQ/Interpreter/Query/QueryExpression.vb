@@ -50,6 +50,7 @@ Namespace Interpreter.Query
     Public MustInherit Class QueryExpression : Inherits Expression
 
         ReadOnly sequence As Expression
+        ReadOnly attaches As New List(Of ImportDataDriver)
 
         Friend ReadOnly symbol As SymbolDeclare
         Friend ReadOnly executeQueue As Expression()
@@ -65,6 +66,11 @@ Namespace Interpreter.Query
             Me.sequence = sequence
             Me.executeQueue = execQueue.ToArray
         End Sub
+
+        Public Function AddAttachDrivers(drivers As IEnumerable(Of ImportDataDriver)) As QueryExpression
+            attaches.AddRange(drivers)
+            Return Me
+        End Function
 
         Public Function GetSeqValue(context As ExecutableContext) As Object
             Return sequence.Exec(context)
