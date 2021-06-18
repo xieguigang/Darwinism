@@ -53,6 +53,7 @@ Namespace Interpreter.Expressions
 
         Public Property symbolName As String
         Public Property type As String
+        Public Property arguments As String()
 
         Public Overrides ReadOnly Property keyword As String
             Get
@@ -65,7 +66,7 @@ Namespace Interpreter.Expressions
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"let {symbolName} as {type}"
+            Return $"let {symbolName} as {type}{If(arguments.IsNullOrEmpty, "", $"[{arguments.JoinBy(", ")}]")}"
         End Function
     End Class
 End Namespace

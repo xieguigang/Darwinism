@@ -220,12 +220,32 @@ Namespace Script
                 ' declare new symbol
                 Dim name As String = tokenList(1).text
                 Dim type As String = "any"
+                Dim arguments As String() = Nothing
 
                 If tokenList.Length > 2 Then
                     type = tokenList(3).text
+
+                    If tokenList.Length > 4 Then
+                        arguments = tokenList _
+                            .Skip(4) _
+                            .Where(Function(r) r.name <> Tokens.Comma) _
+                            .Select(Function(r) r.text) _
+                            .ToArray
+
+                        If arguments(Scan0) = "(" AndAlso arguments.Last = ")" Then
+                            arguments = arguments _
+                                .Skip(1) _
+                                .Take(arguments.Length - 2) _
+                                .ToArray
+                        End If
+                    End If
                 End If
 
-                Return New SymbolDeclare With {.symbolName = name, .type = type}
+                Return New SymbolDeclare With {
+                    .symbolName = name,
+                    .type = type,
+                    .arguments = arguments
+                }
             ElseIf tokenList(Scan0).isKeyword("where") Then
                 Return New WhereFilter(ParseExpression(tokenList.Skip(1).ToArray))
             ElseIf tokenList(Scan0).isKeyword("in") Then
