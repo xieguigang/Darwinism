@@ -42,6 +42,7 @@
 
 Imports System.Reflection
 Imports LINQ.Runtime.Drivers
+Imports Microsoft.VisualBasic.Language
 
 Namespace Runtime
 
@@ -68,7 +69,23 @@ Namespace Runtime
         End Sub
 
         Private Function getDllFile(driver As String) As String
+            If driver.FileExists Then
+                Return driver
+            End If
 
+            Dim fileName As Value(Of String) = ""
+
+            If driver.ExtensionSuffix <> "dll" Then
+                driver = $"{driver}.dll"
+            End If
+
+            For Each dir As String In {App.HOME, App.CurrentDirectory}
+                If (fileName = $"{dir}/{driver}").FileExists Then
+                    Return fileName
+                End If
+            Next
+
+            Throw New BadImageFormatException($"driver module '{driver}' not found!")
         End Function
 
         Public Function GetTypeCodeName(type As Type) As String
