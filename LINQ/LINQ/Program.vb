@@ -1,52 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::8ee987237312a675a87a8260f921a261, LINQ\LINQ\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Program
-    ' 
-    '     Function: Main, RunQuery
-    ' 
-    ' /********************************************************************************/
+' Module Program
+' 
+'     Function: Main, RunQuery
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports LINQ.Interpreter
 Imports LINQ.Interpreter.Query
+Imports LINQ.Language
 Imports LINQ.Runtime
 Imports LINQ.Script
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.My.JavaScript
+Imports Microsoft.VisualBasic.Text
 
 Module Program
 
@@ -54,18 +56,37 @@ Module Program
         Return GetType(Program).RunCLI(App.CommandLine, executeFile:=AddressOf RunQuery)
     End Function
 
+    ''' <summary>
+    ''' &lt;xxx.linq> [/output &lt;result.csv>]
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     Private Function RunQuery(file As String, args As CommandLine) As Integer
-        Dim tokens = LINQ.Language.GetTokens(file.ReadAllText).ToArray
+        Dim tokens As Token() = LINQ.Language.GetTokens(file.ReadAllText).ToArray
         Dim query As ProjectionExpression = tokens.PopulateQueryExpression
         Dim env As New GlobalEnvironment(New Registry)
         Dim result As JavaScriptObject() = query.Exec(New ExecutableContext With {.env = env, .throwError = True})
         Dim table As DataFrame = result.CreateTableDataSet
-        Dim text As String()() = table _
-            .csv _
-            .Select(Function(c) c.ToArray) _
-            .ToArray
+        Dim output As String = args <= "/output"
 
-        Call text.PrintTable
+        If output.StringEmpty Then
+            ' print on the console
+            Dim text As String()() = table _
+                .csv _
+                .Select(Function(c) c.ToArray) _
+                .ToArray
+
+            Call text.PrintTable
+        Else
+            ' save to csv file
+            Call table _
+                .csv _
+                .Save(
+                    path:=output,
+                    encoding:=Encodings.UTF8WithoutBOM
+                )
+        End If
 
         Return 0
     End Function
