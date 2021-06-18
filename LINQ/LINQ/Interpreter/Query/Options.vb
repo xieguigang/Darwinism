@@ -75,5 +75,9 @@ Namespace Interpreter.Query
             Return raw
         End Function
 
+        Public Overrides Function ToString() As String
+            Return pipeline.JoinBy(" -> ")
+        End Function
+
     End Class
 End Namespace

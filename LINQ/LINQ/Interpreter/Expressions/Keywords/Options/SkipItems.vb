@@ -68,5 +68,9 @@ Namespace Interpreter.Expressions
         Public Overrides Function Exec(context As ExecutableContext) As Object
             Return n.Exec(context)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"skip {n}"
+        End Function
     End Class
 End Namespace
