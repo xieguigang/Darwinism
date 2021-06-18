@@ -50,9 +50,8 @@ Namespace Runtime
 
         ReadOnly drivers As New Dictionary(Of String, IDriverLoader)
 
-        Public Sub Register(driver As String)
-            Dim dll As String = getDllFile(driver)
-            Dim assembly As Assembly = Assembly.LoadFile(dll)
+        Public Sub Register(driverDll As String)
+            Dim assembly As Assembly = Assembly.LoadFile(driverDll)
 
             For Each type As Type In From m As Type
                                      In assembly.GetTypes
@@ -67,26 +66,6 @@ Namespace Runtime
                                      End Function
             Next
         End Sub
-
-        Private Function getDllFile(driver As String) As String
-            If driver.FileExists Then
-                Return driver
-            End If
-
-            Dim fileName As Value(Of String) = ""
-
-            If driver.ExtensionSuffix <> "dll" Then
-                driver = $"{driver}.dll"
-            End If
-
-            For Each dir As String In {App.HOME, App.CurrentDirectory}
-                If (fileName = $"{dir}/{driver}").FileExists Then
-                    Return fileName
-                End If
-            Next
-
-            Throw New BadImageFormatException($"driver module '{driver}' not found!")
-        End Function
 
         Public Function GetTypeCodeName(type As Type) As String
             Select Case type

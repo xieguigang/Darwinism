@@ -73,7 +73,7 @@ Namespace Interpreter.Query
             Dim registry As Registry = globalEnv.registry
 
             For Each name As ImportDataDriver In attaches
-                Call registry.Register(driver:=name.dllName)
+                Call registry.Register(driverDll:=name.Exec(context))
             Next
         End Sub
 
