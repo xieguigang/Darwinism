@@ -53,7 +53,7 @@ Namespace Interpreter.Expressions
 
         Public Property symbolName As String
         Public Property type As String
-        Public Property arguments As String()
+        Public Property arguments As Expression()
 
         Public Overrides ReadOnly Property keyword As String
             Get

@@ -56,5 +56,11 @@ Namespace Interpreter
         Public Property env As Environment
         Public Property throwError As Boolean = True
 
+        Public ReadOnly Property GlobalEnvir As GlobalEnvironment
+            Get
+                Return env.GlobalEnvir
+            End Get
+        End Property
+
     End Class
 End Namespace

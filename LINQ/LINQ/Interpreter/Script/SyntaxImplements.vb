@@ -224,24 +224,22 @@ Namespace Script
                 ' declare new symbol
                 Dim name As String = tokenList(1).text
                 Dim type As String = "any"
-                Dim arguments As String() = Nothing
+                Dim arguments As Expression() = Nothing
 
                 If tokenList.Length > 2 Then
                     type = tokenList(3).text
 
                     If tokenList.Length > 4 Then
-                        arguments = tokenList _
-                            .Skip(4) _
-                            .Where(Function(r) r.name <> Tokens.Comma) _
-                            .Select(Function(r) r.text) _
+                        tokenList = tokenList.Skip(4).ToArray
+                        tokenList = tokenList.Take(tokenList.Length - 1).ToArray
+
+                        Dim values As Token()() = tokenList _
+                            .SplitByTopLevelStack _
                             .ToArray
 
-                        If arguments(Scan0) = "(" AndAlso arguments.Last = ")" Then
-                            arguments = arguments _
-                                .Skip(1) _
-                                .Take(arguments.Length - 2) _
-                                .ToArray
-                        End If
+                        arguments = values _
+                            .Select(AddressOf ParseExpression) _
+                            .ToArray
                     End If
                 End If
 
