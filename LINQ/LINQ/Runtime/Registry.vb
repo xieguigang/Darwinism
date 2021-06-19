@@ -56,7 +56,7 @@ Namespace Runtime
         ReadOnly drivers As New Dictionary(Of String, IDriverLoader)
 
         Public Sub Register(driverDll As String)
-            Dim assembly As Assembly = Assembly.LoadFile(driverDll)
+            Dim assembly As Assembly = Assembly.LoadFrom(driverDll)
 
             For Each type As Type In From m As Type
                                      In assembly.GetTypes
