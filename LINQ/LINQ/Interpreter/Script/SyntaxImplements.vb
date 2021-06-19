@@ -187,6 +187,8 @@ Namespace Script
                 t.name = Tokens.Literal Then
 
                 Return New Literals(t)
+            ElseIf t.name = Tokens.CommandLineArgument Then
+                Return New CommandLineArgument(t.text)
             Else
                 Throw New NotImplementedException
             End If
@@ -230,7 +232,7 @@ Namespace Script
                     type = tokenList(3).text
 
                     If tokenList.Length > 4 Then
-                        tokenList = tokenList.Skip(4).ToArray
+                        tokenList = tokenList.Skip(5).ToArray
                         tokenList = tokenList.Take(tokenList.Length - 1).ToArray
 
                         Dim values As Token()() = tokenList _

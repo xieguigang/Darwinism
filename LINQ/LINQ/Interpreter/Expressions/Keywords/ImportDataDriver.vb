@@ -64,8 +64,12 @@ Namespace Interpreter.Expressions
         Public Overrides Function Exec(context As ExecutableContext) As Object
             If dllName.FileExists Then
                 Return dllName
+            Else
+                Return FindDllFile(context)
             End If
+        End Function
 
+        Private Function FindDllFile(context As ExecutableContext) As String
             Dim fileName As Value(Of String) = ""
             Dim driver As String = dllName
 
@@ -73,7 +77,12 @@ Namespace Interpreter.Expressions
                 driver = $"{driver}.dll"
             End If
 
-            For Each dir As String In {App.HOME, App.CurrentDirectory}
+            For Each dir As String In {
+                App.HOME,
+                App.CurrentDirectory,
+                $"{App.HOME}/Library",
+                $"{App.HOME}/Drivers"
+            }
                 If (fileName = $"{dir}/{driver}").FileExists Then
                     Return fileName
                 End If

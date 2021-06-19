@@ -7,12 +7,16 @@
 
         Public ReadOnly Property ArgumentName As String
 
-        Sub New()
-
+        Sub New(arg As String)
+            ArgumentName = arg
         End Sub
 
         Public Overrides Function Exec(context As ExecutableContext) As Object
-            Throw New NotImplementedException()
+            Return CType(App.CommandLine(ArgumentName), String)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"$ARGS['{ArgumentName}']"
         End Function
     End Class
 End Namespace
