@@ -236,7 +236,14 @@ Namespace Script
                         tokenList = tokenList.Take(tokenList.Length - 1).ToArray
 
                         Dim values As Token()() = tokenList _
-                            .SplitByTopLevelStack _
+                            .SplitParameters _
+                            .Select(Function(block)
+                                        If block(Scan0).name = Tokens.Comma Then
+                                            Return block.Skip(1).ToArray
+                                        Else
+                                            Return block
+                                        End If
+                                    End Function) _
                             .ToArray
 
                         arguments = values _
