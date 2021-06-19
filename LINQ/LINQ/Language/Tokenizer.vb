@@ -102,8 +102,16 @@ Namespace Language
         Private Function walkChar(c As Char) As Token
             If escapes.string Then
                 If c = escapes.strWrapper Then
+                    Dim str As String = buffer.PopAllChars.CharString
+
                     escapes.string = False
-                    Return New Token(Tokens.Literal, buffer.PopAllChars.CharString)
+
+                    If str.StartsWith("?") Then
+                        str = str.Substring(1, str.Length - 1)
+                        Return New Token(Tokens.CommandLineArgument, str)
+                    Else
+                        Return New Token(Tokens.Literal, str)
+                    End If
                 Else
                     buffer += c
                     Return Nothing
@@ -123,6 +131,18 @@ Namespace Language
             ElseIf c = "#"c Then
                 escapes.comment = True
                 Return Nothing
+            ElseIf c = "?"c Then
+                Dim tmp As Token
+
+                If buffer <> 0 Then
+                    tmp = createToken(Nothing)
+                Else
+                    tmp = Nothing
+                End If
+
+                buffer += c
+
+                Return tmp
             ElseIf c = " "c OrElse c = ASCII.TAB Then
                 If buffer <> 0 Then
                     Return createToken(Nothing)
@@ -154,6 +174,11 @@ Namespace Language
             Return Nothing
         End Function
 
+        ''' <summary>
+        ''' 这个函数在创建单词的同时还会将缓存之中的信息清理干净
+        ''' </summary>
+        ''' <param name="bufferNext"></param>
+        ''' <returns></returns>
         Private Function createToken(bufferNext As Char?) As Token
             Dim text As String = buffer.PopAllChars.CharString
             Dim textLower As String

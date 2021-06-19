@@ -52,7 +52,12 @@ Namespace Language
         End Sub
 
         Public Overloads Shared Operator =(t As Token, c As (name As Tokens, text As String)) As Boolean
-            Return t.name = c.name AndAlso t.text = c.text
+            If c.name = Tokens.keyword Then
+                ' 在LINQ脚本之中，关键词是不区分大小写的
+                Return t.name = c.name AndAlso t.text.TextEquals(c.text)
+            Else
+                Return t.name = c.name AndAlso t.text = c.text
+            End If
         End Operator
 
         Public Overloads Shared Operator <>(t As Token, c As (name As Tokens, text As String)) As Boolean

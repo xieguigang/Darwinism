@@ -72,6 +72,7 @@ Namespace Language
         ''' the string literal
         ''' </summary>
         Literal
+        CommandLineArgument
 
         Number
         [Integer]
