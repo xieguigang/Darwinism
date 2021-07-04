@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::96c5c2cfb372beb5e7fa8083a31004c7, CloudKit\Centos\PuTTY.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class PuTTY
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: callPipeline, Run, Shell
-    ' 
-    '     Sub: cacheServerKey
-    ' 
-    ' /********************************************************************************/
+' Class PuTTY
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: callPipeline, Run, Shell
+' 
+'     Sub: cacheServerKey
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 
 ''' <summary>
@@ -51,6 +52,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Public Class PuTTY : Inherits SSH
 
     ReadOnly plink As String
+    ReadOnly session As String
 
     Sub New(user$, password$,
             Optional endpoint$ = "127.0.0.1",
@@ -62,6 +64,7 @@ Public Class PuTTY : Inherits SSH
 
         Me.plink = plink
         Me.cacheServerKey()
+        Me.session = TempFileSystem.GetAppSysTempFile(".txt", sessionID:=App.PID.ToHexString, prefix:="bash_session")
     End Sub
 
     ''' <summary>
@@ -103,7 +106,8 @@ Public Class PuTTY : Inherits SSH
             Call $"{plink} {cli}".__DEBUG_ECHO
         End If
 
-        Return PipelineProcess.[Call](plink, cli)
+        Dim std_out As String = PipelineProcess.[Call](plink, cli)
+        Return std_out
     End Function
 
     Public Function Shell(command As String, Optional arguments As String = Nothing) As String
