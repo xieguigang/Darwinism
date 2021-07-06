@@ -227,7 +227,9 @@ Public Class Environment
     ''' <param name="command">``app arguments``</param>
     ''' <param name="workdir">Working directory inside the container</param>
     ''' <param name="portForward">Publish a container's port(s) to the host</param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' docker run xxx
+    ''' </returns>
     Public Function CreateDockerCommand(command$, Optional workdir$ = Nothing, Optional portForward As PortForward = Nothing) As String
         Dim options As New StringBuilder
 
