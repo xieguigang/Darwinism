@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5a81cc10c3070cd9afc5fc125e18092, LINQ\LINQ\Language\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::9a027e0ed7f92384ff7b28a566c8517e, LINQ\LINQ\Language\Tokenizer.vb"
 
     ' Author:
     ' 

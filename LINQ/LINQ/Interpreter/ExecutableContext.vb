@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ef8eb26f223aa943331f6632a1d03b8, LINQ\LINQ\Interpreter\ExecutableContext.vb"
+﻿#Region "Microsoft.VisualBasic::1dfd0d6721aec07aa4d9315deedae8d9, LINQ\LINQ\Interpreter\ExecutableContext.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ExecutableContext
     ' 
-    '         Properties: env, throwError
+    '         Properties: env, GlobalEnvir, throwError
     ' 
     ' 
     ' /********************************************************************************/

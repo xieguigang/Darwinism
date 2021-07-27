@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe1f9bab4890015c1e59337a422ea48c, LINQ\LINQ\Language\Tokens.vb"
+﻿#Region "Microsoft.VisualBasic::b9680c606e2b00d3455e80cab930bdab, LINQ\LINQ\Language\Tokens.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,9 @@
     '     Enum Tokens
     ' 
     '         [Boolean], [Integer], [Operator], Close, Comma
-    '         Comment, Interpolation, Invalid, keyword, Literal
-    '         Number, Open, Reference, Symbol, Terminator
+    '         CommandLineArgument, Comment, Interpolation, Invalid, keyword
+    '         Literal, Number, Open, Reference, Symbol
+    '         Terminator
     ' 
     '  
     ' 

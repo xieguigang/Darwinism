@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1d63509484407ff2856ed8eda58fb3f, LINQ\LINQ\Runtime\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::9a4a81cd0a50303885a339f5c960d722, LINQ\LINQ\Runtime\Registry.vb"
 
     ' Author:
     ' 

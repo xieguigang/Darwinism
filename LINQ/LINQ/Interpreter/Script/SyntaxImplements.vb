@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0435db0915bd15f52f6e49be711a14f, LINQ\LINQ\Interpreter\Script\SyntaxImplements.vb"
+﻿#Region "Microsoft.VisualBasic::907201df6fa8b3b6675829095a2ac5ff, LINQ\LINQ\Interpreter\Script\SyntaxImplements.vb"
 
     ' Author:
     ' 

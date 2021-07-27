@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18c2cdefaa836a7d92f5be04551abea7, LINQ\LINQ\Interpreter\Expressions\Keywords\ImportDataDriver.vb"
+﻿#Region "Microsoft.VisualBasic::273b6a67ee0361038aa1a31f09fbf0f2, LINQ\LINQ\Interpreter\Expressions\Keywords\ImportDataDriver.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: dllName, keyword
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Exec, ToString
+    '         Function: Exec, FindDllFile, ToString
     ' 
     ' 
     ' /********************************************************************************/

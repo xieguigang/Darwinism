@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da28944790a219e92897ec35a5fe0e13, LINQ\LINQ\Interpreter\Expressions\Keywords\SymbolDeclare.vb"
+﻿#Region "Microsoft.VisualBasic::5b6b811a332f3c9dd3cd843c75bf1820, LINQ\LINQ\Interpreter\Expressions\Keywords\SymbolDeclare.vb"
 
     ' Author:
     ' 
