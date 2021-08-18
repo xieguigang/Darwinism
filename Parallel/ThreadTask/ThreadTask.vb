@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::b63a63c50d6beec5245bbe02d8f84e13, Parallel\ThreadTask\ThreadTask.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ThreadTask
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) CreateThreads, GetCompleteThread, GetEmptyThread, ParallelTask, RunParallel
-    '                   SequenceTask, ToString, WithDegreeOfParallelism
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ThreadTask
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+2 Overloads) CreateThreads, GetCompleteThread, GetEmptyThread, ParallelTask, RunParallel
+'                   SequenceTask, ToString, WithDegreeOfParallelism
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,14 +63,22 @@ Namespace ThreadTask
 
         ReadOnly startTicks As Double = App.ElapsedMilliseconds
         ReadOnly debugMode As Boolean = False
+        ReadOnly verbose As Boolean = True
 
         ''' <summary>
         ''' create parallel task pool from a given collection of task handler
         ''' </summary>
         ''' <param name="task"></param>
-        Sub New(task As IEnumerable(Of Func(Of TOut)), Optional debugMode As Boolean = False)
+        ''' <param name="debugMode">
+        ''' if this option is set to TRUE, then task will always running in sequence mode
+        ''' </param>
+        Sub New(task As IEnumerable(Of Func(Of TOut)),
+                Optional debugMode As Boolean = False,
+                Optional verbose As Boolean = True)
+
             Me.taskList = New Queue(Of Func(Of TOut))(task)
             Me.size = Me.taskList.Count
+            Me.verbose = verbose
             Me.debugMode = debugMode
         End Sub
 
@@ -175,7 +183,11 @@ Namespace ThreadTask
 
                 If j > -1 Then
                     Yield threads(j).GetValue
-                    Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
+
+                    If verbose Then
+                        Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
+                    End If
+
                     threads(j) = Nothing
                 End If
 
@@ -187,7 +199,11 @@ Namespace ThreadTask
 
                 If j > -1 Then
                     Yield threads(j).GetValue
-                    Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
+
+                    If verbose Then
+                        Call Console.WriteLine($"{ToString()} [thread_{j + 1}] job done ({threads(j).GetTaskExecTimeSpan.FormatTime})!")
+                    End If
+
                     threads(j) = Nothing
                 End If
 
