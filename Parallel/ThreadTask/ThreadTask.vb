@@ -113,7 +113,12 @@ Namespace ThreadTask
         ''' <param name="n_threads"></param>
         ''' <returns></returns>
         Public Function WithDegreeOfParallelism(n_threads As Integer) As ThreadTask(Of TOut)
-            threads = New AsyncHandle(Of TOut)(n_threads - 1) {}
+            If n_threads <= 0 Then
+                threads = New AsyncHandle(Of TOut)(App.CPUCoreNumbers - 1) {}
+            Else
+                threads = New AsyncHandle(Of TOut)(n_threads - 1) {}
+            End If
+
             Return Me
         End Function
 
