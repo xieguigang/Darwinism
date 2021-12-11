@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::9a4a157e09c3aeebcddba38b88055f15, XDRStream\EmitContexts\OrderModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class OrderModel
-    ' 
-    '         Properties: Fields
-    ' 
-    '         Function: BuildReader, BuildWriter, Create
-    ' 
-    '         Sub: AppendField
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class OrderModel
+' 
+'         Properties: Fields
+' 
+'         Function: BuildReader, BuildWriter, Create
+' 
+'         Sub: AppendField
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Linq
-Imports System.Reflection
-Imports System.Collections.Generic
+Imports System.IO.XDR.Attributes
+Imports System.IO.XDR.Reading
+Imports System.IO.XDR.Writing
 Imports System.Linq.Expressions
+Imports System.Reflection
 
 Namespace Emit.EmitContexts
     Public Class OrderModel
-        Private _Fields As List(Of Xdr.EmitContexts.FieldDesc)
+        Private _Fields As List(Of FieldDesc)
 
         Public Property Fields As List(Of FieldDesc)
             Get

@@ -41,10 +41,10 @@
 
 #End Region
 
+Imports System.IO.XDR.Emit
 Imports System.Reflection
 Imports System.Reflection.Emit
 Imports Microsoft.VisualBasic.Data.IO
-Imports XDR.Xdr.Emit
 
 Namespace Reading
     Partial Public NotInheritable Class ReadBuilder

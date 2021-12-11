@@ -49,9 +49,10 @@
 
 #End Region
 
+Imports System.IO.XDR.Emit
+Imports System.IO.XDR.Emit.EmitContexts
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.Xdr
-Imports XDR.Xdr.EmitContexts
 
 Namespace Writing
 
@@ -204,7 +205,7 @@ Namespace Writing
         Protected Sub AppendBuildRequest(targetType As Type, methodType As OpaqueType)
             SyncLock _dependencySync
                 _dependency.Enqueue(New BuildRequest With {
-                .targetType = targetType,
+                .TargetType = targetType,
                 .Method = methodType
             })
             End SyncLock

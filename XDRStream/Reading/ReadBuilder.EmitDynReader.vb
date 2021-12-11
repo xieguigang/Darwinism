@@ -42,10 +42,10 @@
 
 #End Region
 
+Imports System.IO.XDR.Emit
 Imports System.Reflection
 Imports System.Reflection.Emit
 Imports Microsoft.VisualBasic.Data.IO
-Imports XDR.Xdr.Emit
 
 Namespace Reading
     Partial Public NotInheritable Class ReadBuilder
@@ -70,7 +70,7 @@ Namespace Reading
             Dim genTypeParam = mb.DefineGenericParameters("T")(0)
             mb.SetReturnType(genTypeParam)
             typeBuilder.DefineMethodOverride(mb, miDeclaration)
-            Dim fi = typeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
+            Dim fi = TypeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
             Dim il As ILGenerator = mb.GetILGenerator()
             Dim noBuild As Label = il.DefineLabel()
             il.Emit(OpCodes.Ldsfld, fi)
