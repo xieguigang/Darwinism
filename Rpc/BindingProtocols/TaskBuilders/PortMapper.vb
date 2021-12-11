@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::b9ee3eee7ba86ac3d3dc7da89443fc04, Rpc\BindingProtocols\TaskBuilders\PortMapper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PortMapper
-    ' 
-    '         Properties: Version
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: [Set], CallIt, Dump, GetPort, Null
-    '                   UnSet
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PortMapper
+' 
+'         Properties: Version
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: [Set], CallIt, Dump, GetPort, Null
+'                   UnSet
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Collections.Generic
+Imports System.IO.XDR
 Imports System.Threading
 Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Data.IO
@@ -81,8 +82,8 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' <summary>
         ''' This procedure does no work.  By convention, procedure zero of any protocol takes no parameters and returns no results.
         ''' </summary>
-        Public Function Null() As Task(Of Xdr.Void)
-            Return CreateTask(Of Xdr.Void, Xdr.Void)(0UI, New Xdr.Void())
+        Public Function Null() As Task(Of Void)
+            Return CreateTask(Of Void, Void)(0UI, New Void())
         End Function
 
         ''' <summary>
@@ -118,7 +119,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' The procedure takes no parameters and returns a list of program, version, protocol, and port values.
         ''' </summary>
         Public Function Dump() As Task(Of List(Of mapping))
-            Return CreateTask(Of Xdr.Void, List(Of mapping))(4UI, New Xdr.Void())
+            Return CreateTask(Of Void, List(Of mapping))(4UI, New Void())
         End Function
 
         ''' <summary>

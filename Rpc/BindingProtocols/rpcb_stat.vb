@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Data.IO.Xdr
+Imports System.IO.XDR.Attributes
 
 Namespace Rpc.BindingProtocols
     ''' <summary>

@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::f1b3521b15d77b06df943a11d2d828cc, Rpc\BindingProtocols\TaskBuilders\BaseRpcBind.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class BaseRpcBind
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: [Set], Dump, GetAddr, GetTime, TAddr2Uaddr
-    '                   UAddr2TAddr, UnSet
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class BaseRpcBind
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: [Set], Dump, GetAddr, GetTime, TAddr2Uaddr
+'                   UAddr2TAddr, UnSet
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Collections.Generic
+Imports System.IO.XDR
 Imports System.Threading
 Imports System.Threading.Tasks
 
@@ -96,7 +97,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' The procedure takes no parameters and returns a list of program, version, network identifier, and universal addresses.
         ''' </summary>
         Public Function Dump() As Task(Of List(Of rpcb))
-            Return CreateTask(Of Xdr.Void, List(Of rpcb))(4UI, New Xdr.Void())
+            Return CreateTask(Of Void, List(Of rpcb))(4UI, New Void())
         End Function
 
         ''' <summary>
@@ -104,7 +105,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' since the midnight of the First day of January, 1970. 
         ''' </summary>
         Public Function GetTime() As Task(Of UInteger)
-            Return CreateTask(Of Xdr.Void, UInteger)(6UI, New Xdr.Void())
+            Return CreateTask(Of Void, UInteger)(6UI, New Void())
         End Function
 
         ''' <summary>

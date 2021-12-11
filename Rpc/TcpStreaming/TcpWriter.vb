@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::8700ec6d626b51d311a84dbf67bf7178, Rpc\TcpStreaming\TcpWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TcpWriter
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Build
-    ' 
-    '         Sub: CreateNextBlock, SetLastBlock, SetLenth, (+2 Overloads) Write
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TcpWriter
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Build
+' 
+'         Sub: CreateNextBlock, SetLastBlock, SetLenth, (+2 Overloads) Write
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System
 Imports System.Collections.Generic
-Imports Xdr
+Imports Microsoft.VisualBasic.Data.IO
 
 Namespace Rpc.TcpStreaming
     ''' <summary>
@@ -121,10 +121,10 @@ Namespace Rpc.TcpStreaming
 
         Private Sub SetLenth(block As Byte())
             Dim len = block.Length - 4
-            block(0) = CByte(len >> &H18 And &HfF)
-            block(1) = CByte(len >> &H10 And &HfF)
-            block(2) = CByte(len >> 8 And &HfF)
-            block(3) = CByte(len And &HfF)
+            block(0) = CByte(len >> &H18 And &HFF)
+            block(1) = CByte(len >> &H10 And &HFF)
+            block(2) = CByte(len >> 8 And &HFF)
+            block(3) = CByte(len And &HFF)
         End Sub
 
         ''' <summary>

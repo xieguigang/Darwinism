@@ -61,8 +61,8 @@ Namespace Rpc
         ''' <param name="reqArgs">instance of request arguments</param>
         ''' <param name="options">task creation options</param>
         ''' <param name="token">cancellation token</param>
-        ''' <typeparamname="TReq">type of request</typeparam>
-        ''' <typeparamname="TResp">type of response</typeparam>
+        ''' <typeparam name="TReq">type of request</typeparam>
+        ''' <typeparam name="TResp">type of response</typeparam>
         Function CreateTask(Of TReq, TResp)(callBody As call_body, reqArgs As TReq, options As TaskCreationOptions, token As CancellationToken) As Task(Of TResp)
         ''' <summary>
         ''' Close this connection and cancel all queued tasks

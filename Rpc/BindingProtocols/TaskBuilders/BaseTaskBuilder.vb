@@ -89,10 +89,10 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' <param name="args">
         ''' instance of arguments of request
         ''' </param>
-        ''' <typeparamname="TReq">
+        ''' <typeparam name="TReq">
         ''' type of request
         ''' </typeparam>
-        ''' <typeparamname="TResp">
+        ''' <typeparam name="TResp">
         ''' type of response
         ''' </typeparam>
         Protected Function CreateTask(Of TReq, TResp)(proc As UInteger, args As TReq) As Task(Of TResp)

@@ -1,54 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::d9fc60e97f8ac77fdc9bf9e8bdec53c4, Rpc\Toolkit.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Toolkit
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateReader, CreateWriter, DumpToLog, ToDisplay
-    ' 
-    '         Sub: ReplyMessageValidate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Toolkit
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateReader, CreateWriter, DumpToLog, ToDisplay
+' 
+'         Sub: ReplyMessageValidate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System
-Imports System.Text
-Imports Rpc.MessageProtocol
-Imports Xdr
+Imports System.IO.XDR.Reading
+Imports System.IO.XDR.Writing
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.Data.IO
+Imports Rpc.MessageProtocol
 
 Namespace Rpc
     ''' <summary>
@@ -120,7 +122,7 @@ Namespace Rpc
         ''' returns the description of the RPC message
         ''' </summary>
         ''' <param name="msg"></param>
-        ''' <returns></returns>
+        ''' <return></return>
         Public Sub ReplyMessageValidate(msg As rpc_msg)
             Try
                 If msg.body.mtype <> msg_type.REPLY Then Throw UnexpectedMessageType(msg.body.mtype)

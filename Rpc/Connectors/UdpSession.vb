@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::14f21439dc2d2a8324d44249cffbd635, Rpc\Connectors\UdpSession.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class UdpSession
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: EnqueueTicket
-    ' 
-    '         Sub: AsyncSend, BeginReceive, BuildMessage, Close, OnDatagramWrited
-    '              OnException, OnMessageReaded, OnSend, RemoveTicket
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class UdpSession
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: EnqueueTicket
+' 
+'         Sub: AsyncSend, BeginReceive, BuildMessage, Close, OnDatagramWrited
+'              OnException, OnMessageReaded, OnSend, RemoveTicket
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System
 Imports System.Collections.Generic
-Imports System.Net
+Imports System.IO.XDR.Reading
 Imports System.Linq
+Imports System.Net
 Imports System.Threading
-Imports NLog
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Rpc.MessageProtocol
 Imports Rpc.UdpDatagrams
-Imports Xdr
 
 Namespace Rpc.Connectors
     Friend Class UdpSession
         Implements IRpcSession
 
-        Private Shared Log As Logger = LogManager.GetCurrentClassLogger()
+        Private Shared Log As LogFile = Microsoft.VisualBasic.My.FrameworkInternal.getLogger(GetType(UdpSession).FullName)
         Private ReadOnly _client As UdpClientWrapper
         Private _sendingTicket As ITicket = Nothing
         Private ReadOnly _sync As Object = New Object()
@@ -138,7 +138,7 @@ Namespace Rpc.Connectors
                 r = CreateReader(udpReader)
                 respMsg = r.Read(Of rpc_msg)()
             Catch ex As Exception
-                Log.Info("Parse exception: {0}", ex)
+                Log.info($"Parse exception: {ex.ToString}")
                 BeginReceive()
                 Return
             End Try
@@ -156,7 +156,7 @@ Namespace Rpc.Connectors
 
         Private Function EnqueueTicket(xid As UInteger) As ITicket
             SyncLock _sync
-                Dim result As ITicket
+                Dim result As ITicket = Nothing
                 If Not _handlers.TryGetValue(xid, result) Then Return Nothing
                 _handlers.Remove(xid)
                 Return result
