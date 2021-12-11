@@ -56,7 +56,7 @@ Namespace Rpc.Connectors
         Private _disposed As Boolean = False
         Private _client As UdpClient
 
-        Public Sub New(ByVal ep As IPEndPoint)
+        Public Sub New(ep As IPEndPoint)
             _ep = ep
             _client = New UdpClient()
             _client.Connect(_ep)
@@ -64,7 +64,7 @@ Namespace Rpc.Connectors
 
         Private _readCompleted As Action(Of Exception, UdpReader) = Nothing
 
-        Public Sub AsyncRead(ByVal completed As Action(Of Exception, UdpReader))
+        Public Sub AsyncRead(completed As Action(Of Exception, UdpReader))
             _readCompleted = completed
 
             SyncLock _sync
@@ -79,7 +79,7 @@ Namespace Rpc.Connectors
             End SyncLock
         End Sub
 
-        Private Sub EndRead(ByVal ar As IAsyncResult)
+        Private Sub EndRead(ar As IAsyncResult)
             Dim reader As UdpReader = Nothing
             Dim err As Exception = Nothing
             Dim copy = _readCompleted
@@ -103,7 +103,7 @@ Namespace Rpc.Connectors
 
         Private _writeCompleted As Action(Of Exception) = Nothing
 
-        Public Sub AsyncWrite(ByVal datagram As Byte(), ByVal completed As Action(Of Exception))
+        Public Sub AsyncWrite(datagram As Byte(), completed As Action(Of Exception))
             Call Log.Trace(New Func(Of String, Byte(), String)(AddressOf DumpToLog), "sending datagram: {0}", datagram)
             _writeCompleted = completed
 
@@ -119,7 +119,7 @@ Namespace Rpc.Connectors
             End SyncLock
         End Sub
 
-        Private Sub EndWrite(ByVal ar As IAsyncResult)
+        Private Sub EndWrite(ar As IAsyncResult)
             Dim err As Exception = Nothing
             Dim copy = _writeCompleted
             _writeCompleted = Nothing

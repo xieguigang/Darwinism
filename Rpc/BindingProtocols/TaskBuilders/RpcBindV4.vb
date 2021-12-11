@@ -67,7 +67,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' <param name="conn">instance of connector</param>
         ''' <param name="token">cancellation token</param>
         ''' <param name="attachedToParent">attache created task to parent task</param>
-        Public Sub New(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal attachedToParent As Boolean)
+        Public Sub New(conn As IRpcClient, token As CancellationToken, attachedToParent As Boolean)
             MyBase.New(conn, token, attachedToParent)
         End Sub
 
@@ -84,7 +84,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' This procedure is identical to the version 3 RPCBPROC_CALLIT procedure.  The new name indicates that the procedure should be used
         ''' for broadcast RPCs only.  RPCBPROC_INDIRECT, defined below, should be used for indirect RPC calls.
         ''' </summary>
-        Public Function BCast(ByVal arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
+        Public Function BCast(arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
             Return CreateTask(Of rpcb_rmtcallargs, rpcb_rmtcallres)(5UI, arg)
         End Function
 
@@ -92,7 +92,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' This procedure is similar to RPCBPROC_GETADDR. The difference is the "r_vers" field of the rpcb structure can be used to specify the
         ''' version of interest.  If that version is not registered, no address is returned.
         ''' </summary>
-        Public Function GetVersAddr(ByVal arg As rpcb) As Task(Of String)
+        Public Function GetVersAddr(arg As rpcb) As Task(Of String)
             Return CreateTask(Of rpcb, String)(9UI, arg)
         End Function
 
@@ -101,7 +101,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' procedure returns an indication of the error.  This procedure should not be used for broadcast RPC. It is intended to be used with
         ''' indirect RPC calls only.
         ''' </summary>
-        Public Function Indirect(ByVal arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
+        Public Function Indirect(arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
             Return CreateTask(Of rpcb_rmtcallargs, rpcb_rmtcallres)(10UI, arg)
         End Function
 
@@ -109,7 +109,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' This procedure returns a list of addresses for the given rpcb entry.
         ''' The client may be able use the results to determine alternate transports that it can use to communicate with the server.
         ''' </summary>
-        Public Function GetAddrList(ByVal arg As rpcb) As Task(Of List(Of rpcb_entry))
+        Public Function GetAddrList(arg As rpcb) As Task(Of List(Of rpcb_entry))
             Return CreateTask(Of rpcb, List(Of rpcb_entry))(11UI, arg)
         End Function
 

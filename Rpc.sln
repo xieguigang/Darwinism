@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31019.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Rpc", "Rpc\Rpc.vbproj", "{8F215850-6439-0311-0352-B0720952E0CE}"
 EndProject

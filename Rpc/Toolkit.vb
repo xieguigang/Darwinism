@@ -68,7 +68,7 @@ Namespace Rpc
         ''' </summary>
         ''' <param name="writer"></param>
         ''' <returns></returns>
-        Public Function CreateWriter(ByVal writer As IByteWriter) As Writer
+        Public Function CreateWriter(writer As IByteWriter) As Writer
             Return _wb.Create(writer)
         End Function
 
@@ -77,14 +77,14 @@ Namespace Rpc
         ''' </summary>
         ''' <param name="reader"></param>
         ''' <returns></returns>
-        Public Function CreateReader(ByVal reader As IByteReader) As Reader
+        Public Function CreateReader(reader As IByteReader) As Reader
             Return _rb.Create(reader)
         End Function
 
         ''' <summary>
         ''' To create a delegate output byte array to the log
         ''' </summary>
-        Friend Function DumpToLog(ByVal frm As String, ByVal buffer As Byte()) As String
+        Friend Function DumpToLog(frm As String, buffer As Byte()) As String
             Return String.Format(frm, buffer.ToDisplay())
         End Function
 
@@ -94,7 +94,7 @@ Namespace Rpc
         ''' <param name="buffer"></param>
         ''' <returns></returns>
         <Extension()>
-        Public Function ToDisplay(ByVal buffer As Byte()) As String
+        Public Function ToDisplay(buffer As Byte()) As String
             ' example:
             ' 12345678-12345678-12345678-12345678-12345678-12345678-12345678-12345678 12345678-1234...
 
@@ -121,7 +121,7 @@ Namespace Rpc
         ''' </summary>
         ''' <param name="msg"></param>
         ''' <returns></returns>
-        Public Sub ReplyMessageValidate(ByVal msg As rpc_msg)
+        Public Sub ReplyMessageValidate(msg As rpc_msg)
             Try
                 If msg.body.mtype <> msg_type.REPLY Then Throw UnexpectedMessageType(msg.body.mtype)
                 Dim replyBody = msg.body.rbody

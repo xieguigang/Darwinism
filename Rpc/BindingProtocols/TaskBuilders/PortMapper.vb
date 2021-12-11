@@ -65,7 +65,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' <param name="conn">instance of connector</param>
         ''' <param name="token">cancellation token</param>
         ''' <param name="attachedToParent">attache created task to parent task</param>
-        Public Sub New(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal attachedToParent As Boolean)
+        Public Sub New(conn As IRpcClient, token As CancellationToken, attachedToParent As Boolean)
             MyBase.New(conn, token, attachedToParent)
         End Sub
 
@@ -92,7 +92,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' The procedure returns a boolean reply whose value is "TRUE" if the procedure successfully established the mapping and
         ''' "FALSE" otherwise.  The procedure refuses to establish a mapping if one already exists for the tuple "(prog, vers, prot)".
         ''' </summary>
-        Public Function [Set](ByVal args As mapping) As Task(Of Boolean)
+        Public Function [Set](args As mapping) As Task(Of Boolean)
             Return CreateTask(Of mapping, Boolean)(1UI, args)
         End Function
 
@@ -100,7 +100,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' When a program becomes unavailable, it should unregister itself with the port mapper program on the same machine.  The parameters and
         ''' results have meanings identical to those of "PMAPPROC_SET".  The protocol and port number fields of the argument are ignored.
         ''' </summary>
-        Public Function UnSet(ByVal args As mapping) As Task(Of Boolean)
+        Public Function UnSet(args As mapping) As Task(Of Boolean)
             Return CreateTask(Of mapping, Boolean)(2UI, args)
         End Function
 
@@ -109,7 +109,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' which the program is awaiting call requests.  A port value of zeros means the program has not been registered.  The "port" field of the
         ''' argument is ignored.
         ''' </summary>
-        Public Function GetPort(ByVal args As mapping) As Task(Of UInteger)
+        Public Function GetPort(args As mapping) As Task(Of UInteger)
             Return CreateTask(Of mapping, UInteger)(3UI, args)
         End Function
 
@@ -132,7 +132,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' 
         ''' The procedure returns the remote program's port number, and the reply is the reply of the remote procedure.
         ''' </summary>
-        Public Function CallIt(ByVal args As call_args) As Task(Of call_result)
+        Public Function CallIt(args As call_args) As Task(Of call_result)
             Return CreateTask(Of call_args, call_result)(5UI, args)
         End Function
     End Class

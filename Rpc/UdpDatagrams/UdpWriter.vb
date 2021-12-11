@@ -76,7 +76,7 @@ Namespace Rpc.UdpDatagrams
         ''' write array of bytes
         ''' </summary>
         ''' <param name="buffer"></param>
-        Public Sub Write(ByVal buffer As Byte()) Implements IByteWriter.Write
+        Public Sub Write(buffer As Byte()) Implements IByteWriter.Write
             _totalSize += buffer.Length
             If _totalSize > _max Then Throw SizeIsExceeded()
             Dim offset = 0
@@ -101,7 +101,7 @@ Namespace Rpc.UdpDatagrams
         ''' write byte
         ''' </summary>
         ''' <param name="b"></param>
-        Public Sub Write(ByVal b As Byte) Implements IByteWriter.Write
+        Public Sub Write(b As Byte) Implements IByteWriter.Write
             _totalSize += 1
             If _totalSize > _max Then Throw SizeIsExceeded()
             _currentBlock(_pos) = b

@@ -55,7 +55,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
     Public MustInherit Class BaseRpcBind
         Inherits BaseTaskBuilder
 
-        Friend Sub New(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal attachedToParent As Boolean)
+        Friend Sub New(conn As IRpcClient, token As CancellationToken, attachedToParent As Boolean)
             MyBase.New(conn, token, attachedToParent)
         End Sub
 
@@ -67,7 +67,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' The procedure refuses to establish a mapping if one already exists for the ordered set ("r_prog", "r_vers", "r_netid").
         ''' Note that neither "r_netid" nor "r_addr" can be NULL, and that "r_netid" should be a valid network identifier on the machine making the call.
         ''' </summary>
-        Public Function [Set](ByVal arg As rpcb) As Task(Of Boolean)
+        Public Function [Set](arg As rpcb) As Task(Of Boolean)
             Return CreateTask(Of rpcb, Boolean)(1UI, arg)
         End Function
 
@@ -78,7 +78,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' If "r_netid" is NULL, all mappings specified by the ordered set ("r_prog", "r_vers", *) and the corresponding universal addresses are deleted.
         ''' Only the owner of the service or the super-user is allowed to unset a service
         ''' </summary>
-        Public Function UnSet(ByVal arg As rpcb) As Task(Of Boolean)
+        Public Function UnSet(arg As rpcb) As Task(Of Boolean)
             Return CreateTask(Of rpcb, Boolean)(2UI, arg)
         End Function
 
@@ -87,7 +87,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' on which the program is awaiting call requests.  The "r_netid" field of the argument is ignored and the "r_netid" is inferred from the
         ''' network identifier of the transport on which the request came in.
         ''' </summary>
-        Public Function GetAddr(ByVal arg As rpcb) As Task(Of String)
+        Public Function GetAddr(arg As rpcb) As Task(Of String)
             Return CreateTask(Of rpcb, String)(3UI, arg)
         End Function
 
@@ -110,14 +110,14 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' <summary>
         ''' This procedure converts universal addresses to transport specific addresses.
         ''' </summary>
-        Public Function UAddr2TAddr(ByVal arg As String) As Task(Of netbuf)
+        Public Function UAddr2TAddr(arg As String) As Task(Of netbuf)
             Return CreateTask(Of String, netbuf)(7UI, arg)
         End Function
 
         ''' <summary>
         ''' This procedure converts transport specific addresses to universal addresses.
         ''' </summary>
-        Public Function TAddr2Uaddr(ByVal arg As netbuf) As Task(Of String)
+        Public Function TAddr2Uaddr(arg As netbuf) As Task(Of String)
             Return CreateTask(Of netbuf, String)(8UI, arg)
         End Function
     End Class

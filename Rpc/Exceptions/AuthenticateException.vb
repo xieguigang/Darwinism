@@ -53,7 +53,7 @@ Namespace Rpc
         ''' Authenticate error
         ''' </summary>
         ''' <param name="replyBody"></param>
-        Public Sub New(ByVal replyBody As reply_body)
+        Public Sub New(replyBody As reply_body)
             MyBase.New(replyBody)
         End Sub
 
@@ -62,7 +62,7 @@ Namespace Rpc
         ''' </summary>
         ''' <param name="replyBody"></param>
         ''' <param name="message"></param>
-        Public Sub New(ByVal replyBody As reply_body, ByVal message As String)
+        Public Sub New(replyBody As reply_body, message As String)
             MyBase.New(replyBody, message)
         End Sub
 
@@ -72,7 +72,7 @@ Namespace Rpc
         ''' <param name="replyBody"></param>
         ''' <param name="message"></param>
         ''' <param name="innerEx"></param>
-        Public Sub New(ByVal replyBody As reply_body, ByVal message As String, ByVal innerEx As Exception)
+        Public Sub New(replyBody As reply_body, message As String, innerEx As Exception)
             MyBase.New(replyBody, message, innerEx)
         End Sub
     End Class

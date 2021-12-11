@@ -64,7 +64,7 @@ Namespace Rpc.Connectors
         Private _client As TcpClient
         Private _stream As NetworkStream
 
-        Public Sub New(ByVal ep As IPEndPoint)
+        Public Sub New(ep As IPEndPoint)
             _ep = ep
             _client = New TcpClient(_ep.AddressFamily)
         End Sub
@@ -77,7 +77,7 @@ Namespace Rpc.Connectors
 
         Private _connectCompleted As Action(Of Exception) = Nothing
 
-        Public Sub AsyncConnect(ByVal completed As Action(Of Exception))
+        Public Sub AsyncConnect(completed As Action(Of Exception))
             Try
 
                 SyncLock _sync
@@ -95,7 +95,7 @@ Namespace Rpc.Connectors
             End Try
         End Sub
 
-        Private Sub OnConnected(ByVal ar As IAsyncResult)
+        Private Sub OnConnected(ar As IAsyncResult)
             Dim copy = _connectCompleted
             _connectCompleted = Nothing
 
@@ -118,7 +118,7 @@ Namespace Rpc.Connectors
 
 #Region "async read"
 
-        Public Sub AsyncRead(ByVal completed As Action(Of Exception, TcpReader))
+        Public Sub AsyncRead(completed As Action(Of Exception, TcpReader))
             'HACK: here you need to implement a timeout interrupt
             Try
                 If _readCompleted IsNot Nothing Then Throw New InvalidOperationException("already reading")
@@ -146,7 +146,7 @@ Namespace Rpc.Connectors
             SafeBeginRead(New AsyncCallback(AddressOf EndReadRecordMark))
         End Sub
 
-        Private Sub EndReadRecordMark(ByVal ar As IAsyncResult)
+        Private Sub EndReadRecordMark(ar As IAsyncResult)
             Try
                 Dim read As Integer
 
@@ -175,14 +175,14 @@ Namespace Rpc.Connectors
             End Try
         End Sub
 
-        Private Sub SafeBeginRead(ByVal callback As AsyncCallback)
+        Private Sub SafeBeginRead(callback As AsyncCallback)
             SyncLock _sync
                 If _disposed Then Throw New ObjectDisposedException(GetType(TcpClient).FullName)
                 _stream.BeginRead(_readBuf, _readPos, _leftToRead, callback, Nothing)
             End SyncLock
         End Sub
 
-        Private Sub EndReadBody(ByVal ar As IAsyncResult)
+        Private Sub EndReadBody(ar As IAsyncResult)
             Dim [error] As Exception = Nothing
 
             Try
@@ -235,7 +235,7 @@ Namespace Rpc.Connectors
 
 #Region "async write"
 
-        Public Sub AsyncWrite(ByVal blocks As LinkedList(Of Byte()), ByVal completed As Action(Of Exception))
+        Public Sub AsyncWrite(blocks As LinkedList(Of Byte()), completed As Action(Of Exception))
             'HACK: here you need to implement a timeout interrupt
             Try
                 If _writeCompleted IsNot Nothing Then Throw New InvalidOperationException("already writing")
@@ -258,7 +258,7 @@ Namespace Rpc.Connectors
         Private _writeCompleted As Action(Of Exception)
         Private _byteSending As Integer = 0
 
-        Private Sub EndWrite(ByVal ar As IAsyncResult)
+        Private Sub EndWrite(ar As IAsyncResult)
             Dim [error] As Exception = Nothing
 
             Try
@@ -287,7 +287,7 @@ Namespace Rpc.Connectors
             _writeCompleted = Nothing
         End Sub
 
-        Private Sub SafeBeginWrite(ByVal block As Byte())
+        Private Sub SafeBeginWrite(block As Byte())
             SyncLock _sync
                 If _disposed Then Throw New ObjectDisposedException(GetType(TcpClient).FullName)
                 _stream.BeginWrite(block, 0, block.Length, New AsyncCallback(AddressOf EndWrite), Nothing)

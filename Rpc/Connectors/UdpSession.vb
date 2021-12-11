@@ -66,11 +66,11 @@ Namespace Rpc.Connectors
         Private _receivingInProgress As Boolean = False
         Private _handlers As Dictionary(Of UInteger, ITicket) = New Dictionary(Of UInteger, ITicket)()
 
-        Public Sub New(ByVal ep As IPEndPoint)
+        Public Sub New(ep As IPEndPoint)
             _client = New UdpClientWrapper(ep)
         End Sub
 
-        Public Sub AsyncSend(ByVal ticket As ITicket) Implements IRpcSession.AsyncSend
+        Public Sub AsyncSend(ticket As ITicket) Implements IRpcSession.AsyncSend
             If _sendingTicket IsNot Nothing Then Throw New InvalidOperationException("ticket already sending")
             _sendingTicket = ticket
 
@@ -81,7 +81,7 @@ Namespace Rpc.Connectors
             Call ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf BuildMessage))
         End Sub
 
-        Private Sub BuildMessage(ByVal state As Object)
+        Private Sub BuildMessage(state As Object)
             Dim datagram As Byte()
 
             Try
@@ -120,7 +120,7 @@ Namespace Rpc.Connectors
             _client.AsyncRead(New Action(Of Exception, UdpReader)(AddressOf OnMessageReaded))
         End Sub
 
-        Private Sub OnMessageReaded(ByVal err As Exception, ByVal udpReader As UdpReader)
+        Private Sub OnMessageReaded(err As Exception, udpReader As UdpReader)
             If err IsNot Nothing Then
                 Log.Debug("No receiving UDP datagrams. Reason: {0}", err)
                 OnException(err)
@@ -154,7 +154,7 @@ Namespace Rpc.Connectors
             End If
         End Sub
 
-        Private Function EnqueueTicket(ByVal xid As UInteger) As ITicket
+        Private Function EnqueueTicket(xid As UInteger) As ITicket
             SyncLock _sync
                 Dim result As ITicket
                 If Not _handlers.TryGetValue(xid, result) Then Return Nothing
@@ -163,7 +163,7 @@ Namespace Rpc.Connectors
             End SyncLock
         End Function
 
-        Private Sub OnDatagramWrited(ByVal ex As Exception)
+        Private Sub OnDatagramWrited(ex As Exception)
             If ex IsNot Nothing Then
                 Log.Debug("UDP datagram not sended (xid:{0}) reason: {1}", _sendingTicket.Xid, ex)
                 OnException(ex)
@@ -174,13 +174,13 @@ Namespace Rpc.Connectors
             End If
         End Sub
 
-        Public Sub RemoveTicket(ByVal ticket As ITicket) Implements ITicketOwner.RemoveTicket
+        Public Sub RemoveTicket(ticket As ITicket) Implements ITicketOwner.RemoveTicket
             SyncLock _sync
                 _handlers.Remove(ticket.Xid)
             End SyncLock
         End Sub
 
-        Public Sub Close(ByVal ex As Exception) Implements IRpcSession.Close
+        Public Sub Close(ex As Exception) Implements IRpcSession.Close
             Log.Debug("Close session.")
             Dim tickets As ITicket()
 
@@ -198,7 +198,7 @@ Namespace Rpc.Connectors
 
         Public Event OnExcepted As Action(Of IRpcSession, Exception) Implements IRpcSession.OnExcepted
 
-        Private Sub OnException(ByVal ex As Exception)
+        Private Sub OnException(ex As Exception)
             Dim copy = OnExceptedEvent
             If copy IsNot Nothing Then copy(Me, ex)
         End Sub

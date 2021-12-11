@@ -55,7 +55,7 @@ Namespace Rpc.BindingProtocols
         ''' http://tools.ietf.org/html/rfc1833#section-3.2
         ''' </summary>
         <Extension()>
-        Public Function PortMapper(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal Optional attachedToParent As Boolean = False) As PortMapper
+        Public Function PortMapper(conn As IRpcClient, token As CancellationToken, Optional attachedToParent As Boolean = False) As PortMapper
             Return New PortMapper(conn, token, attachedToParent)
         End Function
 
@@ -65,7 +65,7 @@ Namespace Rpc.BindingProtocols
         ''' http://tools.ietf.org/html/rfc1833#section-3.2
         ''' </summary>
         <Extension()>
-        Public Function PortMapper(ByVal conn As IRpcClient, ByVal Optional attachedToParent As Boolean = False) As PortMapper
+        Public Function PortMapper(conn As IRpcClient, Optional attachedToParent As Boolean = False) As PortMapper
             Return New PortMapper(conn, CancellationToken.None, attachedToParent)
         End Function
 
@@ -77,7 +77,7 @@ Namespace Rpc.BindingProtocols
         ''' http://tools.ietf.org/html/rfc1833#section-2.2.1
         ''' </summary>
         <Extension()>
-        Public Function RpcBindV3(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal Optional attachedToParent As Boolean = False) As RpcBindV3
+        Public Function RpcBindV3(conn As IRpcClient, token As CancellationToken, Optional attachedToParent As Boolean = False) As RpcBindV3
             Return New RpcBindV3(conn, token, attachedToParent)
         End Function
 
@@ -89,7 +89,7 @@ Namespace Rpc.BindingProtocols
         ''' http://tools.ietf.org/html/rfc1833#section-2.2.1
         ''' </summary>
         <Extension()>
-        Public Function RpcBindV3(ByVal conn As IRpcClient, ByVal Optional attachedToParent As Boolean = False) As RpcBindV3
+        Public Function RpcBindV3(conn As IRpcClient, Optional attachedToParent As Boolean = False) As RpcBindV3
             Return New RpcBindV3(conn, CancellationToken.None, attachedToParent)
         End Function
 
@@ -101,7 +101,7 @@ Namespace Rpc.BindingProtocols
         ''' http://tools.ietf.org/html/rfc1833#section-2.2.1
         ''' </summary>
         <Extension()>
-        Public Function RpcBindV4(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal Optional attachedToParent As Boolean = False) As RpcBindV4
+        Public Function RpcBindV4(conn As IRpcClient, token As CancellationToken, Optional attachedToParent As Boolean = False) As RpcBindV4
             Return New RpcBindV4(conn, token, attachedToParent)
         End Function
 
@@ -113,7 +113,7 @@ Namespace Rpc.BindingProtocols
         ''' http://tools.ietf.org/html/rfc1833#section-2.2.1
         ''' </summary>
         <Extension()>
-        Public Function RpcBindV4(ByVal conn As IRpcClient, ByVal Optional attachedToParent As Boolean = False) As RpcBindV4
+        Public Function RpcBindV4(conn As IRpcClient, Optional attachedToParent As Boolean = False) As RpcBindV4
             Return New RpcBindV4(conn, CancellationToken.None, attachedToParent)
         End Function
     End Module

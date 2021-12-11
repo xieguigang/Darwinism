@@ -70,7 +70,7 @@ Namespace Rpc.TcpStreaming
         ''' <summary>
         ''' append the block of RPC message received from TCP protocol
         ''' </summary>
-        Public Sub AppendBlock(ByVal block As Byte())
+        Public Sub AppendBlock(block As Byte())
             If _currentBlock Is Nothing Then
                 _currentBlock = block
                 _currentBlockSize = _currentBlock.LongLength
@@ -97,7 +97,7 @@ Namespace Rpc.TcpStreaming
         ''' </summary>
         ''' <param name="count">required bytes</param>
         ''' <returns></returns>
-        Public Function Read(ByVal count As UInteger) As Byte() Implements IByteReader.Read
+        Public Function Read(count As UInteger) As Byte() Implements IByteReader.Read
             Dim buffer = New Byte(count - 1) {}
             Dim offset As Long = 0
 

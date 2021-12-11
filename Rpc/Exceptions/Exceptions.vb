@@ -47,27 +47,27 @@ Imports Rpc.MessageProtocol
 
 Namespace Rpc
     Friend Module Exceptions
-        Friend Function UnexpectedMessageType(ByVal present As msg_type) As FormatException
+        Friend Function UnexpectedMessageType(present As msg_type) As FormatException
             Return New FormatException(String.Format("unexpected message type: `{0}'", present))
         End Function
 
-        Friend Function NoRFC5531(ByVal paramName As String) As ArgumentException
+        Friend Function NoRFC5531(paramName As String) As ArgumentException
             Return New ArgumentException("structure must be RFC5531", paramName)
         End Function
 
-        Friend Function Format(ByVal frm As String, ParamArray args As Object()) As FormatException
+        Friend Function Format(frm As String, ParamArray args As Object()) As FormatException
             Return New FormatException(String.Format(frm, args))
         End Function
 
-        Friend Function SystemError(ByVal replyBody As reply_body) As ReplyException
+        Friend Function SystemError(replyBody As reply_body) As ReplyException
             Return New ReplyException(replyBody, "system error in RPC-server")
         End Function
 
-        Friend Function AuthError(ByVal replyBody As reply_body, ByVal state As auth_stat) As AuthenticateException
+        Friend Function AuthError(replyBody As reply_body, state As auth_stat) As AuthenticateException
             Return New AuthenticateException(replyBody, GetAuthDescription(state))
         End Function
 
-        Friend Function GetAuthDescription(ByVal state As auth_stat) As String
+        Friend Function GetAuthDescription(state As auth_stat) As String
             Select Case state
                 Case auth_stat.AUTH_BADCRED
                     Return "bad credential (seal broken)"
@@ -94,19 +94,19 @@ Namespace Rpc
             End Select
         End Function
 
-        Friend Function RpcVersionError(ByVal replyBody As reply_body, ByVal info As mismatch_info) As ReplyException
+        Friend Function RpcVersionError(replyBody As reply_body, info As mismatch_info) As ReplyException
             Return New ReplyException(replyBody, String.Format("unsupported RPC version number (supported versions of between {0} and {1})", info.low, info.high))
         End Function
 
-        Friend Function ProgramMismatch(ByVal replyBody As reply_body, ByVal info As mismatch_info) As ReplyException
+        Friend Function ProgramMismatch(replyBody As reply_body, info As mismatch_info) As ReplyException
             Return New ReplyException(replyBody, String.Format("remote can't support program version (supported versions of between {0} and {1})", info.low, info.high))
         End Function
 
-        Friend Function ProgramUnavalible(ByVal replyBody As reply_body) As ReplyException
+        Friend Function ProgramUnavalible(replyBody As reply_body) As ReplyException
             Return New ReplyException(replyBody, "remote hasn't exported program")
         End Function
 
-        Friend Function ProcedureUnavalible(ByVal replyBody As reply_body) As RpcException
+        Friend Function ProcedureUnavalible(replyBody As reply_body) As RpcException
             Return New ReplyException(replyBody, "program can't support procedure")
         End Function
 

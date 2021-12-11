@@ -42,6 +42,6 @@
 
 Namespace Rpc.Connectors
     Friend Interface ITicketOwner
-        Sub RemoveTicket(ByVal ticket As ITicket)
+        Sub RemoveTicket(ticket As ITicket)
     End Interface
 End Namespace

@@ -58,7 +58,7 @@ Namespace Rpc
         ''' Error associated with work on RPC protocol
         ''' </summary>
         ''' <param name="message"></param>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
 
@@ -67,7 +67,7 @@ Namespace Rpc
         ''' </summary>
         ''' <param name="message"></param>
         ''' <param name="innerEx"></param>
-        Public Sub New(ByVal message As String, ByVal innerEx As Exception)
+        Public Sub New(message As String, innerEx As Exception)
             MyBase.New(message, innerEx)
         End Sub
     End Class

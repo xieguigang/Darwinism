@@ -70,7 +70,7 @@ Namespace Rpc
         Private _sendingInProgress As Boolean = False
         Private _pendingRequests As LinkedList(Of ITicket) = New LinkedList(Of ITicket)()
 
-        Friend Sub New(ByVal sessionCreater As Func(Of IRpcSession))
+        Friend Sub New(sessionCreater As Func(Of IRpcSession))
             _sessionCreater = sessionCreater
             NewSession()
         End Sub
@@ -79,7 +79,7 @@ Namespace Rpc
         ''' </summary>
         ''' <param name="ep">server address</param>
         ''' <param name="blockSize">block size</param>
-        Public Shared Function FromTcp(ByVal ep As IPEndPoint, ByVal Optional blockSize As Integer = 1024 * 4) As RpcClient
+        Public Shared Function FromTcp(ep As IPEndPoint, Optional blockSize As Integer = 1024 * 4) As RpcClient
             Log.Debug("Create RPC client for TCP server:{0}", ep)
             Return New RpcClient(Function() New TcpSession(ep, blockSize))
         End Function
@@ -88,7 +88,7 @@ Namespace Rpc
         ''' Create RPC client from UDP protocol.
         ''' </summary>
         ''' <param name="ep">server address</param>
-        Public Shared Function FromUdp(ByVal ep As IPEndPoint) As RpcClient
+        Public Shared Function FromUdp(ep As IPEndPoint) As RpcClient
             Log.Debug("Create RPC client for UDP server:{0}", ep)
             Return New RpcClient(Function() New UdpSession(ep))
         End Function
@@ -101,7 +101,7 @@ Namespace Rpc
             Return prevSession
         End Function
 
-        Private Sub RemoveTicket(ByVal ticket As ITicket) Implements ITicketOwner.RemoveTicket
+        Private Sub RemoveTicket(ticket As ITicket) Implements ITicketOwner.RemoveTicket
             Dim sessionCopy As IRpcSession
 
             SyncLock _sync
@@ -138,7 +138,7 @@ Namespace Rpc
         ''' <summary>
         ''' creates the task for the control request to the RPC server
         ''' </summary>
-        Public Function CreateTask(Of TReq, TResp)(ByVal callBody As call_body, ByVal reqArgs As TReq, ByVal options As TaskCreationOptions, ByVal token As CancellationToken) As Task(Of TResp) Implements IRpcClient.CreateTask
+        Public Function CreateTask(Of TReq, TResp)(callBody As call_body, reqArgs As TReq, options As TaskCreationOptions, token As CancellationToken) As Task(Of TResp) Implements IRpcClient.CreateTask
             Dim ticket As Ticket(Of TReq, TResp) = New Ticket(Of TReq, TResp)(Me, callBody, reqArgs, options, token)
 
             SyncLock _sync
@@ -177,7 +177,7 @@ Namespace Rpc
             sessionCopy.AsyncSend(ticket)
         End Sub
 
-        Private Sub OnSessionExcepted(ByVal session As IRpcSession, ByVal ex As Exception)
+        Private Sub OnSessionExcepted(session As IRpcSession, ex As Exception)
             Dim prevSession As IRpcSession
 
             SyncLock _sync
@@ -191,7 +191,7 @@ Namespace Rpc
             prevSession.Close(ex)
         End Sub
 
-        Private Sub OnSessionMessageSended(ByVal session As IRpcSession)
+        Private Sub OnSessionMessageSended(session As IRpcSession)
             SyncLock _sync
                 If session IsNot _session Then Return
                 _sendingInProgress = False
