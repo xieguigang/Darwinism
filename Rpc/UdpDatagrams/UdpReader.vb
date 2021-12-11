@@ -62,7 +62,7 @@ Namespace Rpc.UdpDatagrams
         ''' <summary>
         ''' parser of RPC message received from UDP protocol
         ''' </summary>
-        ''' <paramname="bytes">UDP datagram</param>
+        ''' <param name="bytes">UDP datagram</param>
         Public Sub New(ByVal bytes As Byte())
             _pos = 0
             _leftToRead = bytes.Length
@@ -72,7 +72,7 @@ Namespace Rpc.UdpDatagrams
         ''' <summary>
         ''' read an array of length 'count' bytes
         ''' </summary>
-        ''' <paramname="count">required bytes</param>
+        ''' <param name="count">required bytes</param>
         ''' <returns></returns>
         Public Function Read(ByVal count As UInteger) As Byte() Implements IByteReader.Read
             If _leftToRead < count Then Throw UnexpectedEnd()

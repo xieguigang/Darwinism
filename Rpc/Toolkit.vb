@@ -66,7 +66,7 @@ Namespace Rpc
         ''' <summary>
         ''' create writer configured for RPC protocol
         ''' </summary>
-        ''' <paramname="writer"></param>
+        ''' <param name="writer"></param>
         ''' <returns></returns>
         Public Function CreateWriter(ByVal writer As IByteWriter) As Writer
             Return _wb.Create(writer)
@@ -75,7 +75,7 @@ Namespace Rpc
         ''' <summary>
         ''' create reader configured for RPC protocol
         ''' </summary>
-        ''' <paramname="reader"></param>
+        ''' <param name="reader"></param>
         ''' <returns></returns>
         Public Function CreateReader(ByVal reader As IByteReader) As Reader
             Return _rb.Create(reader)
@@ -91,7 +91,7 @@ Namespace Rpc
         ''' <summary>
         ''' convert byte array to text
         ''' </summary>
-        ''' <paramname="buffer"></param>
+        ''' <param name="buffer"></param>
         ''' <returns></returns>
         <Extension()>
         Public Function ToDisplay(ByVal buffer As Byte()) As String
@@ -119,7 +119,7 @@ Namespace Rpc
         ''' <summary>
         ''' returns the description of the RPC message
         ''' </summary>
-        ''' <paramname="msg"></param>
+        ''' <param name="msg"></param>
         ''' <returns></returns>
         Public Sub ReplyMessageValidate(ByVal msg As rpc_msg)
             Try

@@ -95,7 +95,7 @@ Namespace Rpc.TcpStreaming
         ''' <summary>
         ''' read an array of length 'count' bytes
         ''' </summary>
-        ''' <paramname="count">required bytes</param>
+        ''' <param name="count">required bytes</param>
         ''' <returns></returns>
         Public Function Read(ByVal count As UInteger) As Byte() Implements IByteReader.Read
             Dim buffer = New Byte(count - 1) {}

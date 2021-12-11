@@ -68,7 +68,7 @@ Namespace Rpc
         ''' <summary>
         ''' Error received in response RPC message
         ''' </summary>
-        ''' <paramname="replyBody"></param>
+        ''' <param name="replyBody"></param>
         Public Sub New(ByVal replyBody As reply_body)
             Me.ReplyBody = replyBody
         End Sub
@@ -76,8 +76,8 @@ Namespace Rpc
         ''' <summary>
         ''' Error received in response RPC message
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        ''' <paramname="message"></param>
+        ''' <param name="replyBody"></param>
+        ''' <param name="message"></param>
         Public Sub New(ByVal replyBody As reply_body, ByVal message As String)
             MyBase.New(message)
             Me.ReplyBody = replyBody
@@ -86,9 +86,9 @@ Namespace Rpc
         ''' <summary>
         ''' Error received in response RPC message
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        ''' <paramname="message"></param>
-        ''' <paramname="innerEx"></param>
+        ''' <param name="replyBody"></param>
+        ''' <param name="message"></param>
+        ''' <param name="innerEx"></param>
         Public Sub New(ByVal replyBody As reply_body, ByVal message As String, ByVal innerEx As Exception)
             MyBase.New(message, innerEx)
             Me.ReplyBody = replyBody

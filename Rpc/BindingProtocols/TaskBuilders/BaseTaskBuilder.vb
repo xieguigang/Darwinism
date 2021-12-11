@@ -83,10 +83,10 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' <returns>
         ''' The queued task.
         ''' </returns>
-        ''' <paramname="proc">
+        ''' <param name="proc">
         ''' procedure number
         ''' </param>
-        ''' <paramname="args">
+        ''' <param name="args">
         ''' instance of arguments of request
         ''' </param>
         ''' <typeparamname="TReq">

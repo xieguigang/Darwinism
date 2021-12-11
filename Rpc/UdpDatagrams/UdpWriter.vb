@@ -75,7 +75,7 @@ Namespace Rpc.UdpDatagrams
         ''' <summary>
         ''' write array of bytes
         ''' </summary>
-        ''' <paramname="buffer"></param>
+        ''' <param name="buffer"></param>
         Public Sub Write(ByVal buffer As Byte()) Implements IByteWriter.Write
             _totalSize += buffer.Length
             If _totalSize > _max Then Throw SizeIsExceeded()
@@ -100,7 +100,7 @@ Namespace Rpc.UdpDatagrams
         ''' <summary>
         ''' write byte
         ''' </summary>
-        ''' <paramname="b"></param>
+        ''' <param name="b"></param>
         Public Sub Write(ByVal b As Byte) Implements IByteWriter.Write
             _totalSize += 1
             If _totalSize > _max Then Throw SizeIsExceeded()

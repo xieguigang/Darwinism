@@ -64,7 +64,7 @@ Namespace Rpc.TcpStreaming
         ''' <summary>
         ''' generator TCP messages with record mark
         ''' </summary>
-        ''' <paramname="maxBlock">maximum block size in the TCP message</param>
+        ''' <param name="maxBlock">maximum block size in the TCP message</param>
         Public Sub New(ByVal maxBlock As Integer)
             _maxBlock = maxBlock
             _pos = 4
@@ -75,7 +75,7 @@ Namespace Rpc.TcpStreaming
         ''' <summary>
         ''' write array of bytes
         ''' </summary>
-        ''' <paramname="buffer"></param>
+        ''' <param name="buffer"></param>
         Public Sub Write(ByVal buffer As Byte()) Implements IByteWriter.Write
             Dim offset As Long = 0
 
@@ -98,7 +98,7 @@ Namespace Rpc.TcpStreaming
         ''' <summary>
         ''' write byte
         ''' </summary>
-        ''' <paramname="b"></param>
+        ''' <param name="b"></param>
         Public Sub Write(ByVal b As Byte) Implements IByteWriter.Write
             _currentBlock(_pos) = b
             _pos += 1

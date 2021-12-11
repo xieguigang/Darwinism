@@ -64,9 +64,9 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' For TCP/IP and UDP/IP, for example, it is port number 111. Each transport has such an assigned, well-known address.
         ''' http://tools.ietf.org/html/rfc1833#section-2.2.1
         ''' </summary>
-        ''' <paramname="conn">instance of connector</param>
-        ''' <paramname="token">cancellation token</param>
-        ''' <paramname="attachedToParent">attache created task to parent task</param>
+        ''' <param name="conn">instance of connector</param>
+        ''' <param name="token">cancellation token</param>
+        ''' <param name="attachedToParent">attache created task to parent task</param>
         Public Sub New(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal attachedToParent As Boolean)
             MyBase.New(conn, token, attachedToParent)
         End Sub

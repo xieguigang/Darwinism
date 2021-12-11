@@ -77,8 +77,8 @@ Namespace Rpc
         ''' <summary>
         ''' Create RPC client from TCP protocol.
         ''' </summary>
-        ''' <paramname="ep">server address</param>
-        ''' <paramname="blockSize">block size</param>
+        ''' <param name="ep">server address</param>
+        ''' <param name="blockSize">block size</param>
         Public Shared Function FromTcp(ByVal ep As IPEndPoint, ByVal Optional blockSize As Integer = 1024 * 4) As RpcClient
             Log.Debug("Create RPC client for TCP server:{0}", ep)
             Return New RpcClient(Function() New TcpSession(ep, blockSize))
@@ -87,7 +87,7 @@ Namespace Rpc
         ''' <summary>
         ''' Create RPC client from UDP protocol.
         ''' </summary>
-        ''' <paramname="ep">server address</param>
+        ''' <param name="ep">server address</param>
         Public Shared Function FromUdp(ByVal ep As IPEndPoint) As RpcClient
             Log.Debug("Create RPC client for UDP server:{0}", ep)
             Return New RpcClient(Function() New UdpSession(ep))
