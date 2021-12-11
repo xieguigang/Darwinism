@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9297d2f761722f9d9abbd430b8589306, XDRStream\Delegates.vb"
+﻿#Region "Microsoft.VisualBasic::9af54abd7d356066660442ad864d805d, XDRStream\EmitContexts\EmitResult.vb"
 
 ' Author:
 ' 
@@ -31,21 +31,7 @@
 
 ' Summaries:
 
-'     Delegate Function
-' 
-' 
-'     Delegate Function
-' 
-' 
-'     Delegate Sub
-' 
-' 
-'     Delegate Sub
-' 
-' 
-' 
-' 
-' 
+'     Class EmitResult
 ' 
 ' 
 ' 
@@ -54,7 +40,9 @@
 
 #End Region
 
-Public Delegate Function ReadOneDelegate(Of T)(reader As Reader) As T
-Public Delegate Function ReadManyDelegate(Of T)(reader As Reader, len As UInteger) As T
-Public Delegate Sub WriteOneDelegate(Of T)(writer As Writer, item As T)
-Public Delegate Sub WriteManyDelegate(Of T)(writer As Writer, len As UInteger, item As T)
+Namespace Emit.EmitContexts
+    Public Class EmitResult
+        Public Method As [Delegate] = Nothing
+        Public [Error] As Exception = Nothing
+    End Class
+End Namespace

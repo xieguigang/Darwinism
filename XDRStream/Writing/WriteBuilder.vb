@@ -46,8 +46,9 @@ Imports System.Reflection.Emit
 Imports Microsoft.VisualBasic.Data.IO
 Imports XDR.Xdr.Emit
 
-Namespace Xdr
-    Public NotInheritable Partial Class WriteBuilder
+Namespace Writing
+
+    Partial Public NotInheritable Class WriteBuilder
         Private _wm As WriteMapper
         Private _creater As Func(Of IByteWriter, Writer)
         Private _modBuilder As ModuleBuilder

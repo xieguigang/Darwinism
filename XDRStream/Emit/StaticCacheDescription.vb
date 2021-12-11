@@ -45,7 +45,7 @@ Imports System
 Imports System.Reflection.Emit
 Imports System.Reflection
 
-Namespace Xdr.Emit
+Namespace Emit
     Public Class StaticCacheDescription
         Public ReadOnly Result As Type
 

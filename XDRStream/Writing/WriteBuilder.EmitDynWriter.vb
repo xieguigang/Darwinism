@@ -42,12 +42,13 @@
 
 #End Region
 
+Imports System.IO.XDR.Xdr.Emit
 Imports System.Reflection
 Imports System.Reflection.Emit
 Imports Microsoft.VisualBasic.Data.IO
-Imports XDR.Xdr.Emit
 
-Namespace Xdr
+Namespace Writing
+
     Partial Public NotInheritable Class WriteBuilder
         Private Function EmitDynWriter() As Type
             Dim typeBuilder = _modBuilder.DefineType("DynWriter", TypeAttributes.NotPublic Or TypeAttributes.Class Or TypeAttributes.Sealed, GetType(Writer))
@@ -71,7 +72,7 @@ Namespace Xdr
             mb.SetReturnType(Nothing)
             mb.SetParameters(genTypeParam)
             typeBuilder.DefineMethodOverride(mb, miDeclaration)
-            Dim fi = TypeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
+            Dim fi = typeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
             Dim il As ILGenerator = mb.GetILGenerator()
             Dim noBuild As Label = il.DefineLabel()
             il.Emit(OpCodes.Ldsfld, fi)

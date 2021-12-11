@@ -48,7 +48,7 @@ Imports System
 Imports System.Reflection
 Imports System.Linq.Expressions
 
-Namespace Xdr.EmitContexts
+Namespace Emit.EmitContexts
     Public Class FieldDesc
         Public ReadOnly FieldType As Type
         Public ReadOnly MInfo As MemberInfo

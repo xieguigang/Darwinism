@@ -126,6 +126,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XDRStream\XDRStream.vbproj">
+      <Project>{806818f5-d50a-4bff-aca3-cff60d3fc61e}</Project>
+      <Name>XDRStream</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic.Data.IO.Xdr" />

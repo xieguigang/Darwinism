@@ -47,8 +47,8 @@ Imports System.Reflection.Emit
 Imports Microsoft.VisualBasic.Data.IO
 Imports XDR.Xdr.Emit
 
-Namespace Xdr
-    Public NotInheritable Partial Class ReadBuilder
+Namespace Reading
+    Partial Public NotInheritable Class ReadBuilder
         Private Function EmitDynReader() As Type
             Dim typeBuilder = _modBuilder.DefineType("DynReader", TypeAttributes.NotPublic Or TypeAttributes.Class Or TypeAttributes.Sealed, GetType(Reader))
             Dim fb_mapperInstance = typeBuilder.DefineField("Mapper", GetType(ReadMapper), FieldAttributes.Public Or FieldAttributes.Static)
@@ -70,7 +70,7 @@ Namespace Xdr
             Dim genTypeParam = mb.DefineGenericParameters("T")(0)
             mb.SetReturnType(genTypeParam)
             typeBuilder.DefineMethodOverride(mb, miDeclaration)
-            Dim fi = TypeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
+            Dim fi = typeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
             Dim il As ILGenerator = mb.GetILGenerator()
             Dim noBuild As Label = il.DefineLabel()
             il.Emit(OpCodes.Ldsfld, fi)

@@ -46,8 +46,8 @@ Imports System
 Imports System.Reflection
 Imports System.Reflection.Emit
 
-Namespace Xdr
-    Public NotInheritable Partial Class ReadBuilder
+Namespace Reading
+    Partial Public NotInheritable Class ReadBuilder
         Private Function EmitDynReadMapper() As Type
             Dim typeBuilder = _modBuilder.DefineType("DynReadMapper", TypeAttributes.NotPublic Or TypeAttributes.Class Or TypeAttributes.Sealed, GetType(ReadMapper))
             Dim fb_oneCacheType = DefineCacheField(typeBuilder, "_oneCacheType")

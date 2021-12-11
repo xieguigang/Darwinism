@@ -50,9 +50,9 @@ Imports System.Reflection
 Imports System.Collections.Generic
 Imports System.Linq.Expressions
 
-Namespace Xdr.EmitContexts
+Namespace Emit.EmitContexts
     Public Class OrderModel
-        Private _Fields As System.Collections.Generic.List(Of Xdr.EmitContexts.FieldDesc)
+        Private _Fields As List(Of Xdr.EmitContexts.FieldDesc)
 
         Public Property Fields As List(Of FieldDesc)
             Get

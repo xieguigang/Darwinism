@@ -51,7 +51,7 @@ Imports System.Reflection
 Imports System.Collections.Generic
 Imports System.Linq.Expressions
 
-Namespace Xdr.EmitContexts
+Namespace Emit.EmitContexts
     Public Class SwitchModel
         Private _SwitchField As Xdr.EmitContexts.FieldDesc, _Branches As System.Collections.Generic.Dictionary(Of Object, Xdr.EmitContexts.FieldDesc)
 

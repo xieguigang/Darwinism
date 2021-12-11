@@ -46,7 +46,7 @@
 
 Imports System
 
-Namespace Xdr
+Namespace Emit
     Friend NotInheritable Class ErrorStubType(Of T)
         Public ReadOnly [Error] As Exception
 

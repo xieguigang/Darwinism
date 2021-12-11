@@ -53,7 +53,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.Xdr
 Imports XDR.Xdr.EmitContexts
 
-Namespace Xdr
+Namespace Reading
+
     Public MustInherit Class ReadMapper
         Private _sync As Object = New Object()
         Private _dependencySync As Object = New Object()
@@ -186,9 +187,9 @@ Namespace Xdr
         Protected Sub AppendBuildRequest(targetType As Type, methodType As OpaqueType)
             SyncLock _dependencySync
                 _dependency.Enqueue(New BuildRequest With {
-                    .TargetType = targetType,
-                    .Method = methodType
-                })
+                .targetType = targetType,
+                .Method = methodType
+            })
             End SyncLock
         End Sub
 

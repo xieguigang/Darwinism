@@ -46,8 +46,8 @@ Imports System.Reflection.Emit
 Imports Microsoft.VisualBasic.Data.IO
 Imports XDR.Xdr.Emit
 
-Namespace Xdr
-    Public NotInheritable Partial Class ReadBuilder
+Namespace Reading
+    Partial Public NotInheritable Class ReadBuilder
         Private _rm As ReadMapper
         Private _creater As Func(Of IByteReader, Reader)
         Private _modBuilder As ModuleBuilder

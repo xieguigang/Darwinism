@@ -43,7 +43,7 @@
 
 Imports Microsoft.VisualBasic.Data.IO
 
-Namespace Xdr
+Namespace Reading
     Public MustInherit Class Reader
         Public ReadOnly ByteReader As IByteReader
 

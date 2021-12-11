@@ -43,7 +43,8 @@
 
 Imports Microsoft.VisualBasic.Data.IO
 
-Namespace Xdr
+Namespace Writing
+
     Public MustInherit Class Writer
         Public ReadOnly ByteWriter As IByteWriter
 
