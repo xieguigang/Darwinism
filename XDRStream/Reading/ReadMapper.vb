@@ -50,7 +50,8 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Data.IO.Xdr.EmitContexts
+Imports Microsoft.VisualBasic.Data.IO.Xdr
+Imports XDR.Xdr.EmitContexts
 
 Namespace Xdr
     Public MustInherit Class ReadMapper
