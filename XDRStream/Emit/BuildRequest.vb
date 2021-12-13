@@ -42,7 +42,7 @@
 
 Imports System
 
-Namespace Xdr
+Namespace Emit
     Friend NotInheritable Class BuildRequest
         Public Property TargetType As Type
         Public Property Method As OpaqueType

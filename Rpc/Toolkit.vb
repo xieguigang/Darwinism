@@ -1,54 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::d9fc60e97f8ac77fdc9bf9e8bdec53c4, Rpc\Toolkit.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Toolkit
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateReader, CreateWriter, DumpToLog, ToDisplay
-    ' 
-    '         Sub: ReplyMessageValidate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Toolkit
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateReader, CreateWriter, DumpToLog, ToDisplay
+' 
+'         Sub: ReplyMessageValidate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System
-Imports System.Text
-Imports Rpc.MessageProtocol
-Imports Xdr
+Imports System.IO.XDR.Reading
+Imports System.IO.XDR.Writing
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.Data.IO
+Imports Rpc.MessageProtocol
 
 Namespace Rpc
     ''' <summary>
@@ -66,35 +68,35 @@ Namespace Rpc
         ''' <summary>
         ''' create writer configured for RPC protocol
         ''' </summary>
-        ''' <paramname="writer"></param>
+        ''' <param name="writer"></param>
         ''' <returns></returns>
-        Public Function CreateWriter(ByVal writer As IByteWriter) As Writer
+        Public Function CreateWriter(writer As IByteWriter) As Writer
             Return _wb.Create(writer)
         End Function
 
         ''' <summary>
         ''' create reader configured for RPC protocol
         ''' </summary>
-        ''' <paramname="reader"></param>
+        ''' <param name="reader"></param>
         ''' <returns></returns>
-        Public Function CreateReader(ByVal reader As IByteReader) As Reader
+        Public Function CreateReader(reader As IByteReader) As Reader
             Return _rb.Create(reader)
         End Function
 
         ''' <summary>
         ''' To create a delegate output byte array to the log
         ''' </summary>
-        Friend Function DumpToLog(ByVal frm As String, ByVal buffer As Byte()) As String
+        Friend Function DumpToLog(frm As String, buffer As Byte()) As String
             Return String.Format(frm, buffer.ToDisplay())
         End Function
 
         ''' <summary>
         ''' convert byte array to text
         ''' </summary>
-        ''' <paramname="buffer"></param>
+        ''' <param name="buffer"></param>
         ''' <returns></returns>
         <Extension()>
-        Public Function ToDisplay(ByVal buffer As Byte()) As String
+        Public Function ToDisplay(buffer As Byte()) As String
             ' example:
             ' 12345678-12345678-12345678-12345678-12345678-12345678-12345678-12345678 12345678-1234...
 
@@ -119,9 +121,9 @@ Namespace Rpc
         ''' <summary>
         ''' returns the description of the RPC message
         ''' </summary>
-        ''' <paramname="msg"></param>
-        ''' <returns></returns>
-        Public Sub ReplyMessageValidate(ByVal msg As rpc_msg)
+        ''' <param name="msg"></param>
+        ''' <return></return>
+        Public Sub ReplyMessageValidate(msg As rpc_msg)
             Try
                 If msg.body.mtype <> msg_type.REPLY Then Throw UnexpectedMessageType(msg.body.mtype)
                 Dim replyBody = msg.body.rbody

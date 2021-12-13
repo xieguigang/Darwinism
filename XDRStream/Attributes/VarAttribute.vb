@@ -44,7 +44,7 @@
 
 Imports System
 
-Namespace Xdr
+Namespace Attributes
     <AttributeUsage(AttributeTargets.Field Or AttributeTargets.Property, Inherited:=True, AllowMultiple:=False)>
     Public Class VarAttribute
         Inherits Attribute

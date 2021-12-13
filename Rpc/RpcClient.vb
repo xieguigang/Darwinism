@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::d7312dbb05793bd8941454dd896c4334, Rpc\RpcClient.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class RpcClient
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateTask, FromTcp, FromUdp, NewSession
-    ' 
-    '         Sub: Close, Dispose, OnSessionExcepted, OnSessionMessageSended, RemoveTicket
-    '              SendNextQueuedItem
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class RpcClient
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateTask, FromTcp, FromUdp, NewSession
+' 
+'         Sub: Close, Dispose, OnSessionExcepted, OnSessionMessageSended, RemoveTicket
+'              SendNextQueuedItem
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System
 Imports System.Collections.Generic
-Imports System.Net
 Imports System.Linq
+Imports System.Net
 Imports System.Threading
 Imports System.Threading.Tasks
-Imports NLog
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Rpc.Connectors
 Imports Rpc.MessageProtocol
 
@@ -62,7 +62,7 @@ Namespace Rpc
     Public Class RpcClient
         Implements IDisposable, IRpcClient, ITicketOwner
 
-        Private Shared Log As Logger = LogManager.GetCurrentClassLogger()
+        Private Shared Log As LogFile = Microsoft.VisualBasic.My.FrameworkInternal.getLogger(GetType(RpcClient).FullName)
         Private ReadOnly _sessionCreater As Func(Of IRpcSession)
         Private ReadOnly _sync As Object = New Object()
         Private _session As IRpcSession = Nothing
@@ -70,16 +70,16 @@ Namespace Rpc
         Private _sendingInProgress As Boolean = False
         Private _pendingRequests As LinkedList(Of ITicket) = New LinkedList(Of ITicket)()
 
-        Friend Sub New(ByVal sessionCreater As Func(Of IRpcSession))
+        Friend Sub New(sessionCreater As Func(Of IRpcSession))
             _sessionCreater = sessionCreater
             NewSession()
         End Sub
         ''' <summary>
         ''' Create RPC client from TCP protocol.
         ''' </summary>
-        ''' <paramname="ep">server address</param>
-        ''' <paramname="blockSize">block size</param>
-        Public Shared Function FromTcp(ByVal ep As IPEndPoint, ByVal Optional blockSize As Integer = 1024 * 4) As RpcClient
+        ''' <param name="ep">server address</param>
+        ''' <param name="blockSize">block size</param>
+        Public Shared Function FromTcp(ep As IPEndPoint, Optional blockSize As Integer = 1024 * 4) As RpcClient
             Log.Debug("Create RPC client for TCP server:{0}", ep)
             Return New RpcClient(Function() New TcpSession(ep, blockSize))
         End Function
@@ -87,8 +87,8 @@ Namespace Rpc
         ''' <summary>
         ''' Create RPC client from UDP protocol.
         ''' </summary>
-        ''' <paramname="ep">server address</param>
-        Public Shared Function FromUdp(ByVal ep As IPEndPoint) As RpcClient
+        ''' <param name="ep">server address</param>
+        Public Shared Function FromUdp(ep As IPEndPoint) As RpcClient
             Log.Debug("Create RPC client for UDP server:{0}", ep)
             Return New RpcClient(Function() New UdpSession(ep))
         End Function
@@ -101,7 +101,7 @@ Namespace Rpc
             Return prevSession
         End Function
 
-        Private Sub RemoveTicket(ByVal ticket As ITicket) Implements ITicketOwner.RemoveTicket
+        Private Sub RemoveTicket(ticket As ITicket) Implements ITicketOwner.RemoveTicket
             Dim sessionCopy As IRpcSession
 
             SyncLock _sync
@@ -138,7 +138,7 @@ Namespace Rpc
         ''' <summary>
         ''' creates the task for the control request to the RPC server
         ''' </summary>
-        Public Function CreateTask(Of TReq, TResp)(ByVal callBody As call_body, ByVal reqArgs As TReq, ByVal options As TaskCreationOptions, ByVal token As CancellationToken) As Task(Of TResp) Implements IRpcClient.CreateTask
+        Public Function CreateTask(Of TReq, TResp)(callBody As call_body, reqArgs As TReq, options As TaskCreationOptions, token As CancellationToken) As Task(Of TResp) Implements IRpcClient.CreateTask
             Dim ticket As Ticket(Of TReq, TResp) = New Ticket(Of TReq, TResp)(Me, callBody, reqArgs, options, token)
 
             SyncLock _sync
@@ -177,7 +177,7 @@ Namespace Rpc
             sessionCopy.AsyncSend(ticket)
         End Sub
 
-        Private Sub OnSessionExcepted(ByVal session As IRpcSession, ByVal ex As Exception)
+        Private Sub OnSessionExcepted(session As IRpcSession, ex As Exception)
             Dim prevSession As IRpcSession
 
             SyncLock _sync
@@ -191,7 +191,7 @@ Namespace Rpc
             prevSession.Close(ex)
         End Sub
 
-        Private Sub OnSessionMessageSended(ByVal session As IRpcSession)
+        Private Sub OnSessionMessageSended(session As IRpcSession)
             SyncLock _sync
                 If session IsNot _session Then Return
                 _sendingInProgress = False

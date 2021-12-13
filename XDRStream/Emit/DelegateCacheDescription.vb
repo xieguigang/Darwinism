@@ -44,7 +44,7 @@ Imports System
 Imports System.Reflection.Emit
 Imports System.Reflection
 
-Namespace Xdr.Emit
+Namespace Emit
     Public Class BuildBinderDescription
         Public ReadOnly Result As Type
         Public ReadOnly BuildRequest As FieldInfo

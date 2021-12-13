@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::56816b31e3ebe28240fdc458329a2a7c, Rpc\Connectors\TcpClientWrapper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TcpClientWrapper
-    ' 
-    '         Properties: Connected
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: AsyncConnect, AsyncRead, AsyncWrite, BeginReadRecordMark, Close
-    '              EndReadBody, EndReadRecordMark, EndWrite, ExtractRecordMark, OnConnected
-    '              SafeBeginRead, SafeBeginWrite
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TcpClientWrapper
+' 
+'         Properties: Connected
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: AsyncConnect, AsyncRead, AsyncWrite, BeginReadRecordMark, Close
+'              EndReadBody, EndReadRecordMark, EndWrite, ExtractRecordMark, OnConnected
+'              SafeBeginRead, SafeBeginWrite
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,12 +51,12 @@ Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
-Imports NLog
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Rpc.TcpStreaming
 
 Namespace Rpc.Connectors
     Friend Class TcpClientWrapper
-        Private Shared Log As Logger = LogManager.GetCurrentClassLogger()
+        Private Shared Log As LogFile = Microsoft.VisualBasic.My.FrameworkInternal.getLogger(GetType(TcpClientWrapper).FullName)
         Private ReadOnly _ep As IPEndPoint
         Private _connected As Boolean = False
         Private _sync As Object = New Object()
@@ -64,7 +64,7 @@ Namespace Rpc.Connectors
         Private _client As TcpClient
         Private _stream As NetworkStream
 
-        Public Sub New(ByVal ep As IPEndPoint)
+        Public Sub New(ep As IPEndPoint)
             _ep = ep
             _client = New TcpClient(_ep.AddressFamily)
         End Sub
@@ -77,7 +77,7 @@ Namespace Rpc.Connectors
 
         Private _connectCompleted As Action(Of Exception) = Nothing
 
-        Public Sub AsyncConnect(ByVal completed As Action(Of Exception))
+        Public Sub AsyncConnect(completed As Action(Of Exception))
             Try
 
                 SyncLock _sync
@@ -95,7 +95,7 @@ Namespace Rpc.Connectors
             End Try
         End Sub
 
-        Private Sub OnConnected(ByVal ar As IAsyncResult)
+        Private Sub OnConnected(ar As IAsyncResult)
             Dim copy = _connectCompleted
             _connectCompleted = Nothing
 
@@ -118,7 +118,7 @@ Namespace Rpc.Connectors
 
 #Region "async read"
 
-        Public Sub AsyncRead(ByVal completed As Action(Of Exception, TcpReader))
+        Public Sub AsyncRead(completed As Action(Of Exception, TcpReader))
             'HACK: here you need to implement a timeout interrupt
             Try
                 If _readCompleted IsNot Nothing Then Throw New InvalidOperationException("already reading")
@@ -146,7 +146,7 @@ Namespace Rpc.Connectors
             SafeBeginRead(New AsyncCallback(AddressOf EndReadRecordMark))
         End Sub
 
-        Private Sub EndReadRecordMark(ByVal ar As IAsyncResult)
+        Private Sub EndReadRecordMark(ar As IAsyncResult)
             Try
                 Dim read As Integer
 
@@ -175,14 +175,14 @@ Namespace Rpc.Connectors
             End Try
         End Sub
 
-        Private Sub SafeBeginRead(ByVal callback As AsyncCallback)
+        Private Sub SafeBeginRead(callback As AsyncCallback)
             SyncLock _sync
                 If _disposed Then Throw New ObjectDisposedException(GetType(TcpClient).FullName)
                 _stream.BeginRead(_readBuf, _readPos, _leftToRead, callback, Nothing)
             End SyncLock
         End Sub
 
-        Private Sub EndReadBody(ByVal ar As IAsyncResult)
+        Private Sub EndReadBody(ar As IAsyncResult)
             Dim [error] As Exception = Nothing
 
             Try
@@ -235,7 +235,7 @@ Namespace Rpc.Connectors
 
 #Region "async write"
 
-        Public Sub AsyncWrite(ByVal blocks As LinkedList(Of Byte()), ByVal completed As Action(Of Exception))
+        Public Sub AsyncWrite(blocks As LinkedList(Of Byte()), completed As Action(Of Exception))
             'HACK: here you need to implement a timeout interrupt
             Try
                 If _writeCompleted IsNot Nothing Then Throw New InvalidOperationException("already writing")
@@ -258,7 +258,7 @@ Namespace Rpc.Connectors
         Private _writeCompleted As Action(Of Exception)
         Private _byteSending As Integer = 0
 
-        Private Sub EndWrite(ByVal ar As IAsyncResult)
+        Private Sub EndWrite(ar As IAsyncResult)
             Dim [error] As Exception = Nothing
 
             Try
@@ -287,7 +287,7 @@ Namespace Rpc.Connectors
             _writeCompleted = Nothing
         End Sub
 
-        Private Sub SafeBeginWrite(ByVal block As Byte())
+        Private Sub SafeBeginWrite(block As Byte())
             SyncLock _sync
                 If _disposed Then Throw New ObjectDisposedException(GetType(TcpClient).FullName)
                 _stream.BeginWrite(block, 0, block.Length, New AsyncCallback(AddressOf EndWrite), Nothing)

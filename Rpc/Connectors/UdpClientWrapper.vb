@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::0e46a4a5d2e6d4c63440cb8ae8c4dd62, Rpc\Connectors\UdpClientWrapper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class UdpClientWrapper
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: AsyncRead, AsyncWrite, Close, EndRead, EndWrite
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class UdpClientWrapper
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: AsyncRead, AsyncWrite, Close, EndRead, EndWrite
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,18 +45,18 @@ Imports System
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
-Imports NLog
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Rpc.UdpDatagrams
 
 Namespace Rpc.Connectors
     Friend Class UdpClientWrapper
-        Private Shared Log As Logger = LogManager.GetCurrentClassLogger()
+        Private Shared Log As LogFile = Microsoft.VisualBasic.My.FrameworkInternal.getLogger(GetType(UdpClientWrapper).FullName)
         Private ReadOnly _ep As IPEndPoint
         Private _sync As Object = New Object()
         Private _disposed As Boolean = False
         Private _client As UdpClient
 
-        Public Sub New(ByVal ep As IPEndPoint)
+        Public Sub New(ep As IPEndPoint)
             _ep = ep
             _client = New UdpClient()
             _client.Connect(_ep)
@@ -64,7 +64,7 @@ Namespace Rpc.Connectors
 
         Private _readCompleted As Action(Of Exception, UdpReader) = Nothing
 
-        Public Sub AsyncRead(ByVal completed As Action(Of Exception, UdpReader))
+        Public Sub AsyncRead(completed As Action(Of Exception, UdpReader))
             _readCompleted = completed
 
             SyncLock _sync
@@ -79,7 +79,7 @@ Namespace Rpc.Connectors
             End SyncLock
         End Sub
 
-        Private Sub EndRead(ByVal ar As IAsyncResult)
+        Private Sub EndRead(ar As IAsyncResult)
             Dim reader As UdpReader = Nothing
             Dim err As Exception = Nothing
             Dim copy = _readCompleted
@@ -103,7 +103,7 @@ Namespace Rpc.Connectors
 
         Private _writeCompleted As Action(Of Exception) = Nothing
 
-        Public Sub AsyncWrite(ByVal datagram As Byte(), ByVal completed As Action(Of Exception))
+        Public Sub AsyncWrite(datagram As Byte(), completed As Action(Of Exception))
             Call Log.Trace(New Func(Of String, Byte(), String)(AddressOf DumpToLog), "sending datagram: {0}", datagram)
             _writeCompleted = completed
 
@@ -119,7 +119,7 @@ Namespace Rpc.Connectors
             End SyncLock
         End Sub
 
-        Private Sub EndWrite(ByVal ar As IAsyncResult)
+        Private Sub EndWrite(ar As IAsyncResult)
             Dim err As Exception = Nothing
             Dim copy = _writeCompleted
             _writeCompleted = Nothing

@@ -60,7 +60,7 @@ Namespace Rpc
             Get
                 Return _ReplyBody
             End Get
-            Private Set(ByVal value As reply_body)
+            Private Set(value As reply_body)
                 _ReplyBody = value
             End Set
         End Property
@@ -68,17 +68,17 @@ Namespace Rpc
         ''' <summary>
         ''' Error received in response RPC message
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        Public Sub New(ByVal replyBody As reply_body)
+        ''' <param name="replyBody"></param>
+        Public Sub New(replyBody As reply_body)
             Me.ReplyBody = replyBody
         End Sub
 
         ''' <summary>
         ''' Error received in response RPC message
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        ''' <paramname="message"></param>
-        Public Sub New(ByVal replyBody As reply_body, ByVal message As String)
+        ''' <param name="replyBody"></param>
+        ''' <param name="message"></param>
+        Public Sub New(replyBody As reply_body, message As String)
             MyBase.New(message)
             Me.ReplyBody = replyBody
         End Sub
@@ -86,10 +86,10 @@ Namespace Rpc
         ''' <summary>
         ''' Error received in response RPC message
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        ''' <paramname="message"></param>
-        ''' <paramname="innerEx"></param>
-        Public Sub New(ByVal replyBody As reply_body, ByVal message As String, ByVal innerEx As Exception)
+        ''' <param name="replyBody"></param>
+        ''' <param name="message"></param>
+        ''' <param name="innerEx"></param>
+        Public Sub New(replyBody As reply_body, message As String, innerEx As Exception)
             MyBase.New(message, innerEx)
             Me.ReplyBody = replyBody
         End Sub

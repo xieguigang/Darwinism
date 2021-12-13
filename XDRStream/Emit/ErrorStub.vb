@@ -42,7 +42,7 @@
 
 Imports System
 
-Namespace Xdr
+Namespace Emit
     Friend Module ErrorStub
         Private Function StubDelegate(ex As Exception, method As String, targetType As Type, genDelegateType As Type) As [Delegate]
             Dim stubType = GetType(ErrorStubType(Of)).MakeGenericType(targetType)

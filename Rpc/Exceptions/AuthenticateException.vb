@@ -52,27 +52,27 @@ Namespace Rpc
         ''' <summary>
         ''' Authenticate error
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        Public Sub New(ByVal replyBody As reply_body)
+        ''' <param name="replyBody"></param>
+        Public Sub New(replyBody As reply_body)
             MyBase.New(replyBody)
         End Sub
 
         ''' <summary>
         ''' Authenticate error
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        ''' <paramname="message"></param>
-        Public Sub New(ByVal replyBody As reply_body, ByVal message As String)
+        ''' <param name="replyBody"></param>
+        ''' <param name="message"></param>
+        Public Sub New(replyBody As reply_body, message As String)
             MyBase.New(replyBody, message)
         End Sub
 
         ''' <summary>
         ''' Authenticate error
         ''' </summary>
-        ''' <paramname="replyBody"></param>
-        ''' <paramname="message"></param>
-        ''' <paramname="innerEx"></param>
-        Public Sub New(ByVal replyBody As reply_body, ByVal message As String, ByVal innerEx As Exception)
+        ''' <param name="replyBody"></param>
+        ''' <param name="message"></param>
+        ''' <param name="innerEx"></param>
+        Public Sub New(replyBody As reply_body, message As String, innerEx As Exception)
             MyBase.New(replyBody, message, innerEx)
         End Sub
     End Class

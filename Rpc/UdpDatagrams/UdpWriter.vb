@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::97b31e1a2228390af824b8d7ec289a55, Rpc\UdpDatagrams\UdpWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class UdpWriter
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Build, SizeIsExceeded
-    ' 
-    '         Sub: CreateNextBlock, (+2 Overloads) Write
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class UdpWriter
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Build, SizeIsExceeded
+' 
+'         Sub: CreateNextBlock, (+2 Overloads) Write
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System
 Imports System.Collections.Generic
-Imports Xdr
+Imports Microsoft.VisualBasic.Data.IO
 
 Namespace Rpc.UdpDatagrams
     ''' <summary>
@@ -75,8 +75,8 @@ Namespace Rpc.UdpDatagrams
         ''' <summary>
         ''' write array of bytes
         ''' </summary>
-        ''' <paramname="buffer"></param>
-        Public Sub Write(ByVal buffer As Byte()) Implements IByteWriter.Write
+        ''' <param name="buffer"></param>
+        Public Sub Write(buffer As Byte()) Implements IByteWriter.Write
             _totalSize += buffer.Length
             If _totalSize > _max Then Throw SizeIsExceeded()
             Dim offset = 0
@@ -100,8 +100,8 @@ Namespace Rpc.UdpDatagrams
         ''' <summary>
         ''' write byte
         ''' </summary>
-        ''' <paramname="b"></param>
-        Public Sub Write(ByVal b As Byte) Implements IByteWriter.Write
+        ''' <param name="b"></param>
+        Public Sub Write(b As Byte) Implements IByteWriter.Write
             _totalSize += 1
             If _totalSize > _max Then Throw SizeIsExceeded()
             _currentBlock(_pos) = b

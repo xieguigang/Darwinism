@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{806818F5-D50A-4BFF-ACA3-CFF60D3FC61E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>XDR</RootNamespace>
-    <AssemblyName>XDRStream</AssemblyName>
+    <RootNamespace>System.IO.XDR</RootNamespace>
+    <AssemblyName>System.IO.XDR</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>XDRStream.xml</DocumentationFile>
+    <DocumentationFile>System.IO.XDR.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>XDRStream.xml</DocumentationFile>
+    <DocumentationFile>System.IO.XDR.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -71,11 +71,11 @@
     <Compile Include="Attributes\SwitchAttribute.vb" />
     <Compile Include="Attributes\VarAttribute.vb" />
     <Compile Include="Delegates.vb" />
-    <Compile Include="EmitContexts\EmitContext.vb" />
-    <Compile Include="EmitContexts\EmitResult.vb" />
-    <Compile Include="EmitContexts\FieldDesc.vb" />
-    <Compile Include="EmitContexts\OrderModel.vb" />
-    <Compile Include="EmitContexts\SwitchModel.vb" />
+    <Compile Include="Emit\EmitContexts\EmitContext.vb" />
+    <Compile Include="Emit\EmitContexts\EmitResult.vb" />
+    <Compile Include="Emit\EmitContexts\FieldDesc.vb" />
+    <Compile Include="Emit\EmitContexts\OrderModel.vb" />
+    <Compile Include="Emit\EmitContexts\SwitchModel.vb" />
     <Compile Include="Emit\BuildRequest.vb" />
     <Compile Include="Emit\DelegateCacheDescription.vb" />
     <Compile Include="Emit\ErrorStub.vb" />
@@ -132,6 +132,16 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\sciBASIC#\Data\BinaryData\BinaryData\BinaryData.vbproj">
+      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
+      <Name>BinaryData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -1,65 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::9375bac9bafcd3331749001949b27a3d, Rpc\Connectors\TcpSession.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TcpSession
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: EnqueueTicket
-    ' 
-    '         Sub: AsyncSend, BeginReceive, BuildMessage, Close, OnBlocksWrited
-    '              OnConnected, OnException, OnMessageReaded, OnSend, RemoveTicket
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TcpSession
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: EnqueueTicket
+' 
+'         Sub: AsyncSend, BeginReceive, BuildMessage, Close, OnBlocksWrited
+'              OnConnected, OnException, OnMessageReaded, OnSend, RemoveTicket
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System
 Imports System.Collections.Generic
-Imports System.Net
+Imports System.IO.XDR.Reading
 Imports System.Linq
+Imports System.Net
 Imports System.Threading
-Imports NLog
+Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Rpc.MessageProtocol
 Imports Rpc.TcpStreaming
-Imports Xdr
 
 Namespace Rpc.Connectors
     Friend Class TcpSession
         Implements IRpcSession
 
-        Private Shared Log As Logger = LogManager.GetCurrentClassLogger()
+        Private Shared Log As LogFile = Microsoft.VisualBasic.My.FrameworkInternal.getLogger(GetType(TcpSession).FullName)
         Private ReadOnly _client As TcpClientWrapper
         Private ReadOnly _maxBlock As Integer
         Private _connected As Boolean = False
@@ -68,12 +69,12 @@ Namespace Rpc.Connectors
         Private _receivingInProgress As Boolean = False
         Private _handlers As Dictionary(Of UInteger, ITicket) = New Dictionary(Of UInteger, ITicket)()
 
-        Public Sub New(ByVal ep As IPEndPoint, ByVal Optional blockSize As Integer = 1024 * 4)
+        Public Sub New(ep As IPEndPoint, Optional blockSize As Integer = 1024 * 4)
             _client = New TcpClientWrapper(ep)
             _maxBlock = blockSize
         End Sub
 
-        Public Sub AsyncSend(ByVal ticket As ITicket) Implements IRpcSession.AsyncSend
+        Public Sub AsyncSend(ticket As ITicket) Implements IRpcSession.AsyncSend
             If _sendingTicket IsNot Nothing Then Throw New InvalidOperationException("ticket already sending")
             _sendingTicket = ticket
 
@@ -89,7 +90,7 @@ Namespace Rpc.Connectors
             End If
         End Sub
 
-        Private Sub OnConnected(ByVal ex As Exception)
+        Private Sub OnConnected(ex As Exception)
             If ex IsNot Nothing Then
                 OnException(ex)
             Else
@@ -97,7 +98,7 @@ Namespace Rpc.Connectors
             End If
         End Sub
 
-        Private Sub BuildMessage(ByVal state As Object)
+        Private Sub BuildMessage(state As Object)
             Dim blocks As LinkedList(Of Byte())
 
             Try
@@ -137,7 +138,7 @@ Namespace Rpc.Connectors
             _client.AsyncRead(New Action(Of Exception, TcpReader)(AddressOf OnMessageReaded))
         End Sub
 
-        Private Sub OnMessageReaded(ByVal err As Exception, ByVal tcpReader As TcpReader)
+        Private Sub OnMessageReaded(err As Exception, tcpReader As TcpReader)
             If err IsNot Nothing Then
                 Log.Debug("No receiving TCP messages. Reason: {0}", err)
                 OnException(err)
@@ -155,7 +156,7 @@ Namespace Rpc.Connectors
                 r = CreateReader(tcpReader)
                 respMsg = r.Read(Of rpc_msg)()
             Catch ex As Exception
-                Log.Info("Parse exception: {0}", ex)
+                Log.info($"Parse exception: {ex.ToString}")
                 BeginReceive()
                 Return
             End Try
@@ -171,16 +172,16 @@ Namespace Rpc.Connectors
             End If
         End Sub
 
-        Private Function EnqueueTicket(ByVal xid As UInteger) As ITicket
+        Private Function EnqueueTicket(xid As UInteger) As ITicket
             SyncLock _sync
-                Dim result As ITicket
+                Dim result As ITicket = Nothing
                 If Not _handlers.TryGetValue(xid, result) Then Return Nothing
                 _handlers.Remove(xid)
                 Return result
             End SyncLock
         End Function
 
-        Private Sub OnBlocksWrited(ByVal ex As Exception)
+        Private Sub OnBlocksWrited(ex As Exception)
             If ex IsNot Nothing Then
                 Log.Debug("TCP message not sended (xid:{0}) reason: {1}", _sendingTicket.Xid, ex)
                 OnException(ex)
@@ -190,13 +191,13 @@ Namespace Rpc.Connectors
             End If
         End Sub
 
-        Public Sub RemoveTicket(ByVal ticket As ITicket) Implements ITicketOwner.RemoveTicket
+        Public Sub RemoveTicket(ticket As ITicket) Implements ITicketOwner.RemoveTicket
             SyncLock _sync
                 _handlers.Remove(ticket.Xid)
             End SyncLock
         End Sub
 
-        Public Sub Close(ByVal ex As Exception) Implements IRpcSession.Close
+        Public Sub Close(ex As Exception) Implements IRpcSession.Close
             Log.Debug("Close session.")
             Dim tickets As ITicket()
 
@@ -214,7 +215,7 @@ Namespace Rpc.Connectors
 
         Public Event OnExcepted As Action(Of IRpcSession, Exception) Implements IRpcSession.OnExcepted
 
-        Private Sub OnException(ByVal ex As Exception)
+        Private Sub OnException(ex As Exception)
             Dim copy = OnExceptedEvent
             If copy IsNot Nothing Then copy(Me, ex)
         End Sub

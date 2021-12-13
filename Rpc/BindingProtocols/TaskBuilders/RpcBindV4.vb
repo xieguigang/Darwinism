@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::2ab1aea23a36baaa9ad03c3c0ba788ab, Rpc\BindingProtocols\TaskBuilders\RpcBindV4.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class RpcBindV4
-    ' 
-    '         Properties: Version
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: BCast, GetAddrList, GetStat, GetVersAddr, Indirect
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class RpcBindV4
+' 
+'         Properties: Version
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: BCast, GetAddrList, GetStat, GetVersAddr, Indirect
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Collections.Generic
+Imports System.IO.XDR
 Imports System.Threading
 Imports System.Threading.Tasks
 
@@ -64,10 +65,10 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' For TCP/IP and UDP/IP, for example, it is port number 111. Each transport has such an assigned, well-known address.
         ''' http://tools.ietf.org/html/rfc1833#section-2.2.1
         ''' </summary>
-        ''' <paramname="conn">instance of connector</param>
-        ''' <paramname="token">cancellation token</param>
-        ''' <paramname="attachedToParent">attache created task to parent task</param>
-        Public Sub New(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal attachedToParent As Boolean)
+        ''' <param name="conn">instance of connector</param>
+        ''' <param name="token">cancellation token</param>
+        ''' <param name="attachedToParent">attache created task to parent task</param>
+        Public Sub New(conn As IRpcClient, token As CancellationToken, attachedToParent As Boolean)
             MyBase.New(conn, token, attachedToParent)
         End Sub
 
@@ -84,7 +85,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' This procedure is identical to the version 3 RPCBPROC_CALLIT procedure.  The new name indicates that the procedure should be used
         ''' for broadcast RPCs only.  RPCBPROC_INDIRECT, defined below, should be used for indirect RPC calls.
         ''' </summary>
-        Public Function BCast(ByVal arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
+        Public Function BCast(arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
             Return CreateTask(Of rpcb_rmtcallargs, rpcb_rmtcallres)(5UI, arg)
         End Function
 
@@ -92,7 +93,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' This procedure is similar to RPCBPROC_GETADDR. The difference is the "r_vers" field of the rpcb structure can be used to specify the
         ''' version of interest.  If that version is not registered, no address is returned.
         ''' </summary>
-        Public Function GetVersAddr(ByVal arg As rpcb) As Task(Of String)
+        Public Function GetVersAddr(arg As rpcb) As Task(Of String)
             Return CreateTask(Of rpcb, String)(9UI, arg)
         End Function
 
@@ -101,7 +102,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' procedure returns an indication of the error.  This procedure should not be used for broadcast RPC. It is intended to be used with
         ''' indirect RPC calls only.
         ''' </summary>
-        Public Function Indirect(ByVal arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
+        Public Function Indirect(arg As rpcb_rmtcallargs) As Task(Of rpcb_rmtcallres)
             Return CreateTask(Of rpcb_rmtcallargs, rpcb_rmtcallres)(10UI, arg)
         End Function
 
@@ -109,7 +110,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' This procedure returns a list of addresses for the given rpcb entry.
         ''' The client may be able use the results to determine alternate transports that it can use to communicate with the server.
         ''' </summary>
-        Public Function GetAddrList(ByVal arg As rpcb) As Task(Of List(Of rpcb_entry))
+        Public Function GetAddrList(arg As rpcb) As Task(Of List(Of rpcb_entry))
             Return CreateTask(Of rpcb, List(Of rpcb_entry))(11UI, arg)
         End Function
 
@@ -122,7 +123,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' RPCBIND program.
         ''' </summary>
         Public Function GetStat() As Task(Of rpcb_stat_byvers)
-            Return CreateTask(Of Xdr.Void, rpcb_stat_byvers)(12UI, New Xdr.Void())
+            Return CreateTask(Of Void, rpcb_stat_byvers)(12UI, New Void())
         End Function
     End Class
 End Namespace

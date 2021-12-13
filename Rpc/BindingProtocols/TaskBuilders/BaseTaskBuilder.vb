@@ -55,7 +55,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         Private _attachedToParent As Boolean
         Private _token As CancellationToken
 
-        Friend Sub New(ByVal conn As IRpcClient, ByVal token As CancellationToken, ByVal attachedToParent As Boolean)
+        Friend Sub New(conn As IRpcClient, token As CancellationToken, attachedToParent As Boolean)
             _conn = conn
             _attachedToParent = attachedToParent
             _token = token
@@ -66,7 +66,7 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' </summary>
         Protected MustOverride ReadOnly Property Version As UInteger
 
-        Private Function CreateHeader(ByVal procNum As UInteger) As call_body
+        Private Function CreateHeader(procNum As UInteger) As call_body
             Return New call_body() With {
                 .rpcvers = 2,
                 .prog = Program,
@@ -83,19 +83,19 @@ Namespace Rpc.BindingProtocols.TaskBuilders
         ''' <returns>
         ''' The queued task.
         ''' </returns>
-        ''' <paramname="proc">
+        ''' <param name="proc">
         ''' procedure number
         ''' </param>
-        ''' <paramname="args">
+        ''' <param name="args">
         ''' instance of arguments of request
         ''' </param>
-        ''' <typeparamname="TReq">
+        ''' <typeparam name="TReq">
         ''' type of request
         ''' </typeparam>
-        ''' <typeparamname="TResp">
+        ''' <typeparam name="TResp">
         ''' type of response
         ''' </typeparam>
-        Protected Function CreateTask(Of TReq, TResp)(ByVal proc As UInteger, ByVal args As TReq) As Task(Of TResp)
+        Protected Function CreateTask(Of TReq, TResp)(proc As UInteger, args As TReq) As Task(Of TResp)
             Return _conn.CreateTask(Of TReq, TResp)(CreateHeader(proc), args, If(_attachedToParent, TaskCreationOptions.AttachedToParent, TaskCreationOptions.None), _token)
         End Function
     End Class

@@ -43,7 +43,7 @@
 Imports System
 Imports System.Collections.Generic
 
-Namespace Xdr.EmitContexts
+Namespace Emit.EmitContexts
     Public Module EmitContext
         Private _sync As Object = New Object()
         Private _readerCache As Dictionary(Of Type, EmitResult) = New Dictionary(Of Type, EmitResult)()
