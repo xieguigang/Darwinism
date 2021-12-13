@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-
+#if netcore5=0 then
 <Assembly: AssemblyTitle("Aliyun ossutil CLI tool wrapper for VB.NET")>
 <Assembly: AssemblyDescription("https://github.com/aliyun/ossutil")>
 <Assembly: AssemblyCompany("I@xieguigang.me")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+#end if
