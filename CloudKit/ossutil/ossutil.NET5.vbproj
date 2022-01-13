@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -29,7 +29,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
@@ -40,7 +40,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
     <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
   </PropertyGroup>
 
@@ -52,7 +52,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
     <OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
   </PropertyGroup>
 
@@ -64,7 +64,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
     <OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
   </PropertyGroup>
 
@@ -76,31 +76,31 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>Docker.xml</DocumentationFile>
+    <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
