@@ -235,7 +235,7 @@ Public Module Commands
         Dim containerId As String
 
         Do While (stdout = CommandLine.Call("docker", $"rmi {imageId}")).Contains("image is being used by stopped container")
-            containerId = Strings.Split(Trim(stdout)).Last
+            containerId = Strings.Split(Strings.Trim(stdout)).Last
 
             Call CommandLine.Call("docker", $"rm {containerId}")
             Call Console.WriteLine($"remove container {containerId}")
