@@ -106,7 +106,7 @@ Public Class IPCSocket : Implements ITaskDriver
         Me.handleSetResult = False
     End Sub
 
-    Private Function GetFirstAvailablePort() As Integer
+    Public Shared Function GetFirstAvailablePort() As Integer
         Call Thread.Sleep(randf.NextInteger(1000))
 
 #If netcore5 = 1 Then
