@@ -52,7 +52,6 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace IpcStream
@@ -63,8 +62,7 @@ Namespace IpcStream
         Public Delegate Function loadBuffer(buf As Stream) As Object
 
         Sub New()
-            Call MsgPackSerializer.DefaultContext.RegisterSerializer(New Serialization.StackFrameBuffer)
-            Call MsgPackSerializer.DefaultContext.RegisterSerializer(New Serialization.StackMethodBuffer)
+            Call RegisterDiagnoseBuffer()
         End Sub
 
         Public Iterator Function PopulatePrimitiveHandles() As IEnumerable(Of (target As Type, emit As toBuffer))
