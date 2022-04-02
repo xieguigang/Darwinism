@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>ThinkVB.FileSystem.OSS</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>ThinkVB.FileSystem.OSS</AssemblyName>
     <Description>High Performance Parallel Compute Library on Unix .NET 5 runtime</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

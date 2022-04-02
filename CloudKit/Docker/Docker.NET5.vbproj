@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Darwinism.Docker</RootNamespace>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>Docker</AssemblyName>
     <Description>High Performance Parallel Compute Library on Unix .NET 5 runtime</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
