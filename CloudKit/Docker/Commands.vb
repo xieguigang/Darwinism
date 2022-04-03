@@ -136,13 +136,23 @@ Public Module Commands
 
     ' Run 'docker COMMAND --help' for more information on a command.
 
-    ReadOnly powershell As New PowerShell
+    Friend ReadOnly shell As Func(Of String, String, String)
+    Friend ReadOnly logs As New List(Of String)
 
     Public Iterator Function CommandHistory() As IEnumerable(Of String)
-        For Each line As String In powershell.logs
+        For Each line As String In logs
             Yield line
         Next
     End Function
+
+    Sub New()
+        shell = Function(app, args) As String
+                    Dim lines As New List(Of String)
+                    Call logs.Add($"{app} {args}")
+                    Call CommandLine.ExecSub(app, args, onReadLine:=AddressOf lines.Add)
+                    Return lines.JoinBy(vbLf)
+                End Function
+    End Sub
 
     ''' <summary>
     ''' Search the Docker Hub for images
@@ -152,7 +162,7 @@ Public Module Commands
     ''' 
     <ExportAPI("search")>
     Public Function Search(term As String) As IEnumerable(Of Search)
-        Return powershell($"docker search {term}") _
+        Return shell("docker", $"search {term}") _
             .ParseTable(Function(tokens)
                             Return New Search With {
                                 .NAME = Image.ParseEntry(tokens(0)),
@@ -171,7 +181,7 @@ Public Module Commands
     ''' 
     <ExportAPI("ps")>
     Public Function PS() As IEnumerable(Of Container)
-        Return powershell("docker ps") _
+        Return shell("docker", "ps") _
             .ParseTable(Function(tokens)
                             Return New Container With {
                                 .CONTAINER_ID = tokens(0).Trim,
@@ -193,7 +203,7 @@ Public Module Commands
     <ExportAPI("stop")>
     Public Sub [Stop](ParamArray containers As String())
         For Each id As String In containers
-            Call powershell.RunScript($"docker stop {id}")
+            Call shell("docker", $"stop {id}")
         Next
     End Sub
 
@@ -217,11 +227,7 @@ Public Module Commands
             .Mount(mounts) _
             .CreateDockerCommand(command, workdir, portForward)
 
-#If UNIX = 0 Then
-        Return CommandLine.Call("docker", cli.GetTagValue.Value)
-#Else
-        Return powershell(cli)
-#End If
+        Return shell("docker", cli)
     End Function
 
     ''' <summary>
@@ -237,7 +243,7 @@ Public Module Commands
         Do While (stdout = CommandLine.Call("docker", $"rmi {imageId}")).Contains("image is being used by stopped container")
             containerId = Strings.Split(Strings.Trim(stdout)).Last
 
-            Call CommandLine.Call("docker", $"rm {containerId}")
+            Call shell("docker", $"rm {containerId}")
             Call Console.WriteLine($"remove container {containerId}")
         Loop
 
