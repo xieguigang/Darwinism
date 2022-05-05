@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/xieguigang/Darwinism</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/Darwinism</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -116,6 +117,10 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|x64'">
+    <OutputPath>D:\biodeep\biodeep_pipeline\lipidsearch\LipidSearch\assembly\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
