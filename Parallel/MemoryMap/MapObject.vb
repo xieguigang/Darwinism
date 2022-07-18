@@ -67,7 +67,7 @@ Public Class MapObject : Implements IDisposable
         Dim memory As MemoryMappedFile = MemoryMappedFile.OpenExisting(hMem)
         Dim view As MemoryMappedViewStream = memory.CreateViewStream
 
-        obj = BSONFormat.Load(view).CreateObject(type)
+        obj = BSONFormat.Load(view).CreateObject(type, decodeMetachar:=False)
 
         Return obj
     End Function

@@ -92,7 +92,7 @@ Namespace IpcStream
 
         Public Shared Function GetSocket(stream As ObjectStream) As SocketRef
             Using file As Stream = stream.openMemoryBuffer
-                Return BSONFormat.Load(file).CreateObject(GetType(SocketRef))
+                Return BSONFormat.Load(file).CreateObject(GetType(SocketRef), decodeMetachar:=False)
             End Using
         End Function
 

@@ -95,11 +95,11 @@ Namespace IpcStream
                         emitCache.Add(type, handler)
                         Return emitCache(type).ReadBuffer(buf)
                     Else
-                        Return BSONFormat.Load(buf).CreateObject(type)
+                        Return BSONFormat.Load(buf).CreateObject(type, decodeMetachar:=False)
                     End If
                 End If
             ElseIf emit = StreamMethods.BSON Then
-                Return BSONFormat.Load(buf).CreateObject(type)
+                Return BSONFormat.Load(buf).CreateObject(type, decodeMetachar:=False)
             ElseIf loadBuffers.ContainsKey(type) Then
                 Return loadBuffers(type)(buf)
             Else
