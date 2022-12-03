@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://github.com/xieguigang/Darwinism</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/Darwinism</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -118,6 +119,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>Docker.xml</DocumentationFile>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'" />
 
   <ItemGroup>
     <Compile Remove="test\**" />
