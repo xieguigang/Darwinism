@@ -110,7 +110,7 @@ Public Class IPCSocket : Implements ITaskDriver
         Call Thread.Sleep(randf.NextInteger(1000))
 
         If Environment.OSVersion.Platform = PlatformID.Unix Then
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
             If Not "/bin/bash".FileExists Then
                 Return TCPExtensions.GetFirstAvailablePort(-1)
             End If
