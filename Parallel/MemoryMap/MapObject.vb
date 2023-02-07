@@ -45,6 +45,7 @@
 
 Imports System.IO
 Imports System.IO.MemoryMappedFiles
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
@@ -59,8 +60,19 @@ Public Class MapObject : Implements IDisposable
     Dim hMem As String
     Dim size As Integer
 
+    Public ReadOnly Property Invalid As Boolean
+        Get
+            Return Not (size > 0 AndAlso Not hMem.StringEmpty)
+        End Get
+    End Property
+
     Private Sub New()
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetMappingFileName() As String
+        Return hMem
+    End Function
 
     ''' <summary>
     ''' load object from the memory region by a specific type schema
