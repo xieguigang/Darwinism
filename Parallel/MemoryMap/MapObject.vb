@@ -96,6 +96,15 @@ Public Class MapObject : Implements IDisposable
         }
     End Function
 
+    Public Shared Function Exists(hMem As String) As Boolean
+        Try
+            Call MemoryMappedFile.OpenExisting(hMem)
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
     ''' <summary>
     ''' serialize object in BSON to a memory region 
     ''' </summary>
