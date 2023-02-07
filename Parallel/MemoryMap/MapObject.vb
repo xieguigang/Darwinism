@@ -62,6 +62,11 @@ Public Class MapObject : Implements IDisposable
     Private Sub New()
     End Sub
 
+    ''' <summary>
+    ''' load object from the memory region by a specific type schema
+    ''' </summary>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
     Public Function GetObject(type As Type) As Object
         Dim obj As Object
         Dim memory As MemoryMappedFile = MemoryMappedFile.OpenExisting(hMem)
@@ -79,11 +84,16 @@ Public Class MapObject : Implements IDisposable
         }
     End Function
 
-    Public Shared Function FromObject(obj As Object) As MapObject
+    ''' <summary>
+    ''' serialize object in BSON to a memory region 
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
+    Public Shared Function FromObject(obj As Object, Optional hMemP As String = Nothing) As MapObject
         Dim type As Type = obj.GetType
         Dim element = type.GetJsonElement(obj, New JSONSerializerOptions)
         Dim bufferSize As Integer
-        Dim hMem As String = App.GetNextUniqueName($"mem_{type.Name}_")
+        Dim hMem As String = If(hMemP.StringEmpty, App.GetNextUniqueName($"mem_{type.Name}_"), hMemP)
 
         Static mapFiles As New Dictionary(Of String, MemoryMappedFile)
 
@@ -96,7 +106,10 @@ Public Class MapObject : Implements IDisposable
             Dim hMemFile As MemoryMappedFile = MemoryMappedFile.CreateNew(hMem, bufferSize)
             Dim view As MemoryMappedViewStream = hMemFile.CreateViewStream
 
-            Call mapFiles.Add(hMem, hMemFile)
+            SyncLock mapFiles
+                Call mapFiles.Add(hMem, hMemFile)
+            End SyncLock
+
             Call view.Write(buffer, Scan0, bufferSize)
 
             Erase buffer

@@ -44,4 +44,12 @@ Public Class UnmanageMemoryRegion
     Public Property memoryFile As String
     Public Property size As Integer
 
+    Public Function GetMemoryMap() As MapObject
+        Return MapObject.FromPointer(Me)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"{memoryFile} ({StringFormats.Lanudry(size)})"
+    End Function
+
 End Class
