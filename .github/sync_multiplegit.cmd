@@ -2,6 +2,8 @@
 
 REM git remote remove local
 REM git remote add local http://192.168.0.232:8848/xieguigang/Darwinism.git
+REM git remote add local http://git.biodeep.cn/xieguigang/Darwinism.git
+
 
 git pull gitlink HEAD
 git pull gitee HEAD
