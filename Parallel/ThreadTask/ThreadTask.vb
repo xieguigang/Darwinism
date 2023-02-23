@@ -66,6 +66,13 @@ Namespace ThreadTask
         ReadOnly verbose As Boolean = True
 
         ''' <summary>
+        ''' sleep for a interval between start each parallel 
+        ''' task thread could avoid some parallel lock
+        ''' problem.
+        ''' </summary>
+        ReadOnly taskInterval As Integer = 1000
+
+        ''' <summary>
         ''' create parallel task pool from a given collection of task handler
         ''' </summary>
         ''' <param name="task"></param>
@@ -74,12 +81,14 @@ Namespace ThreadTask
         ''' </param>
         Sub New(task As IEnumerable(Of Func(Of TOut)),
                 Optional debugMode As Boolean = False,
-                Optional verbose As Boolean = True)
+                Optional verbose As Boolean = True,
+                Optional taskInterval As Integer = 1500)
 
             Me.taskList = New Queue(Of Func(Of TOut))(task)
             Me.size = Me.taskList.Count
             Me.verbose = verbose
             Me.debugMode = debugMode
+            Me.taskInterval = taskInterval
         End Sub
 
         ''' <summary>
@@ -177,11 +186,13 @@ Namespace ThreadTask
         End Function
 
         Private Iterator Function ParallelTask() As IEnumerable(Of TOut)
+            ' handling all pending task
             Do While taskList.Count > 0
                 Dim i As Integer = GetEmptyThread()
 
                 If i > -1 Then
                     threads(i) = New AsyncHandle(Of TOut)(taskList.Dequeue).Run
+                    Thread.Sleep(taskInterval)
                 End If
 
                 Dim j As Integer = GetCompleteThread()
@@ -196,9 +207,10 @@ Namespace ThreadTask
                     threads(j) = Nothing
                 End If
 
-                Call Thread.Sleep(1)
+                Call Thread.Sleep(100)
             Loop
 
+            ' wait for all remaining task finished
             Do While Not threads.All(Function(t) t Is Nothing)
                 Dim j As Integer = GetCompleteThread()
 
@@ -212,7 +224,7 @@ Namespace ThreadTask
                     threads(j) = Nothing
                 End If
 
-                Call Thread.Sleep(1)
+                Call Thread.Sleep(100)
             Loop
         End Function
     End Class
