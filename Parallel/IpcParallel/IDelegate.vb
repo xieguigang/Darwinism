@@ -44,10 +44,11 @@
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
-#If netcore5 = 1 Then
+Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
+
+#If NETCOREAPP Then
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
 #End If
-Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 ''' <summary>
 ''' remote method handler
@@ -114,7 +115,7 @@ Public Class IDelegate
     Public Function GetMethod() As MethodInfo
         Dim type As Type = provideType()
 
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
         Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
 #End If
 
