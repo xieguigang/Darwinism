@@ -37,6 +37,8 @@ Public Module Utils
             Try
                 If parent.HasExited Then
                     Call kill.Dispose()
+                    Call App.Exit()
+
                     Exit Do
                 End If
             Catch ex As Exception
@@ -46,6 +48,8 @@ Public Module Utils
 
             Call Thread.Sleep(100)
         Loop
+
+        Call App.Exit()
     End Sub
 
 End Module
