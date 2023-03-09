@@ -1,6 +1,6 @@
 Imports System.Threading
 
-Public Module Utils
+Public Module BackgroundTaskUtils
 
     ''' <summary>
     ''' if parent is exists then kill current web server 
@@ -9,13 +9,13 @@ Public Module Utils
     ''' <param name="kill"></param>
     Public Sub BindToMaster(parentId As String, kill As IDisposable)
         ' not specific the parent process id
-        If parentId.StringEmpty Then
+        If parentId.StringEmpty OrElse Val(parentId) <= 0 Then
             Return
         Else
 #If WINDOWS Then
             Dim task As New ThreadStart(
                 Sub()
-                    Utils.checkMasterHeartbeat(Integer.Parse(parentId), kill)
+                    BackgroundTaskUtils.checkMasterHeartbeat(Integer.Parse(parentId), kill)
                 End Sub)
 
             Call New Thread(task).Start()
@@ -43,6 +43,8 @@ Public Module Utils
                 End If
             Catch ex As Exception
                 Call kill.Dispose()
+                Call App.Exit()
+
                 Exit Do
             End Try
 
