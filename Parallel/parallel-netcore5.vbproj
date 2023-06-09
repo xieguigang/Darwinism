@@ -4,7 +4,7 @@
     <RootNamespace>Parallel</RootNamespace>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <AssemblyName>Parallel</AssemblyName>
-    <Description>High Performance Parallel Compute Library on Unix .NET 5 runtime</Description>
+    <Description>High Performance Parallel Compute Library on Unix .NET 6 runtime</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>i@xieguigang.me</Copyright>
@@ -15,6 +15,9 @@
     <RepositoryUrl>https://github.com/xieguigang/Darwinism</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Title>Darwinism HPC parallel library for VisualBasic on unix platform</Title>
+    <Product>Darwinism</Product>
+    <PackageTags>parallel;ipc</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
