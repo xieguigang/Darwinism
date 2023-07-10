@@ -127,5 +127,31 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{4fb5985b-a2ed-4cb0-9d74-047a528cd022}</Project>
+      <Name>binarydata-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj">
+      <Project>{7c59f42c-f8b1-4c86-a6bb-17aa1d60c7e9}</Project>
+      <Name>msgpack-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{7b013852-3819-4dd6-ab18-bff063490cfc}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\mime\application%25json\JSON-netcore5.vbproj">
+      <Project>{475ee879-a9c0-4d33-a068-887cb3bae1f8}</Project>
+      <Name>JSON-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\network-netcore5.vbproj">
+      <Project>{f437c359-4c77-4268-820b-fedd75f2221c}</Project>
+      <Name>network-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\parallel-netcore5.vbproj">
+      <Project>{86434851-aba8-4019-88cb-68666a840f53}</Project>
+      <Name>parallel-netcore5</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
