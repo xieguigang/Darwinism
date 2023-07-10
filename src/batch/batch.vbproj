@@ -11,6 +11,7 @@
     <Description>Run bash command in batch and parallel</Description>
     <Platforms>AnyCPU;x64</Platforms>
     <OutputPath>../../build/</OutputPath>
+    <Configurations>Debug;Release;Docker</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
