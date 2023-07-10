@@ -6,7 +6,10 @@ Imports Parallel.ThreadTask
 Module Program
 
     Public Function Main() As Integer
-        Dim args As CommandLine = App.CommandLine
+        Return GetType(Program).RunCLI(App.CommandLine, executeFile:=AddressOf Program.runJobs)
+    End Function
+
+    Private Function runJobs(bash As String, args As CommandLine) As Integer
         Dim input As String = args.Name
         Dim njobs As Integer = args("-j") Or 4
         Dim jobs As String() = input.ReadAllLines
