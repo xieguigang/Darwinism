@@ -18,6 +18,10 @@
     <Title>Darwinism HPC parallel library for VisualBasic on unix platform</Title>
     <Product>Darwinism</Product>
     <PackageTags>parallel;ipc</PackageTags>
+    <Version>6.0.231.5699</Version>
+    <Authors>xie.guigang@gcmodeller.org</Authors>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -130,7 +134,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE">
+    <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
