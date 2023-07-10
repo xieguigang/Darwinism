@@ -10,6 +10,7 @@
     <Product>Parallel</Product>
     <Description>Run bash command in batch and parallel</Description>
     <Platforms>AnyCPU;x64</Platforms>
+    <OutputPath>../../build/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
