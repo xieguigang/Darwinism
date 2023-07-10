@@ -6,7 +6,16 @@ Imports Parallel.ThreadTask
 Module Program
 
     Public Function Main() As Integer
-        Return GetType(Program).RunCLI(App.CommandLine, executeFile:=AddressOf Program.runJobs)
+        Return GetType(Program).RunCLI(
+            args:=App.CommandLine,
+            executeFile:=AddressOf Program.runJobs,
+            executeEmpty:=AddressOf showHelp
+        )
+    End Function
+
+    Private Function showHelp() As Integer
+        Call Console.WriteLine("jobs.sh [-j <n_threads, default=4> --debug --verbose -delay <sleep in seconds, default=0.5>]")
+        Return 0
     End Function
 
     Private Function runJobs(bash As String, args As CommandLine) As Integer
