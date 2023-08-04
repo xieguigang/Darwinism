@@ -1,54 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::e1ea725da821d59758c31270653c458d, Parallel\IpcParallel\TaskBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class TaskBuilder
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: FromStream, GetArgumentValue, GetArgumentValueNumber, GetMethod, GetParameters
-    '               Initialize, PostError, Run
-    ' 
-    '     Sub: PostFinished
-    ' 
-    ' /********************************************************************************/
+' Class TaskBuilder
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: FromStream, GetArgumentValue, GetArgumentValueNumber, GetMethod, GetParameters
+'               Initialize, PostError, Run
+' 
+'     Sub: PostFinished
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
-Imports System.Reflection
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
 #End If
+
+Imports System.IO
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json
@@ -95,6 +96,13 @@ Public Class TaskBuilder : Implements ITaskDriver
         Next
     End Function
 
+    ''' <summary>
+    ''' load task method delegate function and request parameters from remote master for run the task 
+    ''' </summary>
+    ''' <param name="api"></param>
+    ''' <param name="target"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     Private Function Initialize(ByRef api As MethodInfo, ByRef target As Object, ByRef args As Object()) As Integer
         Dim task As IDelegate = GetMethod()
         Dim params As ParameterInfo()
@@ -106,8 +114,8 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim n As Integer = GetArgumentValueNumber()
         Dim argList As New List(Of Object)(GetParameters(params, n))
 
-        Call Console.WriteLine("run task:")
-        Call Console.WriteLine(task.GetJson(indent:=False, simpleDict:=True))
+        Call VBDebugger.EchoLine("run task:")
+        Call VBDebugger.EchoLine(task.GetJson(indent:=False, simpleDict:=True))
 
         ' fix for optional parameter values
         For i As Integer = n To params.Length - 1
@@ -147,7 +155,7 @@ Public Class TaskBuilder : Implements ITaskDriver
         Catch ex As Exception
             Call PostError(ex)
         Finally
-            Call Console.WriteLine("job done!")
+            Call VBDebugger.EchoLine("job done!")
         End Try
 
         Return 0
@@ -174,7 +182,7 @@ Public Class TaskBuilder : Implements ITaskDriver
             searchPath:={stream.type.assembly}
         )
 
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
         Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
 #End If
 
@@ -222,9 +230,9 @@ Public Class TaskBuilder : Implements ITaskDriver
             )
 
             If TypeOf result Is IPCError Then
-                Call Console.WriteLine($"post error...")
+                Call VBDebugger.EchoLine($"post error...")
             Else
-                Call Console.WriteLine($"post result...")
+                Call VBDebugger.EchoLine($"post result...")
             End If
 
             Call New TcpRequest(masterHost, masterPort).SendMessage(request)
