@@ -3,7 +3,7 @@
 ''' define the application host information for the IPC parallel
 ''' </summary>
 ''' 
-Public Class AppHost : Inherits Attribute
+Public Class AppHost
 
     ''' <summary>
     ''' executable name of the application host
