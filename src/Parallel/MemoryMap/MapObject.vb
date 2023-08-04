@@ -116,6 +116,8 @@ Public Class MapObject : Implements IDisposable
         Dim bufferSize As Integer
         Dim hMem As String = If(hMemP.StringEmpty, App.GetNextUniqueName($"mem_{type.Name}_"), hMemP)
 
+        ' keeps the memory map file between the process during the runtime
+        ' via this private static symbol
         Static mapFiles As New Dictionary(Of String, MemoryMappedFile)
 
         Using ms As MemoryStream = BSONFormat.SafeGetBuffer(element)
