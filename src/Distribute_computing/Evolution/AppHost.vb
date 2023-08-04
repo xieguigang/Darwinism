@@ -28,4 +28,8 @@ Public Class AppHost
         Protocol = args
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"[{AppName}] {Protocol}"
+    End Function
+
 End Class
