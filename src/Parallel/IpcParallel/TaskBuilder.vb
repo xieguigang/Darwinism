@@ -44,10 +44,6 @@
 
 #End Region
 
-#If NETCOREAPP Then
-Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
-#End If
-
 Imports System.IO
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
@@ -57,6 +53,10 @@ Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Parallel.IpcStream
+
+#If NETCOREAPP Then
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
+#End If
 
 ''' <summary>
 ''' Run on slave node
