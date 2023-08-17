@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::1d940df528f4ea805c224c1e14fe7d99, Parallel\MemoryMap\MapObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MapObject
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: FromObject, FromPointer, GetObject
-    ' 
-    '     Sub: (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Class MapObject
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: FromObject, FromPointer, GetObject
+' 
+'     Sub: (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,12 +47,16 @@ Imports System.IO
 Imports System.IO.MemoryMappedFiles
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 
 ''' <summary>
 ''' 只能够在进程之间映射一个不大于2GB的对象
 ''' </summary>
+''' <remarks>
+''' this code module only works for windows platform
+''' </remarks>
 Public Class MapObject : Implements IDisposable
 
     Private disposedValue As Boolean
@@ -81,12 +85,27 @@ Public Class MapObject : Implements IDisposable
     ''' <returns></returns>
     Public Function GetObject(type As Type) As Object
         Dim obj As Object
-        Dim memory As MemoryMappedFile = MemoryMappedFile.OpenExisting(hMem)
-        Dim view As MemoryMappedViewStream = memory.CreateViewStream
+        Dim view As Stream = OpenFile()
 
         obj = BSONFormat.Load(view).CreateObject(type, decodeMetachar:=False)
 
         Return obj
+    End Function
+
+#Disable Warning
+    Public Function OpenFile() As Stream
+        Dim memory As MemoryMappedFile = MemoryMappedFile.OpenExisting(hMem)
+        Dim view As MemoryMappedViewStream = memory.CreateViewStream
+
+        Return view
+    End Function
+#Enable Warning
+
+    Public Shared Function FromPointer(hMem As String, Optional size As Integer = 0) As MapObject
+        Return New MapObject With {
+            .hMem = hMem,
+            .size = size
+        }
     End Function
 
     Public Shared Function FromPointer(mem As UnmanageMemoryRegion) As MapObject
@@ -96,13 +115,48 @@ Public Class MapObject : Implements IDisposable
         }
     End Function
 
+    ''' <summary>
+    ''' Test file exists?
+    ''' </summary>
+    ''' <param name="hMem"></param>
+    ''' <returns></returns>
     Public Shared Function Exists(hMem As String) As Boolean
         Try
+#Disable Warning
             Call MemoryMappedFile.OpenExisting(hMem)
+#Enable Warning
             Return True
         Catch ex As Exception
             Return False
         End Try
+    End Function
+
+    ''' <summary>
+    ''' Allocate an empty memory region
+    ''' </summary>
+    ''' <param name="bufferSize"></param>
+    ''' <param name="hMemP"></param>
+    ''' <returns></returns>
+    Public Shared Function Allocate(bufferSize As Integer, Optional hMemP As String = Nothing) As MapObject
+        Dim fileName As String = GetMapFileName(hMemP, GetType(MapObject))
+
+        Static files As New Dictionary(Of String, MemoryMappedFile)
+
+        Call files.ComputeIfAbsent(
+            key:=fileName,
+            lazyValue:=Function()
+                           Return MemoryMappedFile.CreateNew(fileName, bufferSize)
+                       End Function)
+
+        Return New MapObject With {
+            .hMem = fileName,
+            .size = bufferSize
+        }
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Shared Function GetMapFileName(hMemP As String, type As Type) As String
+        Return If(hMemP.StringEmpty, App.GetNextUniqueName($"mem_{type.Name}_"), hMemP)
     End Function
 
     ''' <summary>
@@ -114,7 +168,7 @@ Public Class MapObject : Implements IDisposable
         Dim type As Type = obj.GetType
         Dim element = type.GetJsonElement(obj, New JSONSerializerOptions)
         Dim bufferSize As Integer
-        Dim hMem As String = If(hMemP.StringEmpty, App.GetNextUniqueName($"mem_{type.Name}_"), hMemP)
+        Dim hMem As String = GetMapFileName(hMemP, type)
 
         ' keeps the memory map file between the process during the runtime
         ' via this private static symbol
@@ -125,7 +179,7 @@ Public Class MapObject : Implements IDisposable
 
             bufferSize = buffer.Length
 
-            ' 20210115 MemoryMappedFile.CreateNew not working on unix .net 5
+            ' 20210115 MemoryMappedFile.CreateNew not working on unix .net 6
             Dim hMemFile As MemoryMappedFile = MemoryMappedFile.CreateNew(hMem, bufferSize)
             Dim view As MemoryMappedViewStream = hMemFile.CreateViewStream
 
