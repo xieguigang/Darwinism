@@ -142,11 +142,13 @@ Public Class MapObject : Implements IDisposable
 
         Static files As New Dictionary(Of String, MemoryMappedFile)
 
-        Call files.ComputeIfAbsent(
-            key:=fileName,
-            lazyValue:=Function()
-                           Return MemoryMappedFile.CreateNew(fileName, bufferSize)
-                       End Function)
+        If Not Exists(fileName) Then
+            Call files.ComputeIfAbsent(
+                key:=fileName,
+                lazyValue:=Function()
+                               Return MemoryMappedFile.CreateNew(fileName, bufferSize)
+                           End Function)
+        End If
 
         Return New MapObject With {
             .hMem = fileName,
