@@ -73,6 +73,10 @@ Public Class MapObject : Implements IDisposable
     Private Sub New()
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"&H0x_{hMem}; {StringFormats.Lanudry(size)}"
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetMappingFileName() As String
         Return hMem
