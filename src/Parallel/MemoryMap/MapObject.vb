@@ -115,6 +115,10 @@ Public Class MapObject : Implements IDisposable
         }
     End Function
 
+    Public Shared Function Exists(hMem As MapObject) As Boolean
+        Return Exists(hMem.hMem)
+    End Function
+
     ''' <summary>
     ''' Test file exists?
     ''' </summary>
@@ -130,6 +134,14 @@ Public Class MapObject : Implements IDisposable
             Return False
         End Try
     End Function
+
+    Public Shared Sub Allocate(file As MapObject)
+        Try
+            Call Allocate(file.size, file.hMem)
+        Catch ex As Exception
+
+        End Try
+    End Sub
 
     ''' <summary>
     ''' Allocate an empty memory region
