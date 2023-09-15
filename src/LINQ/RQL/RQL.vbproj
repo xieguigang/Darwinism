@@ -243,6 +243,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NodeMap.vb" />
+    <Compile Include="Resource.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -286,6 +288,10 @@
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
       <Project>{c1413834-6eba-4668-b3e4-9dfa1edb9a5d}</Project>
       <Name>HDSPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{ae10f033-1ee2-44ef-af06-f1c81411d069}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{ef075a21-793b-45ed-9c38-ad5d04744aec}</Project>
