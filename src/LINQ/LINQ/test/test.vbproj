@@ -126,11 +126,5 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LINQ.vbproj">
-      <Project>{ab01b142-b535-4b90-a7d3-d663f61a559a}</Project>
-      <Name>LINQ</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
