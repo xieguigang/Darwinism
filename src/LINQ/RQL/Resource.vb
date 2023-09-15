@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -18,10 +19,26 @@ Public Class Resource : Implements IDisposable
         index = New IndexReader(res.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Read)).Read
     End Sub
 
+    Public Function Add(key As String, str As String)
+        Return Add(key, Encoding.UTF8.GetBytes(str))
+    End Function
+
+    Public Function ReadString(map As String) As String
+        Dim path As String = URL(map)
+        Dim file As Stream = buf.OpenFile(path, FileMode.Open, FileAccess.Read)
+        Dim bytes As Byte() = New Byte(file.Length - 1) {}
+        Call file.Read(bytes, Scan0, bytes.Length)
+        Return Encoding.UTF8.GetString(bytes)
+    End Function
+
+    Private Shared Function URL(map As String) As String
+        Return $"/pool/{map.Substring(4, 2)}/{map.Substring(16, 6)}/{map}"
+    End Function
+
     Public Function Add(key As String, data As Byte()) As Boolean
         Dim tokens As String() = Strings.LCase(key).Split
         Dim map As String = key.MD5
-        Dim path As String = $"/pool/{map.Substring(4, 2)}/{map.Substring(16, 6)}/{map}"
+        Dim path As String = URL(map)
 
         For Each si As String In tokens
             Dim v = index.Add(key)
