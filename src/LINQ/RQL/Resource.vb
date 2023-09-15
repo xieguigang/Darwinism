@@ -80,6 +80,10 @@ Public Class Resource : Implements IDisposable
             End If
 
             For Each map As String In v.child.data.resources
+                If Not maps.ContainsKey(map) Then
+                    Call maps.Add(map, 0)
+                End If
+
                 maps(map) += f
             Next
         Next

@@ -36,6 +36,7 @@ Public Class IndexReader
         node.ID = file.ReadInt32
         node.label = file.ReadString(BinaryStringFormat.ZeroTerminated)
         node.Childs = New Dictionary(Of Char, CharacterNode(Of NodeMap))
+        node.data = New NodeMap With {.resources = maps}
 
         n = file.ReadInt32
 
