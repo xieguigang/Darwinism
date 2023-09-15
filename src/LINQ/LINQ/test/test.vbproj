@@ -126,5 +126,39 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{62c4d50c-cf02-4f49-80a6-170bf92c331e}</Project>
+      <Name>binarydata-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
+      <Project>{c1413834-6eba-4668-b3e4-9dfa1edb9a5d}</Project>
+      <Name>HDSPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj">
+      <Project>{f93a76c1-68c1-45e6-a465-8947db9d52de}</Project>
+      <Name>netCDF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{4d8acc26-21fb-4968-8d70-e57bc009e437}</Project>
+      <Name>dataframework-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{ae10f033-1ee2-44ef-af06-f1c81411d069}</Project>
+      <Name>graph-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{ef075a21-793b-45ed-9c38-ad5d04744aec}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RQL\RQL.vbproj">
+      <Project>{5d750813-1d43-4e79-b461-55187cab11aa}</Project>
+      <Name>RQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LINQ.vbproj">
+      <Project>{7b43f652-7c1e-4c0b-97e6-5b11f30e7ec1}</Project>
+      <Name>LINQ</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
