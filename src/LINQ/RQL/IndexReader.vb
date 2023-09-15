@@ -11,7 +11,11 @@ Public Class IndexReader
     End Sub
 
     Public Function Read() As Trie(Of NodeMap)
-        Return New Trie(Of NodeMap)(Parse)
+        If file.EndOfStream Then
+            Return New Trie(Of NodeMap)
+        Else
+            Return New Trie(Of NodeMap)(Parse)
+        End If
     End Function
 
     Private Function Parse() As CharacterNode(Of NodeMap)
