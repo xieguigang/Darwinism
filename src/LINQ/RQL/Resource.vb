@@ -15,6 +15,7 @@ Public Class Resource : Implements IDisposable
 
     Sub New(res As StreamPack)
         buf = res
+        index = New IndexReader(res.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Read)).Read
     End Sub
 
     Public Function Add(key As String, data As Byte()) As Boolean
@@ -63,6 +64,18 @@ Public Class Resource : Implements IDisposable
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
+                Using ms As New MemoryStream
+                    Call New IndexWriter(ms).Write(index)
+                    Call ms.Flush()
+                    Call ms.Seek(Scan0, SeekOrigin.Begin)
+
+                    Dim file As Stream = buf.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Write)
+
+                    Call file.Write(ms.ToArray, Scan0, ms.Length)
+                    Call file.Flush()
+                    Call file.Dispose()
+                End Using
+
                 ' TODO: 释放托管状态(托管对象)
                 Call buf.Dispose()
             End If
