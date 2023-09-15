@@ -243,11 +243,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Repository.vb" />
-    <Compile Include="Repository\LinqEntry.vb" />
-    <Compile Include="Repository\LinqAPI.vb" />
-    <Compile Include="RESTProvider.vb" />
-    <Compile Include="Repository\Repository.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -263,10 +258,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="StorageTek\API.vb" />
-    <Compile Include="StorageTek\EntityProvider.vb" />
-    <Compile Include="StorageTek\LinqSource.vb" />
-    <Compile Include="StorageTek\StorageTeks.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -288,21 +279,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\httpd\WebCloud\SMRUCC.HTTPInternal\SMRUCC.WebCloud.HTTPInternal.vbproj">
-      <Project>{fbfc1455-b232-4f16-afc7-4054a8b864ab}</Project>
-      <Name>SMRUCC.WebCloud.HTTPInternal</Name>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{62c4d50c-cf02-4f49-80a6-170bf92c331e}</Project>
+      <Name>binarydata-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
+      <Project>{c1413834-6eba-4668-b3e4-9dfa1edb9a5d}</Project>
+      <Name>HDSPack</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ComputingServices\ComputingServices.vbproj">
-      <Project>{87383048-1b31-49b7-9fb7-0ded1b80ace8}</Project>
-      <Name>ComputingServices</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LINQ\LINQ\LINQ.vbproj">
-      <Project>{0a9b9fa6-e12d-48fd-b979-9f021a591e69}</Project>
-      <Name>LINQ</Name>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{ef075a21-793b-45ed-9c38-ad5d04744aec}</Project>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
