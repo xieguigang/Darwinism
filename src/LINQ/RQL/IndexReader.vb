@@ -12,7 +12,9 @@ Public Class IndexReader
 
     Public Function Read() As Trie(Of NodeMap)
         If file.EndOfStream Then
-            Return New Trie(Of NodeMap)
+            Dim tree As New Trie(Of NodeMap)
+            tree.Root.data = New NodeMap With {.resources = New List(Of String)}
+            Return tree
         Else
             Return New Trie(Of NodeMap)(Parse)
         End If

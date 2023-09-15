@@ -15,6 +15,10 @@ Public Class IndexWriter
     End Sub
 
     Public Sub Write(node As CharacterNode(Of NodeMap))
+        If node.data Is Nothing Then
+            node.data = New NodeMap With {.resources = New List(Of String)}
+        End If
+
         Call file.Write(node.Character)
         Call file.Write(node.Ends)
         Call file.Write(node.data.size)

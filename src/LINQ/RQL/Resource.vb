@@ -45,7 +45,7 @@ Public Class Resource : Implements IDisposable
             Dim page As NodeMap = v.data
 
             If page Is Nothing Then
-                v.data = New NodeMap
+                v.data = New NodeMap With {.resources = New List(Of String)}
                 page = v.data
             End If
 
