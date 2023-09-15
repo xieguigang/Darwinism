@@ -15,8 +15,11 @@ Public Class Resource : Implements IDisposable
     Private disposedValue As Boolean
 
     Sub New(res As StreamPack)
+        Dim indexfile = res.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Read)
+        Dim parser As New IndexReader(indexfile)
+
         buf = res
-        index = New IndexReader(res.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Read)).Read
+        index = parser.Read
     End Sub
 
     Public Function Add(key As String, str As String)
@@ -70,6 +73,10 @@ Public Class Resource : Implements IDisposable
 
             If v.success Then
                 f = 1
+            End If
+
+            If v.child.data Is Nothing Then
+                v.child.data = New NodeMap With {.resources = New List(Of String)}
             End If
 
             For Each map As String In v.child.data.resources
