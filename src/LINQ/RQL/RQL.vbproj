@@ -243,6 +243,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IndexWriter.vb" />
+    <Compile Include="IndexReader.vb" />
     <Compile Include="NodeMap.vb" />
     <Compile Include="Resource.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

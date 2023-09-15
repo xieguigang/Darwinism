@@ -1,0 +1,3 @@
+﻿Module IndexWriter
+
+End Module
