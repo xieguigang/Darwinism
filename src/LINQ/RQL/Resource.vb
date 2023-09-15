@@ -41,8 +41,13 @@ Public Class Resource : Implements IDisposable
         Dim path As String = URL(map)
 
         For Each si As String In tokens
-            Dim v = index.Add(key)
+            Dim v = index.Add(si)
             Dim page As NodeMap = v.data
+
+            If page Is Nothing Then
+                v.data = New NodeMap
+                page = v.data
+            End If
 
             Call page.resources.Add(map)
         Next
