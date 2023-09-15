@@ -4,6 +4,10 @@
     <RootNamespace>RQL</RootNamespace>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <UseApplicationFramework>True</UseApplicationFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>The Resource Query Language</Title>
   </PropertyGroup>
 
   <ItemGroup>
