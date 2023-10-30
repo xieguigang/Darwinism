@@ -68,9 +68,9 @@ Public Class Resource : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Associates a resource <paramref name="data"/> with a given query <paramref name="key"/>.
     ''' </summary>
-    ''' <param name="key">The query key, could be any text</param>
+    ''' <param name="key">The query key, could be any text.(SHOULD NOT BE EMPTY!)</param>
     ''' <param name="data">the data for store in the database and associated with
     ''' given query text data <paramref name="key"/>, the unique reference key of
     ''' this resource data is generated via a specific hash algorithm based on 
