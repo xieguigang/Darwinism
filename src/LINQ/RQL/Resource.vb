@@ -17,6 +17,12 @@ Public Class Resource : Implements IDisposable
 
     Private disposedValue As Boolean
 
+    Public ReadOnly Property Archive As StreamPack
+        Get
+            Return buf
+        End Get
+    End Property
+
     Sub New(res As StreamPack)
         Dim indexfile = res.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Read)
         Dim parser As New IndexReader(indexfile)
@@ -25,27 +31,55 @@ Public Class Resource : Implements IDisposable
         index = parser.Read
     End Sub
 
+    ''' <summary>
+    ''' Add a string resource into current arhive file, 
+    ''' and associated this string resource data with
+    ''' a given <paramref name="key"/> value.
+    ''' </summary>
+    ''' <param name="key"></param>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Add(key As String, str As String)
         Return Add(key, Encoding.UTF8.GetBytes(str))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function ReadString(map As String) As String
-        Return Encoding.UTF8.GetString(ReadBuffer(map))
+    Public Function ReadString(map As String, Optional category As String = "") As String
+        Return Encoding.UTF8.GetString(ReadBuffer(map, category))
     End Function
 
-    Public Function ReadBuffer(map As String) As Byte()
-        Dim path As String = URL(map)
+    ''' <summary>
+    ''' Read the resource pack data from the archive via a given resource map key
+    ''' </summary>
+    ''' <param name="map">A resource key which is <see cref="Get(String)"/> from
+    ''' the archive index via a given query text</param>
+    ''' <param name="category"></param>
+    ''' <returns>
+    ''' this function just returns nothing if the given resource 
+    ''' is not exists inside of current archive file.
+    ''' </returns>
+    Public Function ReadBuffer(map As String, Optional category As String = "") As Byte()
+        Dim path As String = URL(map, category)
+
+        If Not buf.FileExists(path) Then
+            Return Nothing
+        End If
+
         Dim file As Stream = buf.OpenFile(path, FileMode.Open, FileAccess.Read)
         Dim bytes As Byte() = New Byte(file.Length - 1) {}
         Call file.Read(bytes, Scan0, bytes.Length)
         Return bytes
     End Function
 
+    ''' <summary>
+    ''' generates the internal package resource reference url
+    ''' </summary>
+    ''' <param name="map"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function URL(map As String) As String
-        Return $"/pool/{map.Substring(4, 2)}/{map.Substring(16, 6)}/{map}"
+    Private Shared Function URL(map As String, category As String) As String
+        Return $"/pool/{category}/{map.Substring(4, 2)}/{map.Substring(16, 6)}/{map}"
     End Function
 
     Public Shared Function GetHashKey(data As Byte()) As String
@@ -76,21 +110,24 @@ Public Class Resource : Implements IDisposable
     ''' this resource data is generated via a specific hash algorithm based on 
     ''' this data payload.</param>
     ''' <returns></returns>
-    Public Function Add(key As String, data As Byte()) As Boolean
+    Public Function Add(key As String, data As Byte(), Optional category As String = "") As Boolean
         Dim tokens As String() = Strings.LCase(key).Split
         Dim map As String = GetHashKey(data)
-        Dim path As String = URL(map)
+        Dim path As String = URL(map, category)
 
         For Each si As String In tokens
-            Dim v = index.Add(si)
-            Dim page As NodeMap = v.data
+            For len As Integer = 1 To si.Length - 1
+                Dim sij = si.Substring(0, len)
+                Dim v = index.Add(sij)
+                Dim page As NodeMap = v.data
 
-            If page Is Nothing Then
-                v.data = New NodeMap With {.resources = New List(Of String)}
-                page = v.data
-            End If
+                If page Is Nothing Then
+                    v.data = New NodeMap With {.resources = New List(Of String)}
+                    page = v.data
+                End If
 
-            Call page.resources.Add(map)
+                Call page.add(map)
+            Next
         Next
 
         Dim file As Stream = buf.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write)
