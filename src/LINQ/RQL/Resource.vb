@@ -23,8 +23,13 @@ Public Class Resource : Implements IDisposable
         End Get
     End Property
 
+    ''' <summary>
+    ''' the tree index
+    ''' </summary>
+    Const indexfile As String = "/index.dat"
+
     Sub New(res As StreamPack)
-        Dim indexfile = res.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Read)
+        Dim indexfile = res.OpenFile(Resource.indexfile, FileMode.OpenOrCreate, FileAccess.Read)
         Dim parser As New IndexReader(indexfile)
 
         buf = res
@@ -111,6 +116,10 @@ Public Class Resource : Implements IDisposable
     ''' this data payload.</param>
     ''' <returns></returns>
     Public Function Add(key As String, data As Byte(), Optional category As String = "") As Boolean
+        If key.StringEmpty Then
+            Return False
+        End If
+
         Dim tokens As String() = Strings.LCase(key).Split
         Dim map As String = GetHashKey(data)
         Dim path As String = URL(map, category)
@@ -184,20 +193,28 @@ Public Class Resource : Implements IDisposable
                Order By o.tag Descending
     End Function
 
+    Private Sub saveTreeIndex()
+        Using ms As New MemoryStream
+            Call New IndexWriter(ms).Write(index)
+            Call ms.Flush()
+            Call ms.Seek(Scan0, SeekOrigin.Begin)
+
+            Call buf.Delete(indexfile)
+
+            Dim file As Stream = buf.OpenFile(indexfile, FileMode.OpenOrCreate, FileAccess.Write)
+
+            Call file.Write(ms.ToArray, Scan0, ms.Length)
+            Call file.Flush()
+            Call file.Dispose()
+        End Using
+    End Sub
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
-                Using ms As New MemoryStream
-                    Call New IndexWriter(ms).Write(index)
-                    Call ms.Flush()
-                    Call ms.Seek(Scan0, SeekOrigin.Begin)
-
-                    Dim file As Stream = buf.OpenFile("/index.dat", FileMode.OpenOrCreate, FileAccess.Write)
-
-                    Call file.Write(ms.ToArray, Scan0, ms.Length)
-                    Call file.Flush()
-                    Call file.Dispose()
-                End Using
+                If Not buf.is_readonly Then
+                    Call saveTreeIndex()
+                End If
 
                 ' TODO: 释放托管状态(托管对象)
                 Call buf.Dispose()
