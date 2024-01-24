@@ -1,8 +1,8 @@
-﻿Imports Microsoft.VisualBasic.Math
+﻿Imports batch
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Parallel
 Imports rnd = Microsoft.VisualBasic.Math.RandomExtensions
-Imports snowFall.Protocol
 
 Module clr_parallelTask_demo
 
@@ -16,7 +16,7 @@ Module clr_parallelTask_demo
         Return sum
     End Function
 
-    Sub Main()
+    Sub Main2()
         Dim width As Integer = 1000
         Dim pool As vectorData() = New vectorData(1000) {}
         Dim v As Double()

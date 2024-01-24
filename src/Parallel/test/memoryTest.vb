@@ -48,7 +48,7 @@ Imports Parallel
 
 Module memoryTest
 
-    Sub Main()
+    Sub Main1()
 
         Console.WriteLine("1 for host and 2 for client")
 
