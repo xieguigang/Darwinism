@@ -79,6 +79,7 @@ Namespace ThreadTask
         ''' <param name="debugMode">
         ''' if this option is set to TRUE, then task will always running in sequence mode
         ''' </param>
+        ''' <param name="taskInterval">thread sleep time in ms, interval for run parallel task</param>
         Sub New(task As IEnumerable(Of Func(Of TOut)),
                 Optional debugMode As Boolean = False,
                 Optional verbose As Boolean = True,

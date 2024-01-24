@@ -1,0 +1,19 @@
+﻿Imports Microsoft.VisualBasic.MIME.application.json
+Imports Parallel
+
+Public Class Argument
+
+    Public Property debugPort As Integer? = Nothing
+    Public Property verbose As Boolean = False
+    Public Property ignoreError As Boolean = False
+    Public Property n_threads As Integer = 32
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+
+    Public Function CreateHost() As SlaveTask
+        Return Host.CreateSlave(debugPort, verbose:=verbose, ignoreError:=ignoreError)
+    End Function
+
+End Class

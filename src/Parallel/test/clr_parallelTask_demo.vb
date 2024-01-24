@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Parallel
+Imports Parallel.IpcStream
 Imports rnd = Microsoft.VisualBasic.Math.RandomExtensions
 
 Module clr_parallelTask_demo
@@ -26,7 +27,13 @@ Module clr_parallelTask_demo
             pool(i) = New vectorData With {.Data = v}
         Next
 
+        Call Console.WriteLine("memory data create job done!")
+        Call Console.WriteLine("create parallrl task...")
+
         Dim snowFall As SlaveTask = Host.CreateSlave(verbose:=True)
+        Dim memory_symbol1 As SocketRef = SocketRef.WriteBuffer(pool)
+
+
     End Sub
 End Module
 

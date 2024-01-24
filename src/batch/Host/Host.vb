@@ -1,5 +1,7 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.InteropService
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Parallel
+Imports Parallel.IpcStream
 
 Public Module Host
 
@@ -7,8 +9,14 @@ Public Module Host
     ''' Create a slave task factory
     ''' </summary>
     ''' <returns></returns>
-    Public Function CreateSlave(Optional debugPort As Integer? = Nothing, Optional verbose As Boolean = False) As SlaveTask
-        Return New SlaveTask(Host.GetCurrentThread, cli:=AddressOf Host.SlaveTask, debugPort, verbose:=verbose)
+    Public Function CreateSlave(Optional debugPort As Integer? = Nothing,
+                                Optional verbose As Boolean = False,
+                                Optional ignoreError As Boolean = False) As SlaveTask
+
+        Return New SlaveTask(Host.GetCurrentThread, cli:=AddressOf Host.SlaveTask,
+                             debugPort:=debugPort,
+                             verbose:=verbose,
+                             ignoreError:=ignoreError)
     End Function
 
     ''' <summary>
@@ -42,8 +50,25 @@ Public Module Host
     ''' <param name="master"></param>
     ''' <param name="port"></param>
     ''' <returns></returns>
-    Public Function Solve(master As String, port As Integer) As Integer
+    Friend Function Solve(master As String, port As Integer) As Integer
         Return New TaskBuilder(port, master).Run
     End Function
 
+    <Extension>
+    Public Function ParallelFor(Of T)(par As Argument, task As [Delegate], [loop] As SocketRef(), ParamArray args As SocketRef()) As IEnumerable(Of T)
+        Dim foreach As New ParallelFor(Of T)(par)
+        Dim run = batch.ParallelFor(Of T).CreateFunction(par, task, [loop], args)
+
+        Return foreach.GetResult(run)
+    End Function
+
+    <Extension>
+    Friend Sub SetRange(ByRef args As SocketRef(), appendAfter As SocketRef(), offset As Integer)
+        For i As Integer = 0 To appendAfter.Length - 1
+            args(i + offset) = appendAfter(i)
+        Next
+    End Sub
+
 End Module
+
+
