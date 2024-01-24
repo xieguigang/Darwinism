@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4044F411-6E9E-47BF-8E5D-B2C2B1A9C637}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.memoryTest</StartupObject>
+    <StartupObject>test.clr_parallelTask_demo</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="memoryTest.vb" />
+    <Compile Include="clr_parallelTask_demo.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
