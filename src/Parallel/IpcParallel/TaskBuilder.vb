@@ -73,6 +73,12 @@ Public Class TaskBuilder : Implements ITaskDriver
         masterHost = master
     End Sub
 
+    ''' <summary>
+    ''' get parameter values
+    ''' </summary>
+    ''' <param name="params"></param>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
     Private Iterator Function GetParameters(params As ParameterInfo(), n As Integer) As IEnumerable(Of Object)
         For i As Integer = 0 To n - 1
             Dim par As Object = GetArgumentValue(i)

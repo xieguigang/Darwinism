@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.MIME.application.json
+Imports Parallel
 Imports Parallel.IpcStream
 Imports rnd = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -18,6 +19,10 @@ Module clr_parallelTask_demo
     End Function
 
     Sub Main2()
+        Call runParallel()
+    End Sub
+
+    Private Function generateDemoData() As vectorData()
         Dim width As Integer = 1000
         Dim pool As vectorData() = New vectorData(1000) {}
         Dim v As Double()
@@ -28,6 +33,13 @@ Module clr_parallelTask_demo
         Next
 
         Call Console.WriteLine("memory data create job done!")
+
+        Return pool
+    End Function
+
+    Private Sub runParallel()
+        Dim pool = generateDemoData()
+
         Call Console.WriteLine("create parallrl task...")
 
         Dim args As New Argument(4)
