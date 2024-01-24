@@ -1,6 +1,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Parallel.ThreadTask
 
 Module Program
@@ -11,6 +12,15 @@ Module Program
             executeFile:=AddressOf Program.runJobs,
             executeEmpty:=AddressOf showHelp
         )
+    End Function
+
+    <ExportAPI("/parallel")>
+    <Usage("--port <port_number> [--master <master_node_ipaddress, default=""localhost"">]")>
+    Public Function runParallel(args As CommandLine) As Integer
+        Dim port As Integer = args <= "--port"
+        Dim master As String = args("--master") Or "localhost"
+
+        Return Host.Solve(master, port)
     End Function
 
     Private Function showHelp() As Integer

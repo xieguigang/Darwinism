@@ -52,6 +52,12 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Parallel.IpcStream
 
+''' <summary>
+''' generates the commandline string not contains the executable file path
+''' </summary>
+''' <param name="processor"></param>
+''' <param name="port"></param>
+''' <returns></returns>
 Public Delegate Function ISlaveTask(processor As InteropService, port As Integer) As String
 
 ''' <summary>
@@ -67,6 +73,16 @@ Public Class SlaveTask
 
     Friend ReadOnly streamBuf As New StreamEmit
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="processor"></param>
+    ''' <param name="cli">function delegate to generates a commandline for run 
+    ''' a parallel task. this commandline string should not contains the 
+    ''' executable file path.</param>
+    ''' <param name="debugPort"></param>
+    ''' <param name="ignoreError"></param>
+    ''' <param name="verbose"></param>
     <DebuggerStepThrough>
     Sub New(processor As InteropService, cli As ISlaveTask,
             Optional debugPort As Integer? = Nothing,
@@ -179,7 +195,7 @@ RE0:
             Call Console.WriteLine($"[{hostIndex.ToHexString}] [EXEC] {processor} {commandlineArgvs}")
         End If
 
-#If netcore5 = 0 Then
+#If NET48 Then
         stdout = CommandLine.Call(processor, commandlineArgvs)
 #Else
         stdout = CommandLine.Call(processor, commandlineArgvs, dotnet:=True, debug:=Not debugPort Is Nothing)
