@@ -1,7 +1,7 @@
 ﻿Imports batch
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports Parallel
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Parallel.IpcStream
 Imports rnd = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -30,10 +30,13 @@ Module clr_parallelTask_demo
         Call Console.WriteLine("memory data create job done!")
         Call Console.WriteLine("create parallrl task...")
 
-        Dim snowFall As SlaveTask = Host.CreateSlave(verbose:=True)
+        Dim args As New Argument(4)
         Dim memory_symbol1 As SocketRef = SocketRef.WriteBuffer(pool)
+        Dim result = Host.ParallelFor(Of vectorData, Double())(args, New Func(Of vectorData, vectorData(), Double())(AddressOf compute_function), pool, memory_symbol1)
 
-
+        For Each item In result
+            Call Console.WriteLine(item.GetJson)
+        Next
     End Sub
 End Module
 

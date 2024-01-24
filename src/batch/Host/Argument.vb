@@ -8,6 +8,13 @@ Public Class Argument
     Public Property ignoreError As Boolean = False
     Public Property n_threads As Integer = 32
 
+    Sub New()
+    End Sub
+
+    Sub New(n_threads As Integer)
+        Me.n_threads = n_threads
+    End Sub
+
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function

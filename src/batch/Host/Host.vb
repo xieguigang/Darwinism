@@ -55,9 +55,12 @@ Public Module Host
     End Function
 
     <Extension>
-    Public Function ParallelFor(Of T)(par As Argument, task As [Delegate], [loop] As SocketRef(), ParamArray args As SocketRef()) As IEnumerable(Of T)
+    Public Function ParallelFor(Of I, T)(par As Argument, task As [Delegate], [loop] As I(), ParamArray args As SocketRef()) As IEnumerable(Of T)
         Dim foreach As New ParallelFor(Of T)(par)
-        Dim run = batch.ParallelFor(Of T).CreateFunction(par, task, [loop], args)
+        Dim loopVal As SocketRef() = [loop] _
+            .Select(Function(obj) SocketRef.WriteBuffer(obj)) _
+            .ToArray
+        Dim run = batch.ParallelFor(Of T).CreateFunction(par, task, loopVal, args)
 
         Return foreach.GetResult(run)
     End Function
