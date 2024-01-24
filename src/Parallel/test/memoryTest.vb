@@ -46,7 +46,7 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Parallel
 
-Module Module1
+Module memoryTest
 
     Sub Main()
 
