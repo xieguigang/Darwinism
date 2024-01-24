@@ -18,7 +18,10 @@ Public Class ParallelFor(Of T)
     End Sub
 
     Public Iterator Function GetResult(task As IEnumerable(Of Func(Of T))) As IEnumerable(Of T)
-        Dim [for] As New ThreadTask(Of T)(task, debugMode:=debugMode, verbose:=args.verbose, taskInterval:=1000)
+        Dim [for] As New ThreadTask(Of T)(task,
+            debugMode:=debugMode,
+            verbose:=args.verbose,
+            taskInterval:=args.thread_interval)
 
         For Each yout As T In [for] _
             .WithDegreeOfParallelism(args.n_threads) _

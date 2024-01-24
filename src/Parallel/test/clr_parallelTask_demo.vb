@@ -42,7 +42,7 @@ Module clr_parallelTask_demo
 
         Call Console.WriteLine("create parallrl task...")
 
-        Dim args As New Argument(4) With {.ignoreError = False, .verbose = True, .debugPort = 15699}
+        Dim args As New Argument(8) With {.ignoreError = False, .verbose = True}
         Dim memory_symbol1 As SocketRef = SocketRef.WriteBuffer(pool)
         Dim result = Host.ParallelFor(Of vectorData, Double())(args, New Func(Of vectorData, vectorData(), Double())(AddressOf compute_function), pool, memory_symbol1)
 

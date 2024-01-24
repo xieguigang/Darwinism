@@ -7,6 +7,7 @@ Public Class Argument
     Public Property verbose As Boolean = False
     Public Property ignoreError As Boolean = False
     Public Property n_threads As Integer = 32
+    Public Property thread_interval As Integer = 300
 
     Sub New()
     End Sub
