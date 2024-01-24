@@ -5,13 +5,14 @@
     <RootNamespace>batch</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Title>Parallel Batch</Title>
+    <Title>Parallel Batch Runtime Host</Title>
     <Authors>xieguigang</Authors>
     <Product>Parallel</Product>
     <Description>Run bash command in batch and parallel</Description>
     <Platforms>AnyCPU;x64</Platforms>
     <OutputPath>../../build/</OutputPath>
     <Configurations>Debug;Release;Docker;Rsharp_app_release</Configurations>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
