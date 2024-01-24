@@ -14,6 +14,11 @@ Module Program
         )
     End Function
 
+    ''' <summary>
+    ''' implements an internal parallel host for clr function
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/parallel")>
     <Usage("--port <port_number> [--master <master_node_ipaddress, default=""localhost"">]")>
     Public Function runParallel(args As CommandLine) As Integer
