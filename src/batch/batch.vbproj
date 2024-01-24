@@ -11,11 +11,15 @@
     <Description>Run bash command in batch and parallel</Description>
     <Platforms>AnyCPU;x64</Platforms>
     <OutputPath>../../build/</OutputPath>
-    <Configurations>Debug;Release;Docker;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;Docker;Rsharp_app_release;PlantMAT</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <OutputPath>../../../../R-sharp/App</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
     <OutputPath>../../../../R-sharp/App</OutputPath>
   </PropertyGroup>
   
