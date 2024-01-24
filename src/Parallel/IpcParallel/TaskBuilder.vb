@@ -66,11 +66,21 @@ Public Class TaskBuilder : Implements ITaskDriver
     ReadOnly masterPort As Integer
     ReadOnly masterHost As String
     ReadOnly emit As New StreamEmit
+    ReadOnly timeout_sec As Double = 15
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="port"></param>
+    ''' <param name="master"></param>
+    ''' <param name="timeout">
+    ''' the tcp request timeout value in time data unit ``seconds``.
+    ''' </param>
     <DebuggerStepThrough>
-    Sub New(port As Integer, Optional master As String = "localhost")
+    Sub New(port As Integer, Optional master As String = "localhost", Optional timeout As Double = 15)
         masterPort = port
         masterHost = master
+        timeout_sec = timeout
     End Sub
 
     ''' <summary>
@@ -154,7 +164,9 @@ Public Class TaskBuilder : Implements ITaskDriver
         End Try
 
         ' send debug message
-        Call New TcpRequest(masterHost, masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
+        Call New TcpRequest(masterHost, masterPort) _
+            .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
 
         Try
             Call PostFinished(api.Invoke(target, args), Protocols.PostResult)
@@ -168,14 +180,18 @@ Public Class TaskBuilder : Implements ITaskDriver
     End Function
 
     Private Function GetArgumentValueNumber() As Integer
-        Dim resp = New TcpRequest(masterHost, masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentNumber))
+        Dim resp = New TcpRequest(masterHost, masterPort) _
+            .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentNumber))
         Dim n As Integer = BitConverter.ToInt32(resp.ChunkBuffer, Scan0)
 
         Return n
     End Function
 
     Private Function GetMethod() As IDelegate
-        Dim resp = New TcpRequest(masterHost, masterPort).SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetTask))
+        Dim resp = New TcpRequest(masterHost, masterPort) _
+            .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetTask))
         Dim json As String = resp.GetUTF8String
         Dim target As IDelegate = json.LoadJSON(Of IDelegate)
 
@@ -204,7 +220,9 @@ Public Class TaskBuilder : Implements ITaskDriver
     ''' <returns></returns>
     Private Function GetArgumentValue(i As Integer) As Object
         Dim request As New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i))
-        Dim resp = New TcpRequest(masterHost, masterPort).SendMessage(request)
+        Dim resp = New TcpRequest(masterHost, masterPort) _
+            .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SendMessage(request)
         Dim stream As New ObjectStream(resp.ChunkBuffer)
 
         If stream.IsNothing Then
@@ -241,7 +259,9 @@ Public Class TaskBuilder : Implements ITaskDriver
                 Call VBDebugger.EchoLine($"post result...")
             End If
 
-            Call New TcpRequest(masterHost, masterPort).SendMessage(request)
+            Call New TcpRequest(masterHost, masterPort) _
+                .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+                .SendMessage(request)
         End Using
     End Sub
 End Class

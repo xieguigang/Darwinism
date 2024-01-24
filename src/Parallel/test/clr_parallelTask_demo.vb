@@ -24,7 +24,7 @@ Module clr_parallelTask_demo
 
     Private Function generateDemoData() As vectorData()
         Dim width As Integer = 1000
-        Dim pool As vectorData() = New vectorData(1000) {}
+        Dim pool As vectorData() = New vectorData(10000) {}
         Dim v As Double()
 
         For i As Integer = 0 To pool.Length - 1
