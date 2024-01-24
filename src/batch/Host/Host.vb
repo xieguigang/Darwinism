@@ -41,7 +41,7 @@ Public Module Host
     ''' <param name="port"></param>
     ''' <returns></returns>
     Private Function SlaveTask(host As InteropService, port As Integer) As String
-        Return $"--port {port} --master ""localhost"" /@set --internal_pipeline=true"
+        Return $"/parallel --port {port} --master ""localhost"" /@set --internal_pipeline=true"
     End Function
 
     ''' <summary>
