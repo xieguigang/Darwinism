@@ -130,6 +130,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\R-sharp\snowFall\snowFall-netcore5.vbproj">
+      <Project>{6a4c95ab-b199-4518-a934-f90421257106}</Project>
+      <Name>snowFall-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
       <Project>{4fb5985b-a2ed-4cb0-9d74-047a528cd022}</Project>
       <Name>binarydata-netcore5</Name>

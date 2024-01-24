@@ -1,6 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Parallel
 Imports rnd = Microsoft.VisualBasic.Math.RandomExtensions
+Imports snowFall.Protocol
 
 Module clr_parallelTask_demo
 
@@ -24,7 +26,7 @@ Module clr_parallelTask_demo
             pool(i) = New vectorData With {.Data = v}
         Next
 
-
+        Dim snowFall As SlaveTask = Host.CreateSlave(verbose:=True)
     End Sub
 End Module
 
