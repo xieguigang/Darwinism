@@ -12,7 +12,7 @@ Public Module VectorMath
 
     End Sub
 
-    <EmitStream(GetType(VectorFile))>
+    <EmitStream(GetType(VectorFile), Target:=GetType(ClusterEntity()))>
     Private Function totalDistance(parts As ClusterEntity(), alldata As ClusterEntity()) As Double()
         Dim sum_total As Double() = New Double(parts.Length - 1) {}
 

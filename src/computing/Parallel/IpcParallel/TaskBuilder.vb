@@ -53,6 +53,8 @@ Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Parallel.IpcStream
+Imports System.Runtime.InteropServices
+
 
 #If NETCOREAPP Then
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
@@ -119,13 +121,27 @@ Public Class TaskBuilder : Implements ITaskDriver
     ''' <param name="target"></param>
     ''' <param name="args"></param>
     ''' <returns></returns>
-    Private Function Initialize(ByRef api As MethodInfo, ByRef target As Object, ByRef args As Object()) As Integer
+    Private Function Initialize(<Out> ByRef api As MethodInfo,
+                                <Out> ByRef target As Object,
+                                <Out> ByRef args As Object()) As Integer
+
         Dim task As IDelegate = GetMethod()
         Dim params As ParameterInfo()
+        Dim emits As EmitStreamAttribute()
 
+        ' .net clr reflection code for get task context
         api = task.GetMethod
+        emits = api.GetCustomAttributes(Of EmitStreamAttribute).ToArray
         params = api.GetParameters
         target = task.GetMethodTarget
+
+        If Not emits.IsNullOrEmpty Then
+            For Each type As EmitStreamAttribute In emits
+                If Not type.Target Is Nothing Then
+                    Call emit.Emit(type.Target, StreamEmit.CreateHandler(type))
+                End If
+            Next
+        End If
 
         Dim n As Integer = GetArgumentValueNumber()
         Dim argList As New List(Of Object)(GetParameters(params, n))
@@ -138,7 +154,7 @@ Public Class TaskBuilder : Implements ITaskDriver
             If Not params(i).IsOptional Then
                 Return PostError(New Exception($"missing parameter value for [{i}]{params(i).Name}!"))
             Else
-                argList.Add(params(i).DefaultValue)
+                Call argList.Add(params(i).DefaultValue)
             End If
         Next
 
@@ -179,6 +195,11 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return 0
     End Function
 
+    ''' <summary>
+    ''' just get the number of the arguments that passed.
+    ''' (due to the reason of optional parameters) 
+    ''' </summary>
+    ''' <returns></returns>
     Private Function GetArgumentValueNumber() As Integer
         Dim resp = New TcpRequest(masterHost, masterPort) _
             .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
@@ -188,6 +209,10 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return n
     End Function
 
+    ''' <summary>
+    ''' get target task function from the master node via TCP request
+    ''' </summary>
+    ''' <returns></returns>
     Private Function GetMethod() As IDelegate
         Dim resp = New TcpRequest(masterHost, masterPort) _
             .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
@@ -198,6 +223,11 @@ Public Class TaskBuilder : Implements ITaskDriver
         Return target
     End Function
 
+    ''' <summary>
+    ''' object is created via the module symbol: <see cref="emit"/>
+    ''' </summary>
+    ''' <param name="stream"></param>
+    ''' <returns></returns>
     Private Function FromStream(stream As ObjectStream) As Object
         Dim type As Type = stream.type.GetType(
             knownFirst:=True,

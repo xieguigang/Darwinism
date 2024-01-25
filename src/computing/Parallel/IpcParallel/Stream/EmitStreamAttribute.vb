@@ -54,6 +54,12 @@ Public Class EmitStreamAttribute : Inherits Attribute
     Public ReadOnly Property Handler As Type
 
     ''' <summary>
+    ''' the target object type for create file i/o via the functions inside <see cref="Handler"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Target As Type
+
+    ''' <summary>
     ''' the handler type should implements the interface <see cref="IEmitStream"/>
     ''' </summary>
     ''' <param name="handler"></param>

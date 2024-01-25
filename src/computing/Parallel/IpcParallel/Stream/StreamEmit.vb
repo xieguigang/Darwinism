@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::fd22cd7fc0597f451c12b76376ad5261, Parallel\IpcParallel\Stream\StreamEmit.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class StreamEmit
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Emit, getHandler, (+2 Overloads) handleCreate, handleSerialize
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class StreamEmit
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+2 Overloads) Emit, getHandler, (+2 Overloads) handleCreate, handleSerialize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -91,6 +91,22 @@ Namespace IpcStream
             Return Me
         End Function
 
+        Public Function Emit(t As Type, streamAs As Func(Of Object, Stream)) As StreamEmit
+            toBuffers(t) = New toBuffer(AddressOf streamAs.Invoke)
+            Return Me
+        End Function
+
+        Public Function Emit(t As Type, fromStream As Func(Of Stream, Object)) As StreamEmit
+            loadBuffers(t) = New loadBuffer(AddressOf fromStream.Invoke)
+            Return Me
+        End Function
+
+        Public Function Emit(t As Type, file As IEmitStream) As StreamEmit
+            toBuffers(t) = New toBuffer(AddressOf file.WriteBuffer)
+            loadBuffers(t) = New loadBuffer(AddressOf file.ReadBuffer)
+            Return Me
+        End Function
+
         ''' <summary>
         ''' add handler for creates the clr object from the file stream data
         ''' </summary>
@@ -115,7 +131,7 @@ Namespace IpcStream
                 ElseIf emitCache.ContainsKey(type) Then
                     Return emitCache(type).ReadBuffer(buf)
                 Else
-                    Dim handler As IEmitStream = getHandler(type)
+                    Dim handler As IEmitStream = GetHandler(type)
 
                     If Not handler Is Nothing Then
                         emitCache.Add(type, handler)
@@ -136,23 +152,27 @@ Namespace IpcStream
         ''' <summary>
         ''' try to get the stream data function
         ''' </summary>
-        ''' <param name="type"></param>
+        ''' <param name="type">target object type for save/read of a stream file.</param>
         ''' <returns></returns>
-        Private Function getHandler(type As Type) As IEmitStream
+        Public Shared Function GetHandler(type As Type) As IEmitStream
             Dim attr As EmitStreamAttribute = CType(type, System.Reflection.TypeInfo) _
                 .GetCustomAttributes(Of EmitStreamAttribute) _
                 .FirstOrDefault
 
             If attr Is Nothing Then
                 Return Nothing
+            Else
+                Return CreateHandler(attr)
             End If
+        End Function
 
-            type = attr.Handler
+        Public Shared Function CreateHandler(attr As EmitStreamAttribute) As IEmitStream
+            Dim type As Type = attr.Handler
 
-            If Not type.ImplementInterface(Of IEmitStream) Then
+            If Not Type.ImplementInterface(Of IEmitStream) Then
                 Return Nothing
             Else
-                Return Activator.CreateInstance(type)
+                Return Activator.CreateInstance(Type)
             End If
         End Function
 
@@ -174,7 +194,7 @@ Namespace IpcStream
                 method = StreamMethods.Auto
                 buf = emitCache(type).WriteBuffer(param)
             Else
-                Dim handler As IEmitStream = getHandler(type)
+                Dim handler As IEmitStream = GetHandler(type)
 
                 If Not handler Is Nothing Then
                     emitCache.Add(type, handler)
