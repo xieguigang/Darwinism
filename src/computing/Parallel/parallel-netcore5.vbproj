@@ -22,6 +22,9 @@
     <Authors>xie.guigang@gcmodeller.org</Authors>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+
+    <OutputPath>../../../../../R-sharp/App/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
