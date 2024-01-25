@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel.Serialization
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Parallel
 
+''' <summary>
+''' file stream handler for <see cref="ClusterEntity()"/>.
+''' </summary>
 Public Class VectorFile : Implements IEmitStream
 
     Public Function BufferInMemory(obj As Object) As Boolean Implements IEmitStream.BufferInMemory
