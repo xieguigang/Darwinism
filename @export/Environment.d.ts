@@ -10,10 +10,13 @@
 */
 declare namespace Environment {
    /**
+   */
+   function set_libpath(libpath: string): object;
+   /**
     * set the parallel batch threads
     * 
     * 
      * @param n_threads -
    */
-   function set_threads(n_threads: object): any;
+   function set_threads(n_threads: object): object;
 }

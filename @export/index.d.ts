@@ -8,4 +8,7 @@ declare namespace Darwinism {
       */
       function onLoad(): object;
    }
+   /**
+   */
+   function ___config_runtime_env(): object;
 }
