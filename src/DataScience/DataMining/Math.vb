@@ -3,6 +3,7 @@ Imports batch
 Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
+Imports Parallel
 Imports Parallel.IpcStream
 
 Public Module VectorMath
@@ -11,6 +12,7 @@ Public Module VectorMath
 
     End Sub
 
+    <EmitStream(GetType(VectorFile))>
     Private Function totalDistance(parts As ClusterEntity(), alldata As ClusterEntity()) As Double()
         Dim sum_total As Double() = New Double(parts.Length - 1) {}
 
@@ -33,7 +35,7 @@ Public Module VectorMath
     <Extension>
     Public Function AverageDistance(points As IEnumerable(Of ClusterEntity)) As Double
         Dim alldata As ClusterEntity() = points.ToArray
-        Dim pool As SocketRef = SocketRef.WriteBuffer(alldata)
+        Dim pool As SocketRef = SocketRef.WriteBuffer(alldata, StreamEmit.)
         Dim task As New Func(Of ClusterEntity(), ClusterEntity(), Double())(AddressOf totalDistance)
         Dim env As Argument = DarwinismEnvironment.GetEnvironmentArguments
         Dim nParts = alldata.Split(CInt(alldata.Length / env.n_threads / 2))

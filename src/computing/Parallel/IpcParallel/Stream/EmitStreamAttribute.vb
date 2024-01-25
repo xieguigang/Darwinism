@@ -46,8 +46,9 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 
-<AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=False)>
+<AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=False)>
 Public Class EmitStreamAttribute : Inherits Attribute
 
     Public ReadOnly Property Handler As Type
@@ -75,3 +76,17 @@ Public Interface IEmitStream
     Function ReadBuffer(file As Stream) As Object
 
 End Interface
+
+Public Module CustomStreamFile
+
+    <Extension>
+    Public Function GetWriter(Of T)(file As IEmitStream) As Func(Of T, Stream)
+        Return Function(a) file.WriteBuffer(a)
+    End Function
+
+    <Extension>
+    Public Function GetReader(Of T)(file As IEmitStream) As Func(Of Stream, T)
+        Return Function(s) file.ReadBuffer(s)
+    End Function
+
+End Module

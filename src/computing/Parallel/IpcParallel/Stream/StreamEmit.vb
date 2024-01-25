@@ -43,6 +43,7 @@
 
 Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
@@ -71,6 +72,13 @@ Namespace IpcStream
                 loadBuffers(handle.target) = handle.emit
             Next
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Custom(Of T)(file As IEmitStream) As StreamEmit
+            Return New StreamEmit() _
+                .Emit(file.GetWriter(Of T)) _
+                .Emit(file.GetReader(Of T))
+        End Function
 
         ''' <summary>
         ''' add handler for convert the clr object to file stream data
