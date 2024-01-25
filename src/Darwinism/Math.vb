@@ -21,7 +21,7 @@ Module Math
     ''' <returns></returns>
     <ExportAPI("average_distance")>
     <RApiReturn(TypeCodes.double)>
-    Public Function averageDistance(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
+    Public Function averageDistance(<RRawVectorArgument> x As Object, Optional env As SMRUCC.Rsharp.Runtime.Environment = Nothing) As Object
         Dim pull = DataMiningDataSet.getDataModel(x, env)
 
         If pull Like GetType(Message) Then

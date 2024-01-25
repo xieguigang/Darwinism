@@ -18,14 +18,14 @@ Module Env
     ''' <returns></returns>
     <ExportAPI("set_threads")>
     Public Function Set_threads(n_threads As Integer) As batch.Argument
-        Call VectorMath.SetThreads(n_threads)
-        Return VectorMath.GetEnvironmentArguments
+        Call DarwinismEnvironment.SetThreads(n_threads)
+        Return DarwinismEnvironment.GetEnvironmentArguments
     End Function
 
     <ExportAPI("set_libpath")>
     Public Function Set_libpath(libpath As String) As batch.Argument
-        Call VectorMath.SetLibPath(libpath)
-        Return VectorMath.GetEnvironmentArguments
+        Call DarwinismEnvironment.SetLibPath(libpath)
+        Return DarwinismEnvironment.GetEnvironmentArguments
     End Function
 
 End Module
