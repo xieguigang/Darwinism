@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Darwinism.DataScience.DataMining</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>Darwinism.DataScience.DataMining</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data_science\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\computing\batch\batch.vbproj" />
+    <ProjectReference Include="..\..\computing\Parallel\parallel-netcore5.vbproj" />
+  </ItemGroup>
+
+</Project>
