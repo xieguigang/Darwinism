@@ -29,3 +29,6 @@ TAKE 15
 ```
 
 ![](LINQ/query.PNG)
+
+
+View packahe [help documents](vignettes/index.html).
