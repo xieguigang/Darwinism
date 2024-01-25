@@ -6,6 +6,7 @@
     <AssemblyName>Darwinism.DataScience.DataMining</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <OutputPath>../../../assembly/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
