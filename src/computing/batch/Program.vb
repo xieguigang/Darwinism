@@ -20,12 +20,14 @@ Module Program
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/parallel")>
-    <Usage("--port <port_number> [--master <master_node_ipaddress, default=""localhost"">]")>
+    <Usage("--port <port_number> [--master <master_node_ipaddress, default=""localhost""> --timeout <default=15> --verbose]")>
     Public Function runParallel(args As CommandLine) As Integer
         Dim port As Integer = args <= "--port"
         Dim master As String = args("--master") Or "localhost"
+        Dim timeout As Double = args("--timeout") Or 15.0
+        Dim verbose As Boolean = args("--verbose")
 
-        Return Host.Solve(master, port)
+        Return Host.Solve(master, port, timeout:=timeout, verbose:=verbose)
     End Function
 
     Private Function showHelp() As Integer

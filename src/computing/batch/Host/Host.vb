@@ -59,8 +59,13 @@ Public Module Host
     ''' <param name="master"></param>
     ''' <param name="port"></param>
     ''' <returns></returns>
-    Friend Function Solve(master As String, port As Integer) As Integer
-        Return New TaskBuilder(port, master).Run
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Friend Function Solve(master As String, port As Integer,
+                          Optional timeout As Double = 15,
+                          Optional verbose As Boolean = False) As Integer
+
+        Return New TaskBuilder(port, master, timeout:=timeout, verbose:=verbose).Run
     End Function
 
     <Extension>

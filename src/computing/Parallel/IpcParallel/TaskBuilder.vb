@@ -55,7 +55,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Parallel.IpcStream
 Imports System.Runtime.InteropServices
 
-
 #If NETCOREAPP Then
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
 #End If
@@ -69,6 +68,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     ReadOnly masterHost As String
     ReadOnly emit As New StreamEmit
     ReadOnly timeout_sec As Double = 15
+    ReadOnly verbose_echo As Boolean = False
 
     ''' <summary>
     ''' 
@@ -79,7 +79,12 @@ Public Class TaskBuilder : Implements ITaskDriver
     ''' the tcp request timeout value in time data unit ``seconds``.
     ''' </param>
     <DebuggerStepThrough>
-    Sub New(port As Integer, Optional master As String = "localhost", Optional timeout As Double = 15)
+    Sub New(port As Integer,
+            Optional master As String = "localhost",
+            Optional timeout As Double = 15,
+            Optional verbose As Boolean = False)
+
+        verbose_echo = verbose
         masterPort = port
         masterHost = master
         timeout_sec = timeout
@@ -146,8 +151,10 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim n As Integer = GetArgumentValueNumber()
         Dim argList As New List(Of Object)(GetParameters(params, n))
 
-        Call VBDebugger.EchoLine("run task:")
-        Call VBDebugger.EchoLine(task.GetJson(indent:=False, simpleDict:=True))
+        If verbose_echo Then
+            Call VBDebugger.EchoLine("run task:")
+            Call VBDebugger.EchoLine(task.GetJson(indent:=False, simpleDict:=True))
+        End If
 
         ' fix for optional parameter values
         For i As Integer = n To params.Length - 1
@@ -189,7 +196,9 @@ Public Class TaskBuilder : Implements ITaskDriver
         Catch ex As Exception
             Call PostError(ex)
         Finally
-            Call VBDebugger.EchoLine("job done!")
+            If verbose_echo Then
+                Call VBDebugger.EchoLine("job done!")
+            End If
         End Try
 
         Return 0
@@ -283,10 +292,12 @@ Public Class TaskBuilder : Implements ITaskDriver
                 buffer:=buf.Serialize
             )
 
-            If TypeOf result Is IPCError Then
-                Call VBDebugger.EchoLine($"post error...")
-            Else
-                Call VBDebugger.EchoLine($"post result...")
+            If verbose_echo Then
+                If TypeOf result Is IPCError Then
+                    Call VBDebugger.EchoLine($"post error...")
+                Else
+                    Call VBDebugger.EchoLine($"post result...")
+                End If
             End If
 
             Call New TcpRequest(masterHost, masterPort) _
