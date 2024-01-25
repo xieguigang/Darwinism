@@ -1,5 +1,3 @@
-
-
 const .onLoad = function() {
 
 }
