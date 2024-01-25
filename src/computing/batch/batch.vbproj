@@ -10,7 +10,7 @@
     <Product>Parallel</Product>
     <Description>Run bash command in batch and parallel</Description>
     <Platforms>AnyCPU;x64</Platforms>
-    <OutputPath>../../../build/</OutputPath>
+    <OutputPath>../../../assembly/</OutputPath>
     <Configurations>Debug;Release;Docker;Rsharp_app_release;PlantMAT</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
