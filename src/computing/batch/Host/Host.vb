@@ -11,9 +11,10 @@ Public Module Host
     ''' <returns></returns>
     Public Function CreateSlave(Optional debugPort As Integer? = Nothing,
                                 Optional verbose As Boolean = False,
-                                Optional ignoreError As Boolean = False) As SlaveTask
+                                Optional ignoreError As Boolean = False,
+                                Optional libpath As String = Nothing) As SlaveTask
 
-        Return New SlaveTask(Host.GetCurrentThread, cli:=AddressOf Host.SlaveTask,
+        Return New SlaveTask(Host.GetCurrentThread(libpath), cli:=AddressOf Host.SlaveTask,
                              debugPort:=debugPort,
                              verbose:=verbose,
                              ignoreError:=ignoreError)
@@ -22,10 +23,18 @@ Public Module Host
     ''' <summary>
     ''' get ``batch.exe``
     ''' </summary>
+    ''' <param name="libpath">
+    ''' parameter for R# package: due to the reason of Rscript build R# package
+    ''' will skip do file copy of some common modules, example like:
+    ''' Microsoft.VisualBasic.Runtime.dll, so used the default location will
+    ''' case the assembly file not found error, this parameter for config the
+    ''' program location that contains the missing assembly file.
+    ''' </param>
     ''' <returns></returns>
-    Private Function GetCurrentThread() As InteropService
+    Private Function GetCurrentThread(libpath As String) As InteropService
         Dim path As String = GetType(Host).Assembly.Location
-        Dim program As New InteropService(path)
+        Dim assembly As String = path.BaseName & ".dll"
+        Dim program As New InteropService(If(libpath.StringEmpty, path, $"{libpath}/{assembly}"))
 
 #If NETCOREAPP Then
         Call program.SetDotNetCoreDll()
