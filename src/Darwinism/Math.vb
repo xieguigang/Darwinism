@@ -9,6 +9,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 ''' math helpers
 ''' </summary>
 <Package("Math")>
+<RTypeExport("entity_vector", GetType(ClusterEntity))>
 Module Math
 
     ''' <summary>
