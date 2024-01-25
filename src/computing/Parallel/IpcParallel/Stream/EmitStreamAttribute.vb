@@ -52,6 +52,10 @@ Public Class EmitStreamAttribute : Inherits Attribute
 
     Public ReadOnly Property Handler As Type
 
+    ''' <summary>
+    ''' the handler type should implements the interface <see cref="IEmitStream"/>
+    ''' </summary>
+    ''' <param name="handler"></param>
     Sub New(handler As Type)
         Me.Handler = handler
     End Sub

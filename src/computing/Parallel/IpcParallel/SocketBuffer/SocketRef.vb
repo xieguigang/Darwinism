@@ -58,8 +58,10 @@ Namespace IpcStream
         ''' <summary>
         ''' buffered object is <see cref="ObjectStream"/>
         ''' </summary>
-        ''' <param name="target"></param>
-        ''' <param name="emit"></param>
+        ''' <param name="target">target .net clr object to save to file, and then which 
+        ''' could be load into memory in another process for run the parallel computing.
+        ''' </param>
+        ''' <param name="emit">the object file read/write helper, default bson serializer will be used if this parameter is missing.</param>
         ''' <returns></returns>
         Public Shared Function WriteBuffer(target As Object, Optional emit As StreamEmit = Nothing) As SocketRef
             Dim stream As ObjectStream

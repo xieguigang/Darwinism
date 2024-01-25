@@ -7,6 +7,10 @@ Imports Parallel.IpcStream
 
 Public Module VectorMath
 
+    Sub New()
+
+    End Sub
+
     Private Function totalDistance(parts As ClusterEntity(), alldata As ClusterEntity()) As Double()
         Dim sum_total As Double() = New Double(parts.Length - 1) {}
 

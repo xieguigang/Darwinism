@@ -53,7 +53,13 @@ Namespace IpcStream
 
     Public Class StreamEmit
 
+        ''' <summary>
+        ''' convert clr object to file stream data
+        ''' </summary>
         ReadOnly toBuffers As New Dictionary(Of Type, toBuffer)
+        ''' <summary>
+        ''' create clr object from a given file stream data
+        ''' </summary>
         ReadOnly loadBuffers As New Dictionary(Of Type, loadBuffer)
         ReadOnly emitCache As New Dictionary(Of Type, IEmitStream)
 
@@ -66,11 +72,23 @@ Namespace IpcStream
             Next
         End Sub
 
+        ''' <summary>
+        ''' add handler for convert the clr object to file stream data
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="streamAs"></param>
+        ''' <returns></returns>
         Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As StreamEmit
             toBuffers(GetType(T)) = Function(obj) streamAs(obj)
             Return Me
         End Function
 
+        ''' <summary>
+        ''' add handler for creates the clr object from the file stream data
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="fromStream"></param>
+        ''' <returns></returns>
         Public Function Emit(Of T)(fromStream As Func(Of Stream, T)) As StreamEmit
             loadBuffers(GetType(T)) = Function(buf) fromStream(buf)
             Return Me
@@ -107,8 +125,15 @@ Namespace IpcStream
             End If
         End Function
 
+        ''' <summary>
+        ''' try to get the stream data function
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Private Function getHandler(type As Type) As IEmitStream
-            Dim attr As EmitStreamAttribute = CType(type, System.Reflection.TypeInfo).GetCustomAttributes(Of EmitStreamAttribute).FirstOrDefault
+            Dim attr As EmitStreamAttribute = CType(type, System.Reflection.TypeInfo) _
+                .GetCustomAttributes(Of EmitStreamAttribute) _
+                .FirstOrDefault
 
             If attr Is Nothing Then
                 Return Nothing
@@ -123,6 +148,11 @@ Namespace IpcStream
             End If
         End Function
 
+        ''' <summary>
+        ''' generates the object file binary data
+        ''' </summary>
+        ''' <param name="param"></param>
+        ''' <returns></returns>
         Public Function handleSerialize(param As Object) As ObjectStream
             Dim type As Type = param.GetType
             Dim method As StreamMethods
