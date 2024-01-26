@@ -10,5 +10,11 @@ declare namespace Darwinism {
    }
    /**
    */
+   function ___check_netstat(): object;
+   /**
+   */
    function ___config_runtime_env(): object;
+   /**
+   */
+   function no_netstat_warning(): object;
 }
