@@ -49,6 +49,9 @@ Imports SMRUCC.Rsharp.Runtime
 ''' <summary>
 ''' An automation pipeline toolkit build for cloud computing
 ''' </summary>
+''' <remarks>
+''' working on windows for connect remote linux server via putty
+''' </remarks>
 <Package("bash", Category:=APICategories.UtilityTools)>
 Public Module Bash
 

@@ -34,7 +34,7 @@ Public Class netstat
     ''' </summary>
     ''' <param name="text"></param>
     ''' <returns></returns>
-    Public Iterator Function tulnp(text As String) As IEnumerable(Of netstat)
+    Public Shared Iterator Function tulnp(text As String) As IEnumerable(Of netstat)
         ' (Not all processes could be identified, non-owned process info
         '  will not be shown, you would have to be root to see it all.)
         ' Active Internet connections (only servers)
