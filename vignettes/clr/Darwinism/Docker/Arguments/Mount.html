@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Darwinism.Docker.Arguments.Mount</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>Mount {Darwinism.Docker.Arguments}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>Mount</h2>
+
+        <h3>Description</h3>
+
+        <p>共享文件夹</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Darwinism.Docker.Arguments
+export class Mount {
+   # 宿主机内的本地文件夹全路径
+   local: string;
+   # 虚拟机内的文件路径,共享文件夹将会在虚拟机内被挂载到这个路径上面
+   virtual: string;
+   # 任何一个路径是空字符串就会被判断为无效参数, 对于<a href="/vignettes/clr/Darwinism/Docker/Arguments/Mount.html">Mount</a>.<a href="#">local</a>本地文件夹路径
+   #  还需要其存在于本地文件系统之上
+   IsValid: boolean;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
