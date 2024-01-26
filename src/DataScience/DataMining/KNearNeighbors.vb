@@ -18,11 +18,10 @@ Public Class KNearNeighbors
         End Get
     End Property
 
-    Private Shared Function FindNeighbors(v As TagVector(), matrix As TagVector(), k As Integer, cutoff As Double, score As ScoreMetric) As KNearNeighbors()
+    Private Shared Function FindNeighbors(v As TagVector(), matrix As TagVector(), k As Integer, cutoff As Double) As KNearNeighbors()
         Dim export As KNearNeighbors() = New KNearNeighbors(v.Length) {}
         Dim llinks As (TagVector, w As Double)()
-
-        score.cutoff = cutoff
+        Dim score As New Cosine() With {.cutoff = cutoff}
 
         For i As Integer = 0 To v.Length - 1
             llinks = KNN.FindNeighbors(v(i), matrix, k, score)
@@ -50,14 +49,13 @@ Public Class KNearNeighbors
     ''' the result collection keeps the original element order with 
     ''' the <paramref name="data"/> matrix rows.
     ''' </returns>
-    Public Shared Function FindNeighbors(data As GeneralMatrix, score As ScoreMetric, cutoff As Double, Optional k As Integer = 30) As IEnumerable(Of KNeighbors)
+    Public Shared Function FindNeighbors(data As GeneralMatrix, cutoff As Double, Optional k As Integer = 30) As IEnumerable(Of KNeighbors)
         Dim matrix As TagVector() = data.PopulateVectors.ToArray
         Dim pool As SocketRef = SocketRef.WriteBuffer(matrix)
-        Dim task As New Func(Of TagVector(), TagVector(), Integer, Double, ScoreMetric, KNearNeighbors())(AddressOf FindNeighbors)
+        Dim task As New Func(Of TagVector(), TagVector(), Integer, Double, KNearNeighbors())(AddressOf FindNeighbors)
         Dim env As Argument = DarwinismEnvironment.GetEnvironmentArguments
         Dim nParts = matrix.Split(CInt(matrix.Length / env.n_threads / 2))
-        Dim score_ref As SocketRef = SocketRef.WriteBuffer(score)
-        Dim dist = Host.ParallelFor(Of TagVector(), KNearNeighbors())(env, task, nParts, pool, k, cutoff, score_ref).ToArray
+        Dim dist = Host.ParallelFor(Of TagVector(), KNearNeighbors())(env, task, nParts, pool, k, cutoff).ToArray
 
         Return dist.IteratesALL.OrderBy(Function(ki) ki.RowIndex).Select(Function(v) v.KNeighbors)
     End Function

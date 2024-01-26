@@ -1,13 +1,17 @@
 ﻿Imports Darwinism.DataScience.DataMining
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
-''' math helpers
+''' darwinism IPC parallel math
 ''' </summary>
 <Package("Math")>
 <RTypeExport("entity_vector", GetType(ClusterEntity))>
@@ -35,6 +39,42 @@ Module Math
         Dim dist As Double = VectorMath.AverageDistance(bigDataset)
 
         Return dist
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="k"></param>
+    ''' <param name="cutoff"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function only supports the cosine similarity score function.
+    ''' </remarks>
+    <ExportAPI("knn")>
+    <RApiReturn(GetType(KNeighbors))>
+    Public Function FindNeighbors(<RRawVectorArgument> x As Object,
+                                  Optional k As Integer = 16,
+                                  Optional cutoff As Double = 0.8,
+                                  Optional env As Environment = Nothing) As Object
+
+        Dim m As GeneralMatrix
+
+        If x Is Nothing Then
+            Call env.AddMessage("the given raw data matrix is nothing!")
+            Return Nothing
+        ElseIf TypeOf x Is dataframe Then
+            m = New NumericMatrix(DirectCast(x, dataframe) _
+               .forEachRow _
+               .Select(Function(r)
+                           Return CLRVector.asNumeric(r.value)
+                       End Function))
+        Else
+            Return Message.InCompatibleType(GetType(GeneralMatrix), x.GetType, env)
+        End If
+
+        Return KNearNeighbors.FindNeighbors(m, cutoff, k).ToArray
     End Function
 
 End Module
