@@ -6,7 +6,7 @@ Imports Parallel
 ''' <summary>
 ''' file stream handler for <see cref="ClusterEntity()"/>.
 ''' </summary>
-Public Class VectorFile : Implements IEmitStream
+Public Class ClusterVectorFile : Implements IEmitStream
 
     Public Function BufferInMemory(obj As Object) As Boolean Implements IEmitStream.BufferInMemory
         Return True

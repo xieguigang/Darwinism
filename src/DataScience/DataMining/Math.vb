@@ -12,7 +12,7 @@ Public Module VectorMath
 
     End Sub
 
-    <EmitStream(GetType(VectorFile), Target:=GetType(ClusterEntity()))>
+    <EmitStream(GetType(ClusterVectorFile), Target:=GetType(ClusterEntity()))>
     Private Function totalDistance(parts As ClusterEntity(), alldata As ClusterEntity()) As Double()
         Dim sum_total As Double() = New Double(parts.Length - 1) {}
 
@@ -35,7 +35,7 @@ Public Module VectorMath
     <Extension>
     Public Function AverageDistance(points As IEnumerable(Of ClusterEntity)) As Double
         Dim alldata As ClusterEntity() = points.ToArray
-        Dim pool As SocketRef = SocketRef.WriteBuffer(alldata, StreamEmit.Custom(Of ClusterEntity())(New VectorFile))
+        Dim pool As SocketRef = SocketRef.WriteBuffer(alldata, StreamEmit.Custom(Of ClusterEntity())(New ClusterVectorFile))
         Dim task As New Func(Of ClusterEntity(), ClusterEntity(), Double())(AddressOf totalDistance)
         Dim env As Argument = DarwinismEnvironment.GetEnvironmentArguments
         Dim nParts = alldata.Split(CInt(alldata.Length / env.n_threads / 2))
