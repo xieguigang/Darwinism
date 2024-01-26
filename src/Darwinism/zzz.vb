@@ -5,6 +5,6 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Public NotInheritable Class zzz
 
     Public Shared Sub onLoad()
-
+        Call CentosTools.Main()
     End Sub
 End Class
