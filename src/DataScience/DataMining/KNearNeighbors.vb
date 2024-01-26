@@ -3,8 +3,10 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
 Imports Microsoft.VisualBasic.Data.GraphTheory.KNearNeighbors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Parallel
 Imports Parallel.IpcStream
 
+<EmitStream(GetType(KNeighborFile))>
 Public Class KNearNeighbors
 
     Public Property Target As TagVector
