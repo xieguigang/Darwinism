@@ -63,7 +63,7 @@ Public Class netstat
             Return
         End If
 
-        For i As Integer = offset.i To lines.Length - 1
+        For i As Integer = offset.i + 1 To lines.Length - 1
             If Not lines(i).StringEmpty Then
                 Dim tokens As String() = lines(i).StringSplit("\s+")
 

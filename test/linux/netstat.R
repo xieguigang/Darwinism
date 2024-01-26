@@ -23,4 +23,4 @@ udp6       0      0 :::5353                 :::*                                
 
 ";
 
-print(centos::netstat(text1));
+print(as.data.frame(centos::netstat(text1)));

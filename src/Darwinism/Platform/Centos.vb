@@ -32,7 +32,7 @@ Public Module CentosTools
         Call df.add("Foreign Address", netstat.Select(Function(a) a.ForeignAddress))
         Call df.add("State", netstat.Select(Function(a) a.State))
         Call df.add("PID/Program name", netstat.Select(Function(a) a.Program))
-        Call df.add("listened_port", netstat.Select(Function(a) If(a.LocalListenPort <= 0, Double.NaN, a.LocalListenPort)))
+        Call df.add("listened_port", netstat.Select(Function(a) a.LocalListenPort))
 
         Return df
     End Function
