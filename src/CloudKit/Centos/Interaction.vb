@@ -25,6 +25,18 @@ Public Class Interaction
         End Get
     End Property
 
+    Public Shared ReadOnly Property isUnix As Boolean
+        Get
+            Dim platform = Environment.OSVersion.Platform
+
+#If NET48 Then
+            Return platform = PlatformID.Unix OrElse platform = PlatformID.MacOSX
+#Else
+            Return platform = PlatformID.Unix
+#End If
+        End Get
+    End Property
+
     ''' <summary>
     ''' does the required command is installed in
     ''' the centos system?
