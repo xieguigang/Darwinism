@@ -22,6 +22,7 @@ Public Module CentosTools
         Call Internal.Object.Converts.makeDataframe.addHandler(GetType(netstat()), AddressOf netstat_table)
     End Sub
 
+    <RGenericOverloads("as.data.frame")>
     Private Function netstat_table(netstat As netstat(), args As list, env As Environment) As dataframe
         Dim df As New dataframe With {.columns = New Dictionary(Of String, Array)}
 

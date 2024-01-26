@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -70,6 +71,12 @@ Module Math
                .Select(Function(r)
                            Return CLRVector.asNumeric(r.value)
                        End Function))
+        ElseIf x.GetType.ImplementInterface(Of GeneralMatrix) Then
+            m = x
+        ElseIf x.GetType.ImplementInterface(Of INumericMatrix) Then
+            m = New NumericMatrix(DirectCast(x, INumericMatrix))
+        ElseIf TypeOf x Is ClusterEntity() Then
+            m = New NumericMatrix(DirectCast(x, ClusterEntity()).Select(Function(v) v.entityVector))
         Else
             Return Message.InCompatibleType(GetType(GeneralMatrix), x.GetType, env)
         End If

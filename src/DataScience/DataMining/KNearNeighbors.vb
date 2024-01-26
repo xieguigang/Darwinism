@@ -18,6 +18,8 @@ Public Class KNearNeighbors
         End Get
     End Property
 
+    <EmitStream(GetType(KNeighborFile), Target:=GetType(KNearNeighbors()))>
+    <EmitStream(GetType(VectorFile), Target:=GetType(TagVector()))>
     Private Shared Function FindNeighbors(v As TagVector(), matrix As TagVector(), k As Integer, cutoff As Double) As KNearNeighbors()
         Dim export As KNearNeighbors() = New KNearNeighbors(v.Length) {}
         Dim llinks As (TagVector, w As Double)()
@@ -51,7 +53,7 @@ Public Class KNearNeighbors
     ''' </returns>
     Public Shared Function FindNeighbors(data As GeneralMatrix, cutoff As Double, Optional k As Integer = 30) As IEnumerable(Of KNeighbors)
         Dim matrix As TagVector() = data.PopulateVectors.ToArray
-        Dim pool As SocketRef = SocketRef.WriteBuffer(matrix)
+        Dim pool As SocketRef = SocketRef.WriteBuffer(matrix, StreamEmit.Custom(Of TagVector())(New VectorFile))
         Dim task As New Func(Of TagVector(), TagVector(), Integer, Double, KNearNeighbors())(AddressOf FindNeighbors)
         Dim env As Argument = DarwinismEnvironment.GetEnvironmentArguments
         Dim nParts = matrix.Split(CInt(matrix.Length / env.n_threads / 2))

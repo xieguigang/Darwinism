@@ -1,10 +1,11 @@
 ﻿Imports System.IO
-Imports Microsoft.VisualBasic.DataMining.ComponentModel.Serialization
-Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
+Imports Microsoft.VisualBasic.Data.IO
 Imports Parallel
 
 ''' <summary>
-''' file stream handler for <see cref="ClusterEntity()"/>.
+''' read/write <see cref="TagVector()"/> vector data
 ''' </summary>
 Public Class VectorFile : Implements IEmitStream
 
@@ -13,20 +14,50 @@ Public Class VectorFile : Implements IEmitStream
     End Function
 
     Public Function WriteBuffer(obj As Object, file As Stream) As Boolean Implements IEmitStream.WriteBuffer
-        Call EntityVectorFile.SaveVector(DirectCast(obj, ClusterEntity()), file)
-        Call file.Flush()
+        Dim vecs As TagVector() = obj
+        Dim bin As New BinaryDataWriter(file) With {.ByteOrder = ByteOrder.LittleEndian}
+
+        Call bin.Write(vecs.Length)
+
+        For Each vi As TagVector In vecs
+            Call WriteSingle(bin, vi)
+        Next
+
+        Call bin.Flush()
+
         Return True
     End Function
 
+    Public Shared Sub WriteSingle(bin As BinaryDataWriter, v As TagVector)
+        Call bin.Write(v.index)
+        Call bin.Write(If(v.tag, ""), BinaryStringFormat.UInt32LengthPrefix)
+        Call bin.Write(v.vector.Length)
+        Call bin.Write(v.vector)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function WriteBuffer(obj As Object) As Stream Implements IEmitStream.WriteBuffer
-        Dim ms As New MemoryStream
-        Call EntityVectorFile.SaveVector(DirectCast(obj, ClusterEntity()), ms)
-        Call ms.Flush()
-        Call ms.Seek(0, SeekOrigin.Begin)
-        Return ms
+        Return Me.DefaultWriteMemory(obj)
+    End Function
+
+    Public Shared Function ReadSingle(bin As BinaryDataReader) As TagVector
+        Dim index As Integer = bin.ReadInt32
+        Dim tag As String = bin.ReadString(BinaryStringFormat.UInt32LengthPrefix)
+        Dim width As Integer = bin.ReadInt32
+        Dim vector As Double() = bin.ReadDoubles(width)
+
+        Return New TagVector(index, tag, vector)
     End Function
 
     Public Function ReadBuffer(file As Stream) As Object Implements IEmitStream.ReadBuffer
-        Return EntityVectorFile.LoadVectors(file).ToArray
+        Dim bin As New BinaryDataReader(file) With {.ByteOrder = ByteOrder.LittleEndian}
+        Dim n As Integer = bin.ReadInt32
+        Dim load As TagVector() = New TagVector(n - 1) {}
+
+        For i As Integer = 0 To n - 1
+            load(i) = ReadSingle(bin)
+        Next
+
+        Return load
     End Function
 End Class
