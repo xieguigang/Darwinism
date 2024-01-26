@@ -18,6 +18,8 @@ Public Class KNearNeighbors
         End Get
     End Property
 
+    <EmitStream(GetType(KNeighborFile), Target:=GetType(KNearNeighbors()))>
+    <EmitStream(GetType(VectorFile), Target:=GetType(TagVector()))>
     Private Shared Function FindNeighbors(v As TagVector(), matrix As TagVector(), k As Integer, cutoff As Double) As KNearNeighbors()
         Dim export As KNearNeighbors() = New KNearNeighbors(v.Length) {}
         Dim llinks As (TagVector, w As Double)()

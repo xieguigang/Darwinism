@@ -28,10 +28,7 @@ Public Class KNeighborFile : Implements IEmitStream
     End Function
 
     Private Shared Sub WriteSingle(knn As KNearNeighbors, bin As BinaryDataWriter)
-        Call bin.Write(knn.Target.index)
-        Call bin.Write(If(knn.Target.tag, ""), BinaryStringFormat.UInt32LengthPrefix)
-        Call bin.Write(knn.Target.vector.Length)
-        Call bin.Write(knn.Target.vector)
+        Call VectorFile.WriteSingle(bin, knn.Target)
         Call bin.Write(knn.KNeighbors.size)
         Call bin.Write(knn.KNeighbors.indices)
         Call bin.Write(knn.KNeighbors.weights)
@@ -45,16 +42,13 @@ Public Class KNeighborFile : Implements IEmitStream
     End Function
 
     Private Shared Function ReadSingle(bin As BinaryDataReader) As KNearNeighbors
-        Dim index As Integer = bin.ReadInt32
-        Dim tag As String = bin.ReadString(BinaryStringFormat.UInt32LengthPrefix)
-        Dim width As Integer = bin.ReadInt32
-        Dim vector As Double() = bin.ReadDoubles(width)
+        Dim vector As TagVector = VectorFile.ReadSingle(bin)
         Dim size As Integer = bin.ReadInt32
         Dim indices As Integer() = bin.ReadInt32s(size)
         Dim weights As Double() = bin.ReadDoubles(size)
 
         Return New KNearNeighbors With {
-            .Target = New TagVector(index, tag, vector),
+            .Target = vector,
             .KNeighbors = New KNeighbors(size, indices, weights)
         }
     End Function
