@@ -114,7 +114,9 @@ Public Class IPCSocket : Implements ITaskDriver
             End If
 
             ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
-            Dim BEGIN_PORT = randf.NextInteger(MAX_PORT - 1)
+            ' port range start from nearby 10000
+            ' for avoid port number conflicts
+            Dim BEGIN_PORT = randf.NextInteger(MAX_PORT / 7, MAX_PORT - 1)
             Dim stdout As String = CommandLine.Call("/bin/bash", "-c ""netstat -tulpn""")
             Dim usedPorts As Index(Of Integer) = stdout.LineTokens _
                 .Select(Function(line) line.StringSplit("\s+").ElementAt(3)) _
