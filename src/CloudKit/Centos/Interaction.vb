@@ -43,7 +43,7 @@ Public Class Interaction
     ''' </summary>
     ''' <param name="command"></param>
     ''' <returns></returns>
-    Public Function hasCommand(command As String) As Boolean
+    Public Shared Function HasCommand(command As String) As Boolean
         Return Not Interaction.Shell("command", $"-v {command}", verbose:=False).StringEmpty
     End Function
 

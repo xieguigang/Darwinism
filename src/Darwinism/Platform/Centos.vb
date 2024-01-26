@@ -37,6 +37,21 @@ Public Module CentosTools
         Return df
     End Function
 
+    ''' <summary>
+    ''' check command is existsed on linux system or not?
+    ''' </summary>
+    ''' <param name="command"></param>
+    ''' <returns></returns>
+    <ExportAPI("check_command_exists")>
+    <RApiReturn(TypeCodes.boolean)>
+    Public Function check_command_exists(command As String, Optional env As Environment = Nothing) As Object
+        If Interaction.isUnix Then
+            Return Interaction.HasCommand(command)
+        Else
+            Return Internal.debug.stop("only works on linux system!", env)
+        End If
+    End Function
+
     <ExportAPI("netstat")>
     Public Function netstat_func(Optional x As String = "-tulnp",
                                  Optional verbose As Boolean = False,

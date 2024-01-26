@@ -68,6 +68,20 @@ Public Module Host
         Return New TaskBuilder(port, master, timeout:=timeout, verbose:=verbose).Run
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="I"></typeparam>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="par"></param>
+    ''' <param name="task"></param>
+    ''' <param name="[loop]"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function required of ``netstat`` command has been installed when running on linux platform, 
+    ''' or network error may be happends!
+    ''' </remarks>
     <Extension>
     Public Function ParallelFor(Of I, T)(par As Argument, task As [Delegate], [loop] As I(), ParamArray args As SocketRef()) As IEnumerable(Of T)
         Dim foreach As New ParallelFor(Of T)(par)
