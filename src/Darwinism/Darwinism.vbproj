@@ -54,6 +54,7 @@
     <ProjectReference Include="..\..\..\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\network-netcore5.vbproj" />
     <ProjectReference Include="..\CloudKit\Centos\Centos.NET5.vbproj" />
+    <ProjectReference Include="..\CloudKit\Docker\Docker.NET5.vbproj" />
     <ProjectReference Include="..\computing\batch\batch.vbproj" />
     <ProjectReference Include="..\computing\Parallel\parallel-netcore5.vbproj" />
     <ProjectReference Include="..\DataScience\DataMining\DataMining.vbproj" />
