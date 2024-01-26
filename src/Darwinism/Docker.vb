@@ -42,6 +42,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Darwinism.Docker
 Imports Darwinism.Docker.Arguments
 Imports Darwinism.Docker.Captures
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -56,7 +57,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 <Package("docker", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 <RTypeExport("image", GetType(Image))>
 <RTypeExport("mount", GetType(Mount))>
-Public Module Commands
+Public Module DockerTools
 
     ' PS C:\Users\lipidsearch> docker
 
@@ -136,24 +137,6 @@ Public Module Commands
 
     ' Run 'docker COMMAND --help' for more information on a command.
 
-    Friend ReadOnly shell As Func(Of String, String, String)
-    Friend ReadOnly logs As New List(Of String)
-
-    Public Iterator Function CommandHistory() As IEnumerable(Of String)
-        For Each line As String In logs
-            Yield line
-        Next
-    End Function
-
-    Sub New()
-        shell = Function(app, args) As String
-                    Dim lines As New List(Of String)
-                    Call logs.Add($"{app} {args}")
-                    Call CommandLine.ExecSub(app, args, onReadLine:=AddressOf lines.Add)
-                    Return lines.JoinBy(vbLf)
-                End Function
-    End Sub
-
     ''' <summary>
     ''' Search the Docker Hub for images
     ''' </summary>
@@ -162,7 +145,7 @@ Public Module Commands
     ''' 
     <ExportAPI("search")>
     Public Function Search(term As String) As IEnumerable(Of Search)
-        Return shell("docker", $"search {term}") _
+        Return ShellCommand.Run("docker", $"search {term}") _
             .ParseTable(Function(tokens)
                             Return New Search With {
                                 .NAME = Image.ParseEntry(tokens(0)),
@@ -181,7 +164,7 @@ Public Module Commands
     ''' 
     <ExportAPI("ps")>
     Public Function PS() As IEnumerable(Of Container)
-        Return shell("docker", "ps") _
+        Return ShellCommand.Run("docker", "ps") _
             .ParseTable(Function(tokens)
                             Return New Container With {
                                 .CONTAINER_ID = tokens(0).Trim,
@@ -203,7 +186,7 @@ Public Module Commands
     <ExportAPI("stop")>
     Public Sub [Stop](ParamArray containers As String())
         For Each id As String In containers
-            Call shell("docker", $"stop {id}")
+            Call ShellCommand.Run("docker", $"stop {id}")
         Next
     End Sub
 
@@ -227,7 +210,7 @@ Public Module Commands
             .Mount(mounts) _
             .CreateDockerCommand(command, workdir, portForward)
 
-        Return shell("docker", cli)
+        Return ShellCommand.Run("docker", cli)
     End Function
 
     ''' <summary>
@@ -243,7 +226,7 @@ Public Module Commands
         Do While (stdout = CommandLine.Call("docker", $"rmi {imageId}")).Contains("image is being used by stopped container")
             containerId = Strings.Split(Strings.Trim(stdout)).Last
 
-            Call shell("docker", $"rm {containerId}")
+            Call ShellCommand.Run("docker", $"rm {containerId}")
             Call Console.WriteLine($"remove container {containerId}")
         Loop
 

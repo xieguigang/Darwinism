@@ -46,7 +46,8 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Captures
 
-    Module ParserHelpers
+    <HideModuleName>
+    Public Module ParserHelpers
 
         <Extension>
         Public Iterator Function ParseTable(Of T)(text$, creator As Func(Of String(), T)) As IEnumerable(Of T)

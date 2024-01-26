@@ -50,7 +50,6 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Darwinism.Docker.Arguments
-Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -278,6 +277,6 @@ Public Class DockerAppDriver
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Shell(args$, Optional workdir$ = Nothing) As String
-        Return Commands.shell("docker", docker.CreateDockerCommand($"{appHome}/{appName} {args}", workdir:=workdir))
+        Return ShellCommand.Run("docker", docker.CreateDockerCommand($"{appHome}/{appName} {args}", workdir:=workdir))
     End Function
 End Class
