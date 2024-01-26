@@ -53,7 +53,7 @@ Public Class KNearNeighbors
     ''' </returns>
     Public Shared Function FindNeighbors(data As GeneralMatrix, cutoff As Double, Optional k As Integer = 30) As IEnumerable(Of KNeighbors)
         Dim matrix As TagVector() = data.PopulateVectors.ToArray
-        Dim pool As SocketRef = SocketRef.WriteBuffer(matrix)
+        Dim pool As SocketRef = SocketRef.WriteBuffer(matrix, StreamEmit.Custom(Of TagVector())(New VectorFile))
         Dim task As New Func(Of TagVector(), TagVector(), Integer, Double, KNearNeighbors())(AddressOf FindNeighbors)
         Dim env As Argument = DarwinismEnvironment.GetEnvironmentArguments
         Dim nParts = matrix.Split(CInt(matrix.Length / env.n_threads / 2))
