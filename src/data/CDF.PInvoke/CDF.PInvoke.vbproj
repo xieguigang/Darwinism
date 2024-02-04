@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>CDF.PInvoke</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+</Project>
