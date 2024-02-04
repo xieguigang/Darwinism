@@ -42,15 +42,16 @@ Public Class DataReader : Implements IDisposable
 
         Dim type As CDFDataTypes = CDFDataTypes.undefined
         Dim ndims As Integer
-        Dim dimSize As Integer
+        Dim dims As Integer()
 
         _error_no = NetCDF.nc_inq_vartype(handle, id, type)
         _error_no = NetCDF.nc_inq_varndims(handle, id, ndims)
 
+        dims = New Integer(ndims - 1) {}
+
         Select Case type
             Case CDFDataTypes.NC_FLOAT
-                Dim v As Single() = New Single(1024) {}
-                _error_no = NetCDF.nc_get_var_float(handle, id, v)
+                Dim v As Single() = NetCDF.Get_float(handle, id)
                 Return CType(v, floats)
             Case CDFDataTypes.NC_DOUBLE
                 Dim v As Double() = New Double(1024) {}
