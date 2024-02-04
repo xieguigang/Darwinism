@@ -4,6 +4,7 @@
 ' 
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Math
 Imports nc_type = Microsoft.VisualBasic.DataStorage.netCDF.Data.CDFDataTypes
 
 Partial Public Module NetCDF
@@ -1008,11 +1009,12 @@ Partial Public Module NetCDF
     Public Function Get_float(ncid As Integer, VarName As String) As Single()
         Dim varid As Integer = Nothing
         nc_inq_varid(ncid, VarName, varid)
-        Dim dimid As Integer = Nothing
-        nc_inq_dimid(ncid, VarName, dimid)
-        Dim len As IntPtr = Nothing
-        nc_inq_dimlen(ncid, dimid, len)
-        Dim data = New Single(CInt(len) - 1) {}
+        Dim ndims As Integer
+        nc_inq_varndims(ncid, varid, ndims)
+        Dim dims As Integer() = New Integer(ndims - 1) {}
+        nc_inq_vardimid(ncid, varid, dims)
+        Dim len As Integer = dims.ProductALL
+        Dim data = New Single(len - 1) {}
         nc_get_var_float(ncid, varid, data)
         Return data
     End Function
@@ -1025,6 +1027,18 @@ Partial Public Module NetCDF
     End Sub
 
     ' Get double data
+    Public Function Get_double(ncid As Integer, varName As String) As Double()
+        Dim varid As Integer = Nothing
+        nc_inq_varid(ncid, varName, varid)
+        Dim dimid As Integer = Nothing
+        nc_inq_dimid(ncid, varName, dimid)
+        Dim len As IntPtr = Nothing
+        nc_inq_dimlen(ncid, dimid, len)
+        Dim data = New Double(CInt(len) - 1) {}
+        nc_get_var_double(ncid, varid, data)
+        Return data
+    End Function
+
     Public Sub Get_double(ncid As Integer, VarName As String, data As Double())
         Dim varid As Integer = Nothing
         nc_inq_varid(ncid, VarName, varid)
