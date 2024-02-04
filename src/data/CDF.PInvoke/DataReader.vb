@@ -14,6 +14,11 @@ Public Class DataReader : Implements IDisposable
     Dim varnames As New Dictionary(Of String, Integer)
 
     Public ReadOnly Property error_no As Integer
+    Public ReadOnly Property vars As String()
+        Get
+            Return varnames.Keys.ToArray
+        End Get
+    End Property
 
     Sub New(file As String)
         _error_no = NetCDF.nc_open(file, OpenMode.NC_NOWRITE, ncidp:=handle)

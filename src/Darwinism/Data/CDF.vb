@@ -21,6 +21,11 @@ Module CDF
         Return New DataReader(file)
     End Function
 
+    <ExportAPI("vars")>
+    Public Function vars(nc As DataReader) As String()
+        Return nc.vars
+    End Function
+
     ''' <summary>
     ''' get variable data from given file
     ''' </summary>
