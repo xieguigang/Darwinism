@@ -808,7 +808,7 @@ Partial Public Module NetCDF
             If type <> nc_type.NC_STRING AndAlso type <> nc_type.NC_CHAR Then Return String.Empty
             Dim sb As StringBuilder = New StringBuilder(CInt(len))
             If nc_get_att_text(ncid, NC_GLOBAL, p_AttName, sb) <> 0 Then Return String.Empty
-            Return sb.ToString().Substring(0, CInt(len))
+            Return sb.ToString()
         Catch __unusedException1__ As Exception
             Return "GetGlobalAttribute for " & p_AttName & " failed"
         End Try
