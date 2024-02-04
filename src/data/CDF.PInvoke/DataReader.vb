@@ -63,6 +63,7 @@ Public Class DataReader : Implements IDisposable
                 Return CType(v, doubles)
             Case CDFDataTypes.NC_CHAR
             Case CDFDataTypes.NC_INT
+                Return CType(NetCDF.Get_int(handle, name), integers)
             Case CDFDataTypes.NC_SHORT
             Case Else
                 Throw New NotImplementedException(type.ToString)

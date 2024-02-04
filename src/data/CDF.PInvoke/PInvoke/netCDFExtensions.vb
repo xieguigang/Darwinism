@@ -990,11 +990,8 @@ Partial Public Module NetCDF
     Public Function Get_int(ncid As Integer, VarName As String) As Integer()
         Dim varid As Integer = Nothing
         nc_inq_varid(ncid, VarName, varid)
-        Dim dimid As Integer = Nothing
-        nc_inq_dimid(ncid, VarName, dimid)
-        Dim len As IntPtr = Nothing
-        nc_inq_dimlen(ncid, dimid, len)
-        Dim data = New Integer(CInt(len) - 1) {}
+        Dim dims = Get_Dimensions(ncid, varid)
+        Dim data = New Integer(dims.ProductALL - 1) {}
         nc_get_var_int(ncid, varid, data)
         Return data
     End Function
