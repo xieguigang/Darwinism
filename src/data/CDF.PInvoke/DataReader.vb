@@ -56,15 +56,15 @@ Public Class DataReader : Implements IDisposable
 
         Select Case type
             Case CDFDataTypes.NC_FLOAT
-                Dim v As Single() = NetCDF.Get_float(handle, name)
-                Return CType(v, floats)
+                Return CType(NetCDF.Get_float(handle, name), floats)
             Case CDFDataTypes.NC_DOUBLE
-                Dim v As Double() = NetCDF.Get_double(handle, name)
-                Return CType(v, doubles)
+                Return CType(NetCDF.Get_double(handle, name), doubles)
             Case CDFDataTypes.NC_CHAR
+                Return CType(NetCDF.Get_char(handle, name), chars)
             Case CDFDataTypes.NC_INT
                 Return CType(NetCDF.Get_int(handle, name), integers)
             Case CDFDataTypes.NC_SHORT
+                Return CType(NetCDF.Get_short(handle, name), shorts)
             Case Else
                 Throw New NotImplementedException(type.ToString)
         End Select

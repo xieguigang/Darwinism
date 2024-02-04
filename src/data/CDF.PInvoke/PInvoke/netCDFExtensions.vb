@@ -1060,11 +1060,8 @@ Partial Public Module NetCDF
     Public Function Get_short(ncid As Integer, VarName As String) As Short()
         Dim varid As Integer = Nothing
         nc_inq_varid(ncid, VarName, varid)
-        Dim dimid As Integer = Nothing
-        nc_inq_dimid(ncid, VarName, dimid)
-        Dim len As IntPtr = Nothing
-        nc_inq_dimlen(ncid, dimid, len)
-        Dim data = New Short(CInt(len) - 1) {}
+        Dim dims = Get_Dimensions(ncid, varid)
+        Dim data = New Short(dims.ProductALL - 1) {}
         nc_get_var_short(ncid, varid, data)
         Return data
     End Function
@@ -1092,13 +1089,19 @@ Partial Public Module NetCDF
     Public Function Get_byte(ncid As Integer, VarName As String) As Byte()
         Dim varid As Integer = Nothing
         nc_inq_varid(ncid, VarName, varid)
-        Dim dimid As Integer = Nothing
-        nc_inq_dimid(ncid, VarName, dimid)
-        Dim len As IntPtr = Nothing
-        nc_inq_dimlen(ncid, dimid, len)
-        Dim data = New Byte(CInt(len) - 1) {}
+        Dim dims = Get_Dimensions(ncid, varid)
+        Dim data = New Byte(dims.ProductALL - 1) {}
         nc_get_var_ubyte(ncid, varid, data)
         Return data
+    End Function
+
+    Public Function Get_char(ncid As Integer, VarName As String) As Char()
+        Dim varid As Integer = Nothing
+        nc_inq_varid(ncid, VarName, varid)
+        Dim dims = Get_Dimensions(ncid, varid)
+        Dim data = New Byte(dims.ProductALL - 1) {}
+        nc_get_var_uchar(ncid, varid, data)
+        Return data.Select(Function(a) Chr(a)).ToArray
     End Function
 
     ' Methods to write attribute data
