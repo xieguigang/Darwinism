@@ -1,4 +1,5 @@
 ﻿
+Imports System.Text
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 
 ''' <summary>
@@ -8,9 +9,26 @@ Public Class DataReader : Implements IDisposable
 
     Dim disposedValue As Boolean
     Dim handle As Integer
+    Dim varnames As String()
 
     Sub New(file As String)
-        NetCDF.nc_open(file, OpenMode.NC_NOWRITE, ncidp:=handle)
+        Dim flag = NetCDF.nc_open(file, OpenMode.NC_NOWRITE, ncidp:=handle)
+
+        If flag <> 0 Then
+            Dim varids As Integer() = Nothing
+            Dim nvars As Integer
+            Dim name As New StringBuilder
+
+            NetCDF.nc_inq_varids(handle, nvars, varids)
+
+            varnames = New String(nvars - 1) {}
+
+            For i As Integer = 0 To nvars - 1
+                NetCDF.nc_inq_varname(handle, varids(i), name)
+                varnames(i) = name.ToString
+                name.Clear()
+            Next
+        End If
     End Sub
 
     Public Function GetData(name As String) As ICDFDataVector
