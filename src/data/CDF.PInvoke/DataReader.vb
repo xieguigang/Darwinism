@@ -20,6 +20,12 @@ Public Class DataReader : Implements IDisposable
         End Get
     End Property
 
+    ''' <summary>
+    ''' the global attributes
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property attributes As Dictionary(Of String, String)
+
     Sub New(file As String)
         _error_no = NetCDF.nc_open(file, OpenMode.NC_NOWRITE, ncidp:=handle)
 
@@ -33,6 +39,18 @@ Public Class DataReader : Implements IDisposable
             For i As Integer = 0 To nvars - 1
                 _error_no = NetCDF.nc_inq_varname(handle, varids(i), name)
                 varnames(name.ToString) = varids(i)
+                name.Clear()
+            Next
+
+            attributes = New Dictionary(Of String, String)
+
+            Dim nattrs As Integer
+
+            NetCDF.nc_inq_natts(handle, nattrs)
+
+            For i As Integer = 0 To nattrs - 1
+                NetCDF.nc_inq_attname(handle, NC_GLOBAL, i, name)
+                attributes(name.ToString) = NetCDF.GetGlobalAttribute(handle, name.ToString)
                 name.Clear()
             Next
         End If
