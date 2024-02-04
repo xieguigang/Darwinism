@@ -8,6 +8,13 @@ By combining of the Darwinism Parallel library and the R# [snowFall](https://git
 
 ![](docs/super_computing.PNG)
 
+> the network tool ``netstat`` is required for the tcp port allocation when running on unix environment, you can use the ``yum`` command for install this ``netstat`` tool: 
+>
+
+```bash
+sudo yum install net-tools
+```
+
 ## [LINQ Script](LINQ/LINQ)
 
 ```vbnet
