@@ -1009,14 +1009,24 @@ Partial Public Module NetCDF
     Public Function Get_float(ncid As Integer, VarName As String) As Single()
         Dim varid As Integer = Nothing
         nc_inq_varid(ncid, VarName, varid)
-        Dim ndims As Integer
-        nc_inq_varndims(ncid, varid, ndims)
-        Dim dims As Integer() = New Integer(ndims - 1) {}
-        nc_inq_vardimid(ncid, varid, dims)
+        Dim dims = Get_Dimensions(ncid, varid)
         Dim len As Integer = dims.ProductALL
         Dim data = New Single(len - 1) {}
         nc_get_var_float(ncid, varid, data)
         Return data
+    End Function
+
+    Public Function Get_Dimensions(ncid As Integer, varid As Integer) As Integer()
+        Dim ndims As Integer
+        nc_inq_varndims(ncid, varid, ndims)
+        Dim dims As Integer() = New Integer(ndims - 1) {}
+        nc_inq_vardimid(ncid, varid, dims)
+
+        For i As Integer = 0 To ndims - 1
+            nc_inq_dimlen(ncid, dims(i), dims(i))
+        Next
+
+        Return dims
     End Function
 
     ' Get float data
@@ -1030,11 +1040,9 @@ Partial Public Module NetCDF
     Public Function Get_double(ncid As Integer, varName As String) As Double()
         Dim varid As Integer = Nothing
         nc_inq_varid(ncid, varName, varid)
-        Dim dimid As Integer = Nothing
-        nc_inq_dimid(ncid, varName, dimid)
-        Dim len As IntPtr = Nothing
-        nc_inq_dimlen(ncid, dimid, len)
-        Dim data = New Double(CInt(len) - 1) {}
+        Dim dims = Get_Dimensions(ncid, varid)
+        Dim len As Integer = dims.ProductALL
+        Dim data = New Double(len - 1) {}
         nc_get_var_double(ncid, varid, data)
         Return data
     End Function
