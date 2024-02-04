@@ -50,9 +50,9 @@
 '   
 ' 
 
-Imports System
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports nc_type = Microsoft.VisualBasic.DataStorage.netCDF.Data.CDFDataTypes
 
 Partial Public Module NetCDF
 #Region "Constants"
@@ -113,152 +113,6 @@ Partial Public Module NetCDF
     ' Alias 
     Public Const NC_FORMAT_CDF5 As Integer = NC_FORMAT_64BIT_DATA
 
-    ''' <summary>The netcdf external data types</summary>
-    Public Enum nc_type As Integer
-        ' Not A Type
-        ' I've commented this out because it seems a bit pointless
-        ' NC_NAT = 0,
-
-        ''' <summary>signed 1 byte integer
-        ''' In C# this is sbyte but the NetCDF variable type is schar (e.g.nc_put_var_schar</summary>
-        NC_BYTE = 1
-        ''' <summary>ISO/ASCII character</summary>
-        NC_CHAR = 2
-        ''' <summary>signed 2 byte integer</summary>
-        NC_SHORT = 3
-        ''' <summary>signed 4 byte integer</summary>
-        NC_INT = 4
-        ''' <summary>single precision floating point number</summary>
-        NC_FLOAT = 5
-        ''' <summary>double precision floating point number</summary>
-        NC_DOUBLE = 6
-        ''' <summary>unsigned 1 byte int 
-        ''' In C# this is byte but the NetCDF variable type is ubyte (e.g.nc_put_var_ubyte</summary>
-        NC_UBYTE = 7
-        ''' <summary>unsigned 2-byte int</summary>
-        NC_USHORT = 8
-        ''' <summary>unsigned 4-byte int </summary>
-        NC_UINT = 9
-        ''' <summary>signed 8-byte int</summary>
-        NC_INT64 = 10
-        ''' <summary>unsigned 8-byte int</summary>
-        NC_UINT64 = 11
-        ''' <summary>string</summary>
-        NC_STRING = 12
-        ' The following are use internally in support of user-defines
-        ' types. They are also the class returned by nc_inq_user_type.
-        ''' <summary>vlen (variable-length) types</summary>
-        NC_VLEN = 13
-        ''' <summary>opaque types</summary>
-        NC_OPAQUE = 14
-        ''' <summary>enum types</summary>
-        NC_ENUM = 15
-        ''' <summary>compound types</summary>
-        NC_COMPOUND = 16
-    End Enum
-
-    ' #define NC_FILL_BYTE    ((signed char)-127)
-    ' #define NC_FILL_CHAR    ((char)0)
-    ' #define NC_FILL_SHORT   ((short)-32767)
-    ' #define NC_FILL_INT     (-2147483647)
-    ' #define NC_FILL_FLOAT   (9.9692099683868690e+36f) /* near 15 * 2^119 
-    ' #define NC_FILL_DOUBLE  (9.9692099683868690e+36)
-    ' #define NC_FILL_UBYTE   (255)
-    ' #define NC_FILL_USHORT  (65535)
-    ' #define NC_FILL_UINT    (4294967295U)
-    ' #define NC_FILL_INT64   ((long long)-9223372036854775806LL)
-    ' #define NC_FILL_UINT64  ((unsigned long long)18446744073709551614ULL)
-    ' #define NC_FILL_STRING  ((char *)"")
-
-    ''' <summary>
-    ''' Default fill values, used unless _FillValue attribute is set.
-    ''' These values are stuffed into newly allocated space as appropriate.
-    ''' The hope is that one might use these to notice that a particular datum
-    ''' has not been set.
-    ''' </summary>
-    Public NotInheritable Class FillValues
-        Public Const NC_FILL_BYTE As SByte = -127
-        Public Const NC_FILL_CHAR As Char = Microsoft.VisualBasic.ChrW(0)
-        Public Const NC_FILL_SHORT As Short = -32767
-        Public Const NC_FILL_INT As Integer = -2147483647
-        Public Const NC_FILL_FLOAT As Single = 9.96921E+36F    ' near 15 * 2^119 
-        Public Const NC_FILL_DOUBLE As Double = 9.969209968386869E+36
-        Public Const NC_FILL_UBYTE As Byte = 255
-        Public Const NC_FILL_USHORT As UShort = 65535
-        Public Const NC_FILL_UINT As UInteger = 4294967295UI
-        Public Const NC_FILL_INT64 As Long = -9223372036854775806L
-        Public Const NC_FILL_UINT64 As ULong = 18446744073709551614UL
-        Public Const NC_FILL_STRING As String = ""
-    End Class
-
-    ''' <summary>
-    ''' 	Fill value arrays for use in the corresponding nc_put_att function e.g.
-    ''' NetCDF.nc_put_att_float(ncid, DataVarid, "_FillValue", NetCDF.nc_type.NC_FLOAT, 1, NetCDF.FillVars.FILL_FLOAT);
-    ''' To save having to define the array each time
-    ''' </summary>
-    Public NotInheritable Class FillVars
-        Public Shared ReadOnly FILL_BYTE As SByte() = {FillValues.NC_FILL_BYTE}
-        Public Shared ReadOnly FILL_CHAR As Char() = {FillValues.NC_FILL_CHAR}
-        Public Shared ReadOnly FILL_SHORT As Short() = {FillValues.NC_FILL_SHORT}
-        Public Shared ReadOnly FILL_INT As Integer() = {FillValues.NC_FILL_INT}
-        Public Shared ReadOnly FILL_FLOAT As Single() = {FillValues.NC_FILL_FLOAT}
-        Public Shared ReadOnly FILL_DOUBLE As Double() = {FillValues.NC_FILL_DOUBLE}
-        Public Shared ReadOnly FILL_UBYTE As Byte() = {FillValues.NC_FILL_UBYTE}
-        Public Shared ReadOnly FILL_USHORT As UShort() = {FillValues.NC_FILL_USHORT}
-        Public Shared ReadOnly FILL_UINT As UInteger() = {FillValues.NC_FILL_UINT}
-        Public Shared ReadOnly FILL_INT64 As Long() = {FillValues.NC_FILL_INT64}
-        Public Shared ReadOnly FILL_UINT64 As ULong() = {FillValues.NC_FILL_UINT64}
-        Public Shared ReadOnly FILL_STRING As String() = {FillValues.NC_FILL_STRING}
-    End Class
-
-    ' 
-    '  cmode	The creation mode flag. The following flags are available: 
-    '  NC_CLOBBER (overwrite existing file), 
-    '  NC_NOCLOBBER (do not overwrite existing file), 
-    '  NC_SHARE (limit write caching - netcdf classic files only), 
-    '  NC_64BIT_OFFSET (create 64-bit offset file), 
-    '  NC_64BIT_DATA (alias NC_CDF5) (create CDF-5 file), 
-    '  NC_NETCDF4 (create netCDF-4/HDF5 file), 
-    '  NC_CLASSIC_MODEL (enforce netCDF classic mode on netCDF-4/HDF5 files), 
-    '  NC_DISKLESS (store data in memory), and NC_PERSIST (force the NC_DISKLESS data from memory to a file), 
-    '  NC_MMAP (use MMAP for NC_DISKLESS instead of NC_INMEMORY – deprecated). 
-    ' 
-    Public Enum CreateMode As Integer
-        ''' <summary>Overwrite existing file. Mode flag for nc_create()</summary>
-        NC_CLOBBER = &H0
-        ''' <summary>Don't destroy existing file. Mode flag for nc_create()</summary>
-        NC_NOCLOBBER = &H4
-        ''' <summary>Use diskless file. Mode flag for nc_open() or nc_create()</summary>
-        NC_DISKLESS = &H8
-        ''' <summary>deprecated Use diskless file with mmap. Mode flag for nc_open() or nc_create()</summary>
-        NC_MMAP = &H10
-        ''' <summary>CDF-5 format: classic model but 64 bit dimensions and sizes</summary>
-        NC_64BIT_DATA = &H20
-        ''' <summary>Enforce classic model on netCDF-4. Mode flag for nc_create()</summary>
-        NC_CLASSIC_MODEL = &H100
-        ''' <summary>Use large (64-bit) file offsets. Mode flag for nc_create()</summary>
-        NC_64BIT_OFFSET = &H200
-        ''' <summary>Share updates, limit caching. Use this in mode flags for both nc_create() and nc_open()</summary>
-        NC_SHARE = &H800
-        ''' <summary>se netCDF-4/HDF5 format. Mode flag for nc_create()</summary>
-        NC_NETCDF4 = &H1000
-        ''' <summary>Save diskless contents to disk. Mode flag for nc_open() or nc_create()</summary>
-        NC_PERSIST = &H4000
-    End Enum
-
-    ''' <summary>The open mode flags</summary>
-    Public Enum OpenMode As Integer
-        ''' <summary>Set read-only access for nc_open()</summary>
-        NC_NOWRITE = &H0
-        ''' <summary>Set read-write access for nc_open()</summary>
-        NC_WRITE = &H1
-        ''' <summary>Use diskless file. Mode flag for nc_open() or nc_create()</summary>
-        NC_DISKLESS = &H8
-        ''' <summary>Share updates, limit caching. Use this in mode flags for both nc_create() and nc_open()</summary>
-        NC_SHARE = &H800
-        ''' <summary>Read from memory. Mode flag for nc_open() or nc_create()</summary>
-        NC_INMEMORY = &H8000
-    End Enum
 #End Region
 
 #Region "Methods returning const char * that require the custom Marshaller"

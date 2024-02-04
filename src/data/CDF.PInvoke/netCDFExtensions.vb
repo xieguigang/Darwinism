@@ -4,6 +4,7 @@
 ' 
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports nc_type = Microsoft.VisualBasic.DataStorage.netCDF.Data.CDFDataTypes
 
 Partial Public Module NetCDF
 #Region "C# Friendly methods"

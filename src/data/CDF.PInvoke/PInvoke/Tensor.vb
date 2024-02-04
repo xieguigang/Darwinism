@@ -3,7 +3,7 @@
 ''' <summary>
 ''' Multi-dimensional array support
 ''' </summary>
-Module Tensor
+Partial Module NetCDF
 
     ' Get methods
     <DllImport("netcdf.dll", CallingConvention:=CallingConvention.Cdecl)>
