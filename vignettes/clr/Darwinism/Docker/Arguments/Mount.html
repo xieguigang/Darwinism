@@ -30,13 +30,13 @@
             <code id="clr_ts">
 # namespace Darwinism.Docker.Arguments
 export class Mount {
+   # 任何一个路径是空字符串就会被判断为无效参数, 对于<a href="/vignettes/clr/Darwinism/Docker/Arguments/Mount.html">Mount</a>.<a href="#">local</a>本地文件夹路径
+   #  还需要其存在于本地文件系统之上
+   IsValid: boolean;
    # 宿主机内的本地文件夹全路径
    local: string;
    # 虚拟机内的文件路径,共享文件夹将会在虚拟机内被挂载到这个路径上面
    virtual: string;
-   # 任何一个路径是空字符串就会被判断为无效参数, 对于<a href="/vignettes/clr/Darwinism/Docker/Arguments/Mount.html">Mount</a>.<a href="#">local</a>本地文件夹路径
-   #  还需要其存在于本地文件系统之上
-   IsValid: boolean;
 }
 </code>
         </pre>
