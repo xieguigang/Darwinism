@@ -20,6 +20,11 @@ const ___check_netstat = function() {
 
 #' show warning message about missing ``netstat`` command
 #' 
+#' @details create a slave task via ``IPCSocket`` needs check of the
+#' assigned port number locally, for windows system, win32 api could 
+#' be used for this job; for unix system, the ``netstat`` command will
+#' be used for check this status data.
+#' 
 const no_netstat_warning = function() {
     let message = [
         "warning: no `netstat` command could be found on your linux system, ipc parallel may be run into a network error!",
