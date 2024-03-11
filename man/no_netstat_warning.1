@@ -3,9 +3,13 @@
 no_netstat_warning \- no_netstat_warning()
 .SH SYNOPSIS
 \fIno_netstat_warning()\fR
+.SH DETAILS
+.PP
+create a slave task via ``IPCSocket`` needs check of the assigned port number locally, for windows system, win32 api could be used for this job; for unix system, the ``netstat`` command will be used for check this status data.
+.PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.no_netstat_warning at env.R:line 23
+SMRUCC/R#.declare_function.no_netstat_warning at env.R:line 28
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2024
