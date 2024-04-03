@@ -116,7 +116,8 @@ Public Class IDelegate
         Dim type As Type = provideType()
 
 #If NETCOREAPP Then
-        Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
+        Call deps.TryHandleNetCore5AssemblyBugs(
+            package:=type, external_libloc:=Nothing)
 #End If
 
         If Not VBLanguage.IsValidVBSymbolName(name) Then

@@ -244,7 +244,8 @@ Public Class TaskBuilder : Implements ITaskDriver
         )
 
 #If NETCOREAPP Then
-        Call deps.TryHandleNetCore5AssemblyBugs(package:=type)
+        Call deps.TryHandleNetCore5AssemblyBugs(
+            package:=type, external_libloc:=Nothing)
 #End If
 
         Using buf As MemoryStream = stream.openMemoryBuffer
