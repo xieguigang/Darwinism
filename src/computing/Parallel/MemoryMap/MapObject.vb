@@ -1,45 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::1d940df528f4ea805c224c1e14fe7d99, Parallel\MemoryMap\MapObject.vb"
+﻿#Region "Microsoft.VisualBasic::972e61f34811c8d4eb9a1b2694ea0663, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//MemoryMap/MapObject.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class MapObject
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: FromObject, FromPointer, GetObject
-' 
-'     Sub: (+2 Overloads) Dispose
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 206
+    '    Code Lines: 129
+    ' Comment Lines: 40
+    '   Blank Lines: 37
+    '     File Size: 6.78 KB
+
+
+    ' Class MapObject
+    ' 
+    '     Properties: Invalid
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Allocate, (+2 Overloads) Exists, FromObject, (+2 Overloads) FromPointer, GetMapFileName
+    '               GetMappingFileName, GetObject, OpenFile, ToString
+    ' 
+    '     Sub: Allocate, (+2 Overloads) Dispose
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

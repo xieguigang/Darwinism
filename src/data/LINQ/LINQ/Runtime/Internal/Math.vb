@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c73f67e2ead98087074c71607b21e5e, LINQ\LINQ\Runtime\Internal\Math.vb"
+﻿#Region "Microsoft.VisualBasic::2c73f67e2ead98087074c71607b21e5e, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Internal/Math.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 413 B
+
 
     '     Class Math
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bd23076d203de1d2865c07c374dbe5a, CloudKit\ossutil\Model\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::9bd23076d203de1d2865c07c374dbe5a, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//Model/MetaData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 589 B
+
 
     '     Class MetaData
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2bbd60671ade4afa89b89745bfd4155, Google.Protobuf\Reflection\Descriptor\ServiceDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::c2bbd60671ade4afa89b89745bfd4155, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/ServiceDescriptor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 39
+    ' Comment Lines: 43
+    '   Blank Lines: 9
+    '     File Size: 3.83 KB
+
 
     '     Class ServiceDescriptor
     ' 

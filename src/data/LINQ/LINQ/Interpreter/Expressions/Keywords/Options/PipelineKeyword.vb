@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c21de972f7dbe539786d772e666e80e, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\PipelineKeyword.vb"
+﻿#Region "Microsoft.VisualBasic::3c21de972f7dbe539786d772e666e80e, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/Options/PipelineKeyword.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 21
+    ' Comment Lines: 5
+    '   Blank Lines: 7
+    '     File Size: 1.30 KB
+
 
     '     Class PipelineKeyword
     ' 

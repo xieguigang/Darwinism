@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc80bc8d8a4419472abddc5d785c6c6a, Google.Protobuf\Reflection\FieldType.vb"
+﻿#Region "Microsoft.VisualBasic::bc80bc8d8a4419472abddc5d785c6c6a, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/FieldType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 24
+    ' Comment Lines: 86
+    '   Blank Lines: 1
+    '     File Size: 3.87 KB
+
 
     '     Enum FieldType
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f52f81768990b5c04714f9db2d5f4672, LINQ\LINQ\Runtime\GlobalEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::f52f81768990b5c04714f9db2d5f4672, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/GlobalEnvironment.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 922 B
+
 
     '     Class GlobalEnvironment
     ' 

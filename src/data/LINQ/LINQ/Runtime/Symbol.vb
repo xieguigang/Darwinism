@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1e0de08bab89ad299202674cf88028c, LINQ\LINQ\Runtime\Symbol.vb"
+﻿#Region "Microsoft.VisualBasic::b1e0de08bab89ad299202674cf88028c, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Symbol.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 860 B
+
 
     '     Class Symbol
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30aae81439e9e8cfab7b3b6897c8f3bf, Google.Protobuf\Reflection\Descriptor\DescriptorPool.vb"
+﻿#Region "Microsoft.VisualBasic::30aae81439e9e8cfab7b3b6897c8f3bf, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/DescriptorPool.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 318
+    '    Code Lines: 173
+    ' Comment Lines: 95
+    '   Blank Lines: 50
+    '     File Size: 14.62 KB
+
 
     '     Class DescriptorPool
     ' 

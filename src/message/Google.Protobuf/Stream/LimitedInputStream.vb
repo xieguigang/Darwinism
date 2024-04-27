@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55fe24040a03b68b3da244f6337ca30, Google.Protobuf\Stream\LimitedInputStream.vb"
+﻿#Region "Microsoft.VisualBasic::e55fe24040a03b68b3da244f6337ca30, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/LimitedInputStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 62
+    ' Comment Lines: 34
+    '   Blank Lines: 15
+    '     File Size: 4.15 KB
+
 
     '     Class LimitedInputStream
     ' 

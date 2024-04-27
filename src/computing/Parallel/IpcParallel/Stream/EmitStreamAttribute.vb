@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::649d6beaad89002ea8a513be53a3967f, Parallel\IpcParallel\Stream\EmitStreamAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::cb7af299126dc94d32b1c8d78f89795d, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/EmitStreamAttribute.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,29 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 34
+    ' Comment Lines: 13
+    '   Blank Lines: 13
+    '     File Size: 1.82 KB
+
+
     ' Class EmitStreamAttribute
     ' 
-    '     Properties: Handler
+    '     Properties: Handler, Target
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
     ' Interface IEmitStream
     ' 
     '     Function: BufferInMemory, ReadBuffer, (+2 Overloads) WriteBuffer
+    ' 
+    ' Module CustomStreamFile
+    ' 
+    '     Function: DefaultWriteMemory, GetReader, GetWriter
     ' 
     ' /********************************************************************************/
 

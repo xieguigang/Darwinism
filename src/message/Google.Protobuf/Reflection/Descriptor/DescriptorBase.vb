@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac6cf61bee97cff9cae3e814e135b6e9, Google.Protobuf\Reflection\Descriptor\DescriptorBase.vb"
+﻿#Region "Microsoft.VisualBasic::ac6cf61bee97cff9cae3e814e135b6e9, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/DescriptorBase.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 31
+    ' Comment Lines: 49
+    '   Blank Lines: 7
+    '     File Size: 3.69 KB
+
 
     '     Class DescriptorBase
     ' 

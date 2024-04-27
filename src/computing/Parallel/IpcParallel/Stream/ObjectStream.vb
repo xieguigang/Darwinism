@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e43fcbbe187b0aabe07e3f31fb5b895, Parallel\IpcParallel\Stream\ObjectStream.vb"
+﻿#Region "Microsoft.VisualBasic::2e43fcbbe187b0aabe07e3f31fb5b895, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/ObjectStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 139
+    '    Code Lines: 103
+    ' Comment Lines: 11
+    '   Blank Lines: 25
+    '     File Size: 5.30 KB
+
 
     '     Class ObjectStream
     ' 

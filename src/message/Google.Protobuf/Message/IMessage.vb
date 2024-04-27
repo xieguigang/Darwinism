@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::081296e26d2715d9b245cd418544721f, Google.Protobuf\Message\IMessage.vb"
+﻿#Region "Microsoft.VisualBasic::081296e26d2715d9b245cd418544721f, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Message/IMessage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 12
+    ' Comment Lines: 52
+    '   Blank Lines: 6
+    '     File Size: 3.27 KB
+
 
     '     Interface IMessage
     ' 

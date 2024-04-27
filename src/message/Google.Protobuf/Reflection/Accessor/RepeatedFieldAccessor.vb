@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12501b388bdab5439a6eafe0e0794981, Google.Protobuf\Reflection\Accessor\RepeatedFieldAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::12501b388bdab5439a6eafe0e0794981, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Accessor/RepeatedFieldAccessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 20
+    ' Comment Lines: 32
+    '   Blank Lines: 5
+    '     File Size: 2.53 KB
+
 
     '     Class RepeatedFieldAccessor
     ' 

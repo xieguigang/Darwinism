@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d2ae0dc5dc0fb85e1545481aeae0eca, Google.Protobuf\WellKnownTypes\Wrappers\BoolValue.vb"
+﻿#Region "Microsoft.VisualBasic::6d2ae0dc5dc0fb85e1545481aeae0eca, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/BoolValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 113
+    ' Comment Lines: 9
+    '   Blank Lines: 28
+    '     File Size: 5.22 KB
+
 
     '     Class BoolValue
     ' 

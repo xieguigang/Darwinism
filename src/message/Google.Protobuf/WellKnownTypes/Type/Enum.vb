@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f1ea7574a0e9e6ca915812e2c418ec7, Google.Protobuf\WellKnownTypes\Type\Enum.vb"
+﻿#Region "Microsoft.VisualBasic::0f1ea7574a0e9e6ca915812e2c418ec7, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/Enum.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 277
+    '    Code Lines: 206
+    ' Comment Lines: 23
+    '   Blank Lines: 48
+    '     File Size: 11.14 KB
+
 
     '     Class [Enum]
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85a637df5f263ddb8e3a2f5ea65ac4da, Google.Protobuf\ICustomDiagnosticMessage.vb"
+﻿#Region "Microsoft.VisualBasic::85a637df5f263ddb8e3a2f5ea65ac4da, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//ICustomDiagnosticMessage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 8
+    ' Comment Lines: 59
+    '   Blank Lines: 3
+    '     File Size: 3.82 KB
+
 
     '     Interface ICustomDiagnosticMessage
     ' 

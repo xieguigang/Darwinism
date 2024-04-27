@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb833244f56a8f07c24bbab2b8432239, LINQ\LINQ\Runtime\Drivers\DriverFlagAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::eb833244f56a8f07c24bbab2b8432239, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Drivers/DriverFlagAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 436 B
+
 
     '     Class DriverFlagAttribute
     ' 

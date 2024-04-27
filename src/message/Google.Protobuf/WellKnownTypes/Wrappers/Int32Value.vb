@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df4e9eb4f676ed00a1b4e301b79c964b, Google.Protobuf\WellKnownTypes\Wrappers\Int32Value.vb"
+﻿#Region "Microsoft.VisualBasic::df4e9eb4f676ed00a1b4e301b79c964b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/Int32Value.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 113
+    ' Comment Lines: 9
+    '   Blank Lines: 28
+    '     File Size: 5.25 KB
+
 
     '     Class Int32Value
     ' 

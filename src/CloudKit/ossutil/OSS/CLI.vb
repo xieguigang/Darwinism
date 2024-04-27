@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8da48e3a99777ec1990b88a3bb42d879, CloudKit\ossutil\OSS\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::8da48e3a99777ec1990b88a3bb42d879, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//OSS/CLI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 28
+    ' Comment Lines: 27
+    '   Blank Lines: 8
+    '     File Size: 2.27 KB
+
 
     ' Class CLI
     ' 

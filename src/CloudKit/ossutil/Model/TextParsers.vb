@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5efc7517b0bffb4b14886a39aaa44b71, CloudKit\ossutil\Model\TextParsers.vb"
+﻿#Region "Microsoft.VisualBasic::5efc7517b0bffb4b14886a39aaa44b71, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//Model/TextParsers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 50
+    ' Comment Lines: 6
+    '   Blank Lines: 11
+    '     File Size: 2.98 KB
+
 
     '     Module TextParsers
     ' 

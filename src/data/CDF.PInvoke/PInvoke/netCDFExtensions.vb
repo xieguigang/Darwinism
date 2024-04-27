@@ -1,4 +1,84 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::98fedd9a568f208fe8f39f50193e8be9, G:/GCModeller/src/runtime/Darwinism/src/data/CDF.PInvoke//PInvoke/netCDFExtensions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1162
+    '    Code Lines: 1023
+    ' Comment Lines: 48
+    '   Blank Lines: 91
+    '     File Size: 66.87 KB
+
+
+    ' Module NetCDF
+    ' 
+    '     Function: ConvertToIntPtr, Get_byte, Get_char, Get_Dimensions, Get_double
+    '               Get_float, Get_int, Get_short, (+2 Overloads) GetGlobalAttribute, GetGlobalBool
+    '               GetGlobalDateTime, GetGlobalDouble, GetGlobalFloat, GetGlobalInt, GetGlobalShort
+    '               (+7 Overloads) GetVarAttribute, nc_def_dim, nc_get_att_double, nc_get_att_float, nc_get_att_int
+    '               nc_get_att_long, nc_get_att_longlong, nc_get_att_schar, nc_get_att_short, nc_get_att_text
+    '               nc_get_att_ubyte, nc_get_att_uchar, nc_get_att_uint, nc_get_att_ulonglong, nc_get_att_ushort
+    '               nc_get_var_string, nc_get_var1_double, nc_get_var1_float, nc_get_var1_int, nc_get_var1_long
+    '               nc_get_var1_longlong, nc_get_var1_schar, nc_get_var1_short, (+2 Overloads) nc_get_var1_string, nc_get_var1_text
+    '               nc_get_var1_ubyte, nc_get_var1_uchar, nc_get_var1_uint, nc_get_var1_ulonglong, nc_get_var1_ushort
+    '               (+3 Overloads) nc_get_vara_double, (+3 Overloads) nc_get_vara_float, (+3 Overloads) nc_get_vara_int, (+3 Overloads) nc_get_vara_long, nc_get_vara_longlong
+    '               nc_get_vara_schar, (+3 Overloads) nc_get_vara_short, (+2 Overloads) nc_get_vara_string, nc_get_vara_text, nc_get_vara_ubyte
+    '               nc_get_vara_uchar, nc_get_vara_uint, nc_get_vara_ulonglong, nc_get_vara_ushort, nc_get_vars_double
+    '               nc_get_vars_float, nc_get_vars_int, nc_get_vars_long, nc_get_vars_longlong, nc_get_vars_schar
+    '               nc_get_vars_short, (+2 Overloads) nc_get_vars_string, nc_get_vars_text, nc_get_vars_uchar, nc_get_vars_uint
+    '               nc_get_vars_ulonglong, nc_get_vars_ushort, nc_get_vlen_element, nc_inq_att, nc_inq_attlen
+    '               nc_inq_dim, nc_inq_dimlen, (+2 Overloads) nc_inq_grpname_full, nc_inq_grpname_len, (+2 Overloads) nc_inq_path
+    '               (+3 Overloads) nc_put_att_double, (+3 Overloads) nc_put_att_float, (+3 Overloads) nc_put_att_int, (+3 Overloads) nc_put_att_long, (+2 Overloads) nc_put_att_longlong
+    '               (+3 Overloads) nc_put_att_schar, (+3 Overloads) nc_put_att_short, (+2 Overloads) nc_put_att_text, (+3 Overloads) nc_put_att_ubyte, (+3 Overloads) nc_put_att_uchar
+    '               (+3 Overloads) nc_put_att_uint, (+3 Overloads) nc_put_att_ulonglong, (+3 Overloads) nc_put_att_ushort, nc_put_var1_double, nc_put_var1_float
+    '               nc_put_var1_int, nc_put_var1_long, nc_put_var1_longlong, nc_put_var1_schar, nc_put_var1_short
+    '               nc_put_var1_string, nc_put_var1_text, nc_put_var1_ubyte, nc_put_var1_uchar, nc_put_var1_uint
+    '               nc_put_var1_ulonglong, nc_put_var1_ushort, (+3 Overloads) nc_put_vara_double, (+3 Overloads) nc_put_vara_float, (+3 Overloads) nc_put_vara_int
+    '               (+3 Overloads) nc_put_vara_long, nc_put_vara_longlong, nc_put_vara_schar, (+3 Overloads) nc_put_vara_short, nc_put_vara_string
+    '               nc_put_vara_text, nc_put_vara_ubyte, nc_put_vara_uchar, nc_put_vara_uint, nc_put_vara_ulonglong
+    '               nc_put_vara_ushort, nc_put_vars_double, nc_put_vars_float, nc_put_vars_int, nc_put_vars_long
+    '               nc_put_vars_longlong, nc_put_vars_schar, nc_put_vars_short, nc_put_vars_string, nc_put_vars_text
+    '               nc_put_vars_uchar, nc_put_vars_uint, nc_put_vars_ulonglong, nc_put_vars_ushort, VarExists
+    ' 
+    '     Sub: Get_byte, Get_double, (+2 Overloads) Get_float, Get_int, Get_long
+    '          (+2 Overloads) Get_short, (+7 Overloads) PutGlobalAttribute, (+7 Overloads) PutVarAttribute
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '   Use this file, rather than CsNetCDF.cs, for customised methods, such as multidimensional array
 '   support, or other helper methods.
 ' 
@@ -1160,3 +1240,4 @@ Partial Public Module NetCDF
 #End Region
 
 End Module
+

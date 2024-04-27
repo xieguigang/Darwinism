@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::420de18a3c0c16d9f7fc6262241a924b, Google.Protobuf\Reflection\Accessor\FieldAccessorBase.vb"
+﻿#Region "Microsoft.VisualBasic::420de18a3c0c16d9f7fc6262241a924b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Accessor/FieldAccessorBase.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 25
+    ' Comment Lines: 32
+    '   Blank Lines: 7
+    '     File Size: 2.93 KB
+
 
     '     Class FieldAccessorBase
     ' 

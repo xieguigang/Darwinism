@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11ad6e7a17e5eeeac053db851ca0ee3f, LINQ\LINQ\Interpreter\Expressions\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::11ad6e7a17e5eeeac053db851ca0ee3f, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Expression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 11
+    ' Comment Lines: 8
+    '   Blank Lines: 5
+    '     File Size: 610 B
+
 
     '     Class Expression
     ' 

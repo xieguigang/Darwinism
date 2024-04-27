@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f39f64ea2d6e431ba614239599869cab, Google.Protobuf\Reflection\Descriptor\IDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::f39f64ea2d6e431ba614239599869cab, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/IDescriptor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 9
+    ' Comment Lines: 41
+    '   Blank Lines: 3
+    '     File Size: 2.44 KB
+
 
     '     Interface IDescriptor
     ' 

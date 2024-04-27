@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::091d6ba17dea23eab9d67309ce161389, Google.Protobuf\Collections\MapField.vb"
+﻿#Region "Microsoft.VisualBasic::091d6ba17dea23eab9d67309ce161389, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Collections/MapField.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 771
+    '    Code Lines: 439
+    ' Comment Lines: 221
+    '   Blank Lines: 111
+    '     File Size: 33.58 KB
+
 
     '     Class MapField
     ' 

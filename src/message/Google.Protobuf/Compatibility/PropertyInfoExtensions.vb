@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02c486a858d937b0b87c48a9479a274d, Google.Protobuf\Compatibility\PropertyInfoExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::02c486a858d937b0b87c48a9479a274d, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Compatibility/PropertyInfoExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 26
+    ' Comment Lines: 42
+    '   Blank Lines: 5
+    '     File Size: 3.24 KB
+
 
     '     Module PropertyInfoExtensions
     ' 

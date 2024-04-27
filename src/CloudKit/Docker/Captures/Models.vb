@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dea7be9c9d31d3f899a0e5e3c1cf4b45, CloudKit\Docker\Captures\Models.vb"
+﻿#Region "Microsoft.VisualBasic::dea7be9c9d31d3f899a0e5e3c1cf4b45, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//Captures/Models.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 545 B
+
 
     '     Structure Search
     ' 

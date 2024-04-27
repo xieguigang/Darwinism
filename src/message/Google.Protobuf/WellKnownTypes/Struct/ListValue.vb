@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f05150d3088e3174ba217091a4470e6, Google.Protobuf\WellKnownTypes\Struct\ListValue.vb"
+﻿#Region "Microsoft.VisualBasic::4f05150d3088e3174ba217091a4470e6, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Struct/ListValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 105
+    ' Comment Lines: 9
+    '   Blank Lines: 26
+    '     File Size: 5.50 KB
+
 
     '     Class ListValue
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fa0ec130da2dfd7e656c5bcf9ade941, Parallel\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::d6174f18955f94afc64848699e9ca436, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel/test//memoryTest.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
-    ' Module Module1
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 25
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 1000 B
+
+
+    ' Module memoryTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' Class vec
     ' 

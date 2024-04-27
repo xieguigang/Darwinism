@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93f3651bb031be5bfb8de94934f48e9d, Google.Protobuf\Reflection\ReflectionUtil.vb"
+﻿#Region "Microsoft.VisualBasic::93f3651bb031be5bfb8de94934f48e9d, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/ReflectionUtil.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 27
+    ' Comment Lines: 58
+    '   Blank Lines: 6
+    '     File Size: 4.73 KB
+
 
     '     Module ReflectionUtil
     ' 

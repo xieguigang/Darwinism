@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::482aa36c8643228f22597dde3118a753, Parallel\ThreadTask\TaskInvokeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::482aa36c8643228f22597dde3118a753, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//ThreadTask/TaskInvokeHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 242 B
+
 
     '     Structure TaskInvokeHelper
     ' 

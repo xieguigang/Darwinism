@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9f933b108621ac52a00063279c9878e, CloudKit\Centos\Commands\ls.vb"
+﻿#Region "Microsoft.VisualBasic::e9f933b108621ac52a00063279c9878e, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Centos//Commands/ls.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 945 B
+
 
     ' Class ls
     ' 

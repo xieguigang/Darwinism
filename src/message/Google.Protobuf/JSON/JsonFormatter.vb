@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::822ce310a13c2d350e6b19e5f24521a6, Google.Protobuf\JSON\JsonFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::822ce310a13c2d350e6b19e5f24521a6, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//JSON/JsonFormatter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 800
+    '    Code Lines: 495
+    ' Comment Lines: 194
+    '   Blank Lines: 111
+    '     File Size: 38.35 KB
+
 
     '     Class JsonFormatter
     ' 

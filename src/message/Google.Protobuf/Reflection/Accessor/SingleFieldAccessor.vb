@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48d60a145fea9f2a40937ed3ec20d7ba, Google.Protobuf\Reflection\Accessor\SingleFieldAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::48d60a145fea9f2a40937ed3ec20d7ba, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Accessor/SingleFieldAccessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 27
+    ' Comment Lines: 37
+    '   Blank Lines: 9
+    '     File Size: 3.62 KB
+
 
     '     Class SingleFieldAccessor
     ' 

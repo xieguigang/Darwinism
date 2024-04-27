@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5579761566c0d0dff8160051ad86f1db, Google.Protobuf\WellKnownTypes\Struct\StructReflection.vb"
+﻿#Region "Microsoft.VisualBasic::5579761566c0d0dff8160051ad86f1db, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Struct/StructReflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 19
+    ' Comment Lines: 2
+    '   Blank Lines: 6
+    '     File Size: 2.62 KB
+
 
     '     Module StructReflection
     ' 

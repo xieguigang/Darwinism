@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e964dd6164ddb0aa2e34cf054fdfb15b, LINQ\LINQ\Interpreter\Query\ProjectionExpression.vb"
+﻿#Region "Microsoft.VisualBasic::e964dd6164ddb0aa2e34cf054fdfb15b, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/ProjectionExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 45
+    ' Comment Lines: 12
+    '   Blank Lines: 14
+    '     File Size: 2.47 KB
+
 
     '     Class ProjectionExpression
     ' 

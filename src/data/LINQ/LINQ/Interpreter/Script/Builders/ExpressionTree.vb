@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf796cc0e55fc3ef8f77c2c2430299d3, LINQ\LINQ\Interpreter\Script\Builders\ExpressionTree.vb"
+﻿#Region "Microsoft.VisualBasic::bf796cc0e55fc3ef8f77c2c2430299d3, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Script/Builders/ExpressionTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 309 B
+
 
     '     Module ExpressionTree
     ' 

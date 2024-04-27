@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1786bac0b529b9a10492e40332beabbe, Google.Protobuf\WellKnownTypes\Timestamp\TimestampReflection.vb"
+﻿#Region "Microsoft.VisualBasic::1786bac0b529b9a10492e40332beabbe, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Timestamp/TimestampReflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 18
+    ' Comment Lines: 2
+    '   Blank Lines: 6
+    '     File Size: 1.51 KB
+
 
     '     Module TimestampReflection
     ' 

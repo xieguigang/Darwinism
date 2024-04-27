@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32039a9b347f077c24c26f2e3f37aaaa, Google.Protobuf\Reflection\Accessor\MapFieldAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::32039a9b347f077c24c26f2e3f37aaaa, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Accessor/MapFieldAccessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 20
+    ' Comment Lines: 32
+    '   Blank Lines: 5
+    '     File Size: 2.52 KB
+
 
     '     Class MapFieldAccessor
     ' 

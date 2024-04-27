@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddd0940cec6cfeae2e20adb7bdaf463a, LINQ\LINQ\Interpreter\Expressions\CommandLineArgument.vb"
+﻿#Region "Microsoft.VisualBasic::ddd0940cec6cfeae2e20adb7bdaf463a, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/CommandLineArgument.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 14
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 620 B
+
 
     '     Class CommandLineArgument
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b283f9c018ed54f26bd27d2520634579, Google.Protobuf\WellKnownTypes\SourceContext.vb"
+﻿#Region "Microsoft.VisualBasic::b283f9c018ed54f26bd27d2520634579, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/SourceContext.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 178
+    '    Code Lines: 131
+    ' Comment Lines: 13
+    '   Blank Lines: 34
+    '     File Size: 7.10 KB
+
 
     '     Module SourceContextReflection
     ' 

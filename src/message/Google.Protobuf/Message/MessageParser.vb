@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::424b444ca681db51ee599a1f829640dc, Google.Protobuf\Message\MessageParser.vb"
+﻿#Region "Microsoft.VisualBasic::424b444ca681db51ee599a1f829640dc, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Message/MessageParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 46
+    ' Comment Lines: 73
+    '   Blank Lines: 11
+    '     File Size: 5.55 KB
+
 
     '     Class MessageParser
     ' 

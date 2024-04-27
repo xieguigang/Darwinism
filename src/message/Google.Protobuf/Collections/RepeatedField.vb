@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6f4e1e03d74fb425944c9aaad561706, Google.Protobuf\Collections\RepeatedField.vb"
+﻿#Region "Microsoft.VisualBasic::a6f4e1e03d74fb425944c9aaad561706, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Collections/RepeatedField.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 585
+    '    Code Lines: 313
+    ' Comment Lines: 185
+    '   Blank Lines: 87
+    '     File Size: 24.05 KB
+
 
     '     Class RepeatedField
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c144ed6b284ca0e64566263bf34f18e, Google.Protobuf\WellKnownTypes\ValuePartial.vb"
+﻿#Region "Microsoft.VisualBasic::4c144ed6b284ca0e64566263bf34f18e, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/ValuePartial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 37
+    ' Comment Lines: 58
+    '   Blank Lines: 6
+    '     File Size: 4.80 KB
+
 
     '     Class Value
     ' 

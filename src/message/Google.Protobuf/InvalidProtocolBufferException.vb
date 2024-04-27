@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2551141d9297debcc25cfcd1533f07d4, Google.Protobuf\InvalidProtocolBufferException.vb"
+﻿#Region "Microsoft.VisualBasic::2551141d9297debcc25cfcd1533f07d4, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//InvalidProtocolBufferException.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 54
+    ' Comment Lines: 36
+    '   Blank Lines: 15
+    '     File Size: 5.77 KB
+
 
     '     Class InvalidProtocolBufferException
     ' 

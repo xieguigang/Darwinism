@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a6673f4ff508ea3a66ea8fae7ffcb1c, Google.Protobuf\Reflection\FieldCollection.vb"
+﻿#Region "Microsoft.VisualBasic::7a6673f4ff508ea3a66ea8fae7ffcb1c, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/FieldCollection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 35
+    ' Comment Lines: 34
+    '   Blank Lines: 12
+    '     File Size: 3.71 KB
+
 
     '     Class FieldCollection
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36903d254aa39e108298a0053065b7f, Google.Protobuf\WellKnownTypes\Empty.vb"
+﻿#Region "Microsoft.VisualBasic::e36903d254aa39e108298a0053065b7f, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Empty.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 105
+    ' Comment Lines: 15
+    '   Blank Lines: 29
+    '     File Size: 5.84 KB
+
 
     '     Module EmptyReflection
     ' 

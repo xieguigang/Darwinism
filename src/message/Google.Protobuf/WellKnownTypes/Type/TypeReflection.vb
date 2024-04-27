@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eeb73aedf7a20d4ae29394a932da1f6b, Google.Protobuf\WellKnownTypes\Type\TypeReflection.vb"
+﻿#Region "Microsoft.VisualBasic::eeb73aedf7a20d4ae29394a932da1f6b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/TypeReflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 19
+    ' Comment Lines: 2
+    '   Blank Lines: 6
+    '     File Size: 4.56 KB
+
 
     '     Module TypeReflection
     ' 

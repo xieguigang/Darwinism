@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efec12e5fbc3420987eed667928b2852, LINQ\LINQ\Runtime\DataFrameExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::efec12e5fbc3420987eed667928b2852, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/DataFrameExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 923 B
+
 
     '     Module DataFrameExtensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbfaa1b6961e402576b0aa4d7e10d13d, Parallel\ThreadTask\BatchTasks.vb"
+﻿#Region "Microsoft.VisualBasic::dbfaa1b6961e402576b0aa4d7e10d13d, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//ThreadTask/BatchTasks.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 42
+    ' Comment Lines: 18
+    '   Blank Lines: 8
+    '     File Size: 2.65 KB
+
 
     '     Module BatchTasks
     ' 

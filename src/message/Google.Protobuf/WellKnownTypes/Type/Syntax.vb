@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60cffc183a67e717684bf937ced8ba84, Google.Protobuf\WellKnownTypes\Type\Syntax.vb"
+﻿#Region "Microsoft.VisualBasic::60cffc183a67e717684bf937ced8ba84, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/Syntax.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 13
+    ' Comment Lines: 9
+    '   Blank Lines: 3
+    '     File Size: 647 B
+
 
     '     Enum Syntax
     ' 

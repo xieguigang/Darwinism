@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fc91ac66b882315f704f910c2ab57c2, LINQ\LINQ\Interpreter\Expressions\BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::9fc91ac66b882315f704f910c2ab57c2, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/BinaryExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 44
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.66 KB
+
 
     '     Class BinaryExpression
     ' 

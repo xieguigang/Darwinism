@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58a8244873f3fb35cb8b0370172d7ec9, LINQ\LINQ\Interpreter\Query\Options.vb"
+﻿#Region "Microsoft.VisualBasic::58a8244873f3fb35cb8b0370172d7ec9, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/Options.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 30
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.27 KB
+
 
     '     Class Options
     ' 

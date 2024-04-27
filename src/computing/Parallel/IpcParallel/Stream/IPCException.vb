@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::739c6de893bf0913b18c7371463b73b9, Parallel\IpcParallel\Stream\IPCException.vb"
+﻿#Region "Microsoft.VisualBasic::739c6de893bf0913b18c7371463b73b9, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/IPCException.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 17
+    ' Comment Lines: 9
+    '   Blank Lines: 6
+    '     File Size: 1.04 KB
+
 
     '     Class IPCException
     ' 

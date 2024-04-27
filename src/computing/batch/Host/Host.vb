@@ -1,4 +1,58 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::5baf554035b1d7d14d654c8b000ba616, G:/GCModeller/src/runtime/Darwinism/src/computing/batch//Host/Host.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 48
+    ' Comment Lines: 42
+    '   Blank Lines: 15
+    '     File Size: 3.99 KB
+
+
+    ' Module Host
+    ' 
+    '     Function: CreateSlave, GetCurrentThread, ParallelFor, SlaveTask, Solve
+    ' 
+    '     Sub: SetRange
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Parallel
 Imports Parallel.IpcStream
@@ -101,5 +155,6 @@ Public Module Host
     End Sub
 
 End Module
+
 
 

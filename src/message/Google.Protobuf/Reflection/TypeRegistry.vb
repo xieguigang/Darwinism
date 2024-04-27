@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb527c4a83e7a13b00bb4f28e9c1fe39, Google.Protobuf\Reflection\TypeRegistry.vb"
+﻿#Region "Microsoft.VisualBasic::fb527c4a83e7a13b00bb4f28e9c1fe39, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/TypeRegistry.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 168
+    '    Code Lines: 64
+    ' Comment Lines: 88
+    '   Blank Lines: 16
+    '     File Size: 8.73 KB
+
 
     '     Class TypeRegistry
     ' 

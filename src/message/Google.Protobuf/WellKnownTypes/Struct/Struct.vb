@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b92678551b9497b309663816051ab7a, Google.Protobuf\WellKnownTypes\Struct\Struct.vb"
+﻿#Region "Microsoft.VisualBasic::0b92678551b9497b309663816051ab7a, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Struct/Struct.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 154
+    '    Code Lines: 109
+    ' Comment Lines: 16
+    '   Blank Lines: 29
+    '     File Size: 6.09 KB
+
 
     '     Class Struct
     ' 

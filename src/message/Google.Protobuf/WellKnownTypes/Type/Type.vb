@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed7239218695ed5ba46ac70debbdf541, Google.Protobuf\WellKnownTypes\Type\Type.vb"
+﻿#Region "Microsoft.VisualBasic::ed7239218695ed5ba46ac70debbdf541, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/Type.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 310
+    '    Code Lines: 227
+    ' Comment Lines: 29
+    '   Blank Lines: 54
+    '     File Size: 12.38 KB
+
 
     '     Class Type
     ' 

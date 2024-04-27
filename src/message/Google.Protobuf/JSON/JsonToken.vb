@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03f99d874addc6e598a646433d613f85, Google.Protobuf\JSON\JsonToken.vb"
+﻿#Region "Microsoft.VisualBasic::03f99d874addc6e598a646433d613f85, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//JSON/JsonToken.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 206
+    '    Code Lines: 145
+    ' Comment Lines: 37
+    '   Blank Lines: 24
+    '     File Size: 8.21 KB
+
 
     '     Class JsonToken
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a55814194d2a23aab8fecfe3cd84b366, Google.Protobuf\WellKnownTypes\Any.vb"
+﻿#Region "Microsoft.VisualBasic::a55814194d2a23aab8fecfe3cd84b366, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Any.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 298
+    '    Code Lines: 157
+    ' Comment Lines: 102
+    '   Blank Lines: 39
+    '     File Size: 11.61 KB
+
 
     '     Module AnyReflection
     ' 

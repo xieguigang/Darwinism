@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca462f2363b6c1215bc89962e3f3e539, LINQ\LINQ\Runtime\Internal\InternalInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::ca462f2363b6c1215bc89962e3f3e539, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Internal/InternalInvoke.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 23
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 929 B
+
 
     '     Class InternalInvoke
     ' 

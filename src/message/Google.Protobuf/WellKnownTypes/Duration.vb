@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a569a13cc7b75b8c8e7719f420966908, Google.Protobuf\WellKnownTypes\Duration.vb"
+﻿#Region "Microsoft.VisualBasic::a569a13cc7b75b8c8e7719f420966908, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Duration.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 256
+    '    Code Lines: 157
+    ' Comment Lines: 60
+    '   Blank Lines: 39
+    '     File Size: 10.06 KB
+
 
     '     Module DurationReflection
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04597e5b4cb6c9351875ed36102270a5, LINQ\LINQ\Interpreter\Expressions\Literals.vb"
+﻿#Region "Microsoft.VisualBasic::04597e5b4cb6c9351875ed36102270a5, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Literals.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 33
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.25 KB
+
 
     '     Class Literals
     ' 

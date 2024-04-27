@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccfedf3bfcd6623c8db7a6a65d51bd13, LINQ\LINQ\Interpreter\Expressions\Keywords\KeywordExpression.vb"
+﻿#Region "Microsoft.VisualBasic::ccfedf3bfcd6623c8db7a6a65d51bd13, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/KeywordExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 204 B
+
 
     '     Class KeywordExpression
     ' 

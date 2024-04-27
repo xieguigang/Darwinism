@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31b1d517569d8bac88bfda23087c33ad, LINQ\LINQ\Interpreter\Query\QueryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::31b1d517569d8bac88bfda23087c33ad, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/QueryExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.74 KB
+
 
     '     Class QueryExpression
     ' 

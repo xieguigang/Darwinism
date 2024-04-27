@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c530499643defc43599f5dc9f9e4b0b, Google.Protobuf\Stream\OutOfSpaceException.vb"
+﻿#Region "Microsoft.VisualBasic::0c530499643defc43599f5dc9f9e4b0b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/OutOfSpaceException.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 9
+    ' Comment Lines: 4
+    '   Blank Lines: 3
+    '     File Size: 443 B
+
 
     '     Class OutOfSpaceException
     ' 

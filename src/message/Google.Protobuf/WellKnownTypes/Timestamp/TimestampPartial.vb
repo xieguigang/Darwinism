@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::118f71f1efc25dfbcbe9f84cad8bfafd, Google.Protobuf\WellKnownTypes\Timestamp\TimestampPartial.vb"
+﻿#Region "Microsoft.VisualBasic::118f71f1efc25dfbcbe9f84cad8bfafd, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Timestamp/TimestampPartial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 88
+    ' Comment Lines: 119
+    '   Blank Lines: 18
+    '     File Size: 13.00 KB
+
 
     '     Class Timestamp
     ' 

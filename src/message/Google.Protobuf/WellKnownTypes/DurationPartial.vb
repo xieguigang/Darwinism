@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::934bbad329cbca9bbe7a048e8d45d2bf, Google.Protobuf\WellKnownTypes\DurationPartial.vb"
+﻿#Region "Microsoft.VisualBasic::934bbad329cbca9bbe7a048e8d45d2bf, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/DurationPartial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 242
+    '    Code Lines: 101
+    ' Comment Lines: 122
+    '   Blank Lines: 19
+    '     File Size: 12.64 KB
+
 
     '     Class Duration
     ' 

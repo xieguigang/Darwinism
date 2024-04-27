@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03e6b820c07e260cdb75545b221a7f3b, CloudKit\Centos\SSH.vb"
+﻿#Region "Microsoft.VisualBasic::03e6b820c07e260cdb75545b221a7f3b, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Centos//SSH/SSH.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 23
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 952 B
+
 
     ' Class SSH
     ' 

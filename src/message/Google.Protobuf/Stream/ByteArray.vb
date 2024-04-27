@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4c0c3e042dda9daf9bcfea730effec9, Google.Protobuf\Stream\ByteArray.vb"
+﻿#Region "Microsoft.VisualBasic::a4c0c3e042dda9daf9bcfea730effec9, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/ByteArray.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 28
+    ' Comment Lines: 41
+    '   Blank Lines: 6
+    '     File Size: 3.25 KB
+
 
     '     Module ByteArray
     ' 

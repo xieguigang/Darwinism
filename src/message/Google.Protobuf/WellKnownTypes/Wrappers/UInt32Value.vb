@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e45aaa423a70c099b884682e5eace551, Google.Protobuf\WellKnownTypes\Wrappers\UInt32Value.vb"
+﻿#Region "Microsoft.VisualBasic::e45aaa423a70c099b884682e5eace551, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/UInt32Value.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 113
+    ' Comment Lines: 9
+    '   Blank Lines: 28
+    '     File Size: 5.28 KB
+
 
     '     Class UInt32Value
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08248a8e4edafe3c8c1435480849a07e, Google.Protobuf\WellKnownTypes\AnyPartial.vb"
+﻿#Region "Microsoft.VisualBasic::08248a8e4edafe3c8c1435480849a07e, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/AnyPartial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 34
+    ' Comment Lines: 61
+    '   Blank Lines: 9
+    '     File Size: 5.72 KB
+
 
     '     Class Any
     ' 

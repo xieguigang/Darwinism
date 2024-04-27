@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3ecf2143a05f268f224d1006073aa3f, CloudKit\ossutil\Aspera.vb"
+﻿#Region "Microsoft.VisualBasic::e3ecf2143a05f268f224d1006073aa3f, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//Aspera.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 52
+    ' Comment Lines: 45
+    '   Blank Lines: 13
+    '     File Size: 3.83 KB
+
 
     ' Class Aspera
     ' 

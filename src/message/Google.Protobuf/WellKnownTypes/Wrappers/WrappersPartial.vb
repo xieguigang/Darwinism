@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::903e1d127b48be70b8dc00a25dd7a203, Google.Protobuf\WellKnownTypes\Wrappers\WrappersPartial.vb"
+﻿#Region "Microsoft.VisualBasic::903e1d127b48be70b8dc00a25dd7a203, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/WrappersPartial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 7
+    ' Comment Lines: 32
+    '   Blank Lines: 1
+    '     File Size: 2.04 KB
+
 
     '     Module WrappersReflection
     ' 

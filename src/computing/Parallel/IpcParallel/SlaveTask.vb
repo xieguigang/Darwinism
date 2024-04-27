@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cff0efcc2d710ecd4c1a5d321a19ad2, Parallel\IpcParallel\SlaveTask.vb"
+﻿#Region "Microsoft.VisualBasic::42d833ef64209a985b535927de22b892, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/SlaveTask.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 128
+    ' Comment Lines: 36
+    '   Blank Lines: 32
+    '     File Size: 7.10 KB
+
 
     ' Delegate Function
     ' 

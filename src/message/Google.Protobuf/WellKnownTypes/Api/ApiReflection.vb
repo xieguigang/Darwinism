@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d14f9b3835d0e6e63fd2a3250d71eb16, Google.Protobuf\WellKnownTypes\Api\ApiReflection.vb"
+﻿#Region "Microsoft.VisualBasic::d14f9b3835d0e6e63fd2a3250d71eb16, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Api/ApiReflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 19
+    ' Comment Lines: 2
+    '   Blank Lines: 6
+    '     File Size: 2.85 KB
+
 
     '     Module ApiReflection
     ' 

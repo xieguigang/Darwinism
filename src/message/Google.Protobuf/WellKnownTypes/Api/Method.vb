@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c248ae83aab9d01b32313c5daf7a74f, Google.Protobuf\WellKnownTypes\Api\Method.vb"
+﻿#Region "Microsoft.VisualBasic::8c248ae83aab9d01b32313c5daf7a74f, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Api/Method.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 350
+    '    Code Lines: 261
+    ' Comment Lines: 31
+    '   Blank Lines: 58
+    '     File Size: 13.37 KB
+
 
     '     Class Method
     ' 

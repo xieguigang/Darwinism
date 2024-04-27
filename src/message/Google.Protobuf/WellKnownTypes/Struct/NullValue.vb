@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1be883cf85c2fbde62b049541f558528, Google.Protobuf\WellKnownTypes\Struct\NullValue.vb"
+﻿#Region "Microsoft.VisualBasic::1be883cf85c2fbde62b049541f558528, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Struct/NullValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 11
+    ' Comment Lines: 9
+    '   Blank Lines: 2
+    '     File Size: 623 B
+
 
     '     Enum NullValue
     ' 

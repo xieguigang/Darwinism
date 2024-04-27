@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::900f73fea2c7e819ef4250efb84e3790, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\OrderBy.vb"
+﻿#Region "Microsoft.VisualBasic::900f73fea2c7e819ef4250efb84e3790, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/Options/OrderBy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 62
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 2.93 KB
+
 
     '     Class OrderBy
     ' 

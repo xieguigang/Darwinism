@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9553a8c545a433ed8b4bb0982c1dd284, Google.Protobuf\JSON\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::9553a8c545a433ed8b4bb0982c1dd284, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//JSON/JsonParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 928
+    '    Code Lines: 590
+    ' Comment Lines: 201
+    '   Blank Lines: 137
+    '     File Size: 48.97 KB
+
 
     '     Class JsonParser
     ' 

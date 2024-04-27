@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::915d0087daf37e7e27f031dfbcfd2694, LINQ\LINQ\Interpreter\Query\DataSoruce\SymbolIterator.vb"
+﻿#Region "Microsoft.VisualBasic::915d0087daf37e7e27f031dfbcfd2694, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/DataSoruce/SymbolIterator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.15 KB
+
 
     '     Class SymbolIterator
     ' 

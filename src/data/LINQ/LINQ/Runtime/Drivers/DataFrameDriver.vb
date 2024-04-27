@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4038b3952bb34ff8167bb72c35c0619c, LINQ\LINQ\Runtime\Drivers\DataFrameDriver.vb"
+﻿#Region "Microsoft.VisualBasic::4038b3952bb34ff8167bb72c35c0619c, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Drivers/DataFrameDriver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 883 B
+
 
     '     Class DataFrameDriver
     ' 

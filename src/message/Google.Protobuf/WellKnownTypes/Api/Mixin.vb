@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97228bd4c54ddc43bb83da5180100d9b, Google.Protobuf\WellKnownTypes\Api\Mixin.vb"
+﻿#Region "Microsoft.VisualBasic::97228bd4c54ddc43bb83da5180100d9b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Api/Mixin.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 261
+    '    Code Lines: 140
+    ' Comment Lines: 88
+    '   Blank Lines: 33
+    '     File Size: 9.55 KB
+
 
     '     Class Mixin
     ' 

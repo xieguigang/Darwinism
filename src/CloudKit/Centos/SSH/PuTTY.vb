@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84c589878c3cc8350584f74bf48df6a1, CloudKit\Centos\PuTTY.vb"
+﻿#Region "Microsoft.VisualBasic::84c589878c3cc8350584f74bf48df6a1, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Centos//SSH/PuTTY.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 37
+    ' Comment Lines: 26
+    '   Blank Lines: 12
+    '     File Size: 3.00 KB
+
 
     ' Class PuTTY
     ' 

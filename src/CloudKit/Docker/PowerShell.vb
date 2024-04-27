@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a516a8ece188b9bf689ee6e775a60d4e, CloudKit\Docker\PowerShell.vb"
+﻿#Region "Microsoft.VisualBasic::a516a8ece188b9bf689ee6e775a60d4e, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//PowerShell.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 35
+    ' Comment Lines: 42
+    '   Blank Lines: 11
+    '     File Size: 3.19 KB
+
 
     ' Class PowerShell
     ' 

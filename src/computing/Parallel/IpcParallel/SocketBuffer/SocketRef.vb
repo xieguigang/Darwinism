@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4953a7a21e32f9f3b4218327453c7d55, Parallel\IpcParallel\SocketBuffer\SocketRef.vb"
+﻿#Region "Microsoft.VisualBasic::835389a5248f9c2f9fa8ef6242960774, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/SocketBuffer/SocketRef.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 53
+    ' Comment Lines: 8
+    '   Blank Lines: 14
+    '     File Size: 3.02 KB
+
 
     '     Class SocketRef
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ddaea783aa68f59d5652027e1989b00, CloudKit\ossutil\Model\Bucket.vb"
+﻿#Region "Microsoft.VisualBasic::5ddaea783aa68f59d5652027e1989b00, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//Model/Bucket.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 31
+    ' Comment Lines: 3
+    '   Blank Lines: 8
+    '     File Size: 1.13 KB
+
 
     '     Class Bucket
     ' 

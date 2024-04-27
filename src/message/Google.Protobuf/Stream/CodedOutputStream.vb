@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::791daf8c0e7e48277820bbcf61027079, Google.Protobuf\Stream\CodedOutputStream.vb"
+﻿#Region "Microsoft.VisualBasic::791daf8c0e7e48277820bbcf61027079, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/CodedOutputStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 664
+    '    Code Lines: 315
+    ' Comment Lines: 279
+    '   Blank Lines: 70
+    '     File Size: 28.37 KB
+
 
     '     Class CodedOutputStream
     ' 

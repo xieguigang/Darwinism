@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8de1799af471ac1b38838a4de69d16af, CloudKit\Docker\Captures\ParserHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::4fc2d17ac235975135d69b4a521ce747, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//Captures/ParserHelpers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 852 B
+
 
     '     Module ParserHelpers
     ' 

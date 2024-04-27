@@ -1,4 +1,110 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::3ac155dedf409fba8717a27d3aeb7663, G:/GCModeller/src/runtime/Darwinism/src/data/CDF.PInvoke//PInvoke/netCDF.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1313
+    '    Code Lines: 842
+    ' Comment Lines: 218
+    '   Blank Lines: 253
+    '     File Size: 72.22 KB
+
+
+    ' Module NetCDF
+    ' 
+    '     Function: nc_abort, nc_close, nc_copy_att, nc_copy_var, nc_create
+    '               nc_create_mem, nc_def_compound, nc_def_dim, nc_def_enum, nc_def_grp
+    '               nc_def_var, nc_def_var_chunking, nc_def_var_deflate, nc_def_var_endian, nc_def_var_fill
+    '               nc_def_var_filter, nc_def_var_fletcher32, nc_def_vlen, nc_del_att, nc_enddef
+    '               nc_free_string, nc_get_att_double, nc_get_att_float, nc_get_att_int, nc_get_att_long
+    '               nc_get_att_longlong, nc_get_att_schar, nc_get_att_short, nc_get_att_text, nc_get_att_ubyte
+    '               nc_get_att_uchar, nc_get_att_uint, nc_get_att_ulonglong, nc_get_att_ushort, nc_get_chunk_cache
+    '               nc_get_var_chunk_cache, nc_get_var_double, nc_get_var_float, nc_get_var_int, nc_get_var_long
+    '               nc_get_var_longlong, nc_get_var_schar, nc_get_var_short, nc_get_var_string, nc_get_var_text
+    '               nc_get_var_ubyte, nc_get_var_uchar, nc_get_var_uint, nc_get_var_ulonglong, nc_get_var_ushort
+    '               nc_get_var1_double, nc_get_var1_float, nc_get_var1_int, nc_get_var1_long, nc_get_var1_longlong
+    '               nc_get_var1_schar, nc_get_var1_short, nc_get_var1_string, nc_get_var1_text, nc_get_var1_ubyte
+    '               nc_get_var1_uchar, nc_get_var1_uint, nc_get_var1_ulonglong, nc_get_var1_ushort, nc_get_vara_double
+    '               nc_get_vara_float, nc_get_vara_int, nc_get_vara_long, nc_get_vara_longlong, nc_get_vara_schar
+    '               nc_get_vara_short, nc_get_vara_string, nc_get_vara_text, nc_get_vara_ubyte, nc_get_vara_uchar
+    '               nc_get_vara_uint, nc_get_vara_ulonglong, nc_get_vara_ushort, nc_get_vars_double, nc_get_vars_float
+    '               nc_get_vars_int, nc_get_vars_long, nc_get_vars_longlong, nc_get_vars_schar, nc_get_vars_short
+    '               nc_get_vars_string, nc_get_vars_text, nc_get_vars_uchar, nc_get_vars_uint, nc_get_vars_ulonglong
+    '               nc_get_vars_ushort, nc_get_vlen_element, nc_inq, (+2 Overloads) nc_inq_att, nc_inq_attid
+    '               (+2 Overloads) nc_inq_attlen, nc_inq_attname, nc_inq_atttype, nc_inq_compound, nc_inq_compound_field
+    '               nc_inq_compound_fielddim_sizes, nc_inq_compound_fieldindex, nc_inq_compound_fieldname, nc_inq_compound_fieldndims, nc_inq_compound_fieldoffset
+    '               nc_inq_compound_fieldtype, nc_inq_compound_name, nc_inq_compound_nfields, nc_inq_compound_size, nc_inq_dim
+    '               nc_inq_dimid, nc_inq_dimids, nc_inq_dimlen, nc_inq_dimname, nc_inq_enum
+    '               nc_inq_enum_ident, nc_inq_enum_member, nc_inq_format, nc_inq_format_extended, nc_inq_grp_full_ncid
+    '               nc_inq_grp_ncid, nc_inq_grp_parent, nc_inq_grpname, nc_inq_grpname_full, nc_inq_grpname_len
+    '               nc_inq_grps, nc_inq_libvers, nc_inq_natts, nc_inq_ncid, nc_inq_ndims
+    '               nc_inq_nvars, nc_inq_path, (+2 Overloads) nc_inq_type, nc_inq_type_equal, nc_inq_typeid
+    '               (+2 Overloads) nc_inq_typeids, nc_inq_unlimdim, nc_inq_unlimdims, nc_inq_user_type, nc_inq_var
+    '               nc_inq_var_chunking, nc_inq_var_deflate, nc_inq_var_endian, nc_inq_var_fill, nc_inq_var_filter
+    '               nc_inq_var_fletcher32, nc_inq_var_szip, nc_inq_vardimid, nc_inq_varid, nc_inq_varids
+    '               nc_inq_varname, nc_inq_varnatts, nc_inq_varndims, nc_inq_vartype, nc_inq_vlen
+    '               nc_insert_array_compound, nc_insert_compound, nc_insert_enum, nc_open, nc_put_att_double
+    '               nc_put_att_float, nc_put_att_int, nc_put_att_long, nc_put_att_longlong, nc_put_att_schar
+    '               nc_put_att_short, nc_put_att_text, nc_put_att_ubyte, nc_put_att_uchar, nc_put_att_uint
+    '               nc_put_att_ulonglong, nc_put_att_ushort, nc_put_var_double, nc_put_var_float, nc_put_var_int
+    '               nc_put_var_long, nc_put_var_longlong, nc_put_var_schar, nc_put_var_short, nc_put_var_string
+    '               nc_put_var_text, nc_put_var_ubyte, nc_put_var_uchar, nc_put_var_uint, nc_put_var_ulonglong
+    '               nc_put_var_ushort, nc_put_var1_double, nc_put_var1_float, nc_put_var1_int, nc_put_var1_long
+    '               nc_put_var1_longlong, nc_put_var1_schar, nc_put_var1_short, nc_put_var1_string, nc_put_var1_text
+    '               nc_put_var1_ubyte, nc_put_var1_uchar, nc_put_var1_uint, nc_put_var1_ulonglong, nc_put_var1_ushort
+    '               nc_put_vara_double, nc_put_vara_float, nc_put_vara_int, nc_put_vara_long, nc_put_vara_longlong
+    '               nc_put_vara_schar, nc_put_vara_short, nc_put_vara_string, nc_put_vara_text, nc_put_vara_ubyte
+    '               nc_put_vara_uchar, nc_put_vara_uint, nc_put_vara_ulonglong, nc_put_vara_ushort, nc_put_vars_double
+    '               nc_put_vars_float, nc_put_vars_int, nc_put_vars_long, nc_put_vars_longlong, nc_put_vars_schar
+    '               nc_put_vars_short, nc_put_vars_string, nc_put_vars_text, nc_put_vars_uchar, nc_put_vars_uint
+    '               nc_put_vars_ulonglong, nc_put_vars_ushort, nc_put_vlen_element, nc_redef, nc_rename_att
+    '               nc_rename_dim, nc_rename_grp, nc_rename_var, nc_set_chunk_cache, nc_set_default_format
+    '               nc_set_fill, nc_set_var_chunk_cache, nc_set_var_szip, nc_show_metadata, nc_strerror
+    '               nc_sync
+    '     Class ConstCharPtrMarshaler
+    ' 
+    '         Function: GetInstance, GetNativeDataSize, MarshalManagedToNative, MarshalNativeToManaged
+    ' 
+    '         Sub: CleanUpManagedData, CleanUpNativeData
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  A C# interface to the UniData NetCDF dll.
 '  Nick Humphries   April 2021
 '      
@@ -1311,3 +1417,4 @@ Partial Public Module NetCDF
 #End Region
 
 End Module
+

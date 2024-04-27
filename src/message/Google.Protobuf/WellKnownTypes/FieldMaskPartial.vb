@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d43117fdf9e7642ca094154e3bbcea1f, Google.Protobuf\WellKnownTypes\FieldMaskPartial.vb"
+﻿#Region "Microsoft.VisualBasic::d43117fdf9e7642ca094154e3bbcea1f, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/FieldMaskPartial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 119
+    '    Code Lines: 53
+    ' Comment Lines: 56
+    '   Blank Lines: 10
+    '     File Size: 5.89 KB
+
 
     '     Class FieldMask
     ' 

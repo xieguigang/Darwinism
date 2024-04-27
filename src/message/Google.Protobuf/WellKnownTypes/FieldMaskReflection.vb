@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9108dc26f255452002a3fe9fc4a1c1b, Google.Protobuf\WellKnownTypes\FieldMaskReflection.vb"
+﻿#Region "Microsoft.VisualBasic::f9108dc26f255452002a3fe9fc4a1c1b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/FieldMaskReflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 19
+    ' Comment Lines: 2
+    '   Blank Lines: 6
+    '     File Size: 1.45 KB
+
 
     '     Module FieldMaskReflection
     ' 

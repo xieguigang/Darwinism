@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d76115216b9dae9ba847582caf5aa8c, Parallel\IpcParallel\IDelegate.vb"
+﻿#Region "Microsoft.VisualBasic::c615837c187d1c1ff819b7fa4a16d771, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/IDelegate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 56
+    ' Comment Lines: 29
+    '   Blank Lines: 14
+    '     File Size: 2.93 KB
+
 
     ' Class IDelegate
     ' 

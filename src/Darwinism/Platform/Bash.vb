@@ -1,42 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::cd9315b80e68ea9400614fae6484fa09, CloudKit\Centos\Bash.vb"
+﻿#Region "Microsoft.VisualBasic::410153f0e591303c55e5321410882adf, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Platform/Bash.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Bash
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: exec, run, ssh
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 30
+    ' Comment Lines: 28
+    '   Blank Lines: 7
+    '     File Size: 2.32 KB
+
+
+    ' Module Bash
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: exec, run, ssh
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

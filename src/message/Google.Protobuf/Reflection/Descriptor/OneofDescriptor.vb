@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d267bc664f51cf6499cbf9ea938e4205, Google.Protobuf\Reflection\Descriptor\OneofDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::d267bc664f51cf6499cbf9ea938e4205, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/OneofDescriptor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 132
+    '    Code Lines: 60
+    ' Comment Lines: 55
+    '   Blank Lines: 17
+    '     File Size: 5.44 KB
+
 
     '     Class OneofDescriptor
     ' 

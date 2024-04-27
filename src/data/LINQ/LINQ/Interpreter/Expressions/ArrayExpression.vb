@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc720bf5ac14ba41d1a66c96563518fb, LINQ\LINQ\Interpreter\Expressions\ArrayExpression.vb"
+﻿#Region "Microsoft.VisualBasic::dc720bf5ac14ba41d1a66c96563518fb, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/ArrayExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 693 B
+
 
     '     Class ArrayExpression
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c962356c7d316c3619dc16ef5fe5e7dd, LINQ\LINQ\Interpreter\Query\DataSoruce\URIIteratorDriver.vb"
+﻿#Region "Microsoft.VisualBasic::c962356c7d316c3619dc16ef5fe5e7dd, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/DataSoruce/URIIteratorDriver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 28
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.17 KB
+
 
     '     Class URIIteratorDriver
     ' 

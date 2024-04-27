@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::370b5a447c484484e508d32e2bf75164, Google.Protobuf\FieldCodec.vb"
+﻿#Region "Microsoft.VisualBasic::370b5a447c484484e508d32e2bf75164, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//FieldCodec.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 291
+    '    Code Lines: 117
+    ' Comment Lines: 142
+    '   Blank Lines: 32
+    '     File Size: 16.56 KB
+
 
     '     Module FieldCodec
     ' 

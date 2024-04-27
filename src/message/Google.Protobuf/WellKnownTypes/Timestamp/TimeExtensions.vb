@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8acfa759059483f8fa362e78bd8b2f67, Google.Protobuf\WellKnownTypes\Timestamp\TimeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8acfa759059483f8fa362e78bd8b2f67, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Timestamp/TimeExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 20
+    ' Comment Lines: 51
+    '   Blank Lines: 4
+    '     File Size: 3.84 KB
+
 
     '     Module TimeExtensions
     ' 

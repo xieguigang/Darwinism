@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dbd09cb9689d1c0ede426f425a5a482, LINQ\LINQ\Interpreter\Program.vb"
+﻿#Region "Microsoft.VisualBasic::0dbd09cb9689d1c0ede426f425a5a482, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 620 B
+
 
     '     Class Program
     ' 

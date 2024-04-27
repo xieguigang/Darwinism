@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d0bae3eb11039218d1c2a13707f4ce2, Google.Protobuf\WellKnownTypes\Wrappers\UInt64Value.vb"
+﻿#Region "Microsoft.VisualBasic::6d0bae3eb11039218d1c2a13707f4ce2, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/UInt64Value.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 113
+    ' Comment Lines: 9
+    '   Blank Lines: 28
+    '     File Size: 5.27 KB
+
 
     '     Class UInt64Value
     ' 

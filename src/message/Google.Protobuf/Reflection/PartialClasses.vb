@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cc6a5aa916c82733c435e04d35d9010, Google.Protobuf\Reflection\PartialClasses.vb"
+﻿#Region "Microsoft.VisualBasic::7cc6a5aa916c82733c435e04d35d9010, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/PartialClasses.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 14
+    ' Comment Lines: 38
+    '   Blank Lines: 2
+    '     File Size: 2.79 KB
+
 
     '     Class FieldDescriptorProto
     ' 

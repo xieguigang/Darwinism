@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18a0b3f772e9f502d5a29090d69dab03, Google.Protobuf\Message\MessageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::18a0b3f772e9f502d5a29090d69dab03, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Message/MessageExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 71
+    ' Comment Lines: 76
+    '   Blank Lines: 9
+    '     File Size: 7.45 KB
+
 
     '     Module MessageExtensions
     ' 

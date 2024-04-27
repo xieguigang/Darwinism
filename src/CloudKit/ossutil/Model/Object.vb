@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::543abaabe407846fc1a9295ce3c0549c, CloudKit\ossutil\Model\Object.vb"
+﻿#Region "Microsoft.VisualBasic::543abaabe407846fc1a9295ce3c0549c, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//Model/Object.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 32
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 1.03 KB
+
 
     '     Class [Object]
     ' 

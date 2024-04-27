@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40e20c6f14c72034d3d3524d48392aad, Google.Protobuf\WellKnownTypes\Wrappers\StringValue.vb"
+﻿#Region "Microsoft.VisualBasic::40e20c6f14c72034d3d3524d48392aad, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/StringValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 113
+    ' Comment Lines: 9
+    '   Blank Lines: 28
+    '     File Size: 5.34 KB
+
 
     '     Class StringValue
     ' 

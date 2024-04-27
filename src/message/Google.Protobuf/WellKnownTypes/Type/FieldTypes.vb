@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::543fc2c23ed6a07c445950edf7d55b0c, Google.Protobuf\WellKnownTypes\Type\FieldTypes.vb"
+﻿#Region "Microsoft.VisualBasic::543fc2c23ed6a07c445950edf7d55b0c, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/FieldTypes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 60
+    ' Comment Lines: 76
+    '   Blank Lines: 2
+    '     File Size: 4.68 KB
+
 
     '     Class FieldTypes
     ' 

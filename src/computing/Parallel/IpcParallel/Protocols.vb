@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe442a9d9a44ad71f2ed2a2001036924, Parallel\IpcParallel\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::fe442a9d9a44ad71f2ed2a2001036924, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Protocols.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 8
+    ' Comment Lines: 21
+    '   Blank Lines: 0
+    '     File Size: 669 B
+
 
     ' Enum Protocols
     ' 

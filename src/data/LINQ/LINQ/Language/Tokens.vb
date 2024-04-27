@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9680c606e2b00d3455e80cab930bdab, LINQ\LINQ\Language\Tokens.vb"
+﻿#Region "Microsoft.VisualBasic::b9680c606e2b00d3455e80cab930bdab, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Language/Tokens.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 20
+    ' Comment Lines: 12
+    '   Blank Lines: 9
+    '     File Size: 709 B
+
 
     '     Enum Tokens
     ' 

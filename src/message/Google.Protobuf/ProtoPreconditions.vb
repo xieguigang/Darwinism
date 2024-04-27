@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a9330c5393e2ce58116b7eaed5f8593, Google.Protobuf\ProtoPreconditions.vb"
+﻿#Region "Microsoft.VisualBasic::2a9330c5393e2ce58116b7eaed5f8593, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//ProtoPreconditions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 18
+    ' Comment Lines: 51
+    '   Blank Lines: 5
+    '     File Size: 3.47 KB
+
 
     '     Module ProtoPreconditions
     ' 

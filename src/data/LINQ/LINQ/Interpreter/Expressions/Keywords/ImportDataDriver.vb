@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::273b6a67ee0361038aa1a31f09fbf0f2, LINQ\LINQ\Interpreter\Expressions\Keywords\ImportDataDriver.vb"
+﻿#Region "Microsoft.VisualBasic::273b6a67ee0361038aa1a31f09fbf0f2, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/ImportDataDriver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.61 KB
+
 
     '     Class ImportDataDriver
     ' 

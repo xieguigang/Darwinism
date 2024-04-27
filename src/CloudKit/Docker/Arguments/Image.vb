@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a16040febc3f2d131e86271d7a5e67cb, CloudKit\Docker\Arguments\Image.vb"
+﻿#Region "Microsoft.VisualBasic::a16040febc3f2d131e86271d7a5e67cb, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//Arguments/Image.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 39
+    ' Comment Lines: 13
+    '   Blank Lines: 9
+    '     File Size: 1.82 KB
+
 
     '     Class Image
     ' 

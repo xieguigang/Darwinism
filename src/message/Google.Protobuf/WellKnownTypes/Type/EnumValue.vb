@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99803ad9088a00aaa7f60f962d8ac55, Google.Protobuf\WellKnownTypes\Type\EnumValue.vb"
+﻿#Region "Microsoft.VisualBasic::e99803ad9088a00aaa7f60f962d8ac55, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/EnumValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 208
+    '    Code Lines: 157
+    ' Comment Lines: 15
+    '   Blank Lines: 36
+    '     File Size: 7.71 KB
+
 
     '     Class EnumValue
     ' 

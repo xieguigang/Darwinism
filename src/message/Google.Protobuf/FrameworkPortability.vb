@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e27ada0fc6fb581cdbebce4202ad84e5, Google.Protobuf\FrameworkPortability.vb"
+﻿#Region "Microsoft.VisualBasic::e27ada0fc6fb581cdbebce4202ad84e5, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//FrameworkPortability.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 8
+    ' Comment Lines: 35
+    '   Blank Lines: 2
+    '     File Size: 2.38 KB
+
 
     '     Module FrameworkPortability
     ' 

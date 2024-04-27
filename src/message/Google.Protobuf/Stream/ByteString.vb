@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e275edbbf77b46f0016f053c29c90fb7, Google.Protobuf\Stream\ByteString.vb"
+﻿#Region "Microsoft.VisualBasic::e275edbbf77b46f0016f053c29c90fb7, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/ByteString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 324
+    '    Code Lines: 128
+    ' Comment Lines: 158
+    '   Blank Lines: 38
+    '     File Size: 13.79 KB
+
 
     '     Class ByteString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5ae1af97d3c1973299b228dc60a121b, Google.Protobuf\Reflection\Descriptor\DescriptorUtil.vb"
+﻿#Region "Microsoft.VisualBasic::d5ae1af97d3c1973299b228dc60a121b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/DescriptorUtil.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 16
+    ' Comment Lines: 40
+    '   Blank Lines: 5
+    '     File Size: 2.90 KB
+
 
     '     Module DescriptorUtil
     ' 

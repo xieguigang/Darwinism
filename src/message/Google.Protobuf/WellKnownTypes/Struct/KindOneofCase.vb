@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c04a694b3c7155730fe56cab0a32f8e, Google.Protobuf\WellKnownTypes\Struct\KindOneofCase.vb"
+﻿#Region "Microsoft.VisualBasic::6c04a694b3c7155730fe56cab0a32f8e, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Struct/KindOneofCase.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 11
+    ' Comment Lines: 1
+    '   Blank Lines: 2
+    '     File Size: 339 B
+
 
     '     Enum KindOneofCase
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8b1900f81c66558565fff66bb11cf99, LINQ\LINQ\Interpreter\Expressions\Keywords\Options\TakeItems.vb"
+﻿#Region "Microsoft.VisualBasic::e8b1900f81c66558565fff66bb11cf99, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/Options/TakeItems.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 936 B
+
 
     '     Class TakeItems
     ' 

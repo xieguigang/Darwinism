@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3dee4ed59d69548e25c89b2f6a27bd2, Parallel\ThreadTask\ThreadTask.vb"
+﻿#Region "Microsoft.VisualBasic::8cc77b7a5c6ec88f144a0e195b020408, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//ThreadTask/ThreadTask.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 188
+    '    Code Lines: 101
+    ' Comment Lines: 56
+    '   Blank Lines: 31
+    '     File Size: 7.74 KB
+
 
     '     Class ThreadTask
     ' 

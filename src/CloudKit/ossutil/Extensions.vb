@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ce8c46990bc1111d78e1a1b5f43c194, CloudKit\ossutil\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9ce8c46990bc1111d78e1a1b5f43c194, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 30
+    ' Comment Lines: 11
+    '   Blank Lines: 6
+    '     File Size: 1.58 KB
+
 
     ' Module Extensions
     ' 

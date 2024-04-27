@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5df10fe3935ff18d977c388dac5122a0, Google.Protobuf\JSON\InvalidJsonException.vb"
+﻿#Region "Microsoft.VisualBasic::5df10fe3935ff18d977c388dac5122a0, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//JSON/InvalidJsonException.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 11
+    ' Comment Lines: 38
+    '   Blank Lines: 3
+    '     File Size: 2.59 KB
+
 
     '     Class InvalidJsonException
     ' 

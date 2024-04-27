@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e15b7a9dbc3ca96bce9c6062ff5f6b36, Parallel\IpcParallel\Stream\IPCError.vb"
+﻿#Region "Microsoft.VisualBasic::e15b7a9dbc3ca96bce9c6062ff5f6b36, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/IPCError.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.72 KB
+
 
     '     Class IPCError
     ' 

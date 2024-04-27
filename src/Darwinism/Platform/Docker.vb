@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f25852e5f31fa7a6ca9e1017a01d7e9a, CloudKit\Docker\Commands.vb"
+﻿#Region "Microsoft.VisualBasic::e96aa65b2e6420e3b0d132ae7c146c3b, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Platform/Docker.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
-    ' Module Commands
+
+    ' Code Statistics:
+
+    '   Total Lines: 192
+    '    Code Lines: 70
+    ' Comment Lines: 104
+    '   Blank Lines: 18
+    '     File Size: 8.50 KB
+
+
+    ' Module DockerTools
     ' 
-    '     Function: CommandHistory, PS, rmi, Run, Search
+    '     Function: PS, rmi, Run, Search
     ' 
     '     Sub: [Stop]
     ' 

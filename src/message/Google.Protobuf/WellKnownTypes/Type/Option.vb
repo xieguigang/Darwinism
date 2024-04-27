@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::873ece8a11b43baae5ec893c557e1c24, Google.Protobuf\WellKnownTypes\Type\Option.vb"
+﻿#Region "Microsoft.VisualBasic::873ece8a11b43baae5ec893c557e1c24, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/Option.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 194
+    '    Code Lines: 146
+    ' Comment Lines: 12
+    '   Blank Lines: 36
+    '     File Size: 7.04 KB
+
 
     '     Class [Option]
     ' 

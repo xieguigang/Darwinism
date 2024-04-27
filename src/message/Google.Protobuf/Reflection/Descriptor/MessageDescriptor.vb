@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::feb8e023aadb916cb529bd6c42dac89d, Google.Protobuf\Reflection\Descriptor\MessageDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::feb8e023aadb916cb529bd6c42dac89d, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/MessageDescriptor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 239
+    '    Code Lines: 96
+    ' Comment Lines: 118
+    '   Blank Lines: 25
+    '     File Size: 11.88 KB
+
 
     '     Class MessageDescriptor
     ' 

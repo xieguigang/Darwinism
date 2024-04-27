@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff74a872a0976f4912ffe849c17f1b86, Google.Protobuf\Compatibility\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ff74a872a0976f4912ffe849c17f1b86, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Compatibility/TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 38
+    ' Comment Lines: 58
+    '   Blank Lines: 13
+    '     File Size: 5.29 KB
+
 
     '     Module TypeExtensions
     ' 

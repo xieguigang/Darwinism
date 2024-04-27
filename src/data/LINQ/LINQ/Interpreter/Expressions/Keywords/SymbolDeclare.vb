@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b6b811a332f3c9dd3cd843c75bf1820, LINQ\LINQ\Interpreter\Expressions\Keywords\SymbolDeclare.vb"
+﻿#Region "Microsoft.VisualBasic::5b6b811a332f3c9dd3cd843c75bf1820, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/SymbolDeclare.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 19
+    ' Comment Lines: 3
+    '   Blank Lines: 6
+    '     File Size: 881 B
+
 
     '     Class SymbolDeclare
     ' 

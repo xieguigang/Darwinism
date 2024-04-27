@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efd90cc05773e5fbfb7f6f72fe7ae8a2, Google.Protobuf\Reflection\Descriptor\EnumValueDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::efd90cc05773e5fbfb7f6f72fe7ae8a2, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/EnumValueDescriptor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 36
+    ' Comment Lines: 41
+    '   Blank Lines: 7
+    '     File Size: 3.51 KB
+
 
     '     Class EnumValueDescriptor
     ' 

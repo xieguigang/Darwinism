@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a99b19a8f5203c9207c369130b52e8e6, Google.Protobuf\Reflection\Accessor\IFieldAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::a99b19a8f5203c9207c369130b52e8e6, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Accessor/IFieldAccessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 10
+    ' Comment Lines: 52
+    '   Blank Lines: 5
+    '     File Size: 3.11 KB
+
 
     '     Interface IFieldAccessor
     ' 

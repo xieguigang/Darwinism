@@ -1,44 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::907201df6fa8b3b6675829095a2ac5ff, LINQ\LINQ\Interpreter\Script\SyntaxImplements.vb"
+﻿#Region "Microsoft.VisualBasic::c9043902671928afe9b3a56da6aa2a5d, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Script/SyntaxImplements.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module SyntaxImplements
-' 
-'         Function: CreateAggregateQuery, CreateProjectionQuery, GetParameters, GetProjection, GetSequence
-'                   GetVector, IsClosure, IsNumeric, JoinOperators, ParseExpression
-'                   ParseKeywordExpression, ParseToken, PopulateExpressions, PopulateQueryExpression
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 305
+    '    Code Lines: 261
+    ' Comment Lines: 1
+    '   Blank Lines: 43
+    '     File Size: 13.18 KB
+
+
+    '     Module SyntaxImplements
+    ' 
+    '         Function: CreateAggregateQuery, CreateProjectionQuery, GetParameters, GetProjection, GetSequence
+    '                   GetVector, IsClosure, IsNumeric, JoinOperators, ParseExpression
+    '                   ParseKeywordExpression, ParseToken, PopulateExpressions, PopulateQueryExpression
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

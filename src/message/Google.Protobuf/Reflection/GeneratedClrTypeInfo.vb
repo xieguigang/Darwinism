@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af7fa1d561408ac4a15ac765dd5c5bac, Google.Protobuf\Reflection\GeneratedClrTypeInfo.vb"
+﻿#Region "Microsoft.VisualBasic::af7fa1d561408ac4a15ac765dd5c5bac, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/GeneratedClrTypeInfo.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 34
+    ' Comment Lines: 64
+    '   Blank Lines: 10
+    '     File Size: 5.29 KB
+
 
     '     Class GeneratedClrTypeInfo
     ' 

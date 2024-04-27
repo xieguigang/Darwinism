@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78ca7079f86e63f067662f55d1404d47, Parallel\IpcParallel\Stream\StreamMethods.vb"
+﻿#Region "Microsoft.VisualBasic::78ca7079f86e63f067662f55d1404d47, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/StreamMethods.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 123 B
+
 
     '     Enum StreamMethods
     ' 

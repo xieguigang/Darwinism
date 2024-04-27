@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6809876621909f5f97cbd363f2b3667, Google.Protobuf\Reflection\OriginalNameAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b6809876621909f5f97cbd363f2b3667, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/OriginalNameAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 13
+    ' Comment Lines: 40
+    '   Blank Lines: 3
+    '     File Size: 2.52 KB
+
 
     '     Class OriginalNameAttribute
     ' 

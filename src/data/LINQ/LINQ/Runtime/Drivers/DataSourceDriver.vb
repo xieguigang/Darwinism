@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81cc4bb3a24f205dc47b7db13b4c0f7d, LINQ\LINQ\Runtime\Drivers\DataSourceDriver.vb"
+﻿#Region "Microsoft.VisualBasic::81cc4bb3a24f205dc47b7db13b4c0f7d, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Drivers/DataSourceDriver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 348 B
+
 
     '     Class DataSourceDriver
     ' 

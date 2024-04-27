@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2efa20f5e1e465d3e3d776518d7b769, Google.Protobuf\Reflection\Descriptor\FileDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::c2efa20f5e1e465d3e3d776518d7b769, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/FileDescriptor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 326
+    '    Code Lines: 140
+    ' Comment Lines: 142
+    '   Blank Lines: 44
+    '     File Size: 15.78 KB
+
 
     '     Class FileDescriptor
     ' 

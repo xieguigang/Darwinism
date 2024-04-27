@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0236fa546c5bac748ce7ae6d87fa037, Google.Protobuf\Collections\ReadOnlyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::d0236fa546c5bac748ce7ae6d87fa037, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Collections/ReadOnlyDictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 82
+    ' Comment Lines: 32
+    '   Blank Lines: 24
+    '     File Size: 5.95 KB
+
 
     '     Class ReadOnlyDictionary
     ' 
