@@ -5,7 +5,7 @@ SET R_HOME=%R_proj%/App/net6.0
 SET REnv="%R_HOME%/R#.exe"
 SET updater=%R_proj%/studio/code_banner.R
 
-%REnv% %updater% --banner-xml ../.github/mit.xml --proj-folder ../
+%REnv% %updater% --banner-xml ../.github/gpl3.xml --proj-folder ../
 
 cd ../
 
