@@ -78,7 +78,7 @@ Module Math
     <ExportAPI("average_distance")>
     <RApiReturn(TypeCodes.double)>
     Public Function averageDistance(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
-        Dim pull = DataMiningDataSet.getDataModel(x, env)
+        Dim pull = DataMiningDataSet.getDataModel(x, check_class:=False, env)
 
         If pull Like GetType(Message) Then
             Return pull.TryCast(Of Message)
