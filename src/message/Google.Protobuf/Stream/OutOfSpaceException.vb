@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c530499643defc43599f5dc9f9e4b0b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/OutOfSpaceException.vb"
+﻿#Region "Microsoft.VisualBasic::0c530499643defc43599f5dc9f9e4b0b, src\message\Google.Protobuf\Stream\OutOfSpaceException.vb"
 
     ' Author:
     ' 

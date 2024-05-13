@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::915d0087daf37e7e27f031dfbcfd2694, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/DataSoruce/SymbolIterator.vb"
+﻿#Region "Microsoft.VisualBasic::915d0087daf37e7e27f031dfbcfd2694, src\data\LINQ\LINQ\Interpreter\Query\DataSoruce\SymbolIterator.vb"
 
     ' Author:
     ' 

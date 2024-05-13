@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40e20c6f14c72034d3d3524d48392aad, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/StringValue.vb"
+﻿#Region "Microsoft.VisualBasic::40e20c6f14c72034d3d3524d48392aad, src\message\Google.Protobuf\WellKnownTypes\Wrappers\StringValue.vb"
 
     ' Author:
     ' 

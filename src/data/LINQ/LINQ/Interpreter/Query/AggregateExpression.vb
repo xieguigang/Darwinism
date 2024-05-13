@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70e8ded3851ec091c59cc014def65b94, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/AggregateExpression.vb"
+﻿#Region "Microsoft.VisualBasic::70e8ded3851ec091c59cc014def65b94, src\data\LINQ\LINQ\Interpreter\Query\AggregateExpression.vb"
 
     ' Author:
     ' 

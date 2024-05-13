@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44ef17ef72553f3c3529e4bd124cf29a, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/FloatValue.vb"
+﻿#Region "Microsoft.VisualBasic::44ef17ef72553f3c3529e4bd124cf29a, src\message\Google.Protobuf\WellKnownTypes\Wrappers\FloatValue.vb"
 
     ' Author:
     ' 

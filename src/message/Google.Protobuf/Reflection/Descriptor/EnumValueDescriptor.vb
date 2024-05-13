@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efd90cc05773e5fbfb7f6f72fe7ae8a2, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/EnumValueDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::efd90cc05773e5fbfb7f6f72fe7ae8a2, src\message\Google.Protobuf\Reflection\Descriptor\EnumValueDescriptor.vb"
 
     ' Author:
     ' 

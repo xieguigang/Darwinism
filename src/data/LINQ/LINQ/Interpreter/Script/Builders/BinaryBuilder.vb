@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::390a8342e7e80bbeb22a4b73795c864b, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Script/Builders/BinaryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::390a8342e7e80bbeb22a4b73795c864b, src\data\LINQ\LINQ\Interpreter\Script\Builders\BinaryBuilder.vb"
 
     ' Author:
     ' 

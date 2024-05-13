@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c73f67e2ead98087074c71607b21e5e, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Internal/Math.vb"
+﻿#Region "Microsoft.VisualBasic::2c73f67e2ead98087074c71607b21e5e, src\data\LINQ\LINQ\Runtime\Internal\Math.vb"
 
     ' Author:
     ' 

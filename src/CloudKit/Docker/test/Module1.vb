@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a754bf01330f73d1889d37788fb98aec, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::a754bf01330f73d1889d37788fb98aec, src\CloudKit\Docker\test\Module1.vb"
 
     ' Author:
     ' 

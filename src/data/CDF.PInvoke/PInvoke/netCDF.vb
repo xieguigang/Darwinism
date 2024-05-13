@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ac155dedf409fba8717a27d3aeb7663, G:/GCModeller/src/runtime/Darwinism/src/data/CDF.PInvoke//PInvoke/netCDF.vb"
+﻿#Region "Microsoft.VisualBasic::010d26c938ffd8da179590cba41a3e89, src\data\CDF.PInvoke\PInvoke\netCDF.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 842
     ' Comment Lines: 218
     '   Blank Lines: 253
-    '     File Size: 72.22 KB
+    '     File Size: 72.21 KB
 
 
     ' Module NetCDF
@@ -1417,4 +1417,3 @@ Partial Public Module NetCDF
 #End Region
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1e68131554fa5d4a0dd0787f305cf41, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Env.vb"
+﻿#Region "Microsoft.VisualBasic::3f6ca3161f30af6e46fc9fa7ef850673, src\Darwinism\Env.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
+    '   Total Lines: 30
     '    Code Lines: 18
     ' Comment Lines: 8
-    '   Blank Lines: 5
-    '     File Size: 999 B
+    '   Blank Lines: 4
+    '     File Size: 995 B
 
 
     ' Module Env
@@ -48,7 +48,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Darwinism.DataScience.DataMining
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -80,4 +79,3 @@ Module Env
     End Function
 
 End Module
-

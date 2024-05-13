@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::739c6de893bf0913b18c7371463b73b9, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/IPCException.vb"
+﻿#Region "Microsoft.VisualBasic::739c6de893bf0913b18c7371463b73b9, src\computing\Parallel\IpcParallel\Stream\IPCException.vb"
 
     ' Author:
     ' 

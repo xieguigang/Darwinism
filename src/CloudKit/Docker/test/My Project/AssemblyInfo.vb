@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55a7178bf7d089679c7502e18f3b88e4, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::166093cc30845d4e0ec6e834b0a3345b, src\CloudKit\Docker\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

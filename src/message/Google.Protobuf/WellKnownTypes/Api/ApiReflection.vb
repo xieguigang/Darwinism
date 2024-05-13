@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d14f9b3835d0e6e63fd2a3250d71eb16, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Api/ApiReflection.vb"
+﻿#Region "Microsoft.VisualBasic::d14f9b3835d0e6e63fd2a3250d71eb16, src\message\Google.Protobuf\WellKnownTypes\Api\ApiReflection.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fc91ac66b882315f704f910c2ab57c2, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::9fc91ac66b882315f704f910c2ab57c2, src\data\LINQ\LINQ\Interpreter\Expressions\BinaryExpression.vb"
 
     ' Author:
     ' 

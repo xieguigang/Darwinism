@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af7fa1d561408ac4a15ac765dd5c5bac, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/GeneratedClrTypeInfo.vb"
+﻿#Region "Microsoft.VisualBasic::af7fa1d561408ac4a15ac765dd5c5bac, src\message\Google.Protobuf\Reflection\GeneratedClrTypeInfo.vb"
 
     ' Author:
     ' 

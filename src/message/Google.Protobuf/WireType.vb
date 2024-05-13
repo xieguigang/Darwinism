@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68309125d39eea5458145a8cf51938e5, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WireType.vb"
+﻿#Region "Microsoft.VisualBasic::68309125d39eea5458145a8cf51938e5, src\message\Google.Protobuf\WireType.vb"
 
     ' Author:
     ' 

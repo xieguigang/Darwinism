@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2551141d9297debcc25cfcd1533f07d4, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//InvalidProtocolBufferException.vb"
+﻿#Region "Microsoft.VisualBasic::2551141d9297debcc25cfcd1533f07d4, src\message\Google.Protobuf\InvalidProtocolBufferException.vb"
 
     ' Author:
     ' 

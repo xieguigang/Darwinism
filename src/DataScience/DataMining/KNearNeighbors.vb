@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f54909507f664f340883a4125f363f0a, G:/GCModeller/src/runtime/Darwinism/src/DataScience/DataMining//KNearNeighbors.vb"
+﻿#Region "Microsoft.VisualBasic::f54909507f664f340883a4125f363f0a, src\DataScience\DataMining\KNearNeighbors.vb"
 
     ' Author:
     ' 

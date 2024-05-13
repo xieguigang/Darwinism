@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8af4711d352fde1006be4a159d0cbe40, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/DataSoruce/DataSoruce.vb"
+﻿#Region "Microsoft.VisualBasic::8af4711d352fde1006be4a159d0cbe40, src\data\LINQ\LINQ\Interpreter\Query\DataSoruce\DataSoruce.vb"
 
     ' Author:
     ' 

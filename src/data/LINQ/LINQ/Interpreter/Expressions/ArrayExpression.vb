@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc720bf5ac14ba41d1a66c96563518fb, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/ArrayExpression.vb"
+﻿#Region "Microsoft.VisualBasic::dc720bf5ac14ba41d1a66c96563518fb, src\data\LINQ\LINQ\Interpreter\Expressions\ArrayExpression.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0188abe900a374c964c93b73cde7ec31, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Script/StackParser.vb"
+﻿#Region "Microsoft.VisualBasic::0188abe900a374c964c93b73cde7ec31, src\data\LINQ\LINQ\Interpreter\Script\StackParser.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f2a1e0e2d83612321c0d3711040a406, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Centos//Interaction.vb"
+﻿#Region "Microsoft.VisualBasic::2f2a1e0e2d83612321c0d3711040a406, src\CloudKit\Centos\Interaction.vb"
 
     ' Author:
     ' 

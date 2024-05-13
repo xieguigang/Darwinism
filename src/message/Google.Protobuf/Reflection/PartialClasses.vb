@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cc6a5aa916c82733c435e04d35d9010, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/PartialClasses.vb"
+﻿#Region "Microsoft.VisualBasic::7cc6a5aa916c82733c435e04d35d9010, src\message\Google.Protobuf\Reflection\PartialClasses.vb"
 
     ' Author:
     ' 

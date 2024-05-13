@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::655f57f7e586e30dfa74a1335af88f29, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/FuncEval.vb"
+﻿#Region "Microsoft.VisualBasic::655f57f7e586e30dfa74a1335af88f29, src\data\LINQ\LINQ\Interpreter\Expressions\FuncEval.vb"
 
     ' Author:
     ' 

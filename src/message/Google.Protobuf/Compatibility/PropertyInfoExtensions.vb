@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02c486a858d937b0b87c48a9479a274d, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Compatibility/PropertyInfoExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::02c486a858d937b0b87c48a9479a274d, src\message\Google.Protobuf\Compatibility\PropertyInfoExtensions.vb"
 
     ' Author:
     ' 

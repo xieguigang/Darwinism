@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8acfa759059483f8fa362e78bd8b2f67, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Timestamp/TimeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8acfa759059483f8fa362e78bd8b2f67, src\message\Google.Protobuf\WellKnownTypes\Timestamp\TimeExtensions.vb"
 
     ' Author:
     ' 

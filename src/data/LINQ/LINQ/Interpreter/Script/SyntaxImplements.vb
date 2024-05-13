@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9043902671928afe9b3a56da6aa2a5d, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Script/SyntaxImplements.vb"
+﻿#Region "Microsoft.VisualBasic::c9043902671928afe9b3a56da6aa2a5d, src\data\LINQ\LINQ\Interpreter\Script\SyntaxImplements.vb"
 
     ' Author:
     ' 

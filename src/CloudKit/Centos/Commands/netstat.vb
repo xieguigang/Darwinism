@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c81717126b3055c6e670d2e6022fd25, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Centos//Commands/netstat.vb"
+﻿#Region "Microsoft.VisualBasic::a0967ffd73e33f7f9a76076f82bd5395, src\CloudKit\Centos\Commands\netstat.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
+    '   Total Lines: 82
     '    Code Lines: 42
     ' Comment Lines: 33
-    '   Blank Lines: 8
+    '   Blank Lines: 7
     '     File Size: 3.65 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 
@@ -135,4 +134,3 @@ Public Class netstat
     End Function
 
 End Class
-

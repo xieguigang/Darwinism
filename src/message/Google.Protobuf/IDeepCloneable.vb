@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71de7e5b0bce6a5a65e935e4936a585c, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//IDeepCloneable.vb"
+﻿#Region "Microsoft.VisualBasic::71de7e5b0bce6a5a65e935e4936a585c, src\message\Google.Protobuf\IDeepCloneable.vb"
 
     ' Author:
     ' 

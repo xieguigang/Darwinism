@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efec12e5fbc3420987eed667928b2852, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/DataFrameExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::efec12e5fbc3420987eed667928b2852, src\data\LINQ\LINQ\Runtime\DataFrameExtensions.vb"
 
     ' Author:
     ' 

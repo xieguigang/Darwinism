@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18a0b3f772e9f502d5a29090d69dab03, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Message/MessageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::18a0b3f772e9f502d5a29090d69dab03, src\message\Google.Protobuf\Message\MessageExtensions.vb"
 
     ' Author:
     ' 

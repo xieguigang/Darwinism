@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9f933b108621ac52a00063279c9878e, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Centos//Commands/ls.vb"
+﻿#Region "Microsoft.VisualBasic::e9f933b108621ac52a00063279c9878e, src\CloudKit\Centos\Commands\ls.vb"
 
     ' Author:
     ' 

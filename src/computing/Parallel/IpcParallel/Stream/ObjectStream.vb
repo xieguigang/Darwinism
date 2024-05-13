@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e43fcbbe187b0aabe07e3f31fb5b895, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/ObjectStream.vb"
+﻿#Region "Microsoft.VisualBasic::2e43fcbbe187b0aabe07e3f31fb5b895, src\computing\Parallel\IpcParallel\Stream\ObjectStream.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a9330c5393e2ce58116b7eaed5f8593, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//ProtoPreconditions.vb"
+﻿#Region "Microsoft.VisualBasic::2a9330c5393e2ce58116b7eaed5f8593, src\message\Google.Protobuf\ProtoPreconditions.vb"
 
     ' Author:
     ' 

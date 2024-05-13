@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99803ad9088a00aaa7f60f962d8ac55, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Type/EnumValue.vb"
+﻿#Region "Microsoft.VisualBasic::e99803ad9088a00aaa7f60f962d8ac55, src\message\Google.Protobuf\WellKnownTypes\Type\EnumValue.vb"
 
     ' Author:
     ' 

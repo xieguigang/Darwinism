@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::547dd9e45fdc9930831e70fc18ce8d9f, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//zzz.vb"
+﻿#Region "Microsoft.VisualBasic::f37cde7ddbf9680eb5ae42fe1a862f49, src\Darwinism\zzz.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 195 B
+    '     File Size: 193 B
 
 
     ' Class zzz
@@ -59,4 +59,3 @@ Public NotInheritable Class zzz
         Call CentosTools.Main()
     End Sub
 End Class
-

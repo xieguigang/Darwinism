@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9680c606e2b00d3455e80cab930bdab, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Language/Tokens.vb"
+﻿#Region "Microsoft.VisualBasic::b9680c606e2b00d3455e80cab930bdab, src\data\LINQ\LINQ\Language\Tokens.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1819f0085e2e3fd31c23eef859d25f0, G:/GCModeller/src/runtime/Darwinism/src/data/CDF.PInvoke//PInvoke/OpenMode.vb"
+﻿#Region "Microsoft.VisualBasic::c1819f0085e2e3fd31c23eef859d25f0, src\data\CDF.PInvoke\PInvoke\OpenMode.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84c589878c3cc8350584f74bf48df6a1, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Centos//SSH/PuTTY.vb"
+﻿#Region "Microsoft.VisualBasic::84c589878c3cc8350584f74bf48df6a1, src\CloudKit\Centos\SSH\PuTTY.vb"
 
     ' Author:
     ' 

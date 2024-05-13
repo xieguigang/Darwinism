@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6640bfdb6c206119a98dbc9cd979d592, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/IPCSocket.vb"
+﻿#Region "Microsoft.VisualBasic::6640bfdb6c206119a98dbc9cd979d592, src\computing\Parallel\IpcParallel\IPCSocket.vb"
 
     ' Author:
     ' 

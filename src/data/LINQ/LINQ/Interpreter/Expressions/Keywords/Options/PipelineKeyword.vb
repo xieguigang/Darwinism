@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c21de972f7dbe539786d772e666e80e, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/Options/PipelineKeyword.vb"
+﻿#Region "Microsoft.VisualBasic::3c21de972f7dbe539786d772e666e80e, src\data\LINQ\LINQ\Interpreter\Expressions\Keywords\Options\PipelineKeyword.vb"
 
     ' Author:
     ' 

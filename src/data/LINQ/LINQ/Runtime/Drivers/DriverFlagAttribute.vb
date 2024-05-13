@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb833244f56a8f07c24bbab2b8432239, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Drivers/DriverFlagAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::eb833244f56a8f07c24bbab2b8432239, src\data\LINQ\LINQ\Runtime\Drivers\DriverFlagAttribute.vb"
 
     ' Author:
     ' 

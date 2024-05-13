@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96b6937c45f2c43af639592d184f868b, G:/GCModeller/src/runtime/Darwinism/src/data/CDF.PInvoke//DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::7946ed1396f702dc1279d3465f463774, src\data\CDF.PInvoke\DataReader.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
+    '   Total Lines: 115
     '    Code Lines: 76
     ' Comment Lines: 17
-    '   Blank Lines: 23
+    '   Blank Lines: 22
     '     File Size: 4.06 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Text
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
@@ -171,4 +170,3 @@ Public Class DataReader : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

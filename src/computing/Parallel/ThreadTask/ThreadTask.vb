@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cc77b7a5c6ec88f144a0e195b020408, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//ThreadTask/ThreadTask.vb"
+﻿#Region "Microsoft.VisualBasic::8cc77b7a5c6ec88f144a0e195b020408, src\computing\Parallel\ThreadTask\ThreadTask.vb"
 
     ' Author:
     ' 

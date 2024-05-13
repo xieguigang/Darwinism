@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81cc4bb3a24f205dc47b7db13b4c0f7d, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Drivers/DataSourceDriver.vb"
+﻿#Region "Microsoft.VisualBasic::81cc4bb3a24f205dc47b7db13b4c0f7d, src\data\LINQ\LINQ\Runtime\Drivers\DataSourceDriver.vb"
 
     ' Author:
     ' 

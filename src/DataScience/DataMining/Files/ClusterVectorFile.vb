@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cdb364d62fd7b693474fbe15816cf75, G:/GCModeller/src/runtime/Darwinism/src/DataScience/DataMining//Files/ClusterVectorFile.vb"
+﻿#Region "Microsoft.VisualBasic::feb560bd6dfb2f8bc53d11a341756fa6, src\DataScience\DataMining\Files\ClusterVectorFile.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 3
     '   Blank Lines: 5
-    '     File Size: 1.21 KB
+    '     File Size: 1.20 KB
 
 
     ' Class ClusterVectorFile
@@ -81,4 +81,3 @@ Public Class ClusterVectorFile : Implements IEmitStream
         Return EntityVectorFile.LoadVectors(file).ToArray
     End Function
 End Class
-

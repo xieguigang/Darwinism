@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9108dc26f255452002a3fe9fc4a1c1b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/FieldMaskReflection.vb"
+﻿#Region "Microsoft.VisualBasic::f9108dc26f255452002a3fe9fc4a1c1b, src\message\Google.Protobuf\WellKnownTypes\FieldMaskReflection.vb"
 
     ' Author:
     ' 

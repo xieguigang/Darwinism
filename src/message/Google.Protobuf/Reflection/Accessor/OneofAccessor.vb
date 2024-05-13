@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::091b773f7051a64771b1508308f2e13d, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Accessor/OneofAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::091b773f7051a64771b1508308f2e13d, src\message\Google.Protobuf\Reflection\Accessor\OneofAccessor.vb"
 
     ' Author:
     ' 

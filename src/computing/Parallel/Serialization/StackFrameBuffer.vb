@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a73604e77c063a9a6bbcb32490912b6c, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//Serialization/StackFrameBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::a73604e77c063a9a6bbcb32490912b6c, src\computing\Parallel\Serialization\StackFrameBuffer.vb"
 
     ' Author:
     ' 

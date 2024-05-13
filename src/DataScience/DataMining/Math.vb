@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d9291eee8058d6f61b795ff305e288d, G:/GCModeller/src/runtime/Darwinism/src/DataScience/DataMining//Math.vb"
+﻿#Region "Microsoft.VisualBasic::dbc901e9e714bd16246386794001bf15, src\DataScience\DataMining\Math.vb"
 
     ' Author:
     ' 
@@ -96,4 +96,3 @@ Public Module VectorMath
         Return CanopyBuilder.AverageDistance(alldata.Length, parts:=dist.IteratesALL.ToArray)
     End Function
 End Module
-

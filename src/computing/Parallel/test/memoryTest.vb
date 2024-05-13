@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6174f18955f94afc64848699e9ca436, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel/test//memoryTest.vb"
+﻿#Region "Microsoft.VisualBasic::d6174f18955f94afc64848699e9ca436, src\computing\Parallel\test\memoryTest.vb"
 
     ' Author:
     ' 

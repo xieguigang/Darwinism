@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6809876621909f5f97cbd363f2b3667, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/OriginalNameAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b6809876621909f5f97cbd363f2b3667, src\message\Google.Protobuf\Reflection\OriginalNameAttribute.vb"
 
     ' Author:
     ' 

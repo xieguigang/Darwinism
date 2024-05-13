@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e27ada0fc6fb581cdbebce4202ad84e5, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//FrameworkPortability.vb"
+﻿#Region "Microsoft.VisualBasic::e27ada0fc6fb581cdbebce4202ad84e5, src\message\Google.Protobuf\FrameworkPortability.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41cc733c437f0801080eb0177ae48151, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//JSON/JsonTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::41cc733c437f0801080eb0177ae48151, src\message\Google.Protobuf\JSON\JsonTokenizer.vb"
 
     ' Author:
     ' 

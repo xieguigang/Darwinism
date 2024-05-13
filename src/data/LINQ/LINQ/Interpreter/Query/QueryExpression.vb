@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31b1d517569d8bac88bfda23087c33ad, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/QueryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::31b1d517569d8bac88bfda23087c33ad, src\data\LINQ\LINQ\Interpreter\Query\QueryExpression.vb"
 
     ' Author:
     ' 

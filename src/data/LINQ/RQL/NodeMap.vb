@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::665ebf4854b20f5e72e9997defe361e4, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/RQL//NodeMap.vb"
+﻿#Region "Microsoft.VisualBasic::05cb51bae504b30cad47203c7ea05987, src\data\LINQ\RQL\NodeMap.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 7
     '   Blank Lines: 5
-    '     File Size: 844 B
+    '     File Size: 842 B
 
 
     ' Class NodeMap
@@ -86,4 +86,3 @@ Public Class NodeMap
     End Function
 
 End Class
-

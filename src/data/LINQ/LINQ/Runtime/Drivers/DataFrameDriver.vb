@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4038b3952bb34ff8167bb72c35c0619c, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Drivers/DataFrameDriver.vb"
+﻿#Region "Microsoft.VisualBasic::4038b3952bb34ff8167bb72c35c0619c, src\data\LINQ\LINQ\Runtime\Drivers\DataFrameDriver.vb"
 
     ' Author:
     ' 

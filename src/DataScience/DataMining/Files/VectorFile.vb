@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99c2733f4d92f4c51ac23016618ecffd, G:/GCModeller/src/runtime/Darwinism/src/DataScience/DataMining//Files/VectorFile.vb"
+﻿#Region "Microsoft.VisualBasic::adbede842ce6cf7933b33103f5648992, src\DataScience\DataMining\Files\VectorFile.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Public Class VectorFile : Implements IEmitStream
         Return load
     End Function
 End Class
-

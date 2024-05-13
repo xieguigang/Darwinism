@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aec493da6f01aa78c8dfc82ce350eea, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Data/CDF.vb"
+﻿#Region "Microsoft.VisualBasic::6a51afe881bae54a5fb0ab959459fe4c, src\Darwinism\Data\CDF.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 13
     '   Blank Lines: 5
-    '     File Size: 1.09 KB
+    '     File Size: 1.08 KB
 
 
     ' Module CDF
@@ -89,4 +89,3 @@ Module CDF
         Return nc.GetData(name)
     End Function
 End Module
-

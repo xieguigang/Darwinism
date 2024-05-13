@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12ee38844b4c5b1b5425649a3f8e1fae, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::0660baae35e819a0fde3f80a6b26864c, src\CloudKit\ossutil\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

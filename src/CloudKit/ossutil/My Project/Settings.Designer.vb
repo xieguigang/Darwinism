@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::802bdd046cdb41984c1e1cd6a8203aee, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::802bdd046cdb41984c1e1cd6a8203aee, src\CloudKit\ossutil\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

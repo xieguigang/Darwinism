@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c615837c187d1c1ff819b7fa4a16d771, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/IDelegate.vb"
+﻿#Region "Microsoft.VisualBasic::c615837c187d1c1ff819b7fa4a16d771, src\computing\Parallel\IpcParallel\IDelegate.vb"
 
     ' Author:
     ' 

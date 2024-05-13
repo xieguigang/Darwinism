@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d736f16451466f2bb07c4d45bf685e5c, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/RQL//IndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::85d7e343270c83f9fb17da24f3a41b6b, src\data\LINQ\RQL\IndexReader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 1.50 KB
+    '     File Size: 1.49 KB
 
 
     ' Class IndexReader
@@ -100,4 +100,3 @@ Public Class IndexReader
         Return node
     End Function
 End Class
-

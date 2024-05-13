@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::118f71f1efc25dfbcbe9f84cad8bfafd, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Timestamp/TimestampPartial.vb"
+﻿#Region "Microsoft.VisualBasic::118f71f1efc25dfbcbe9f84cad8bfafd, src\message\Google.Protobuf\WellKnownTypes\Timestamp\TimestampPartial.vb"
 
     ' Author:
     ' 

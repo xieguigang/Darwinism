@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cca672ec6e5b7bc3ae545ca6ecd554a, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//ShellCommand.vb"
+﻿#Region "Microsoft.VisualBasic::f274af0dd3656eb333793a9fef3205fe, src\CloudKit\Docker\ShellCommand.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 794 B
+    '     File Size: 792 B
 
 
     ' Module ShellCommand
@@ -74,4 +74,3 @@ Public Module ShellCommand
         Return shell(app, args)
     End Function
 End Module
-

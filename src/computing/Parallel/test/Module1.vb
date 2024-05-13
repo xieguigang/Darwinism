@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::716b2bbc60ca858da4180f78c37213f7, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel/test//Module1.vb"
+﻿#Region "Microsoft.VisualBasic::716b2bbc60ca858da4180f78c37213f7, src\computing\Parallel\test\Module1.vb"
 
     ' Author:
     ' 

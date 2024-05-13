@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b320bfa4c659031764e44dcd59aded96, G:/GCModeller/src/runtime/Darwinism/src/computing/batch//Program.vb"
+﻿#Region "Microsoft.VisualBasic::bd099a066fedc197777125957d1c7535, src\computing\batch\Program.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Module Program
         End Function
     End Class
 End Module
-

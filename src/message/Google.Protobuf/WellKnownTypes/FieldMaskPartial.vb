@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d43117fdf9e7642ca094154e3bbcea1f, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/FieldMaskPartial.vb"
+﻿#Region "Microsoft.VisualBasic::d43117fdf9e7642ca094154e3bbcea1f, src\message\Google.Protobuf\WellKnownTypes\FieldMaskPartial.vb"
 
     ' Author:
     ' 

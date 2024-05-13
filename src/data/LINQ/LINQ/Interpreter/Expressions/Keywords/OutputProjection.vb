@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33b60112e1480e674302005868e29699, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/OutputProjection.vb"
+﻿#Region "Microsoft.VisualBasic::33b60112e1480e674302005868e29699, src\data\LINQ\LINQ\Interpreter\Expressions\Keywords\OutputProjection.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7b112059ce7b4663aa42600daf37d00, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/RQL//IndexWriter.vb"
+﻿#Region "Microsoft.VisualBasic::e1cf76145f556666d5446da159d98df9, src\data\LINQ\RQL\IndexWriter.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public Class IndexWriter
     End Sub
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4afd2f0ad308bf9235ee71f04e260002, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Registry.vb"
+﻿#Region "Microsoft.VisualBasic::4afd2f0ad308bf9235ee71f04e260002, src\data\LINQ\LINQ\Runtime\Registry.vb"
 
     ' Author:
     ' 

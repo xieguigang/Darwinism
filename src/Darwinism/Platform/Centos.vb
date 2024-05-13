@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c075b69434b1a4dcc78c8c82976f990, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Platform/Centos.vb"
+﻿#Region "Microsoft.VisualBasic::e4c616a6a11bef7fa4bdf71f8980fd1c, src\Darwinism\Platform\Centos.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
+    '   Total Lines: 85
     '    Code Lines: 61
     ' Comment Lines: 14
-    '   Blank Lines: 11
+    '   Blank Lines: 10
     '     File Size: 3.35 KB
 
 
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Darwinism.Centos
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -137,4 +136,3 @@ Public Module CentosTools
     End Function
 
 End Module
-

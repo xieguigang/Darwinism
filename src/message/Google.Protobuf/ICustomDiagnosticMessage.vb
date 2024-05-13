@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85a637df5f263ddb8e3a2f5ea65ac4da, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//ICustomDiagnosticMessage.vb"
+﻿#Region "Microsoft.VisualBasic::85a637df5f263ddb8e3a2f5ea65ac4da, src\message\Google.Protobuf\ICustomDiagnosticMessage.vb"
 
     ' Author:
     ' 

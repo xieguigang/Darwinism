@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7971a1bd3eb248bb9aa6abdc5cf70da7, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/RQL//Resource.vb"
+﻿#Region "Microsoft.VisualBasic::8e7ea1fb545a9b5b56af72dd6233284a, src\data\LINQ\RQL\Resource.vb"
 
     ' Author:
     ' 
@@ -297,4 +297,3 @@ Public Class Resource : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

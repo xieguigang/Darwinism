@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e275edbbf77b46f0016f053c29c90fb7, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/ByteString.vb"
+﻿#Region "Microsoft.VisualBasic::e275edbbf77b46f0016f053c29c90fb7, src\message\Google.Protobuf\Stream\ByteString.vb"
 
     ' Author:
     ' 

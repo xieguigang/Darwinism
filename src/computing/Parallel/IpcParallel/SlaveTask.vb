@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42d833ef64209a985b535927de22b892, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/SlaveTask.vb"
+﻿#Region "Microsoft.VisualBasic::42d833ef64209a985b535927de22b892, src\computing\Parallel\IpcParallel\SlaveTask.vb"
 
     ' Author:
     ' 

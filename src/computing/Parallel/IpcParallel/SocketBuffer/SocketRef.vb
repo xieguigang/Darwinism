@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::835389a5248f9c2f9fa8ef6242960774, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/SocketBuffer/SocketRef.vb"
+﻿#Region "Microsoft.VisualBasic::835389a5248f9c2f9fa8ef6242960774, src\computing\Parallel\IpcParallel\SocketBuffer\SocketRef.vb"
 
     ' Author:
     ' 

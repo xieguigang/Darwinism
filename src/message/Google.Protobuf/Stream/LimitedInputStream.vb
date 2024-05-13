@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55fe24040a03b68b3da244f6337ca30, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/LimitedInputStream.vb"
+﻿#Region "Microsoft.VisualBasic::e55fe24040a03b68b3da244f6337ca30, src\message\Google.Protobuf\Stream\LimitedInputStream.vb"
 
     ' Author:
     ' 

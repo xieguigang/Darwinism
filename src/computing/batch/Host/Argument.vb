@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c354e4a15da62f4988de9aa148ed7aa, G:/GCModeller/src/runtime/Darwinism/src/computing/batch//Host/Argument.vb"
+﻿#Region "Microsoft.VisualBasic::5cee868f7eca68470904b6d12c02e6b1, src\computing\batch\Host\Argument.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Public Class Argument
     End Function
 
 End Class
-

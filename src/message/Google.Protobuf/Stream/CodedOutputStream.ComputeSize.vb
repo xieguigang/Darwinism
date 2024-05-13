@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6ed0d89f4e88852b226d065eedfc94d, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Stream/CodedOutputStream.ComputeSize.vb"
+﻿#Region "Microsoft.VisualBasic::a6ed0d89f4e88852b226d065eedfc94d, src\message\Google.Protobuf\Stream\CodedOutputStream.ComputeSize.vb"
 
     ' Author:
     ' 

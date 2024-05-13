@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50b33ca454fd3b8845e493d7457afd78, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/Options/SkipItems.vb"
+﻿#Region "Microsoft.VisualBasic::50b33ca454fd3b8845e493d7457afd78, src\data\LINQ\LINQ\Interpreter\Expressions\Keywords\Options\SkipItems.vb"
 
     ' Author:
     ' 

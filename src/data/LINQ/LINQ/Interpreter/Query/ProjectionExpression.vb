@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e964dd6164ddb0aa2e34cf054fdfb15b, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Query/ProjectionExpression.vb"
+﻿#Region "Microsoft.VisualBasic::e964dd6164ddb0aa2e34cf054fdfb15b, src\data\LINQ\LINQ\Interpreter\Query\ProjectionExpression.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e657013c35afdcde1819c6cf41b6c184, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e657013c35afdcde1819c6cf41b6c184, src\computing\Parallel\Extensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a3ff69077b284de93ef0064097a8d97, G:/GCModeller/src/runtime/Darwinism/src/DataScience/DataMining//Files/KNeighborFile.vb"
+﻿#Region "Microsoft.VisualBasic::fc4d84d2353e33ce2a58c435e65ad139, src\DataScience\DataMining\Files\KNeighborFile.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Public Class KNeighborFile : Implements IEmitStream
         Return load
     End Function
 End Class
-

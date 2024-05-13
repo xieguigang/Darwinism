@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8b1900f81c66558565fff66bb11cf99, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/Options/TakeItems.vb"
+﻿#Region "Microsoft.VisualBasic::e8b1900f81c66558565fff66bb11cf99, src\data\LINQ\LINQ\Interpreter\Expressions\Keywords\Options\TakeItems.vb"
 
     ' Author:
     ' 

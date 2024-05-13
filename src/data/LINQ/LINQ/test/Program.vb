@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fde37c8f4df7549a619d5aa3e8dda33, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//test/Program.vb"
+﻿#Region "Microsoft.VisualBasic::6fde37c8f4df7549a619d5aa3e8dda33, src\data\LINQ\LINQ\test\Program.vb"
 
     ' Author:
     ' 

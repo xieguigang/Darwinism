@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd557dbf8e19b518beacd8dd3e9754ca, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Math.vb"
+﻿#Region "Microsoft.VisualBasic::b923c74657f122907358850a71244a0d, src\Darwinism\Math.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 57
     ' Comment Lines: 20
     '   Blank Lines: 10
-    '     File Size: 3.34 KB
+    '     File Size: 3.36 KB
 
 
     ' Module Math
@@ -136,4 +136,3 @@ Module Math
     End Function
 
 End Module
-

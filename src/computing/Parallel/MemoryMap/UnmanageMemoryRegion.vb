@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d77c80b602c38f45007952c7caa3edf, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//MemoryMap/UnmanageMemoryRegion.vb"
+﻿#Region "Microsoft.VisualBasic::7d77c80b602c38f45007952c7caa3edf, src\computing\Parallel\MemoryMap\UnmanageMemoryRegion.vb"
 
     ' Author:
     ' 

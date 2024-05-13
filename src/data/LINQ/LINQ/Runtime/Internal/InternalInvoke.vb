@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca462f2363b6c1215bc89962e3f3e539, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Internal/InternalInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::ca462f2363b6c1215bc89962e3f3e539, src\data\LINQ\LINQ\Runtime\Internal\InternalInvoke.vb"
 
     ' Author:
     ' 

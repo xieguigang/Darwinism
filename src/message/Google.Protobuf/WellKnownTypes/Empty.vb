@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36903d254aa39e108298a0053065b7f, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Empty.vb"
+﻿#Region "Microsoft.VisualBasic::e36903d254aa39e108298a0053065b7f, src\message\Google.Protobuf\WellKnownTypes\Empty.vb"
 
     ' Author:
     ' 

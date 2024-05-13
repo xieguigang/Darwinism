@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e93db5b60e5268ea8b284f474e9e320, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/SymbolReference.vb"
+﻿#Region "Microsoft.VisualBasic::2e93db5b60e5268ea8b284f474e9e320, src\data\LINQ\LINQ\Interpreter\Expressions\SymbolReference.vb"
 
     ' Author:
     ' 

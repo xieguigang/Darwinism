@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38cc0b4027fc15a25f20e2288132d8dd, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/EmitHandler.vb"
+﻿#Region "Microsoft.VisualBasic::38cc0b4027fc15a25f20e2288132d8dd, src\computing\Parallel\IpcParallel\Stream\EmitHandler.vb"
 
     ' Author:
     ' 

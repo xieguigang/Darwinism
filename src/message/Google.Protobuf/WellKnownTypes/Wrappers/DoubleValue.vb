@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b25a3d938dbd8939b3d3ab1d1c3817b, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/Wrappers/DoubleValue.vb"
+﻿#Region "Microsoft.VisualBasic::1b25a3d938dbd8939b3d3ab1d1c3817b, src\message\Google.Protobuf\WellKnownTypes\Wrappers\DoubleValue.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5efc7517b0bffb4b14886a39aaa44b71, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/ossutil//Model/TextParsers.vb"
+﻿#Region "Microsoft.VisualBasic::5efc7517b0bffb4b14886a39aaa44b71, src\CloudKit\ossutil\Model\TextParsers.vb"
 
     ' Author:
     ' 

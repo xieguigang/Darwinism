@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25980b66ca7f52b03f055893b4c20314, G:/GCModeller/src/runtime/Darwinism/src/data/CDF.PInvoke//PInvoke/FillVars.vb"
+﻿#Region "Microsoft.VisualBasic::25980b66ca7f52b03f055893b4c20314, src\data\CDF.PInvoke\PInvoke\FillVars.vb"
 
     ' Author:
     ' 

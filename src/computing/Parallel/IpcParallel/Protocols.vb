@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe442a9d9a44ad71f2ed2a2001036924, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::fe442a9d9a44ad71f2ed2a2001036924, src\computing\Parallel\IpcParallel\Protocols.vb"
 
     ' Author:
     ' 

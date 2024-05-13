@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccfedf3bfcd6623c8db7a6a65d51bd13, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Keywords/KeywordExpression.vb"
+﻿#Region "Microsoft.VisualBasic::ccfedf3bfcd6623c8db7a6a65d51bd13, src\data\LINQ\LINQ\Interpreter\Expressions\Keywords\KeywordExpression.vb"
 
     ' Author:
     ' 

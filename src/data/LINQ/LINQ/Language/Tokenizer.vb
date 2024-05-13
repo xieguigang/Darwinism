@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a027e0ed7f92384ff7b28a566c8517e, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Language/Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::9a027e0ed7f92384ff7b28a566c8517e, src\data\LINQ\LINQ\Language\Tokenizer.vb"
 
     ' Author:
     ' 

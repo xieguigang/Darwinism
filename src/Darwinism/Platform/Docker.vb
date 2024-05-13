@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e96aa65b2e6420e3b0d132ae7c146c3b, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Platform/Docker.vb"
+﻿#Region "Microsoft.VisualBasic::e96aa65b2e6420e3b0d132ae7c146c3b, src\Darwinism\Platform\Docker.vb"
 
     ' Author:
     ' 

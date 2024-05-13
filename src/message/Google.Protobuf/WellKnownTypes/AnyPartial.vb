@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08248a8e4edafe3c8c1435480849a07e, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//WellKnownTypes/AnyPartial.vb"
+﻿#Region "Microsoft.VisualBasic::08248a8e4edafe3c8c1435480849a07e, src\message\Google.Protobuf\WellKnownTypes\AnyPartial.vb"
 
     ' Author:
     ' 

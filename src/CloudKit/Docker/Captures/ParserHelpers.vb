@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fc2d17ac235975135d69b4a521ce747, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//Captures/ParserHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::4fc2d17ac235975135d69b4a521ce747, src\CloudKit\Docker\Captures\ParserHelpers.vb"
 
     ' Author:
     ' 

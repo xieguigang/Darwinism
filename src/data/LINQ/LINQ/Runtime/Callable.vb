@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9f1ea206fbb3b8cc0b9967f6b41945c, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Runtime/Callable.vb"
+﻿#Region "Microsoft.VisualBasic::a9f1ea206fbb3b8cc0b9967f6b41945c, src\data\LINQ\LINQ\Runtime\Callable.vb"
 
     ' Author:
     ' 

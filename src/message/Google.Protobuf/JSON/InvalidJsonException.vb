@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5df10fe3935ff18d977c388dac5122a0, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//JSON/InvalidJsonException.vb"
+﻿#Region "Microsoft.VisualBasic::5df10fe3935ff18d977c388dac5122a0, src\message\Google.Protobuf\JSON\InvalidJsonException.vb"
 
     ' Author:
     ' 

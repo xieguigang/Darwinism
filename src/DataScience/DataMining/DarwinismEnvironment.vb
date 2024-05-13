@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7170a3e6e1081e3e9247f6514a681c59, G:/GCModeller/src/runtime/Darwinism/src/DataScience/DataMining//DarwinismEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::fd0d2ea986c56be5e700779bea76b7d9, src\DataScience\DataMining\DarwinismEnvironment.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Public Module DarwinismEnvironment
         End If
     End Sub
 End Module
-

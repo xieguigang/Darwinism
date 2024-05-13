@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30aae81439e9e8cfab7b3b6897c8f3bf, G:/GCModeller/src/runtime/Darwinism/src/message/Google.Protobuf//Reflection/Descriptor/DescriptorPool.vb"
+﻿#Region "Microsoft.VisualBasic::30aae81439e9e8cfab7b3b6897c8f3bf, src\message\Google.Protobuf\Reflection\Descriptor\DescriptorPool.vb"
 
     ' Author:
     ' 

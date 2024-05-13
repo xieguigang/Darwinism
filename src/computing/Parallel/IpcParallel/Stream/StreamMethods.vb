@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78ca7079f86e63f067662f55d1404d47, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//IpcParallel/Stream/StreamMethods.vb"
+﻿#Region "Microsoft.VisualBasic::78ca7079f86e63f067662f55d1404d47, src\computing\Parallel\IpcParallel\Stream\StreamMethods.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04597e5b4cb6c9351875ed36102270a5, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//Interpreter/Expressions/Literals.vb"
+﻿#Region "Microsoft.VisualBasic::04597e5b4cb6c9351875ed36102270a5, src\data\LINQ\LINQ\Interpreter\Expressions\Literals.vb"
 
     ' Author:
     ' 

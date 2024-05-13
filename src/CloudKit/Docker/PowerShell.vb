@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a516a8ece188b9bf689ee6e775a60d4e, G:/GCModeller/src/runtime/Darwinism/src/CloudKit/Docker//PowerShell.vb"
+﻿#Region "Microsoft.VisualBasic::a516a8ece188b9bf689ee6e775a60d4e, src\CloudKit\Docker\PowerShell.vb"
 
     ' Author:
     ' 

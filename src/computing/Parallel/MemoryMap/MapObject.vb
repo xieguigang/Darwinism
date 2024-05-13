@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::972e61f34811c8d4eb9a1b2694ea0663, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//MemoryMap/MapObject.vb"
+﻿#Region "Microsoft.VisualBasic::972e61f34811c8d4eb9a1b2694ea0663, src\computing\Parallel\MemoryMap\MapObject.vb"
 
     ' Author:
     ' 

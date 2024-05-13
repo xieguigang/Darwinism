@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::410153f0e591303c55e5321410882adf, G:/GCModeller/src/runtime/Darwinism/src/Darwinism//Platform/Bash.vb"
+﻿#Region "Microsoft.VisualBasic::410153f0e591303c55e5321410882adf, src\Darwinism\Platform\Bash.vb"
 
     ' Author:
     ' 

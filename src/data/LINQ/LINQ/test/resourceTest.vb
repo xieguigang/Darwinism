@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::797ab599e90383ade6a8b54d23e136b1, G:/GCModeller/src/runtime/Darwinism/src/data/LINQ/LINQ//test/resourceTest.vb"
+﻿#Region "Microsoft.VisualBasic::86bfd82eb2826816898275ec5135e0ee, src\data\LINQ\LINQ\test\resourceTest.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Module resourceTest
         Next
     End Sub
 End Module
-

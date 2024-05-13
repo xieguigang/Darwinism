@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5baf554035b1d7d14d654c8b000ba616, G:/GCModeller/src/runtime/Darwinism/src/computing/batch//Host/Host.vb"
+﻿#Region "Microsoft.VisualBasic::b97b780b1c38e4a26b75665b231dd75d, src\computing\batch\Host\Host.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
+    '   Total Lines: 103
     '    Code Lines: 48
     ' Comment Lines: 42
-    '   Blank Lines: 15
-    '     File Size: 3.99 KB
+    '   Blank Lines: 13
+    '     File Size: 3.98 KB
 
 
     ' Module Host
@@ -46,7 +46,6 @@
     '     Function: CreateSlave, GetCurrentThread, ParallelFor, SlaveTask, Solve
     ' 
     '     Sub: SetRange
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -155,6 +154,3 @@ Public Module Host
     End Sub
 
 End Module
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::482aa36c8643228f22597dde3118a753, G:/GCModeller/src/runtime/Darwinism/src/computing/Parallel//ThreadTask/TaskInvokeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::482aa36c8643228f22597dde3118a753, src\computing\Parallel\ThreadTask\TaskInvokeHelper.vb"
 
     ' Author:
     ' 
