@@ -95,7 +95,7 @@ Module Program
     Private Function runJobs(bash As String, args As CommandLine) As Integer
         Dim input As String = args.Name
         Dim njobs As Integer = args("-j") Or 4
-        Dim jobs As String() = input.ReadAllLines
+        Dim jobs As IEnumerable(Of String) = input.IterateAllLines
         Dim debug As Boolean = args("--debug")
         Dim verbose As Boolean = args("--verbose")
         Dim delay As Double = args("-delay") Or 0.5
