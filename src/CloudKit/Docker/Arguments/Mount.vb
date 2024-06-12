@@ -89,6 +89,14 @@ Namespace Arguments
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New([shared] As String)
+            local = [shared]
+            virtual = [shared]
+        End Sub
+
         ''' <summary>
         ''' ``local:virtual``
         ''' </summary>

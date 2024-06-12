@@ -57,6 +57,8 @@ Imports Darwinism.Docker.Captures
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Operators
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -265,7 +267,48 @@ Public Module DockerTools
         Return docker
     End Function
 
+    ''' <summary>
+    ''' mount shared volumn between the host and the container
+    ''' </summary>
+    ''' <param name="docker"></param>
+    ''' <param name="mount">
+    ''' the folder path for shared, value of this parameter could be:
+    ''' 
+    ''' 1. just a single character vector for specific the path string
+    ''' 2. a lambda expression for specific the different folder name
+    '''
+    ''' </param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' # for just mount a folder
+    ''' #
+    ''' # -v "/path/to/shared/folder/:/path/to/shared/folder/"
+    ''' #
+    ''' docker 
+    ''' |> mount("/path/to/shared/folder/");
+    ''' 
+    ''' # for mount a folder with different name
+    ''' #
+    ''' # -v "/foldername_in_host:/folder_name_in_container"
+    ''' #
+    ''' docker 
+    ''' |> mount("/foldername_in_host" -> "/folder_name_in_container")
+    ''' </example>
+    <ExportAPI("mount")>
+    Public Function mountVolumn(docker As Docker.Environment, mount As Object, Optional env As Environment = Nothing) As Object
+        If TypeOf mount Is String Then
+            Return docker.Mount(New Mount(CStr(mount)))
+        ElseIf TypeOf mount Is DeclareLambdaFunction Then
+            Dim lambda As DeclareLambdaFunction = mount
+            Dim host As String = lambda.parameterNames(0)
+            Dim virtual As String = ValueAssignExpression.GetSymbol(lambda.closure)
 
+            Return docker.Mount(New Mount With {.local = host, .virtual = virtual})
+        Else
+            Return Message.InCompatibleType(GetType(String), mount.GetType, env)
+        End If
+    End Function
 
     ''' <summary>
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
