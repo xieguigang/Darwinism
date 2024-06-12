@@ -226,6 +226,8 @@ Public Class Environment
     ''' <returns></returns>
     Public ReadOnly Property workspace As String
 
+    Public Property tty As Boolean
+
     Sub New(container As Image)
         Me.container = container
     End Sub
@@ -269,6 +271,10 @@ Public Class Environment
 
         workdir = If(workdir, workspace)
 
+        If tty Then
+            options.AppendLine("-it")
+        End If
+
         If Not [Shared] Is Nothing Then
             For Each map As Mount In [Shared]
                 If Not map.IsValid Then
@@ -285,7 +291,7 @@ Public Class Environment
             Call options.AppendLine($"-p {portForward}")
         End If
 
-        Return $"run {options} {container} {command}"
+        Return $"run {options.ToString.TrimNewLine(" ")} {container} {command}"
     End Function
 End Class
 

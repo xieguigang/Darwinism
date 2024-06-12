@@ -317,6 +317,17 @@ Public Module DockerTools
     End Function
 
     ''' <summary>
+    ''' enable interactive tty device
+    ''' </summary>
+    ''' <param name="docker"></param>
+    ''' <returns></returns>
+    <ExportAPI("tty")>
+    Public Function tty(docker As Docker.Environment) As Object
+        docker.tty = True
+        Return docker
+    End Function
+
+    ''' <summary>
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
     ''' </summary>
     ''' <param name="command"></param>
