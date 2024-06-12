@@ -332,6 +332,10 @@ Public Module DockerTools
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
     ''' </summary>
     ''' <param name="command"></param>
+    ''' <param name="shell_cmdl">
+    ''' this debug parameter specific that just returns the commandline for 
+    ''' run docker instead of run command and returns the std_output.
+    ''' </param>
     ''' <remarks>
     ''' 这个方法能够自定义的参数比较有限,如果需要更加复杂的使用方法,可以使用<see cref="Environment"/>对象
     ''' </remarks>
@@ -345,6 +349,7 @@ Public Module DockerTools
                         Optional portForward As PortForward = Nothing,
                         <RListObjectArgument>
                         Optional args As list = Nothing,
+                        Optional shell_cmdl As Boolean = False,
                         Optional env As REnvironment = Nothing) As Object
 
         If (Not TypeOf container Is Image) AndAlso (Not TypeOf container Is Docker.Environment) Then
@@ -381,7 +386,11 @@ Public Module DockerTools
             .Mount(mounts) _
             .CreateDockerCommand(command, workdir, portForward)
 
-        Return ShellCommand.Run("docker", cli)
+        If shell_cmdl Then
+            Return $"docker {cli}"
+        Else
+            Return ShellCommand.Run("docker", cli)
+        End If
     End Function
 
     ''' <summary>
