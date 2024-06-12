@@ -70,6 +70,12 @@ Public Module ShellCommand
                 End Function
     End Sub
 
+    ''' <summary>
+    ''' run commandline and then returns the std output of the command
+    ''' </summary>
+    ''' <param name="app"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     Public Function Run(app As String, args As String) As String
         Return shell(app, args)
     End Function

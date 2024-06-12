@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::e96aa65b2e6420e3b0d132ae7c146c3b, src\Darwinism\Platform\Docker.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 192
-    '    Code Lines: 70
-    ' Comment Lines: 104
-    '   Blank Lines: 18
-    '     File Size: 8.50 KB
+' Summaries:
 
 
-    ' Module DockerTools
-    ' 
-    '     Function: PS, rmi, Run, Search
-    ' 
-    '     Sub: [Stop]
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 192
+'    Code Lines: 70
+' Comment Lines: 104
+'   Blank Lines: 18
+'     File Size: 8.50 KB
+
+
+' Module DockerTools
+' 
+'     Function: PS, rmi, Run, Search
+' 
+'     Sub: [Stop]
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Darwinism.Docker
 Imports Darwinism.Docker.Arguments
 Imports Darwinism.Docker.Captures
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Runtime
+Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
 
 ''' <summary>
@@ -194,11 +195,24 @@ Public Module DockerTools
     ''' <param name="containers"></param>
     ''' 
     <ExportAPI("stop")>
-    Public Sub [Stop](ParamArray containers As String())
+    Public Sub [Stop](Optional containers As String() = Nothing)
         For Each id As String In containers
             Call ShellCommand.Run("docker", $"stop {id}")
         Next
     End Sub
+
+    ''' <summary>
+    ''' create docker image reference
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("image")>
+    Public Function image_reference(name As String, Optional publisher As String = Nothing) As Image
+        Return New Image With {
+            .Package = name,
+            .Publisher = publisher
+        }
+    End Function
 
     ''' <summary>
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
@@ -208,15 +222,23 @@ Public Module DockerTools
     ''' 这个方法能够自定义的参数比较有限,如果需要更加复杂的使用方法,可以使用<see cref="Environment"/>对象
     ''' </remarks>
     ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
+    <RApiReturn(TypeCodes.string)>
     <ExportAPI("run")>
-    Public Function Run(container As Image, command$,
+    Public Function Run(container As Object, command$,
                         Optional workdir As String = Nothing,
                         Optional mounts As Mount() = Nothing,
-                        Optional portForward As PortForward = Nothing) As String
+                        Optional portForward As PortForward = Nothing,
+                        Optional env As Environment = Nothing) As Object
 
-        Dim cli As String = New Environment(container) _
+        If Not TypeOf container Is Image Then
+            If TypeOf container Is String Then
+                container = New Image(CStr(container))
+            Else
+                Return Message.InCompatibleType(GetType(Image), container.GetType, env)
+            End If
+        End If
+
+        Dim cli As String = New Docker.Environment(container) _
             .Mount(mounts) _
             .CreateDockerCommand(command, workdir, portForward)
 

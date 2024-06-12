@@ -64,6 +64,13 @@ Namespace Arguments
         Public Property Publisher As String
         Public Property Package As String
 
+        Sub New()
+        End Sub
+
+        Sub New(packageName As String)
+            Package = packageName
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>

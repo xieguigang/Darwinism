@@ -63,7 +63,7 @@ Imports Darwinism.Docker.Arguments
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
-''' The container environment module for ``docker run ...``
+''' The container environment module for wrap ``docker run ...``
 ''' </summary>
 Public Class Environment
 
@@ -215,8 +215,22 @@ Public Class Environment
     Public ReadOnly Property [Shared] As Mount()
     Public ReadOnly Property container As Image
 
+    ''' <summary>
+    ''' the environment variable
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property environments As New Dictionary(Of String, String)
+    ''' <summary>
+    ''' set the current workdir
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property workspace As String
+
     Sub New(container As Image)
         Me.container = container
+    End Sub
+
+    Sub New()
     End Sub
 
     Public Function Mount(local$, virtual$) As Environment
@@ -226,6 +240,16 @@ Public Class Environment
 
     Public Function Mount(ParamArray [shared] As Mount()) As Environment
         _Shared = [shared]
+        Return Me
+    End Function
+
+    Public Function SetWorkdir(dir As String) As Environment
+        _workspace = dir
+        Return Me
+    End Function
+
+    Public Function SetImage(img As Image) As Environment
+        _container = img
         Return Me
     End Function
 
@@ -243,13 +267,15 @@ Public Class Environment
     Public Function CreateDockerCommand(command$, Optional workdir$ = Nothing, Optional portForward As PortForward = Nothing) As String
         Dim options As New StringBuilder
 
+        workdir = If(workdir, workspace)
+
         If Not [Shared] Is Nothing Then
             For Each map As Mount In [Shared]
-                If map.IsValid Then
-                    Call options.AppendLine($"-v {map}")
-                Else
+                If Not map.IsValid Then
                     Call InvalidMount.Warning
                 End If
+
+                Call options.AppendLine($"-v {map}")
             Next
         End If
         If Not workdir.StringEmpty Then
