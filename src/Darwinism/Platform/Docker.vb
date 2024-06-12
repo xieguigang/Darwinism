@@ -232,6 +232,20 @@ Public Module DockerTools
             ' add reference to a docker image in R#
             ' docker() |> image("...")
             Return DirectCast(x, Docker.Environment).SetImage(New Image(name))
+        ElseIf TypeOf x Is RMethodInfo Then
+            Dim f As RMethodInfo = x
+
+            If Not f.parameters.Length <> 1 Then
+                Return Internal.debug.stop("invalid docker command wrapper!", env)
+            End If
+
+            If f.name = "docker" AndAlso f.name = "docker" Then
+                Dim docker As Docker.Environment = f.Invoke({Nothing}, env)
+                docker.SetImage(New Image(name))
+                Return docker
+            Else
+                Return Internal.debug.stop("invalid docker command wrapper!", env)
+            End If
         Else
             ' create docker image reference
             name = CLRVector.asCharacter(x).FirstOrDefault
