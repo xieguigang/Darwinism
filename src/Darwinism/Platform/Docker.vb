@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' Docker commands
@@ -148,6 +149,15 @@ Public Module DockerTools
 
     ' Run 'docker COMMAND --help' for more information on a command.
 
+    <ExportAPI("docker")>
+    Public Function docker_env(Optional img As String = Nothing) As Docker.Environment
+        If img.StringEmpty Then
+            Return New Docker.Environment
+        Else
+            Return New Docker.Environment(New Image(img))
+        End If
+    End Function
+
     ''' <summary>
     ''' Search the Docker Hub for images
     ''' </summary>
@@ -207,7 +217,24 @@ Public Module DockerTools
     ''' <returns></returns>
     ''' 
     <ExportAPI("image")>
-    Public Function image_reference(name As String, Optional publisher As String = Nothing) As Image
+    Public Function image_reference(x As Object,
+                                    Optional name As String = Nothing,
+                                    Optional publisher As String = Nothing,
+                                    Optional env As Environment = Nothing) As Object
+
+        If TypeOf x Is Docker.Environment Then
+            ' add reference to a docker image in R#
+            ' docker() |> image("...")
+            Return DirectCast(x, Docker.Environment).SetImage(New Image(name))
+        Else
+            ' create docker image reference
+            name = CLRVector.asCharacter(x).FirstOrDefault
+
+            If name.StringEmpty Then
+                Return Internal.debug.stop("invalid docker image: empty image reference name!", env)
+            End If
+        End If
+
         Return New Image With {
             .Package = name,
             .Publisher = publisher
