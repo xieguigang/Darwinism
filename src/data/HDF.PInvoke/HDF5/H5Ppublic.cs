@@ -989,8 +989,6 @@ namespace HDF.PInvoke
         /// See https://support.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-GetFileSpacePageSize
         /// </summary>
         /// <param name="fcpl">The file creation property list identifier.</param>
-        /// <param name="strategy">The current file space management strategy
-        /// in use for the file.</param>
         /// <param name="fsp_size">File space page size</param>
         /// <returns>Returns a non-negative value if successful; otherwise
         /// returns a negative value.</returns>
@@ -2742,8 +2740,6 @@ namespace HDF.PInvoke
         /// See https://support.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetFileSpacePageSize
         /// </summary>
         /// <param name="fcpl">The file creation property list identifier.</param>
-        /// <param name="strategy">The current file space management strategy
-        /// in use for the file.</param>
         /// <param name="fsp_size">File space page size</param>
         /// <returns>Returns a non-negative value if successful; otherwise
         /// returns a negative value.</returns>

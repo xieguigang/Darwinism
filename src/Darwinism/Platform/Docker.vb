@@ -65,6 +65,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports REnvironment = SMRUCC.Rsharp.Runtime.Environment
 
 ''' <summary>
 ''' Docker commands
@@ -225,7 +226,7 @@ Public Module DockerTools
     Public Function image_reference(x As Object,
                                     Optional name As String = Nothing,
                                     Optional publisher As String = Nothing,
-                                    Optional env As Environment = Nothing) As Object
+                                    Optional env As REnvironment = Nothing) As Object
 
         If TypeOf x Is Docker.Environment Then
             ' add reference to a docker image in R#
@@ -254,7 +255,7 @@ Public Module DockerTools
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("env")>
-    Public Function setVariable(docker As Docker.Environment, <RListObjectArgument> args As list, Optional env As Environment = Nothing) As Object
+    Public Function setVariable(docker As Docker.Environment, <RListObjectArgument> args As list, Optional env As REnvironment = Nothing) As Object
         For Each tuple As KeyValuePair(Of String, Object) In args.slots
             Dim value As String() = CLRVector.asCharacter(tuple.Value)
 
@@ -297,7 +298,7 @@ Public Module DockerTools
     ''' |> mount("/foldername_in_host" -> "/folder_name_in_container")
     ''' </example>
     <ExportAPI("mount")>
-    Public Function mountVolumn(docker As Docker.Environment, mount As Object, Optional env As Environment = Nothing) As Object
+    Public Function mountVolumn(docker As Docker.Environment, mount As Object, Optional env As REnvironment = Nothing) As Object
         If TypeOf mount Is String Then
             Return docker.Mount(New Mount(CStr(mount)))
         ElseIf TypeOf mount Is DeclareLambdaFunction Then
@@ -344,7 +345,7 @@ Public Module DockerTools
                         Optional portForward As PortForward = Nothing,
                         <RListObjectArgument>
                         Optional args As list = Nothing,
-                        Optional env As Environment = Nothing) As Object
+                        Optional env As REnvironment = Nothing) As Object
 
         If (Not TypeOf container Is Image) AndAlso (Not TypeOf container Is Docker.Environment) Then
             If TypeOf container Is String Then
