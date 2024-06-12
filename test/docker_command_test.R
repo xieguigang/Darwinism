@@ -5,6 +5,7 @@ imports "docker" from "Darwinism";
 let wd = "/path/to/host/folder/"; 
 let cmdl_debug = docker 
 |> image("analysis_image:20240612_1")
+|> tty()
 |> env(LD_LIBRARY_PATH = "/opt/R/4.0.3/lib/R/lib")
 |> env(R_HOME = "/opt/R/4.0.3/lib/R")
 |> mount(wd)
