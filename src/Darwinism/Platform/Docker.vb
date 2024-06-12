@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 
@@ -217,6 +218,7 @@ Public Module DockerTools
     ''' <returns></returns>
     ''' 
     <ExportAPI("image")>
+    <RApiReturn(GetType(Docker.Environment), GetType(Image))>
     Public Function image_reference(x As Object,
                                     Optional name As String = Nothing,
                                     Optional publisher As String = Nothing,
@@ -240,6 +242,30 @@ Public Module DockerTools
             .Publisher = publisher
         }
     End Function
+
+    ''' <summary>
+    ''' set environment variable for the docker run
+    ''' </summary>
+    ''' <param name="docker"></param>
+    ''' <param name="args"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("env")>
+    Public Function setVariable(docker As Docker.Environment, <RListObjectArgument> args As list, Optional env As Environment = Nothing) As Object
+        For Each tuple As KeyValuePair(Of String, Object) In args.slots
+            Dim value As String() = CLRVector.asCharacter(tuple.Value)
+
+            If value.IsNullOrEmpty Then
+                docker.environments(tuple.Key) = ""
+            Else
+                docker.environments(tuple.Key) = value(0)
+            End If
+        Next
+
+        Return docker
+    End Function
+
+
 
     ''' <summary>
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
