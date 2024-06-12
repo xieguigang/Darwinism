@@ -54,6 +54,7 @@
 Imports Darwinism.Docker
 Imports Darwinism.Docker.Arguments
 Imports Darwinism.Docker.Captures
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -310,6 +311,11 @@ Public Module DockerTools
         End If
     End Function
 
+    <ExportAPI("workspace")>
+    Public Function setWorkspace(docker As Docker.Environment, workdir As String) As Object
+        Return docker.SetWorkdir(workdir)
+    End Function
+
     ''' <summary>
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
     ''' </summary>
@@ -321,12 +327,15 @@ Public Module DockerTools
     <RApiReturn(TypeCodes.string)>
     <ExportAPI("run")>
     Public Function Run(container As Object, command$,
+                        Optional script As String = Nothing,
                         Optional workdir As String = Nothing,
                         Optional mounts As Mount() = Nothing,
                         Optional portForward As PortForward = Nothing,
+                        <RListObjectArgument>
+                        Optional args As list = Nothing,
                         Optional env As Environment = Nothing) As Object
 
-        If Not TypeOf container Is Image Then
+        If (Not TypeOf container Is Image) AndAlso (Not TypeOf container Is Docker.Environment) Then
             If TypeOf container Is String Then
                 container = New Image(CStr(container))
             Else
@@ -334,7 +343,29 @@ Public Module DockerTools
             End If
         End If
 
-        Dim cli As String = New Docker.Environment(container) _
+        Dim host As Docker.Environment
+
+        If TypeOf container Is Docker.Environment Then
+            host = container
+        Else
+            host = New Docker.Environment(container)
+        End If
+
+        If Not script.StringEmpty Then
+            command = command & " " & script.CLIPath
+        End If
+
+        If args.length > 0 Then
+            Dim pars As String() = args.slots _
+                .Select(Function(t)
+                            Return $"{t.Key} {CLRVector.asCharacter(t.Value).JoinBy(",").CLIToken}"
+                        End Function) _
+                .ToArray
+
+            command = command & " " & pars.JoinBy(" ")
+        End If
+
+        Dim cli As String = host _
             .Mount(mounts) _
             .CreateDockerCommand(command, workdir, portForward)
 
