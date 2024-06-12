@@ -235,7 +235,7 @@ Public Module DockerTools
         ElseIf TypeOf x Is RMethodInfo Then
             Dim f As RMethodInfo = x
 
-            If Not f.parameters.Length <> 1 Then
+            If f.parameters.Length <> 1 Then
                 Return Internal.debug.stop("invalid docker command wrapper!", env)
             End If
 
