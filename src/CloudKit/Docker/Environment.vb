@@ -275,6 +275,10 @@ Public Class Environment
             options.AppendLine("-it")
         End If
 
+        For Each env In environments
+            Call options.AppendLine($"--env ""{env.Key}={env.Value}""")
+        Next
+
         If Not [Shared] Is Nothing Then
             For Each map As Mount In [Shared]
                 If Not map.IsValid Then
