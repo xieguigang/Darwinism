@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>The container environment module for <code>docker run ...</code></p>
+        <p>The container environment module for wrap <code>docker run ...</code></p>
 
         <h3>Declare</h3>        
 
@@ -31,7 +31,12 @@
 # namespace Darwinism.Docker
 export class Environment {
    container: <a href="/vignettes/clr/Darwinism/Docker/Arguments/Image.html">Image</a>;
+   # the environment variable
+   environments: list;
    Shared: <a href="/vignettes/clr/Darwinism/Docker/Arguments/Mount.html">Mount[]</a>;
+   tty: boolean;
+   # set the current workdir
+   workspace: string;
 }
 </code>
         </pre>
@@ -40,6 +45,7 @@ export class Environment {
 
         <ol>
 <li>use by <i>property</i> member <code>container</code>: <a href="/vignettes/clr/Darwinism/Docker/Arguments/Image.html">Image</a></li>
+<li>use by <i>property</i> member <code>environments</code>: list</li>
 <li>use by <i>property</i> member <code>Shared</code>: <a href="/vignettes/clr/Darwinism/Docker/Arguments/Mount.html">Mount</a></li>
 </ol>
 

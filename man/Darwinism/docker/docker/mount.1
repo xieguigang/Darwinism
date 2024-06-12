@@ -1,0 +1,52 @@
+.\" man page create by R# package system.
+.TH DOCKER 1 2000-Jan "mount" "mount"
+.SH NAME
+mount \- mount shared volumn between the host and the container
+.SH SYNOPSIS
+\fImount(\fBdocker\fR as <generic> Environment, 
+\fBmount\fR as any, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+mount shared volumn between the host and the container
+.PP
+.SH OPTIONS
+.PP
+\fBdocker\fB \fR\- -. 
+.PP
+.PP
+\fBmount\fB \fR\- 
+ the folder path for shared, value of this parameter could be:
+ 
+ 1. just a single character vector for specific the path string
+ 2. a lambda expression for specific the different folder name
+
+. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+# for just mount a folder
+ #
+ # -v "/path/to/shared/folder/:/path/to/shared/folder/"
+ #
+ docker 
+ |> mount("/path/to/shared/folder/");
+ 
+ # for mount a folder with different name
+ #
+ # -v "/foldername_in_host:/folder_name_in_container"
+ #
+ docker 
+ |> mount("/foldername_in_host" -> "/folder_name_in_container")
+.PP
+.SH SEE ALSO
+docker
+.SH FILES
+.PP
+Darwinism.dll
+.PP
+.SH AUTHOR
+Written by \fBxie.guigang@live.com\fR

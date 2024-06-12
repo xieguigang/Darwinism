@@ -3,11 +3,14 @@
 .SH NAME
 run \- Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
 .SH SYNOPSIS
-\fIrun(\fBcontainer\fR as <generic> Image, 
+\fIrun(\fBcontainer\fR as any, 
 \fBcommand\fR as string, 
+\fBscript\fR as string = \fB<NULL>\fR, 
 \fBworkdir\fR as string = \fB<NULL>\fR, 
 \fBmounts\fR as <generic> Mount[] = \fB<NULL>\fR, 
-\fBportForward\fR as <generic> PortForward = \fB<NULL>\fR);\fR
+\fBportForward\fR as <generic> PortForward = \fB<NULL>\fR, 
+..., 
+[\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
 Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)

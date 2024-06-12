@@ -10,6 +10,47 @@
 */
 declare namespace docker {
    /**
+     * @param img default value Is ``null``.
+   */
+   function docker(img?: string): object;
+   /**
+    * set environment variable for the docker run
+    * 
+    * 
+     * @param docker -
+     * @param args -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function env(docker: object, args: object, env?: object): any;
+   /**
+    * create docker image reference
+    * 
+    * 
+     * @param name 
+     * + default value Is ``null``.
+     * @param publisher 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
+   */
+   function image(x: any, name?: string, publisher?: string, env?: object): object|object;
+   /**
+    * mount shared volumn between the host and the container
+    * 
+    * 
+     * @param docker -
+     * @param mount the folder path for shared, value of this parameter could be:
+     *  
+     *  1. just a single character vector for specific the path string
+     *  2. a lambda expression for specific the different folder name
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function mount(docker: object, mount: any, env?: object): any;
+   /**
     * List containers
     * 
     * 
@@ -27,14 +68,20 @@ declare namespace docker {
     * > 这个方法能够自定义的参数比较有限,如果需要更加复杂的使用方法,可以使用@``T:Darwinism.Docker.Environment``对象
     * 
      * @param command -
+     * @param script 
+     * + default value Is ``null``.
      * @param workdir 
      * + default value Is ``null``.
      * @param mounts 
      * + default value Is ``null``.
      * @param portForward 
      * + default value Is ``null``.
+     * @param args 
+     * + default value Is ``null``.
+     * @param env 
+     * + default value Is ``null``.
    */
-   function run(container: object, command: string, workdir?: string, mounts?: object, portForward?: object): string;
+   function run(container: any, command: string, script?: string, workdir?: string, mounts?: object, portForward?: object, args?: object, env?: object): string;
    /**
     * Search the Docker Hub for images
     * 
@@ -47,6 +94,18 @@ declare namespace docker {
     * 
     * 
      * @param containers -
+     * 
+     * + default value Is ``null``.
    */
-   function stop(containers: string): ;
+   function stop(containers?: string): ;
+   /**
+    * enable interactive tty device
+    * 
+    * 
+     * @param docker -
+   */
+   function tty(docker: object): any;
+   /**
+   */
+   function workspace(docker: object, workdir: string): any;
 }

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)</title>
+    <title>create docker image reference</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>run {docker}</td>
+                <td>image {docker}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)</h2>
+        <h2>create docker image reference</h2>
 
         <h3>Description</h3>
 
@@ -27,27 +27,21 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>run</strong>(<i>container</i>, <i>command</i>,
-    <i>script</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>workdir</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>mounts</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>portForward</i> = <span style='color: blue !important;'>NULL</span>,
-    <i>...</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>image</strong>(<i>x</i>,
+    <i>name</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>publisher</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>command</dt>
-<dd><p>[as string]</p></dd>
-
         </table>
 
 
-        <h3 style="display: block;">Details</h3>
+        <h3 style="display: none;">Details</h3>
 
-        <p>这个方法能够自定义的参数比较有限,如果需要更加复杂的使用方法,可以使用<a href="/vignettes/clr/Darwinism/Docker/Environment.html">Environment</a>对象</p>
+        
 
         <h3 style="display: block">Authors</h3>
 
@@ -55,7 +49,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type string.<h4>clr value class</h4><ul><li>string</li></ul>
+        this function returns data object in these one of the listed data types: <a href="/vignettes/clr/Darwinism/Docker/Environment.html">Environment</a>, <a href="/vignettes/clr/Darwinism/Docker/Arguments/Image.html">Image</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/Darwinism/Docker/Environment.html">Environment</a></li><li><a href="/vignettes/clr/Darwinism/Docker/Arguments/Image.html">Image</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 
