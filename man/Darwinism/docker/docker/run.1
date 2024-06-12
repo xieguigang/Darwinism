@@ -10,6 +10,7 @@ run \- Run a command in a new container.(这个函数会捕捉到命令的标准
 \fBmounts\fR as <generic> Mount[] = \fB<NULL>\fR, 
 \fBportForward\fR as <generic> PortForward = \fB<NULL>\fR, 
 ..., 
+\fBshell_cmdl\fR as boolean = FALSE, 
 [\fB<Environment>\fR]);\fR
 .SH DESCRIPTION
 .PP
@@ -18,6 +19,12 @@ Run a command in a new container.(这个函数会捕捉到命令的标准输出�
 .SH OPTIONS
 .PP
 \fBcommand\fB \fR\- -. 
+.PP
+.PP
+\fBshell_cmdl\fB \fR\- 
+ this debug parameter specific that just returns the commandline for 
+ run docker instead of run command and returns the std_output.
+. 
 .PP
 .SH DETAILS
 .PP

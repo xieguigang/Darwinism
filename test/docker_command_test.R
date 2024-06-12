@@ -11,7 +11,7 @@ let cmdl_debug = docker
 |> mount("/bin/docker")
 |> mount("/mnt/datapool/")
 |> workspace(wd)
-|> run("python3", "/mnt/diff.py", args = list(
+|> run("python3", "/mnt/diff.py", shell_cmdl = TRUE, args = list(
     "-anno" = anno,
     "-peak" = region_samples,
     "-sample" = sampleinfo,
@@ -21,3 +21,5 @@ let cmdl_debug = docker
     "-log" = "log2"
 ))
 ;
+
+print(cmdl_debug);

@@ -78,10 +78,14 @@ declare namespace docker {
      * + default value Is ``null``.
      * @param args 
      * + default value Is ``null``.
+     * @param shell_cmdl this debug parameter specific that just returns the commandline for 
+     *  run docker instead of run command and returns the std_output.
+     * 
+     * + default value Is ``false``.
      * @param env 
      * + default value Is ``null``.
    */
-   function run(container: any, command: string, script?: string, workdir?: string, mounts?: object, portForward?: object, args?: object, env?: object): string;
+   function run(container: any, command: string, script?: string, workdir?: string, mounts?: object, portForward?: object, args?: object, shell_cmdl?: boolean, env?: object): string;
    /**
     * Search the Docker Hub for images
     * 
