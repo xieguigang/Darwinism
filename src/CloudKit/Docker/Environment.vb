@@ -241,7 +241,7 @@ Public Class Environment
     End Function
 
     Public Function Mount(ParamArray [shared] As Mount()) As Environment
-        _Shared = [shared]
+        _Shared = _Shared.JoinIterates([shared]).ToArray
         Return Me
     End Function
 
