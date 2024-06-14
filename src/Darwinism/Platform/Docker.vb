@@ -209,7 +209,7 @@ Public Module DockerTools
     ''' </summary>
     ''' <param name="containers"></param>
     ''' 
-    <ExportAPI("stop")>
+    <ExportAPI("stop_container")>
     Public Sub [Stop](Optional containers As String() = Nothing)
         For Each id As String In containers
             Call ShellCommand.Run("docker", $"stop {id}")
@@ -326,7 +326,13 @@ Public Module DockerTools
         End If
     End Function
 
-    <ExportAPI("workspace")>
+    ''' <summary>
+    ''' set the workdir for run the command inside this new docker container
+    ''' </summary>
+    ''' <param name="docker"></param>
+    ''' <param name="workdir">the directory path inside the docker container.</param>
+    ''' <returns></returns>
+    <ExportAPI("workdir")>
     Public Function setWorkspace(docker As Docker.Environment, workdir As String) As Object
         Return docker.SetWorkdir(workdir)
     End Function
