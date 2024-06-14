@@ -330,11 +330,11 @@ Public Module DockerTools
     ''' set the workdir for run the command inside this new docker container
     ''' </summary>
     ''' <param name="docker"></param>
-    ''' <param name="workdir">the directory path inside the docker container.</param>
+    ''' <param name="dir">the directory path inside the docker container.</param>
     ''' <returns></returns>
     <ExportAPI("workdir")>
-    Public Function setWorkspace(docker As Docker.Environment, workdir As String) As Object
-        Return docker.SetWorkdir(workdir)
+    Public Function setWorkspace(docker As Docker.Environment, dir As String) As Object
+        Return docker.SetWorkdir(dir)
     End Function
 
     ''' <summary>
