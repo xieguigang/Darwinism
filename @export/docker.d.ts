@@ -101,7 +101,7 @@ declare namespace docker {
      * 
      * + default value Is ``null``.
    */
-   function stop(containers?: string): ;
+   function stop_container(containers?: string): ;
    /**
     * enable interactive tty device
     * 
@@ -110,6 +110,11 @@ declare namespace docker {
    */
    function tty(docker: object): any;
    /**
+    * set the workdir for run the command inside this new docker container
+    * 
+    * 
+     * @param docker -
+     * @param dir the directory path inside the docker container.
    */
-   function workspace(docker: object, workdir: string): any;
+   function workdir(docker: object, dir: string): any;
 }
