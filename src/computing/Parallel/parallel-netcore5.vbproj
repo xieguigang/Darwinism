@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Parallel</RootNamespace>
+    <RootNamespace>Darwinism.HPC.Parallel</RootNamespace>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
-    <AssemblyName>Parallel</AssemblyName>
+    <AssemblyName>Darwinism.HPC.Parallel</AssemblyName>
     <Description>High Performance Parallel Compute Library on Unix .NET 6 runtime</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
