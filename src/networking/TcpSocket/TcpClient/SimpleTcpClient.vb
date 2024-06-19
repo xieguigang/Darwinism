@@ -8,8 +8,10 @@ Imports System.Security.Authentication
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Threading
+Imports IPAddress2 = Microsoft.VisualBasic.Net.IPEndPoint
 
 Namespace TcpSocket
+
     ''' <summary>
     ''' SimpleTcp client with SSL support.  
     ''' Set the Connected, Disconnected, and DataReceived events.  
@@ -162,7 +164,8 @@ Namespace TcpSocket
         Public Sub New(ipPort As String)
             If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))
 
-            ParseIpPort(ipPort, _serverIp, _serverPort)
+            Call IPAddress2.ParseIpPort(ipPort, _serverIp, _serverPort)
+
             If _serverPort < 0 Then Throw New ArgumentException("Port must be zero or greater.")
             If String.IsNullOrEmpty(_serverIp) Then Throw New ArgumentNullException("Server IP or hostname must not be null.")
 

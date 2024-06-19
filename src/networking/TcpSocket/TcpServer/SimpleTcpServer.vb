@@ -9,6 +9,7 @@ Imports System.Security.Authentication
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Threading
+Imports IPAddress2 = Microsoft.VisualBasic.Net.IPEndPoint
 
 Namespace TcpSocket
 
@@ -174,7 +175,7 @@ Namespace TcpSocket
         Public Sub New(ipPort As String)
             If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))
 
-            ParseIpPort(ipPort, _listenerIp, _port)
+            IPAddress2.ParseIpPort(ipPort, _listenerIp, _port)
 
             If _port < 0 Then Throw New ArgumentException("Port must be zero or greater.")
             If String.IsNullOrEmpty(_listenerIp) Then
@@ -231,7 +232,7 @@ Namespace TcpSocket
         Public Sub New(ipPort As String, ssl As Boolean, pfxCertFilename As String, pfxPassword As String)
             If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))
 
-            ParseIpPort(ipPort, _listenerIp, _port)
+            IPAddress2.ParseIpPort(ipPort, _listenerIp, _port)
             If _port < 0 Then Throw New ArgumentException("Port must be zero or greater.")
 
             If String.IsNullOrEmpty(_listenerIp) Then
@@ -661,7 +662,7 @@ Namespace TcpSocket
 
                     Dim clientIp As String = Nothing
                     Dim clientPort = 0
-                    ParseIpPort(clientIpPort, clientIp, clientPort)
+                    IPAddress2.ParseIpPort(clientIpPort, clientIp, clientPort)
 
                     If _settings.PermittedIPs.Count > 0 AndAlso Not _settings.PermittedIPs.Contains(clientIp) Then
                         Logger?.Invoke($"{_header}rejecting connection from {clientIp} (not permitted)")
