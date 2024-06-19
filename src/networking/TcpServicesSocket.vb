@@ -60,8 +60,6 @@
 #End Region
 
 Imports System.IO
-Imports System.Net
-Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Darwinism.IPC.Networking.HTTP
@@ -247,16 +245,16 @@ Namespace Tcp
 
         Private Sub DataReceived(sender As Object, e As DataReceivedEventArgs)
             Dim request As New RequestStream(e.Data.Array)
-            Dim remote As TcpEndPoint = Nothing
+            Dim remote As TcpEndPoint = New IPEndPoint(e.IpPort)
 
-            Using ms As New MemoryStream
-                Call HandleRequest(remote, ms, request)
-                Call _socket.Send(Nothing, ms.ToArray)
+            Using payload As New MemoryStream
+                Call HandleRequest(remote, payload, request)
+                Call payload.Seek(Scan0, SeekOrigin.Begin)
+                Call _socket.Send(e.IpPort, payload.Length, payload)
             End Using
         End Sub
 
         Private Sub DataSent(sender As Object, e As DataSentEventArgs)
-
         End Sub
 
         ''' <summary>
