@@ -63,9 +63,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
-''' document text file 
+''' document text file full text search index file
 ''' </summary>
-Public Class FileStorage : Implements Enumeration(Of Long), IDisposable
+Public Class FTSIndex : Implements Enumeration(Of Long), IDisposable
 
     ReadOnly doc_stream As BinaryDataReader
     ReadOnly file As Stream

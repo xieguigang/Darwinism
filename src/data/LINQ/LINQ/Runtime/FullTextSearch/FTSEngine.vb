@@ -61,12 +61,11 @@ Imports Microsoft.VisualBasic.Linq
 Public Class FTSEngine : Implements IDisposable
 
     ReadOnly index As InvertedIndex
-    ReadOnly documents As FileStorage
-    ReadOnly repo_dir As String
+    ReadOnly documents As DocumentPool
 
     Private disposedValue As Boolean
 
-    Sub New(repo_dir As String)
+    Sub New(pool As DocumentPool)
         Dim offsets As Long() = Nothing
 
         Me.index = FileStorage.ReadIndex($"{repo_dir}/index.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), offsets)
