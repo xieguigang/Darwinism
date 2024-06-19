@@ -128,28 +128,32 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
-      <Project>{62c4d50c-cf02-4f49-80a6-170bf92c331e}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{9384ac10-5c0d-41f9-b031-a7895d9f3327}</Project>
       <Name>binarydata-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
-      <Project>{c1413834-6eba-4668-b3e4-9dfa1edb9a5d}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
+      <Project>{37e0fee5-d09b-4ca0-a00f-6c7e6e5c87fd}</Project>
       <Name>HDSPack</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj">
-      <Project>{f93a76c1-68c1-45e6-a465-8947db9d52de}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj">
+      <Project>{35601f0b-698a-406b-80ff-37e52328fa58}</Project>
+      <Name>msgpack-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj">
+      <Project>{3e8730ed-27e7-4df1-9469-c85325ec9691}</Project>
       <Name>netCDF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
-      <Project>{4d8acc26-21fb-4968-8d70-e57bc009e437}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{0447b72e-f90a-4160-9816-69aa44cb6535}</Project>
       <Name>dataframework-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj">
-      <Project>{ae10f033-1ee2-44ef-af06-f1c81411d069}</Project>
-      <Name>graph-netcore5</Name>
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{ff880c70-2b83-4ff7-95cc-cce84f0fb6ab}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
-      <Project>{ef075a21-793b-45ed-9c38-ad5d04744aec}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{7fd30be4-86d5-47d1-a6f3-b50ba6da5f4c}</Project>
       <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\RQL\RQL.vbproj">
