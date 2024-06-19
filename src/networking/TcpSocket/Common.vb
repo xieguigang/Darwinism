@@ -1,7 +1,9 @@
 ﻿Imports System.Runtime.InteropServices
 
 Namespace TcpSocket
+
     Friend Module Common
+
         Friend Sub ParseIpPort(ipPort As String, <Out> ByRef ip As String, <Out> ByRef port As Integer)
             If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))
 

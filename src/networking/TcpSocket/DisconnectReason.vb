@@ -1,4 +1,5 @@
 ﻿Namespace TcpSocket
+
     ''' <summary>
     ''' Reason why a client disconnected.
     ''' </summary>

@@ -1,13 +1,9 @@
 ﻿Namespace TcpSocket
+
     ''' <summary>
     ''' Arguments for connection events.
     ''' </summary>
-    Public Class ConnectionEventArgs
-        Inherits EventArgs
-        Friend Sub New(ipPort As String, Optional reason As DisconnectReason = DisconnectReason.None)
-            Me.IpPort = ipPort
-            Me.Reason = reason
-        End Sub
+    Public Class ConnectionEventArgs : Inherits EventArgs
 
         ''' <summary>
         ''' The IP address and port number of the connected peer socket.
@@ -18,5 +14,11 @@
         ''' The reason for the disconnection, if any.
         ''' </summary>
         Public ReadOnly Property Reason As DisconnectReason = DisconnectReason.None
+
+        Sub New(ipPort As String, Optional reason As DisconnectReason = DisconnectReason.None)
+            Me.IpPort = ipPort
+            Me.Reason = reason
+        End Sub
+
     End Class
 End Namespace

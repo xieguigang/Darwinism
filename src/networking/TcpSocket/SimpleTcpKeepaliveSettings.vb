@@ -1,4 +1,5 @@
 ﻿Namespace TcpSocket
+
     ''' <summary>
     ''' SimpleTcp keepalive settings.
     ''' Keepalive probes are sent after an idle period defined by TcpKeepAliveTime (seconds).
@@ -8,7 +9,6 @@
     ''' TCP keepalives are not supported in .NET Standard.
     ''' </summary>
     Public Class SimpleTcpKeepaliveSettings
-#Region "Public-Members"
 
         ''' <summary>
         ''' Enable or disable TCP-based keepalive probes.
@@ -58,10 +58,6 @@
             End Set
         End Property
 
-#End Region
-
-#Region "Internal-Members"
-
         Friend ReadOnly Property TcpKeepAliveIntervalMilliseconds As Integer
             Get
                 Return TcpKeepAliveInterval * 1000
@@ -74,33 +70,14 @@
             End Get
         End Property
 
-#End Region
-
-#Region "Private-Members"
-
         Private _tcpKeepAliveInterval As Integer = 2
         Private _tcpKeepAliveTime As Integer = 2
         Private _tcpKeepAliveRetryCount As Integer = 3
-
-#End Region
-
-#Region "Constructors-and-Factories"
 
         ''' <summary>
         ''' Instantiate the object.
         ''' </summary>
         Public Sub New()
-
         End Sub
-
-#End Region
-
-#Region "Public-Methods"
-
-#End Region
-
-#Region "Private-Methods"
-
-#End Region
     End Class
 End Namespace
