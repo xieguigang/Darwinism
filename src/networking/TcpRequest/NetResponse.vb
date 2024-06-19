@@ -71,8 +71,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Net.HTTP
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
 Imports r = System.Text.RegularExpressions.Regex
 

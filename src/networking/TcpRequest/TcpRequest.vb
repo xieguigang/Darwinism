@@ -64,10 +64,10 @@ Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
+Imports Darwinism.IPC.Networking.TcpSocket
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports TcpEndPoint = System.Net.IPEndPoint
@@ -83,21 +83,11 @@ Namespace Tcp
     ''' <remarks></remarks>
     Public Class TcpRequest : Implements IDisposable
 
-#Region "Internal Fields"
-
         ''' <summary>
         ''' The port number for the remote device.
         ''' </summary>
         ''' <remarks></remarks>
         Dim port As Integer
-
-        ''' <summary>
-        ''' ' ManualResetEvent instances signal completion.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Dim connectDone As ManualResetEvent
-        Dim sendDone As ManualResetEvent
-        Dim receiveDone As ManualResetEvent
         Dim exceptionHandler As ExceptionHandler
         Dim remoteHost As String
 
@@ -112,7 +102,6 @@ Namespace Tcp
         ''' </summary>
         ''' <remarks></remarks>
         Protected ReadOnly remoteEP As TcpEndPoint
-#End Region
 
         Public Function SetTimeOut(timespan As TimeSpan) As TcpRequest
             Me.timeout = timespan
@@ -227,69 +216,11 @@ Namespace Tcp
         End Function
 
         Public Sub RequestToStream(message As RequestStream, stream As Stream)
-            Dim client As Socket = getSocket(message.Serialize)
+            Dim buffer = SendMessage(message.Serialize)
 
-            ' Receive the response from the remote device.
-            Call Receive(client, stream)
-            Call receiveDone.WaitOne()
-
-            On Error Resume Next
-
-            ' Release the socket.
-            Call client.Shutdown(SocketShutdown.Both)
-            Call client.Close()
+            Call stream.Write(buffer, Scan0, buffer.Length)
+            Call stream.Flush()
         End Sub
-
-        ''' <summary>
-        ''' Blocks the current thread until the current instance receives a signal, using
-        ''' a System.TimeSpan to specify the time interval.
-        ''' </summary>
-        ''' <param name="handler"></param>
-        ''' <returns>true if the current instance receives a signal; otherwise, false.</returns>
-        Private Function doWait(handler As ManualResetEvent) As Boolean
-            If timeout.TotalMilliseconds > 0 Then
-                Return handler.WaitOne(timeout)
-            Else
-                Return handler.WaitOne
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="message"></param>
-        ''' <returns>
-        ''' returns nothing means timeout
-        ''' </returns>
-        Private Function getSocket(message As Byte()) As Socket
-            ' ManualResetEvent instances signal completion.
-            connectDone = New ManualResetEvent(False)
-            sendDone = New ManualResetEvent(False)
-            receiveDone = New ManualResetEvent(False)
-
-            ' Establish the remote endpoint for the socket.
-            ' For this example use local machine.
-            ' Create a TCP/IP socket.
-            Dim client As New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-
-            Call client.Bind(New TcpEndPoint(IPAddress.Any, 0))
-            ' Connect to the remote endpoint.
-            Call client.BeginConnect(remoteEP, New AsyncCallback(AddressOf ConnectCallback), client)
-
-            ' Wait for connect.
-            If Not doWait(connectDone) Then
-                Return Nothing
-            End If
-
-            ' Send test data to the remote device.
-            Call doSend(client, message)
-
-            If Not doWait(sendDone) Then
-                Return Nothing
-            Else
-                Return client
-            End If
-        End Function
 
         ''' <summary>
         ''' 最底层的消息发送函数
@@ -297,126 +228,52 @@ Namespace Tcp
         ''' <param name="message"></param>
         ''' <returns></returns>
         Public Function SendMessage(message As Byte()) As Byte()
-            If Not RequestStream.IsAvaliableStream(message) Then
-                message = New RequestStream(0, 0, message).Serialize
-            End If
+            Dim socket As New SimpleTcpClient(remoteHost, port)
+            Dim buffer As New DataReceived
 
-            Dim client As Socket = getSocket(message)
-            Dim buffer As New MemoryStream
+            AddHandler socket.Events.Connected, AddressOf Connected
+            AddHandler socket.Events.Disconnected, AddressOf Disconnected
+            AddHandler socket.Events.DataReceived, AddressOf buffer.HandleEvent
+            AddHandler socket.Events.DataSent, AddressOf DataSent
 
-            If client Is Nothing Then
-                ' operation timeout
-                Return New RequestStream(-1, 500, "send message timeout").Serialize
-            End If
+            socket.Keepalive.EnableTcpKeepAlives = True
+            socket.Settings.MutuallyAuthenticate = False
+            socket.Settings.AcceptInvalidCertificates = True
+            socket.Settings.ConnectTimeoutMs = 5000
+            socket.Settings.NoDelay = True
+            socket.Settings.StreamBufferSize = 64 * 1024 * 1024
+            socket.ConnectWithRetries(5000)
 
-            ' Receive the response from the remote device.
-            Call Receive(client, buffer)
+            socket.Send(message)
 
-            If Not doWait(receiveDone) Then
-                ' get part of the data package?
-                If buffer.Length = 0 Then
-                    Return New RequestStream(-1, 500, "receive message timeout").Serialize
-                End If
-            End If
+            Do While Not buffer.triggered
+                Call Thread.Sleep(1)
+            Loop
 
-            On Error Resume Next
+            socket.Disconnect()
+            socket.Dispose()
 
-            ' Release the socket.
-            Call client.Shutdown(SocketShutdown.Both)
-            Call client.Close()
-
-            Return buffer.ToArray
+            Return buffer.cache_buffer
         End Function
 
-        Private Sub ConnectCallback(ar As IAsyncResult)
-            ' Retrieve the socket from the state object.
-            Dim client As Socket = DirectCast(ar.AsyncState, Socket)
-
-            ' Complete the connection.
-            Try
-                client.EndConnect(ar)
-                ' Signal that the connection has been made.
-                connectDone.Set()
-            Catch ex As Exception
-                Call exceptionHandler(ex)
-            End Try
+        Private Sub Connected(sender As Object, e As ConnectionEventArgs)
         End Sub
 
-        ''' <summary>
-        ''' An exception of type '<see cref="SocketException"/>' occurred in System.dll but was not handled in user code
-        ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and
-        ''' (when sending on a datagram socket using a sendto call) no address was supplied
-        ''' </summary>
-        ''' <param name="client"></param>
-        Private Sub Receive(client As Socket, buffer As Stream)
-            ' Create the state object.
-            Dim state As New StateObject With {
-                .workSocket = client,
-                .received = buffer
-            }
-
-            ' Begin receiving the data from the remote device.
-            Try
-                Call client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
-            Catch ex As Exception
-                Call Me.exceptionHandler(ex)
-            End Try
+        Private Sub Disconnected(sender As Object, e As ConnectionEventArgs)
         End Sub
 
-        ''' <summary>
-        ''' Retrieve the state object and the client socket from the 
-        ''' asynchronous state object.
-        ''' </summary>
-        ''' <param name="ar"></param>
-        Private Sub ReceiveCallback(ar As IAsyncResult)
-            Dim state As StateObject = DirectCast(ar.AsyncState, StateObject)
-            Dim client As Socket = state.workSocket
-            Dim bytesRead As Integer
+        Private Class DataReceived
 
-            Try
-                ' Read data from the remote device.
-                bytesRead = client.EndReceive(ar)
-            Catch ex As Exception
-                Call exceptionHandler(ex)
-                GoTo EX_EXIT
-            End Try
+            Public cache_buffer As Byte()
+            Public triggered As Boolean = False
 
-            If bytesRead > 0 Then
-                ' There might be more data, so store the data received so far.
-                state.received.Write(state.readBuffer.Takes(bytesRead).ToArray, Scan0, bytesRead)
-                ' Get the rest of the data.
-                client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
-            Else
-                ' All the data has arrived; put it in response.
-EX_EXIT:
-                ' Signal that all bytes have been received.
-                Call receiveDone.Set()
-            End If
-        End Sub
+            Public Sub HandleEvent(sender As Object, e As DataReceivedEventArgs)
+                cache_buffer = e.Data.Array
+                triggered = True
+            End Sub
+        End Class
 
-        ''' <summary>
-        ''' ????
-        ''' An exception of type 'System.Net.Sockets.SocketException' occurred in System.dll but was not handled in user code
-        ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and
-        ''' (when sending on a datagram socket using a sendto call) no address was supplied
-        ''' </summary>
-        ''' <param name="client"></param>
-        ''' <param name="byteData"></param>
-        ''' <remarks></remarks>
-        Private Sub doSend(client As Socket, byteData As Byte())
-            ' Begin sending the data to the remote device.
-            Try
-                ' For Each block As Byte() In byteData.Split(512)
-                ' Call client.Send(block, socketFlags:=SocketFlags.None)
-                ' Next
-                Call client.Send(byteData, socketFlags:=SocketFlags.None)
-
-            Catch ex As Exception
-                Call Me.exceptionHandler(ex)
-            Finally
-                ' Signal that all bytes have been sent.
-                Call sendDone.Set()
-            End Try
+        Private Sub DataSent(sender As Object, e As DataSentEventArgs)
         End Sub
 
 #Region "IDisposable Support"
@@ -427,9 +284,6 @@ EX_EXIT:
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call connectDone.Set()  ' ManualResetEvent instances signal completion.
-                    Call sendDone.Set()
-                    Call receiveDone.Set() '中断服务器的连接
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
