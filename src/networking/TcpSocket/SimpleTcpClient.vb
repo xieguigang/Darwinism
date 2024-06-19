@@ -9,7 +9,7 @@ Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Threading
 
-Namespace SuperSimpleTcp
+Namespace TcpSocket
     ''' <summary>
     ''' SimpleTcp client with SSL support.  
     ''' Set the Connected, Disconnected, and DataReceived events.  

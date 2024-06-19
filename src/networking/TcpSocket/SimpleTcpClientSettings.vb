@@ -1,8 +1,7 @@
-﻿Imports System
-Imports System.Net
+﻿Imports System.Net
 Imports System.Net.Security
 
-Namespace SuperSimpleTcp
+Namespace TcpSocket
     ''' <summary>
     ''' SimpleTcp client settings.
     ''' </summary>

@@ -1,6 +1,4 @@
-﻿Imports System
-
-Namespace SuperSimpleTcp
+﻿Namespace TcpSocket
     ''' <summary>
     ''' SimpleTcp server events.
     ''' </summary>

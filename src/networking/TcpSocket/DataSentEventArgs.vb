@@ -1,6 +1,4 @@
-﻿Imports System
-
-Namespace SuperSimpleTcp
+﻿Namespace TcpSocket
     ''' <summary>
     ''' Arguments for data sent to a connected endpoint.
     ''' </summary>

@@ -10,7 +10,7 @@ Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Threading
 
-Namespace SuperSimpleTcp
+Namespace TcpSocket
 
     ''' <summary>
     ''' SimpleTcp server with SSL support.  

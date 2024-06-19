@@ -1,6 +1,4 @@
-﻿Imports System
-
-Namespace SuperSimpleTcp
+﻿Namespace TcpSocket
     ''' <summary>
     ''' SimpleTcp keepalive settings.
     ''' Keepalive probes are sent after an idle period defined by TcpKeepAliveTime (seconds).

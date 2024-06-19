@@ -1,7 +1,6 @@
-﻿Imports System
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 
-Namespace SuperSimpleTcp
+Namespace TcpSocket
     Friend Module Common
         Friend Sub ParseIpPort(ipPort As String, <Out> ByRef ip As String, <Out> ByRef port As Integer)
             If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))

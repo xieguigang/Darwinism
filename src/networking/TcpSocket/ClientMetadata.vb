@@ -1,11 +1,10 @@
-﻿Imports System
-Imports System.Net.Security
+﻿Imports System.Net.Security
 Imports System.Net.Sockets
 Imports System.Threading
 
-Namespace SuperSimpleTcp
-    Friend Class ClientMetadata
-        Implements IDisposable
+Namespace TcpSocket
+
+    Friend Class ClientMetadata : Implements IDisposable
 #Region "Public-Members"
 
         Friend ReadOnly Property Client As TcpClient
