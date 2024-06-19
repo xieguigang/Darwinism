@@ -65,6 +65,7 @@ Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Darwinism.IPC.Networking.HTTP
+Imports Darwinism.IPC.Networking.TcpSocket
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language.Default
@@ -77,9 +78,11 @@ Namespace Tcp
 
     ''' <summary>
     ''' Socket listening object which is running at the server side asynchronous able multiple threading.
-    ''' (运行于服务器端上面的Socket监听对象，多线程模型)
+    ''' a wrapper of the <see cref="SimpleTcpServer"/>
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (运行于服务器端上面的Socket监听对象，多线程模型)
+    ''' </remarks>
     Public Class TcpServicesSocket
         Implements IDisposable
         Implements ITaskDriver
