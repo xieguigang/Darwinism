@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::dac9f7ec22e7e7e84cf9f7af868c310f, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 173
-    '    Code Lines: 138 (79.77%)
-    ' Comment Lines: 9 (5.20%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 26 (15.03%)
-    '     File Size: 6.98 KB
+' Summaries:
 
 
-    '     Module WebCrawling
-    ' 
-    '         Function: __downloadAllLinks, __parsePage, DownloadAllLinks, GetCurrentFolder, GetRootPath
-    ' 
-    '         Sub: SavePage
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 173
+'    Code Lines: 138 (79.77%)
+' Comment Lines: 9 (5.20%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 26 (15.03%)
+'     File Size: 6.98 KB
+
+
+'     Module WebCrawling
+' 
+'         Function: __downloadAllLinks, __parsePage, DownloadAllLinks, GetCurrentFolder, GetRootPath
+' 
+'         Sub: SavePage
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Namespace HTTP
