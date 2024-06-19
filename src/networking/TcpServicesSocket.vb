@@ -247,7 +247,12 @@ Namespace Tcp
 
         Private Sub DataReceived(sender As Object, e As DataReceivedEventArgs)
             Dim request As New RequestStream(e.Data.Array)
-            Dim remote = New e.IpPort
+            Dim remote As TcpEndPoint = Nothing
+
+            Using ms As New MemoryStream
+                Call HandleRequest(remote, ms, request)
+                Call _socket.Send(Nothing, ms.ToArray)
+            End Using
         End Sub
 
         Private Sub DataSent(sender As Object, e As DataSentEventArgs)
