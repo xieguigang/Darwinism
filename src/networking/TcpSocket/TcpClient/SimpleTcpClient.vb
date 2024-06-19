@@ -766,6 +766,7 @@ Namespace TcpSocket
 
         Private Async Function DataReceiver(token As CancellationToken) As Task
             Dim outerStream As Stream = Nothing
+
             If Not _ssl Then
                 outerStream = _networkStream
             Else
@@ -774,31 +775,36 @@ Namespace TcpSocket
 
             While Not token.IsCancellationRequested AndAlso _client IsNot Nothing AndAlso _client.Connected
                 Try
+                    Dim require As Func(Of Task(Of ArraySegment(Of Byte)), Task(Of ArraySegment(Of Byte))) =
+                        Async Function(task)
+                            If task.IsCanceled Then Return DirectCast(Nothing, ArraySegment(Of Byte))
+                            Dim data As ArraySegment(Of Byte) = task.Result
+
+                            If data.Array IsNot Nothing Then
+                                _lastActivity = Date.Now
+
+                                Dim action As Action = Sub() _events.HandleDataReceived(CObj(Me), CType(New DataReceivedEventArgs(CStr(ServerIpPort), CType(data, ArraySegment(Of Byte))), DataReceivedEventArgs))
+                                If _settings.UseAsyncDataReceivedEvents Then
+                                    Call Tasks.Task.Run(CType(action, Action), CType(token, CancellationToken))
+                                Else
+                                    action.Invoke()
+                                End If
+
+                                _statistics.ReceivedBytes += data.Count
+
+                                Return data
+                            Else
+                                Await Tasks.Task.Delay(CInt(100)).ConfigureAwait(CBool(False))
+                                Return DirectCast(Nothing, ArraySegment(Of Byte))
+                            End If
+                        End Function
+
                     Await DataReadAsync(CType(token, CancellationToken)) _
-                        .ContinueWith(Of Task(Of Global.System.ArraySegment(Of Global.System.[Byte])))(CType(Async Function(task)
-                                                                                                                 If task.IsCanceled Then Return DirectCast(Nothing, ArraySegment(Of Byte))
-                                                                                                                 Dim data As ArraySegment(Of Byte) = task.Result
+                        .ContinueWith(require, CType(token, CancellationToken)) _
+                        .ContinueWith(CType(Sub(task)
+                                            End Sub, Action(Of Task(Of Task(Of ArraySegment(Of Byte)))))) _
+                        .ConfigureAwait(False)
 
-                                                                                                                 If data.Array IsNot Nothing Then
-                                                                                                                     _lastActivity = Date.Now
-
-                                                                                                                     Dim action As Action = Sub() _events.HandleDataReceived(CObj(Me), CType(New DataReceivedEventArgs(CStr(ServerIpPort), CType(data, ArraySegment(Of Byte))), DataReceivedEventArgs))
-                                                                                                                     If _settings.UseAsyncDataReceivedEvents Then
-                                                                                                                         Call Tasks.Task.Run(CType(action, Action), CType(token, CancellationToken))
-                                                                                                                     Else
-                                                                                                                         action.Invoke()
-                                                                                                                     End If
-
-                                                                                                                     _statistics.ReceivedBytes += data.Count
-
-                                                                                                                     Return data
-                                                                                                                 Else
-                                                                                                                     Await Tasks.Task.Delay(CInt(100)).ConfigureAwait(CBool(False))
-                                                                                                                     Return DirectCast(Nothing, ArraySegment(Of Byte))
-                                                                                                                 End If
-
-                                                                                                             End Function, Func(Of Task(Of ArraySegment(Of Byte)), Task(Of ArraySegment(Of Byte)))), CType(token, CancellationToken)).ContinueWith(CType(Sub(task)
-                                                                                                                                                                                                                                                         End Sub, Action(Of Task(Of Task(Of ArraySegment(Of Byte)))))).ConfigureAwait(False)
                 Catch __unusedAggregateException1__ As AggregateException
                     Logger?.Invoke($"{_header}data receiver canceled, disconnected")
                     Exit While

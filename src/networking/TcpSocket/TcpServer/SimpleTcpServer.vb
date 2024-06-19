@@ -195,9 +195,10 @@ Namespace TcpSocket
         End Sub
 
         ''' <summary>
-        ''' Instantiates the TCP server without SSL.  Set the ClientConnected, ClientDisconnected, and DataReceived callbacks.  Once set, use Start() to begin listening for connections.
+        ''' Instantiates the TCP server without SSL.  Set the ClientConnected, ClientDisconnected, and DataReceived callbacks.  
+        ''' Once set, use Start() to begin listening for connections.
         ''' </summary>
-        ''' <param name="listenerIp">The listener IP address or hostname.</param>
+        ''' <param name="listenerIp">The listener IP address or hostname. * means any address</param>
         ''' <param name="port">The TCP port on which to listen.</param>
         Public Sub New(listenerIp As String, port As Integer)
             If port < 0 Then Throw New ArgumentException("Port must be zero or greater.")

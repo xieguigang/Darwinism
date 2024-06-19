@@ -88,19 +88,10 @@ Namespace Tcp
         Implements ITaskDriver
         Implements IServicesSocket
 
-#Region "INTERNAL FIELDS"
-
-        ''' <summary>
-        ''' 处理连接的线程池
-        ''' </summary>
-        ReadOnly _threadPool As New Threads.ThreadPool(8)
-
         Dim _exceptionHandle As ExceptionHandler
         Dim _maxAccepts As Integer = 4
         Dim _debugMode As Boolean = False
-        Dim _socket As TcpListener
-
-#End Region
+        Dim _socket As SimpleTcpServer
 
         ''' <summary>
         ''' The server services listening on this local port.(当前的这个服务器对象实例所监听的本地端口号)
@@ -213,18 +204,25 @@ Namespace Tcp
                 Call VBDebugger.EchoLine("Start run socket...")
             End If
 
-            Me._socket = New TcpListener(IPAddress.Any, localEndPoint.Port)
-            Me._socket.Start(10240)
-            Me._threadPool.Start()
+            _socket = New SimpleTcpServer("*", localEndPoint.Port)
+
+            AddHandler _socket.Events.ClientConnected, AddressOf AcceptWorker
+            AddHandler _socket.Events.ClientDisconnected, AddressOf Disconnect
+            AddHandler _socket.Events.DataReceived, AddressOf DataReceived
+            AddHandler _socket.Events.DataSent, AddressOf DataSent
+
+            _socket.Keepalive.EnableTcpKeepAlives = True
+            _socket.Settings.IdleClientTimeoutMs = 0
+            _socket.Settings.MutuallyAuthenticate = False
+            _socket.Settings.AcceptInvalidCertificates = True
+            _socket.Settings.NoDelay = True
+            _socket.Settings.StreamBufferSize = BufferSize
+            _socket.Start()
 
             _Running = True
 
             While Not Me.disposedValue AndAlso Running
-                If Not _threadPool.FullCapacity Then
-                    Call _threadPool.RunTask(AddressOf accept)
-                Else
-                    Thread.Sleep(1)
-                End If
+                Call Thread.Sleep(1)
             End While
 
             If _debugMode Then
@@ -241,59 +239,19 @@ Namespace Tcp
             Return exitCode
         End Function
 
-        ''' <summary>
-        ''' processing the request data
-        ''' </summary>
-        Private Sub accept()
-            Try
-                Call acceptWorker()
-            Catch ex As Exception
-                Call App.LogException(ex)
-            End Try
+        Private Sub AcceptWorker(sender As Object, e As ConnectionEventArgs)
         End Sub
 
-        Private Sub acceptWorker()
-            Dim s As TcpClient = _socket.AcceptTcpClient
-            Dim request As New BufferedStream(s.GetStream)
-            Dim response As Stream = s.GetStream()
-            Dim received As New MemoryStream
-            Dim chunk As Byte() = New Byte(4096 - 1) {}
-
-            Do While Running
-                Dim nreads As Integer = request.Read(chunk, Scan0, chunk.Length)
-
-                If nreads > 0 Then
-                    received.Write(chunk, Scan0, nreads)
-                End If
-
-                ' has no data reads
-                ' start to processing the request 
-                Dim requestData As New RequestStream(received.ToArray)
-
-                If requestData.FullRead Then
-                    Call HandleRequest(s.Client.RemoteEndPoint, response, requestData)
-                    Exit Do
-                Else
-
-                End If
-
-                Call Thread.Sleep(1)
-            Loop
-
-            Call response.Flush()
-            Call response.Dispose()
-            Call s.Close()
+        Private Sub Disconnect(sender As Object, e As ConnectionEventArgs)
         End Sub
 
-        Public Sub WaitForStart()
-            Do While Running = False
-                Call Thread.Sleep(10)
-            Loop
+        Private Sub DataReceived(sender As Object, e As DataReceivedEventArgs)
+            Dim request As New RequestStream(e.Data.Array)
+            Dim remote = New e.IpPort
         End Sub
 
-        Private Sub ForceCloseHandle(RemoteEndPoint As EndPoint, ex As Exception)
-            Call $"Connection was force closed by {RemoteEndPoint.ToString}, services thread abort!".__DEBUG_ECHO
-            Call ex.PrintException
+        Private Sub DataSent(sender As Object, e As DataSentEventArgs)
+
         End Sub
 
         ''' <summary>
@@ -381,7 +339,6 @@ Namespace Tcp
 
                     ' TODO: dispose managed state (managed objects).
                     Try
-                        Call _threadPool.Dispose()
                         Call _socket.Stop()
                     Catch ex As Exception
 
