@@ -1,61 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::35b16408803da924c66a084e5cd37824, Data\FullTextSearch\FTSEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 77
-    '    Code Lines: 46 (59.74%)
-    ' Comment Lines: 17 (22.08%)
-    '    - Xml Docs: 35.29%
-    ' 
-    '   Blank Lines: 14 (18.18%)
-    '     File Size: 2.68 KB
+' Summaries:
 
 
-    ' Class FTSEngine
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: Search
-    ' 
-    '     Sub: (+2 Overloads) Dispose, (+2 Overloads) Indexing
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 77
+'    Code Lines: 46 (59.74%)
+' Comment Lines: 17 (22.08%)
+'    - Xml Docs: 35.29%
+' 
+'   Blank Lines: 14 (18.18%)
+'     File Size: 2.68 KB
+
+
+' Class FTSEngine
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: Search
+' 
+'     Sub: (+2 Overloads) Dispose, (+2 Overloads) Indexing
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
 Imports Microsoft.VisualBasic.Linq
 
 Public Class FTSEngine : Implements IDisposable
@@ -68,9 +67,8 @@ Public Class FTSEngine : Implements IDisposable
     Sub New(pool As DocumentPool)
         Dim offsets As Long() = Nothing
 
-        Me.index = FileStorage.ReadIndex($"{repo_dir}/index.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), offsets)
-        Me.documents = New FileStorage(offsets, $"{repo_dir}/documents.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
-        Me.repo_dir = repo_dir
+        Me.index = pool.GetIndex
+        Me.documents = pool
     End Sub
 
     Public Sub Indexing(doc As IEnumerable(Of String))
@@ -108,7 +106,7 @@ Public Class FTSEngine : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: 释放托管状态(托管对象)
-                Call FileStorage.WriteIndex(index, documents.AsEnumerable.ToArray, $"{repo_dir}/index.dat".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
+                Call documents.WriteIndex(index)
                 Call documents.Dispose()
             End If
 

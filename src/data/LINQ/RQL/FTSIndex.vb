@@ -1,62 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::ee31c41ab14f42512a21e8eba6dfe2be, Data\FullTextSearch\FileStorage.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 126
-    '    Code Lines: 87 (69.05%)
-    ' Comment Lines: 15 (11.90%)
-    '    - Xml Docs: 20.00%
-    ' 
-    '   Blank Lines: 24 (19.05%)
-    '     File Size: 4.44 KB
+' Summaries:
 
 
-    ' Class FileStorage
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GenericEnumerator, GetDocument, ReadIndex
-    ' 
-    '     Sub: (+2 Overloads) Dispose, Save, WriteIndex
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 126
+'    Code Lines: 87 (69.05%)
+' Comment Lines: 15 (11.90%)
+'    - Xml Docs: 20.00%
+' 
+'   Blank Lines: 24 (19.05%)
+'     File Size: 4.44 KB
+
+
+' Class FileStorage
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GenericEnumerator, GetDocument, ReadIndex
+' 
+'     Sub: (+2 Overloads) Dispose, Save, WriteIndex
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports System.Text
+Imports LINQ
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -65,21 +67,25 @@ Imports Microsoft.VisualBasic.Linq
 ''' <summary>
 ''' document text file full text search index file
 ''' </summary>
-Public Class FTSIndex : Implements Enumeration(Of Long), IDisposable
+Public Class FTSIndex : Inherits DocumentPool
+    Implements Enumeration(Of Long), IDisposable
 
     ReadOnly doc_stream As BinaryDataReader
     ReadOnly file As Stream
     ReadOnly offsets As New List(Of Long)
+    ReadOnly repo_dir As String
 
     Private disposedValue As Boolean
 
-    Sub New(offsets As Long(), doc As Stream)
-        Me.offsets = New List(Of Long)(offsets)
+    Sub New(repo_dir As String)
+        Dim doc = $"{repo_dir}/documents.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False)
+
+        Me.repo_dir = repo_dir
         Me.doc_stream = New BinaryDataReader(doc, Encoding.UTF8)
         Me.file = doc
     End Sub
 
-    Public Sub Save(text As String)
+    Public Overrides Sub Save(text As String)
         Dim writer As New BinaryDataWriter(file, Encoding.UTF8)
 
         offsets.Add(file.Length)
@@ -89,13 +95,23 @@ Public Class FTSIndex : Implements Enumeration(Of Long), IDisposable
         writer.Flush()
     End Sub
 
-    Public Function GetDocument(id As Integer) As String
+    Public Overrides Function GetDocument(id As Integer) As String
         Dim offset As Long = offsets(id)
         doc_stream.Seek(offset, SeekOrigin.Begin)
         Return doc_stream.ReadString(BinaryStringFormat.DwordLengthPrefix)
     End Function
 
-    Public Shared Function ReadIndex(file As Stream, ByRef offsets As Long()) As InvertedIndex
+    Public Overrides Function GetIndex() As InvertedIndex
+        Dim offset As Long() = Nothing
+        Dim index As InvertedIndex = ReadIndex($"{repo_dir}/index.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), offsets)
+
+        Me.offsets.Clear()
+        Me.offsets.AddRange(offset)
+
+        Return index
+    End Function
+
+    Public Shared Function ReadIndex(file As Stream, <Out> ByRef offsets As Long()) As InvertedIndex
         Dim index As InvertedIndex
 
         If file.Length = 0 Then
@@ -126,7 +142,11 @@ Public Class FTSIndex : Implements Enumeration(Of Long), IDisposable
         Return index
     End Function
 
-    Public Shared Sub WriteIndex(index As InvertedIndex, offsets As Long(), file As Stream)
+    Public Overrides Sub WriteIndex(index As InvertedIndex)
+        Call WriteIndex(index, Me.AsEnumerable.ToArray, $"{repo_dir}/index.dat".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
+    End Sub
+
+    Public Overloads Shared Sub WriteIndex(index As InvertedIndex, offsets As Long(), file As Stream)
         Dim bin As New BinaryDataWriter(file, Encoding.UTF8)
 
         ' last id is not equals to the offset length
@@ -153,7 +173,7 @@ Public Class FTSIndex : Implements Enumeration(Of Long), IDisposable
         Next
     End Function
 
-    Protected Overridable Sub Dispose(disposing As Boolean)
+    Protected Overridable Overloads Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
                 ' TODO: 释放托管状态(托管对象)
@@ -175,7 +195,7 @@ Public Class FTSIndex : Implements Enumeration(Of Long), IDisposable
     '     MyBase.Finalize()
     ' End Sub
 
-    Public Sub Dispose() Implements IDisposable.Dispose
+    Public Overrides Sub Dispose() Implements IDisposable.Dispose
         ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
         Dispose(disposing:=True)
         GC.SuppressFinalize(Me)
