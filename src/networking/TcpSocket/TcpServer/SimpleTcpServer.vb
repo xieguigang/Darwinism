@@ -135,7 +135,8 @@ Namespace TcpSocket
 
 #Region "Private-Members"
 
-        Private ReadOnly _header As String = "[SimpleTcp.Server] "
+        ReadOnly _header As String = $"[{App.AssemblyName}->TcpServer] "
+
         Private _settings As SimpleTcpServerSettings = New SimpleTcpServerSettings()
         Private _events As SimpleTcpServerEvents = New SimpleTcpServerEvents()
         Private _keepalive As SimpleTcpKeepaliveSettings = New SimpleTcpKeepaliveSettings()
