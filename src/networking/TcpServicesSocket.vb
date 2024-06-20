@@ -60,6 +60,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Darwinism.IPC.Networking.HTTP
@@ -199,7 +200,7 @@ Namespace Tcp
             Dim exitCode As Integer = 0
 
             If _debugMode Then
-                Call VBDebugger.EchoLine("Start run socket...")
+                Call VBDebugger.EchoLine($"Start run socket... {localEndPoint.ToString}")
             End If
 
             _socket = New SimpleTcpServer("*", localEndPoint.Port)
@@ -215,6 +216,7 @@ Namespace Tcp
             _socket.Settings.AcceptInvalidCertificates = True
             _socket.Settings.NoDelay = True
             _socket.Settings.StreamBufferSize = BufferSize
+            _socket.Logger = AddressOf VBDebugger.EchoLine
             _socket.Start()
 
             _Running = True

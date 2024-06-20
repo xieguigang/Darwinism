@@ -60,14 +60,12 @@
 
 Imports System.IO
 Imports System.Net
-Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
 Imports Darwinism.IPC.Networking.TcpSocket
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports TcpEndPoint = System.Net.IPEndPoint
@@ -243,7 +241,7 @@ Namespace Tcp
             socket.Settings.NoDelay = True
             socket.Settings.StreamBufferSize = 64 * 1024 * 1024
             socket.ConnectWithRetries(5000)
-
+            socket.Logger = AddressOf VBDebugger.EchoLine
             socket.Send(message)
 
             Do While Not buffer.triggered
