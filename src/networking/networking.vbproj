@@ -5,7 +5,7 @@
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <AssemblyName>Darwinism.IPC.Networking</AssemblyName>
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release</Configurations>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -21,6 +21,13 @@
     <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -133,7 +140,15 @@
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x86'">
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -141,7 +156,15 @@
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x86'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x86'">
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -149,7 +172,15 @@
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x86'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x86'">
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -157,11 +188,23 @@
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x86'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CFD_win32|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CFD_win32|x86'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|x86'">
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 

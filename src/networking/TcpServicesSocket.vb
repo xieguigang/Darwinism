@@ -269,7 +269,7 @@ Namespace Tcp
             Try
                 Dim result As BufferPipe
 
-                If requestData.IsPing Then
+                If ResponseHandler Is Nothing OrElse requestData.IsPing Then
                     result = New DataPipe(NetResponse.RFC_OK)
                 Else
                     result = Me.ResponseHandler()(requestData, remote)
