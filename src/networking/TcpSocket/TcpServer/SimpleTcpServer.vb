@@ -1,4 +1,66 @@
-﻿Imports System.Collections.Concurrent
+﻿#Region "Microsoft.VisualBasic::04501642298637115b03ebae330e1259, src\networking\TcpSocket\TcpServer\SimpleTcpServer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1053
+    '    Code Lines: 732 (69.52%)
+    ' Comment Lines: 147 (13.96%)
+    '    - Xml Docs: 91.16%
+    ' 
+    '   Blank Lines: 174 (16.52%)
+    '     File Size: 47.97 KB
+
+
+    '     Class SimpleTcpServer
+    ' 
+    '         Properties: Connections, Endpoint, Events, IpAddress, IsListening
+    '                     Keepalive, Port, Settings, Statistics
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: AcceptCertificate, GetClients, IsClientConnected, IsConnected, StartAsync
+    ' 
+    '         Sub: [Stop], DisconnectClient, (+2 Overloads) Dispose, (+2 Overloads) EnableKeepalives, (+3 Overloads) Send
+    '              SendInternal, Start, UpdateClientLastSeen
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.Concurrent
 Imports System.IO
 Imports System.Net
 Imports System.Net.NetworkInformation
@@ -1051,3 +1113,4 @@ Namespace TcpSocket
 #End Region
     End Class
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfd2bf7e327f6cfa9b21f60d2c670e4f, src\CloudKit\Docker\Arguments\Mount.vb"
+﻿#Region "Microsoft.VisualBasic::3b59253ff8faf1bac23e22a0c71a0110, src\CloudKit\Docker\Arguments\Mount.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 24
-    ' Comment Lines: 19
-    '   Blank Lines: 10
-    '     File Size: 1.68 KB
+    '   Total Lines: 61
+    '    Code Lines: 30 (49.18%)
+    ' Comment Lines: 19 (31.15%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 12 (19.67%)
+    '     File Size: 1.84 KB
 
 
     '     Class Mount
     ' 
     '         Properties: IsValid, local, virtual
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Class PortForward

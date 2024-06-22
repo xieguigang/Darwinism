@@ -1,4 +1,62 @@
-﻿Imports System.Net.Security
+﻿#Region "Microsoft.VisualBasic::177a7d6450ef56266f88c790be5fda87, src\networking\TcpSocket\ClientMetadata.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 74 (75.51%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 24 (24.49%)
+    '     File Size: 2.67 KB
+
+
+    '     Class ClientMetadata
+    ' 
+    '         Properties: Client, IpPort, NetworkStream, SslStream, Token
+    '                     TokenSource
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Net.Security
 Imports System.Net.Sockets
 Imports System.Threading
 
@@ -96,3 +154,4 @@ Namespace TcpSocket
 #End Region
     End Class
 End Namespace
+

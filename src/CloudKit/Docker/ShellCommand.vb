@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f274af0dd3656eb333793a9fef3205fe, src\CloudKit\Docker\ShellCommand.vb"
+﻿#Region "Microsoft.VisualBasic::ed93f00b779914f1c968fc70c2058916, src\CloudKit\Docker\ShellCommand.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 20
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 792 B
+    '   Total Lines: 30
+    '    Code Lines: 20 (66.67%)
+    ' Comment Lines: 6 (20.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (13.33%)
+    '     File Size: 1005 B
 
 
     ' Module ShellCommand

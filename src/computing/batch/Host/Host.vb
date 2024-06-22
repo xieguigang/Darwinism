@@ -1,53 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::b97b780b1c38e4a26b75665b231dd75d, src\computing\batch\Host\Host.vb"
+﻿#Region "Microsoft.VisualBasic::106715406093e4cdb8cce8ba576cf3c0, src\computing\batch\Host\Host.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 103
-'    Code Lines: 48
-' Comment Lines: 42
-'   Blank Lines: 13
-'     File Size: 3.98 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Host
-' 
-'     Function: CreateSlave, GetCurrentThread, ParallelFor, SlaveTask, Solve
-' 
-'     Sub: SetRange
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 48 (46.60%)
+    ' Comment Lines: 42 (40.78%)
+    '    - Xml Docs: 95.24%
+    ' 
+    '   Blank Lines: 13 (12.62%)
+    '     File Size: 4.01 KB
+
+
+    ' Module Host
+    ' 
+    '     Function: CreateSlave, GetCurrentThread, ParallelFor, SlaveTask, Solve
+    ' 
+    '     Sub: SetRange
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

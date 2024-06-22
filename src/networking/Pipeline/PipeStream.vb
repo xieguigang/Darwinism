@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcef67d082278c0a628092039df11539, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::fcef67d082278c0a628092039df11539, src\networking\Pipeline\PipeStream.vb"
 
     ' Author:
     ' 

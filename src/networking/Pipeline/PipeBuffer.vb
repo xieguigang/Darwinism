@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1099a51d6575fa2c550ad6b6d495b516, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::1099a51d6575fa2c550ad6b6d495b516, src\networking\Pipeline\PipeBuffer.vb"
 
     ' Author:
     ' 

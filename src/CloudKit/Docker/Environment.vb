@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55d79222e18053a875d1be064eff3fb9, src\CloudKit\Docker\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::5b98b2872aca2d0fe99c7cc3638bb61c, src\CloudKit\Docker\Environment.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 233
-    '    Code Lines: 53
-    ' Comment Lines: 166
-    '   Blank Lines: 14
-    '     File Size: 13.24 KB
+    '   Total Lines: 269
+    '    Code Lines: 72 (26.77%)
+    ' Comment Lines: 174 (64.68%)
+    '    - Xml Docs: 16.67%
+    ' 
+    '   Blank Lines: 23 (8.55%)
+    '     File Size: 14.19 KB
 
 
     ' Class Environment
     ' 
-    '     Properties: [Shared], container
+    '     Properties: [Shared], container, environments, tty, workspace
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CreateDockerCommand, (+2 Overloads) Mount
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: CreateDockerCommand, (+2 Overloads) Mount, SetImage, SetWorkdir
     ' 
     ' Class DockerAppDriver
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e80732510250e0f454fb2ec4c9ba4176, Data\FullTextSearch\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::e80732510250e0f454fb2ec4c9ba4176, src\data\LINQ\LINQ\test\FTStestProgram.vb"
 
     ' Author:
     ' 

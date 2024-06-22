@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a16040febc3f2d131e86271d7a5e67cb, src\CloudKit\Docker\Arguments\Image.vb"
+﻿#Region "Microsoft.VisualBasic::395b04d884ffa20a0ddce960a6cf6647, src\CloudKit\Docker\Arguments\Image.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 39
-    ' Comment Lines: 13
-    '   Blank Lines: 9
-    '     File Size: 1.82 KB
+    '   Total Lines: 68
+    '    Code Lines: 44 (64.71%)
+    ' Comment Lines: 13 (19.12%)
+    '    - Xml Docs: 84.62%
+    ' 
+    '   Blank Lines: 11 (16.18%)
+    '     File Size: 1.96 KB
 
 
     '     Class Image
     ' 
     '         Properties: Package, Publisher
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ParseEntry, ToString
     ' 
     ' 

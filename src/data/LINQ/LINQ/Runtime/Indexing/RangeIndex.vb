@@ -1,4 +1,58 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+﻿#Region "Microsoft.VisualBasic::c80f8890e7fcdb7bb0da38e7f5c8dd46, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 57 (76.00%)
+    ' Comment Lines: 4 (5.33%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (18.67%)
+    '     File Size: 2.42 KB
+
+
+    ' Class RangeIndex
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: IndexData, (+2 Overloads) Search
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -73,3 +127,4 @@ Public Class RangeIndex(Of T)
     End Function
 
 End Class
+
