@@ -69,12 +69,12 @@ G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Env
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Math.vb,87,20,10,57,1,0,0,2,0,3362,3.36 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\zzz.vb,10,0,3,7,1,0,1,0,0,193,193 B
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Data\CDF.vb,39,13,5,21,1,0,1,3,0,1085,1.08 KB
-G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Data\MemoryQuery.vb,211,52,26,133,1,0,0,7,0,7359,7.36 KB
+G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Data\MemoryQuery.vb,225,52,29,144,1,0,0,7,0,7825,7.83 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Bash.vb,65,28,7,30,1,0,1,3,0,2322,2.32 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Centos.vb,85,14,10,61,1,0,1,4,0,3347,3.35 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Docker.vb,382,162,38,182,1,0,1,10,0,15738,15.74 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Tcp.vb,3,0,1,2,1,0,0,0,0,24,24 B
-G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,<project>,912,297,104,511,9,0,5,31,0,34425,34.42 KB
+G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,<project>,926,297,107,522,9,0,5,31,0,34891,34.89 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\CDF.PInvoke\CDF.PInvoke.vbproj,CDF.PInvoke\DataReader.vb,115,17,22,76,1,3,3,1,0,4060,4.06 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\CDF.PInvoke\CDF.PInvoke.vbproj,CDF.PInvoke\PInvoke\CreateMode.vb,34,22,0,12,1,0,0,0,0,1854,1.85 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\CDF.PInvoke\CDF.PInvoke.vbproj,CDF.PInvoke\PInvoke\FillValues.vb,35,18,2,15,1,0,0,0,0,1620,1.62 KB
@@ -309,4 +309,4 @@ G:\GCModeller\src\runtime\Darwinism\src\networking\networking.vbproj,networking\
 G:\GCModeller\src\runtime\Darwinism\src\networking\networking.vbproj,<project>,6040,1495,909,3636,51,163,133,73,0,258265,258.26 KB
 G:\GCModeller\src\runtime\Darwinism\src\networking\test\test.vbproj,test\Program.vb,28,0,6,22,1,0,3,0,0,660,660 B
 G:\GCModeller\src\runtime\Darwinism\src\networking\test\test.vbproj,<project>,28,0,6,22,1,0,3,0,0,660,660 B
-../,<root>,87506,20782,13060,53664,840,1618,1750,3012,20,3735906,3.74 MB
+../,<root>,87534,20782,13066,53686,840,1618,1750,3012,20,3736838,3.74 MB
