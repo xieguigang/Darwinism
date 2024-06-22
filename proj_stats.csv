@@ -69,12 +69,12 @@ G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Env
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Math.vb,87,20,10,57,1,0,0,2,0,3362,3.36 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\zzz.vb,10,0,3,7,1,0,1,0,0,193,193 B
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Data\CDF.vb,39,13,5,21,1,0,1,3,0,1085,1.08 KB
-G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Data\MemoryQuery.vb,101,31,14,56,1,0,0,4,0,3467,3.47 KB
+G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Data\MemoryQuery.vb,211,52,26,133,1,0,0,7,0,7359,7.36 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Bash.vb,65,28,7,30,1,0,1,3,0,2322,2.32 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Centos.vb,85,14,10,61,1,0,1,4,0,3347,3.35 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Docker.vb,382,162,38,182,1,0,1,10,0,15738,15.74 KB
 G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,Darwinism\Platform\Tcp.vb,3,0,1,2,1,0,0,0,0,24,24 B
-G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,<project>,802,276,92,434,9,0,5,28,0,30533,30.53 KB
+G:\GCModeller\src\runtime\Darwinism\src\Darwinism\Darwinism.vbproj,<project>,912,297,104,511,9,0,5,31,0,34425,34.42 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\CDF.PInvoke\CDF.PInvoke.vbproj,CDF.PInvoke\DataReader.vb,115,17,22,76,1,3,3,1,0,4060,4.06 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\CDF.PInvoke\CDF.PInvoke.vbproj,CDF.PInvoke\PInvoke\CreateMode.vb,34,22,0,12,1,0,0,0,0,1854,1.85 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\CDF.PInvoke\CDF.PInvoke.vbproj,CDF.PInvoke\PInvoke\FillValues.vb,35,18,2,15,1,0,0,0,0,1620,1.62 KB
@@ -120,7 +120,8 @@ G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Language
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Language\Token.vb,25,1,6,18,1,0,1,0,2,876,876 B
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Language\Tokenizer.vb,174,5,24,145,3,0,1,3,0,6272,6.27 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Language\Tokens.vb,41,12,9,20,1,0,0,0,0,709,709 B
-G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\MemoryQuery\MemoryTable.vb,52,3,11,38,1,0,1,3,0,1743,1.74 KB
+G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\MemoryQuery\MemoryTable.vb,182,8,36,138,1,0,5,4,0,6844,6.84 KB
+G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\MemoryQuery\Query.vb,14,0,3,11,2,3,0,0,0,259,259 B
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Callable.vb,48,0,10,38,1,1,3,1,0,1395,1.40 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\DataFrameExtensions.vb,25,0,5,20,1,0,0,1,0,923,923 B
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Environment.vb,70,0,13,57,1,2,1,4,0,2120,2.12 KB
@@ -132,8 +133,8 @@ G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Drivers\DriverFlagAttribute.vb,17,0,5,12,1,1,1,1,0,436,436 B
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\RangeIndex.vb,75,4,14,57,1,0,1,3,0,2435,2.44 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\SearchIndex.vb,17,0,5,12,1,0,2,0,0,411,411 B
-G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\TermHashIndex.vb,18,0,5,13,1,0,2,0,0,509,509 B
-G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\ValueIndex.vb,17,0,5,12,1,0,0,3,0,541,541 B
+G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\TermHashIndex.vb,24,0,7,17,1,0,2,1,0,706,706 B
+G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\ValueIndex.vb,19,0,6,13,1,0,0,3,0,609,609 B
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\FullTextSearch\DocumentPool.vb,28,17,4,7,1,0,0,0,0,861,861 B
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\FullTextSearch\FTSEngine.vb,67,18,12,37,1,0,4,1,0,2115,2.12 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\Runtime\Indexing\FullTextSearch\InMemoryDocuments.vb,34,1,8,25,1,0,2,5,0,983,983 B
@@ -149,7 +150,7 @@ G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\test\My 
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1143,1.14 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2769,2.77 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,LINQ\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2954,2.95 KB
-G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,<project>,2961,200,587,2174,67,38,62,113,2,100260,100.26 KB
+G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\LINQ\LINQ.vbproj,<project>,3113,205,618,2290,69,41,66,115,2,105885,105.89 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\RQL\RQL.vbproj,RQL\FTSIndex.vb,149,15,30,104,1,0,5,5,0,5371,5.37 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\RQL\RQL.vbproj,RQL\IndexReader.vb,50,0,11,39,1,0,1,2,0,1493,1.49 KB
 G:\GCModeller\src\runtime\Darwinism\src\data\LINQ\RQL\RQL.vbproj,RQL\IndexWriter.vb,40,0,11,29,1,0,3,0,0,1098,1.10 KB
@@ -308,4 +309,4 @@ G:\GCModeller\src\runtime\Darwinism\src\networking\networking.vbproj,networking\
 G:\GCModeller\src\runtime\Darwinism\src\networking\networking.vbproj,<project>,6040,1495,909,3636,51,163,133,73,0,258265,258.26 KB
 G:\GCModeller\src\runtime\Darwinism\src\networking\test\test.vbproj,test\Program.vb,28,0,6,22,1,0,3,0,0,660,660 B
 G:\GCModeller\src\runtime\Darwinism\src\networking\test\test.vbproj,<project>,28,0,6,22,1,0,3,0,0,660,660 B
-../,<root>,86970,20730,12972,53268,836,1610,1742,3002,20,3716588,3.72 MB
+../,<root>,87494,20782,13058,53654,840,1616,1750,3012,20,3735622,3.74 MB

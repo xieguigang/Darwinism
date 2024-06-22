@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d06aecce1fe79dc45199d43a8ee36352, src\data\LINQ\LINQ\Runtime\Indexing\ValueIndex.vb"
+﻿#Region "Microsoft.VisualBasic::4b299351bf8857b2653bc2ae287370b6, src\data\LINQ\LINQ\Runtime\Indexing\ValueIndex.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 12 (70.59%)
+    '   Total Lines: 19
+    '    Code Lines: 13 (68.42%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (29.41%)
-    '     File Size: 541 B
+    '   Blank Lines: 6 (31.58%)
+    '     File Size: 609 B
 
 
     ' Class ValueIndex
