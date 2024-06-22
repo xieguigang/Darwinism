@@ -62,6 +62,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports dataframe = Microsoft.VisualBasic.Data.csv.IO.DataFrame
 Imports rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
+Imports renv = SMRUCC.Rsharp.Runtime
 
 ''' <summary>
 ''' package tools for run in-memory query
@@ -149,6 +150,115 @@ Module MemoryQuery
         Next
 
         Return x
+    End Function
+
+    ''' <summary>
+    ''' create a full text search filter
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
+    <ExportAPI("match_against")>
+    Public Function match_against(name As String, text As String) As Query
+        Return New Query With {
+            .field = name,
+            .search = Query.Type.FullText,
+            .value = text
+        }
+    End Function
+
+    <ExportAPI("between")>
+    Public Function between(name As String,
+                            <RRawVectorArgument>
+                            range As Object,
+                            Optional env As Environment = Nothing) As Query
+
+        Dim vec As Array = renv.TryCastGenericArray(range, env)
+        Dim mode = RType.TypeOf(vec)
+
+        Select Case mode.mode
+            Case TypeCodes.double : vec = CLRVector.asNumeric(vec)
+            Case TypeCodes.integer : vec = CLRVector.asInteger(vec)
+            Case Else
+                Select Case mode.GetRawElementType
+                    Case GetType(Date) : vec = CLRVector.asDate(vec)
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
+        End Select
+
+        Return New Query With {
+            .field = name,
+            .search = Query.Type.ValueRange,
+            .value = vec
+        }
+    End Function
+
+    ''' <summary>
+    ''' make dataframe query
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="query"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' x 
+    ''' |> select(match_against("field1", "full text value"), between("field2", [min, max]), field3 = "xxxxx")
+    ''' |> print()
+    ''' ;
+    ''' </example>
+    <ExportAPI("select")>
+    Public Function [select](x As MemoryTable, <RListObjectArgument> query As list, Optional env As Environment = Nothing) As Object
+        Dim filter As New List(Of Query)
+
+        For Each name As String In query.slotKeys
+            Dim q As Object = query.getByName(name)
+
+            If TypeOf q Is Query Then
+                ' do nothing
+            Else
+                ' a = b filter expression 
+                Select Case q.GetType
+                    Case GetType(String)
+                        q = New Query With {
+                            .field = name,
+                            .search = LINQ.Query.Type.HashTerm,
+                            .value = q
+                        }
+                    Case GetType(Double), GetType(Single)
+                        q = New Query With {
+                            .field = name,
+                            .search = LINQ.Query.Type.ValueMatch,
+                            .value = CDbl(q)
+                        }
+                    Case GetType(Integer), GetType(Long)
+                        q = New Query With {
+                            .field = name,
+                            .search = LINQ.Query.Type.ValueMatch,
+                            .value = CInt(q)
+                        }
+                    Case GetType(Date)
+                        q = New Query With {
+                            .field = name,
+                            .search = LINQ.Query.Type.ValueMatch,
+                            .value = CDate(q)
+                        }
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
+            End If
+
+            Call filter.Add(q)
+        Next
+
+        Dim df As dataframe = x.Query(filter)
+        Dim result As New rdataframe
+
+        For Each name As String In df.HeadTitles
+            Call result.add(name, df.Column(name))
+        Next
+
+        Return result
     End Function
 
 End Module
