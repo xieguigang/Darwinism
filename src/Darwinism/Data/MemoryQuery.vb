@@ -188,7 +188,7 @@ Module MemoryQuery
                             range As Object,
                             Optional env As Environment = Nothing) As Query
 
-        Dim vec As Array = renv.TryCastGenericArray(range, env)
+        Dim vec As Array = renv.TryCastGenericArray(renv.asVector(Of Object)(range), env)
         Dim mode = RType.TypeOf(vec)
 
         Select Case mode.mode

@@ -17,6 +17,6 @@ let table = memory_query::load(test_data)
 ;
 
 table 
-|> select(proj_name = "Docker.NET5")
+|> select(proj_name = "Docker.NET5", "totalLines" |> between([30,80]))
 |> print()
 ;
