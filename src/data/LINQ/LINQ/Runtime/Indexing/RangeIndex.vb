@@ -111,14 +111,27 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
             Return
         End If
 
-        Dim left = index.Search(New SeqValue(Of T)(min), window)
-        Dim right = index.Search(New SeqValue(Of T)(max), window)
+        Dim left = index.GetOffset(New SeqValue(Of T)(min))
+        Dim right = index.GetOffset(New SeqValue(Of T)(max))
 
-        For Each item As SeqValue(Of T) In left.JoinIterates(right)
-            Dim xi As Double = eval(item.value)
+        If left < 0 Then left = 0
+        If right < 0 Then right = index.numBlocks - 1
 
-            If xi >= min_d AndAlso xi <= max_d Then
-                Yield item
+        For i As Integer = left To right
+            Dim checkBoundary As Boolean = i = left OrElse i = right
+
+            If checkBoundary Then
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Dim xi As Double = eval(item.value)
+
+                    If xi >= min_d AndAlso xi <= max_d Then
+                        Yield item
+                    End If
+                Next
+            Else
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Yield item
+                Next
             End If
         Next
     End Function
