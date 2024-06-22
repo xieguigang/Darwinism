@@ -102,6 +102,56 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Return Me
     End Function
 
+    Public Iterator Function SearchLessThan(x As T) As IEnumerable(Of SeqValue(Of T))
+        Dim right_d As Double = eval(x)
+        Dim right = index.GetOffset(New SeqValue(Of T)(x))
+
+        If right < 0 Then
+            Return
+        End If
+
+        For i As Integer = 0 To right
+            If i = right Then
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Dim xi As Double = eval(item.value)
+
+                    If xi <= right_d Then
+                        Yield item
+                    End If
+                Next
+            Else
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Yield item
+                Next
+            End If
+        Next
+    End Function
+
+    Public Iterator Function SearchGreaterThan(x As T) As IEnumerable(Of SeqValue(Of T))
+        Dim left_d As Double = eval(x)
+        Dim left = index.GetOffset(New SeqValue(Of T)(x))
+
+        If left < 0 Then
+            left = 0
+        End If
+
+        For i As Integer = left To index.numBlocks - 1
+            If i = left Then
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Dim xi As Double = eval(item.value)
+
+                    If xi >= left_d Then
+                        Yield item
+                    End If
+                Next
+            Else
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Yield item
+                Next
+            End If
+        Next
+    End Function
+
     Public Iterator Function Search(min As T, max As T) As IEnumerable(Of SeqValue(Of T))
         Dim max_d As Double = eval(max)
         Dim min_d As Double = eval(min)

@@ -66,6 +66,8 @@ Public Class Query
         FullText
         HashTerm
         ValueRange
+        ValueRangeGreaterThan
+        ValueRangeLessThan
         ValueMatch
     End Enum
 

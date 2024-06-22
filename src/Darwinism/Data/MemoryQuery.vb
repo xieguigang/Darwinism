@@ -57,6 +57,10 @@ Imports LINQ
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Closure
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.DataSets
+Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine.ExpressionSymbols.Operators
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
@@ -223,11 +227,25 @@ Module MemoryQuery
     ''' ;
     ''' </example>
     <ExportAPI("select")>
-    Public Function [select](x As MemoryTable, <RListObjectArgument> query As list, Optional env As Environment = Nothing) As Object
+    Public Function [select](x As MemoryTable, <RListObjectArgument> <RLazyExpression> query As list, Optional env As Environment = Nothing) As Object
         Dim filter As New List(Of Query)
 
         For Each name As String In query.slotKeys
             Dim q As Object = query.getByName(name)
+
+            If TypeOf q Is Literal OrElse TypeOf q Is FunctionInvoke Then
+                q = DirectCast(q, Expression).Evaluate(env)
+            ElseIf TypeOf q Is BinaryExpression Then
+                Dim bin As BinaryExpression = q
+
+                If bin.operator = ">" Then
+                    q = New Query With {.field = ValueAssignExpression.GetSymbol(bin.left), .search = LINQ.Query.Type.ValueRangeGreaterThan, .value = bin.right.Evaluate(env)}
+                ElseIf bin.operator = "<" Then
+                    q = New Query With {.field = ValueAssignExpression.GetSymbol(bin.left), .search = LINQ.Query.Type.ValueRangeLessThan, .value = bin.right.Evaluate(env)}
+                Else
+                    Throw New NotImplementedException
+                End If
+            End If
 
             If TypeOf q Is Query Then
                 ' do nothing
