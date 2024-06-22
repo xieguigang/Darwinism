@@ -55,6 +55,8 @@ Imports Microsoft.VisualBasic.ValueTypes
 
 Public MustInherit Class ValueIndex
 
+    Public MustOverride ReadOnly Property UnderlyingType As Type
+
     Public Shared Function IntegerIndex() As RangeIndex(Of Integer)
         Return New RangeIndex(Of Integer)(Function(i) CDbl(i))
     End Function
