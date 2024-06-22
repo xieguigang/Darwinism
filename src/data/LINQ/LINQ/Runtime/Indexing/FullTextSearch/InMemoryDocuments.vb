@@ -79,8 +79,12 @@ Public Class InMemoryDocuments : Inherits DocumentPool
         Return documents(id)
     End Function
 
-    Public Shared Function CreateEngine() As FTSEngine
+    Public Shared Function CreateFullTextSearch() As FTSEngine
         Return New FTSEngine(New InMemoryDocuments)
+    End Function
+
+    Public Shared Function CreateHashSearch() As TermHashIndex
+        Return New TermHashIndex(New InMemoryDocuments)
     End Function
 End Class
 

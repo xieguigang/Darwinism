@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Math
 ''' in-memory index of the numeric value
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
-Public Class RangeIndex(Of T)
+Public Class RangeIndex(Of T) : Inherits ValueIndex
 
     Dim index As BlockSearchFunction(Of SeqValue(Of T))
     Dim eval As Func(Of T, Double)

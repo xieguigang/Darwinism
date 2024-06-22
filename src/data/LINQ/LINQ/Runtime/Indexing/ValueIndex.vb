@@ -53,19 +53,19 @@
 
 Imports Microsoft.VisualBasic.ValueTypes
 
-Public Module IndexExtensions
+Public MustInherit Class ValueIndex
 
-    Public Function IntegerIndex() As RangeIndex(Of Integer)
+    Public Shared Function IntegerIndex() As RangeIndex(Of Integer)
         Return New RangeIndex(Of Integer)(Function(i) CDbl(i))
     End Function
 
-    Public Function DoubleIndex() As RangeIndex(Of Double)
+    Public Shared Function DoubleIndex() As RangeIndex(Of Double)
         Return New RangeIndex(Of Double)(Function(x) x)
     End Function
 
-    Public Function DateIndex() As RangeIndex(Of Date)
+    Public Shared Function DateIndex() As RangeIndex(Of Date)
         Return New RangeIndex(Of Date)(Function(x) x.UnixTimeStamp)
     End Function
 
-End Module
+End Class
 

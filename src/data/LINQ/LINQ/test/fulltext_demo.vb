@@ -56,7 +56,7 @@ Imports LINQ
 Module fulltext_demo
 
     Sub Main()
-        Dim index = InMemoryDocuments.CreateEngine
+        Dim index = InMemoryDocuments.CreateFullTextSearch
 
         For Each path As String In {"G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Beauty_and_the_Beast.txt",
 "G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Cinderalla.txt",
