@@ -1,0 +1,35 @@
+.\" man page create by R# package system.
+.TH MEMORY_QUERY 1 2000-Jan "select" "select"
+.SH NAME
+select \- make dataframe query
+.SH SYNOPSIS
+\fIselect(\fBx\fR as <generic> MemoryTable, 
+..., 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+make dataframe query
+.PP
+.SH OPTIONS
+.PP
+\fBx\fB \fR\- -. 
+.PP
+.PP
+\fBquery\fB \fR\- -. 
+.PP
+.PP
+\fBenv\fB \fR\- -. 
+.PP
+.SH EXAMPLES
+.PP
+x 
+ |> select(match_against("field1", "full text value"), between("field2", [min, max]), field3 = "xxxxx")
+ |> print()
+ ;
+.PP
+.SH SEE ALSO
+memory_query
+.SH FILES
+.PP
+Darwinism.dll
+.PP

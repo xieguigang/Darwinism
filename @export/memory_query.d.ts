@@ -10,6 +10,10 @@
 */
 declare namespace memory_query {
    /**
+     * @param env default value Is ``null``.
+   */
+   function between(name: string, range: any, env?: object): object;
+   /**
     * set full text search index on data fields
     * 
     * 
@@ -35,6 +39,25 @@ declare namespace memory_query {
      * + default value Is ``null``.
    */
    function load(x: any, env?: object): object;
+   /**
+    * create a full text search filter
+    * 
+    * 
+     * @param name -
+     * @param text -
+   */
+   function match_against(name: string, text: string): object;
+   /**
+    * make dataframe query
+    * 
+    * 
+     * @param x -
+     * @param query -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function select(x: object, query: object, env?: object): any;
    /**
     * set value range search index on data fields
     * 

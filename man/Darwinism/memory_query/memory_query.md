@@ -6,3 +6,6 @@ package tools for run in-memory query
 + [fulltext](memory_query/fulltext.1) set full text search index on data fields
 + [hashindex](memory_query/hashindex.1) set hash term search index on data fields
 + [valueindex](memory_query/valueindex.1) set value range search index on data fields
++ [match_against](memory_query/match_against.1) create a full text search filter
++ [between](memory_query/between.1) 
++ [select](memory_query/select.1) make dataframe query
