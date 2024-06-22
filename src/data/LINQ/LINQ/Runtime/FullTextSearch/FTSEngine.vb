@@ -78,7 +78,7 @@ Public Class FTSEngine : Implements IDisposable
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' add index of a single document
     ''' </summary>
     ''' <param name="doc"></param>
     ''' <remarks>
