@@ -2,9 +2,11 @@
 
     ReadOnly documents As New List(Of String)
 
-    Public Overrides Sub Save(doc As String)
+    Public Overrides Function Save(doc As String) As Integer
+        Dim id As Integer = documents.Count
         Call documents.Add(doc)
-    End Sub
+        Return id
+    End Function
 
     Public Overrides Sub WriteIndex(index As InvertedIndex)
         ' do nothing

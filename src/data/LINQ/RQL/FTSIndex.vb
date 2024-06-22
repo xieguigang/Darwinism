@@ -85,15 +85,18 @@ Public Class FTSIndex : Inherits DocumentPool
         Me.file = doc
     End Sub
 
-    Public Overrides Sub Save(text As String)
+    Public Overrides Function Save(text As String) As Integer
         Dim writer As New BinaryDataWriter(file, Encoding.UTF8)
+        Dim id As Integer = offsets.Count
 
         offsets.Add(file.Length)
 
         writer.Seek(file.Length, SeekOrigin.Begin)
         writer.Write(text, BinaryStringFormat.DwordLengthPrefix)
         writer.Flush()
-    End Sub
+
+        Return id
+    End Function
 
     Public Overrides Function GetDocument(id As Integer) As String
         Dim offset As Long = offsets(id)
