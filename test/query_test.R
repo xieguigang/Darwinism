@@ -22,6 +22,6 @@ table
 ;
 
 table
-|> select(lineOfCodes > 100)
+|> select(lineOfCodes > 100, match_against("proj","google"))
 |> print()
 ;

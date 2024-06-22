@@ -111,6 +111,13 @@ Public Class MemoryTable
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="filter"></param>
+    ''' <returns>
+    ''' this function will returns nothing if query filter has no result
+    ''' </returns>
     Public Function Query(filter As IEnumerable(Of Query)) As DataFrame
         Dim index As Integer() = Nothing
 

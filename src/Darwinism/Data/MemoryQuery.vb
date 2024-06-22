@@ -285,9 +285,15 @@ Module MemoryQuery
         Next
 
         Dim df As dataframe = x.Query(filter)
-        Dim result As New rdataframe With {
-            .columns = New Dictionary(Of String, Array)
-        }
+        Dim result As rdataframe
+
+        If df Is Nothing Then
+            Return Nothing
+        Else
+            result = New rdataframe With {
+                .columns = New Dictionary(Of String, Array)
+            }
+        End If
 
         For Each name As String In df.HeadTitles
             Call result.add(name, df.Column(name))
