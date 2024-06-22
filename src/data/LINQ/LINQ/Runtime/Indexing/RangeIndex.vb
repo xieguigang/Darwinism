@@ -21,8 +21,12 @@ Public Class RangeIndex(Of T)
     Public Function IndexData(data As IEnumerable(Of T)) As RangeIndex(Of T)
         Dim pool = data.Select(Function(xi, i) New SeqValue(Of T)(i, xi)).ToArray
         Dim x As Double() = (From xi As SeqValue(Of T) In pool Select eval(xi.value)).ToArray
-        Dim diff As Double() = NumberGroups.diff(x:=x.OrderBy(Function(a) a).ToArray)
-        Dim win_size As Double = diff.Average * 5
+        Dim diff As Double() = x.OrderBy(Function(a) a) _
+            .Split(x.Length / 1000) _
+            .AsParallel _
+            .Select(Function(a) a.Max - a.Min) _
+            .ToArray
+        Dim win_size As Double = diff.Average * 1.125
 
         tolerance = win_size
         doubles = x
