@@ -21,4 +21,8 @@
     Public Overrides Function GetDocument(id As Integer) As String
         Return documents(id)
     End Function
+
+    Public Shared Function CreateEngine() As FTSEngine
+        Return New FTSEngine(New InMemoryDocuments)
+    End Function
 End Class
