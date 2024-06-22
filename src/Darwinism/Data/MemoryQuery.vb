@@ -55,6 +55,7 @@
 Imports System.IO
 Imports LINQ
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
@@ -64,6 +65,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports dataframe = Microsoft.VisualBasic.Data.csv.IO.DataFrame
 Imports rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports renv = SMRUCC.Rsharp.Runtime
+Imports VB = Microsoft.VisualBasic.Language.Runtime
 
 ''' <summary>
 ''' package tools for run in-memory query
@@ -80,17 +82,29 @@ Module MemoryQuery
     <ExportAPI("load")>
     <RApiReturn(GetType(MemoryTable))>
     Public Function load(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
+        Dim df As dataframe
+
         If TypeOf x Is rdataframe Then
-            Throw New NotImplementedException
+            Dim rdf As rdataframe = x
+            Dim fields As New List(Of ArgumentReference)
+
+            With New VB
+                For Each name As String In rdf.colnames
+                    Call fields.Add(.Argument(name) = CLRVector.asCharacter(rdf.getColumnVector(name)))
+                Next
+            End With
+
+            df = New dataframe(fields)
+        Else
+            Dim file = SMRUCC.Rsharp.GetFileStream(x, FileAccess.Read, env)
+
+            If file Like GetType(Message) Then
+                Return file.TryCast(Of Message)
+            End If
+
+            df = dataframe.Load(file.TryCast(Of Stream))
         End If
 
-        Dim file = SMRUCC.Rsharp.GetFileStream(x, FileAccess.Read, env)
-
-        If file Like GetType(Message) Then
-            Return file.TryCast(Of Message)
-        End If
-
-        Dim df As dataframe = dataframe.Load(file.TryCast(Of Stream))
         Dim table As New MemoryTable(df)
 
         Return table
