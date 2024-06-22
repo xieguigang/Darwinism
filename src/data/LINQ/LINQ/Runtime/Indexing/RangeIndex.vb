@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::b8866943dfde9057c4874d94c12a1378, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 81
-    '    Code Lines: 62 (76.54%)
-    ' Comment Lines: 4 (4.94%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 15 (18.52%)
-    '     File Size: 2.58 KB
+' Summaries:
 
 
-    ' Class RangeIndex
-    ' 
-    '     Properties: UnderlyingType
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: IndexData, (+2 Overloads) Search
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 81
+'    Code Lines: 62 (76.54%)
+' Comment Lines: 4 (4.94%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 15 (18.52%)
+'     File Size: 2.58 KB
+
+
+' Class RangeIndex
+' 
+'     Properties: UnderlyingType
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: IndexData, (+2 Overloads) Search
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
@@ -102,7 +103,7 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Return Me
     End Function
 
-    Public Iterator Function SearchLessThan(x As T) As IEnumerable(Of SeqValue(Of T))
+    Public Iterator Function SearchLessThan(x As T) As IEnumerable(Of IAddressOf)
         Dim right_d As Double = eval(x)
         Dim right = index.GetOffset(New SeqValue(Of T)(x))
 
@@ -127,7 +128,7 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Next
     End Function
 
-    Public Iterator Function SearchGreaterThan(x As T) As IEnumerable(Of SeqValue(Of T))
+    Public Iterator Function SearchGreaterThan(x As T) As IEnumerable(Of IAddressOf)
         Dim left_d As Double = eval(x)
         Dim left = index.GetOffset(New SeqValue(Of T)(x))
 
@@ -152,7 +153,7 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Next
     End Function
 
-    Public Iterator Function Search(min As T, max As T) As IEnumerable(Of SeqValue(Of T))
+    Public Iterator Function Search(min As T, max As T) As IEnumerable(Of IAddressOf)
         Dim max_d As Double = eval(max)
         Dim min_d As Double = eval(min)
         Dim window As Double = max_d - min_d
@@ -186,7 +187,7 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Next
     End Function
 
-    Public Iterator Function Search(x As T) As IEnumerable(Of SeqValue(Of T))
+    Public Iterator Function Search(x As T) As IEnumerable(Of IAddressOf)
         Dim q = index.Search(New SeqValue(Of T)(x), tolerance)
         Dim target As Double = eval(x)
 

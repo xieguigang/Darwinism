@@ -56,8 +56,10 @@
 #End Region
 
 Imports System.Data
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports any = Microsoft.VisualBasic.Scripting
 
@@ -117,7 +119,8 @@ Public Class MemoryTable
                 Case LINQ.Query.Type.FullText : Call FullTextSearch(q, index)
                 Case LINQ.Query.Type.HashTerm : Call HashSearch(q, index)
                 Case LINQ.Query.Type.ValueRange : Call ValueRangeSearch(q, index)
-                Case LINQ.Query.Type.ValueMatch : Call ValueMatchSearch(q, index)
+                Case LINQ.Query.Type.ValueMatch, LINQ.Query.Type.ValueRangeGreaterThan, LINQ.Query.Type.ValueRangeLessThan
+                    Call ValueMatchSearch(q, index)
                 Case Else
                     Throw New NotImplementedException()
             End Select
@@ -138,25 +141,44 @@ Public Class MemoryTable
             Throw New MissingPrimaryKeyException($"missing value range search index on data field '{q.field}'!")
         End If
 
+        Dim query As IEnumerable(Of IAddressOf)
+
         Select Case search.UnderlyingType
             Case GetType(Double)
                 Dim val As Double = CDbl(q.value)
-                Dim query = DirectCast(search, RangeIndex(Of Double)).Search(val).ToArray
 
-                offsets = query.Select(Function(a) a.i)
+                If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
+                    query = DirectCast(search, RangeIndex(Of Double)).SearchGreaterThan(val)
+                ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
+                    query = DirectCast(search, RangeIndex(Of Double)).SearchLessThan(val)
+                Else
+                    query = DirectCast(search, RangeIndex(Of Double)).Search(val)
+                End If
             Case GetType(Integer)
                 Dim val As Integer = CInt(q.value)
-                Dim query = DirectCast(search, RangeIndex(Of Integer)).Search(val).ToArray
 
-                offsets = query.Select(Function(a) a.i)
+                If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
+                    query = DirectCast(search, RangeIndex(Of Integer)).SearchGreaterThan(val)
+                ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
+                    query = DirectCast(search, RangeIndex(Of Integer)).SearchLessThan(val)
+                Else
+                    query = DirectCast(search, RangeIndex(Of Integer)).Search(val)
+                End If
             Case GetType(Date)
                 Dim val As Date = CDate(q.value)
-                Dim query = DirectCast(search, RangeIndex(Of Date)).Search(val).ToArray
 
-                offsets = query.Select(Function(a) a.i)
+                If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
+                    query = DirectCast(search, RangeIndex(Of Date)).SearchGreaterThan(val)
+                ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
+                    query = DirectCast(search, RangeIndex(Of Date)).SearchLessThan(val)
+                Else
+                    query = DirectCast(search, RangeIndex(Of Date)).Search(val)
+                End If
             Case Else
                 Throw New NotImplementedException(search.UnderlyingType.FullName)
         End Select
+
+        offsets = query.Select(Function(a) a.Address)
 
         If index Is Nothing Then
             index = offsets.ToArray
@@ -178,25 +200,23 @@ Public Class MemoryTable
             Throw New MissingPrimaryKeyException($"missing value range search index on data field '{q.field}'!")
         End If
 
+        Dim query As IEnumerable(Of IAddressOf)
+
         Select Case search.UnderlyingType
             Case GetType(Double)
                 Dim minmax As Double() = DirectCast(q.value, Double())
-                Dim query = DirectCast(search, RangeIndex(Of Double)).Search(minmax(0), minmax(1)).ToArray
-
-                offsets = query.Select(Function(a) a.i)
+                query = DirectCast(search, RangeIndex(Of Double)).Search(minmax(0), minmax(1))
             Case GetType(Integer)
                 Dim minmax As Integer() = DirectCast(q.value, Integer())
-                Dim query = DirectCast(search, RangeIndex(Of Integer)).Search(minmax(0), minmax(1)).ToArray
-
-                offsets = query.Select(Function(a) a.i)
+                query = DirectCast(search, RangeIndex(Of Integer)).Search(minmax(0), minmax(1))
             Case GetType(Date)
                 Dim minmax As Date() = DirectCast(q.value, Date())
-                Dim query = DirectCast(search, RangeIndex(Of Date)).Search(minmax(0), minmax(1)).ToArray
-
-                offsets = query.Select(Function(a) a.i)
+                query = DirectCast(search, RangeIndex(Of Date)).Search(minmax(0), minmax(1))
             Case Else
                 Throw New NotImplementedException(search.UnderlyingType.FullName)
         End Select
+
+        offsets = query.Select(Function(a) a.Address)
 
         If index Is Nothing Then
             index = offsets.ToArray
