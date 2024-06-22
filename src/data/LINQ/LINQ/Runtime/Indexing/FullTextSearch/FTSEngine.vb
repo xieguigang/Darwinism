@@ -70,12 +70,6 @@ Public Class FTSEngine : Inherits SearchIndex
         index = pool.GetIndex
     End Sub
 
-    Public Sub Indexing(doc As IEnumerable(Of String))
-        For Each par As String In doc
-            Call Indexing(par)
-        Next
-    End Sub
-
     ''' <summary>
     ''' add index of a single document
     ''' </summary>
@@ -83,7 +77,7 @@ Public Class FTSEngine : Inherits SearchIndex
     ''' <remarks>
     ''' thread unsafe
     ''' </remarks>
-    Public Sub Indexing(doc As String)
+    Public Overrides Sub Indexing(doc As String)
         If index.Add(doc) Then
             Call documents.Save(doc)
         End If

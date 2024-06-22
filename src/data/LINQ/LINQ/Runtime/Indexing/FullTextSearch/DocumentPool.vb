@@ -4,7 +4,7 @@
     ''' save the document text to file
     ''' </summary>
     ''' <param name="doc"></param>
-    Public MustOverride Sub Save(doc As String)
+    Public MustOverride Function Save(doc As String) As Integer
 
     ''' <summary>
     ''' usually used for load index from file
