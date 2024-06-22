@@ -89,6 +89,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="valueIndex.vb" />
     <Compile Include="fulltext_demo.vb" />
     <Compile Include="resourceTest.vb" />
     <Compile Include="Program.vb" />
