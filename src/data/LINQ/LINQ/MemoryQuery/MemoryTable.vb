@@ -124,7 +124,7 @@ Public Class MemoryTable
             End If
         Next
 
-
+        Return df.Slice(index)
     End Function
 
     Private Sub ValueMatchSearch(q As Query, ByRef index As Integer())
@@ -135,7 +135,31 @@ Public Class MemoryTable
             Throw New MissingPrimaryKeyException($"missing value range search index on data field '{q.field}'!")
         End If
 
+        Select Case search.UnderlyingType
+            Case GetType(Double)
+                Dim val As Double = CDbl(q.value)
+                Dim query = DirectCast(search, RangeIndex(Of Double)).Search(val).ToArray
 
+                offsets = query.Select(Function(a) a.i)
+            Case GetType(Integer)
+                Dim val As Integer = CInt(q.value)
+                Dim query = DirectCast(search, RangeIndex(Of Integer)).Search(val).ToArray
+
+                offsets = query.Select(Function(a) a.i)
+            Case GetType(Date)
+                Dim val As Date = CDate(q.value)
+                Dim query = DirectCast(search, RangeIndex(Of Date)).Search(val).ToArray
+
+                offsets = query.Select(Function(a) a.i)
+            Case Else
+                Throw New NotImplementedException(search.UnderlyingType.FullName)
+        End Select
+
+        If index Is Nothing Then
+            index = offsets.ToArray
+        Else
+            index = index.Intersect(offsets).ToArray
+        End If
     End Sub
 
     ''' <summary>
