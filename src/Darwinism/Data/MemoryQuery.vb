@@ -94,7 +94,7 @@ Module MemoryQuery
                 Next
             End With
 
-            df = New dataframe(fields)
+            df = New dataframe(fields.ToArray)
         Else
             Dim file = SMRUCC.Rsharp.GetFileStream(x, FileAccess.Read, env)
 
@@ -267,7 +267,9 @@ Module MemoryQuery
         Next
 
         Dim df As dataframe = x.Query(filter)
-        Dim result As New rdataframe
+        Dim result As New rdataframe With {
+            .columns = New Dictionary(Of String, Array)
+        }
 
         For Each name As String In df.HeadTitles
             Call result.add(name, df.Column(name))

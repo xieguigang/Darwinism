@@ -13,6 +13,10 @@ print(test_data, max.print = 13);
 let table = memory_query::load(test_data)
 |> fulltext(["proj","files"])
 |> hashindex(["proj_name", "filename"])
+|> valueindex(totalLines = "integer")
 ;
 
-
+table 
+|> select(proj_name = "Docker.NET5")
+|> print()
+;
