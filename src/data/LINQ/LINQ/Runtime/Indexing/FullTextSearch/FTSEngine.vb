@@ -57,18 +57,17 @@
 
 Imports Microsoft.VisualBasic.Linq
 
-Public Class FTSEngine : Implements IDisposable
+Public Class FTSEngine : Inherits SearchIndex
+    Implements IDisposable
 
     ReadOnly index As InvertedIndex
-    ReadOnly documents As DocumentPool
 
     Private disposedValue As Boolean
 
     Sub New(pool As DocumentPool)
-        Dim offsets As Long() = Nothing
-
-        Me.index = pool.GetIndex
-        Me.documents = pool
+        Call MyBase.New(pool)
+        ' read index from file
+        index = pool.GetIndex
     End Sub
 
     Public Sub Indexing(doc As IEnumerable(Of String))
