@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcd3d6b992a75d643439432b8defc6fc, src\data\LINQ\LINQ\MemoryQuery\Query.vb"
+﻿#Region "Microsoft.VisualBasic::202b26a06c70e19d33ff134d0455b931, src\data\LINQ\LINQ\MemoryQuery\Query.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
-    '    Code Lines: 11 (78.57%)
+    '   Total Lines: 16
+    '    Code Lines: 13 (81.25%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 3 (21.43%)
-    '     File Size: 257 B
+    '   Blank Lines: 3 (18.75%)
+    '     File Size: 316 B
 
 
     ' Class Query
@@ -48,7 +48,8 @@
     ' 
     '     Enum Type
     ' 
-    '         FullText, HashTerm, ValueMatch, ValueRange
+    '         FullText, HashTerm, ValueMatch, ValueRange, ValueRangeGreaterThan
+    '         ValueRangeLessThan
     ' 
     ' 
     ' 

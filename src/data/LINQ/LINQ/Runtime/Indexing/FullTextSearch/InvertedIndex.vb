@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b2b28c6aa9be0fe0c8eaa2dbb1a8f16, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\InvertedIndex.vb"
+﻿#Region "Microsoft.VisualBasic::227fe8f344bc1d14cf8c2c2b76206bd1, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\InvertedIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 29 (19.08%)
-    '     File Size: 4.31 KB
+    '     File Size: 4.32 KB
 
 
     ' Class InvertedIndex

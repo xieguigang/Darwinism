@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::b8866943dfde9057c4874d94c12a1378, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
+﻿#Region "Microsoft.VisualBasic::e95b64c8e9d125580b915d23c2e125c0, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 81
-'    Code Lines: 62 (76.54%)
-' Comment Lines: 4 (4.94%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 15 (18.52%)
-'     File Size: 2.58 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class RangeIndex
-' 
-'     Properties: UnderlyingType
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: IndexData, (+2 Overloads) Search
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 145
+    '    Code Lines: 116 (80.00%)
+    ' Comment Lines: 4 (2.76%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 25 (17.24%)
+    '     File Size: 4.63 KB
+
+
+    ' Class RangeIndex
+    ' 
+    '     Properties: UnderlyingType
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: IndexData, (+2 Overloads) Search, SearchGreaterThan, SearchLessThan
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

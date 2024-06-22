@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::8770e9d95a75208d1641b127867a6a53, src\Darwinism\Data\MemoryQuery.vb"
+﻿#Region "Microsoft.VisualBasic::22f0be9c0aa1b3e3d357aeb237378262, src\Darwinism\Data\MemoryQuery.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 225
-'    Code Lines: 144 (64.00%)
-' Comment Lines: 52 (23.11%)
-'    - Xml Docs: 96.15%
-' 
-'   Blank Lines: 29 (12.89%)
-'     File Size: 7.83 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module MemoryQuery
-' 
-'     Function: [select], between, fulltext, hashindex, load
-'               match_against, valueindex
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 251
+    '    Code Lines: 167 (66.53%)
+    ' Comment Lines: 52 (20.72%)
+    '    - Xml Docs: 96.15%
+    ' 
+    '   Blank Lines: 32 (12.75%)
+    '     File Size: 9.17 KB
+
+
+    ' Module MemoryQuery
+    ' 
+    '     Function: [select], between, fulltext, hashindex, load
+    '               match_against, valueindex
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

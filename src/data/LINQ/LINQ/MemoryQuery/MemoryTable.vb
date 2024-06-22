@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8a9bdc8abbe476a5289e0f0eae3ca44, src\data\LINQ\LINQ\MemoryQuery\MemoryTable.vb"
+﻿#Region "Microsoft.VisualBasic::40aa8873a54b8ff0ed23a46bdd763d2b, src\data\LINQ\LINQ\MemoryQuery\MemoryTable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 182
-    '    Code Lines: 138 (75.82%)
-    ' Comment Lines: 8 (4.40%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 209
+    '    Code Lines: 157 (75.12%)
+    ' Comment Lines: 15 (7.18%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 36 (19.78%)
-    '     File Size: 6.84 KB
+    '   Blank Lines: 37 (17.70%)
+    '     File Size: 8.17 KB
 
 
     ' Class MemoryTable
