@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::177a7d6450ef56266f88c790be5fda87, src\networking\TcpSocket\ClientMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::ebf14ac242dfc3181792bbf3e458c397, src\networking\TcpSocket\ClientMetadata.vb"
 
     ' Author:
     ' 
@@ -154,4 +154,3 @@ Namespace TcpSocket
 #End Region
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c80f8890e7fcdb7bb0da38e7f5c8dd46, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
+﻿#Region "Microsoft.VisualBasic::5da1096f69811accb1f8e80aa42566b8, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 14 (18.67%)
-    '     File Size: 2.42 KB
+    '     File Size: 2.44 KB
 
 
     ' Class RangeIndex
@@ -127,4 +127,3 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
     End Function
 
 End Class
-

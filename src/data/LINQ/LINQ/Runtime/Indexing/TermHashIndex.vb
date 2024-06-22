@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1dc4f64c96b16448cca50bd205e0e46, src\data\LINQ\LINQ\Runtime\Indexing\TermHashIndex.vb"
+﻿#Region "Microsoft.VisualBasic::7a08467f017d8abc52236ecb60026d3b, src\data\LINQ\LINQ\Runtime\Indexing\TermHashIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (27.78%)
-    '     File Size: 511 B
+    '     File Size: 509 B
 
 
     ' Class TermHashIndex
@@ -70,4 +70,3 @@ Public Class TermHashIndex : Inherits SearchIndex
         hashIndex(doc_key).Add(documents.Save(doc))
     End Sub
 End Class
-

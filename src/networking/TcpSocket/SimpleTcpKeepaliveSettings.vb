@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65ef440216be2049a086e397a577fae6, src\networking\TcpSocket\SimpleTcpKeepaliveSettings.vb"
+﻿#Region "Microsoft.VisualBasic::985801a67d18aa3b8e12e265c5089a78, src\networking\TcpSocket\SimpleTcpKeepaliveSettings.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Namespace TcpSocket
         End Sub
     End Class
 End Namespace
-

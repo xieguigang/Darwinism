@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::610fc855a7d3549b693a5362a02b024b, src\networking\TcpSocket\DataSentEventArgs.vb"
+﻿#Region "Microsoft.VisualBasic::4ea853b1696e5c8721a650056cb28a8b, src\networking\TcpSocket\DataSentEventArgs.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (17.39%)
-    '     File Size: 661 B
+    '     File Size: 659 B
 
 
     '     Class DataSentEventArgs
@@ -77,4 +77,3 @@ Namespace TcpSocket
         End Sub
     End Class
 End Namespace
-

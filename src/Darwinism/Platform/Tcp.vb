@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac919a8e5575ffcee5f1ef3280ca3b8b, src\Darwinism\Platform\Tcp.vb"
+﻿#Region "Microsoft.VisualBasic::e0b334b5fa745a3c5f60e991a4da0df2, src\Darwinism\Platform\Tcp.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4
-    '    Code Lines: 2 (50.00%)
+    '   Total Lines: 3
+    '    Code Lines: 2 (66.67%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 2 (50.00%)
-    '     File Size: 28 B
+    '   Blank Lines: 1 (33.33%)
+    '     File Size: 24 B
 
 
     ' Module Tcp
@@ -51,8 +51,6 @@
 
 #End Region
 
-
 Module Tcp
 
 End Module
-

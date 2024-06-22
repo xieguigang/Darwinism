@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fda6d3914b6e807014b924f442605732, src\DataScience\DataMining\UMAP.vb"
+﻿#Region "Microsoft.VisualBasic::902d8c24bf869956a84118c9751619a9, src\DataScience\DataMining\UMAP.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (33.33%)
-    '     File Size: 34 B
+    '     File Size: 32 B
 
 
     ' Module UMAP
@@ -54,4 +54,3 @@
 Public Module UMAP
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04501642298637115b03ebae330e1259, src\networking\TcpSocket\TcpServer\SimpleTcpServer.vb"
+﻿#Region "Microsoft.VisualBasic::3a5b6d359322d01b07ac5d51cc8eadf4, src\networking\TcpSocket\TcpServer\SimpleTcpServer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.16%
     ' 
     '   Blank Lines: 174 (16.52%)
-    '     File Size: 47.97 KB
+    '     File Size: 47.96 KB
 
 
     '     Class SimpleTcpServer
@@ -1113,4 +1113,3 @@ Namespace TcpSocket
 #End Region
     End Class
 End Namespace
-

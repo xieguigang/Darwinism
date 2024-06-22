@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b374a55b04402085678d834c3d04fce, src\networking\TcpSocket\DisconnectReason.vb"
+﻿#Region "Microsoft.VisualBasic::c943fc1f727df67810be66b241e75e70, src\networking\TcpSocket\DisconnectReason.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (4.17%)
-    '     File Size: 712 B
+    '     File Size: 710 B
 
 
     '     Enum DisconnectReason
@@ -79,4 +79,3 @@ Namespace TcpSocket
         None = 3
     End Enum
 End Namespace
-

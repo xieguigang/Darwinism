@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa7b8fd1531776a2d43f25b295bbe528, src\networking\TcpSocket\DataReceivedEventArgs.vb"
+﻿#Region "Microsoft.VisualBasic::527ca5bf04dd698043b12b4c664fb82d, src\networking\TcpSocket\DataReceivedEventArgs.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (17.39%)
-    '     File Size: 695 B
+    '     File Size: 693 B
 
 
     '     Class DataReceivedEventArgs
@@ -77,4 +77,3 @@ Namespace TcpSocket
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::740127c3b47ec4f78e287808e19e5ac0, src\data\LINQ\LINQ\Runtime\Indexing\IndexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d06aecce1fe79dc45199d43a8ee36352, src\data\LINQ\LINQ\Runtime\Indexing\ValueIndex.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,10 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (29.41%)
-    '     File Size: 517 B
+    '     File Size: 541 B
 
 
-    ' Module IndexExtensions
+    ' Class ValueIndex
     ' 
     '     Function: DateIndex, DoubleIndex, IntegerIndex
     ' 
@@ -68,4 +68,3 @@ Public MustInherit Class ValueIndex
     End Function
 
 End Class
-

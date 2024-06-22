@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6157735144b0e8129a3928cc26fb4090, src\data\LINQ\LINQ\test\fulltext_demo.vb"
+﻿#Region "Microsoft.VisualBasic::18fff95022438b5d612b054bb6a62df9, src\data\LINQ\LINQ\test\fulltext_demo.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (30.43%)
-    '     File Size: 691 B
+    '     File Size: 697 B
 
 
     ' Module fulltext_demo
@@ -74,4 +74,3 @@ Module fulltext_demo
         Pause()
     End Sub
 End Module
-

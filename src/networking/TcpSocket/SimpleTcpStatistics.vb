@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::869597595f97981c71bc6bb869ae7362, src\networking\TcpSocket\SimpleTcpStatistics.vb"
+﻿#Region "Microsoft.VisualBasic::d190ad6bb24d3cd8456f08bfc0b828ce, src\networking\TcpSocket\SimpleTcpStatistics.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Namespace TcpSocket
         End Sub
     End Class
 End Namespace
-

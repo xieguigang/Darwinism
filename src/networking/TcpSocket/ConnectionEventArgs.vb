@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::310daa21379ff09bf2e6af448d6c7eb8, src\networking\TcpSocket\ConnectionEventArgs.vb"
+﻿#Region "Microsoft.VisualBasic::a10cda00b9b1c321ffed056301768d01, src\networking\TcpSocket\ConnectionEventArgs.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (20.83%)
-    '     File Size: 737 B
+    '     File Size: 735 B
 
 
     '     Class ConnectionEventArgs
@@ -78,4 +78,3 @@ Namespace TcpSocket
 
     End Class
 End Namespace
-

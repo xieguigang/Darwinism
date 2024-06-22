@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f348423124922e6870a470c25fa6887d, src\data\LINQ\LINQ\Runtime\Indexing\SearchIndex.vb"
+﻿#Region "Microsoft.VisualBasic::213b90f937f33e383fb0196000d86484, src\data\LINQ\LINQ\Runtime\Indexing\SearchIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (29.41%)
-    '     File Size: 413 B
+    '     File Size: 411 B
 
 
     ' Class SearchIndex
@@ -69,4 +69,3 @@ Public MustInherit Class SearchIndex
     Public MustOverride Sub Indexing(doc As String)
 
 End Class
-

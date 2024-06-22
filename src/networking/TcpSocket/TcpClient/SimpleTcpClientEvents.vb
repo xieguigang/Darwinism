@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::281f6e82866d571ce94ab443233da2c4, src\networking\TcpSocket\TcpClient\SimpleTcpClientEvents.vb"
+﻿#Region "Microsoft.VisualBasic::1cf953f13cbc1badcffd19ec64de34ff, src\networking\TcpSocket\TcpClient\SimpleTcpClientEvents.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace TcpSocket
 #End Region
     End Class
 End Namespace
-

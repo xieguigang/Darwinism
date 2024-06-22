@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85c5e7cd0eac56bd718ad4a8305efcb4, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\InMemoryDocuments.vb"
+﻿#Region "Microsoft.VisualBasic::e7c0213fc253cea1c1aa41c31a009cdd, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\InMemoryDocuments.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 22 (73.33%)
-    ' Comment Lines: 1 (3.33%)
+    '   Total Lines: 34
+    '    Code Lines: 25 (73.53%)
+    ' Comment Lines: 1 (2.94%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (23.33%)
-    '     File Size: 836 B
+    '   Blank Lines: 8 (23.53%)
+    '     File Size: 983 B
 
 
     ' Class InMemoryDocuments
     ' 
-    '     Function: CreateEngine, GetDocument, GetIndex, Save
+    '     Function: CreateFullTextSearch, CreateHashSearch, GetDocument, GetIndex, Save
     ' 
     '     Sub: Dispose, WriteIndex
     ' 
@@ -87,4 +87,3 @@ Public Class InMemoryDocuments : Inherits DocumentPool
         Return New TermHashIndex(New InMemoryDocuments)
     End Function
 End Class
-

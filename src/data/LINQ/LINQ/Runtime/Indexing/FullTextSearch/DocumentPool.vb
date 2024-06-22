@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3bbe21fe7402aebde8872c9c106bcc0, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\DocumentPool.vb"
+﻿#Region "Microsoft.VisualBasic::66127713c8990a997526dd27702d17c4, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\DocumentPool.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 7 (24.14%)
-    ' Comment Lines: 17 (58.62%)
+    '   Total Lines: 28
+    '    Code Lines: 7 (25.00%)
+    ' Comment Lines: 17 (60.71%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (17.24%)
-    '     File Size: 865 B
+    '   Blank Lines: 4 (14.29%)
+    '     File Size: 861 B
 
 
     ' Class DocumentPool
-    ' 
     ' 
     ' 
     ' 
@@ -80,5 +79,3 @@ Public MustInherit Class DocumentPool
     Public MustOverride Sub Dispose()
 
 End Class
-
-
