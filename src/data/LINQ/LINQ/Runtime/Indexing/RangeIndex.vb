@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5da1096f69811accb1f8e80aa42566b8, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
+﻿#Region "Microsoft.VisualBasic::b8866943dfde9057c4874d94c12a1378, src\data\LINQ\LINQ\Runtime\Indexing\RangeIndex.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 57 (76.00%)
-    ' Comment Lines: 4 (5.33%)
+    '   Total Lines: 81
+    '    Code Lines: 62 (76.54%)
+    ' Comment Lines: 4 (4.94%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (18.67%)
-    '     File Size: 2.44 KB
+    '   Blank Lines: 15 (18.52%)
+    '     File Size: 2.58 KB
 
 
     ' Class RangeIndex
+    ' 
+    '     Properties: UnderlyingType
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: IndexData, (+2 Overloads) Search
@@ -67,6 +69,12 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
     Dim eval As Func(Of T, Double)
     Dim tolerance As Double
     Dim doubles As Double()
+
+    Public Overrides ReadOnly Property UnderlyingType As Type
+        Get
+            Return GetType(T)
+        End Get
+    End Property
 
     Sub New(eval As Func(Of T, Double))
         Me.eval = eval

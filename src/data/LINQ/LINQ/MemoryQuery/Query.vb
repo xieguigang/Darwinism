@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b91dd8de769a87a64f8fa8e49f3459, src\data\LINQ\LINQ\MemoryQuery\Query.vb"
+﻿#Region "Microsoft.VisualBasic::dcd3d6b992a75d643439432b8defc6fc, src\data\LINQ\LINQ\MemoryQuery\Query.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 3 (21.43%)
-    '     File Size: 259 B
+    '     File Size: 257 B
 
 
     ' Class Query
@@ -74,4 +74,3 @@ Public Class Query
     Public Property value As Object
 
 End Class
-
