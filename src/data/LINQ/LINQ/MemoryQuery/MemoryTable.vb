@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Data
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports any = Microsoft.VisualBasic.Scripting
@@ -113,8 +114,9 @@ Public Class MemoryTable
                 Case LINQ.Query.Type.FullText : Call FullTextSearch(q, index)
                 Case LINQ.Query.Type.HashTerm : Call HashSearch(q, index)
                 Case LINQ.Query.Type.ValueRange : Call ValueRangeSearch(q, index)
-                Case LINQ.Query.Type.ValueMatch
-
+                Case LINQ.Query.Type.ValueMatch : Call ValueMatchSearch(q, index)
+                Case Else
+                    Throw New NotImplementedException()
             End Select
 
             If index.Length = 0 Then
@@ -125,6 +127,22 @@ Public Class MemoryTable
 
     End Function
 
+    Private Sub ValueMatchSearch(q As Query, ByRef index As Integer())
+        Dim search As ValueIndex = m_valueindex.TryGetValue(q.field)
+        Dim offsets As IEnumerable(Of Integer)
+
+        If search Is Nothing Then
+            Throw New MissingPrimaryKeyException($"missing value range search index on data field '{q.field}'!")
+        End If
+
+
+    End Sub
+
+    ''' <summary>
+    ''' implements between ... and ... range search
+    ''' </summary>
+    ''' <param name="q"></param>
+    ''' <param name="index"></param>
     Private Sub ValueRangeSearch(q As Query, ByRef index As Integer())
         Dim search As ValueIndex = m_valueindex.TryGetValue(q.field)
         Dim offsets As IEnumerable(Of Integer)
@@ -141,8 +159,23 @@ Public Class MemoryTable
                 offsets = query.Select(Function(a) a.i)
             Case GetType(Integer)
                 Dim minmax As Integer() = DirectCast(q.value, Integer())
+                Dim query = DirectCast(search, RangeIndex(Of Integer)).Search(minmax(0), minmax(1)).ToArray
 
+                offsets = query.Select(Function(a) a.i)
+            Case GetType(Date)
+                Dim minmax As Date() = DirectCast(q.value, Date())
+                Dim query = DirectCast(search, RangeIndex(Of Date)).Search(minmax(0), minmax(1)).ToArray
+
+                offsets = query.Select(Function(a) a.i)
+            Case Else
+                Throw New NotImplementedException(search.UnderlyingType.FullName)
         End Select
+
+        If index Is Nothing Then
+            index = offsets.ToArray
+        Else
+            index = index.Intersect(offsets).ToArray
+        End If
     End Sub
 
     Private Sub HashSearch(q As Query, ByRef index As Integer())
