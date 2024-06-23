@@ -245,6 +245,8 @@ Module MemoryQuery
                 Else
                     Throw New NotImplementedException
                 End If
+            ElseIf TypeOf q Is Expression Then
+                q = DirectCast(q, Expression).Evaluate(env)
             End If
 
             If TypeOf q Is Query Then
@@ -277,7 +279,7 @@ Module MemoryQuery
                             .value = CDate(q)
                         }
                     Case Else
-                        Throw New NotImplementedException
+                        Throw New NotImplementedException(q.GetType.FullName)
                 End Select
             End If
 
