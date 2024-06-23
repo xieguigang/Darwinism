@@ -249,6 +249,14 @@ Module MemoryQuery
                 q = DirectCast(q, Expression).Evaluate(env)
             End If
 
+            If TypeOf q Is Message Then
+                Return q
+            End If
+            ' get scalar value from r# evaluation
+            If TypeOf q Is vector Then
+                q = DirectCast(q, vector).data.GetValueOrDefault(0)
+            End If
+
             If TypeOf q Is Query Then
                 ' do nothing
             Else
