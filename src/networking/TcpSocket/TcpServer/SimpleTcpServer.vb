@@ -71,6 +71,7 @@ Imports System.Security.Authentication
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Threading
+Imports Microsoft.VisualBasic.Linq
 Imports IPAddress2 = Microsoft.VisualBasic.Net.IPEndPoint
 
 Namespace TcpSocket
@@ -689,12 +690,29 @@ Namespace TcpSocket
             End If
         End Sub
 
+        Private Function AssertTcpClient(x As TcpConnectionInformation, client As TcpClient) As Boolean
+            If x Is Nothing Then
+                Return False
+            End If
+
+            Return x.LocalEndPoint.Equals(client.Client.LocalEndPoint) AndAlso x.RemoteEndPoint.Equals(client.Client.RemoteEndPoint)
+        End Function
+
         Private Function IsClientConnected(client As TcpClient) As Boolean
             If client Is Nothing Then Return False
 
-            Dim state = IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections().FirstOrDefault(Function(x) x.LocalEndPoint.Equals(client.Client.LocalEndPoint) AndAlso x.RemoteEndPoint.Equals(client.Client.RemoteEndPoint))
+            ' allTcps maybe null
+            Dim allTcps = IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections()
+            Dim state = allTcps.SafeQuery.FirstOrDefault(Function(x) AssertTcpClient(x, client))
 
-            If state Is Nothing OrElse state.State = TcpState.Unknown OrElse state.State = TcpState.FinWait1 OrElse state.State = TcpState.FinWait2 OrElse state.State = TcpState.Closed OrElse state.State = TcpState.Closing OrElse state.State = TcpState.CloseWait Then
+            If state Is Nothing OrElse
+                state.State = TcpState.Unknown OrElse
+                state.State = TcpState.FinWait1 OrElse
+                state.State = TcpState.FinWait2 OrElse
+                state.State = TcpState.Closed OrElse
+                state.State = TcpState.Closing OrElse
+                state.State = TcpState.CloseWait Then
+
                 Return False
             End If
 
