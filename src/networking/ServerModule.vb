@@ -90,7 +90,8 @@ Namespace ApplicationServices
         ''' <param name="port">The listen port of the tcp socket.</param>
         Sub New(port As Integer)
             socket = New TcpServicesSocket(port, AddressOf LogException) With {
-                .ResponseHandler = ProtocolHandler()
+                .ResponseHandler = ProtocolHandler(),
+                .KeepsAlive = False
             }
         End Sub
 

@@ -619,9 +619,12 @@ Namespace TcpSocket
         ''' </summary>
         ''' <param name="ipPort">IP:port of the client.</param>
         Public Sub DisconnectClient(ipPort As String)
-            If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))
-
             Dim client As ClientMetadata = Nothing
+
+            If String.IsNullOrEmpty(ipPort) Then
+                Call "server do nothing due to the reason of empty client identifier was provided.".Warning
+                Return
+            End If
 
             If Not _clients.TryGetValue(ipPort, client) Then
                 Logger?.Invoke($"{_header}unable to find client: {ipPort}")

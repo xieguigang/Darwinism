@@ -109,7 +109,9 @@ Public Class IPCSocket : Implements ITaskDriver
     Public ReadOnly Property socketExitCode As Integer
 
     Sub New(target As IDelegate, Optional debug As Integer? = Nothing, Optional verbose As Boolean = False)
-        Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()), debug:=verbose OrElse Not debug Is Nothing)
+        Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()), debug:=verbose OrElse Not debug Is Nothing) With {
+            .KeepsAlive = False
+        }
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         Me.target = target
         Me.verbose = verbose

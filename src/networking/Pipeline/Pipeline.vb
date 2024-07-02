@@ -76,8 +76,10 @@ Namespace MMFProtocol.Pipeline
 
         Sub New(Optional port As Integer = API.PeplinePort)
             _protocols = New ProtocolHandler(Me)
-            _netSocket = New TcpServicesSocket(port)
-            _netSocket.ResponseHandler = AddressOf _protocols.HandleRequest
+            _netSocket = New TcpServicesSocket(port) With {
+                .KeepsAlive = False,
+                .ResponseHandler = AddressOf _protocols.HandleRequest
+            }
 
             Call Microsoft.VisualBasic.Parallel.RunTask(AddressOf _netSocket.Run)
         End Sub

@@ -106,6 +106,8 @@ Namespace Tcp
         ''' </summary>
         ''' <remarks></remarks>
         Public Property ResponseHandler As DataRequestHandler Implements IServicesSocket.ResponseHandler
+        Public Property KeepsAlive As Boolean = True
+
         Public ReadOnly Property Running As Boolean = False Implements IServicesSocket.IsRunning
 
         Public ReadOnly Property IsShutdown As Boolean Implements IServicesSocket.IsShutdown
@@ -158,9 +160,12 @@ Namespace Tcp
         ''' <remarks></remarks>
         Public Shared Function BeginListen(requestEventHandler As DataRequestHandler,
                                            Optional localPort As Integer = 11000,
+                                           Optional keepsAlive As Boolean = True,
                                            Optional exceptionHandler As ExceptionHandler = Nothing) As Action
 
-            With New TcpServicesSocket(requestEventHandler, localPort, exceptionHandler)
+            With New TcpServicesSocket(requestEventHandler, localPort, exceptionHandler) With {
+                .KeepsAlive = keepsAlive
+            }
                 Call New Action(AddressOf .Run).BeginInvoke(Nothing, Nothing)
                 Return AddressOf .Dispose
             End With
@@ -249,10 +254,18 @@ Namespace Tcp
             Dim remote As TcpEndPoint = New IPEndPoint(e.IpPort)
 
             Using payload As New MemoryStream
+                ' received data, then processing the request 
+                ' finally send the response data to clinet
                 Call HandleRequest(remote, payload, request)
                 Call payload.Seek(Scan0, SeekOrigin.Begin)
                 Call _socket.Send(e.IpPort, payload.Length, payload)
             End Using
+
+            If Not KeepsAlive Then
+                ' finnaly, disconnect client if no needs keeps alive of the
+                ' socket connection
+                Call _socket.DisconnectClient(e.IpPort)
+            End If
         End Sub
 
         Private Sub DataSent(sender As Object, e As DataSentEventArgs)
