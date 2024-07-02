@@ -106,7 +106,7 @@ Namespace Tcp
         ''' </summary>
         ''' <remarks></remarks>
         Public Property ResponseHandler As DataRequestHandler Implements IServicesSocket.ResponseHandler
-        Public Property KeepsAlive As Boolean = True
+        Public Property KeepsAlive As Boolean = False
 
         Public ReadOnly Property Running As Boolean = False Implements IServicesSocket.IsRunning
 
