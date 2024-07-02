@@ -694,12 +694,26 @@ Namespace TcpSocket
             If x Is Nothing Then
                 Return False
             End If
+            If x.LocalEndPoint Is Nothing OrElse x.RemoteEndPoint Is Nothing Then
+                Return False
+            End If
 
             Return x.LocalEndPoint.Equals(client.Client.LocalEndPoint) AndAlso x.RemoteEndPoint.Equals(client.Client.RemoteEndPoint)
         End Function
 
         Private Function IsClientConnected(client As TcpClient) As Boolean
-            If client Is Nothing Then Return False
+            If client Is Nothing Then
+                Return False
+            Else
+                Dim clientTcpInfo = client.Client
+
+                If clientTcpInfo Is Nothing OrElse
+                    clientTcpInfo.LocalEndPoint Is Nothing OrElse
+                    clientTcpInfo.RemoteEndPoint Is Nothing Then
+
+                    Return False
+                End If
+            End If
 
             ' allTcps maybe null
             Dim allTcps = IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections()
