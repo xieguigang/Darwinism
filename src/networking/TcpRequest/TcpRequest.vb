@@ -260,13 +260,24 @@ Namespace Tcp
         Private Sub Connected(sender As Object, e As ConnectionEventArgs)
         End Sub
 
-        Private Sub Disconnected(sender As Object, e As ConnectionEventArgs)
-        End Sub
-
         Private Class DataReceived
 
             Public cache_buffer As Byte()
             Public triggered As Boolean = False
+
+            Private Sub Disconnected(sender As Object, e As ConnectionEventArgs)
+                ' 20240702 the server socket may send empty package
+                ' then handle event will not be triggered
+                ' disconnected event from the server will happends
+                ' set trigger flag at here
+                ' or this client socket will wait for the server data
+                ' forever
+                If cache_buffer Is Nothing Then
+                    cache_buffer = {}
+                End If
+
+                triggered = True
+            End Sub
 
             Public Sub HandleEvent(sender As Object, e As DataReceivedEventArgs)
                 cache_buffer = e.Data.Array
