@@ -233,7 +233,7 @@ Namespace Tcp
             Dim buffer As New DataReceived
 
             AddHandler socket.Events.Connected, AddressOf Connected
-            AddHandler socket.Events.Disconnected, AddressOf Disconnected
+            AddHandler socket.Events.Disconnected, AddressOf buffer.Disconnected
             AddHandler socket.Events.DataReceived, AddressOf buffer.HandleEvent
             AddHandler socket.Events.DataSent, AddressOf DataSent
 
@@ -265,7 +265,7 @@ Namespace Tcp
             Public cache_buffer As Byte()
             Public triggered As Boolean = False
 
-            Private Sub Disconnected(sender As Object, e As ConnectionEventArgs)
+            Public Sub Disconnected(sender As Object, e As ConnectionEventArgs)
                 ' 20240702 the server socket may send empty package
                 ' then handle event will not be triggered
                 ' disconnected event from the server will happends
