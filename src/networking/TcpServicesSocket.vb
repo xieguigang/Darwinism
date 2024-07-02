@@ -60,7 +60,6 @@
 #End Region
 
 Imports System.IO
-Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Darwinism.IPC.Networking.HTTP

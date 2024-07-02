@@ -550,7 +550,10 @@ Namespace TcpSocket
         ''' <param name="stream">Stream containing the data to send.</param>
         Public Sub Send(ipPort As String, contentLength As Long, stream As Stream)
             If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))
-            If contentLength < 1 Then Return
+            ' 20240702 for contentLength is zero, the send event will be never triggered
+            ' and the client may run into dead loop
+            ' removes this contentlength assert test at here
+            ' If contentLength < 1 Then Return
             If stream Is Nothing Then Throw New ArgumentNullException(NameOf(stream))
             If Not stream.CanRead Then Throw New InvalidOperationException("Cannot read from supplied stream.")
 
