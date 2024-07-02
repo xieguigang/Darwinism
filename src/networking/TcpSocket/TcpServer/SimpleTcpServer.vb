@@ -698,7 +698,12 @@ Namespace TcpSocket
                 Return False
             End If
 
-            Return x.LocalEndPoint.Equals(client.Client.LocalEndPoint) AndAlso x.RemoteEndPoint.Equals(client.Client.RemoteEndPoint)
+            Try
+                Return x.LocalEndPoint.Equals(client.Client.LocalEndPoint) AndAlso
+                    x.RemoteEndPoint.Equals(client.Client.RemoteEndPoint)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         Private Function IsClientConnected(client As TcpClient) As Boolean
