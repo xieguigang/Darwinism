@@ -62,7 +62,6 @@ Namespace TcpSocket
     ''' SimpleTcp server settings.
     ''' </summary>
     Public Class SimpleTcpServerSettings
-#Region "Public-Members"
 
         ''' <summary>
         ''' Nagle's algorithm.
@@ -138,28 +137,28 @@ Namespace TcpSocket
         ''' <summary>
         ''' Enable or disable acceptance of invalid SSL certificates.
         ''' </summary>
-        Public AcceptInvalidCertificates As Boolean = True
+        Public Property AcceptInvalidCertificates As Boolean = True
 
         ''' <summary>
         ''' Enable or disable mutual authentication of SSL client and server.
         ''' </summary>
-        Public MutuallyAuthenticate As Boolean = True
+        Public Property MutuallyAuthenticate As Boolean = True
 
         ''' <summary>
         ''' Enable or disable whether the data receiver thread fires the DataReceived event from a background task.
         ''' The default is enabled.
         ''' </summary>
-        Public UseAsyncDataReceivedEvents As Boolean = True
+        Public Property UseAsyncDataReceivedEvents As Boolean = True
 
         ''' <summary>
         ''' Enable or disable checking certificate revocation list during the validation process.
         ''' </summary>
-        Public CheckCertificateRevocation As Boolean = True
+        Public Property CheckCertificateRevocation As Boolean = True
 
         ''' <summary>
         ''' Delegate responsible for validating a certificate supplied by a remote party.
         ''' </summary>
-        Public CertificateValidationCallback As RemoteCertificateValidationCallback = Nothing
+        Public Property CertificateValidationCallback As RemoteCertificateValidationCallback = Nothing
 
         ''' <summary>
         ''' The list of permitted IP addresses from which connections can be received.
@@ -193,10 +192,6 @@ Namespace TcpSocket
             End Set
         End Property
 
-#End Region
-
-#Region "Private-Members"
-
         Private _noDelay As Boolean = True
         Private _streamBufferSize As Integer = 65536
         Private _maxConnections As Integer = 4096
@@ -205,25 +200,11 @@ Namespace TcpSocket
         Private _permittedIPs As List(Of String) = New List(Of String)()
         Private _blockedIPs As List(Of String) = New List(Of String)()
 
-#End Region
-
-#Region "Constructors-and-Factories"
-
         ''' <summary>
         ''' Instantiate the object.
         ''' </summary>
         Public Sub New()
-
         End Sub
 
-#End Region
-
-#Region "Public-Methods"
-
-#End Region
-
-#Region "Private-Methods"
-
-#End Region
     End Class
 End Namespace

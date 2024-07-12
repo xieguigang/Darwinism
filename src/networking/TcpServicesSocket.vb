@@ -66,10 +66,12 @@ Imports Darwinism.IPC.Networking.HTTP
 Imports Darwinism.IPC.Networking.TcpSocket
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TcpEndPoint = System.Net.IPEndPoint
 
 Namespace Tcp
@@ -219,9 +221,12 @@ Namespace Tcp
             _socket.Settings.MutuallyAuthenticate = False
             _socket.Settings.AcceptInvalidCertificates = True
             _socket.Settings.NoDelay = True
-            _socket.Settings.StreamBufferSize = BufferSize
+            _socket.Settings.StreamBufferSize = App.BufferSize
             _socket.Logger = AddressOf VBDebugger.EchoLine
             _socket.Start()
+
+            Call VBDebugger.EchoLine(_socket.Settings.GetJson)
+            Call VBDebugger.EchoLine($"set tcp server message buffer size: {_socket.Settings.StreamBufferSize / ByteSize.KB}KB.")
 
             _Running = True
 
