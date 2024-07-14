@@ -165,8 +165,10 @@ Public Class MapObject : Implements IDisposable
     ''' <summary>
     ''' Allocate an empty memory region
     ''' </summary>
-    ''' <param name="bufferSize"></param>
-    ''' <param name="hMemP"></param>
+    ''' <param name="bufferSize">size in bytes, should be less than 2GB</param>
+    ''' <param name="hMemP">
+    ''' the memory map file name 
+    ''' </param>
     ''' <returns></returns>
     Public Shared Function Allocate(bufferSize As Integer, Optional hMemP As String = Nothing) As MapObject
         Dim fileName As String = GetMapFileName(hMemP, GetType(MapObject))
