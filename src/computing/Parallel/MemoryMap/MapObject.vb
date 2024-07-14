@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::972e61f34811c8d4eb9a1b2694ea0663, src\computing\Parallel\MemoryMap\MapObject.vb"
+﻿#Region "Microsoft.VisualBasic::3c417ffa8affc8a2c430f994e944cb76, src\computing\Parallel\MemoryMap\MapObject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 206
-    '    Code Lines: 129 (62.62%)
-    ' Comment Lines: 40 (19.42%)
-    '    - Xml Docs: 67.50%
+    '   Total Lines: 208
+    '    Code Lines: 129 (62.02%)
+    ' Comment Lines: 42 (20.19%)
+    '    - Xml Docs: 69.05%
     ' 
-    '   Blank Lines: 37 (17.96%)
-    '     File Size: 6.78 KB
+    '   Blank Lines: 37 (17.79%)
+    '     File Size: 6.86 KB
 
 
     ' Class MapObject

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22f0be9c0aa1b3e3d357aeb237378262, src\Darwinism\Data\MemoryQuery.vb"
+﻿#Region "Microsoft.VisualBasic::0ed50204b1884d4410308ade97c4c7c6, src\Darwinism\Data\MemoryQuery.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 251
-    '    Code Lines: 167 (66.53%)
-    ' Comment Lines: 52 (20.72%)
-    '    - Xml Docs: 96.15%
+    '   Total Lines: 261
+    '    Code Lines: 175 (67.05%)
+    ' Comment Lines: 53 (20.31%)
+    '    - Xml Docs: 94.34%
     ' 
-    '   Blank Lines: 32 (12.75%)
-    '     File Size: 9.17 KB
+    '   Blank Lines: 33 (12.64%)
+    '     File Size: 9.56 KB
 
 
     ' Module MemoryQuery

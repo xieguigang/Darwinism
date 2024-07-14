@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ede101dad4521ef2803522a7c42e6c8, src\computing\Parallel\IpcParallel\IPCSocket.vb"
+﻿#Region "Microsoft.VisualBasic::72f396f1f6afae5109a79125569bf395, src\computing\Parallel\IpcParallel\IPCSocket.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 121 (59.31%)
-    ' Comment Lines: 55 (26.96%)
+    '   Total Lines: 206
+    '    Code Lines: 123 (59.71%)
+    ' Comment Lines: 55 (26.70%)
     '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 28 (13.73%)
-    '     File Size: 7.58 KB
+    '   Blank Lines: 28 (13.59%)
+    '     File Size: 7.63 KB
 
 
     ' Class IPCSocket

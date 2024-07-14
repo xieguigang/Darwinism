@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15760225c580d20b32d03c4ec8fcee09, src\networking\Pipeline\Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::e3dcb14bc856c1a75e6dae432d331ee9, src\networking\Pipeline\Pipeline.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 58 (66.67%)
-    ' Comment Lines: 14 (16.09%)
+    '   Total Lines: 89
+    '    Code Lines: 60 (67.42%)
+    ' Comment Lines: 14 (15.73%)
     '    - Xml Docs: 92.86%
     ' 
-    '   Blank Lines: 15 (17.24%)
-    '     File Size: 3.35 KB
+    '   Blank Lines: 15 (16.85%)
+    '     File Size: 3.41 KB
 
 
     '     Class Pipeline
