@@ -58,6 +58,7 @@
 Imports System.Net.Security
 
 Namespace TcpSocket
+
     ''' <summary>
     ''' SimpleTcp server settings.
     ''' </summary>
