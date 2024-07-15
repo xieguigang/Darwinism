@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::beba09d5c351c9412457f4f236161960, src\networking\TcpSocket\TcpServer\SimpleTcpServerSettings.vb"
+﻿#Region "Microsoft.VisualBasic::1e9bcaf88d19b49710e7916e5538c57d, src\networking\TcpSocket\TcpServer\SimpleTcpServerSettings.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
-    '    Code Lines: 97 (56.40%)
-    ' Comment Lines: 50 (29.07%)
+    '   Total Lines: 153
+    '    Code Lines: 87 (56.86%)
+    ' Comment Lines: 50 (32.68%)
     '    - Xml Docs: 98.00%
     ' 
-    '   Blank Lines: 25 (14.53%)
-    '     File Size: 6.28 KB
+    '   Blank Lines: 16 (10.46%)
+    '     File Size: 6.09 KB
 
 
     '     Class SimpleTcpServerSettings
     ' 
-    '         Properties: BlockedIPs, IdleClientEvaluationIntervalMs, IdleClientTimeoutMs, MaxConnections, NoDelay
-    '                     PermittedIPs, StreamBufferSize
+    '         Properties: AcceptInvalidCertificates, BlockedIPs, CertificateValidationCallback, CheckCertificateRevocation, IdleClientEvaluationIntervalMs
+    '                     IdleClientTimeoutMs, MaxConnections, MutuallyAuthenticate, NoDelay, PermittedIPs
+    '                     StreamBufferSize, UseAsyncDataReceivedEvents
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

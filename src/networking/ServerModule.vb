@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26c9a60a2418eb7a102d1e0a7e544da0, src\networking\ServerModule.vb"
+﻿#Region "Microsoft.VisualBasic::6152060aa038268bd5538118ccaa9d85, src\networking\ServerModule.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 61 (57.01%)
-    ' Comment Lines: 28 (26.17%)
+    '   Total Lines: 108
+    '    Code Lines: 62 (57.41%)
+    ' Comment Lines: 28 (25.93%)
     '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 18 (16.82%)
-    '     File Size: 4.39 KB
+    '   Blank Lines: 18 (16.67%)
+    '     File Size: 4.43 KB
 
 
     '     Class ServerModule

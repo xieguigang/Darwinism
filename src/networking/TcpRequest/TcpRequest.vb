@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e320fcfa281a42ebd255f032bcf25dc, src\networking\TcpRequest\TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::faa7b1021d84633349f870215b4ac5e4, src\networking\TcpRequest\TcpRequest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 249
-    '    Code Lines: 135 (54.22%)
-    ' Comment Lines: 72 (28.92%)
-    '    - Xml Docs: 79.17%
+    '   Total Lines: 260
+    '    Code Lines: 139 (53.46%)
+    ' Comment Lines: 78 (30.00%)
+    '    - Xml Docs: 73.08%
     ' 
-    '   Blank Lines: 42 (16.87%)
-    '     File Size: 10.02 KB
+    '   Blank Lines: 43 (16.54%)
+    '     File Size: 10.52 KB
 
 
     '     Class TcpRequest
@@ -49,10 +49,10 @@
     ' 
     '         Function: LocalConnection, (+4 Overloads) SendMessage, SetTimeOut, ToString
     ' 
-    '         Sub: Connected, DataSent, Disconnected, (+2 Overloads) Dispose, RequestToStream
+    '         Sub: Connected, DataSent, (+2 Overloads) Dispose, RequestToStream
     '         Class DataReceived
     ' 
-    '             Sub: HandleEvent
+    '             Sub: Disconnected, HandleEvent
     ' 
     ' 
     ' 
