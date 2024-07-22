@@ -79,9 +79,7 @@ Namespace TcpSocket
     ''' Set the Connected, Disconnected, and DataReceived events.  
     ''' Once set, use Connect() to connect to the server.
     ''' </summary>
-    Public Class SimpleTcpClient
-        Implements IDisposable
-#Region "Public-Members"
+    Public Class SimpleTcpClient : Implements IDisposable
 
         ''' <summary>
         ''' Indicates whether or not the client is connected to the server.
@@ -179,10 +177,6 @@ Namespace TcpSocket
             End Get
         End Property
 
-#End Region
-
-#Region "Private-Members"
-
         ReadOnly _header As String = $"[{App.AssemblyName}->TcpClient] "
 
         Private _settings As SimpleTcpClientSettings = New SimpleTcpClientSettings()
@@ -214,8 +208,6 @@ Namespace TcpSocket
 
         Private _lastActivity As Date = Date.Now
         Private _isTimeout As Boolean = False
-
-#End Region
 
 #Region "Constructors-and-Factories"
 

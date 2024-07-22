@@ -198,6 +198,7 @@ Public Class TaskBuilder : Implements ITaskDriver
         ' send debug message
         Call New TcpRequest(masterHost, masterPort) _
             .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SetVerbose(verbose_echo) _
             .SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.PostStart))
 
         Try
@@ -221,6 +222,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     Private Function GetArgumentValueNumber() As Integer
         Dim resp = New TcpRequest(masterHost, masterPort) _
             .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SetVerbose(verbose_echo) _
             .SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentNumber))
         Dim n As Integer = BitConverter.ToInt32(resp.ChunkBuffer, Scan0)
 
@@ -234,6 +236,7 @@ Public Class TaskBuilder : Implements ITaskDriver
     Private Function GetMethod() As IDelegate
         Dim resp = New TcpRequest(masterHost, masterPort) _
             .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SetVerbose(verbose_echo) _
             .SendMessage(New RequestStream(IPCSocket.Protocol, Protocols.GetTask))
         Dim json As String = resp.GetUTF8String
         Dim target As IDelegate = json.LoadJSON(Of IDelegate)
@@ -271,6 +274,7 @@ Public Class TaskBuilder : Implements ITaskDriver
         Dim request As New RequestStream(IPCSocket.Protocol, Protocols.GetArgumentByIndex, BitConverter.GetBytes(i))
         Dim resp = New TcpRequest(masterHost, masterPort) _
             .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+            .SetVerbose(verbose_echo) _
             .SendMessage(request)
         Dim stream As New ObjectStream(resp.ChunkBuffer)
 
@@ -312,6 +316,7 @@ Public Class TaskBuilder : Implements ITaskDriver
 
             Call New TcpRequest(masterHost, masterPort) _
                 .SetTimeOut(timespan:=TimeSpan.FromSeconds(timeout_sec)) _
+                .SetVerbose(verbose_echo) _
                 .SendMessage(request)
         End Using
     End Sub

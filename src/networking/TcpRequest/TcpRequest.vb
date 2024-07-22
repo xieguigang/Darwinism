@@ -91,6 +91,7 @@ Namespace Tcp
         Dim port As Integer
         Dim exceptionHandler As ExceptionHandler
         Dim remoteHost As String
+        Dim verbose As Boolean = True
 
         ''' <summary>
         ''' A System.TimeSpan that represents the number of milliseconds to wait, or a System.TimeSpan
@@ -106,6 +107,11 @@ Namespace Tcp
 
         Public Function SetTimeOut(timespan As TimeSpan) As TcpRequest
             Me.timeout = timespan
+            Return Me
+        End Function
+
+        Public Function SetVerbose([option] As Boolean) As TcpRequest
+            Me.verbose = [option]
             Return Me
         End Function
 
@@ -244,8 +250,13 @@ Namespace Tcp
             socket.Settings.NoDelay = True
             socket.Settings.StreamBufferSize = 64 * 1024 * 1024
             socket.ConnectWithRetries(5000)
-            socket.Logger = AddressOf VBDebugger.EchoLine
             socket.Send(message)
+
+            If verbose Then
+                socket.Logger = AddressOf VBDebugger.EchoLine
+            Else
+                socket.Logger = Nothing
+            End If
 
             Do While Not buffer.triggered
                 Call Thread.Sleep(1)
