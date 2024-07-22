@@ -243,6 +243,12 @@ Namespace Tcp
             AddHandler socket.Events.DataReceived, AddressOf buffer.HandleEvent
             AddHandler socket.Events.DataSent, AddressOf DataSent
 
+            If verbose Then
+                socket.Logger = AddressOf VBDebugger.EchoLine
+            Else
+                socket.Logger = Nothing
+            End If
+
             socket.Keepalive.EnableTcpKeepAlives = True
             socket.Settings.MutuallyAuthenticate = False
             socket.Settings.AcceptInvalidCertificates = True
@@ -251,12 +257,6 @@ Namespace Tcp
             socket.Settings.StreamBufferSize = 64 * 1024 * 1024
             socket.ConnectWithRetries(5000)
             socket.Send(message)
-
-            If verbose Then
-                socket.Logger = AddressOf VBDebugger.EchoLine
-            Else
-                socket.Logger = Nothing
-            End If
 
             Do While Not buffer.triggered
                 Call Thread.Sleep(1)

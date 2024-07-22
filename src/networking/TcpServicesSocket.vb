@@ -110,7 +110,7 @@ Namespace Tcp
         ''' <remarks></remarks>
         Public Property ResponseHandler As DataRequestHandler Implements IServicesSocket.ResponseHandler
         Public Property KeepsAlive As Boolean = False
-
+        Public Property Verbose As Boolean = False
         Public ReadOnly Property Running As Boolean = False Implements IServicesSocket.IsRunning
 
         Public ReadOnly Property IsShutdown As Boolean Implements IServicesSocket.IsShutdown
@@ -217,13 +217,18 @@ Namespace Tcp
             AddHandler _socket.Events.DataReceived, AddressOf DataReceived
             AddHandler _socket.Events.DataSent, AddressOf DataSent
 
+            If Verbose Then
+                _socket.Logger = AddressOf VBDebugger.EchoLine
+            Else
+                _socket.Logger = Nothing
+            End If
+
             _socket.Keepalive.EnableTcpKeepAlives = True
             _socket.Settings.IdleClientTimeoutMs = 0
             _socket.Settings.MutuallyAuthenticate = False
             _socket.Settings.AcceptInvalidCertificates = True
             _socket.Settings.NoDelay = True
             _socket.Settings.StreamBufferSize = App.BufferSize
-            _socket.Logger = AddressOf VBDebugger.EchoLine
             _socket.Start()
 
             Call VBDebugger.EchoLine(_socket.Settings.GetJson)
