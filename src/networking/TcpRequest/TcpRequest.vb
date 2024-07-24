@@ -91,7 +91,7 @@ Namespace Tcp
         Dim port As Integer
         Dim exceptionHandler As ExceptionHandler
         Dim remoteHost As String
-        Dim verbose As Boolean = True
+        Dim verbose As Boolean = False
 
         ''' <summary>
         ''' A System.TimeSpan that represents the number of milliseconds to wait, or a System.TimeSpan
@@ -110,8 +110,18 @@ Namespace Tcp
             Return Me
         End Function
 
+        ''' <summary>
+        ''' enable the verbose debug echo
+        ''' </summary>
+        ''' <param name="[option]"></param>
+        ''' <returns></returns>
         Public Function SetVerbose([option] As Boolean) As TcpRequest
             Me.verbose = [option]
+
+            If Me.verbose Then
+                Call VBDebugger.EchoLine("the verbose debug echo of the socket status has been enabled!")
+            End If
+
             Return Me
         End Function
 

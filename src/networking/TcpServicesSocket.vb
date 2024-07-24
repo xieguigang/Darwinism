@@ -200,9 +200,9 @@ Namespace Tcp
         ''' This server waits for a connection and then uses  asychronous operations to
         ''' accept the connection, get data from the connected client,
         ''' echo that data back to the connected client.
-        ''' It then disconnects from the client and waits for another client.(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)
+        ''' It then disconnects from the client and waits for another client.
         ''' </summary>
-        ''' <remarks></remarks>
+        ''' <remarks>(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)</remarks>
         Public Function Run(localEndPoint As TcpEndPoint) As Integer Implements IServicesSocket.Run
             Dim exitCode As Integer = 0
 
