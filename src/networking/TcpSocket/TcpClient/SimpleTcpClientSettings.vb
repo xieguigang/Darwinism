@@ -198,6 +198,12 @@ Namespace TcpSocket
         ''' </summary>
         Public CertificateValidationCallback As RemoteCertificateValidationCallback = Nothing
 
+        ''' <summary>
+        ''' print and log the verbose debug echo?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Verbose As Boolean = False
+
 #End Region
 
 #Region "Private-Members"

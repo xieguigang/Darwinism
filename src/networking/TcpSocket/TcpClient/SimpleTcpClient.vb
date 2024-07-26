@@ -166,7 +166,7 @@ Namespace TcpSocket
         ''' <summary>
         ''' Method to invoke to send a log message.
         ''' </summary>
-        Public Logger As Action(Of String) = Nothing
+        Public Debugger As Action(Of String) = Nothing
 
         ''' <summary>
         ''' The IP:port of the server to which this client is mapped.
@@ -425,6 +425,16 @@ Namespace TcpSocket
 
 #End Region
 
+        Private Sub Logger(msg As String)
+            If _settings.Verbose Then
+                If Debugger Is Nothing Then
+                    Call VBDebugger.EchoLine(msg)
+                Else
+                    Call Debugger(msg)
+                End If
+            End If
+        End Sub
+
 #Region "Public-Methods"
 
         ''' <summary>
@@ -440,12 +450,12 @@ Namespace TcpSocket
         ''' </summary>
         Public Sub Connect()
             If IsConnected Then
-                Logger?.Invoke($"{_header}already connected")
+                Logger($"{_header}already connected")
                 Return
             Else
-                Logger?.Invoke($"{_header}initializing client")
+                Logger($"{_header}initializing client")
                 InitializeClient(_ssl, _pfxCertFilename, _pfxPassword, _sslCert)
-                Logger?.Invoke($"{_header}connecting to {ServerIpPort}")
+                Logger($"{_header}connecting to {ServerIpPort}")
             End If
 
             _tokenSource = New CancellationTokenSource()
@@ -521,14 +531,14 @@ Namespace TcpSocket
             If timeoutMs IsNot Nothing Then _settings.ConnectTimeoutMs = timeoutMs.Value
 
             If IsConnected Then
-                Logger?.Invoke($"{_header}already connected")
+                Logger($"{_header}already connected")
                 Return
             Else
-                Logger?.Invoke($"{_header}initializing client")
+                Logger($"{_header}initializing client")
 
                 InitializeClient(_ssl, _pfxCertFilename, _pfxPassword, _sslCert)
 
-                Logger?.Invoke($"{_header}connecting to {ServerIpPort}")
+                Logger($"{_header}connecting to {ServerIpPort}")
             End If
 
             _tokenSource = New CancellationTokenSource()
@@ -555,7 +565,7 @@ Namespace TcpSocket
                                                            Try
                                                                Dim msg = $"{_header}attempting connection to {_serverIp}:{_serverPort}"
                                                                If retryCount > 0 Then msg += $" ({retryCount} retries)"
-                                                               Logger?.Invoke(msg)
+                                                               Logger(msg)
 
                                                                _client.Dispose()
                                                                _client = If(_settings.LocalEndpoint Is Nothing, New TcpClient(), New TcpClient(_settings.LocalEndpoint))
@@ -563,7 +573,7 @@ Namespace TcpSocket
                                                                _client.ConnectAsync(_serverIp, _serverPort).Wait(1000, connectToken)
 
                                                                If _client.Connected Then
-                                                                   Logger?.Invoke($"{_header}connected to {_serverIp}:{_serverPort}")
+                                                                   Logger($"{_header}connected to {_serverIp}:{_serverPort}")
                                                                    Exit While
                                                                End If
                                                            Catch __unusedTaskCanceledException1__ As TaskCanceledException
@@ -571,7 +581,7 @@ Namespace TcpSocket
                                                            Catch __unusedOperationCanceledException2__ As OperationCanceledException
                                                                Exit While
                                                            Catch e As Exception
-                                                               Logger?.Invoke($"{_header}failed connecting to {_serverIp}:{_serverPort}: {e.Message}")
+                                                               Logger($"{_header}failed connecting to {_serverIp}:{_serverPort}: {e.Message}")
                                                            Finally
                                                                retryCount += 1
                                                            End Try
@@ -628,11 +638,11 @@ Namespace TcpSocket
         ''' </summary>
         Public Sub Disconnect()
             If Not IsConnected Then
-                Logger?.Invoke($"{_header}already disconnected")
+                Logger($"{_header}already disconnected")
                 Return
             End If
 
-            Logger?.Invoke($"{_header}disconnecting from {ServerIpPort}")
+            Logger($"{_header}disconnecting from {ServerIpPort}")
 
             _tokenSource.Cancel()
             WaitCompletion()
@@ -645,11 +655,11 @@ Namespace TcpSocket
         ''' </summary>
         Public Async Function DisconnectAsync() As Task
             If Not IsConnected Then
-                Logger?.Invoke($"{_header}already disconnected")
+                Logger($"{_header}already disconnected")
                 Return
             End If
 
-            Logger?.Invoke($"{_header}disconnecting from {ServerIpPort}")
+            Logger($"{_header}disconnecting from {ServerIpPort}")
 
             _tokenSource.Cancel()
             Await WaitCompletionAsync()
@@ -784,7 +794,7 @@ Namespace TcpSocket
                     _client.Dispose()
                 End If
 
-                Logger?.Invoke($"{_header}dispose complete")
+                Logger($"{_header}dispose complete")
             End If
         End Sub
 
@@ -861,30 +871,30 @@ Namespace TcpSocket
                         .ConfigureAwait(False)
 
                 Catch __unusedAggregateException1__ As AggregateException
-                    Logger?.Invoke($"{_header}data receiver canceled, disconnected")
+                    Logger($"{_header}data receiver canceled, disconnected")
                     Exit While
                 Catch __unusedIOException2__ As IOException
-                    Logger?.Invoke($"{_header}data receiver canceled, disconnected")
+                    Logger($"{_header}data receiver canceled, disconnected")
                     Exit While
                 Catch __unusedSocketException3__ As SocketException
-                    Logger?.Invoke($"{_header}data receiver canceled, disconnected")
+                    Logger($"{_header}data receiver canceled, disconnected")
                     Exit While
                 Catch __unusedTaskCanceledException4__ As TaskCanceledException
-                    Logger?.Invoke($"{_header}data receiver task canceled, disconnected")
+                    Logger($"{_header}data receiver task canceled, disconnected")
                     Exit While
                 Catch __unusedOperationCanceledException5__ As OperationCanceledException
-                    Logger?.Invoke($"{_header}data receiver operation canceled, disconnected")
+                    Logger($"{_header}data receiver operation canceled, disconnected")
                     Exit While
                 Catch __unusedObjectDisposedException6__ As ObjectDisposedException
-                    Logger?.Invoke($"{_header}data receiver canceled due to disposal, disconnected")
+                    Logger($"{_header}data receiver canceled due to disposal, disconnected")
                     Exit While
                 Catch e As Exception
-                    Logger?.Invoke($"{_header}data receiver exception:{Environment.NewLine}{e}{Environment.NewLine}")
+                    Logger($"{_header}data receiver exception:{Environment.NewLine}{e}{Environment.NewLine}")
                     Exit While
                 End Try
             End While
 
-            Logger?.Invoke($"{_header}disconnection detected")
+            Logger($"{_header}disconnection detected")
 
             _isConnected = False
 
@@ -1012,7 +1022,7 @@ Namespace TcpSocket
             Try
                 _dataReceiver.Wait()
             Catch ex As AggregateException When TypeOf ex.InnerException Is TaskCanceledException
-                Logger?.Invoke("Awaiting a canceled task")
+                Logger("Awaiting a canceled task")
             End Try
         End Sub
 
@@ -1020,7 +1030,7 @@ Namespace TcpSocket
             Try
                 Await _dataReceiver
             Catch __unusedTaskCanceledException1__ As TaskCanceledException
-                Logger?.Invoke("Awaiting a canceled task")
+                Logger("Awaiting a canceled task")
             End Try
         End Function
 
@@ -1054,7 +1064,7 @@ Namespace TcpSocket
                 _client.Client.IOControl(IOControlCode.KeepAliveValues, keepAlive, Nothing)
 #End If
             Catch __unusedException1__ As Exception
-                Logger?.Invoke($"{_header}keepalives not supported on this platform, disabled")
+                Logger($"{_header}keepalives not supported on this platform, disabled")
                 _keepalive.EnableTcpKeepAlives = False
             End Try
         End Sub
@@ -1068,7 +1078,7 @@ Namespace TcpSocket
                 Dim timeoutTime = _lastActivity.AddMilliseconds(_settings.IdleServerTimeoutMs)
 
                 If Date.Now > timeoutTime Then
-                    Logger?.Invoke($"{_header}disconnecting from {ServerIpPort} due to timeout")
+                    Logger($"{_header}disconnecting from {ServerIpPort} due to timeout")
                     _isConnected = False
                     _isTimeout = True
                     _tokenSource.Cancel() ' DataReceiver will fire events including dispose
@@ -1083,7 +1093,7 @@ Namespace TcpSocket
                 If Not _isConnected Then Continue While 'Just monitor connected clients
 
                 If Not PollSocket() Then
-                    Logger?.Invoke($"{_header}disconnecting from {ServerIpPort} due to connection lost")
+                    Logger($"{_header}disconnecting from {ServerIpPort} due to connection lost")
                     _isConnected = False
                     _tokenSource.Cancel() ' DataReceiver will fire events including dispose
                 End If
@@ -1107,7 +1117,7 @@ Namespace TcpSocket
                 Dim clientSentData = _client.Client.Receive(buff, SocketFlags.Peek) <> 0
                 Return clientSentData 'False here though Poll() succeeded means we had a disconnect!
             Catch ex As SocketException
-                Logger?.Invoke($"{_header}poll socket from {ServerIpPort} failed with ex = {ex}")
+                Logger($"{_header}poll socket from {ServerIpPort} failed with ex = {ex}")
                 Return ex.SocketErrorCode = SocketError.TimedOut
             Catch __unusedException2__ As Exception
                 Return False
