@@ -87,7 +87,6 @@ Namespace TcpSocket
     ''' </remarks>
     Public Class SimpleTcpServer
         Implements IDisposable
-#Region "Public-Members"
 
         ''' <summary>
         ''' Indicates if the server is listening for connections.
@@ -193,11 +192,7 @@ Namespace TcpSocket
         ''' <summary>
         ''' Method to invoke to send a log message.
         ''' </summary>
-        Public Logger As Action(Of String) = Nothing
-
-#End Region
-
-#Region "Private-Members"
+        Public Debugger As Action(Of String) = Nothing
 
         ReadOnly _header As String = $"[{App.AssemblyName}->TcpServer] "
 
@@ -228,10 +223,6 @@ Namespace TcpSocket
         Private _listenerToken As CancellationToken
         Private _acceptConnections As Task = Nothing
         Private _idleClientMonitor As Task = Nothing
-
-#End Region
-
-#Region "Constructors-and-Factories"
 
         ''' <summary>
         ''' Instantiates the TCP server without SSL.  Set the ClientConnected, ClientDisconnected, and DataReceived callbacks.  Once set, use Start() to begin listening for connections.
@@ -408,9 +399,15 @@ Namespace TcpSocket
             _token = _tokenSource.Token
         End Sub
 
-#End Region
-
-#Region "Public-Methods"
+        Private Sub Logger(msg As String)
+            If _settings.Verbose Then
+                If Debugger Is Nothing Then
+                    Call VBDebugger.EchoLine(msg)
+                Else
+                    Call Debugger(msg)
+                End If
+            End If
+        End Sub
 
         ''' <summary>
         ''' Dispose of the TCP server.
@@ -486,7 +483,7 @@ Namespace TcpSocket
             _acceptConnections.Wait()
             _acceptConnections = Nothing
 
-            Logger?.Invoke($"{_header}stopped")
+            Logger($"{_header}stopped")
         End Sub
 
         ''' <summary>
@@ -629,10 +626,10 @@ Namespace TcpSocket
             End If
 
             If Not _clients.TryGetValue(ipPort, client) Then
-                Logger?.Invoke($"{_header}unable to find client: {ipPort}")
+                Logger($"{_header}unable to find client: {ipPort}")
             Else
                 If Not _clientsTimedout.ContainsKey(ipPort) Then
-                    Logger?.Invoke($"{_header}kicking: {ipPort}")
+                    Logger($"{_header}kicking: {ipPort}")
                     _clientsKicked.TryAdd(ipPort, Date.Now)
                 End If
             End If
@@ -640,16 +637,12 @@ Namespace TcpSocket
             If client IsNot Nothing Then
                 If Not client.TokenSource.IsCancellationRequested Then
                     client.TokenSource.Cancel()
-                    Logger?.Invoke($"{_header}requesting disposal of: {ipPort}")
+                    Logger($"{_header}requesting disposal of: {ipPort}")
                 End If
 
                 client.Dispose()
             End If
         End Sub
-
-#End Region
-
-#Region "Private-Methods"
 
         ''' <summary>
         ''' Dispose of the TCP server.
@@ -661,7 +654,7 @@ Namespace TcpSocket
                     If _clients IsNot Nothing AndAlso _clients.Count > 0 Then
                         For Each curr In _clients
                             curr.Value.Dispose()
-                            Logger?.Invoke($"{_header}disconnected client: {curr.Key}")
+                            Logger($"{_header}disconnected client: {curr.Key}")
                         Next
                     End If
 
@@ -682,12 +675,12 @@ Namespace TcpSocket
                         _listener.Stop()
                     End If
                 Catch e As Exception
-                    Logger?.Invoke($"{_header}dispose exception:{Environment.NewLine}{e}{Environment.NewLine}")
+                    Logger($"{_header}dispose exception:{Environment.NewLine}{e}{Environment.NewLine}")
                 End Try
 
                 _isListening = False
 
-                Logger?.Invoke($"{_header}disposed")
+                Logger($"{_header}disposed")
             End If
         End Sub
 
@@ -773,13 +766,13 @@ Namespace TcpSocket
                     IPAddress2.ParseIpPort(clientIpPort, clientIp, clientPort)
 
                     If _settings.PermittedIPs.Count > 0 AndAlso Not _settings.PermittedIPs.Contains(clientIp) Then
-                        Logger?.Invoke($"{_header}rejecting connection from {clientIp} (not permitted)")
+                        Logger($"{_header}rejecting connection from {clientIp} (not permitted)")
                         tcpClient.Close()
                         Continue While
                     End If
 
                     If _settings.BlockedIPs.Count > 0 AndAlso _settings.BlockedIPs.Contains(clientIp) Then
-                        Logger?.Invoke($"{_header}rejecting connection from {clientIp} (blocked)")
+                        Logger($"{_header}rejecting connection from {clientIp} (blocked)")
                         tcpClient.Close()
                         Continue While
                     End If
@@ -807,7 +800,7 @@ Namespace TcpSocket
 
                     _clients.TryAdd(clientIpPort, client)
                     _clientsLastSeen.TryAdd(clientIpPort, Date.Now)
-                    Logger?.Invoke($"{_header}starting data receiver for: {clientIpPort}")
+                    Logger($"{_header}starting data receiver for: {clientIpPort}")
                     _events.HandleClientConnected(Me, New ConnectionEventArgs(clientIpPort))
 
                     If _keepalive.EnableTcpKeepAlives Then EnableKeepalives(tcpClient)
@@ -818,7 +811,7 @@ Namespace TcpSocket
 #Region "Check-for-Maximum-Connections"
 
                     If _clients.Count >= _settings.MaxConnections Then
-                        Logger?.Invoke($"{_header}maximum connections {_settings.MaxConnections} met (currently {_clients.Count} connections), pausing")
+                        Logger($"{_header}maximum connections {_settings.MaxConnections} met (currently {_clients.Count} connections), pausing")
                         _isListening = False
                         _listener.Stop()
 
@@ -828,11 +821,11 @@ Namespace TcpSocket
                     If TypeOf ex Is TaskCanceledException OrElse TypeOf ex Is OperationCanceledException OrElse TypeOf ex Is ObjectDisposedException OrElse TypeOf ex Is InvalidOperationException Then
                         _isListening = False
                         If client IsNot Nothing Then client.Dispose()
-                        Logger?.Invoke($"{_header}stopped listening")
+                        Logger($"{_header}stopped listening")
                         Exit While
                     Else
                         If client IsNot Nothing Then client.Dispose()
-                        Logger?.Invoke($"{_header}exception while awaiting connections: {ex}")
+                        Logger($"{_header}exception while awaiting connections: {ex}")
                         Continue While
                     End If
                 End Try
@@ -846,27 +839,27 @@ Namespace TcpSocket
                 Await client.SslStream.AuthenticateAsServerAsync(_sslCertificate, _settings.MutuallyAuthenticate, SslProtocols.Tls12, _settings.CheckCertificateRevocation).ConfigureAwait(False)
 
                 If Not client.SslStream.IsEncrypted Then
-                    Logger?.Invoke($"{_header}client {client.IpPort} not encrypted, disconnecting")
+                    Logger($"{_header}client {client.IpPort} not encrypted, disconnecting")
                     client.Dispose()
                     Return False
                 End If
 
                 If Not client.SslStream.IsAuthenticated Then
-                    Logger?.Invoke($"{_header}client {client.IpPort} not SSL/TLS authenticated, disconnecting")
+                    Logger($"{_header}client {client.IpPort} not SSL/TLS authenticated, disconnecting")
                     client.Dispose()
                     Return False
                 End If
 
                 If _settings.MutuallyAuthenticate AndAlso Not client.SslStream.IsMutuallyAuthenticated Then
-                    Logger?.Invoke($"{_header}client {client.IpPort} failed mutual authentication, disconnecting")
+                    Logger($"{_header}client {client.IpPort} failed mutual authentication, disconnecting")
                     client.Dispose()
                     Return False
                 End If
             Catch e As Exception
                 If TypeOf e Is TaskCanceledException OrElse TypeOf e Is OperationCanceledException Then
-                    Logger?.Invoke($"{_header}client {client.IpPort} timeout during SSL/TLS establishment")
+                    Logger($"{_header}client {client.IpPort} timeout during SSL/TLS establishment")
                 Else
-                    Logger?.Invoke($"{_header}client {client.IpPort} SSL/TLS exception: {Environment.NewLine}{e}")
+                    Logger($"{_header}client {client.IpPort} SSL/TLS exception: {Environment.NewLine}{e}")
                 End If
 
                 client.Dispose()
@@ -883,19 +876,19 @@ Namespace TcpSocket
 
         Private Async Function DataReceiver(client As ClientMetadata) As Task
             Dim ipPort = client.IpPort
-            Logger?.Invoke($"{_header}data receiver started for client {ipPort}")
+            Logger($"{_header}data receiver started for client {ipPort}")
 
             Dim linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_token, client.Token)
 
             While True
                 Try
                     If Not IsClientConnected(client.Client) Then
-                        Logger?.Invoke($"{_header}client {ipPort} disconnected")
+                        Logger($"{_header}client {ipPort} disconnected")
                         Exit While
                     End If
 
                     If client.Token.IsCancellationRequested Then
-                        Logger?.Invoke($"{_header}cancellation requested (data receiver for client {ipPort})")
+                        Logger($"{_header}cancellation requested (data receiver for client {ipPort})")
                         Exit While
                     End If
 
@@ -915,24 +908,24 @@ Namespace TcpSocket
                     _statistics.ReceivedBytes += data.Count
                     UpdateClientLastSeen(client.IpPort)
                 Catch __unusedIOException1__ As IOException
-                    Logger?.Invoke($"{_header}data receiver canceled, peer disconnected [{ipPort}]")
+                    Logger($"{_header}data receiver canceled, peer disconnected [{ipPort}]")
                     Exit While
                 Catch __unusedSocketException2__ As SocketException
-                    Logger?.Invoke($"{_header}data receiver canceled, peer disconnected [{ipPort}]")
+                    Logger($"{_header}data receiver canceled, peer disconnected [{ipPort}]")
                     Exit While
                 Catch __unusedTaskCanceledException3__ As TaskCanceledException
-                    Logger?.Invoke($"{_header}data receiver task canceled [{ipPort}]")
+                    Logger($"{_header}data receiver task canceled [{ipPort}]")
                     Exit While
                 Catch __unusedObjectDisposedException4__ As ObjectDisposedException
-                    Logger?.Invoke($"{_header}data receiver canceled due to disposal [{ipPort}]")
+                    Logger($"{_header}data receiver canceled due to disposal [{ipPort}]")
                     Exit While
                 Catch e As Exception
-                    Logger?.Invoke($"{_header}data receiver exception [{ipPort}]:{Environment.NewLine}{e}{Environment.NewLine}")
+                    Logger($"{_header}data receiver exception [{ipPort}]:{Environment.NewLine}{e}{Environment.NewLine}")
                     Exit While
                 End Try
             End While
 
-            Logger?.Invoke($"{_header}data receiver terminated for client {ipPort}")
+            Logger($"{_header}data receiver terminated for client {ipPort}")
 
             If _clientsKicked.ContainsKey(ipPort) Then
                 _events.HandleClientDisconnected(Me, New ConnectionEventArgs(ipPort, DisconnectReason.Kicked))
@@ -997,12 +990,12 @@ Namespace TcpSocket
                     For Each curr In _clientsLastSeen
                         If curr.Value < idleTimestamp Then
                             _clientsTimedout.TryAdd(curr.Key, Date.Now)
-                            Logger?.Invoke($"{_header}disconnecting {curr.Key} due to timeout")
+                            Logger($"{_header}disconnecting {curr.Key} due to timeout")
                             DisconnectClient(curr.Key)
                         End If
                     Next
                 Catch e As Exception
-                    Logger?.Invoke($"{_header}monitor exception: {e}")
+                    Logger($"{_header}monitor exception: {e}")
                 End Try
             End While
         End Function
@@ -1117,7 +1110,7 @@ Namespace TcpSocket
                 _listener.Server.IOControl(IOControlCode.KeepAliveValues, keepAlive, Nothing)
 #End If
             Catch __unusedException1__ As Exception
-                Logger?.Invoke($"{_header}keepalives not supported on this platform, disabled")
+                Logger($"{_header}keepalives not supported on this platform, disabled")
             End Try
         End Sub
 
@@ -1149,11 +1142,9 @@ Namespace TcpSocket
                 client.Client.IOControl(IOControlCode.KeepAliveValues, keepAlive, Nothing)
 #End If
             Catch __unusedException1__ As Exception
-                Logger?.Invoke($"{_header}keepalives not supported on this platform, disabled")
+                Logger($"{_header}keepalives not supported on this platform, disabled")
                 _keepalive.EnableTcpKeepAlives = False
             End Try
         End Sub
-
-#End Region
     End Class
 End Namespace

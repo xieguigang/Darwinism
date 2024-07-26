@@ -194,6 +194,12 @@ Namespace TcpSocket
             End Set
         End Property
 
+        ''' <summary>
+        ''' print and log the verbose debug echo?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Verbose As Boolean = False
+
         Private _noDelay As Boolean = True
         Private _streamBufferSize As Integer = 65536
         Private _maxConnections As Integer = 4096
