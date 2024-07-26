@@ -218,9 +218,9 @@ Namespace Tcp
             AddHandler _socket.Events.DataSent, AddressOf DataSent
 
             If Verbose Then
-                _socket.Logger = AddressOf VBDebugger.EchoLine
+                _socket.Debugger = AddressOf VBDebugger.EchoLine
             Else
-                _socket.Logger = Nothing
+                _socket.Debugger = Nothing
             End If
 
             _socket.Keepalive.EnableTcpKeepAlives = True
