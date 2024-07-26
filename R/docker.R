@@ -22,7 +22,7 @@ const container_id = function() {
         # 2:cpuset:/docker/459b7205dc04f9b274996918ba5e333afbeb74e53b1cd8230277819f67c8c057
         # 1:name=systemd:/docker/459b7205dc04f9b274996918ba5e333afbeb74e53b1cd8230277819f67c8c057
         container <- container |> unlist() |> strsplit("/", fixed = TRUE);
-        container <- container@{2};
+        container <- container@{3};
 
         # returns the container id
         unique(container);

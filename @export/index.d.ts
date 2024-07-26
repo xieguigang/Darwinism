@@ -16,5 +16,8 @@ declare namespace Darwinism {
    function ___config_runtime_env(): object;
    /**
    */
+   function container_id(): object;
+   /**
+   */
    function no_netstat_warning(): object;
 }
