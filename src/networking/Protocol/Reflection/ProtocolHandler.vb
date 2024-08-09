@@ -157,7 +157,7 @@ Namespace Protocols.Reflection
         End Function
 
         ''' <summary>
-        ''' Handle the data request from the client for socket events: <see cref="TcpServicesSocket.ResponseHandler"/>.
+        ''' Handle the data request from the client for socket events: ResponseHandler.
         ''' </summary>
         ''' <param name="request">The request stream object which contains the commands from the client</param>
         ''' <param name="remoteDevcie">The IPAddress of the target incoming client data request.</param>
