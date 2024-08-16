@@ -5,7 +5,7 @@
     <RootNamespace>batch</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <Title>Parallel Batch Runtime Host</Title>
+    <Title>IPC Parallel Batch Runtime Host</Title>
     <Authors>xieguigang</Authors>
     <Product>Parallel</Product>
     <Description>Run bash command in batch and parallel</Description>
