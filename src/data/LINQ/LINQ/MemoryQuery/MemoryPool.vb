@@ -27,4 +27,23 @@ Public Class MemoryPool(Of T) : Inherits MemoryIndex
             Return cast
         End If
     End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="filter"></param>
+    ''' <returns>
+    ''' this function will returns nothing if query filter has no result
+    ''' </returns>
+    Public Function Query(filter As IEnumerable(Of Query)) As T()
+        Dim index As Integer() = GetIndex(filter)
+
+        If index.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
+        Return index _
+            .Select(Function(i) pool(i)) _
+            .ToArray
+    End Function
 End Class
