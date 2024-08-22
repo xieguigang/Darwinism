@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::0ed50204b1884d4410308ade97c4c7c6, src\Darwinism\Data\MemoryQuery.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 261
-    '    Code Lines: 175 (67.05%)
-    ' Comment Lines: 53 (20.31%)
-    '    - Xml Docs: 94.34%
-    ' 
-    '   Blank Lines: 33 (12.64%)
-    '     File Size: 9.56 KB
+' Summaries:
 
 
-    ' Module MemoryQuery
-    ' 
-    '     Function: [select], between, fulltext, hashindex, load
-    '               match_against, valueindex
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 261
+'    Code Lines: 175 (67.05%)
+' Comment Lines: 53 (20.31%)
+'    - Xml Docs: 94.34%
+' 
+'   Blank Lines: 33 (12.64%)
+'     File Size: 9.56 KB
+
+
+' Module MemoryQuery
+' 
+'     Function: [select], between, fulltext, hashindex, load
+'               match_against, valueindex
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -121,7 +121,7 @@ Module MemoryQuery
     ''' <param name="fields"></param>
     ''' <returns></returns>
     <ExportAPI("fulltext")>
-    Public Function fulltext(x As MemoryTable, fields As String()) As MemoryTable
+    Public Function fulltext(x As MemoryIndex, fields As String()) As MemoryIndex
         For Each name As String In fields
             x = x.FullText(name)
         Next
@@ -136,7 +136,7 @@ Module MemoryQuery
     ''' <param name="fields"></param>
     ''' <returns></returns>
     <ExportAPI("hashindex")>
-    Public Function hashindex(x As MemoryTable, fields As String()) As MemoryTable
+    Public Function hashindex(x As MemoryIndex, fields As String()) As MemoryIndex
         For Each name As String In fields
             x = x.HashIndex(name)
         Next
@@ -155,10 +155,10 @@ Module MemoryQuery
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("valueindex")>
-    Public Function valueindex(x As MemoryTable,
+    Public Function valueindex(x As MemoryIndex,
                                <RListObjectArgument>
                                fields As list,
-                               Optional env As Environment = Nothing) As MemoryTable
+                               Optional env As Environment = Nothing) As MemoryIndex
 
         For Each name As String In fields.getNames
             Dim desc As String = CLRVector.asCharacter(fields.getByName(name)).FirstOrDefault
@@ -217,26 +217,7 @@ Module MemoryQuery
         }
     End Function
 
-    ''' <summary>
-    ''' make dataframe query
-    ''' </summary>
-    ''' <param name="x"></param>
-    ''' <param name="query"></param>
-    ''' <param name="env"></param>
-    ''' <returns></returns>
-    ''' <example>
-    ''' x 
-    ''' |> select(match_against("field1", "full text value"), between("field2", [min, max]), field3 = "xxxxx")
-    ''' |> print()
-    ''' ;
-    ''' </example>
-    <ExportAPI("select")>
-    Public Function [select](x As MemoryTable,
-                             <RListObjectArgument>
-                             <RLazyExpression>
-                             query As list,
-                             Optional env As Environment = Nothing) As Object
-
+    Private Function BuildQuery(query As list, env As Environment) As [Variant](Of List(Of Query), Message)
         Dim filter As New List(Of Query)
 
         For Each name As String In query.slotKeys
@@ -248,9 +229,17 @@ Module MemoryQuery
                 Dim bin As BinaryExpression = q
 
                 If bin.operator = ">" Then
-                    q = New Query With {.field = ValueAssignExpression.GetSymbol(bin.left), .search = LINQ.Query.Type.ValueRangeGreaterThan, .value = bin.right.Evaluate(env)}
+                    q = New Query With {
+                        .field = ValueAssignExpression.GetSymbol(bin.left),
+                        .search = LINQ.Query.Type.ValueRangeGreaterThan,
+                        .value = bin.right.Evaluate(env)
+                    }
                 ElseIf bin.operator = "<" Then
-                    q = New Query With {.field = ValueAssignExpression.GetSymbol(bin.left), .search = LINQ.Query.Type.ValueRangeLessThan, .value = bin.right.Evaluate(env)}
+                    q = New Query With {
+                        .field = ValueAssignExpression.GetSymbol(bin.left),
+                        .search = LINQ.Query.Type.ValueRangeLessThan,
+                        .value = bin.right.Evaluate(env)
+                    }
                 Else
                     Throw New NotImplementedException
                 End If
@@ -303,22 +292,56 @@ Module MemoryQuery
             Call filter.Add(q)
         Next
 
-        Dim df As dataframe = x.Query(filter)
-        Dim result As rdataframe
+        Return filter
+    End Function
 
-        If df Is Nothing Then
-            Return Nothing
-        Else
-            result = New rdataframe With {
-                .columns = New Dictionary(Of String, Array)
-            }
+    ''' <summary>
+    ''' make dataframe query
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="query"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    ''' <example>
+    ''' x 
+    ''' |> select(match_against("field1", "full text value"), between("field2", [min, max]), field3 = "xxxxx")
+    ''' |> print()
+    ''' ;
+    ''' </example>
+    <ExportAPI("select")>
+    Public Function [select](x As MemoryIndex,
+                             <RListObjectArgument>
+                             <RLazyExpression>
+                             query As list,
+                             Optional env As Environment = Nothing) As Object
+
+        Dim filter = BuildQuery(query, env)
+
+        If filter Like GetType(Message) Then
+            Return filter.TryCast(Of Message)
         End If
 
-        For Each name As String In df.HeadTitles
-            Call result.add(name, df.Column(name))
-        Next
+        If TypeOf x Is MemoryTable Then
+            Dim tbl As MemoryTable = DirectCast(x, MemoryTable)
+            Dim df As dataframe = tbl.Query(filter)
+            Dim result As rdataframe
 
-        Return result
+            If df Is Nothing Then
+                Return Nothing
+            Else
+                result = New rdataframe With {
+                    .columns = New Dictionary(Of String, Array)
+                }
+            End If
+
+            For Each name As String In df.HeadTitles
+                Call result.add(name, df.Column(name))
+            Next
+
+            Return result
+        Else
+            Throw New NotImplementedException
+        End If
     End Function
 
 End Module
