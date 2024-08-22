@@ -155,7 +155,11 @@ Module MemoryQuery
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("valueindex")>
-    Public Function valueindex(x As MemoryTable, <RListObjectArgument> fields As list, Optional env As Environment = Nothing) As MemoryTable
+    Public Function valueindex(x As MemoryTable,
+                               <RListObjectArgument>
+                               fields As list,
+                               Optional env As Environment = Nothing) As MemoryTable
+
         For Each name As String In fields.getNames
             Dim desc As String = CLRVector.asCharacter(fields.getByName(name)).FirstOrDefault
 
@@ -227,7 +231,12 @@ Module MemoryQuery
     ''' ;
     ''' </example>
     <ExportAPI("select")>
-    Public Function [select](x As MemoryTable, <RListObjectArgument> <RLazyExpression> query As list, Optional env As Environment = Nothing) As Object
+    Public Function [select](x As MemoryTable,
+                             <RListObjectArgument>
+                             <RLazyExpression>
+                             query As list,
+                             Optional env As Environment = Nothing) As Object
+
         Dim filter As New List(Of Query)
 
         For Each name As String In query.slotKeys
