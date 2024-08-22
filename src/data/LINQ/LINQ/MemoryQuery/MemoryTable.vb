@@ -70,39 +70,6 @@ Public Class MemoryTable : Inherits MemoryIndex
         Me.df = df
     End Sub
 
-    Public Function FullText(field As String) As MemoryTable
-        Dim col As String() = df.Column(field)
-        Dim fts As FTSEngine = InMemoryDocuments.CreateFullTextSearch
-        fts.Indexing(col)
-        m_fulltext(field) = fts
-        Return Me
-    End Function
-
-    Public Function HashIndex(field As String) As MemoryTable
-        Dim col As String() = df.Column(field)
-        Dim hash As TermHashIndex = InMemoryDocuments.CreateHashSearch
-        hash.Indexing(col)
-        m_hashindex(field) = hash
-        Return Me
-    End Function
-
-    Public Function ValueRange(field As String, asType As Type) As MemoryTable
-        Dim col As String() = df.Column(field)
-        Dim index As ValueIndex
-
-        Select Case asType
-            Case GetType(Integer) : index = ValueIndex.IntegerIndex.IndexData(col.AsInteger)
-            Case GetType(Double) : index = ValueIndex.DoubleIndex.IndexData(col.AsDouble)
-            Case GetType(Date) : index = ValueIndex.DateIndex.IndexData(col.AsDateTime)
-            Case Else
-                Throw New NotImplementedException(asType.FullName)
-        End Select
-
-        m_valueindex(field) = index
-
-        Return Me
-    End Function
-
     ''' <summary>
     ''' 
     ''' </summary>
@@ -111,25 +78,25 @@ Public Class MemoryTable : Inherits MemoryIndex
     ''' this function will returns nothing if query filter has no result
     ''' </returns>
     Public Function Query(filter As IEnumerable(Of Query)) As DataFrame
-        Dim index As Integer() = Nothing
+        Dim index As Integer() = GetIndex(filter)
 
-        For Each q As Query In filter
-            Select Case q.search
-                Case LINQ.Query.Type.FullText : Call FullTextSearch(q, index)
-                Case LINQ.Query.Type.HashTerm : Call HashSearch(q, index)
-                Case LINQ.Query.Type.ValueRange : Call ValueRangeSearch(q, index)
-                Case LINQ.Query.Type.ValueMatch, LINQ.Query.Type.ValueRangeGreaterThan, LINQ.Query.Type.ValueRangeLessThan
-                    Call ValueMatchSearch(q, index)
-                Case Else
-                    Throw New NotImplementedException()
-            End Select
-
-            If index.Length = 0 Then
-                Return Nothing
-            End If
-        Next
+        If index.IsNullOrEmpty Then
+            Return Nothing
+        End If
 
         Return df.Slice(index)
     End Function
 
+    Protected Overrides Function GetData(Of T)(field As String) As T()
+        Select Case GetType(T)
+            Case GetType(String) : Return CObj(df.Column(field))
+            Case GetType(Integer) : Return CObj(df.Column(field).AsInteger)
+            Case GetType(Double) : Return CObj(df.Column(field).AsDouble)
+            Case GetType(Date) : Return CObj(df.Column(field).AsDateTime)
+            Case GetType(Boolean) : Return CObj(df.Column(field).AsBoolean)
+
+            Case Else
+                Throw New NotImplementedException(GetType(T).FullName)
+        End Select
+    End Function
 End Class

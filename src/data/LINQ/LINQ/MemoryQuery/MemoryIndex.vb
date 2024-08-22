@@ -9,6 +9,73 @@ Public MustInherit Class MemoryIndex
     Protected ReadOnly m_hashindex As New Dictionary(Of String, TermHashIndex)
     Protected ReadOnly m_valueindex As New Dictionary(Of String, ValueIndex)
 
+    Protected MustOverride Function GetData(Of T)(field As String) As T()
+
+    Public Function FullText(field As String) As MemoryIndex
+        Dim col As String() = GetData(Of String)(field)
+        Dim fts As FTSEngine = InMemoryDocuments.CreateFullTextSearch
+        fts.Indexing(col)
+        m_fulltext(field) = fts
+        Return Me
+    End Function
+
+    Public Function HashIndex(field As String) As MemoryIndex
+        Dim col As String() = GetData(Of String)(field)
+        Dim hash As TermHashIndex = InMemoryDocuments.CreateHashSearch
+        hash.Indexing(col)
+        m_hashindex(field) = hash
+        Return Me
+    End Function
+
+    Public Function ValueRange(field As String, asType As Type) As MemoryIndex
+        Dim index As ValueIndex
+
+        Select Case asType
+            Case GetType(Integer) : index = ValueIndex.IntegerIndex.IndexData(GetData(Of Integer)(field))
+            Case GetType(Double) : index = ValueIndex.DoubleIndex.IndexData(GetData(Of Double)(field))
+            Case GetType(Date) : index = ValueIndex.DateIndex.IndexData(GetData(Of Date)(field))
+            Case Else
+                Throw New NotImplementedException(asType.FullName)
+        End Select
+
+        m_valueindex(field) = index
+
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="filter"></param>
+    ''' <returns>
+    ''' this function will returns nothing if query filter has no result
+    ''' </returns>
+    Public Function GetIndex(filter As IEnumerable(Of Query)) As Integer()
+        Dim index As Integer() = Nothing
+
+        For Each q As Query In filter
+            Select Case q.search
+                Case LINQ.Query.Type.FullText : Call FullTextSearch(q, index)
+                Case LINQ.Query.Type.HashTerm : Call HashSearch(q, index)
+                Case LINQ.Query.Type.ValueRange : Call ValueRangeSearch(q, index)
+                Case LINQ.Query.Type.ValueMatch,
+                     LINQ.Query.Type.ValueRangeGreaterThan,
+                     LINQ.Query.Type.ValueRangeLessThan
+
+                    Call ValueMatchSearch(q, index)
+
+                Case Else
+                    Throw New NotImplementedException(q.search.Description)
+            End Select
+
+            If index.Length = 0 Then
+                Return Nothing
+            End If
+        Next
+
+        Return index
+    End Function
+
     Protected Sub ValueMatchSearch(q As Query, ByRef index As Integer())
         Dim search As ValueIndex = m_valueindex.TryGetValue(q.field)
         Dim offsets As IEnumerable(Of Integer)
