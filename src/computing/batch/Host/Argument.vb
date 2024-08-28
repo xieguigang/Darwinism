@@ -60,6 +60,9 @@ Imports Darwinism.HPC.Parallel
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' the configuration of the Darwinism IPC parallel environment
+''' </summary>
 Public Class Argument
 
     Public Property debugPort As Integer? = Nothing

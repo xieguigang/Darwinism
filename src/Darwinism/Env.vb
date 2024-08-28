@@ -74,6 +74,14 @@ Module Env
         Return DarwinismEnvironment.GetEnvironmentArguments
     End Function
 
+    ''' <summary>
+    ''' ### Set framework library directory path
+    ''' 
+    ''' set a directory path that contains the scibasic.net framework 
+    ''' runtime of the current parallel environment.
+    ''' </summary>
+    ''' <param name="libpath"></param>
+    ''' <returns></returns>
     <ExportAPI("set_libpath")>
     Public Function Set_libpath(libpath As String) As batch.Argument
         Call DarwinismEnvironment.SetLibPath(libpath)
