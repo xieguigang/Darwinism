@@ -137,6 +137,13 @@ Namespace IpcStream
             End Using
         End Function
 
+        ''' <summary>
+        ''' load clr object from the given stream data
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' <param name="type"></param>
+        ''' <param name="emit"></param>
+        ''' <returns></returns>
         Public Function handleCreate(buf As Stream, type As Type, emit As StreamMethods) As Object
             If emit = StreamMethods.Auto Then
                 If loadBuffers.ContainsKey(type) Then

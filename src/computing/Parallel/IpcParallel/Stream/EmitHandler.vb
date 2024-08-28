@@ -65,13 +65,24 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace IpcStream
 
     Module EmitHandler
 
+        ''' <summary>
+        ''' serialize target object as memory stream bytes
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Delegate Function toBuffer(obj As Object) As Stream
+        ''' <summary>
+        ''' parse target object from a given memory stream bytes
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' <returns></returns>
         Public Delegate Function loadBuffer(buf As Stream) As Object
 
         Sub New()
@@ -95,6 +106,62 @@ Namespace IpcStream
 
             Yield (GetType(Byte), Function(b) New MemoryStream({DirectCast(b, Byte)}))
             Yield (GetType(Date), Function(d) New MemoryStream(BitConverter.GetBytes(DirectCast(d, Date).UnixTimeStamp)))
+
+            ' special handler for data
+            Yield (GetType(NamedValue(Of Double)), Function(d) saveTagNumber(d))
+            Yield (GetType(NamedValue(Of Double)()), Function(d) saveTagVector(d))
+        End Function
+
+        Private Function saveTagVector(vec As NamedValue(Of Double)()) As MemoryStream
+            Dim s As New MemoryStream()
+            Dim bin As New BinaryWriter(s, Encoding.UTF8)
+            bin.Write(vec.Length)
+
+            For Each d As NamedValue(Of Double) In vec
+                bin.Write(If(d.Name, ""))
+                bin.Write(d.Value)
+                bin.Write(If(d.Description, ""))
+            Next
+
+            bin.Flush()
+            s.Seek(Scan0, SeekOrigin.Begin)
+            Return s
+        End Function
+
+        Private Function saveTagNumber(d As NamedValue(Of Double)) As MemoryStream
+            Dim s As New MemoryStream()
+            Dim bin As New BinaryWriter(s, Encoding.UTF8)
+            bin.Write(If(d.Name, ""))
+            bin.Write(d.Value)
+            bin.Write(If(d.Description, ""))
+            bin.Flush()
+            s.Seek(Scan0, SeekOrigin.Begin)
+            Return s
+        End Function
+
+        Private Function readTagVector(s As Stream) As NamedValue(Of Double)()
+            Dim bin As New BinaryReader(s, Encoding.UTF8)
+            Dim n As Integer = bin.ReadInt32
+            Dim vec As NamedValue(Of Double)() = New NamedValue(Of Double)(n - 1) {}
+
+            For i As Integer = 0 To n - 1
+                Dim name = bin.ReadString
+                Dim val = bin.ReadDouble
+                Dim desc = bin.ReadString
+
+                vec(i) = New NamedValue(Of Double)(name, val, desc)
+            Next
+
+            Return vec
+        End Function
+
+        Private Function readTagNumber(s As Stream) As NamedValue(Of Double)
+            Dim bin As New BinaryReader(s, Encoding.UTF8)
+            Dim name = bin.ReadString
+            Dim val = bin.ReadDouble
+            Dim desc = bin.ReadString
+
+            Return New NamedValue(Of Double)(name, val, desc)
         End Function
 
         Private Function stringBuffer(s As Object) As Stream
@@ -130,6 +197,10 @@ Namespace IpcStream
 
             Yield (GetType(Byte), Function(b) b.readAllBytes()(Scan0))
             Yield (GetType(Date), Function(d) FromUnixTimeStamp(BitConverter.ToDouble(d.readAllBytes, Scan0)))
+
+            ' special handler for data
+            Yield (GetType(NamedValue(Of Double)), Function(s) readTagNumber(s))
+            Yield (GetType(NamedValue(Of Double)()), Function(s) readTagVector(s))
         End Function
 
         <Extension>
