@@ -141,7 +141,7 @@ Public Module Host
     Public Function ParallelFor(Of I, T)(par As Argument, task As [Delegate], [loop] As I(), ParamArray args As SocketRef()) As IEnumerable(Of T)
         Dim foreach As New ParallelFor(Of T)(par)
         Dim loopVal As SocketRef() = [loop] _
-            .Select(Function(obj) SocketRef.WriteBuffer(obj)) _
+            .Select(Function(obj) SocketRef.WriteBuffer(obj, par.emit)) _
             .ToArray
         Dim run = batch.ParallelFor(Of T).CreateFunction(par, task, loopVal, args)
 

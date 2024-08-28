@@ -54,6 +54,7 @@
 #End Region
 
 Imports batch
+Imports Darwinism.HPC.Parallel.IpcStream
 
 Public Module DarwinismEnvironment
 
@@ -66,11 +67,13 @@ Public Module DarwinismEnvironment
     ''' get a copy of the current parallel runtime environment arguments
     ''' </summary>
     ''' <returns></returns>
-    Public Function GetEnvironmentArguments() As Argument
+    Public Function GetEnvironmentArguments(Optional emit As StreamEmit = Nothing) As Argument
         If par Is Nothing Then
             Return Nothing
         Else
-            Return par.Copy
+            Dim clone As Argument = par.Copy
+            clone.emit = emit
+            Return clone
         End If
     End Function
 
