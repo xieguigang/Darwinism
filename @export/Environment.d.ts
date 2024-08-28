@@ -10,6 +10,13 @@
 */
 declare namespace Environment {
    /**
+    * ### Set framework library directory path
+    *  
+    *  set a directory path that contains the scibasic.net framework 
+    *  runtime of the current parallel environment.
+    * 
+    * 
+     * @param libpath -
    */
    function set_libpath(libpath: string): object;
    /**
