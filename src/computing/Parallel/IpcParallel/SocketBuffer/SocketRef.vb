@@ -110,9 +110,23 @@ Namespace IpcStream
             End Using
         End Function
 
+        ''' <summary>
+        ''' Usually be used for create memory temp file reference
+        ''' </summary>
+        ''' <returns>
+        ''' this function returns a temp file inside memory cache location: ``/dev/shm`` by default.
+        ''' the default location could be modify via the sciBASIC framework variable: ``sockets``.
+        ''' </returns>
+        ''' <remarks>
+        ''' the size of ``/dev/shm`` depends on the memory size of the host system, example as the 
+        ''' memory size of linux host system is 1.5TB, then ``/dev/shm`` is allocated as 756GB.
+        ''' but the docker contains ``/dev/shm`` has a very small size allocated by default: 64MB, 
+        ''' you needs configs of the docker container startup parameter for adjust of the size via 
+        ''' ``--shm-size``, example as: ``docker run -it --shm-size="512M" docker-image-id``.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateReference() As SocketRef
-            Return TempFileSystem.CreateTempFilePath(App.GetVariable("sockets", App.SysTemp), ".sock", App.PID.ToHexString, prefix:="Parallel")
+            Return TempFileSystem.CreateTempFilePath(App.GetVariable("sockets", "/dev/shm"), ".sock", App.PID.ToHexString, prefix:="Parallel")
         End Function
 
         Public Shared Sub SetSocketPool(handle As String)
