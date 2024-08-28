@@ -126,7 +126,9 @@ Namespace IpcStream
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateReference() As SocketRef
-            Return TempFileSystem.CreateTempFilePath(App.GetVariable("sockets", "/dev/shm"), ".sock", App.PID.ToHexString, prefix:="Parallel")
+            Dim tempDevice As String = If(App.IsMicrosoftPlatform, App.AppSystemTemp, "/dev/shm")
+            tempDevice = App.GetVariable("sockets", tempDevice)
+            Return TempFileSystem.CreateTempFilePath(tempDevice, ".sock", App.PID.ToHexString, prefix:="Parallel")
         End Function
 
         Public Shared Sub SetSocketPool(handle As String)
