@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Darwinism.HPC.Parallel
+Imports Darwinism.HPC.Parallel.IpcStream
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -71,6 +72,7 @@ Public Class Argument
     Public Property n_threads As Integer = 32
     Public Property thread_interval As Integer = 300
     Public Property libpath As String = Nothing
+    Public Property emit As StreamEmit = Nothing
 
     Sub New()
     End Sub
