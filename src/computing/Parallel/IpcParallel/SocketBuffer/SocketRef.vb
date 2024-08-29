@@ -60,6 +60,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
+Imports options = Darwinism.HPC.Parallel.Extensions
 
 Namespace IpcStream
 
@@ -90,7 +91,9 @@ Namespace IpcStream
                 Call stream.Dispose()
             End Using
 
-            Call VBDebugger.EchoLine($"object {ref.address}: {StringFormats.Lanudry(bytes:=ref.address.FileLength)}")
+            If options.Verbose Then
+                Call VBDebugger.EchoLine($"object {ref.address}: {StringFormats.Lanudry(bytes:=ref.address.FileLength)}")
+            End If
 
             Return ref
         End Function
@@ -133,6 +136,13 @@ Namespace IpcStream
             Return TempFileSystem.CreateTempFilePath(tempDevice, ".sock", App.PID.ToHexString, prefix:="Parallel")
         End Function
 
+        ''' <summary>
+        ''' set the directory for place the socket data that used for data exchange 
+        ''' between the slave process and master node.
+        ''' </summary>
+        ''' <param name="handle">
+        ''' usually be a directory path that in memory disk
+        ''' </param>
         Public Shared Sub SetSocketPool(handle As String)
             Call App.JoinVariable("sockets", handle)
             Call handle.MakeDir

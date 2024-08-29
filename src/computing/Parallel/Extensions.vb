@@ -56,6 +56,20 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack
 <HideModuleName>
 Public Module Extensions
 
+    ''' <summary>
+    ''' print the verbose debug echo?
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Verbose As Boolean = False
+
+    ''' <summary>
+    ''' set global verbose option
+    ''' </summary>
+    ''' <param name="v"></param>
+    Public Sub SetVerbose(v As Boolean)
+        _Verbose = v
+    End Sub
+
     Public Sub RegisterDiagnoseBuffer()
         Call MsgPackSerializer.DefaultContext.RegisterSerializer(New Serialization.StackFrameBuffer)
         Call MsgPackSerializer.DefaultContext.RegisterSerializer(New Serialization.StackMethodBuffer)

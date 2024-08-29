@@ -55,12 +55,9 @@
 #End Region
 
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
-
-#If NETCOREAPP Then
-Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
-#End If
 
 ''' <summary>
 ''' remote method handler
