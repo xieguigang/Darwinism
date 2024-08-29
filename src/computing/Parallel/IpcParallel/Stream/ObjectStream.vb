@@ -123,7 +123,7 @@ Namespace IpcStream
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{StringFormats.Lanudry(bytes:=stream.Length)}: {type.ToString}"
+            Return $"{StringFormats.Lanudry(bytes:=stream.Length)}{vbTab}({type.ToString})"
         End Function
 
         Private Sub LoadBuffer(raw As Stream)
