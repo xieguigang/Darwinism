@@ -81,6 +81,10 @@ Namespace IpcStream
         Dim disposedValue As Boolean
 
         <MessagePackMember(0)> Public Property method As StreamMethods
+        ''' <summary>
+        ''' the in-memory buffer data, should be less than 2GB
+        ''' </summary>
+        ''' <returns></returns>
         <MessagePackMember(1)> Public Property stream As Byte()
         <MessagePackMember(2)> Public Property type As TypeInfo
 
@@ -117,6 +121,10 @@ Namespace IpcStream
         Sub New(raw As Stream)
             Call LoadBuffer(raw)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{StringFormats.Lanudry(bytes:=stream.Length)}: {type.ToString}"
+        End Function
 
         Private Sub LoadBuffer(raw As Stream)
             Using read As New BinaryReader(raw)
