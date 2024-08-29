@@ -60,6 +60,7 @@ Imports Darwinism.HPC.Parallel
 Imports Darwinism.HPC.Parallel.IpcStream
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports options = Darwinism.HPC.Parallel.Extensions
 
 ''' <summary>
 ''' the configuration of the Darwinism IPC parallel environment
@@ -67,6 +68,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class Argument
 
     Public Property debugPort As Integer? = Nothing
+    ''' <summary>
+    ''' apply the verbose option to <see cref="options.SetVerbose(Boolean)"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public Property verbose As Boolean = False
     Public Property ignoreError As Boolean = False
     Public Property n_threads As Integer = 32
@@ -94,8 +99,8 @@ Public Class Argument
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateHost() As SlaveTask
+        Call options.SetVerbose(verbose)
         Return Host.CreateSlave(debugPort,
-                                verbose:=verbose,
                                 ignoreError:=ignoreError,
                                 libpath:=libpath)
     End Function

@@ -65,13 +65,11 @@ Public Module Host
     ''' </summary>
     ''' <returns></returns>
     Public Function CreateSlave(Optional debugPort As Integer? = Nothing,
-                                Optional verbose As Boolean = False,
                                 Optional ignoreError As Boolean = False,
                                 Optional libpath As String = Nothing) As SlaveTask
 
         Return New SlaveTask(Host.GetCurrentThread(libpath), cli:=AddressOf Host.SlaveTask,
                              debugPort:=debugPort,
-                             verbose:=verbose,
                              ignoreError:=ignoreError)
     End Function
 
