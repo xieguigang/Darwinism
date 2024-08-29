@@ -63,6 +63,7 @@ Imports System.Threading
 Imports Darwinism.HPC.Parallel.IpcStream
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.CommandLine.InteropService
+Imports options = Darwinism.HPC.Parallel.Extensions
 
 ''' <summary>
 ''' generates the commandline string not contains the executable file path
@@ -81,7 +82,6 @@ Public Class SlaveTask
     ReadOnly builder As ISlaveTask
     ReadOnly debugPort As Integer?
     ReadOnly ignoreError As Boolean
-    ReadOnly verbose As Boolean
 
     Friend ReadOnly streamBuf As New StreamEmit
 
@@ -94,18 +94,15 @@ Public Class SlaveTask
     ''' executable file path.</param>
     ''' <param name="debugPort"></param>
     ''' <param name="ignoreError"></param>
-    ''' <param name="verbose"></param>
     <DebuggerStepThrough>
     Sub New(processor As InteropService, cli As ISlaveTask,
             Optional debugPort As Integer? = Nothing,
-            Optional ignoreError As Boolean = False,
-            Optional verbose As Boolean = False)
+            Optional ignoreError As Boolean = False)
 
         Me.builder = cli
         Me.processor = processor
         Me.debugPort = debugPort
         Me.ignoreError = ignoreError
-        Me.verbose = verbose
     End Sub
 
     Public Function Emit(Of T)(streamAs As Func(Of T, Stream)) As SlaveTask
@@ -126,8 +123,8 @@ Public Class SlaveTask
     ''' <param name="debugCode"></param>
     ''' <returns></returns>
     Private Function handlePOST(buf As Stream, type As Type, debugCode As Integer) As Object
-        If verbose Then
-            Call Console.WriteLine($"[{debugCode.ToHexString}] task finished!")
+        If options.Verbose Then
+            Call VBDebugger.EchoLine($"[{debugCode.ToHexString}] task finished!")
         End If
 
         Return GetValueFromStream(buf, type, streamBuf)
@@ -147,8 +144,8 @@ Public Class SlaveTask
     Private Function handleGET(param As Object, i As Integer, debugCode As Integer) As ObjectStream
         Dim socket As SocketRef = SocketRef.WriteBuffer(param, streamBuf)
 
-        If verbose Then
-            Call Console.WriteLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
+        If options.Verbose Then
+            Call VBDebugger.EchoLine($"[{debugCode.ToHexString}] get argument[{i + 1}]...")
         End If
 
         Return streamBuf.handleSerialize(socket)
@@ -158,7 +155,7 @@ Public Class SlaveTask
         Dim target As New IDelegate(entry)
         Dim resultType As Type = entry.Method.ReturnType
 
-        Return New IPCSocket(target, debugPort, verbose:=verbose) With {
+        Return New IPCSocket(target, debugPort) With {
             .host = Me,
             .handlePOSTResult =
                 Function(buf, host)
@@ -191,8 +188,8 @@ RE0:
         Call Microsoft.VisualBasic.Parallel.RunTask(AddressOf host.Run)
         Call Thread.Sleep(100)
 
-        If verbose Then
-            Call Console.WriteLine($"[{hostIndex.ToHexString}] port:{host.HostPort}")
+        If options.Verbose Then
+            Call VBDebugger.EchoLine($"[{hostIndex.ToHexString}] port:{host.HostPort}")
         End If
 
         Dim commandlineArgvs As String = builder(processor, host.HostPort)
@@ -203,8 +200,8 @@ RE0:
             Pause()
         End If
 
-        If verbose Then
-            Call Console.WriteLine($"[{hostIndex.ToHexString}] [EXEC] {processor} {commandlineArgvs}")
+        If options.Verbose Then
+            Call VBDebugger.EchoLine($"[{hostIndex.ToHexString}] [EXEC] {processor} {commandlineArgvs}")
         End If
 
 #If NET48 Then
@@ -216,20 +213,20 @@ RE0:
         Call host.Stop()
 
         If Not host.handleSetResult Then
-            If verbose AndAlso host.socketExitCode <> 0 Then
-                Call Console.WriteLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] socket have non-ZERO exit status({host.socketExitCode}), retry...")
-                Call Console.WriteLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] {host.GetLastError}")
-            ElseIf verbose Then
-                Call Console.WriteLine($"[{Me.GetHashCode}] slave process echo:")
-                Call Console.WriteLine(stdout)
-                Call Console.WriteLine("--------- end echo ----------")
+            If options.Verbose AndAlso host.socketExitCode <> 0 Then
+                Call VBDebugger.EchoLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] socket have non-ZERO exit status({host.socketExitCode}), retry...")
+                Call VBDebugger.EchoLine($"[{Me.GetHashCode}/{hostIndex.ToHexString}] {host.GetLastError}")
+            ElseIf options.Verbose Then
+                Call VBDebugger.EchoLine($"[{Me.GetHashCode}] slave process echo:")
+                Call VBDebugger.EchoLine(stdout)
+                Call VBDebugger.EchoLine("--------- end echo ----------")
             End If
 
             GoTo RE0
         End If
 
-        If verbose Then
-            Call Console.WriteLine($"[{hostIndex.ToHexString}] thread exit...")
+        If options.Verbose Then
+            Call VBDebugger.EchoLine($"[{hostIndex.ToHexString}] thread exit...")
         End If
 
         result = host.result
