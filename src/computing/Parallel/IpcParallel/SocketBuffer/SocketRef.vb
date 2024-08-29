@@ -90,6 +90,8 @@ Namespace IpcStream
                 Call stream.Dispose()
             End Using
 
+            Call VBDebugger.EchoLine($"object {ref.address}: {StringFormats.Lanudry(bytes:=ref.address.FileLength)}")
+
             Return ref
         End Function
 
