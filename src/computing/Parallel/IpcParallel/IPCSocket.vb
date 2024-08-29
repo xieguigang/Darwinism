@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports options = Darwinism.HPC.Parallel.Extensions
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 ''' <summary>
@@ -82,11 +83,6 @@ Public Class IPCSocket : Implements ITaskDriver
 
     ReadOnly socket As TcpServicesSocket
     ReadOnly target As IDelegate
-
-    ''' <summary>
-    ''' running in verbose(debug) mode?
-    ''' </summary>
-    ReadOnly verbose As Boolean
 
     Public ReadOnly Property HostPort As Integer
         Get
@@ -108,13 +104,12 @@ Public Class IPCSocket : Implements ITaskDriver
     ''' <returns></returns>
     Public ReadOnly Property socketExitCode As Integer
 
-    Sub New(target As IDelegate, Optional debug As Integer? = Nothing, Optional verbose As Boolean = False)
-        Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()), debug:=verbose OrElse Not debug Is Nothing) With {
+    Sub New(target As IDelegate, Optional debug As Integer? = Nothing)
+        Me.socket = New TcpServicesSocket(If(debug, GetFirstAvailablePort()), debug:=Verbose OrElse Not debug Is Nothing) With {
             .KeepsAlive = False
         }
         Me.socket.ResponseHandler = AddressOf New ProtocolHandler(Me).HandleRequest
         Me.target = target
-        Me.verbose = verbose
         Me.result = Nothing
         Me.handleSetResult = False
     End Sub
@@ -185,8 +180,8 @@ Public Class IPCSocket : Implements ITaskDriver
     ''' <returns></returns>
     <Protocol(Protocols.GetTask)>
     Public Function GetTask(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        If verbose Then
-            Call Console.WriteLine($"[{GetHashCode.ToHexString}] get parallel task entry.")
+        If options.Verbose Then
+            Call VBDebugger.EchoLine($"[{GetHashCode.ToHexString}] get parallel task entry.")
         End If
 
         Return New DataPipe(Encoding.UTF8.GetBytes(target.GetJson))
@@ -215,8 +210,8 @@ Public Class IPCSocket : Implements ITaskDriver
     ''' <returns></returns>
     <Protocol(Protocols.PostStart)>
     Public Function PostStart(request As RequestStream, remoteAddress As System.Net.IPEndPoint) As BufferPipe
-        If verbose Then
-            Call Console.WriteLine($"[{GetHashCode.ToHexString}] started!")
+        If options.Verbose Then
+            Call VBDebugger.EchoLine($"[{GetHashCode.ToHexString}] started!")
         End If
 
         Return New DataPipe(Encoding.UTF8.GetBytes("OK!"))
