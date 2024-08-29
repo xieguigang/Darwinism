@@ -231,8 +231,10 @@ Namespace Tcp
             _socket.Settings.StreamBufferSize = App.BufferSize
             _socket.Start()
 
-            Call VBDebugger.EchoLine(_socket.Settings.GetJson)
-            Call VBDebugger.EchoLine($"set tcp server message buffer size: {_socket.Settings.StreamBufferSize / ByteSize.KB}KB.")
+            If Verbose Then
+                Call VBDebugger.EchoLine(_socket.Settings.GetJson)
+                Call VBDebugger.EchoLine($"set tcp server message buffer size: {_socket.Settings.StreamBufferSize / ByteSize.KB}KB.")
+            End If
 
             _Running = True
 
