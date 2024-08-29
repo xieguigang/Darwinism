@@ -317,7 +317,9 @@ Namespace Tcp
         ''' <param name="data"></param>
         ''' <remarks></remarks>
         Private Sub Send(response As Stream, data As BufferPipe)
-            Call VBDebugger.EchoLine($"send stream: {data}")
+            If Verbose Then
+                Call VBDebugger.EchoLine($"send stream: {data}")
+            End If
 
             ' Convert the string data to byte data using ASCII encoding.
             For Each byteData As Byte() In data.GetBlocks
