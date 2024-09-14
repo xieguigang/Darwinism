@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Scripting
 
 ''' <summary>
-''' Index of the clr object
+''' Index of the generic clr object
 ''' </summary>
 Public Class MemoryPool(Of T) : Inherits MemoryIndex
 
