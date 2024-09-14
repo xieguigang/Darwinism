@@ -24,6 +24,12 @@ Public Class MemoryPool : Inherits MemoryIndex
         End If
     End Sub
 
+    Protected Overrides Function CheckScalar(field As String) As Boolean
+        Dim prop As PropertyInfo = vector.GetProperty(field)
+        Dim is_scalar As Boolean = Not prop.PropertyType.IsArray
+        Return is_scalar
+    End Function
+
     Protected Overrides Function GetData(Of V)(field As String) As V()
         Dim prop As PropertyInfo = vector.GetProperty(field)
 
@@ -100,5 +106,11 @@ Public Class MemoryPool(Of T) : Inherits MemoryIndex
         Return index _
             .Select(Function(i) pool(i)) _
             .ToArray
+    End Function
+
+    Protected Overrides Function CheckScalar(field As String) As Boolean
+        Dim prop As PropertyInfo = vector.GetProperty(field)
+        Dim is_scalar As Boolean = Not prop.PropertyType.IsArray
+        Return is_scalar
     End Function
 End Class

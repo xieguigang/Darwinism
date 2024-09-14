@@ -99,4 +99,13 @@ Public Class MemoryTable : Inherits MemoryIndex
                 Throw New NotImplementedException(GetType(T).FullName)
         End Select
     End Function
+
+    ''' <summary>
+    ''' data fields element type in dataframe always scalar
+    ''' </summary>
+    ''' <param name="field"></param>
+    ''' <returns></returns>
+    Protected Overrides Function CheckScalar(field As String) As Boolean
+        Return True
+    End Function
 End Class
