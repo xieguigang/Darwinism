@@ -81,11 +81,18 @@ Module MemoryQuery
     ''' load in-memory table 
     ''' </summary>
     ''' <param name="x">a dataframe object, a clr object array, or the file resource to a csv dataframe file.</param>
+    ''' <param name="nested_field">
+    ''' use the nested property for make the clr object array index, this property name parameter value not working 
+    ''' for the dataframe or the table value, only works for the generic clr array object index.
+    ''' </param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("load")>
     <RApiReturn(GetType(MemoryTable))>
-    Public Function load(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
+    Public Function load(<RRawVectorArgument>
+                         x As Object,
+                         Optional nested_field As String = Nothing,
+                         Optional env As Environment = Nothing) As Object
         Dim df As dataframe
 
         If x Is Nothing Then
@@ -113,7 +120,7 @@ Module MemoryQuery
             df = dataframe.Load(file.TryCast(Of Stream))
         ElseIf x.GetType.IsArray OrElse TypeOf x Is vector Then
             Dim genericArray As Array = renv.UnsafeTryCastGenericArray(CLRVector.asObject(x))
-            Dim index As New MemoryPool(genericArray)
+            Dim index As New MemoryPool(genericArray, [property]:=nested_field)
 
             Return index
         Else
