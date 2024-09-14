@@ -33,7 +33,7 @@ declare namespace memory_query {
     * load in-memory table
     * 
     * 
-     * @param x a dataframe object, or the file resource to a csv dataframe file
+     * @param x a dataframe object, a clr object array, or the file resource to a csv dataframe file.
      * @param env -
      * 
      * + default value Is ``null``.
