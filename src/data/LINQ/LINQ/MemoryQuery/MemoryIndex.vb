@@ -26,11 +26,22 @@ Public MustInherit Class MemoryIndex
     ''' </returns>
     Protected MustOverride Function CheckScalar(field As String) As Boolean
 
+    ''' <summary>
+    ''' make full text search index on a specific field
+    ''' </summary>
+    ''' <param name="field"></param>
+    ''' <returns></returns>
     Public Function FullText(field As String) As MemoryIndex
-        Dim col As String() = GetData(Of String)(field)
         Dim fts As FTSEngine = InMemoryDocuments.CreateFullTextSearch
-        fts.Indexing(col)
+
+        If CheckScalar(field) Then
+            Call fts.Indexing(GetData(Of String)(field))
+        Else
+            Call fts.Indexing(GetData(Of String())(field))
+        End If
+
         m_fulltext(field) = fts
+
         Return Me
     End Function
 
