@@ -60,10 +60,32 @@ Public MustInherit Class SearchIndex
         Me.documents = documents
     End Sub
 
+    ''' <summary>
+    ''' make index of the given document set
+    ''' </summary>
+    ''' <param name="doc">
+    ''' each element insdie the input doc collection is a document.
+    ''' </param>
+    ''' <remarks>
+    ''' usually be apply for processing index for the dataframe field or clr object array with scalar property value
+    ''' </remarks>
     Public Sub Indexing(doc As IEnumerable(Of String))
         For Each par As String In doc
             Call Indexing(par)
         Next
+    End Sub
+
+    ''' <summary>
+    ''' make index of the given document set
+    ''' </summary>
+    ''' <param name="doc">
+    ''' each element inside the input doc collection is consist with multiple document contents.
+    ''' </param>
+    ''' <remarks>
+    ''' usually be apply for processing index for the clr object array with string array property value.
+    ''' </remarks>
+    Public Sub Indexing(doc As IEnumerable(Of String()))
+
     End Sub
 
     Public MustOverride Sub Indexing(doc As String)

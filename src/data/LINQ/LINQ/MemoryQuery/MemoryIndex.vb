@@ -9,6 +9,12 @@ Public MustInherit Class MemoryIndex
     Protected ReadOnly m_hashindex As New Dictionary(Of String, TermHashIndex)
     Protected ReadOnly m_valueindex As New Dictionary(Of String, ValueIndex)
 
+    ''' <summary>
+    ''' a proxy reader function for read data from the internal data resource set.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="field">the filed name/property name.</param>
+    ''' <returns></returns>
     Protected MustOverride Function GetData(Of T)(field As String) As T()
 
     Public Function FullText(field As String) As MemoryIndex
