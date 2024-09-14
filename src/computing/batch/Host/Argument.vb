@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f838a71ba854303e8bd14035fc88e67a, src\computing\batch\Host\Argument.vb"
+﻿#Region "Microsoft.VisualBasic::cb19198829a8994b13d21e8681cdbe5c, src\computing\batch\Host\Argument.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 33 (80.49%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 51
+    '    Code Lines: 36 (70.59%)
+    ' Comment Lines: 7 (13.73%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (19.51%)
-    '     File Size: 1.35 KB
+    '   Blank Lines: 8 (15.69%)
+    '     File Size: 1.73 KB
 
 
     ' Class Argument
     ' 
-    '     Properties: debugPort, ignoreError, libpath, n_threads, thread_interval
-    '                 verbose
+    '     Properties: debugPort, emit, ignoreError, libpath, n_threads
+    '                 thread_interval, verbose
     ' 
     '     Constructor: (+2 Overloads) Sub New
     '     Function: Copy, CreateHost, ToString

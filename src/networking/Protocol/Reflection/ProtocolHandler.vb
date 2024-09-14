@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dbefa9c2e52afa696b45d4b8ab001ca, src\networking\Protocol\Reflection\ProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::c13cff8741090c38069104bbac531de7, src\networking\Protocol\Reflection\ProtocolHandler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.91%
     ' 
     '   Blank Lines: 25 (14.62%)
-    '     File Size: 7.78 KB
+    '     File Size: 7.75 KB
 
 
     '     Class ProtocolHandler

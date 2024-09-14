@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20e3e261e0f7ee65ceb172792fce38b1, src\computing\Parallel\IpcParallel\SlaveTask.vb"
+﻿#Region "Microsoft.VisualBasic::2248825b67980049b6e4b5f64228dfa5, src\computing\Parallel\IpcParallel\SlaveTask.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 128 (65.31%)
-    ' Comment Lines: 36 (18.37%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 193
+    '    Code Lines: 126 (65.28%)
+    ' Comment Lines: 35 (18.13%)
+    '    - Xml Docs: 91.43%
     ' 
-    '   Blank Lines: 32 (16.33%)
-    '     File Size: 7.11 KB
+    '   Blank Lines: 32 (16.58%)
+    '     File Size: 7.07 KB
 
 
     ' Delegate Function

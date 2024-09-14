@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f6ca3161f30af6e46fc9fa7ef850673, src\Darwinism\Env.vb"
+﻿#Region "Microsoft.VisualBasic::d85eb77c40b16ad4cf6b7648d688467d, src\Darwinism\Env.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 18 (60.00%)
-    ' Comment Lines: 8 (26.67%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 38
+    '    Code Lines: 18 (47.37%)
+    ' Comment Lines: 16 (42.11%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 4 (13.33%)
-    '     File Size: 995 B
+    '   Blank Lines: 4 (10.53%)
+    '     File Size: 1.29 KB
 
 
     ' Module Env

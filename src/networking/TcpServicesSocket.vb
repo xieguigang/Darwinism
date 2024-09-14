@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d84f61678b8aeb08f16d19345f36b12, src\networking\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::354452a586a79455343c5505b48dbc3e, src\networking\TcpServicesSocket.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 335
-    '    Code Lines: 181 (54.03%)
-    ' Comment Lines: 101 (30.15%)
+    '   Total Lines: 344
+    '    Code Lines: 190 (55.23%)
+    ' Comment Lines: 101 (29.36%)
     '    - Xml Docs: 78.22%
     ' 
-    '   Blank Lines: 53 (15.82%)
-    '     File Size: 14.52 KB
+    '   Blank Lines: 53 (15.41%)
+    '     File Size: 14.80 KB
 
 
     '     Class TcpServicesSocket
     ' 
     '         Properties: IsShutdown, KeepsAlive, LastError, LocalPort, ResponseHandler
-    '                     Running
+    '                     Running, Verbose
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

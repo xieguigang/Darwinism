@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00f3d63d767944f0e811fb7bd92de84c, src\networking\TcpSocket\TcpClient\SimpleTcpClientSettings.vb"
+﻿#Region "Microsoft.VisualBasic::4645c96edcdec57e024cb487bf2bae1b, src\networking\TcpSocket\TcpClient\SimpleTcpClientSettings.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 178
-    '    Code Lines: 101 (56.74%)
-    ' Comment Lines: 51 (28.65%)
+    '   Total Lines: 184
+    '    Code Lines: 102 (55.43%)
+    ' Comment Lines: 55 (29.89%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 26 (14.61%)
-    '     File Size: 6.58 KB
+    '   Blank Lines: 27 (14.67%)
+    '     File Size: 6.77 KB
 
 
     '     Class SimpleTcpClientSettings
     ' 
     '         Properties: ConnectionLostEvaluationIntervalMs, ConnectTimeoutMs, IdleServerEvaluationIntervalMs, IdleServerTimeoutMs, LocalEndpoint
-    '                     NoDelay, ReadTimeoutMs, StreamBufferSize
+    '                     NoDelay, ReadTimeoutMs, StreamBufferSize, Verbose
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

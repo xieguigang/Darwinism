@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::392bfb4e28f165b06fbff27e09c376fe, src\computing\Parallel\IpcParallel\TaskBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c7c31f6a783ed4128dc814f766dfce31, src\computing\Parallel\IpcParallel\TaskBuilder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 260
-    '    Code Lines: 173 (66.54%)
-    ' Comment Lines: 49 (18.85%)
+    '   Total Lines: 265
+    '    Code Lines: 178 (67.17%)
+    ' Comment Lines: 49 (18.49%)
     '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 38 (14.62%)
-    '     File Size: 9.18 KB
+    '   Blank Lines: 38 (14.34%)
+    '     File Size: 9.39 KB
 
 
     ' Class TaskBuilder

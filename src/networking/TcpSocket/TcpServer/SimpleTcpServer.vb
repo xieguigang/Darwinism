@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95f60777dd3e1256decc8ee54d98b89f, src\networking\TcpSocket\TcpServer\SimpleTcpServer.vb"
+﻿#Region "Microsoft.VisualBasic::3c3ca9f4a85bc6ceb7dfc2f47252632b, src\networking\TcpSocket\TcpServer\SimpleTcpServer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1096
-    '    Code Lines: 765 (69.80%)
-    ' Comment Lines: 152 (13.87%)
+    '   Total Lines: 1087
+    '    Code Lines: 764 (70.29%)
+    ' Comment Lines: 152 (13.98%)
     '    - Xml Docs: 88.16%
     ' 
-    '   Blank Lines: 179 (16.33%)
-    '     File Size: 49.37 KB
+    '   Blank Lines: 171 (15.73%)
+    '     File Size: 49.20 KB
 
 
     '     Class SimpleTcpServer
@@ -53,8 +53,8 @@
     '         Function: AcceptCertificate, AssertTcpClient, GetClients, IsClientConnected, IsConnected
     '                   StartAsync
     ' 
-    '         Sub: [Stop], DisconnectClient, (+2 Overloads) Dispose, (+2 Overloads) EnableKeepalives, (+3 Overloads) Send
-    '              SendInternal, Start, UpdateClientLastSeen
+    '         Sub: [Stop], DisconnectClient, (+2 Overloads) Dispose, (+2 Overloads) EnableKeepalives, Logger
+    '              (+3 Overloads) Send, SendInternal, Start, UpdateClientLastSeen
     ' 
     ' 
     ' /********************************************************************************/

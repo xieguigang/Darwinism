@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38cc0b4027fc15a25f20e2288132d8dd, src\computing\Parallel\IpcParallel\Stream\EmitHandler.vb"
+﻿#Region "Microsoft.VisualBasic::b29a468e0d18717fc65da5254353d5a1, src\computing\Parallel\IpcParallel\Stream\EmitHandler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 59 (72.84%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 152
+    '    Code Lines: 106 (69.74%)
+    ' Comment Lines: 12 (7.89%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 22 (27.16%)
-    '     File Size: 3.95 KB
+    '   Blank Lines: 34 (22.37%)
+    '     File Size: 6.68 KB
 
 
     '     Module EmitHandler
@@ -52,7 +52,8 @@
     '         Delegate Function
     ' 
     '             Constructor: (+1 Overloads) Sub New
-    '             Function: PopulatePrimitiveHandles, PopulatePrimitiveParsers, readAllBytes, (+2 Overloads) stringBuffer
+    '             Function: PopulatePrimitiveHandles, PopulatePrimitiveParsers, readAllBytes, readTagNumber, readTagVector
+    '                       saveTagNumber, saveTagVector, (+2 Overloads) stringBuffer
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd0d2ea986c56be5e700779bea76b7d9, src\DataScience\DataMining\DarwinismEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::baa7d6a83faf54243432ea3798e96123, src\DataScience\DataMining\DarwinismEnvironment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 28 (60.87%)
-    ' Comment Lines: 12 (26.09%)
+    '   Total Lines: 49
+    '    Code Lines: 31 (63.27%)
+    ' Comment Lines: 12 (24.49%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (13.04%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 6 (12.24%)
+    '     File Size: 1.41 KB
 
 
     ' Module DarwinismEnvironment

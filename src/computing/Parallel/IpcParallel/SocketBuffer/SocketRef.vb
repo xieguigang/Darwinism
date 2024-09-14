@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::835389a5248f9c2f9fa8ef6242960774, src\computing\Parallel\IpcParallel\SocketBuffer\SocketRef.vb"
+﻿#Region "Microsoft.VisualBasic::5f5b96635874f371d8472e0fdcbf0b01, src\computing\Parallel\IpcParallel\SocketBuffer\SocketRef.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 53 (70.67%)
-    ' Comment Lines: 8 (10.67%)
+    '   Total Lines: 103
+    '    Code Lines: 59 (57.28%)
+    ' Comment Lines: 29 (28.16%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (18.67%)
-    '     File Size: 3.02 KB
+    '   Blank Lines: 15 (14.56%)
+    '     File Size: 4.60 KB
 
 
     '     Class SocketRef

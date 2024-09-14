@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c615837c187d1c1ff819b7fa4a16d771, src\computing\Parallel\IpcParallel\IDelegate.vb"
+﻿#Region "Microsoft.VisualBasic::7d1d7de0bedc9504ddd0ce3a8696bf68, src\computing\Parallel\IpcParallel\IDelegate.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 56 (56.57%)
-    ' Comment Lines: 29 (29.29%)
+    '   Total Lines: 96
+    '    Code Lines: 54 (56.25%)
+    ' Comment Lines: 29 (30.21%)
     '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 14 (14.14%)
-    '     File Size: 2.93 KB
+    '   Blank Lines: 13 (13.54%)
+    '     File Size: 2.90 KB
 
 
     ' Class IDelegate

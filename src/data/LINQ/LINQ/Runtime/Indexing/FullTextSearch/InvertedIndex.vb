@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::227fe8f344bc1d14cf8c2c2b76206bd1, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\InvertedIndex.vb"
+﻿#Region "Microsoft.VisualBasic::cd006610f90a1d7c8a25832e9642ab2a, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\InvertedIndex.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 152
-    '    Code Lines: 108 (71.05%)
-    ' Comment Lines: 15 (9.87%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 166
+    '    Code Lines: 113 (68.07%)
+    ' Comment Lines: 22 (13.25%)
+    '    - Xml Docs: 86.36%
     ' 
-    '   Blank Lines: 29 (19.08%)
-    '     File Size: 4.32 KB
+    '   Blank Lines: 31 (18.67%)
+    '     File Size: 4.80 KB
 
 
     ' Class InvertedIndex
@@ -49,7 +49,8 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: Add, GenericEnumerator, intersection, Search, split
+    '     Function: (+2 Overloads) Add, GenericEnumerator, intersection, MoveNext, Search
+    '               split
     ' 
     '     Sub: Add
     ' 

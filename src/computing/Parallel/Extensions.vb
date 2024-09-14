@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e657013c35afdcde1819c6cf41b6c184, src\computing\Parallel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::35ae46e4582028553144a611da9e9665, src\computing\Parallel\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 8 (80.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 24
+    '    Code Lines: 12 (50.00%)
+    ' Comment Lines: 8 (33.33%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (20.00%)
-    '     File Size: 368 B
+    '   Blank Lines: 4 (16.67%)
+    '     File Size: 720 B
 
 
     ' Module Extensions
     ' 
-    '     Sub: RegisterDiagnoseBuffer
+    '     Properties: Verbose
+    ' 
+    '     Sub: RegisterDiagnoseBuffer, SetVerbose
     ' 
     ' /********************************************************************************/
 

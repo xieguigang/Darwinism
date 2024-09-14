@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::620a876b21a47c90c30e1c25dc79c593, src\networking\TcpSocket\TcpClient\SimpleTcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::d2180f0973799cc610faebab879634ca, src\networking\TcpSocket\TcpClient\SimpleTcpClient.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1065
-    '    Code Lines: 716 (67.23%)
-    ' Comment Lines: 190 (17.84%)
+    '   Total Lines: 1067
+    '    Code Lines: 720 (67.48%)
+    ' Comment Lines: 190 (17.81%)
     '    - Xml Docs: 91.58%
     ' 
-    '   Blank Lines: 159 (14.93%)
-    '     File Size: 50.72 KB
+    '   Blank Lines: 157 (14.71%)
+    '     File Size: 50.71 KB
 
 
     '     Class SimpleTcpClient
@@ -53,7 +53,7 @@
     '         Function: AcceptCertificate, PollSocket
     ' 
     '         Sub: Connect, ConnectWithRetries, Disconnect, (+2 Overloads) Dispose, EnableKeepalives
-    '              InitializeClient, (+3 Overloads) Send, SendInternal, WaitCompletion
+    '              InitializeClient, Logger, (+3 Overloads) Send, SendInternal, WaitCompletion
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e43fcbbe187b0aabe07e3f31fb5b895, src\computing\Parallel\IpcParallel\Stream\ObjectStream.vb"
+﻿#Region "Microsoft.VisualBasic::da89017db0c14e18f9512a7e64815097, src\computing\Parallel\IpcParallel\Stream\ObjectStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 103 (74.10%)
-    ' Comment Lines: 11 (7.91%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 147
+    '    Code Lines: 106 (72.11%)
+    ' Comment Lines: 15 (10.20%)
+    '    - Xml Docs: 26.67%
     ' 
-    '   Blank Lines: 25 (17.99%)
-    '     File Size: 5.30 KB
+    '   Blank Lines: 26 (17.69%)
+    '     File Size: 5.62 KB
 
 
     '     Class ObjectStream
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: GetUnderlyingType, openMemoryBuffer
+    '         Function: GetUnderlyingType, openMemoryBuffer, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose, LoadBuffer, Serialize
     '         Class TypeMsgPack

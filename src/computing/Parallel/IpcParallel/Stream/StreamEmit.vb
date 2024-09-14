@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::286cdf7fa183c9664e466f806607c148, src\computing\Parallel\IpcParallel\Stream\StreamEmit.vb"
+﻿#Region "Microsoft.VisualBasic::226a20c937a8838b006fc83706034bb3, src\computing\Parallel\IpcParallel\Stream\StreamEmit.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 171
-    '    Code Lines: 122 (71.35%)
-    ' Comment Lines: 28 (16.37%)
+    '   Total Lines: 178
+    '    Code Lines: 122 (68.54%)
+    ' Comment Lines: 35 (19.66%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (12.28%)
-    '     File Size: 6.86 KB
+    '   Blank Lines: 21 (11.80%)
+    '     File Size: 7.12 KB
 
 
     '     Class StreamEmit

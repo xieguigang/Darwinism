@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106715406093e4cdb8cce8ba576cf3c0, src\computing\batch\Host\Host.vb"
+﻿#Region "Microsoft.VisualBasic::b51460499e698a019331ae183d240da1, src\computing\batch\Host\Host.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 48 (46.60%)
-    ' Comment Lines: 42 (40.78%)
+    '   Total Lines: 101
+    '    Code Lines: 46 (45.54%)
+    ' Comment Lines: 42 (41.58%)
     '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 13 (12.62%)
-    '     File Size: 4.01 KB
+    '   Blank Lines: 13 (12.87%)
+    '     File Size: 3.90 KB
 
 
     ' Module Host

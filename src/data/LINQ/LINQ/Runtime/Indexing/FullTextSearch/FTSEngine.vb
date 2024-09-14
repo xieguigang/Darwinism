@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f358f4277136d3cb73f6288f91d7f5b2, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\FTSEngine.vb"
+﻿#Region "Microsoft.VisualBasic::e3f7f2d77b87af096307aea3e6c90ced, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\FTSEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 37 (55.22%)
-    ' Comment Lines: 18 (26.87%)
+    '   Total Lines: 81
+    '    Code Lines: 48 (59.26%)
+    ' Comment Lines: 18 (22.22%)
     '    - Xml Docs: 38.89%
     ' 
-    '   Blank Lines: 12 (17.91%)
-    '     File Size: 2.12 KB
+    '   Blank Lines: 15 (18.52%)
+    '     File Size: 2.51 KB
 
 
     ' Class FTSEngine
@@ -49,7 +49,7 @@
     ' 
     '     Function: Search
     ' 
-    '     Sub: (+2 Overloads) Dispose, Indexing
+    '     Sub: (+2 Overloads) Dispose, (+2 Overloads) Indexing, IndexingOneDocument
     ' 
     ' /********************************************************************************/
 
