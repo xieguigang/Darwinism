@@ -80,6 +80,8 @@ Public MustInherit Class SearchIndex
     ''' </summary>
     ''' <param name="doc">
     ''' each element inside the input doc collection is consist with multiple document contents.
+    ''' each value in one collection element share the same index offset value. due to the reason of 
+    ''' each value in one collection element comes from the same object property field. 
     ''' </param>
     ''' <remarks>
     ''' usually be apply for processing index for the clr object array with string array property value.
@@ -88,6 +90,10 @@ Public MustInherit Class SearchIndex
 
     End Sub
 
+    ''' <summary>
+    ''' make data index with auto index offset incremental
+    ''' </summary>
+    ''' <param name="doc">the doc content data for make index</param>
     Public MustOverride Sub Indexing(doc As String)
 
 End Class

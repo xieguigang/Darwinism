@@ -17,6 +17,15 @@ Public MustInherit Class MemoryIndex
     ''' <returns></returns>
     Protected MustOverride Function GetData(Of T)(field As String) As T()
 
+    ''' <summary>
+    ''' check of the data field its element type is scalar type or not
+    ''' </summary>
+    ''' <param name="field"></param>
+    ''' <returns>
+    ''' data frame object field should always be scalar, and the clr object its property field may be an array
+    ''' </returns>
+    Protected MustOverride Function CheckScalar(field As String) As Boolean
+
     Public Function FullText(field As String) As MemoryIndex
         Dim col As String() = GetData(Of String)(field)
         Dim fts As FTSEngine = InMemoryDocuments.CreateFullTextSearch
