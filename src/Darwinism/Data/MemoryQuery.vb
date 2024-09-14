@@ -80,13 +80,17 @@ Module MemoryQuery
     ''' <summary>
     ''' load in-memory table 
     ''' </summary>
-    ''' <param name="x">a dataframe object, or the file resource to a csv dataframe file</param>
+    ''' <param name="x">a dataframe object, a clr object array, or the file resource to a csv dataframe file.</param>
     ''' <param name="env"></param>
     ''' <returns></returns>
     <ExportAPI("load")>
     <RApiReturn(GetType(MemoryTable))>
     Public Function load(<RRawVectorArgument> x As Object, Optional env As Environment = Nothing) As Object
         Dim df As dataframe
+
+        If x Is Nothing Then
+            Return Internal.debug.stop("the required input data source `x` should not be nothing!", env)
+        End If
 
         If TypeOf x Is rdataframe Then
             Dim rdf As rdataframe = x
@@ -99,7 +103,7 @@ Module MemoryQuery
             End With
 
             df = New dataframe(fields.ToArray)
-        Else
+        ElseIf TypeOf x Is String OrElse TypeOf x Is Stream Then
             Dim file = SMRUCC.Rsharp.GetFileStream(x, FileAccess.Read, env)
 
             If file Like GetType(Message) Then
@@ -107,6 +111,13 @@ Module MemoryQuery
             End If
 
             df = dataframe.Load(file.TryCast(Of Stream))
+        ElseIf x.GetType.IsArray OrElse TypeOf x Is vector Then
+            Dim genericArray As Array = renv.UnsafeTryCastGenericArray(CLRVector.asObject(x))
+            Dim index As New MemoryPool(genericArray)
+
+            Return index
+        Else
+            Return Message.InCompatibleType(GetType(dataframe), x.GetType, env)
         End If
 
         Dim table As New MemoryTable(df)
