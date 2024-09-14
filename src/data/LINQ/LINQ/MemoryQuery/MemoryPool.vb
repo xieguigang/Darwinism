@@ -8,9 +8,20 @@ Imports Microsoft.VisualBasic.Scripting
 Public Class MemoryPool : Inherits MemoryIndex
 
     ReadOnly vector As DataObjectVector
+    ''' <summary>
+    ''' the raw input pool data
+    ''' </summary>
+    ReadOnly pool As Array
 
-    Sub New(data As Array)
+    Sub New(data As Array, Optional [property] As String = Nothing)
         vector = New DataObjectVector(data)
+
+        If Not [property].StringEmpty() Then
+            ' index via the nested data property
+            ' not the raw vector
+            ' the query returns result use the raw vector
+            vector = New DataObjectVector(DirectCast(vector(name:=[property]), Array))
+        End If
     End Sub
 
     Protected Overrides Function GetData(Of V)(field As String) As V()
@@ -39,8 +50,6 @@ Public Class MemoryPool : Inherits MemoryIndex
         If index.IsNullOrEmpty Then
             Return Nothing
         End If
-
-        Dim pool As Array = vector.RawArray
 
         Return index _
             .Select(Function(i) pool(i)) _
