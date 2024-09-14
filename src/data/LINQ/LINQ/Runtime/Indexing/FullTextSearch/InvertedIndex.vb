@@ -95,20 +95,28 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
         Me.index = index
     End Sub
 
+    ''' <summary>
+    ''' get a new id for the new document data
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function call will make the index id advance 1. updates the index status to the next new document.
+    ''' </remarks>
+    Public Function MoveNext() As Integer
+        Return ++id
+    End Function
+
     Public Sub Add(docs As IEnumerable(Of String))
         For Each doc As String In docs
             Call Add(doc)
         Next
     End Sub
 
-    Public Function Add(doc As String) As Boolean
-        Dim id As Integer
+    Public Function Add(doc As String, id As Integer) As Boolean
         Dim tokens As String() = split(doc)
 
         If tokens.IsNullOrEmpty Then
             Return False
-        Else
-            id = ++Me.id
         End If
 
         Dim append As Boolean = False
@@ -132,6 +140,12 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
         Next
 
         Return append
+    End Function
+
+    Public Function Add(doc As String) As Boolean
+        Dim id As Integer = ++Me.id
+        Dim flag As Boolean = Add(doc, id)
+        Return flag
     End Function
 
     Private Function split(doc As String) As String()

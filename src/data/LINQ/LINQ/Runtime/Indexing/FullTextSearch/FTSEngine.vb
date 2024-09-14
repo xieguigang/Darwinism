@@ -83,6 +83,20 @@ Public Class FTSEngine : Inherits SearchIndex
         End If
     End Sub
 
+    Public Overrides Sub Indexing(doc As String, id As Integer)
+        If index.Add(doc, id) Then
+            Call documents.Save(doc)
+        End If
+    End Sub
+
+    Protected Overrides Sub IndexingOneDocument(data() As String)
+        Dim id As Integer = index.MoveNext
+
+        For Each doc As String In data.SafeQuery
+            Call Indexing(doc, id)
+        Next
+    End Sub
+
     Public Iterator Function Search(text As String) As IEnumerable(Of SeqValue(Of String))
         Dim ids = index.Search(text)
 
