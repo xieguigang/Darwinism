@@ -27,7 +27,8 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>load</strong>(<i>x</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>load</strong>(<i>x</i>,
+    <i>nested.field</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -36,6 +37,11 @@
             
 <dt>x</dt>
 <dd><p>a dataframe object, a clr object array, or the file resource to a csv dataframe file.</p></dd>
+
+
+<dt>nested.field</dt>
+<dd><p>use the nested property for make the clr object array index, this property name parameter value not working 
+ for the dataframe or the table value, only works for the generic clr array object index. [as string]</p></dd>
 
 
 <dt>env</dt>
