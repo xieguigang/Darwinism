@@ -58,6 +58,8 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -71,6 +73,8 @@ Imports Image = System.Drawing.Image
 Imports Bitmap = System.Drawing.Bitmap
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
 Imports FontStyle = System.Drawing.FontStyle
+Imports HatchBrush = System.Drawing.Drawing2D.HatchBrush
+Imports HatchStyle = System.Drawing.Drawing2D.HatchStyle
 #Else
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports Pens = Microsoft.VisualBasic.Imaging.Pens
@@ -83,6 +87,8 @@ Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+Imports HatchBrush = Microsoft.VisualBasic.Imaging.HatchBrush
+Imports HatchStyle = Microsoft.VisualBasic.Imaging.HatchStyle
 #End If
 
 ''' <summary>
@@ -263,10 +269,7 @@ Public Class Captcha
         _CaptchaWidth = Width
 
         If Font Is Nothing Then
-            CaptchaFont = New Font("Georgia", 30.0F,
-                                   FontStyle.Bold,
-                                   GraphicsUnit.Point,
-                                   Convert.ToByte(0))
+            CaptchaFont = New Font("Georgia", 30.0F, FontStyle.Bold)
         Else
             CaptchaFont = Font
         End If
@@ -287,10 +290,10 @@ Public Class Captcha
         captchaDigit = RandomValue.[Next](10000, 1000000).ToString()
         _CaptchaImage = New Bitmap(_CaptchaWidth, _CaptchaHeight)
 
-        Using CaptchaGraphics As Graphics = Graphics.FromImage(CaptchaImage)
+        Using CaptchaGraphics As IGraphics = DriverLoad.CreateGraphicsDevice(CaptchaImage)
 
-            Using BackgroundBrush As New Drawing2D.HatchBrush(   ' 填充背景和绘制栅格
-                Drawing2D.HatchStyle.SmallGrid,
+            Using BackgroundBrush As New HatchBrush(   ' 填充背景和绘制栅格
+                HatchStyle.SmallGrid,
                 Color.LightGray,
                 Color.WhiteSmoke)
                 Call CaptchaGraphics.FillRectangle(BackgroundBrush, 0, 0, _CaptchaWidth, _CaptchaHeight)
