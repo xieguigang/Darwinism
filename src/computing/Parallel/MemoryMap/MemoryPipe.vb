@@ -1,63 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::f71027f988b76be83bc3164ada6d6327, src\computing\Parallel\MemoryMap\MemoryPipe.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 77
-    '    Code Lines: 46 (59.74%)
-    ' Comment Lines: 12 (15.58%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 19 (24.68%)
-    '     File Size: 2.06 KB
+' Summaries:
 
 
-    ' Class MemoryPipe
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: LoadImage, LoadStream, ToString
-    ' 
-    '     Sub: (+2 Overloads) WriteBuffer
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 77
+'    Code Lines: 46 (59.74%)
+' Comment Lines: 12 (15.58%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 19 (24.68%)
+'     File Size: 2.06 KB
+
+
+' Class MemoryPipe
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: LoadImage, LoadStream, ToString
+' 
+'     Sub: (+2 Overloads) WriteBuffer
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+
+#If NET48 Then
+Imports Image = System.Drawing.Image
+#Else
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+#End If
 
 Public Class MemoryPipe
 
