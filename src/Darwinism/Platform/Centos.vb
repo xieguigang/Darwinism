@@ -61,6 +61,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' 
@@ -73,7 +74,7 @@ Imports SMRUCC.Rsharp.Runtime.Interop
 Public Module CentosTools
 
     Sub Main()
-        Call Internal.Object.Converts.makeDataframe.addHandler(GetType(netstat()), AddressOf netstat_table)
+        Call RInternal.Object.Converts.makeDataframe.addHandler(GetType(netstat()), AddressOf netstat_table)
     End Sub
 
     <RGenericOverloads("as.data.frame")>
@@ -103,7 +104,7 @@ Public Module CentosTools
         If Interaction.isUnix Then
             Return Interaction.HasCommand(command)
         Else
-            Return Internal.debug.stop("only works on linux system!", env)
+            Return RInternal.debug.stop("only works on linux system!", env)
         End If
     End Function
 
@@ -133,7 +134,7 @@ Public Module CentosTools
         If Interaction.isUnix Then
             Return Interaction.Shell(command, args, verbose:=verbose)
         Else
-            Return Internal.debug.stop("only works on linux system!", env)
+            Return RInternal.debug.stop("only works on linux system!", env)
         End If
     End Function
 

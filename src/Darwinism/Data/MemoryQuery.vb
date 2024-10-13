@@ -69,6 +69,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports dataframe = Microsoft.VisualBasic.Data.csv.IO.DataFrame
 Imports rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports renv = SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Imports VB = Microsoft.VisualBasic.Language.Runtime
 
 ''' <summary>
@@ -96,7 +97,7 @@ Module MemoryQuery
         Dim df As dataframe
 
         If x Is Nothing Then
-            Return Internal.debug.stop("the required input data source `x` should not be nothing!", env)
+            Return RInternal.debug.stop("the required input data source `x` should not be nothing!", env)
         End If
 
         If TypeOf x Is rdataframe Then

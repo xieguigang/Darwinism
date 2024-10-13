@@ -69,6 +69,7 @@ Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports REnvironment = SMRUCC.Rsharp.Runtime.Environment
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Docker commands
@@ -239,7 +240,7 @@ Public Module DockerTools
             Dim f As RMethodInfo = x
 
             If f.parameters.Length <> 1 Then
-                Return Internal.debug.stop("invalid docker command wrapper!", env)
+                Return RInternal.debug.stop("invalid docker command wrapper!", env)
             End If
 
             If f.name = "docker" AndAlso f.name = "docker" Then
@@ -247,14 +248,14 @@ Public Module DockerTools
                 docker.SetImage(New Image(name))
                 Return docker
             Else
-                Return Internal.debug.stop("invalid docker command wrapper!", env)
+                Return RInternal.debug.stop("invalid docker command wrapper!", env)
             End If
         Else
             ' create docker image reference
             name = CLRVector.asCharacter(x).FirstOrDefault
 
             If name.StringEmpty Then
-                Return Internal.debug.stop("invalid docker image: empty image reference name!", env)
+                Return RInternal.debug.stop("invalid docker image: empty image reference name!", env)
             End If
         End If
 

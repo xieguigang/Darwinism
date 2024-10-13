@@ -56,7 +56,7 @@ Imports System.Runtime.CompilerServices
 Imports Darwinism.Centos
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports SMRUCC.Rsharp.Runtime
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' An automation pipeline toolkit build for cloud computing
@@ -68,7 +68,7 @@ Imports SMRUCC.Rsharp.Runtime
 Public Module Bash
 
     Sub New()
-        Call Internal.ConsolePrinter.AttachConsoleFormatter(Of PuTTY)(Function(ssh) ssh.ToString)
+        Call RInternal.ConsolePrinter.AttachConsoleFormatter(Of PuTTY)(Function(ssh) ssh.ToString)
     End Sub
 
     ''' <summary>
