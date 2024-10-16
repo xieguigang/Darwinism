@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec2461772164362b3eb3be10317cf150, src\data\LINQ\LINQ\MemoryQuery\MemoryPool.vb"
+﻿#Region "Microsoft.VisualBasic::28f02609736a861f9bb3efa269db20c8, src\data\LINQ\LINQ\MemoryQuery\MemoryPool.vb"
 
     ' Author:
     ' 
@@ -173,4 +173,3 @@ Public Class MemoryPool(Of T) : Inherits MemoryIndex
         Return is_scalar
     End Function
 End Class
-

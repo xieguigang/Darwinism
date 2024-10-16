@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::410153f0e591303c55e5321410882adf, src\Darwinism\Platform\Bash.vb"
+﻿#Region "Microsoft.VisualBasic::afe40751a42a5eb48c7dccac9c79b1c7, src\Darwinism\Platform\Bash.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 7 (10.77%)
-    '     File Size: 2.32 KB
+    '     File Size: 2.34 KB
 
 
     ' Module Bash

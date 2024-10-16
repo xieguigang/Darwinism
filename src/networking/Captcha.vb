@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, src\networking\Captcha.vb"
+﻿#Region "Microsoft.VisualBasic::bb40480eb9539420fbbee581a2efd635, src\networking\Captcha.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 296
-'    Code Lines: 256 (86.49%)
-' Comment Lines: 16 (5.41%)
-'    - Xml Docs: 93.75%
-' 
-'   Blank Lines: 24 (8.11%)
-'     File Size: 12.40 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Captcha
-' 
-'     Properties: CaptchaHeight, CaptchaImage, CaptchaValue, CaptchaWidth, TimeStamp
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: ToString
-' 
-'     Sub: __generateCaptcha
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 323
+    '    Code Lines: 282 (87.31%)
+    ' Comment Lines: 16 (4.95%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 25 (7.74%)
+    '     File Size: 13.67 KB
+
+
+    ' Class Captcha
+    ' 
+    '     Properties: CaptchaHeight, CaptchaImage, CaptchaValue, CaptchaWidth, TimeStamp
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: ToString
+    ' 
+    '     Sub: __generateCaptcha
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

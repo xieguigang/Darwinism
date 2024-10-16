@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8144ea549744c5442bafc340f7449cc5, src\data\LINQ\LINQ\MemoryQuery\MemoryIndex.vb"
+﻿#Region "Microsoft.VisualBasic::4e39ee11460e241eb7ab8e479c0ba7a1, src\data\LINQ\LINQ\MemoryQuery\MemoryIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.67%
     ' 
     '   Blank Lines: 42 (18.42%)
-    '     File Size: 8.94 KB
+    '     File Size: 8.98 KB
 
 
     ' Class MemoryIndex
@@ -281,4 +281,3 @@ Public MustInherit Class MemoryIndex
         End If
     End Sub
 End Class
-
