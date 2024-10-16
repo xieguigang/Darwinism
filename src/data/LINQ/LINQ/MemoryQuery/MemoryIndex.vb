@@ -92,7 +92,7 @@ Public MustInherit Class MemoryIndex
         If CheckScalar(field) Then
             Call fts.Indexing(GetData(Of String)(field))
         Else
-            Call fts.Indexing(GetData(Of String())(field))
+            Call fts.Indexing(GetData(Of String())(field).Select(Function(bstr) bstr.JoinBy(" ")))
         End If
 
         m_fulltext(field) = fts
