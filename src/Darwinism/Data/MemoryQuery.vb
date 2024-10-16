@@ -342,7 +342,7 @@ Module MemoryQuery
 
         If TypeOf x Is MemoryTable Then
             Dim tbl As MemoryTable = DirectCast(x, MemoryTable)
-            Dim df As dataframe = tbl.Query(filter)
+            Dim df As dataframe = tbl.Query(filter.TryCast(Of IEnumerable(Of Query)))
             Dim result As rdataframe
 
             If df Is Nothing Then
