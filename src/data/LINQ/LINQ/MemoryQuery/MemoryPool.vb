@@ -117,11 +117,9 @@ Public Class MemoryPool : Inherits MemoryIndex
 
     Protected Overrides Function GetData(Of V)(field As String) As V()
         Dim prop As PropertyInfo
-        Dim is_subvec As Boolean = False
         Dim vector As DataObjectVector = Me.vector
 
         If field.Contains("."c) Then
-            is_subvec = True
             vector = sub_vector(field)
             field = field.Split("."c).Last
         End If
