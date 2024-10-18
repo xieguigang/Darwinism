@@ -340,9 +340,11 @@ Module MemoryQuery
             Return filter.TryCast(Of Message)
         End If
 
+        Dim queryList = filter.TryCast(Of IEnumerable(Of Query)).ToArray
+
         If TypeOf x Is MemoryTable Then
             Dim tbl As MemoryTable = DirectCast(x, MemoryTable)
-            Dim df As dataframe = tbl.Query(filter.TryCast(Of IEnumerable(Of Query)))
+            Dim df As dataframe = tbl.Query(queryList)
             Dim result As rdataframe
 
             If df Is Nothing Then
@@ -360,9 +362,13 @@ Module MemoryQuery
             Return result
         Else
             Dim pool As MemoryPool = DirectCast(x, MemoryPool)
-            Dim array As Object() = pool.Query(filter.TryCast(Of IEnumerable(Of Query)))
+            Dim array As Object() = pool.Query(queryList)
 
-            Return renv.TryCastGenericArray(array, env)
+            If array Is Nothing Then
+                Return Nothing
+            Else
+                Return renv.TryCastGenericArray(array, env)
+            End If
         End If
     End Function
 
