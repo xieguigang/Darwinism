@@ -58,6 +58,7 @@
 #End Region
 
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Scripting
 
@@ -72,6 +73,8 @@ Public Class MemoryPool : Inherits MemoryIndex
     ''' </summary>
     ReadOnly pool As Array
 
+    ReadOnly sub_vector As New Dictionary(Of String, DataObjectVector)
+
     Sub New(data As Array, Optional [property] As String = Nothing)
         vector = New DataObjectVector(data)
 
@@ -84,7 +87,30 @@ Public Class MemoryPool : Inherits MemoryIndex
     End Sub
 
     Protected Overrides Function CheckScalar(field As String) As Boolean
-        Dim prop As PropertyInfo = vector.GetProperty(field)
+        Dim prop As PropertyInfo
+
+        If field.Contains("."c) Then
+            ' a.b.c get from the clr object which
+            ' comes from the property value.
+            Dim path As String() = field.Split("."c)
+            Dim subvec As DataObjectVector = sub_vector _
+                .ComputeIfAbsent(path(0), lazyValue:=Function(name) vector.GetSubVector(name))
+            Dim visit As New List(Of String) From {path(0)}
+
+            For Each name As String In path.Skip(1)
+                visit.Add(name)
+                subvec = sub_vector _
+                    .ComputeIfAbsent(visit.JoinBy("."),
+                                     lazyValue:=Function()
+                                                    Return subvec.GetSubVector(name)
+                                                End Function)
+            Next
+
+            prop = subvec.GetProperty(path.Last)
+        Else
+            prop = vector.GetProperty(field)
+        End If
+
         Dim is_scalar As Boolean = Not prop.PropertyType.IsArray
         Return is_scalar
     End Function
