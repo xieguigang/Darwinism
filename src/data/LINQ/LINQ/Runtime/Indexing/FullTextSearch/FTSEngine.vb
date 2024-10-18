@@ -80,6 +80,11 @@ Public Class FTSEngine : Inherits SearchIndex
     Public Overrides Sub Indexing(doc As String)
         If index.Add(doc) Then
             Call documents.Save(doc)
+        ElseIf doc Is Nothing Then
+            ' 20241018 for avoid the incorrect data offset
+            ' when there are some missing content in the
+            ' data source
+            Call documents.Save("")
         End If
     End Sub
 
