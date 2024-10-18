@@ -359,7 +359,10 @@ Module MemoryQuery
 
             Return result
         Else
-            Throw New NotImplementedException
+            Dim pool As MemoryPool = DirectCast(x, MemoryPool)
+            Dim array As Object() = pool.Query(filter.TryCast(Of IEnumerable(Of Query)))
+
+            Return renv.TryCastGenericArray(array, env)
         End If
     End Function
 

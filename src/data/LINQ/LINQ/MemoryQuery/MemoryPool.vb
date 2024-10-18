@@ -109,7 +109,7 @@ Public Class MemoryPool : Inherits MemoryIndex
     ''' <returns>
     ''' this function will returns nothing if query filter has no result
     ''' </returns>
-    Public Function Query(filter As IEnumerable(Of Query)) As Array()
+    Public Function Query(filter As IEnumerable(Of Query)) As Object()
         Dim index As Integer() = GetIndex(filter)
 
         If index.IsNullOrEmpty Then
