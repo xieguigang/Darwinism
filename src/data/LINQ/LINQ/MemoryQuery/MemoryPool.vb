@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::28f02609736a861f9bb3efa269db20c8, src\data\LINQ\LINQ\MemoryQuery\MemoryPool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 116
-    '    Code Lines: 69 (59.48%)
-    ' Comment Lines: 26 (22.41%)
-    '    - Xml Docs: 80.77%
-    ' 
-    '   Blank Lines: 21 (18.10%)
-    '     File Size: 3.46 KB
+' Summaries:
 
 
-    ' Class MemoryPool
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CheckScalar, GetData, Query
-    ' 
-    ' Class MemoryPool
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CheckScalar, GetData, Query
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 116
+'    Code Lines: 69 (59.48%)
+' Comment Lines: 26 (22.41%)
+'    - Xml Docs: 80.77%
+' 
+'   Blank Lines: 21 (18.10%)
+'     File Size: 3.46 KB
+
+
+' Class MemoryPool
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CheckScalar, GetData, Query
+' 
+' Class MemoryPool
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CheckScalar, GetData, Query
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -92,12 +92,18 @@ Public Class MemoryPool : Inherits MemoryIndex
         If field.Contains("."c) Then
             ' a.b.c get from the clr object which
             ' comes from the property value.
+            ' a is root
+            ' b is path
+            ' c is the data property
             Dim path As String() = field.Split("."c)
             Dim subvec As DataObjectVector = sub_vector _
                 .ComputeIfAbsent(path(0), lazyValue:=Function(name) vector.GetSubVector(name))
             Dim visit As New List(Of String) From {path(0)}
 
-            For Each name As String In path.Skip(1)
+            ' -2 means we needs to ignores of the data property
+            For i As Integer = 1 To path.Length - 2
+                Dim name As String = path(i)
+
                 visit.Add(name)
                 subvec = sub_vector _
                     .ComputeIfAbsent(visit.JoinBy("."),
@@ -106,6 +112,7 @@ Public Class MemoryPool : Inherits MemoryIndex
                                                 End Function)
             Next
 
+            ' get property for read the data 
             prop = subvec.GetProperty(path.Last)
         Else
             prop = vector.GetProperty(field)
@@ -120,8 +127,11 @@ Public Class MemoryPool : Inherits MemoryIndex
         Dim vector As DataObjectVector = Me.vector
 
         If field.Contains("."c) Then
-            vector = sub_vector(field)
-            field = field.Split("."c).Last
+            Dim t = field.Split("."c)
+            Dim path As String = t.Take(t.Length - 1).JoinBy(".")
+
+            vector = sub_vector(path)
+            field = t.Last
         End If
 
         prop = vector.GetProperty(field)
