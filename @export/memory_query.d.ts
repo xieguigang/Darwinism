@@ -10,7 +10,14 @@
 */
 declare namespace memory_query {
    /**
-     * @param env default value Is ``null``.
+    * value between a given range?
+    * 
+    * 
+     * @param name -
+     * @param range -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function between(name: string, range: any, env?: object): object;
    /**
@@ -29,6 +36,14 @@ declare namespace memory_query {
      * @param fields -
    */
    function hashindex(x: object, fields: string): object;
+   /**
+    * create a index that used for the text similarity search
+    * 
+    * 
+     * @param x -
+     * @param fields -
+   */
+   function levenshtein_index(x: object, fields: string): object;
    /**
     * load in-memory table
     * 
@@ -49,8 +64,11 @@ declare namespace memory_query {
     * 
      * @param name -
      * @param text -
+     * @param boolean_mode set this parameter will use the levenshtein similarity matches method for index search
+     * 
+     * + default value Is ``true``.
    */
-   function match_against(name: string, text: string): object;
+   function match_against(name: string, text: string, boolean_mode?: boolean): object;
    /**
     * make dataframe query
     * 

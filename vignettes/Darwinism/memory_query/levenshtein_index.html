@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>value between a given range?</title>
+    <title>create a index that used for the text similarity search</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>between {memory_query}</td>
+                <td>levenshtein_index {memory_query}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>value between a given range?</h2>
+        <h2>create a index that used for the text similarity search</h2>
 
         <h3>Description</h3>
 
@@ -27,23 +27,19 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>between</strong>(<i>name</i>, <i>range</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>levenshtein_index</strong>(<i>x</i>, <i>fields</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>name</dt>
+<dt>x</dt>
+<dd><p>[as <a href="/vignettes/clr/LINQ/MemoryIndex.html">MemoryIndex</a>]</p></dd>
+
+
+<dt>fields</dt>
 <dd><p>[as string]</p></dd>
-
-
-<dt>range</dt>
-<dd><p>-</p></dd>
-
-
-<dt>env</dt>
-<dd><p>[as <a href="/vignettes/clr/SMRUCC/Rsharp/Runtime/Environment.html">Environment</a>]</p></dd>
 
         </table>
 
@@ -58,7 +54,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/LINQ/Query.html">Query</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/LINQ/Query.html">Query</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/LINQ/MemoryIndex.html">MemoryIndex</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/LINQ/MemoryIndex.html">MemoryIndex</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

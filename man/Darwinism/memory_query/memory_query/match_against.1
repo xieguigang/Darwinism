@@ -4,7 +4,8 @@
 match_against \- create a full text search filter
 .SH SYNOPSIS
 \fImatch_against(\fBname\fR as string, 
-\fBtext\fR as string);\fR
+\fBtext\fR as string, 
+\fBboolean_mode\fR as boolean = TRUE);\fR
 .SH DESCRIPTION
 .PP
 create a full text search filter
@@ -15,6 +16,11 @@ create a full text search filter
 .PP
 .PP
 \fBtext\fB \fR\- -. 
+.PP
+.PP
+\fBboolean_mode\fB \fR\- 
+ set this parameter will use the levenshtein similarity matches method for index search
+. 
 .PP
 .SH SEE ALSO
 memory_query

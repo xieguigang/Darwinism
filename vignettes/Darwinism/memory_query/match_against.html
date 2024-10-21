@@ -27,7 +27,8 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>match_against</strong>(<i>name</i>, <i>text</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>match_against</strong>(<i>name</i>, <i>text</i>,
+    <i>boolean.mode</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -40,6 +41,10 @@
 
 <dt>text</dt>
 <dd><p>[as string]</p></dd>
+
+
+<dt>boolean.mode</dt>
+<dd><p>set this parameter will use the levenshtein similarity matches method for index search. [as boolean]</p></dd>
 
         </table>
 
