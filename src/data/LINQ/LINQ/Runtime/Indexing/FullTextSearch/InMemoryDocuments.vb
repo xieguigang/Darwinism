@@ -79,6 +79,10 @@ Public Class InMemoryDocuments : Inherits DocumentPool
         Return documents(id)
     End Function
 
+    Public Shared Function CreateLevenshteinIndex() As LevenshteinIndex
+        Return New LevenshteinIndex(New InMemoryDocuments)
+    End Function
+
     Public Shared Function CreateFullTextSearch() As FTSEngine
         Return New FTSEngine(New InMemoryDocuments)
     End Function

@@ -21,4 +21,8 @@ Public Class LevenshteinIndex : Inherits SearchIndex
     Protected Overrides Sub IndexingOneDocument(data() As String)
         Call Indexing(data.JoinBy(" "))
     End Sub
+
+    Public Function Search(text As String) As IEnumerable(Of Integer)
+        Return index.Query(text)
+    End Function
 End Class

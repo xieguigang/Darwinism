@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::4e39ee11460e241eb7ab8e479c0ba7a1, src\data\LINQ\LINQ\MemoryQuery\MemoryIndex.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 228
-    '    Code Lines: 156 (68.42%)
-    ' Comment Lines: 30 (13.16%)
-    '    - Xml Docs: 96.67%
-    ' 
-    '   Blank Lines: 42 (18.42%)
-    '     File Size: 8.98 KB
+' Summaries:
 
 
-    ' Class MemoryIndex
-    ' 
-    '     Function: FullText, GetIndex, HashIndex, ValueRange
-    ' 
-    '     Sub: FullTextSearch, HashSearch, ValueMatchSearch, ValueRangeSearch
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 228
+'    Code Lines: 156 (68.42%)
+' Comment Lines: 30 (13.16%)
+'    - Xml Docs: 96.67%
+' 
+'   Blank Lines: 42 (18.42%)
+'     File Size: 8.98 KB
+
+
+' Class MemoryIndex
+' 
+'     Function: FullText, GetIndex, HashIndex, ValueRange
+' 
+'     Sub: FullTextSearch, HashSearch, ValueMatchSearch, ValueRangeSearch
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Data
+Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
@@ -63,6 +64,7 @@ Public MustInherit Class MemoryIndex
     Protected ReadOnly m_fulltext As New Dictionary(Of String, FTSEngine)
     Protected ReadOnly m_hashindex As New Dictionary(Of String, TermHashIndex)
     Protected ReadOnly m_valueindex As New Dictionary(Of String, ValueIndex)
+    Protected ReadOnly m_levenshtein As New Dictionary(Of String, LevenshteinIndex)
 
     ''' <summary>
     ''' a proxy reader function for read data from the internal data resource set.
@@ -100,7 +102,25 @@ Public MustInherit Class MemoryIndex
         Return Me
     End Function
 
+    Public Function LevenshteinTree(field As String) As MemoryIndex
+        Dim levenshtein = InMemoryDocuments.CreateLevenshteinIndex
+
+        If CheckScalar(field) Then
+            Call levenshtein.Indexing(GetData(Of String)(field))
+        Else
+            Throw New InvalidDataException("the character vector is not supported in levenshtein text similarity index!")
+        End If
+
+        m_levenshtein(field) = levenshtein
+
+        Return Me
+    End Function
+
     Public Function HashIndex(field As String) As MemoryIndex
+        If Not CheckScalar(field) Then
+            Throw New InvalidDataException("the character vector is not supported in term hash index!")
+        End If
+
         Dim col As String() = GetData(Of String)(field)
         Dim hash As TermHashIndex = InMemoryDocuments.CreateHashSearch
         hash.Indexing(col)
@@ -136,12 +156,13 @@ Public MustInherit Class MemoryIndex
 
         For Each q As Query In filter
             Select Case q.search
-                Case LINQ.Query.Type.FullText : Call FullTextSearch(q, index)
-                Case LINQ.Query.Type.HashTerm : Call HashSearch(q, index)
-                Case LINQ.Query.Type.ValueRange : Call ValueRangeSearch(q, index)
-                Case LINQ.Query.Type.ValueMatch,
-                     LINQ.Query.Type.ValueRangeGreaterThan,
-                     LINQ.Query.Type.ValueRangeLessThan
+                Case Query.Type.FullText : Call FullTextSearch(q, index)
+                Case Query.Type.HashTerm : Call HashSearch(q, index)
+                Case Query.Type.Levenshtein : Call LevenshteinSearch(q, index)
+                Case Query.Type.ValueRange : Call ValueRangeSearch(q, index)
+                Case Query.Type.ValueMatch,
+                     Query.Type.ValueRangeGreaterThan,
+                     Query.Type.ValueRangeLessThan
 
                     Call ValueMatchSearch(q, index)
 
@@ -278,6 +299,22 @@ Public MustInherit Class MemoryIndex
             index = offsets.Select(Function(a) a.i).ToArray
         Else
             index = index.Intersect(offsets.Select(Function(a) a.i)).ToArray
+        End If
+    End Sub
+
+    Protected Sub LevenshteinSearch(q As Query, ByRef index As Integer())
+        Dim text As String = any.ToString(q.value)
+
+        If Not m_fulltext.ContainsKey(q.field) Then
+            Throw New MissingPrimaryKeyException($"missing levenshtein text search index on data field '{q.field}'!")
+        End If
+
+        Dim offsets = m_levenshtein(q.field).Search(text).ToArray
+
+        If index Is Nothing Then
+            index = offsets
+        Else
+            index = index.Intersect(offsets).ToArray
         End If
     End Sub
 End Class

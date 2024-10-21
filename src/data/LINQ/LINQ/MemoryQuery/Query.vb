@@ -64,8 +64,12 @@
 Public Class Query
 
     Public Enum Type
+        ' text search index
         FullText
         HashTerm
+        Levenshtein
+
+        ' numeric value search
         ValueRange
         ValueRangeGreaterThan
         ValueRangeLessThan
