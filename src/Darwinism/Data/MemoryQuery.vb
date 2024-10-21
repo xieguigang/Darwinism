@@ -148,6 +148,15 @@ Module MemoryQuery
         Return x
     End Function
 
+    <ExportAPI("levenshtein_index")>
+    Public Function Levenshtein_search(x As MemoryIndex, fields As String()) As MemoryIndex
+        For Each name As String In fields
+
+        Next
+
+        Return x
+    End Function
+
     ''' <summary>
     ''' set hash term search index on data fields
     ''' </summary>
@@ -199,9 +208,12 @@ Module MemoryQuery
     ''' </summary>
     ''' <param name="name"></param>
     ''' <param name="text"></param>
+    ''' <param name="boolean_mode">
+    ''' set this parameter will use the levenshtein similarity matches method for index search
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("match_against")>
-    Public Function match_against(name As String, text As String) As Query
+    Public Function match_against(name As String, text As String, Optional boolean_mode As Boolean = True) As Query
         Return New Query With {
             .field = name,
             .search = Query.Type.FullText,
