@@ -57,6 +57,10 @@ Public MustInherit Class DocumentPool
     ''' save the document text to file
     ''' </summary>
     ''' <param name="doc"></param>
+    ''' <remarks>
+    ''' this function usually be used for save the document text string
+    ''' to file and then returns the offset value of the document.
+    ''' </remarks>
     Public MustOverride Function Save(doc As String) As Integer
 
     ''' <summary>
