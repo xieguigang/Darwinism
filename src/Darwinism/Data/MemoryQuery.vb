@@ -148,10 +148,16 @@ Module MemoryQuery
         Return x
     End Function
 
+    ''' <summary>
+    ''' create a index that used for the text similarity search
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="fields"></param>
+    ''' <returns></returns>
     <ExportAPI("levenshtein_index")>
     Public Function Levenshtein_search(x As MemoryIndex, fields As String()) As MemoryIndex
         For Each name As String In fields
-
+            x = x.LevenshteinTree(name)
         Next
 
         Return x
@@ -216,11 +222,20 @@ Module MemoryQuery
     Public Function match_against(name As String, text As String, Optional boolean_mode As Boolean = True) As Query
         Return New Query With {
             .field = name,
-            .search = Query.Type.FullText,
+            .search = If(boolean_mode,
+                Query.Type.FullText,
+                Query.Type.Levenshtein),
             .value = text
         }
     End Function
 
+    ''' <summary>
+    ''' value between a given range?
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="range"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("between")>
     Public Function between(name As String,
                             <RRawVectorArgument>
