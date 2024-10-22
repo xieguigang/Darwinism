@@ -2,7 +2,7 @@
   "profiles": {
     "Spy": {
       "commandName": "Project",
-      "commandLineArgs": "\"E:\\biodeep\\biodeepdb_v3\\NPOC2021\\NPOC2021\\fragment.bson\""
+      "commandLineArgs": "\"G:\\LOTUSlatest\\NPOC2021\\NPOC2021\\lotusUniqueNaturalProduct.bson\""
     }
   }
 }
