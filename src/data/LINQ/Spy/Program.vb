@@ -1,5 +1,6 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 
 Module Program
@@ -16,10 +17,17 @@ Module Program
         End Select
     End Function
 
+    ''' <summary>
+    ''' inspect of the MongoDB bson list
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     Private Function InspectBson(file As String, args As CommandLine) As Integer
         Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Dim doc = BSONFormat.Load(s)
-
+            For Each item In BSONFormat.LoadList(s)
+                Call Console.WriteLine(item.BuildJsonString)
+            Next
         End Using
     End Function
 
