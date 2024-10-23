@@ -4,6 +4,12 @@ Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 
 Public Class QueryIndex : Inherits MemoryQuery
 
+    Public ReadOnly Property hashKeys As String()
+        Get
+            Return m_hashindex.Keys.ToArray
+        End Get
+    End Property
+
     ''' <summary>
     ''' 
     ''' </summary>

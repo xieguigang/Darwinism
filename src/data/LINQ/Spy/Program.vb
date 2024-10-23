@@ -84,27 +84,32 @@ Module Program
         Dim query As AppHandler =
             Sub(req, response)
                 Dim url As URL = req.URL
-                Dim q As New List(Of Query)
 
-                For Each qi In url.query
-                    Call q.Add(New Query With {.field = qi.Key, .search = LINQ.Query.Type.HashTerm, .value = qi.Value.First})
-                Next
+                If url.path = "/hash_keys" Then
+                    Call response.WriteJSON(queryIndex.hashKeys)
+                Else
+                    Dim q As New List(Of Query)
 
-                Dim index = queryIndex.GetIndex(q)
-                Dim data As New List(Of JsonObject)
+                    For Each qi In url.query
+                        Call q.Add(New Query With {.field = qi.Key, .search = LINQ.Query.Type.HashTerm, .value = qi.Value.First})
+                    Next
 
-                Select Case type
-                    Case "bson"
-                        For Each id As Integer In index.SafeQuery
-                            Call data.Add(BSONFormat.Load(document.GetSubBuffer(id), leaveOpen:=True))
-                        Next
-                    Case Else
-                        Throw New NotImplementedException
-                End Select
+                    Dim index = queryIndex.GetIndex(q)
+                    Dim data As New List(Of JsonObject)
 
-                Call response.AddCustomHttpHeader("Content-Type", "application/json")
-                Call response.WriteLine(data.CreateArray.BuildJsonString)
-                Call response.Flush()
+                    Select Case type
+                        Case "bson"
+                            For Each id As Integer In index.SafeQuery
+                                Call data.Add(BSONFormat.Load(document.GetSubBuffer(id), leaveOpen:=True))
+                            Next
+                        Case Else
+                            Throw New NotImplementedException
+                    End Select
+
+                    Call response.AddCustomHttpHeader("Content-Type", "application/json")
+                    Call response.WriteLine(data.CreateArray.BuildJsonString)
+                    Call response.Flush()
+                End If
             End Sub
 
         Return New HttpDriver() _
