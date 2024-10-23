@@ -1,4 +1,6 @@
 Imports System.IO
+Imports Flute.Http
+Imports Flute.Http.Core.HttpSocket
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.MIME.application.json
@@ -59,6 +61,31 @@ Module Program
         End Select
 
         Return 0
+    End Function
+
+    <ExportAPI("/listen")>
+    <Usage("/listen -i <input_file> [-p <http_port, default=80>]")>
+    Public Function listen(args As CommandLine) As Integer
+        Dim file As String = args("-i")
+        Dim port As Integer = args("-p") Or 80
+        Dim indexfile As String = file.ChangeSuffix(".rqi")
+
+        If Not indexfile.FileExists(ZERO_Nonexists:=True) Then
+            Throw New InvalidProgramException("No index for the database file, please make index via ``/make_index`` at first, and then try again!")
+        End If
+
+        Dim type As String = file.ExtensionSuffix
+        Dim document As DocumentIndex = DocumentIndexer.LoadDocument(file)
+        Dim queryIndex As 
+        Dim query As AppHandler =
+            Sub(req, response)
+
+            End Sub
+
+        Return New HttpDriver() _
+            .HttpMethod("get", query) _
+            .GetSocket(port) _
+            .Run()
     End Function
 
 End Module

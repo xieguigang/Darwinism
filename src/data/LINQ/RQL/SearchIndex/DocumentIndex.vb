@@ -11,9 +11,10 @@ Public Class DocumentIndex : Implements IDisposable
 
     Private disposedValue As Boolean
 
-    Sub New(s As Stream)
-        document = s
-        text = New StreamReader(document)
+    Sub New(s As Stream, offsets As Dictionary(Of UInteger, Long))
+        Me.document = s
+        Me.text = New StreamReader(document)
+        Me.offsets = offsets
     End Sub
 
     ''' <summary>
