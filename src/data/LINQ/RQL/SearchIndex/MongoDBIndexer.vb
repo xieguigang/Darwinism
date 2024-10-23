@@ -17,10 +17,30 @@ Public Class MongoDBIndexer : Inherits DocumentIndexer
         For Each json As JsonObject In TqdmWrapper.WrapStreamReader(document.Length, AddressOf requestJSON)
             ' make hash index
             For Each field As String In hashIndex.Keys
-                Dim str As String = DirectCast(json(field), JsonValue).GetStripString(decodeMetachar:=False)
+                If Not json.HasObjectKey(field) Then
+                    Continue For
+                End If
+
+                Dim val As JsonElement = json(field)
                 Dim index As TermHashIndex = hashIndex(field)
 
-                Call index.Indexing(str, id)
+                If TypeOf val Is JsonValue Then
+                    ' is scalar string 
+                    Dim str As String = DirectCast(val, JsonValue).GetStripString(decodeMetachar:=False, null:="")
+                    Call index.Indexing(str, id)
+                ElseIf TypeOf val Is JsonArray Then
+                    ' is string array?
+                    Dim strs As String() = DirectCast(val, JsonArray) _
+                        .Select(Function(si) DirectCast(si, JsonValue) _
+                        .GetStripString(decodeMetachar:=False, null:="")) _
+                        .ToArray
+
+                    For Each str As String In strs
+                        Call index.Indexing(str, id)
+                    Next
+                Else
+                    ' do nothing
+                End If
             Next
 
             Call offsets.Add(id, offset)
