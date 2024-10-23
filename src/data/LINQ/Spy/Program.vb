@@ -45,7 +45,7 @@ Module Program
                 Dim mongoDB As New MongoDBIndexer
 
                 Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True),
-                      index As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                      index As Stream = indexfile.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
 
                     If Not hash.StringEmpty(, True) Then
                         Call hash.Split(","c).ForEach(AddressOf mongoDB.AddHashIndex)
