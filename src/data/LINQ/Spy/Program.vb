@@ -1,10 +1,13 @@
 Imports System.IO
 Imports Flute.Http
 Imports Flute.Http.Core.HttpSocket
+Imports LINQ
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Net.Http
 Imports RQL
 
 Module Program
@@ -76,10 +79,26 @@ Module Program
 
         Dim type As String = file.ExtensionSuffix
         Dim document As DocumentIndex = DocumentIndexer.LoadDocument(file)
-        Dim queryIndex As 
+        Dim queryIndex As New QueryIndex(indexfile.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
         Dim query As AppHandler =
             Sub(req, response)
+                Dim url As URL = req.URL
+                Dim q As New List(Of Query)
+                Dim index = queryIndex.GetIndex(q)
+                Dim data As New List(Of JsonObject)
 
+                Select Case type
+                    Case "bson"
+                        For Each id As Integer In index
+                            Call data.Add(BSONFormat.Load(document.GetSubBuffer(id), leaveOpen:=True))
+                        Next
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
+
+                Call response.AddCustomHttpHeader("Content-Type", "application/json")
+                Call response.WriteLine(data.CreateArray.BuildJsonString)
+                Call response.Flush()
             End Sub
 
         Return New HttpDriver() _
