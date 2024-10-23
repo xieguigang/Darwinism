@@ -82,6 +82,17 @@ Public Class TermHashIndex : Inherits SearchIndex
         MyBase.New(documents)
     End Sub
 
+    Sub New(documents As DocumentPool, documentMaps As Dictionary(Of Integer, Integer), hashMaps As Dictionary(Of String, Integer()))
+        MyBase.New(documents)
+
+        Me.documentMaps = New Dictionary(Of Integer, Integer)(documentMaps)
+        Me.hashIndex = hashMaps _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return New List(Of Integer)(a.Value)
+                          End Function)
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetDocumentMaps() As Dictionary(Of Integer, Integer)
         Return New Dictionary(Of Integer, Integer)(documentMaps)
