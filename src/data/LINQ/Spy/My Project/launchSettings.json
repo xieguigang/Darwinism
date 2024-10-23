@@ -2,7 +2,7 @@
   "profiles": {
     "Spy": {
       "commandName": "Project",
-      "commandLineArgs": "/make_index /file \"E:\\biodeep\\biodeepdb_v3\\NPOC2021\\NPOC2021\\lotusUniqueNaturalProduct.bson\" --hash \"lotus_id,inchikey,molecular_formula\""
+      "commandLineArgs": "/listen -i \"E:\\biodeep\\biodeepdb_v3\\NPOC2021\\NPOC2021\\lotusUniqueNaturalProduct.bson\" -p 80"
     }
   }
 }

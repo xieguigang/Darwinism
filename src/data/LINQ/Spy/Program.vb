@@ -4,6 +4,7 @@ Imports Flute.Http.Core.HttpSocket
 Imports LINQ
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
@@ -84,12 +85,17 @@ Module Program
             Sub(req, response)
                 Dim url As URL = req.URL
                 Dim q As New List(Of Query)
+
+                For Each qi In url.query
+                    Call q.Add(New Query With {.field = qi.Key, .search = LINQ.Query.Type.HashTerm, .value = qi.Value.First})
+                Next
+
                 Dim index = queryIndex.GetIndex(q)
                 Dim data As New List(Of JsonObject)
 
                 Select Case type
                     Case "bson"
-                        For Each id As Integer In index
+                        For Each id As Integer In index.SafeQuery
                             Call data.Add(BSONFormat.Load(document.GetSubBuffer(id), leaveOpen:=True))
                         Next
                     Case Else
