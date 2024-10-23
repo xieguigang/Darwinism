@@ -89,6 +89,11 @@ Public Class TermHashIndex : Inherits SearchIndex
         Call Indexing(doc, ++queryId)
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="doc">the document content data for make hash index</param>
+    ''' <param name="id">the document id that associated with the given document content data</param>
     Public Overrides Sub Indexing(doc As String, id As Integer)
         Dim doc_key = doc.ToLower
 
