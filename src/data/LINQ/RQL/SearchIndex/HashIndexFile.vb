@@ -7,10 +7,7 @@ Public Class HashIndexFile
 
     Public Shared Sub WriteIndex(index As TermHashIndex, root As String, s As StreamPack)
         Call s.WriteText(index.GetDocumentMaps.GetJson, $"{root}/documentMaps.json")
-
-        For Each term In index.GetHashIndex
-            Call s.WriteText(term.Value.JoinBy(","), $"{root}/term/{term.Key}.txt")
-        Next
+        Call s.WriteText(index.GetHashIndex.GetJson, $"{root}/hashMaps.json")
     End Sub
 
 End Class
