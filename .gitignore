@@ -241,3 +241,4 @@ _Pvt_Extensions
 *.map
 .pkg/ggplot.zip
 .pkg/Darwinism.zip
+/tools
