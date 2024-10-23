@@ -47,6 +47,10 @@ Module Program
                 Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True),
                       index As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
 
+                    If Not hash.StringEmpty(, True) Then
+                        Call hash.Split(","c).ForEach(AddressOf mongoDB.AddHashIndex)
+                    End If
+
                     Call mongoDB.CreateDocumentIndex(s)
                     Call mongoDB.Save(index)
                 End Using
