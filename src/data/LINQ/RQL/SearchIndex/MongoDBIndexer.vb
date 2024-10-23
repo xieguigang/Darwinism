@@ -8,11 +8,12 @@ Public Class MongoDBIndexer : Inherits DocumentIndexer
 
     Dim mongoDB As Decoder
     Dim offset As Long
+    Dim documentLen As Long
 
     Public Overrides Sub CreateDocumentIndex(document As Stream)
         Dim id As Integer = 0
-        Dim documentLen As Long = document.Length
 
+        documentLen = document.Length
         mongoDB = New Decoder(document)
 
         For Each json As JsonObject In TqdmWrapper.WrapStreamReader(document.Length, AddressOf requestJSON)
@@ -57,6 +58,11 @@ Public Class MongoDBIndexer : Inherits DocumentIndexer
     Private Function requestJSON(ByRef getOffset As Long, bar As ProgressBar) As JsonObject
         getOffset = mongoDB.getDocumentOffset
         offset = getOffset
+
+        If offset >= documentLen - 1 Then
+            Return Nothing
+        End If
+
         Return mongoDB.decodeDocument
     End Function
 End Class
