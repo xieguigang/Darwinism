@@ -46,7 +46,9 @@ Public MustInherit Class DocumentIndexer
             Call index.WriteText(offsets.GetJson, "/offsets.json")
 
             ' save hashindex
-
+            For Each field As String In hashIndex.Keys
+                Call HashIndexFile.WriteIndex(hashIndex(field), root:=$"/hash/{field}", s:=index)
+            Next
         End Using
     End Sub
 
