@@ -8,6 +8,7 @@ Public Class DocumentIndex : Implements IDisposable
     ReadOnly offsets As Dictionary(Of UInteger, Long)
     ReadOnly document As Stream
     ReadOnly text As StreamReader
+
     Private disposedValue As Boolean
 
     Sub New(s As Stream)
