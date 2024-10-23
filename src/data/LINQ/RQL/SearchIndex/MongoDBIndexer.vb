@@ -17,6 +17,14 @@ Public Class MongoDBIndexer : Inherits DocumentIndexer
         mongoDB = New Decoder(document)
 
         For Each json As JsonObject In TqdmWrapper.WrapStreamReader(document.Length, AddressOf requestJSON)
+            If json Is Nothing Then
+                If offset >= documentLen - 1 Then
+                    Exit For
+                Else
+                    Continue For
+                End If
+            End If
+
             ' make hash index
             For Each field As String In hashIndex.Keys
                 If Not json.HasObjectKey(field) Then
