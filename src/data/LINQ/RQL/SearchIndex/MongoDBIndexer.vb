@@ -11,6 +11,7 @@ Public Class MongoDBIndexer : Inherits DocumentIndexer
 
     Public Overrides Sub CreateDocumentIndex(document As Stream)
         Dim id As Integer = 0
+        Dim documentLen As Long = document.Length
 
         mongoDB = New Decoder(document)
 
@@ -46,6 +47,10 @@ Public Class MongoDBIndexer : Inherits DocumentIndexer
             Call offsets.Add(id, offset)
 
             id += 1
+
+            If offset >= documentLen - 1 Then
+                Exit For
+            End If
         Next
     End Sub
 
