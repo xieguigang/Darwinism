@@ -1,11 +1,10 @@
 Package: Darwinism
 Type: Package
-Title: Create Elegant Data Visualisations Using the Grammar of Graphics
-Version: 1.0.0.1254
-Date: 2021-01-25
+Title: Cloud workflow & big data application development
+Version: 1.2.0.1254
+Date: 2024-11-01
 Author: xieguigang
 Maintainer: xieguigang <gg.xie@bionovogene.com>
-Description: A R language ggplot2 package liked grammar of 
-    graphics library for R# language programming.
+Description: Cloud computing & big data science application development.
 License: MIT
 RoxygenNote: 7.1.1
