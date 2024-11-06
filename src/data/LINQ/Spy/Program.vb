@@ -9,7 +9,11 @@ Imports RQL
 Module Program
 
     Public Function Main() As Integer
-        Return GetType(Program).RunCLI(App.CommandLine, executeFile:=AddressOf InspectFile)
+        Return GetType(Program).RunCLI(
+            args:=App.CommandLine,
+            executeFile:=AddressOf InspectFile,
+            executeEmpty:=AddressOf LinqShell.RunTerminal
+        )
     End Function
 
     Public Function InspectFile(file As String, args As CommandLine) As Integer
