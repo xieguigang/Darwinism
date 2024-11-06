@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Spy": {
-      "commandName": "Project",
-      "commandLineArgs": "/listen -i \"E:\\biodeep\\biodeepdb_v3\\NPOC2021\\NPOC2021\\lotusUniqueNaturalProduct.bson\" -p 80"
+      "commandName": "Project"
     }
   }
 }

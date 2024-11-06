@@ -1,4 +1,8 @@
-﻿Imports LINQ.Runtime
+﻿Imports LINQ.Interpreter
+Imports LINQ.Interpreter.Query
+Imports LINQ.Language
+Imports LINQ.Runtime
+Imports LINQ.Script
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.LineEdit
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -29,7 +33,12 @@ Module LinqShell
     End Function
 
     Private Sub ExecLinq(script As String)
-
+        Dim tokens As Token() = LINQ.Language.GetTokens(script).ToArray
+        Dim query As ProjectionExpression = tokens.PopulateQueryExpression
+        Dim context As New ExecutableContext With {
+            .env = env,
+            .throwError = True
+        }
     End Sub
 
 End Module
