@@ -123,5 +123,9 @@ Namespace Interpreter.Query
 
             Return opt.RunOptionPipeline(projections, context).ToArray
         End Function
+
+        Public Overrides Function ToString() As String
+            Return project.ToString
+        End Function
     End Class
 End Namespace
