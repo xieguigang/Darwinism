@@ -32,6 +32,10 @@ Module LinqShell
         Return console.Run
     End Function
 
+    ' # file driver is detected via the file extension name suffix
+    ' let x = load "/path/to/file"
+    ' let y = from xi in x where xi.score > 80 select xi.name
+
     Private Sub ExecLinq(script As String)
         Dim tokens As Token() = LINQ.Language.GetTokens(script).ToArray
         Dim query As ProjectionExpression = tokens.PopulateQueryExpression
