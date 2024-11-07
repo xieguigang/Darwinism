@@ -80,7 +80,7 @@ Namespace Runtime
         Public Function CheckTabular(output As JavaScriptObject()) As Boolean
             Return Not output _
                 .Any(Function(a)
-
+                         Return a.data.All(Function(d) d.CheckLiteral)
                      End Function)
         End Function
     End Module
