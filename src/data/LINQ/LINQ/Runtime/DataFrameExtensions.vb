@@ -75,5 +75,13 @@ Namespace Runtime
 
             Return dataset.MeasureTypeSchema
         End Function
+
+        <Extension>
+        Public Function CheckTabular(output As JavaScriptObject()) As Boolean
+            Return Not output _
+                .Any(Function(a)
+
+                     End Function)
+        End Function
     End Module
 End Namespace
