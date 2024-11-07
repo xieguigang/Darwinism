@@ -82,16 +82,20 @@ Namespace Interpreter.Expressions
 
         Public Sub CheckProjection(q As ProjectionExpression)
             If fields.Length = 1 Then
-                no_projection = fields(0).Name = q.symbol.symbolName
+                no_projection = DirectCast(fields(0).Value, SymbolReference).name = q.symbol.symbolName
             End If
         End Sub
 
         Public Overrides Function Exec(context As ExecutableContext) As Object
             Dim obj As New JavaScriptObject
 
-            For Each field In fields
-                obj(field.Name) = field.Value.Exec(context)
-            Next
+            If no_projection Then
+                obj = fields(0).Value.Exec(context)
+            Else
+                For Each field In fields
+                    obj(field.Name) = field.Value.Exec(context)
+                Next
+            End If
 
             Return obj
         End Function
