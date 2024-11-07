@@ -5,7 +5,9 @@ Imports LINQ.Runtime
 Imports LINQ.Script
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.LineEdit
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.My.JavaScript
 
 ''' <summary>
 ''' Linq shell
@@ -43,6 +45,15 @@ Module LinqShell
             .env = env,
             .throwError = True
         }
+        Dim result As JavaScriptObject() = query.Exec(context)
+        Dim table As DataFrame = result.CreateTableDataSet
+        ' print on the console
+        Dim text As String()() = table _
+            .csv _
+            .Select(Function(c) c.ToArray) _
+            .ToArray
+
+        Call text.PrintTable
     End Sub
 
 End Module
