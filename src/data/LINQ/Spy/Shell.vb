@@ -43,7 +43,8 @@ Module LinqShell
         Dim query As ProjectionExpression = tokens.PopulateQueryExpression
         Dim context As New ExecutableContext With {
             .env = env,
-            .throwError = True
+            .throwError = True,
+            .linq = query
         }
         Dim result As JavaScriptObject() = query.Exec(context)
         Dim table As DataFrame = result.CreateTableDataSet

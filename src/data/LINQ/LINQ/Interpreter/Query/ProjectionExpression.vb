@@ -90,6 +90,7 @@ Namespace Interpreter.Query
             }
 
             Call LoadDrivers(context)
+            Call project.CheckProjection(Me)
 
             Dim skipVal As Boolean
             Dim dataset As DataSet = GetDataSet(context)

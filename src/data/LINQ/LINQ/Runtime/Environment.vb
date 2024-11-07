@@ -60,6 +60,9 @@ Imports LINQ.Runtime.Internal
 
 Namespace Runtime
 
+    ''' <summary>
+    ''' A linq runtime environment
+    ''' </summary>
     Public Class Environment
 
         Protected ReadOnly symbols As New Dictionary(Of String, Symbol)
