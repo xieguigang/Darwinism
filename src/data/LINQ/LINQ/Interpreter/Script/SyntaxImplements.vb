@@ -187,7 +187,10 @@ Namespace Script
         <Extension>
         Private Function CreateAggregateQuery(symbol As Token(), blocks As Token()()) As AggregateExpression
             Dim symbolExpr As SymbolDeclare = symbol.ParseExpression
-            Dim seq As Expression
+            Dim i As Integer = 0
+            Dim seq As Expression = blocks.GetSequence(offset:=i)
+
+            Throw New NotImplementedException
         End Function
 
         <Extension>
