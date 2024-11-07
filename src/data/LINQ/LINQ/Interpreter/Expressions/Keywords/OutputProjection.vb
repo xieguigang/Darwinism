@@ -82,7 +82,7 @@ Namespace Interpreter.Expressions
 
         Public Sub CheckProjection(q As ProjectionExpression)
             If fields.Length = 1 Then
-                no_projection = DirectCast(fields(0).Value, SymbolReference).name = q.symbol.symbolName
+                no_projection = DirectCast(fields(0).Value, SymbolReference).symbolName = q.symbol.symbolName
             End If
         End Sub
 
