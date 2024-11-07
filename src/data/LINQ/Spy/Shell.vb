@@ -47,14 +47,21 @@ Module LinqShell
             .linq = query
         }
         Dim result As JavaScriptObject() = query.Exec(context)
-        Dim table As DataFrame = result.CreateTableDataSet
-        ' print on the console
-        Dim text As String()() = table _
-            .csv _
-            .Select(Function(c) c.ToArray) _
-            .ToArray
 
-        Call text.PrintTable
+        If result.CheckTabular Then
+            ' result as table
+            Dim table As DataFrame = result.CreateTableDataSet
+            ' print on the console
+            Dim text As String()() = table _
+                .csv _
+                .Select(Function(c) c.ToArray) _
+                .ToArray
+
+            Call text.PrintTable
+        Else
+            ' result as object set
+            Throw New NotImplementedException
+        End If
     End Sub
 
 End Module
