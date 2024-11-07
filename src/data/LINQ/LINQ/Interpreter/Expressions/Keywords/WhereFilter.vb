@@ -87,6 +87,9 @@ Namespace Interpreter.Expressions
         ''' </summary>
         ''' <param name="context"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function implements as the full table scanning
+        ''' </remarks>
         Public Overrides Function Exec(context As ExecutableContext) As Object
             Return filter.Exec(context)
         End Function
