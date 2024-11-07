@@ -101,6 +101,7 @@ Namespace Interpreter.Query
                 closure.env.FindSymbol(symbol.symbolName).value = item
 
                 For Each line As Expression In executeQueue
+                    ' full table scanning
                     If TypeOf line Is WhereFilter Then
                         skipVal = Not DirectCast(line.Exec(closure), Boolean)
 
