@@ -96,7 +96,9 @@ Public Module CentosTools
     ''' <summary>
     ''' check command is existsed on linux system or not?
     ''' </summary>
-    ''' <param name="command"></param>
+    ''' <param name="command">
+    ''' the command name
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("check_command_exists")>
     <RApiReturn(TypeCodes.boolean)>
