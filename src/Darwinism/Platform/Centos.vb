@@ -100,9 +100,11 @@ Public Module CentosTools
     ''' <returns></returns>
     <ExportAPI("check_command_exists")>
     <RApiReturn(TypeCodes.boolean)>
-    Public Function check_command_exists(command As String, Optional env As Environment = Nothing) As Object
+    Public Function check_command_exists(command As String,
+                                         Optional verbose As Boolean? = Nothing,
+                                         Optional env As Environment = Nothing) As Object
         If Interaction.isUnix Then
-            Return Interaction.HasCommand(command)
+            Return Interaction.HasCommand(command, env.verboseOption(verbose))
         Else
             Return RInternal.debug.stop("only works on linux system!", env)
         End If

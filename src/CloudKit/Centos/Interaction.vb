@@ -98,8 +98,8 @@ Public Class Interaction
     ''' </summary>
     ''' <param name="command"></param>
     ''' <returns></returns>
-    Public Shared Function HasCommand(command As String) As Boolean
-        Return Not Interaction.Shell("command", $"-v {command}", verbose:=False).StringEmpty
+    Public Shared Function HasCommand(command As String, Optional verbose As Boolean = False) As Boolean
+        Return Not Interaction.Shell("command", $"-v {command}", verbose:=verbose).StringEmpty
     End Function
 
     ' 20201023
