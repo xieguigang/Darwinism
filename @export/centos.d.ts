@@ -13,11 +13,13 @@ declare namespace centos {
     * check command is existsed on linux system or not?
     * 
     * 
-     * @param command -
+     * @param command the command name
+     * @param verbose 
+     * + default value Is ``null``.
      * @param env 
      * + default value Is ``null``.
    */
-   function check_command_exists(command: string, env?: object): boolean;
+   function check_command_exists(command: string, verbose?: object, env?: object): boolean;
    /**
      * @param x default value Is ``'-tulnp'``.
      * @param verbose default value Is ``false``.
