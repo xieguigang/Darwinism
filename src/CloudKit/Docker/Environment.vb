@@ -242,6 +242,11 @@ Public Class Environment
         Return Me
     End Function
 
+    ''' <summary>
+    ''' Add mount of the shared volumn
+    ''' </summary>
+    ''' <param name="[shared]"></param>
+    ''' <returns></returns>
     Public Function Mount(ParamArray [shared] As Mount()) As Environment
         _Shared = _Shared.JoinIterates([shared]).ToArray
         Return Me

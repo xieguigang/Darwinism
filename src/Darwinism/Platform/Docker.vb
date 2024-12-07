@@ -316,7 +316,16 @@ Public Module DockerTools
     ''' |> mount("/foldername_in_host" -> "/folder_name_in_container")
     ''' </example>
     <ExportAPI("mount")>
-    Public Function mountVolumn(docker As Docker.Environment, mount As Object, Optional env As REnvironment = Nothing) As Object
+    Public Function mountVolumn(docker As Docker.Environment,
+                                <RRawVectorArgument>
+                                mount As Object,
+                                Optional env As REnvironment = Nothing) As Object
+
+        If mount Is Nothing Then
+            Call "no volumn for mount to the docker container environment".Warning
+            Return docker
+        End If
+
         If TypeOf mount Is String Then
             Return docker.Mount(New Mount(CStr(mount)))
         ElseIf TypeOf mount Is DeclareLambdaFunction Then
@@ -325,9 +334,25 @@ Public Module DockerTools
             Dim virtual As String = ValueAssignExpression.GetSymbol(lambda.closure)
 
             Return docker.Mount(New Mount With {.local = host, .virtual = virtual})
+        ElseIf TypeOf mount Is list Then
+            Dim shares As list = DirectCast(mount, list)
+
+            For Each host As String In shares.getNames
+                Dim guest As String = shares.getValue(Of String)(host, env)
+
+                If Not guest.StringEmpty(, True) Then
+                    Call docker.Mount(host, guest)
+                End If
+            Next
+        ElseIf RType.TypeOf(mount).mode = TypeCodes.string Then
+            For Each vol As String In CLRVector.asCharacter(mount)
+                Call docker.Mount(New Mount(vol))
+            Next
         Else
             Return Message.InCompatibleType(GetType(String), mount.GetType, env)
         End If
+
+        Return docker
     End Function
 
     ''' <summary>
@@ -347,8 +372,8 @@ Public Module DockerTools
     ''' <param name="docker"></param>
     ''' <returns></returns>
     <ExportAPI("tty")>
-    Public Function tty(docker As Docker.Environment) As Object
-        docker.tty = True
+    Public Function tty(docker As Docker.Environment, Optional opt As Boolean = True) As Object
+        docker.tty = opt
         Return docker
     End Function
 

@@ -30,3 +30,69 @@ const container_id = function() {
         NULL;
     }
 }
+
+#' Interop run rscript in a docker container
+#' 
+#' @param code a R# closure code for run in the target docker container
+#' @param image the docker image id for run Rscript interop
+#' @param mount the volumn for mount in the target docker container
+#'  
+const run_rlang_interop = function(code, image, source = NULL, debug = FALSE, 
+        workdir = NULL, 
+        mount = list()) {
+
+    let script_code = transform_rlang_source(code, source, 
+            debug = debug);
+
+    image |> __call_rscript_docker(script_code, 
+        workdir = workdir, 
+        mount = mount, 
+        debug = debug);
+}
+
+#' A helper function for run Rscript inside a docker container
+#' 
+#' @param script_code a text data of the script for run
+#' @param image the docker image id for run in the docker.
+#' 
+const __call_rscript_docker = function(image_id, script_code, workdir, mount, 
+                                            debug = FALSE) {
+    imports "docker" from "Darwinism";
+
+    let code_save  = tempfile(fileext = ".R");
+    let current_wd = getwd();
+    let change_wd  = nchar(workdir) > 0;
+    
+    if (change_wd) {
+        setwd(workdir);
+    }
+
+    print("run script at workspace:");
+    print(getwd());
+    print(code_save);
+    print(`Rscript "${code_save}"`);
+
+    writeLines(script_code, con = code_save);
+    # system(`Rscript "${code_save}"`);
+    # run in docker container
+    let cmdl_debug = docker 
+    |> image(image_id)
+    |> tty(opt = FALSE)
+    # |> env(LD_LIBRARY_PATH = "/opt/R/4.0.3/lib/R/lib")
+    # |> env(R_HOME = "/opt/R/4.0.3/lib/R")
+    |> mount(getwd())
+    |> mount("/var/run/docker.sock" -> "/var/run/docker.sock")
+    |> mount("/usr/bin/docker")
+    |> mount(mount)
+    |> workspace(getwd())
+    |> run("Rscript", code_save, shell_cmdl = debug)
+    ;
+
+    print(cmdl_debug);
+
+    if (change_wd) {
+        setwd(current_wd);
+    }
+
+    print("end of rlang_interop~~~");
+}
