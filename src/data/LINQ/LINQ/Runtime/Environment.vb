@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0a47581dde60bb833166c5501677007, src\data\LINQ\LINQ\Runtime\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::a1ddd0cb325ef27dc042fc74c8b5d7fc, src\data\LINQ\LINQ\Runtime\Environment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 57 (81.43%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 73
+    '    Code Lines: 57 (78.08%)
+    ' Comment Lines: 3 (4.11%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (18.57%)
-    '     File Size: 2.12 KB
+    '   Blank Lines: 13 (17.81%)
+    '     File Size: 2.19 KB
 
 
     '     Class Environment

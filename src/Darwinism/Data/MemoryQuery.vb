@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8433b5a8445793a60719c3e28a1dcd3, src\Darwinism\Data\MemoryQuery.vb"
+﻿#Region "Microsoft.VisualBasic::c0c983928b6690714b75c55a80a8d152, src\Darwinism\Data\MemoryQuery.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 312
-    '    Code Lines: 215 (68.91%)
-    ' Comment Lines: 57 (18.27%)
-    '    - Xml Docs: 94.74%
+    '   Total Lines: 348
+    '    Code Lines: 231 (66.38%)
+    ' Comment Lines: 73 (20.98%)
+    '    - Xml Docs: 95.89%
     ' 
-    '   Blank Lines: 40 (12.82%)
-    '     File Size: 11.56 KB
+    '   Blank Lines: 44 (12.64%)
+    '     File Size: 12.85 KB
 
 
     ' Module MemoryQuery
     ' 
     '     Function: [select], between, BuildQuery, fulltext, hashindex
-    '               load, match_against, valueindex
+    '               Levenshtein_search, load, match_against, valueindex
     ' 
     ' /********************************************************************************/
 

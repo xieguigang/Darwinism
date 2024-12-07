@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9043902671928afe9b3a56da6aa2a5d, src\data\LINQ\LINQ\Interpreter\Script\SyntaxImplements.vb"
+﻿#Region "Microsoft.VisualBasic::529332e50331bc840128c05759e740a9, src\data\LINQ\LINQ\Interpreter\Script\SyntaxImplements.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 305
-    '    Code Lines: 261 (85.57%)
-    ' Comment Lines: 1 (0.33%)
+    '   Total Lines: 308
+    '    Code Lines: 263 (85.39%)
+    ' Comment Lines: 1 (0.32%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 43 (14.10%)
-    '     File Size: 13.18 KB
+    '   Blank Lines: 44 (14.29%)
+    '     File Size: 13.29 KB
 
 
     '     Module SyntaxImplements

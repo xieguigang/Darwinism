@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efec12e5fbc3420987eed667928b2852, src\data\LINQ\LINQ\Runtime\DataFrameExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::48de2a72c722953448db0ad8d462902d, src\data\LINQ\LINQ\Runtime\DataFrameExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 20 (80.00%)
+    '   Total Lines: 33
+    '    Code Lines: 27 (81.82%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (20.00%)
-    '     File Size: 923 B
+    '   Blank Lines: 6 (18.18%)
+    '     File Size: 1.22 KB
 
 
     '     Module DataFrameExtensions
     ' 
-    '         Function: CreateTableDataSet
+    '         Function: CheckTabular, CreateTableDataSet
     ' 
     ' 
     ' /********************************************************************************/

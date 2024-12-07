@@ -1,3 +1,56 @@
+﻿#Region "Microsoft.VisualBasic::72a201d672a195f92e8be6640ca3c53f, src\data\LINQ\Spy\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 66 (76.74%)
+    ' Comment Lines: 6 (6.98%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (16.28%)
+    '     File Size: 3.17 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: InspectBson, InspectFile, listen, Main, MakeIndex
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.IO
 Imports Flute.Http
 Imports Microsoft.VisualBasic.CommandLine
@@ -84,3 +137,4 @@ Module Program
     End Function
 
 End Module
+

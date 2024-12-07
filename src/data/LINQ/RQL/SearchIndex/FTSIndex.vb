@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f41e339e99f92d00fb66a3bc7ece70e0, src\data\LINQ\RQL\FTSIndex.vb"
+﻿#Region "Microsoft.VisualBasic::f41e339e99f92d00fb66a3bc7ece70e0, src\data\LINQ\RQL\SearchIndex\FTSIndex.vb"
 
     ' Author:
     ' 

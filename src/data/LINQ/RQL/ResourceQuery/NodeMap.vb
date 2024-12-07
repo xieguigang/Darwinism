@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05cb51bae504b30cad47203c7ea05987, src\data\LINQ\RQL\NodeMap.vb"
+﻿#Region "Microsoft.VisualBasic::05cb51bae504b30cad47203c7ea05987, src\data\LINQ\RQL\ResourceQuery\NodeMap.vb"
 
     ' Author:
     ' 

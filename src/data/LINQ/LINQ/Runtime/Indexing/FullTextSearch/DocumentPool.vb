@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66127713c8990a997526dd27702d17c4, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\DocumentPool.vb"
+﻿#Region "Microsoft.VisualBasic::0d26cf98d9c751f8e808a78b45f94a61, src\data\LINQ\LINQ\Runtime\Indexing\FullTextSearch\DocumentPool.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 7 (25.00%)
-    ' Comment Lines: 17 (60.71%)
+    '   Total Lines: 32
+    '    Code Lines: 7 (21.88%)
+    ' Comment Lines: 21 (65.62%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (14.29%)
-    '     File Size: 861 B
+    '   Blank Lines: 4 (12.50%)
+    '     File Size: 1.04 KB
 
 
     ' Class DocumentPool

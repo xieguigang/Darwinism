@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a14cac2e8a5fe4306a9ae82c9b934d1e, src\Darwinism\Platform\Centos.vb"
+﻿#Region "Microsoft.VisualBasic::f985976eef0e3bdc7e0c453e42174ace, src\Darwinism\Platform\Centos.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 62 (72.09%)
-    ' Comment Lines: 14 (16.28%)
-    '    - Xml Docs: 71.43%
+    '   Total Lines: 90
+    '    Code Lines: 64 (71.11%)
+    ' Comment Lines: 16 (17.78%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 10 (11.63%)
-    '     File Size: 3.40 KB
+    '   Blank Lines: 10 (11.11%)
+    '     File Size: 3.59 KB
 
 
     ' Module CentosTools

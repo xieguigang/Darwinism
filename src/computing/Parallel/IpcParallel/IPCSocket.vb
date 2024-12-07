@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::1e4fcbcec022a3f0d4158e72a4a53de0, src\computing\Parallel\IpcParallel\IPCSocket.vb"
+﻿#Region "Microsoft.VisualBasic::7e4f86546d30c8214f26fbaaeb652b62, src\computing\Parallel\IpcParallel\IPCSocket.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 201
-'    Code Lines: 122 (60.70%)
-' Comment Lines: 52 (25.87%)
-'    - Xml Docs: 90.38%
-' 
-'   Blank Lines: 27 (13.43%)
-'     File Size: 7.52 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class IPCSocket
-' 
-'     Properties: handleGetArgument, handlePOSTResult, handleSetResult, host, HostPort
-'                 nargs, Protocol, result, socketExitCode
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetLastError, GetTask
-'               PostError, PostResult, PostStart, Run
-' 
-'     Sub: [Stop]
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 201
+    '    Code Lines: 122 (60.70%)
+    ' Comment Lines: 52 (25.87%)
+    '    - Xml Docs: 90.38%
+    ' 
+    '   Blank Lines: 27 (13.43%)
+    '     File Size: 7.56 KB
+
+
+    ' Class IPCSocket
+    ' 
+    '     Properties: handleGetArgument, handlePOSTResult, handleSetResult, host, HostPort
+    '                 nargs, Protocol, result, socketExitCode
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetArgumentByIndex, GetArgumentNumber, GetFirstAvailablePort, GetLastError, GetTask
+    '               PostError, PostResult, PostStart, Run
+    ' 
+    '     Sub: [Stop]
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,59 @@
-﻿Imports System.Data
+﻿#Region "Microsoft.VisualBasic::9f7117b99dd0ba895752bdac605bb5b7, src\data\LINQ\LINQ\MemoryQuery\MemoryQuery.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 188
+    '    Code Lines: 140 (74.47%)
+    ' Comment Lines: 12 (6.38%)
+    '    - Xml Docs: 91.67%
+    ' 
+    '   Blank Lines: 36 (19.15%)
+    '     File Size: 7.47 KB
+
+
+    ' Class MemoryQuery
+    ' 
+    '     Function: GetIndex
+    ' 
+    '     Sub: FullTextSearch, HashSearch, LevenshteinSearch, ValueMatchSearch, ValueRangeSearch
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Data
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -186,3 +241,4 @@ Public MustInherit Class MemoryQuery
     End Sub
 
 End Class
+
