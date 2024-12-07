@@ -107,8 +107,10 @@ declare namespace docker {
     * 
     * 
      * @param docker -
+     * @param opt 
+     * + default value Is ``true``.
    */
-   function tty(docker: object): any;
+   function tty(docker: object, opt?: boolean): any;
    /**
     * set the workdir for run the command inside this new docker container
     * 

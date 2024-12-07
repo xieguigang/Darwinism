@@ -1,0 +1,38 @@
+﻿.TH RUN_RLANG_INTEROP 1 2024-Dec "" "Interop run rscript in a docker container"
+.SH NAME
+run_rlang_interop \- run_rlang_interop(code, image,
+    <i>source</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>debug</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>workdir</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>mount</i> = 'list'())
+.SH SYNOPSIS
+\fIrun_rlang_interop(code, image,
+    <i>source</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>debug</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>workdir</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>mount</i> = 'list'())\fR
+.SH OPTIONS
+.PP
+\fBcode\fB \fR\- . a R# closure code for run in the target docker container
+.PP
+.PP
+\fBimage\fB \fR\- . the docker image id for run Rscript interop
+.PP
+.PP
+\fBsource\fB \fR\- NULL. 
+.PP
+.PP
+\fBdebug\fB \fR\- FALSE. 
+.PP
+.PP
+\fBworkdir\fB \fR\- NULL. 
+.PP
+.PP
+\fBmount\fB \fR\- 'list'(). the volumn for mount in the target docker container
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.run_rlang_interop at docker.R:line 40
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang, MIT Licensed 2024
