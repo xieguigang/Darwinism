@@ -76,16 +76,16 @@ const __call_rscript_docker = function(image_id, script_code, workdir, mount,
     # system(`Rscript "${code_save}"`);
     # run in docker container
     let cmdl_debug = docker 
-    |> image(image_id)
-    |> tty(opt = FALSE)
+    |> docker::image(image_id)
+    |> docker::tty(opt = FALSE)
     # |> env(LD_LIBRARY_PATH = "/opt/R/4.0.3/lib/R/lib")
     # |> env(R_HOME = "/opt/R/4.0.3/lib/R")
-    |> mount(getwd())
-    |> mount("/var/run/docker.sock" -> "/var/run/docker.sock")
-    |> mount("/usr/bin/docker")
-    |> mount(mount)
-    |> workspace(getwd())
-    |> run("Rscript", code_save, shell_cmdl = debug)
+    |> docker::mount(getwd())
+    |> docker::mount("/var/run/docker.sock" -> "/var/run/docker.sock")
+    |> docker::mount("/usr/bin/docker")
+    |> docker::mount(mount)
+    |> docker::workspace(getwd())
+    |> docker::run("Rscript", code_save, shell_cmdl = debug)
     ;
 
     print(cmdl_debug);
