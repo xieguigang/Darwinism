@@ -381,6 +381,9 @@ Public Module DockerTools
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
     ''' </summary>
     ''' <param name="command"></param>
+    ''' <param name="args">
+    ''' the commandline arguments for the shell <paramref name="command"/> run inside a docker container.
+    ''' </param>
     ''' <param name="shell_cmdl">
     ''' this debug parameter specific that just returns the commandline for 
     ''' run docker instead of run command and returns the std_output.
