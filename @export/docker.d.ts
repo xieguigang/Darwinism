@@ -76,7 +76,8 @@ declare namespace docker {
      * + default value Is ``null``.
      * @param portForward 
      * + default value Is ``null``.
-     * @param args 
+     * @param args the commandline arguments for the shell **`command`** run inside a docker container.
+     * 
      * + default value Is ``null``.
      * @param shell_cmdl this debug parameter specific that just returns the commandline for 
      *  run docker instead of run command and returns the std_output.
