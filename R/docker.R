@@ -50,6 +50,21 @@ const run_rlang_interop = function(code, image, source = NULL, debug = FALSE,
         debug = debug);
 }
 
+const __rscript_tmp = function(workdir) {
+    let mount_tmp = readLines("/etc/mtab") 
+    |> grep("/tmp", fixed = TRUE)
+    ; 
+
+    if (mount_tmp) {
+        tempfile(fileext = ".R");
+    } else {
+        # write rscript to workspace
+        mount_tmp <- basename(tempfile(fileext = ".R"));
+        mount_tmp <- file.path(workdir, `.r_lang/${mount_tmp}.R`);
+        mount_tmp;
+    }
+}
+
 #' A helper function for run Rscript inside a docker container
 #' 
 #' @param script_code a text data of the script for run
@@ -59,7 +74,7 @@ const __call_rscript_docker = function(image_id, script_code, workdir, mount,
                                             debug = FALSE) {
     imports "docker" from "Darwinism";
 
-    let code_save  = tempfile(fileext = ".R");
+    let code_save  = __rscript_tmp(workdir);
     let current_wd = getwd();
     let change_wd  = nchar(workdir) > 0;
     

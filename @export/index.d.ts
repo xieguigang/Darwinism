@@ -20,6 +20,9 @@ declare namespace Darwinism {
    function __call_rscript_docker(image_id: any, script_code: any, workdir: any, mount: any, debug?: any): object;
    /**
    */
+   function __rscript_tmp(workdir: any): object;
+   /**
+   */
    function container_id(): object;
    /**
    */
