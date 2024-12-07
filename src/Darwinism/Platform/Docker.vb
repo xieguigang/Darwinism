@@ -421,7 +421,7 @@ Public Module DockerTools
             command = command & " " & script.CLIPath
         End If
 
-        If args.length > 0 Then
+        If args IsNot Nothing AndAlso args.length > 0 Then
             Dim pars As String() = args.slots _
                 .Select(Function(t)
                             Return $"{t.Key} {CLRVector.asCharacter(t.Value).JoinBy(",").CLIToken}"
