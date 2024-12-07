@@ -84,6 +84,7 @@ const __call_rscript_docker = function(image_id, script_code, workdir, mount,
     |> docker::mount("/var/run/docker.sock" -> "/var/run/docker.sock")
     |> docker::mount("/usr/bin/docker")
     |> docker::mount(mount)
+    |> docker::mount(code_save)
     # |> docker::workspace(getwd())
     |> docker::run("Rscript", code_save, 
         workdir = getwd(), 
