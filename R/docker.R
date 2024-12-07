@@ -61,7 +61,9 @@ const __rscript_tmp = function(workdir) {
         # write rscript to workspace
         mount_tmp <- basename(tempfile(fileext = ".R"));
         mount_tmp <- file.path(workdir, `.r_lang/${mount_tmp}.R`);
-        mount_tmp;
+        
+        # ensure is absolute file path
+        normalizePath(mount_tmp);
     }
 }
 
