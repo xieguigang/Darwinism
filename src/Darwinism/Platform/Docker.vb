@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56b895d9e676d548736ee432a7f0e77d, src\Darwinism\Platform\Docker.vb"
+﻿#Region "Microsoft.VisualBasic::8438d66f1f7c4439e6cde02a10898c53, src\Darwinism\Platform\Docker.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 383
-    '    Code Lines: 183 (47.78%)
-    ' Comment Lines: 162 (42.30%)
+    '   Total Lines: 408
+    '    Code Lines: 203 (49.75%)
+    ' Comment Lines: 162 (39.71%)
     '    - Xml Docs: 48.15%
     ' 
-    '   Blank Lines: 38 (9.92%)
-    '     File Size: 15.79 KB
+    '   Blank Lines: 43 (10.54%)
+    '     File Size: 16.72 KB
 
 
     ' Module DockerTools
@@ -316,7 +316,16 @@ Public Module DockerTools
     ''' |> mount("/foldername_in_host" -> "/folder_name_in_container")
     ''' </example>
     <ExportAPI("mount")>
-    Public Function mountVolumn(docker As Docker.Environment, mount As Object, Optional env As REnvironment = Nothing) As Object
+    Public Function mountVolumn(docker As Docker.Environment,
+                                <RRawVectorArgument>
+                                mount As Object,
+                                Optional env As REnvironment = Nothing) As Object
+
+        If mount Is Nothing Then
+            Call "no volumn for mount to the docker container environment".Warning
+            Return docker
+        End If
+
         If TypeOf mount Is String Then
             Return docker.Mount(New Mount(CStr(mount)))
         ElseIf TypeOf mount Is DeclareLambdaFunction Then
@@ -325,9 +334,25 @@ Public Module DockerTools
             Dim virtual As String = ValueAssignExpression.GetSymbol(lambda.closure)
 
             Return docker.Mount(New Mount With {.local = host, .virtual = virtual})
+        ElseIf TypeOf mount Is list Then
+            Dim shares As list = DirectCast(mount, list)
+
+            For Each host As String In shares.getNames
+                Dim guest As String = shares.getValue(Of String)(host, env)
+
+                If Not guest.StringEmpty(, True) Then
+                    Call docker.Mount(host, guest)
+                End If
+            Next
+        ElseIf RType.TypeOf(mount).mode = TypeCodes.string Then
+            For Each vol As String In CLRVector.asCharacter(mount)
+                Call docker.Mount(New Mount(vol))
+            Next
         Else
             Return Message.InCompatibleType(GetType(String), mount.GetType, env)
         End If
+
+        Return docker
     End Function
 
     ''' <summary>
@@ -347,8 +372,8 @@ Public Module DockerTools
     ''' <param name="docker"></param>
     ''' <returns></returns>
     <ExportAPI("tty")>
-    Public Function tty(docker As Docker.Environment) As Object
-        docker.tty = True
+    Public Function tty(docker As Docker.Environment, Optional opt As Boolean = True) As Object
+        docker.tty = opt
         Return docker
     End Function
 
@@ -356,6 +381,9 @@ Public Module DockerTools
     ''' Run a command in a new container.(这个函数会捕捉到命令的标准输出然后以字符串的形式返回)
     ''' </summary>
     ''' <param name="command"></param>
+    ''' <param name="args">
+    ''' the commandline arguments for the shell <paramref name="command"/> run inside a docker container.
+    ''' </param>
     ''' <param name="shell_cmdl">
     ''' this debug parameter specific that just returns the commandline for 
     ''' run docker instead of run command and returns the std_output.
@@ -396,7 +424,7 @@ Public Module DockerTools
             command = command & " " & script.CLIPath
         End If
 
-        If args.length > 0 Then
+        If args IsNot Nothing AndAlso args.length > 0 Then
             Dim pars As String() = args.slots _
                 .Select(Function(t)
                             Return $"{t.Key} {CLRVector.asCharacter(t.Value).JoinBy(",").CLIToken}"

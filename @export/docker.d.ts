@@ -76,7 +76,8 @@ declare namespace docker {
      * + default value Is ``null``.
      * @param portForward 
      * + default value Is ``null``.
-     * @param args 
+     * @param args the commandline arguments for the shell **`command`** run inside a docker container.
+     * 
      * + default value Is ``null``.
      * @param shell_cmdl this debug parameter specific that just returns the commandline for 
      *  run docker instead of run command and returns the std_output.
@@ -107,8 +108,10 @@ declare namespace docker {
     * 
     * 
      * @param docker -
+     * @param opt 
+     * + default value Is ``true``.
    */
-   function tty(docker: object): any;
+   function tty(docker: object, opt?: boolean): any;
    /**
     * set the workdir for run the command inside this new docker container
     * 

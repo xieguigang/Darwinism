@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e7ea1fb545a9b5b56af72dd6233284a, src\data\LINQ\RQL\Resource.vb"
+﻿#Region "Microsoft.VisualBasic::8e7ea1fb545a9b5b56af72dd6233284a, src\data\LINQ\RQL\ResourceQuery\Resource.vb"
 
     ' Author:
     ' 

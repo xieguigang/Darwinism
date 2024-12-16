@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b98b2872aca2d0fe99c7cc3638bb61c, src\CloudKit\Docker\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::bf5dc77b494f6f785b1540fba3f4b65f, src\CloudKit\Docker\Environment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 269
-    '    Code Lines: 72 (26.77%)
-    ' Comment Lines: 174 (64.68%)
-    '    - Xml Docs: 16.67%
+    '   Total Lines: 274
+    '    Code Lines: 72 (26.28%)
+    ' Comment Lines: 179 (65.33%)
+    '    - Xml Docs: 18.99%
     ' 
-    '   Blank Lines: 23 (8.55%)
-    '     File Size: 14.19 KB
+    '   Blank Lines: 23 (8.39%)
+    '     File Size: 14.34 KB
 
 
     ' Class Environment
@@ -242,6 +242,11 @@ Public Class Environment
         Return Me
     End Function
 
+    ''' <summary>
+    ''' Add mount of the shared volumn
+    ''' </summary>
+    ''' <param name="[shared]"></param>
+    ''' <returns></returns>
     Public Function Mount(ParamArray [shared] As Mount()) As Environment
         _Shared = _Shared.JoinIterates([shared]).ToArray
         Return Me

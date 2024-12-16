@@ -60,7 +60,9 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Module CDF
 
     Sub New()
-        Call VBDebugger.EchoLine("the netcdf module only works for windows platform currently!")
+        If Not App.IsMicrosoftPlatform Then
+            Call VBDebugger.EchoLine("the netcdf module only works for windows platform currently!")
+        End If
     End Sub
 
     ''' <summary>

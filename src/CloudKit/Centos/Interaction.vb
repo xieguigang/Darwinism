@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f2a1e0e2d83612321c0d3711040a406, src\CloudKit\Centos\Interaction.vb"
+﻿#Region "Microsoft.VisualBasic::0cf9299d7956d2c3299068153e02ee2b, src\CloudKit\Centos\Interaction.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 53.33%
     ' 
     '   Blank Lines: 18 (15.13%)
-    '     File Size: 4.66 KB
+    '     File Size: 4.70 KB
 
 
     ' Class Interaction
@@ -98,8 +98,8 @@ Public Class Interaction
     ''' </summary>
     ''' <param name="command"></param>
     ''' <returns></returns>
-    Public Shared Function HasCommand(command As String) As Boolean
-        Return Not Interaction.Shell("command", $"-v {command}", verbose:=False).StringEmpty
+    Public Shared Function HasCommand(command As String, Optional verbose As Boolean = False) As Boolean
+        Return Not Interaction.Shell("command", $"-v {command}", verbose:=verbose).StringEmpty
     End Function
 
     ' 20201023

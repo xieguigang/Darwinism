@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1cf76145f556666d5446da159d98df9, src\data\LINQ\RQL\IndexWriter.vb"
+﻿#Region "Microsoft.VisualBasic::e1cf76145f556666d5446da159d98df9, src\data\LINQ\RQL\ResourceQuery\IndexWriter.vb"
 
     ' Author:
     ' 

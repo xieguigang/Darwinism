@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85d7e343270c83f9fb17da24f3a41b6b, src\data\LINQ\RQL\IndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::85d7e343270c83f9fb17da24f3a41b6b, src\data\LINQ\RQL\ResourceQuery\IndexReader.vb"
 
     ' Author:
     ' 

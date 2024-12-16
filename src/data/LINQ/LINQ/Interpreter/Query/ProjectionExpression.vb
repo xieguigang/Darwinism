@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e964dd6164ddb0aa2e34cf054fdfb15b, src\data\LINQ\LINQ\Interpreter\Query\ProjectionExpression.vb"
+﻿#Region "Microsoft.VisualBasic::59fbb8056e9a706b4b17fb3a8c30e8c8, src\data\LINQ\LINQ\Interpreter\Query\ProjectionExpression.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 45 (63.38%)
-    ' Comment Lines: 12 (16.90%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 77
+    '    Code Lines: 49 (63.64%)
+    ' Comment Lines: 13 (16.88%)
+    '    - Xml Docs: 69.23%
     ' 
-    '   Blank Lines: 14 (19.72%)
-    '     File Size: 2.47 KB
+    '   Blank Lines: 15 (19.48%)
+    '     File Size: 2.68 KB
 
 
     '     Class ProjectionExpression
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Exec
+    '         Function: Exec, ToString
     ' 
     ' 
     ' /********************************************************************************/
