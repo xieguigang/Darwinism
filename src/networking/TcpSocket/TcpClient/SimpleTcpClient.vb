@@ -522,6 +522,36 @@ Namespace TcpSocket
             _connectionMonitor = Task.Run(New Func(Of Task)(AddressOf ConnectedMonitor), _token)
         End Sub
 
+        Private Sub ConnectWithRetries(connectToken As CancellationToken)
+            Dim retryCount = 0
+
+            While True
+                Try
+                    Dim msg = $"{_header}attempting connection to {_serverIp}:{_serverPort}"
+                    If retryCount > 0 Then msg += $" ({retryCount} retries)"
+                    Logger(msg)
+
+                    _client.Dispose()
+                    _client = If(_settings.LocalEndpoint Is Nothing, New TcpClient(), New TcpClient(_settings.LocalEndpoint))
+                    _client.NoDelay = _settings.NoDelay
+                    _client.ConnectAsync(_serverIp, _serverPort).Wait(1000, connectToken)
+
+                    If _client.Connected Then
+                        Logger($"{_header}connected to {_serverIp}:{_serverPort}")
+                        Exit While
+                    End If
+                Catch __unusedTaskCanceledException1__ As TaskCanceledException
+                    Exit While
+                Catch __unusedOperationCanceledException2__ As OperationCanceledException
+                    Exit While
+                Catch e As Exception
+                    Logger($"{_header}failed connecting to {_serverIp}:{_serverPort}: {e.Message}")
+                Finally
+                    retryCount += 1
+                End Try
+            End While
+        End Sub
+
         ''' <summary>
         ''' Establish the connection to the server with retries up to either the timeout specified or the value in Settings.ConnectTimeoutMs.
         ''' </summary>
@@ -555,38 +585,10 @@ Namespace TcpSocket
 
 
             Using connectTokenSource As CancellationTokenSource = New CancellationTokenSource()
-                Dim connectToken = connectTokenSource.Token
+                Dim connectToken As CancellationToken = connectTokenSource.Token
 
                 Dim cancelTask = Task.Delay(_settings.ConnectTimeoutMs, _token)
-                Dim connectTask As Task = Task.Run(Sub()
-                                                       Dim retryCount = 0
-
-                                                       While True
-                                                           Try
-                                                               Dim msg = $"{_header}attempting connection to {_serverIp}:{_serverPort}"
-                                                               If retryCount > 0 Then msg += $" ({retryCount} retries)"
-                                                               Logger(msg)
-
-                                                               _client.Dispose()
-                                                               _client = If(_settings.LocalEndpoint Is Nothing, New TcpClient(), New TcpClient(_settings.LocalEndpoint))
-                                                               _client.NoDelay = _settings.NoDelay
-                                                               _client.ConnectAsync(_serverIp, _serverPort).Wait(1000, connectToken)
-
-                                                               If _client.Connected Then
-                                                                   Logger($"{_header}connected to {_serverIp}:{_serverPort}")
-                                                                   Exit While
-                                                               End If
-                                                           Catch __unusedTaskCanceledException1__ As TaskCanceledException
-                                                               Exit While
-                                                           Catch __unusedOperationCanceledException2__ As OperationCanceledException
-                                                               Exit While
-                                                           Catch e As Exception
-                                                               Logger($"{_header}failed connecting to {_serverIp}:{_serverPort}: {e.Message}")
-                                                           Finally
-                                                               retryCount += 1
-                                                           End Try
-                                                       End While
-                                                   End Sub, connectToken)
+                Dim connectTask As Task = Task.Run(Sub() Call ConnectWithRetries(connectToken), connectToken)
 
                 Call Task.WhenAny(cancelTask, connectTask).Wait()
 
