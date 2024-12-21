@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fdfe344bc3eac63526529dddf2bcb13, src\data\LINQ\RQL\SearchIndex\MongoDBIndexer.vb"
+﻿#Region "Microsoft.VisualBasic::94d652ff8946a2259397f9ffe71ba4c1, src\data\LINQ\RQL\SearchIndex\MongoDBIndexer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Public Class MongoDBIndexer : Inherits DocumentIndexer
         Return mongoDB.decodeDocument
     End Function
 End Class
-

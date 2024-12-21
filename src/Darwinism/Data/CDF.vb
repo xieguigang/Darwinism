@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a51afe881bae54a5fb0ab959459fe4c, src\Darwinism\Data\CDF.vb"
+﻿#Region "Microsoft.VisualBasic::7c3f0cfa2109e033e1e423745c59653d, src\Darwinism\Data\CDF.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 21 (53.85%)
-    ' Comment Lines: 13 (33.33%)
+    '   Total Lines: 41
+    '    Code Lines: 23 (56.10%)
+    ' Comment Lines: 13 (31.71%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (12.82%)
-    '     File Size: 1.08 KB
+    '   Blank Lines: 5 (12.20%)
+    '     File Size: 1.15 KB
 
 
     ' Module CDF

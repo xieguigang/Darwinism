@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d81b0858530331bf5ade6d065d9a2cdd, src\data\LINQ\RQL\SearchIndex\DocumentIndexer.vb"
+﻿#Region "Microsoft.VisualBasic::56649de607fe7e9947c96ef7d1b9d724, src\data\LINQ\RQL\SearchIndex\DocumentIndexer.vb"
 
     ' Author:
     ' 
@@ -121,4 +121,3 @@ Public MustInherit Class DocumentIndexer
     End Function
 
 End Class
-

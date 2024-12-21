@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb740f094a969107acc7210216634886, src\data\LINQ\LINQ\Runtime\Indexing\LevenshteinIndex.vb"
+﻿#Region "Microsoft.VisualBasic::922c4ed726f9c3613536971a5002212c, src\data\LINQ\LINQ\Runtime\Indexing\LevenshteinIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (28.57%)
-    '     File Size: 786 B
+    '     File Size: 784 B
 
 
     ' Class LevenshteinIndex
@@ -83,4 +83,3 @@ Public Class LevenshteinIndex : Inherits SearchIndex
         Return index.Query(text)
     End Function
 End Class
-

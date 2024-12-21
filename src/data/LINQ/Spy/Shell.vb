@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72b7a0900e4c23592597a1fd34d36bee, src\data\LINQ\Spy\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::968c358571379422469e97858060b42c, src\data\LINQ\Spy\Shell.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Module LinqShell
     End Sub
 
 End Module
-

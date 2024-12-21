@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da48f9f2d3c648dd55431525cf025b9a, src\data\LINQ\RQL\SearchIndex\CsvIndexer.vb"
+﻿#Region "Microsoft.VisualBasic::b1c692a4ac2bc3b310ba03a350a57e8b, src\data\LINQ\RQL\SearchIndex\CsvIndexer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 3 (37.50%)
-    '     File Size: 167 B
+    '     File Size: 165 B
 
 
     ' Class CsvIndexer
@@ -59,4 +59,3 @@ Public Class CsvIndexer : Inherits DocumentIndexer
 
     End Sub
 End Class
-

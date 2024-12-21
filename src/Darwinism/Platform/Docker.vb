@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8438d66f1f7c4439e6cde02a10898c53, src\Darwinism\Platform\Docker.vb"
+﻿#Region "Microsoft.VisualBasic::f596f825d6d7be3ee1843b215873d12f, src\Darwinism\Platform\Docker.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 408
-    '    Code Lines: 203 (49.75%)
-    ' Comment Lines: 162 (39.71%)
-    '    - Xml Docs: 48.15%
+    '   Total Lines: 411
+    '    Code Lines: 203 (49.39%)
+    ' Comment Lines: 165 (40.15%)
+    '    - Xml Docs: 49.09%
     ' 
-    '   Blank Lines: 43 (10.54%)
-    '     File Size: 16.72 KB
+    '   Blank Lines: 43 (10.46%)
+    '     File Size: 16.90 KB
 
 
     ' Module DockerTools

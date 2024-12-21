@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92b2e11020a3ca0f304c481c28383c48, src\data\LINQ\Spy\HttpQuery.vb"
+﻿#Region "Microsoft.VisualBasic::eb9f009bf5d182fa191a054a6e8e6ae0, src\data\LINQ\Spy\HttpQuery.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 11 (15.49%)
-    '     File Size: 2.48 KB
+    '     File Size: 2.47 KB
 
 
     ' Class HttpQuery
@@ -126,4 +126,3 @@ Public Class HttpQuery : Implements IAppHandler
         Next
     End Function
 End Class
-

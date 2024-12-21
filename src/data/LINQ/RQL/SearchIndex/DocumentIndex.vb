@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26a7a2d2813fe37672cc8ab48bb00b9a, src\data\LINQ\RQL\SearchIndex\DocumentIndex.vb"
+﻿#Region "Microsoft.VisualBasic::dfa3b1ba80463e55e53726d9539bb23e, src\data\LINQ\RQL\SearchIndex\DocumentIndex.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Public Class DocumentIndex : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

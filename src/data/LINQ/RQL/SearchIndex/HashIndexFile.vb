@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66cca9ef6c6efdcb0993f2cd38f8f470, src\data\LINQ\RQL\SearchIndex\HashIndexFile.vb"
+﻿#Region "Microsoft.VisualBasic::50e02ace6a5e8b43c8127969ecefdb2e, src\data\LINQ\RQL\SearchIndex\HashIndexFile.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (20.59%)
-    '     File Size: 1.66 KB
+    '     File Size: 1.65 KB
 
 
     ' Class HashIndexFile
@@ -87,4 +87,3 @@ Public Class HashIndexFile
     End Function
 
 End Class
-

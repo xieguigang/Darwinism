@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f7117b99dd0ba895752bdac605bb5b7, src\data\LINQ\LINQ\MemoryQuery\MemoryQuery.vb"
+﻿#Region "Microsoft.VisualBasic::8d0a9cc9b8ae145a61530e8be569eaa1, src\data\LINQ\LINQ\MemoryQuery\MemoryQuery.vb"
 
     ' Author:
     ' 
@@ -241,4 +241,3 @@ Public MustInherit Class MemoryQuery
     End Sub
 
 End Class
-

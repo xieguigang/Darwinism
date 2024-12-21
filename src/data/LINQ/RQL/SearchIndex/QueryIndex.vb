@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36ee5637c9859fce12928c4eb8cffeb0, src\data\LINQ\RQL\SearchIndex\QueryIndex.vb"
+﻿#Region "Microsoft.VisualBasic::8ba14c9e712a87f5086e2194c25dc5bb, src\data\LINQ\RQL\SearchIndex\QueryIndex.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Public Class QueryIndex : Inherits MemoryQuery
         End If
     End Sub
 End Class
-
