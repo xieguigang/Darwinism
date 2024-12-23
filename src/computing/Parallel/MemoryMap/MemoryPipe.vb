@@ -124,9 +124,10 @@ Public Class MemoryPipe
     ''' <param name="data"></param>
     Public Sub WriteBuffer(ByRef data As Byte())
         Dim buf As Stream = channel.OpenFile
+        Dim size As Byte() = BitConverter.GetBytes(data.Length)
 
         Call buf.Seek(Scan0, SeekOrigin.Begin)
-        Call buf.Write(BitConverter.GetBytes(data.Length), 0, 4)
+        Call buf.Write(size, 0, 4)
         Call buf.Write(data, Scan0, data.Length)
         Call buf.Flush()
 
