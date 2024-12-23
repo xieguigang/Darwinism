@@ -186,7 +186,7 @@ Namespace Protocols.Reflection
         Private Shared Function GetMethod(obj As Object, entryPoint As MethodInfo, Optional debug As Boolean = False) As DataRequestHandler
             Dim parameters As ParameterInfo() = entryPoint.GetParameters
 
-            If Not entryPoint.ReturnType.IsInheritsFrom(GetType(BufferPipe)) Then
+            If Not entryPoint.ReturnType.IsInheritsFrom(GetType(BufferPipe), strict:=False) Then
                 Return Nothing
             ElseIf parameters.Length > 2 Then
                 Return Nothing
