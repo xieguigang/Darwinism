@@ -12,12 +12,17 @@ Public MustInherit Class IProtocolHandler
 
 End Class
 
+Public Interface IRequestClient
+
+    Function SendMessage(message As RequestStream) As RequestStream
+
+End Interface
+
 #Region "Delegate Abstract Interface"
 
 Public Delegate Function SendMessageInvoke(Message As String) As String
 
 Public Delegate Sub ForceCloseHandle(socket As StateObject)
-
 
 #End Region
 

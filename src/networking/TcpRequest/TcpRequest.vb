@@ -82,7 +82,7 @@ Namespace Tcp
     ''' 否则本客户端会在<see cref="SendMessage"></see>函数位置一直处于等待的状态)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TcpRequest : Implements IDisposable
+    Public Class TcpRequest : Implements IDisposable, IRequestClient
 
         ''' <summary>
         ''' The port number for the remote device.
@@ -215,7 +215,7 @@ Namespace Tcp
         ''' </summary>
         ''' <param name="message"></param>
         ''' <returns></returns>
-        Public Function SendMessage(message As RequestStream) As RequestStream
+        Public Function SendMessage(message As RequestStream) As RequestStream Implements IRequestClient.SendMessage
             Dim byteData As Byte() = SendMessage(message.Serialize)
             Dim stream As RequestStream
 

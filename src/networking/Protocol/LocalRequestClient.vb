@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Parallel
 ''' <summary>
 ''' helper for run services module debug
 ''' </summary>
-Public Class LocalRequestClient
+Public Class LocalRequestClient : Implements IRequestClient
 
     ReadOnly fakeLocal As IPEndPoint
     ReadOnly host As ProtocolHandler
@@ -15,7 +15,7 @@ Public Class LocalRequestClient
         Me.fakeLocal = New IPEndPoint(0, 1)
     End Sub
 
-    Public Function SendMessage(message As RequestStream) As RequestStream
+    Public Function SendMessage(message As RequestStream) As RequestStream Implements IRequestClient.SendMessage
         Dim pull As New List(Of Byte)
         Dim responseData = host.HandleRequest(message, fakeLocal)
 
