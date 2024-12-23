@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::c13cff8741090c38069104bbac531de7, src\networking\Protocol\Reflection\ProtocolHandler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 171
-    '    Code Lines: 113 (66.08%)
-    ' Comment Lines: 33 (19.30%)
-    '    - Xml Docs: 90.91%
-    ' 
-    '   Blank Lines: 25 (14.62%)
-    '     File Size: 7.75 KB
+' Summaries:
 
 
-    '     Class ProtocolHandler
-    ' 
-    '         Properties: DeclaringType, ProtocolEntry
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetMethod, HandlePush, HandleRequest, method1, method2
-    '                   (+2 Overloads) SafelyCreateObject, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 171
+'    Code Lines: 113 (66.08%)
+' Comment Lines: 33 (19.30%)
+'    - Xml Docs: 90.91%
+' 
+'   Blank Lines: 25 (14.62%)
+'     File Size: 7.75 KB
+
+
+'     Class ProtocolHandler
+' 
+'         Properties: DeclaringType, ProtocolEntry
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetMethod, HandlePush, HandleRequest, method1, method2
+'                   (+2 Overloads) SafelyCreateObject, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -110,24 +110,26 @@ Namespace Protocols.Reflection
             Me.ProtocolEntry = entry?.EntryPoint
             Me.debug = debug
             Me.host = target
-
-            ' 解析出所有符合 WrapperClassTools.Net.DataRequestHandler 接口类型的函数方法
-            Dim Methods = type.GetMethods(bindingAttr:=AllInstanceMethod)
-            Dim LQuery = (From entryPoint As MethodInfo
-                          In Methods
-                          Let Protocol As ProtocolAttribute = ProtocolAttribute.GetEntryPoint(entryPoint)
-                          Let method As DataRequestHandler = GetMethod(target, entryPoint, debug:=debug)
-                          Where Not (Protocol Is Nothing) AndAlso
-                              Not method Is Nothing
-                          Select Protocol, entryPoint, method).ToArray
-
-            Me.Protocols = LQuery.ToDictionary(Function(element)
-                                                   Return element.Protocol.EntryPoint
-                                               End Function,
-                                               Function(element)
-                                                   Return element.method
-                                               End Function)
+            Me.Protocols = FindMethods(type, target, debug) _
+                .ToDictionary(Function(element)
+                                  Return element.protocol.EntryPoint
+                              End Function,
+                              Function(element)
+                                  Return element.method
+                              End Function)
         End Sub
+
+        Private Shared Function FindMethods(type As Type, target As Object, debug As Boolean) As IEnumerable(Of (protocol As ProtocolAttribute, entryPoint As MethodInfo, method As DataRequestHandler))
+            ' 解析出所有符合 WrapperClassTools.Net.DataRequestHandler 接口类型的函数方法
+            Dim methods = type.GetMethods(bindingAttr:=AllInstanceMethod)
+
+            Return From entryPoint As MethodInfo
+                   In methods
+                   Let Protocol As ProtocolAttribute = ProtocolAttribute.GetEntryPoint(entryPoint)
+                   Let method As DataRequestHandler = GetMethod(target, entryPoint, debug:=debug)
+                   Where Not (Protocol Is Nothing) AndAlso Not method Is Nothing
+                   Select (Protocol, entryPoint, method)
+        End Function
 
         ''' <summary>
         ''' 失败会返回空值
@@ -139,6 +141,7 @@ Namespace Protocols.Reflection
             Try
                 Return New ProtocolHandler(App)
             Catch ex As Exception
+                Call Microsoft.VisualBasic.App.LogException(ex)
                 Return Nothing
             End Try
         End Function
@@ -147,13 +150,9 @@ Namespace Protocols.Reflection
             Try
                 Return New ProtocolHandler(App)
             Catch ex As Exception
+                Call Microsoft.VisualBasic.App.LogException(ex)
                 Return Nothing
             End Try
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function HandlePush(uid As Long, request As RequestStream) As BufferPipe
-            Return HandleRequest(request, Nothing)
         End Function
 
         ''' <summary>
@@ -187,7 +186,7 @@ Namespace Protocols.Reflection
         Private Shared Function GetMethod(obj As Object, entryPoint As MethodInfo, Optional debug As Boolean = False) As DataRequestHandler
             Dim parameters As ParameterInfo() = entryPoint.GetParameters
 
-            If Not entryPoint.ReturnType.Equals(GetType(BufferPipe)) Then
+            If Not entryPoint.ReturnType.IsInheritsFrom(GetType(BufferPipe)) Then
                 Return Nothing
             ElseIf parameters.Length > 2 Then
                 Return Nothing
@@ -205,8 +204,8 @@ Namespace Protocols.Reflection
         End Function
 
         Private Shared Function method2(obj As Object, entryPoint As MethodInfo, parameters As ParameterInfo(), debug As Boolean) As DataRequestHandler
-            If (Not parameters.First.ParameterType.Equals(GetType(RequestStream)) OrElse
-                Not parameters.Last.ParameterType.Equals(GetType(TcpEndPoint))) Then
+            If parameters.First.ParameterType IsNot GetType(RequestStream) OrElse
+                parameters.Last.ParameterType IsNot GetType(TcpEndPoint) Then
                 Return Nothing
             Else
                 Return AddressOf New ProtocolInvoker(obj, entryPoint, debug).InvokeProtocol2
@@ -214,7 +213,7 @@ Namespace Protocols.Reflection
         End Function
 
         Private Shared Function method1(obj As Object, entryPoint As MethodInfo, parameters As ParameterInfo(), debug As Boolean) As DataRequestHandler
-            If Not parameters.First.ParameterType.Equals(GetType(RequestStream)) Then
+            If parameters.First.ParameterType IsNot GetType(RequestStream) Then
                 Return Nothing
             Else
                 Return AddressOf New ProtocolInvoker(obj, entryPoint, debug).InvokeProtocol1
