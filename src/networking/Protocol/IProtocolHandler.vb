@@ -78,53 +78,56 @@ Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
 
-<HideModuleName>
-Public Module Extensions
+Namespace Protocols
 
-    ''' <summary>
-    ''' -1标识Ping不通
-    ''' </summary>
-    ''' <param name="operationTimeOut">ms</param>
-    ''' <returns></returns>
-    Public Function Ping(ep As System.Net.IPEndPoint, Optional operationTimeOut As Integer = 3 * 1000) As Double
-        Return New TcpRequest(ep).Ping(operationTimeOut)
-    End Function
+    <HideModuleName>
+    Public Module Extensions
 
-    ''' <summary>
-    ''' -1 ping failure
-    ''' </summary>
-    ''' <param name="invoke"></param>
-    ''' <param name="timeout"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Ping(invoke As TcpRequest, Optional timeout As Integer = 3 * 1000) As Double
-        Dim sw As Stopwatch = Stopwatch.StartNew
-        Dim request As RequestStream = RequestStream.SystemProtocol(RequestStream.Protocols.Ping, PING_REQUEST)
-        Dim response As RequestStream = invoke _
+        ''' <summary>
+        ''' -1标识Ping不通
+        ''' </summary>
+        ''' <param name="operationTimeOut">ms</param>
+        ''' <returns></returns>
+        Public Function Ping(ep As System.Net.IPEndPoint, Optional operationTimeOut As Integer = 3 * 1000) As Double
+            Return New TcpRequest(ep).Ping(operationTimeOut)
+        End Function
+
+        ''' <summary>
+        ''' -1 ping failure
+        ''' </summary>
+        ''' <param name="invoke"></param>
+        ''' <param name="timeout"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Ping(invoke As TcpRequest, Optional timeout As Integer = 3 * 1000) As Double
+            Dim sw As Stopwatch = Stopwatch.StartNew
+            Dim request As RequestStream = RequestStream.SystemProtocol(RequestStream.Protocols.Ping, PING_REQUEST)
+            Dim response As RequestStream = invoke _
             .SetTimeOut(TimeSpan.FromMilliseconds(timeout)) _
             .SendMessage(request)
 
-        If HTTP_RFC.RFC_REQUEST_TIMEOUT = response.Protocol Then
-            Return -1
-        End If
+            If HTTP_RFC.RFC_REQUEST_TIMEOUT = response.Protocol Then
+                Return -1
+            End If
 
-        Return sw.ElapsedMilliseconds
-    End Function
+            Return sw.ElapsedMilliseconds
+        End Function
 
-    Public Const PING_REQUEST As String = "PING/TTL-78973"
+        Public Const PING_REQUEST As String = "PING/TTL-78973"
 
 #Region ""
 
-    <Extension>
-    Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Dim client As New TcpRequest(host)
-        Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
-    End Sub
+        <Extension>
+        Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
+            Dim client As New TcpRequest(host)
+            Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
+        End Sub
 
-    <Extension>
-    Public Sub SendMessage(host As IPEndPoint, request As String, Callback As Action(Of String))
-        Call host.GetIPEndPoint.SendMessage(request, Callback)
-    End Sub
+        <Extension>
+        Public Sub SendMessage(host As IPEndPoint, request As String, Callback As Action(Of String))
+            Call host.GetIPEndPoint.SendMessage(request, Callback)
+        End Sub
 
 #End Region
-End Module
+    End Module
+End Namespace

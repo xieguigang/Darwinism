@@ -2,27 +2,30 @@
 Imports Darwinism.IPC.Networking.Protocols.Reflection
 Imports Microsoft.VisualBasic.Parallel
 
-''' <summary>
-''' helper for run services module debug
-''' </summary>
-Public Class LocalRequestClient : Implements IRequestClient
+Namespace Protocols
 
-    ReadOnly fakeLocal As IPEndPoint
-    ReadOnly host As ProtocolHandler
+    ''' <summary>
+    ''' helper for run services module debug
+    ''' </summary>
+    Public Class LocalRequestClient : Implements IRequestClient
 
-    Sub New(host As ProtocolHandler)
-        Me.host = host
-        Me.fakeLocal = New IPEndPoint(0, 1)
-    End Sub
+        ReadOnly fakeLocal As IPEndPoint
+        ReadOnly host As ProtocolHandler
 
-    Public Function SendMessage(message As RequestStream) As RequestStream Implements IRequestClient.SendMessage
-        Dim pull As New List(Of Byte)
-        Dim responseData = host.HandleRequest(message, fakeLocal)
+        Sub New(host As ProtocolHandler)
+            Me.host = host
+            Me.fakeLocal = New IPEndPoint(0, 1)
+        End Sub
 
-        For Each buf As Byte() In responseData.GetBlocks
-            Call pull.AddRange(buf)
-        Next
+        Public Function SendMessage(message As RequestStream) As RequestStream Implements IRequestClient.SendMessage
+            Dim pull As New List(Of Byte)
+            Dim responseData = host.HandleRequest(message, fakeLocal)
 
-        Return New RequestStream(0, 200, pull.ToArray)
-    End Function
-End Class
+            For Each buf As Byte() In responseData.GetBlocks
+                Call pull.AddRange(buf)
+            Next
+
+            Return New RequestStream(0, 200, pull.ToArray)
+        End Function
+    End Class
+End Namespace

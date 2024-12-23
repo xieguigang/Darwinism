@@ -2,28 +2,31 @@
 Imports Darwinism.IPC.Networking.Tcp
 Imports Microsoft.VisualBasic.Parallel
 
-''' <summary>
-''' Object for handles the request <see cref="ProtocolAttribute"/>.
-''' </summary>
-Public MustInherit Class IProtocolHandler
+Namespace Protocols
 
-    MustOverride ReadOnly Property ProtocolEntry As Long
-    MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As BufferPipe
+    ''' <summary>
+    ''' Object for handles the request <see cref="ProtocolAttribute"/>.
+    ''' </summary>
+    Public MustInherit Class IProtocolHandler
 
-End Class
+        MustOverride ReadOnly Property ProtocolEntry As Long
+        MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As BufferPipe
 
-Public Interface IRequestClient
+    End Class
 
-    Function SendMessage(message As RequestStream) As RequestStream
+    Public Interface IRequestClient
 
-End Interface
+        Function SendMessage(message As RequestStream) As RequestStream
+
+    End Interface
 
 #Region "Delegate Abstract Interface"
 
-Public Delegate Function SendMessageInvoke(Message As String) As String
+    Public Delegate Function SendMessageInvoke(Message As String) As String
 
-Public Delegate Sub ForceCloseHandle(socket As StateObject)
+    Public Delegate Sub ForceCloseHandle(socket As StateObject)
 
 #End Region
 
-Public Delegate Sub ProcessMessagePush(message As RequestStream)
+    Public Delegate Sub ProcessMessagePush(message As RequestStream)
+End Namespace
