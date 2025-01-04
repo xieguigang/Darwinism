@@ -86,7 +86,7 @@ Public Module BackgroundTaskUtils
             Return
         End Try
 
-        Do While True
+        Do While App.Running
             Try
                 If parent.HasExited Then
                     Call kill.Dispose()

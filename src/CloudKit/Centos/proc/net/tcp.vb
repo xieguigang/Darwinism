@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net
@@ -90,6 +91,7 @@ Namespace proc.net
         ''' <returns></returns>
         Public Property inode As String()
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return GetLocalAddress.ToString
         End Function
@@ -102,8 +104,12 @@ Namespace proc.net
             Return New IPEndPoint(ip, port)
         End Function
 
-        Public Shared Iterator Function Parse(file As Stream) As IEnumerable(Of tcp)
-            Dim str As New StreamReader(file)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Parse(file As Stream) As IEnumerable(Of tcp)
+            Return Parse(New StreamReader(file))
+        End Function
+
+        Public Shared Iterator Function Parse(str As TextReader) As IEnumerable(Of tcp)
             Dim line As Value(Of String) = str.ReadLine()
 
             Do While (line = str.ReadLine) IsNot Nothing
