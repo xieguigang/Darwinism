@@ -129,19 +129,7 @@ Public Class IPCSocket : Implements ITaskDriver
             ' port range start from nearby 10000
             ' for avoid port number conflicts
             Dim BEGIN_PORT = randf.NextInteger(MAX_PORT / 7, MAX_PORT - 1)
-            Dim stdout As String = Interaction.Shell("netstat", "-tulpn", verbose:=False)
-            Dim usedPorts As Index(Of Integer) = netstat.tulnp(stdout) _
-                .Select(Function(t) t.LocalListenPort) _
-                .Indexing
-
-            If usedPorts.Count = 0 Then
-                ' fallback method, read /proc/net/tcp file
-                ' 可能存在权限问题，在netstat不存在的时候才会进行读取
-                stdout = Interaction.cat("/proc/net/tcp", verbose:=False)
-                usedPorts = tcp.Parse(New StringReader(stdout)) _
-                    .Select(Function(t) t.GetLocalAddress.port) _
-                    .Indexing
-            End If
+            Dim usedPorts As Index(Of Integer) = PortIsUsed()
 
             For i As Integer = BEGIN_PORT To MAX_PORT - 1
                 If Not i Like usedPorts Then
@@ -158,6 +146,28 @@ Public Class IPCSocket : Implements ITaskDriver
         Else
             Return TCPExtensions.GetFirstAvailablePort(-1)
         End If
+    End Function
+
+    ''' <summary>
+    ''' work on linux
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared Function PortIsUsed() As Integer()
+        Dim stdout As String = Interaction.Shell("netstat", "-tulpn", verbose:=False)
+        Dim usedPorts As Integer() = netstat.tulnp(stdout) _
+            .Select(Function(t) t.LocalListenPort) _
+            .ToArray
+
+        If usedPorts.Length = 0 Then
+            ' fallback method, read /proc/net/tcp file
+            ' 可能存在权限问题，在netstat不存在的时候才会进行读取
+            stdout = Interaction.cat("/proc/net/tcp", verbose:=False)
+            usedPorts = tcp.Parse(New StringReader(stdout)) _
+                .Select(Function(t) t.GetLocalAddress.port) _
+                .ToArray
+        End If
+
+        Return usedPorts
     End Function
 
     Public Function GetLastError() As String
