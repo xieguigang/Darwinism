@@ -93,20 +93,22 @@ Namespace proc.net
             Dim line As Value(Of String) = str.ReadLine()
 
             Do While (line = str.ReadLine) IsNot Nothing
-                Dim cols As String() = CStr(line).StringSplit("\s+")
+                Dim cols As String() = line.Trim.StringSplit("\s+")
+                Dim queue As String() = cols(4).Split(":"c)
+                Dim trtm As String() = cols(5).Split(":"c)
                 Dim port As New tcp With {
-                    .sl = cols(0),
+                    .sl = Val(cols(0)),
                     .local_address = cols(1),
                     .rem_address = cols(2),
                     .st = cols(3),
-                    .tx_queue = cols(4),
-                    .rx_queue = cols(5),
-                    .tr = cols(6),
-                    .tm_when = cols(7),
-                    .retrnsmt = cols(8),
-                    .uid = cols(9),
-                    .timeout = cols(10),
-                    .inode = cols.Skip(10).ToArray
+                    .tx_queue = queue(0),
+                    .rx_queue = queue(1),
+                    .tr = trtm(0),
+                    .tm_when = trtm(1),
+                    .retrnsmt = cols(6),
+                    .uid = Integer.Parse(cols(7)),
+                    .timeout = cols(8),
+                    .inode = cols.Skip(8).ToArray
                 }
 
                 Yield port
