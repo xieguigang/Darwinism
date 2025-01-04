@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Language
 
 Namespace proc.net
 
@@ -84,7 +86,32 @@ Namespace proc.net
         ''' the socket by looking at ``/proc/[pid]/fdinfo/`` for the inode.
         ''' </summary>
         ''' <returns></returns>
-        Public Property inode As String
+        Public Property inode As String()
+
+        Public Shared Iterator Function Parse(file As Stream) As IEnumerable(Of tcp)
+            Dim str As New StreamReader(file)
+            Dim line As Value(Of String) = str.ReadLine()
+
+            Do While (line = str.ReadLine) IsNot Nothing
+                Dim cols As String() = CStr(line).StringSplit("\s+")
+                Dim port As New tcp With {
+                    .sl = cols(0),
+                    .local_address = cols(1),
+                    .rem_address = cols(2),
+                    .st = cols(3),
+                    .tx_queue = cols(4),
+                    .rx_queue = cols(5),
+                    .tr = cols(6),
+                    .tm_when = cols(7),
+                    .retrnsmt = cols(8),
+                    .uid = cols(9),
+                    .timeout = cols(10),
+                    .inode = cols.Skip(10).ToArray
+                }
+
+                Yield port
+            Loop
+        End Function
 
     End Class
 End Namespace
