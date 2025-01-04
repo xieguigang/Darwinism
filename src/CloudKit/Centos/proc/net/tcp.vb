@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net
+Imports Microsoft.VisualBasic.Net.Tcp
 
 Namespace proc.net
 
@@ -88,6 +90,18 @@ Namespace proc.net
         ''' <returns></returns>
         Public Property inode As String()
 
+        Public Overrides Function ToString() As String
+            Return GetLocalAddress.ToString
+        End Function
+
+        Public Function GetLocalAddress() As IPEndPoint
+            Dim ipaddr = local_address.Split(":"c)
+            Dim ip As String = IPv4.NumericIpToSymbolic(hexIp:=ipaddr(0))
+            Dim port As Integer = Convert.ToInt32(ipaddr(1), 16)
+
+            Return New IPEndPoint(ip, port)
+        End Function
+
         Public Shared Iterator Function Parse(file As Stream) As IEnumerable(Of tcp)
             Dim str As New StreamReader(file)
             Dim line As Value(Of String) = str.ReadLine()
@@ -108,7 +122,7 @@ Namespace proc.net
                     .retrnsmt = cols(6),
                     .uid = Integer.Parse(cols(7)),
                     .timeout = cols(8),
-                    .inode = cols.Skip(8).ToArray
+                    .inode = cols.Skip(9).ToArray
                 }
 
                 Yield port
