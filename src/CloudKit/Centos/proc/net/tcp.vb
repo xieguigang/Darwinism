@@ -96,7 +96,7 @@ Namespace proc.net
 
         Public Function GetLocalAddress() As IPEndPoint
             Dim ipaddr = local_address.Split(":"c)
-            Dim ip As String = IPv4.NumericIpToSymbolic(hexIp:=ipaddr(0))
+            Dim ip As String = IPv4.NumericIpToSymbolic(hexIp:=ipaddr(0), False)
             Dim port As Integer = Convert.ToInt32(ipaddr(1), 16)
 
             Return New IPEndPoint(ip, port)
