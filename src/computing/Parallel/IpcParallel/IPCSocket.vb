@@ -161,7 +161,7 @@ Public Class IPCSocket : Implements ITaskDriver
         If usedPorts.Length = 0 Then
             ' fallback method, read /proc/net/tcp file
             ' 可能存在权限问题，在netstat不存在的时候才会进行读取
-            stdout = Interaction.cat("/proc/net/tcp", verbose:=False)
+            stdout = "/proc/net/tcp".ReadAllText
             usedPorts = tcp.Parse(New StringReader(stdout)) _
                 .Select(Function(t) t.GetLocalAddress.port) _
                 .ToArray
