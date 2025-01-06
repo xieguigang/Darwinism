@@ -1,59 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::f985976eef0e3bdc7e0c453e42174ace, src\Darwinism\Platform\Centos.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 90
-    '    Code Lines: 64 (71.11%)
-    ' Comment Lines: 16 (17.78%)
-    '    - Xml Docs: 75.00%
-    ' 
-    '   Blank Lines: 10 (11.11%)
-    '     File Size: 3.59 KB
+' Summaries:
 
 
-    ' Module CentosTools
-    ' 
-    '     Function: check_command_exists, netstat_func, netstat_table, RunLinuxHelper
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 90
+'    Code Lines: 64 (71.11%)
+' Comment Lines: 16 (17.78%)
+'    - Xml Docs: 75.00%
+' 
+'   Blank Lines: 10 (11.11%)
+'     File Size: 3.59 KB
+
+
+' Module CentosTools
+' 
+'     Function: check_command_exists, netstat_func, netstat_table, RunLinuxHelper
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports Darwinism.Centos
+Imports Darwinism.Centos.proc.net
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -140,6 +142,17 @@ Public Module CentosTools
         Else
             Return RInternal.debug.stop("only works on linux system!", env)
         End If
+    End Function
+
+    ''' <summary>
+    ''' Parse the file content of file ``/proc/net/tcp``
+    ''' </summary>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
+    <ExportAPI("parse_tcp")>
+    <RApiReturn(GetType(proc.net.tcp))>
+    Public Function ParseTcpFile(text As String) As Object
+        Return proc.net.tcp.Parse(New StringReader(text)).ToArray
     End Function
 
 End Module
