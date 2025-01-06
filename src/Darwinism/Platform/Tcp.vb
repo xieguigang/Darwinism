@@ -51,8 +51,10 @@
 
 #End Region
 
+Imports Darwinism.Centos
 Imports Darwinism.HPC.Parallel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -71,5 +73,12 @@ Module Tcp
         Else
             Return TCPExtensions.PortIsUsed
         End If
+    End Function
+
+    <ExportAPI("local_address")>
+    Public Function local_address(tcp As proc.net.tcp()) As IPEndPoint()
+        Return tcp _
+            .Select(Function(p) p.GetLocalAddress) _
+            .ToArray
     End Function
 End Module
