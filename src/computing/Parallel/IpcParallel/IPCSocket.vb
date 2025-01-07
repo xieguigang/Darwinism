@@ -129,7 +129,7 @@ Public Class IPCSocket : Implements ITaskDriver
             ' port range start from nearby 10000
             ' for avoid port number conflicts
             Dim BEGIN_PORT = randf.NextInteger(MAX_PORT / 7, MAX_PORT - 1)
-            Dim usedPorts As Index(Of Integer) = PortIsUsed()
+            Dim usedPorts As Index(Of Integer) = PortIsUsed(Verbose)
 
             For i As Integer = BEGIN_PORT To MAX_PORT - 1
                 If Not i Like usedPorts Then
@@ -152,19 +152,32 @@ Public Class IPCSocket : Implements ITaskDriver
     ''' work on linux
     ''' </summary>
     ''' <returns></returns>
-    Public Shared Function PortIsUsed() As Integer()
+    Public Shared Function PortIsUsed(verbose As Boolean) As Integer()
         Dim stdout As String = Interaction.Shell("netstat", "-tulpn", verbose:=False)
         Dim usedPorts As Integer() = netstat.tulnp(stdout) _
             .Select(Function(t) t.LocalListenPort) _
             .ToArray
 
+        If verbose Then
+            Call VBDebugger.EchoLine("try to get tcp port listen binding status via `netstat` tool.")
+        End If
+
         If usedPorts.Length = 0 Then
+            If verbose Then
+                Call VBDebugger.EchoLine("but the `netstat` tool is missing or not working, read/decode of the `/proc/net/tcp` file directly!")
+            End If
+
             ' fallback method, read /proc/net/tcp file
             ' 可能存在权限问题，在netstat不存在的时候才会进行读取
             stdout = "/proc/net/tcp".ReadAllText
             usedPorts = tcp.Parse(New StringReader(stdout)) _
                 .Select(Function(t) t.GetLocalAddress.port) _
                 .ToArray
+
+            If verbose Then
+                Call VBDebugger.EchoLine($"parse {usedPorts.Length} tcp ports from the output:")
+                Call VBDebugger.EchoLine(stdout)
+            End If
         End If
 
         Return usedPorts

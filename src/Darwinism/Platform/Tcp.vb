@@ -67,10 +67,16 @@ Module Tcp
     ''' <returns></returns>
     ''' 
     <ExportAPI("port_in_used")>
-    Public Function portInUsed() As Integer()
+    Public Function portInUsed(Optional verbose As Boolean = True) As Integer()
         If App.Platform = PlatformID.Unix Then
+            If verbose Then
+                Call VBDebugger.EchoLine("detects used of tcp ports for unix platform")
+            End If
             Return IPCSocket.PortIsUsed
         Else
+            If verbose Then
+                Call VBDebugger.EchoLine("detects used of tcp ports via windows api")
+            End If
             Return TCPExtensions.PortIsUsed
         End If
     End Function
