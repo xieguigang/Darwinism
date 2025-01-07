@@ -9,6 +9,9 @@
 */
 declare namespace tcp {
    /**
+   */
+   function local_address(tcp: object): object;
+   /**
     * get a list of tcp port in used
     * 
     * 

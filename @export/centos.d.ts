@@ -26,4 +26,11 @@ declare namespace centos {
      * @param env default value Is ``null``.
    */
    function netstat(x?: string, verbose?: boolean, env?: object): any;
+   /**
+    * Parse the file content of file ``/proc/net/tcp``
+    * 
+    * 
+     * @param text -
+   */
+   function parse_tcp(text: string): object;
 }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Darwinism.Centos.proc.net.tcp</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://rdocumentation.rsharp.net/assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>tcp {Darwinism.Centos.proc.net}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>tcp</h2>
+
+        <h3>Description</h3>
+
+        <p>/proc/net/tcp</p>
+
+<p>This file contains information about all TCP sockets that are currently open on 
+ the system. Each line in the file represents a TCP socket, and the fields in 
+ each line provide details about the socket’s state, the local and remote addresses 
+ and ports, and other related information.</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Darwinism.Centos.proc.net
+export class tcp {
+   # The inode number of the socket. This can be used to find the process using 
+   #  the socket by looking at <code>/proc/[pid]/fdinfo/</code> for the inode.
+   inode: string;
+   # The local IP address and port number (in hexadecimal).
+   local_address: string;
+   # The remote IP address and port number (in hexadecimal), or 00000000:0000 if not connected.
+   rem_address: string;
+   # Timing and retransmission information.
+   retrnsmt: string;
+   # The amount of data in the receive queue.
+   rx_queue: string;
+   # The socket’s slot (index) in the kernel’s socket table.
+   sl: integer;
+   # The socket’s state (e.g., 0A for listening, 01 for established).
+   st: string;
+   # The socket’s timeout value.
+   timeout: integer;
+   # Timing and retransmission information.
+   tm_when: string;
+   # Timing and retransmission information.
+   tr: string;
+   # The amount of data in the transmit queue.
+   tx_queue: string;
+   # The user ID of the process that owns the socket.
+   uid: integer;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        this clr type has no other .net clr type reference.
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://rdocumentation.rsharp.net/assets/R_syntax.js"></script>
+<script type="text/javascript" src="https://rdocumentation.rsharp.net/assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>

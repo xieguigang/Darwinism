@@ -51,8 +51,10 @@
 
 #End Region
 
+Imports Darwinism.Centos
 Imports Darwinism.HPC.Parallel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -65,11 +67,24 @@ Module Tcp
     ''' <returns></returns>
     ''' 
     <ExportAPI("port_in_used")>
-    Public Function portInUsed() As Integer()
+    Public Function portInUsed(Optional verbose As Boolean = True) As Integer()
         If App.Platform = PlatformID.Unix Then
-            Return IPCSocket.PortIsUsed
+            If verbose Then
+                Call VBDebugger.EchoLine("detects used of tcp ports for unix platform")
+            End If
+            Return IPCSocket.PortIsUsed(verbose)
         Else
+            If verbose Then
+                Call VBDebugger.EchoLine("detects used of tcp ports via windows api")
+            End If
             Return TCPExtensions.PortIsUsed
         End If
+    End Function
+
+    <ExportAPI("local_address")>
+    Public Function local_address(tcp As proc.net.tcp()) As IPEndPoint()
+        Return tcp _
+            .Select(Function(p) p.GetLocalAddress) _
+            .ToArray
     End Function
 End Module
