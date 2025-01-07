@@ -72,7 +72,7 @@ Module Tcp
             If verbose Then
                 Call VBDebugger.EchoLine("detects used of tcp ports for unix platform")
             End If
-            Return IPCSocket.PortIsUsed
+            Return IPCSocket.PortIsUsed(verbose)
         Else
             If verbose Then
                 Call VBDebugger.EchoLine("detects used of tcp ports via windows api")
