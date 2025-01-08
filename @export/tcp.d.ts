@@ -15,6 +15,8 @@ declare namespace tcp {
     * get a list of tcp port in used
     * 
     * 
+     * @param verbose 
+     * + default value Is ``true``.
    */
-   function port_in_used(): object;
+   function port_in_used(verbose?: boolean): object;
 }

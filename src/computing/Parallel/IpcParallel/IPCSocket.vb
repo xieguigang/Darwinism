@@ -160,6 +160,11 @@ Public Class IPCSocket : Implements ITaskDriver
 
         If verbose Then
             Call VBDebugger.EchoLine("try to get tcp port listen binding status via `netstat` tool.")
+            Call VBDebugger.EchoLine($"usedPorts: {usedPorts.JoinBy(", ")}.")
+
+            If usedPorts.IsNullOrEmpty Then
+                Call VBDebugger.EchoLine("none?")
+            End If
         End If
 
         If usedPorts.Length = 0 Then
