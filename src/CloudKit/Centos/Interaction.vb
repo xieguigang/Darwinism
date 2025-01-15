@@ -93,11 +93,14 @@ Public Class Interaction
     End Property
 
     ''' <summary>
-    ''' does the required command is installed in
-    ''' the centos system?
+    ''' does the required command is installed in the centos system?
     ''' </summary>
     ''' <param name="command"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' use the ``command -v`` for check the command is existsed or not, example as 
+    ''' check docker command is existed ``command -v docker``.
+    ''' </remarks>
     Public Shared Function HasCommand(command As String, Optional verbose As Boolean = False) As Boolean
         Return Not Interaction.Shell("command", $"-v {command}", verbose:=verbose).StringEmpty
     End Function
