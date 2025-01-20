@@ -155,7 +155,7 @@ Public Class Interaction
             Call Console.WriteLine($"/bin/bash -c ""{cmdl}""")
         End If
 
-        Dim stdout As String = CommandLine.Call("/bin/bash", $"-c ""{cmdl}""")
+        Dim stdout As String = CommandLine.Call("/bin/bash", $"-c ""{cmdl}""", debug:=verbose)
 
         If verbose Then
             Call Console.WriteLine("std_output:")
