@@ -61,9 +61,9 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' </summary>
 Public Class MemoryTable : Inherits MemoryIndex
 
-    ReadOnly df As DataFrame
+    ReadOnly df As DataFrameResolver
 
-    Sub New(df As DataFrame)
+    Sub New(df As DataFrameResolver)
         Me.df = df
     End Sub
 
@@ -74,7 +74,7 @@ Public Class MemoryTable : Inherits MemoryIndex
     ''' <returns>
     ''' this function will returns nothing if query filter has no result
     ''' </returns>
-    Public Function Query(filter As IEnumerable(Of Query)) As DataFrame
+    Public Function Query(filter As IEnumerable(Of Query)) As DataFrameResolver
         Dim index As Integer() = GetIndex(filter)
 
         If index.IsNullOrEmpty Then

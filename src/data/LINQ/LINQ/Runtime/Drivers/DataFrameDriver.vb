@@ -65,7 +65,7 @@ Namespace Runtime.Drivers
         End Sub
 
         Public Overrides Iterator Function ReadFromUri(uri As String) As IEnumerable(Of Object)
-            Dim dataframe As DataFrame = DataFrame.Load(uri).MeasureTypeSchema
+            Dim dataframe As DataFrameResolver = DataFrameResolver.Load(uri).MeasureTypeSchema
             Dim obj As JavaScriptObject
             Dim headers As String() = dataframe.HeadTitles
 

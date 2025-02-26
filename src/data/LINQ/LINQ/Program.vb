@@ -80,7 +80,7 @@ Module Program
         Dim env As New GlobalEnvironment(New Registry)
         Dim context As New ExecutableContext With {.env = env, .throwError = True}
         Dim result As JavaScriptObject() = query.Exec(context)
-        Dim table As DataFrame = result.CreateTableDataSet
+        Dim table As DataFrameResolver = result.CreateTableDataSet
         Dim output As String = args <= "/output"
 
         If output.StringEmpty Then
