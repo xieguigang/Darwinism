@@ -58,7 +58,7 @@ Imports LINQ.Runtime
 Imports LINQ.Script
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Text
 
