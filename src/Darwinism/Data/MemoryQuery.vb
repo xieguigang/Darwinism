@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::c0c983928b6690714b75c55a80a8d152, src\Darwinism\Data\MemoryQuery.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 348
-    '    Code Lines: 231 (66.38%)
-    ' Comment Lines: 73 (20.98%)
-    '    - Xml Docs: 95.89%
-    ' 
-    '   Blank Lines: 44 (12.64%)
-    '     File Size: 12.85 KB
+' Summaries:
 
 
-    ' Module MemoryQuery
-    ' 
-    '     Function: [select], between, BuildQuery, fulltext, hashindex
-    '               Levenshtein_search, load, match_against, valueindex
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 348
+'    Code Lines: 231 (66.38%)
+' Comment Lines: 73 (20.98%)
+'    - Xml Docs: 95.89%
+' 
+'   Blank Lines: 44 (12.64%)
+'     File Size: 12.85 KB
+
+
+' Module MemoryQuery
+' 
+'     Function: [select], between, BuildQuery, fulltext, hashindex
+'               Levenshtein_search, load, match_against, valueindex
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports LINQ
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Interpreter.ExecuteEngine
@@ -66,7 +67,6 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.Object
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
-Imports dataframe = Microsoft.VisualBasic.Data.Framework.IO.DataFrame
 Imports rdataframe = SMRUCC.Rsharp.Runtime.Internal.Object.dataframe
 Imports renv = SMRUCC.Rsharp.Runtime
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
@@ -94,7 +94,8 @@ Module MemoryQuery
                          x As Object,
                          Optional nested_field As String = Nothing,
                          Optional env As Environment = Nothing) As Object
-        Dim df As dataframe
+
+        Dim df As DataFrameResolver
 
         If x Is Nothing Then
             Return RInternal.debug.stop("the required input data source `x` should not be nothing!", env)
@@ -110,7 +111,7 @@ Module MemoryQuery
                 Next
             End With
 
-            df = New dataframe(fields.ToArray)
+            df = New DataFrameResolver(fields.ToArray)
         ElseIf TypeOf x Is String OrElse TypeOf x Is Stream Then
             Dim file = SMRUCC.Rsharp.GetFileStream(x, FileAccess.Read, env)
 
@@ -118,14 +119,14 @@ Module MemoryQuery
                 Return file.TryCast(Of Message)
             End If
 
-            df = dataframe.Load(file.TryCast(Of Stream))
+            df = DataFrameResolver.Load(file.TryCast(Of Stream))
         ElseIf x.GetType.IsArray OrElse TypeOf x Is vector Then
             Dim genericArray As Array = renv.UnsafeTryCastGenericArray(CLRVector.asObject(x))
             Dim index As New MemoryPool(genericArray, [property]:=nested_field)
 
             Return index
         Else
-            Return Message.InCompatibleType(GetType(dataframe), x.GetType, env)
+            Return Message.InCompatibleType(GetType(DataFrameResolver), x.GetType, env)
         End If
 
         Dim table As New MemoryTable(df)
@@ -371,7 +372,7 @@ Module MemoryQuery
 
         If TypeOf x Is MemoryTable Then
             Dim tbl As MemoryTable = DirectCast(x, MemoryTable)
-            Dim df As dataframe = tbl.Query(queryList)
+            Dim df As DataFrameResolver = tbl.Query(queryList)
             Dim result As rdataframe
 
             If df Is Nothing Then
