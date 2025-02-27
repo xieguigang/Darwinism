@@ -661,8 +661,7 @@ Namespace HTTP
         ''' (服务器所不支持的协议类型)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property RFC_VERSION_NOT_SUPPORTED As RequestStream =
-        New RequestStream(0, HTTP_RFC.RFC_VERSION_NOT_SUPPORTED, "HTTP/505")
+        Public ReadOnly Property RFC_VERSION_NOT_SUPPORTED As New RequestStream(0, HTTP_RFC.RFC_VERSION_NOT_SUPPORTED, "HTTP/505")
 
         ''' <summary>
         ''' 506 Variant Also Negotiates (RFC 2295) |
