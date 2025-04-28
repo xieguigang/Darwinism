@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>hardware_sign</title>
+    <title>Generate Hardware-based Digital Signatures Creates unique MD5 checksums based on system hardware characteristics and optional salt. Signatures are MAC-address specific, generating one checksum per network interface.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>hardware_sign</h2>
+        <h2>Generate Hardware-based Digital Signatures Creates unique MD5 checksums based on system hardware characteristics and optional salt. Signatures are MAC-address specific, generating one checksum per network interface.</h2>
 
         <h3>Description</h3>
 
@@ -29,13 +29,25 @@
         <div style="width: 100%; padding-left: 3%; color: black;">
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>hardware_sign</strong>(
     <i>salt</i> = <span style='color: brown;'><strong>''</strong></span>,
-    <i>salt.bytes</i> = <span style='color: blue !important;'>NULL</span>);</code></pre>
+    <i>salt.bytes</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>salt</dt>
+<dd><p><p>Character string (typically user email) to add entropy to signatures.</p></p></dd>
+
+
+<dt>salt.bytes</dt>
+<dd><p><p>Optional raw bytes as additional salt. Will be MD5-hashed if provided.</p></p></dd>
+
+
+<dt>verbose</dt>
+<dd><p><p>Logical. Show debug information during generation (default: FALSE).</p></p></dd>
+
         </table>
 
 
@@ -49,7 +61,7 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>Character vector of MD5 checksums: \itemize{ \item Length matches number of valid network interfaces \item Order corresponds to interfaces returned by get<em>mac</em>addresses() \item Each checksum incorporates hardware profile + MAC address + salt(s) }</p>
 
         <h3 style="display: none;">Examples</h3>
 

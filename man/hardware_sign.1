@@ -1,22 +1,31 @@
-﻿.TH HARDWARE_SIGN 1 2025-Apr "" "hardware_sign"
+﻿.TH HARDWARE_SIGN 1 2025-Apr "" "Generate Hardware-based Digital Signatures Creates unique MD5 checksums based on system hardware characteristics and optional salt. Signatures are MAC-address specific, generating one checksum per network interface."
 .SH NAME
 hardware_sign \- hardware_sign(
     <i>salt</i> = <span style='color: brown;'><strong>''</strong></span>,
-    <i>salt.bytes</i> = <span style='color: blue !important;'>NULL</span>)
+    <i>salt.bytes</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>)
 .SH SYNOPSIS
 \fIhardware_sign(
     <i>salt</i> = <span style='color: brown;'><strong>''</strong></span>,
-    <i>salt.bytes</i> = <span style='color: blue !important;'>NULL</span>)\fR
+    <i>salt.bytes</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>)\fR
 .SH OPTIONS
 .PP
-\fBsalt\fB \fR\- ''. 
+\fBsalt\fB \fR\- ''. Character string (typically user email) to add entropy to signatures.
 .PP
 .PP
 \fBsalt.bytes\fB \fR\- NULL. 
 .PP
+.PP
+\fBverbose\fB \fR\- FALSE. Logical. Show debug information during generation (default: FALSE).
+.PP
+.SH VALUE
+.PP
+Character vector of MD5 checksums: \itemize{ \item Length matches number of valid network interfaces \item Order corresponds to interfaces returned by get_mac_addresses() \item Each checksum incorporates hardware profile + MAC address + salt(s) }
+.PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.hardware_sign at env.R:line 83
+SMRUCC/R#.declare_function.hardware_sign at env.R:line 195
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2025

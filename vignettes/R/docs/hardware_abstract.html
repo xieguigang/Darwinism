@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>get platform hardware abstract report</title>
+    <title>Get Platform Hardware Abstract Report This function retrieves key hardware information from the system, including CPU details and MAC addresses of network interfaces. It provides both raw data and a structured summary.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,7 +18,7 @@
             </tr>
         </table>
 
-        <h2>get platform hardware abstract report</h2>
+        <h2>Get Platform Hardware Abstract Report This function retrieves key hardware information from the system, including CPU details and MAC addresses of network interfaces. It provides both raw data and a structured summary.</h2>
 
         <h3>Description</h3>
 
@@ -27,13 +27,17 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>hardware_abstract</strong>();</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>hardware_abstract</strong>(
+    <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>verbose</dt>
+<dd><p><p>Logical. If TRUE (default), prints detailed system information to console.</p></p></dd>
+
         </table>
 
 
@@ -47,7 +51,7 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>A list containing three components: \itemize{ \item \strong{cpuinfo}: Character vector of CPU model names (one per thread) \item \strong{threads}: Integer count of logical processors/threads \item \strong{mac_list}: List of non-empty MAC addresses for network interfaces }</p>
 
         <h3 style="display: none;">Examples</h3>
 

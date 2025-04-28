@@ -1,11 +1,15 @@
-﻿.TH GET_MAC_ADDRESSES 1 2025-Apr "" "get_mac_addresses"
+﻿.TH GET_MAC_ADDRESSES 1 2025-Apr "" "Retrieve MAC Addresses of Network Interfaces Scans system network interfaces and extracts MAC addresses, excluding loopback interfaces."
 .SH NAME
 get_mac_addresses \- get_mac_addresses()
 .SH SYNOPSIS
 \fIget_mac_addresses()\fR
+.SH VALUE
+.PP
+A named list where: \itemize{ \item Names are network interface names (e.g., "eth0") \item Values are corresponding MAC addresses (empty string if unavailable) }
+.PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.get_mac_addresses at env.R:line 64
+SMRUCC/R#.declare_function.get_mac_addresses at env.R:line 148
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2025

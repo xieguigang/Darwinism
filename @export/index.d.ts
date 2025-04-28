@@ -28,13 +28,15 @@ declare namespace Darwinism {
    */
    function get_mac_addresses(): object;
    /**
+     * @param verbose default value Is ``true``.
    */
-   function hardware_abstract(): object;
+   function hardware_abstract(verbose?: any): object;
    /**
      * @param salt default value Is ````.
      * @param salt_bytes default value Is ``null``.
+     * @param verbose default value Is ``false``.
    */
-   function hardware_sign(salt?: any, salt_bytes?: any): object;
+   function hardware_sign(salt?: any, salt_bytes?: any, verbose?: any): object;
    /**
    */
    function no_netstat_warning(): object;

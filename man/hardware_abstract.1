@@ -1,11 +1,21 @@
-﻿.TH HARDWARE_ABSTRACT 1 2025-Apr "" "get platform hardware abstract report"
+﻿.TH HARDWARE_ABSTRACT 1 2025-Apr "" "Get Platform Hardware Abstract Report This function retrieves key hardware information from the system, including CPU details and MAC addresses of network interfaces. It provides both raw data and a structured summary."
 .SH NAME
-hardware_abstract \- hardware_abstract()
+hardware_abstract \- hardware_abstract(
+    <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>)
 .SH SYNOPSIS
-\fIhardware_abstract()\fR
+\fIhardware_abstract(
+    <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>)\fR
+.SH OPTIONS
+.PP
+\fBverbose\fB \fR\- TRUE. Logical. If TRUE (default), prints detailed system information to console.
+.PP
+.SH VALUE
+.PP
+A list containing three components: \itemize{ \item \strong{cpuinfo}: Character vector of CPU model names (one per thread) \item \strong{threads}: Integer count of logical processors/threads \item \strong{mac_list}: List of non-empty MAC addresses for network interfaces }
+.PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.hardware_abstract at env.R:line 42
+SMRUCC/R#.declare_function.hardware_abstract at env.R:line 64
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang, MIT Licensed 2025
