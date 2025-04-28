@@ -75,3 +75,16 @@ const get_mac_addresses = function() {
 
     return(mac_list);
 }
+
+const hardware_sign = function(salt = "", salt_bytes = NULL) {
+    let abstract = hardware_abstract();
+
+    require(JSON);
+
+    abstract$salt_bytes <- md5(salt_bytes);
+    abstract$salt <- salt;
+    abstract <- JSON::json_encode(abstract);
+    abstract <- md5(abstract);
+
+    return(abstract);
+}
