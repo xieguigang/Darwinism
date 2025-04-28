@@ -42,7 +42,8 @@ const no_netstat_warning = function() {
 const hardware_abstract = function() {
     let cpuinfo <- readLines("/proc/cpuinfo") 
     |> which(s -> instr(s,"model name") > 0) 
-    |> gsub("model name:","")
+    |> tagvalue(":","")
+    |> as.character()
     ;
     let threads = length(cpuinfo);
     let abstract = list(
@@ -52,6 +53,9 @@ const hardware_abstract = function() {
     );
 
     print("get platform hardware abstract:");
+    print("cpu info:");
+    print(cpuinfo);
+    print("abstract report:");
     str(abstract);
 
     return(abstract);
