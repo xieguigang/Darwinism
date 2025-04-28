@@ -40,10 +40,10 @@ const no_netstat_warning = function() {
 #' get platform hardware abstract report
 #' 
 const hardware_abstract = function() {
-    let cpuinfo <- readLines("/proc/cpuinfo") 
+    let cpuinfo = readLines("/proc/cpuinfo") 
     |> which(s -> instr(s,"model name") > 0) 
-    |> tagvalue(":","")
-    |> as.character()
+    |> .Internal::tagvalue(":","")
+    |> .Internal::trim()
     ;
     let threads = length(cpuinfo);
     let abstract = list(
