@@ -36,3 +36,42 @@ const no_netstat_warning = function() {
 
     invisible(NULL);
 }
+
+#' get platform hardware abstract report
+#' 
+const hardware_abstract = function() {
+    let cpuinfo <- readLines("/proc/cpuinfo") 
+    |> which(s -> instr(s,"model name") > 0) 
+    |> gsub("model name:","")
+    ;
+    let threads = length(cpuinfo);
+    let abstract = list(
+        cpuinfo = cpuinfo,
+        threads = threads,
+        mac_list = get_mac_addresses();
+    );
+
+    print("get platform hardware abstract:");
+    str(abstract);
+
+    return(abstract);
+}
+
+const get_mac_addresses = function() {
+    let interfaces <- list.dirs("/sys/class/net", recursive = FALSE);
+    interfaces <- basename(interfaces);
+    interfaces <- interfaces[interfaces != "lo"];  # 排除回环接口
+    interfaces <- as.list(interfaces, names = interfaces);
+
+    let mac_list <- lapply(interfaces, function(intf) {
+        let address_file <- file.path("/sys/class/net", intf, "address");
+
+        if (file.exists(address_file)) {
+            readLines(address_file, warn = FALSE);
+        } else {
+            "";
+        }
+    });
+
+    return(mac_list);
+}
