@@ -39,7 +39,7 @@ const no_netstat_warning = function() {
 
 #' get platform hardware abstract report
 #' 
-const hardware_abstract = function() {
+const hardware_abstract = function(verbose = TRUE) {
     let cpuinfo = readLines("/proc/cpuinfo") 
     |> which(s -> instr(s,"model name") > 0) 
     |> .Internal::tagvalue(":","")
@@ -52,11 +52,13 @@ const hardware_abstract = function() {
         mac_list = get_mac_addresses()
     );
 
-    print("get platform hardware abstract:");
-    print("cpu info:");
-    print(cpuinfo);
-    print("abstract report:");
-    str(abstract);
+    if (verbose) {
+        print("get platform hardware abstract:");
+        print("cpu info:");
+        print(cpuinfo);
+        print("abstract report:");
+        str(abstract);
+    }
 
     return(abstract);
 }
@@ -80,15 +82,33 @@ const get_mac_addresses = function() {
     return(mac_list);
 }
 
-const hardware_sign = function(salt = "", salt_bytes = NULL) {
-    let abstract = hardware_abstract();
+#' make digital signs for current platform hardware.
+#' 
+#' @param salt the salt string for make the digital sign, usually be the account email address.
+#' @param salt_bytes a vector of the raw bytes binary data for this digital sign.
+#' @param verbose show verbose debug echo
+#' 
+#' @return a character vector of the current hardware digital sign checksum.
+#'   the length of this checksum vector is equals to the size of the network
+#'   driver. which means make sign for each corresponding network driver based
+#'   on its mac address.
+#' 
+const hardware_sign = function(salt = "", salt_bytes = NULL, verbose = FALSE) {
+    let abstract = hardware_abstract(verbose = verbose);
+    let mac_list = abstract$mac_list;
 
-    require(JSON);
+    require(JSON,quietly=TRUE);
 
+    abstract$mac_list <- NULL;
     abstract$salt_bytes <- md5(salt_bytes);
     abstract$salt <- salt;
-    abstract <- JSON::json_encode(abstract);
-    abstract <- md5(abstract);
 
-    return(abstract);
+    let sign = sapply(mac_list, function(mac) {
+        let data = as.list(abstract);
+        data$mac = mac;
+        data = JSON::json_encode(data);
+        return(md5(data));
+    });
+
+    return(sign);
 }
