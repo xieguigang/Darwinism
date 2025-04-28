@@ -26,6 +26,17 @@ declare namespace Darwinism {
    function container_id(): object;
    /**
    */
+   function get_mac_addresses(): object;
+   /**
+   */
+   function hardware_abstract(): object;
+   /**
+     * @param salt default value Is ````.
+     * @param salt_bytes default value Is ``null``.
+   */
+   function hardware_sign(salt?: any, salt_bytes?: any): object;
+   /**
+   */
    function no_netstat_warning(): object;
    /**
      * @param source default value Is ``null``.
