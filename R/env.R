@@ -48,7 +48,7 @@ const hardware_abstract = function() {
     let abstract = list(
         cpuinfo = cpuinfo,
         threads = threads,
-        mac_list = get_mac_addresses();
+        mac_list = get_mac_addresses()
     );
 
     print("get platform hardware abstract:");
