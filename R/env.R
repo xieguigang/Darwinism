@@ -214,6 +214,14 @@ const hardware_sign = function(salt = "", salt_bytes = NULL, verbose = FALSE) {
 
 #' get and print the generated hardware keys
 #' 
+#' @param salt_bytes an integer array
+#' 
 const hardware_keys = function(salt = "", salt_bytes = NULL, verbose = FALSE) {
-    print(hardware_sign(salt, salt_bytes, verbose));
+    print(hardware_sign(salt, salt_bytes = {
+        if (length(salt_bytes) > 0) {
+            as.integer(salt_bytes);
+        } else {
+            NULL;
+        }
+    }, verbose));
 }
