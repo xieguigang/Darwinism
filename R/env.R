@@ -199,7 +199,7 @@ const hardware_sign = function(salt = "", salt_bytes = NULL, verbose = FALSE) {
     require(JSON,quietly=TRUE);
 
     abstract$mac_list <- NULL;
-    abstract$salt_bytes <- md5(salt_bytes);
+    abstract$salt_bytes <- md5(as.raw(salt_bytes));
     abstract$salt <- salt;
 
     let sign = sapply(mac_list, function(mac) {
