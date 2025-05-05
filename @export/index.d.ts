@@ -36,6 +36,12 @@ declare namespace Darwinism {
      * @param salt_bytes default value Is ``null``.
      * @param verbose default value Is ``false``.
    */
+   function hardware_keys(salt?: any, salt_bytes?: any, verbose?: any): object;
+   /**
+     * @param salt default value Is ````.
+     * @param salt_bytes default value Is ``null``.
+     * @param verbose default value Is ``false``.
+   */
    function hardware_sign(salt?: any, salt_bytes?: any, verbose?: any): object;
    /**
    */

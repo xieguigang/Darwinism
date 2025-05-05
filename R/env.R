@@ -211,3 +211,9 @@ const hardware_sign = function(salt = "", salt_bytes = NULL, verbose = FALSE) {
 
     return(sign);
 }
+
+#' get and print the generated hardware keys
+#' 
+const hardware_keys = function(salt = "", salt_bytes = NULL, verbose = FALSE) {
+    print(hardware_sign(salt, salt_bytes, verbose));
+}
