@@ -1,4 +1,4 @@
-﻿.TH HARDWARE_SIGN 1 2025-Jun "" "Generate Hardware-based Digital Signatures Creates unique MD5 checksums based on system hardware characteristics and optional salt. Signatures are MAC-address specific, generating one checksum per network interface."
+﻿.TH HARDWARE_SIGN 1 2025-Jun "" "Generate Hardware-based Digital Signatures"
 .SH NAME
 hardware_sign \- hardware_sign(
     <i>salt</i> = <span style='color: brown;'><strong>''</strong></span>,
@@ -23,6 +23,12 @@ hardware_sign \- hardware_sign(
 .PP
 Character vector of MD5 checksums: \itemize{ \item Length matches number of valid network interfaces \item Order corresponds to interfaces returned by get_mac_addresses() \item Each checksum incorporates hardware profile + MAC address + salt(s) }
 .PP
+.SH EXAMPLES
+.PP
+\dontrun{ signatures <- hardware_sign(salt = "user@example.com") }
+.PP
+.SH SEE ALSO
+\code{\link{hardware_abstract}} for underlying hardware data collection
 .SH FILES
 .PP
 SMRUCC/R#.declare_function.hardware_sign at env.R:line 195

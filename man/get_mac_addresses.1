@@ -1,4 +1,4 @@
-﻿.TH GET_MAC_ADDRESSES 1 2025-Jun "" "Retrieve MAC Addresses of Network Interfaces Scans system network interfaces and extracts MAC addresses, excluding loopback interfaces."
+﻿.TH GET_MAC_ADDRESSES 1 2025-Jun "" "Retrieve MAC Addresses of Network Interfaces"
 .SH NAME
 get_mac_addresses \- get_mac_addresses()
 .SH SYNOPSIS
@@ -6,6 +6,10 @@ get_mac_addresses \- get_mac_addresses()
 .SH VALUE
 .PP
 A named list where: \itemize{ \item Names are network interface names (e.g., "eth0") \item Values are corresponding MAC addresses (empty string if unavailable) }
+.PP
+.SH EXAMPLES
+.PP
+\dontrun{ macs <- get_mac_addresses() }
 .PP
 .SH FILES
 .PP

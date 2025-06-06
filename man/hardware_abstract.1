@@ -1,4 +1,4 @@
-﻿.TH HARDWARE_ABSTRACT 1 2025-Jun "" "Get Platform Hardware Abstract Report This function retrieves key hardware information from the system, including CPU details and MAC addresses of network interfaces. It provides both raw data and a structured summary."
+﻿.TH HARDWARE_ABSTRACT 1 2025-Jun "" "Get Platform Hardware Abstract Report"
 .SH NAME
 hardware_abstract \- hardware_abstract(
     <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>)
@@ -12,6 +12,10 @@ hardware_abstract \- hardware_abstract(
 .SH VALUE
 .PP
 A list containing three components: \itemize{ \item \strong{cpuinfo}: Character vector of CPU model names (one per thread) \item \strong{threads}: Integer count of logical processors/threads \item \strong{mac_list}: List of non-empty MAC addresses for network interfaces }
+.PP
+.SH EXAMPLES
+.PP
+\dontrun{ hardware_info <- hardware_abstract() str(hardware_info) }
 .PP
 .SH FILES
 .PP
