@@ -325,7 +325,7 @@ Namespace Tcp
 
             ' Convert the string data to byte data using ASCII encoding.
             For Each byteData As Byte() In data.GetBlocks
-                For Each block As Byte() In byteData.Split(4096)
+                For Each block As Byte() In byteData.SplitIterator(4096)
                     Call response.Write(block, Scan0, block.Length)
                     Call response.Flush()
                 Next
