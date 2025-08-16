@@ -102,6 +102,10 @@ Namespace ThreadTask
             Me.verbose = verbose
             Me.debugMode = debugMode
             Me.taskInterval = taskInterval
+
+            If debugMode Then
+                Call VBDebugger.EchoLine("parallel thread task run in debug mode(run in sequential model)")
+            End If
         End Sub
 
         ''' <summary>
