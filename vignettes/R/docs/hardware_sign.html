@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        <p>Creates unique MD5 checksums based on system hardware characteristics and optional salt.
+Signatures are MAC-address specific, generating one checksum per network interface.</p>
 
         <h3>Usage</h3>
 
@@ -61,11 +62,20 @@
 
         <h3>Value</h3>
 
-        <p>Character vector of MD5 checksums: \itemize{ \item Length matches number of valid network interfaces \item Order corresponds to interfaces returned by get<em>mac</em>addresses() \item Each checksum incorporates hardware profile + MAC address + salt(s) }</p>
+        <p>Character vector of MD5 checksums:
+\itemize{
+\item Length matches number of valid network interfaces
+\item Order corresponds to interfaces returned by get<em>mac</em>addresses()
+\item Each checksum incorporates hardware profile + MAC address + salt(s)
+}</p>
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code id="example_r">\dontrun{ signatures <- hardware_sign(salt = "user@example.com") }</code></pre>
+        <pre><code id="example_r">#\dontrun{
+
+signatures <- hardware_sign(salt = "user@example.com")
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>Darwinism</em> version 1.2.0.1254 <a

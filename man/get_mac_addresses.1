@@ -3,13 +3,25 @@
 get_mac_addresses \- get_mac_addresses()
 .SH SYNOPSIS
 \fIget_mac_addresses()\fR
+.SH DESCRIPTION
+.PP
+Scans system network interfaces and extracts MAC addresses, excluding loopback interfaces.
+.PP
 .SH VALUE
 .PP
-A named list where: \itemize{ \item Names are network interface names (e.g., "eth0") \item Values are corresponding MAC addresses (empty string if unavailable) }
+A named list where:
+\itemize{
+\item Names are network interface names (e.g., "eth0")
+\item Values are corresponding MAC addresses (empty string if unavailable)
+}
 .PP
 .SH EXAMPLES
 .PP
-\dontrun{ macs <- get_mac_addresses() }
+#\dontrun{
+
+macs <- get_mac_addresses()
+
+#}
 .PP
 .SH FILES
 .PP

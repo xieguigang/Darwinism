@@ -5,17 +5,32 @@ hardware_abstract \- hardware_abstract(
 .SH SYNOPSIS
 \fIhardware_abstract(
     <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>)\fR
+.SH DESCRIPTION
+.PP
+This function retrieves key hardware information from the system, including CPU details
+and MAC addresses of network interfaces. It provides both raw data and a structured summary.
+.PP
 .SH OPTIONS
 .PP
 \fBverbose\fB \fR\- TRUE. Logical. If TRUE (default), prints detailed system information to console.
 .PP
 .SH VALUE
 .PP
-A list containing three components: \itemize{ \item \strong{cpuinfo}: Character vector of CPU model names (one per thread) \item \strong{threads}: Integer count of logical processors/threads \item \strong{mac_list}: List of non-empty MAC addresses for network interfaces }
+A list containing three components:
+\itemize{
+\item \strong{cpuinfo}: Character vector of CPU model names (one per thread)
+\item \strong{threads}: Integer count of logical processors/threads
+\item \strong{mac_list}: List of non-empty MAC addresses for network interfaces
+}
 .PP
 .SH EXAMPLES
 .PP
-\dontrun{ hardware_info <- hardware_abstract() str(hardware_info) }
+#\dontrun{
+
+hardware_info <- hardware_abstract()
+str(hardware_info)
+
+#}
 .PP
 .SH FILES
 .PP

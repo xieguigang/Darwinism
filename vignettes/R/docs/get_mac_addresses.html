@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        
+        <p>Scans system network interfaces and extracts MAC addresses, excluding loopback interfaces.</p>
 
         <h3>Usage</h3>
 
@@ -47,11 +47,19 @@
 
         <h3>Value</h3>
 
-        <p>A named list where: \itemize{ \item Names are network interface names (e.g., "eth0") \item Values are corresponding MAC addresses (empty string if unavailable) }</p>
+        <p>A named list where:
+\itemize{
+\item Names are network interface names (e.g., "eth0")
+\item Values are corresponding MAC addresses (empty string if unavailable)
+}</p>
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code id="example_r">\dontrun{ macs <- get_mac_addresses() }</code></pre>
+        <pre><code id="example_r">#\dontrun{
+
+macs <- get_mac_addresses()
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>Darwinism</em> version 1.2.0.1254 <a

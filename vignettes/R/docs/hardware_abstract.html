@@ -22,7 +22,8 @@
 
         <h3>Description</h3>
 
-        
+        <p>This function retrieves key hardware information from the system, including CPU details
+and MAC addresses of network interfaces. It provides both raw data and a structured summary.</p>
 
         <h3>Usage</h3>
 
@@ -51,11 +52,21 @@
 
         <h3>Value</h3>
 
-        <p>A list containing three components: \itemize{ \item \strong{cpuinfo}: Character vector of CPU model names (one per thread) \item \strong{threads}: Integer count of logical processors/threads \item \strong{mac_list}: List of non-empty MAC addresses for network interfaces }</p>
+        <p>A list containing three components:
+\itemize{
+\item \strong{cpuinfo}: Character vector of CPU model names (one per thread)
+\item \strong{threads}: Integer count of logical processors/threads
+\item \strong{mac_list}: List of non-empty MAC addresses for network interfaces
+}</p>
 
         <h3 style="display: block;">Examples</h3>
 
-        <pre><code id="example_r">\dontrun{ hardware_info <- hardware_abstract() str(hardware_info) }</code></pre>
+        <pre><code id="example_r">#\dontrun{
+
+hardware_info <- hardware_abstract()
+str(hardware_info)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>Darwinism</em> version 1.2.0.1254 <a

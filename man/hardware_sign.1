@@ -9,6 +9,11 @@ hardware_sign \- hardware_sign(
     <i>salt</i> = <span style='color: brown;'><strong>''</strong></span>,
     <i>salt.bytes</i> = <span style='color: blue !important;'>NULL</span>,
     <i>verbose</i> = <span style='color: blue !important;'>FALSE</span>)\fR
+.SH DESCRIPTION
+.PP
+Creates unique MD5 checksums based on system hardware characteristics and optional salt.
+Signatures are MAC-address specific, generating one checksum per network interface.
+.PP
 .SH OPTIONS
 .PP
 \fBsalt\fB \fR\- ''. Character string (typically user email) to add entropy to signatures.
@@ -21,11 +26,20 @@ hardware_sign \- hardware_sign(
 .PP
 .SH VALUE
 .PP
-Character vector of MD5 checksums: \itemize{ \item Length matches number of valid network interfaces \item Order corresponds to interfaces returned by get_mac_addresses() \item Each checksum incorporates hardware profile + MAC address + salt(s) }
+Character vector of MD5 checksums:
+\itemize{
+\item Length matches number of valid network interfaces
+\item Order corresponds to interfaces returned by get_mac_addresses()
+\item Each checksum incorporates hardware profile + MAC address + salt(s)
+}
 .PP
 .SH EXAMPLES
 .PP
-\dontrun{ signatures <- hardware_sign(salt = "user@example.com") }
+#\dontrun{
+
+signatures <- hardware_sign(salt = "user@example.com")
+
+#}
 .PP
 .SH SEE ALSO
 \code{\link{hardware_abstract}} for underlying hardware data collection
