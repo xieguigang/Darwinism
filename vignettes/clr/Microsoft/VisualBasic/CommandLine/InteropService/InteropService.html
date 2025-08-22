@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Microsoft.VisualBasic.CommandLine.InteropService.InteropService</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="https://rdocumentation.rsharp.net/assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>InteropService {Microsoft.VisualBasic.CommandLine.InteropService}</td>
+                <td style="text-align: right;">.NET clr documentation</td>
+            </tr>
+        </table>
+
+        <h2>InteropService</h2>
+
+        <h3>Description</h3>
+
+        <p>The class object which can interact with the target commandline program.
+ (与目标命令行程序进行命令行交互的编程接口，本类型的对象的作用主要是生成命令行参数)</p>
+
+        <h3>Declare</h3>        
+
+        <pre>
+            <code id="clr_ts">
+# namespace Microsoft.VisualBasic.CommandLine.InteropService
+export class InteropService extends <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/InteropService/CLIBuilder.html">CLIBuilder</a> {
+   dotnetcoreApp: boolean;
+   # 默认是不做IO重定向的
+   IORedirect: boolean;
+   # 这个只读属性返回目标可执行文件是否有效
+   IsAvailable: boolean;
+   # App path
+   Path: string;
+}
+</code>
+        </pre>
+
+        <h3>.NET clr type reference tree</h3>
+
+        <ol>
+<li>this class extends from <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/InteropService/CLIBuilder.html">CLIBuilder</a> class: <a href="/vignettes/clr/Microsoft/VisualBasic/CommandLine/InteropService/CLIBuilder.html">CLIBuilder</a></li>
+</ol>
+
+
+        <hr />
+        <div style="text-align: center;">[Package <em>{$package}</em> version {$version} <a
+                href="../{$package}.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="https://rdocumentation.rsharp.net/assets/R_syntax.js"></script>
+<script type="text/javascript" src="https://rdocumentation.rsharp.net/assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("clr_ts");</script>
+
+</html>
