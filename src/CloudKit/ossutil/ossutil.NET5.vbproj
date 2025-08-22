@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>ThinkVB.FileSystem.OSS</RootNamespace>
+    <RootNamespace>Darwinism.OSSUtil</RootNamespace>
     <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
-    <AssemblyName>ThinkVB.FileSystem.OSS</AssemblyName>
-    <Description>High Performance Parallel Compute Library on Unix .NET 5 runtime</Description>
+    <AssemblyName>Darwinism.OSSUtil</AssemblyName>
+    <Description>Cloud data storage helper</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>i@xieguigang.me</Copyright>
@@ -128,10 +128,6 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
   </ItemGroup>
 
   <ItemGroup>

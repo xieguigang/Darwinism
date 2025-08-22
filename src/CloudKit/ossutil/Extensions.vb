@@ -54,7 +54,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports ThinkVB.FileSystem.OSS.Model
 
 Public Module Extensions
 
