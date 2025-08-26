@@ -164,14 +164,14 @@ Namespace Protocols.Reflection
         Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As TcpEndPoint) As BufferPipe
             If request.ProtocolCategory <> Me.ProtocolEntry Then
 #If DEBUG Then
-                Call $"Protocol_entry:={request.ProtocolCategory} was not found!".__DEBUG_ECHO
+                Call $"Protocol_entry:={request.ProtocolCategory} was not found!".debug
 #End If
                 Return New DataPipe(NetResponse.RFC_VERSION_NOT_SUPPORTED)
             End If
 
             If Not Me.Protocols.ContainsKey(request.Protocol) Then
 #If DEBUG Then
-                Call $"Protocol:={request.Protocol} was not found!".__DEBUG_ECHO
+                Call $"Protocol:={request.Protocol} was not found!".debug
 #End If
                 ' 没有找到相对应的协议处理逻辑，则没有实现相对应的数据协议处理方法
                 Return New DataPipe(NetResponse.RFC_NOT_IMPLEMENTED)

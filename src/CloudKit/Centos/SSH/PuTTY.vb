@@ -115,7 +115,7 @@ Public Class PuTTY : Inherits SSH
 
     Private Function callPipeline(cli As String) As String
         If debug Then
-            Call $"{plink} {cli}".__DEBUG_ECHO
+            Call $"{plink} {cli}".debug
         End If
 
         Dim std_out As String = PipelineProcess.[Call](plink, cli)
