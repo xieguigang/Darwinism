@@ -125,10 +125,10 @@ Namespace Protocols.Reflection
 
             Return From entryPoint As MethodInfo
                    In methods
-                   Let Protocol As ProtocolAttribute = ProtocolAttribute.GetEntryPoint(entryPoint)
+                   Let protocol As ProtocolAttribute = ProtocolAttribute.GetEntryPoint(entryPoint)
                    Let method As DataRequestHandler = GetMethod(target, entryPoint, debug:=debug)
-                   Where Not (Protocol Is Nothing) AndAlso Not method Is Nothing
-                   Select (Protocol, entryPoint, method)
+                   Where Not (protocol Is Nothing) AndAlso Not method Is Nothing
+                   Select (protocol, entryPoint, method)
         End Function
 
         ''' <summary>

@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Darwinism.IPC.Driver</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Darwinism.IPC.Driver</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\httpd\src\Flute\Flute.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\networking\networking.vbproj" />
+    <ProjectReference Include="..\Parallel\parallel-netcore5.vbproj" />
+  </ItemGroup>
+
+</Project>
