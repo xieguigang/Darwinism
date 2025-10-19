@@ -242,3 +242,4 @@ _Pvt_Extensions
 .pkg/ggplot.zip
 .pkg/Darwinism.zip
 /tools
+/.nuget
