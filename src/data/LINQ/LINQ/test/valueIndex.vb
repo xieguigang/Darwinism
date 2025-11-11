@@ -52,18 +52,60 @@
 #End Region
 
 Imports LINQ
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Module valueIndex2
 
     Sub Main()
+        testQGramIndex()
+
+        Pause()
+    End Sub
+
+    Sub testQGramIndex()
+        Dim index As New QGramIndex(5)
+
+        For Each name As String In {"Prochlorococcus marinus subsp. marinus CCMP1375",
+"Prochlorococcus marinus subsp. pastoris CCMP1986",
+"Prochlorococcus marinus MIT 9313",
+"Prochlorococcus marinus NATL2A",
+"Prochlorococcus marinus MIT 9312",
+"Prochlorococcus marinus AS9601",
+"Prochlorococcus marinus MIT 9515",
+"Prochlorococcus marinus MIT 9303",
+"Prochlorococcus marinus MIT 9301",
+"Prochlorococcus marinus MIT 9215",
+"Prochlorococcus marinus MIT 9211",
+"Prochlorococcus marinus NATL1A",
+"Prochlorococcus sp. MIT 0604",
+"Prochlorococcus sp. MIT 0801",
+"Woronichinia naegeliana",
+"Chamaesiphon minutus",
+"Cyanothece sp. PCC 7425",
+"Crinalium epipsammum",
+"Thermostichus vulcanus",
+"Parathermosynechococcus lividus",
+"Thermosynechococcus vestitus",
+"Thermosynechococcus sp. NK55",
+"Thermosynechococcus sp. CL-1",
+"Thermosynechococcus sp. TA-1",
+"Thermosynechococcus sichuanensis"}
+
+            Call index.AddString(name)
+        Next
+
+        Dim test = index.FindSimilar("chococcus", 0.6)
+
+        Pause()
+    End Sub
+
+    Sub tesdtIndex()
         Dim pool = Enumerable.Range(0, 10000000).Select(Function(a) randf.NextDouble(0, 2000)).ToArray
         Dim index As RangeIndex(Of Double) = ValueIndex.DoubleIndex().IndexData(pool)
 
         Dim search1 = index.Search(100).ToArray
         Dim search2 = index.Search(99, 103).ToArray
         Dim search3 = index.Search(-50).ToArray
-
-        Pause()
     End Sub
 End Module
