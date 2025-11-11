@@ -95,7 +95,7 @@ Public Module valueIndex2
             Call index.AddString(name)
         Next
 
-        Dim test = index.FindSimilar("chococcus", 0.6)
+        Dim test = index.FindSimilar("chococcus", 0.1)
 
         Pause()
     End Sub
