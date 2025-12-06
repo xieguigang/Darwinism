@@ -24,9 +24,10 @@ Public Class Buckets : Implements IDisposable
     ' 用于同步 hotCache 的访问
     Friend ReadOnly hotCacheLock As New ReaderWriterLockSlim()
 
-    ' L2 Index: 内存中的文件索引，key: bucketId, value: 该桶的索引
-    ' 索引项: key: hashcode, value: (offset, size)
-    Friend ReadOnly fileIndexes As New Dictionary(Of Integer, Lazy(Of Dictionary(Of UInteger, (offset As Long, size As Integer))))()
+    ''' <summary>
+    ''' L2 Index: 内存中的文件索引，key: bucketId, value: 该桶的索引
+    ''' </summary>
+    Friend ReadOnly fileIndexes As New Dictionary(Of UInteger, Index)
 
     ' 用于读取数据文件的流
     ReadOnly bucketReaders As New Dictionary(Of Integer, BinaryDataReader)()
@@ -77,6 +78,7 @@ Public Class Buckets : Implements IDisposable
         For i As Integer = 1 To partitions
             Dim dataFilePath = Path.Combine(database_dir, $"bucket{i}.db")
             Dim indexFilePath = Path.Combine(database_dir, $"bucket{i}.index")
+            Dim bucketId As UInteger = i
 
             ' 1. 初始化数据文件读写器
             ' FileMode.OpenOrCreate: 文件存在则打开，不存在则创建
@@ -90,16 +92,7 @@ Public Class Buckets : Implements IDisposable
             bucketWriters(i) = New BinaryDataWriter(writerStream)
 
             ' 3. 初始化延迟加载的内存索引
-            ' Lazy(Of T) 确保索引只被加载一次，且在首次访问时才加载
-            Dim bucketId = i
-            fileIndexes(i) = New Lazy(Of Dictionary(Of UInteger, (offset As Long, size As Integer)))(
-                Function()
-                    Dim index As New Dictionary(Of UInteger, (offset As Long, size As Integer))()
-                    LoadIndex(bucketId, indexFilePath, index)
-                    Return index
-                End Function,
-                LazyThreadSafetyMode.ExecutionAndPublication ' 确保线程安全
-            )
+            fileIndexes(i) = New Index(indexFilePath)
         Next
     End Sub
 
@@ -119,10 +112,10 @@ Public Class Buckets : Implements IDisposable
 
             Using readerStream As New FileStream(dataFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
                 Using reader As New BinaryDataReader(readerStream)
-                    Dim index = fileIndexes(bucketId).Value
+                    Dim index = fileIndexes(bucketId).IndexValue
 
                     For Each entry In index.Values
-                        reader.Position = entry.offset
+                        reader.Position = entry.position
 
                         ' 数据块格式: [ValueLen][ValueData][KeyLen][KeyData]
                         ' 1. 读取并跳过Value部分
@@ -139,27 +132,6 @@ Public Class Buckets : Implements IDisposable
             End Using
         Next
     End Function
-
-    ''' <summary>
-    ''' 从索引文件加载索引到内存
-    ''' </summary>
-    Private Shared Sub LoadIndex(bucketId As Integer, indexFilePath As String, ByRef index As Dictionary(Of UInteger, (offset As Long, size As Integer)))
-        If Not File.Exists(indexFilePath) OrElse New FileInfo(indexFilePath).Length = 0 Then
-            Return
-        End If
-
-        Using indexStream As New FileStream(indexFilePath, FileMode.Open, FileAccess.Read)
-            Using indexReader As New BinaryDataReader(indexStream)
-                Dim count As Integer = indexReader.ReadInt32()
-                For j As Integer = 0 To count - 1
-                    Dim hashcode As UInteger = indexReader.ReadUInt32()
-                    Dim offset As Long = indexReader.ReadInt64()
-                    Dim size As Integer = indexReader.ReadInt32()
-                    index(hashcode) = (offset, size)
-                Next
-            End Using
-        End Using
-    End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Get](key As String) As Byte()
@@ -185,12 +157,12 @@ Public Class Buckets : Implements IDisposable
         End Try
 
         ' 2. 检查内存索引
-        Dim index = fileIndexes(bucketId).Value
-        Dim entry As (offset As Long, size As Integer)
+        Dim index = fileIndexes(bucketId).IndexValue
+        Dim entry As BufferRegion = Nothing
 
         If index.TryGetValue(hashcode, entry) Then
             ' 从索引中找到偏移量和大小
-            Dim offset As Long = entry.offset
+            Dim offset As Long = entry.position
             ' 3. 从数据文件读取
             Dim bucketReader As BinaryDataReader = bucketReaders(CInt(bucketId))
 
@@ -268,8 +240,8 @@ Public Class Buckets : Implements IDisposable
 
             ' 3. 更新内存索引，size是整个记录的大小
             Dim recordSize = 4 + data.Length + 4 + keybuf.Length
-            Dim index = fileIndexes(bucketIdInt).Value
-            index(hashcode) = (offset, recordSize)
+            Dim index = fileIndexes(bucketIdInt).IndexValue
+            index(hashcode) = New BufferRegion(offset, recordSize)
 
             ' 4. 标记索引为“脏”，通知后台任务需要持久化
             SyncLock worker.backgroundSyncLock
@@ -310,7 +282,7 @@ Public Class Buckets : Implements IDisposable
 
                 ' 保存所有索引（包括脏的和干净的，确保最终状态一致）
                 For i As Integer = 1 To partitions
-                    BackgroundWorker.SaveIndex(i, fileIndexes(i).Value, database_dir)
+                    BackgroundWorker.SaveIndex(i, fileIndexes(i).IndexValue, database_dir)
                 Next
 
                 ' 3. Flush并释放所有文件流

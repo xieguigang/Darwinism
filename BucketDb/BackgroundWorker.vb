@@ -76,7 +76,7 @@ Public Class BackgroundWorker
 
                     ' 并行保存多个索引文件
                     Parallel.ForEach(indexesToSave, Sub(bucketId)
-                                                        Dim index = fileIndexes(bucketId).Value
+                                                        Dim index = fileIndexes(bucketId).IndexValue
                                                         SaveIndex(bucketId, index, database_dir)
                                                     End Sub)
 
@@ -99,7 +99,7 @@ Public Class BackgroundWorker
     ''' <summary>
     ''' 保存单个桶的索引到文件
     ''' </summary>
-    Public Shared Sub SaveIndex(bucketId As Integer, index As Dictionary(Of UInteger, (offset As Long, size As Integer)), database_dir As String)
+    Public Shared Sub SaveIndex(bucketId As Integer, index As Dictionary(Of UInteger, BufferRegion), database_dir As String)
         Dim indexFilePath = Path.Combine(database_dir, $"bucket{bucketId}.index")
         Dim tempPath = indexFilePath & ".tmp"
 
@@ -108,7 +108,7 @@ Public Class BackgroundWorker
                 indexWriter.Write(index.Count)
                 For Each entry In index
                     indexWriter.Write(entry.Key) ' hashcode
-                    indexWriter.Write(entry.Value.offset)
+                    indexWriter.Write(entry.Value.position)
                     indexWriter.Write(entry.Value.size)
                 Next
                 indexWriter.Flush()
