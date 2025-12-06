@@ -1,11 +1,26 @@
-﻿Imports System.Threading
+﻿Imports System.IO
+Imports System.Threading
+Imports Microsoft.VisualBasic.Data.IO
 
 Public Class BackgroundWorker
 
     ReadOnly buckets As Buckets
+    ''' <summary>
+    ''' 后台任务取消令牌，用于优雅关闭
+    ''' </summary>
+    ReadOnly cts As New CancellationTokenSource
+
+    Dim backgroundSyncIntervalMs As Integer = 5000 ' 后台同步间隔5秒
+
+    ''' <summary>
+    ''' 后台任务用于同步的锁
+    ''' </summary>
+    Friend ReadOnly backgroundSyncLock As New Object()
 
     Sub New(engine As Buckets)
         buckets = engine
+        ' 启动后台任务
+        Task.Run(AddressOf BackgroundSyncWorker, cts.Token)
     End Sub
 
     Public Sub ClearColdDataAsync()
@@ -31,5 +46,76 @@ Public Class BackgroundWorker
                 Monitor.Exit(buckets.hotCacheLock)
             End Try
         End If
+    End Sub
+
+    Public Sub Cancel()
+        Call cts.cancel
+    End Sub
+
+    ''' <summary>
+    ''' 后台同步工作线程：定期将脏的索引写入磁盘，并Flush数据文件。
+    ''' </summary>
+    Private Sub BackgroundSyncWorker()
+        Do While Not cts.Token.IsCancellationRequested
+            Try
+                ' 等待指定间隔或取消信号
+                Task.Delay(backgroundSyncIntervalMs, cts.Token).Wait()
+
+                Dim indexesToSave As Integer()
+                Dim database_dir As String = buckets.database_dir
+                Dim bucketWriters = buckets.bucketWriters
+
+                ' 获取需要保存的索引列表，并清空脏标记
+                SyncLock backgroundSyncLock
+                    indexesToSave = buckets.dirtyIndexes.ToArray()
+                    buckets.dirtyIndexes.Clear()
+                End SyncLock
+
+                If indexesToSave.Length > 0 Then
+                    Dim fileIndexes = buckets.fileIndexes
+
+                    ' 并行保存多个索引文件
+                    Parallel.ForEach(indexesToSave, Sub(bucketId)
+                                                        Dim index = fileIndexes(bucketId).Value
+                                                        SaveIndex(bucketId, index, database_dir)
+                                                    End Sub)
+
+                    ' 强制Flush所有数据文件，确保数据落盘
+                    For Each writer In bucketWriters.Values
+                        writer.Flush()
+                    Next
+                End If
+
+            Catch ex As OperationCanceledException
+                ' 正常退出，无需处理
+                Exit Do
+            Catch ex As Exception
+                ' 记录日志，但保持后台任务运行
+                ' Console.WriteLine($"Background sync error: {ex.Message}")
+            End Try
+        Loop
+    End Sub
+
+    ''' <summary>
+    ''' 保存单个桶的索引到文件
+    ''' </summary>
+    Public Shared Sub SaveIndex(bucketId As Integer, index As Dictionary(Of UInteger, (offset As Long, size As Integer)), database_dir As String)
+        Dim indexFilePath = Path.Combine(database_dir, $"bucket{bucketId}.index")
+        Dim tempPath = indexFilePath & ".tmp"
+
+        Using indexStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
+            Using indexWriter As New BinaryDataWriter(indexStream)
+                indexWriter.Write(index.Count)
+                For Each entry In index
+                    indexWriter.Write(entry.Key) ' hashcode
+                    indexWriter.Write(entry.Value.offset)
+                    indexWriter.Write(entry.Value.size)
+                Next
+                indexWriter.Flush()
+            End Using
+        End Using
+
+        If File.Exists(indexFilePath) Then File.Delete(indexFilePath)
+        File.Move(tempPath, indexFilePath)
     End Sub
 End Class

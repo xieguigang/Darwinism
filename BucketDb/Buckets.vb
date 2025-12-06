@@ -15,7 +15,7 @@ Imports Microsoft.VisualBasic.Data.Repository
 Public Class Buckets : Implements IDisposable
 
     ReadOnly partitions As Integer
-    ReadOnly database_dir As String
+    Friend ReadOnly database_dir As String
 
     ''' <summary>
     ''' L1 Cache: 存储最近访问的数据
@@ -26,12 +26,12 @@ Public Class Buckets : Implements IDisposable
 
     ' L2 Index: 内存中的文件索引，key: bucketId, value: 该桶的索引
     ' 索引项: key: hashcode, value: (offset, size)
-    ReadOnly fileIndexes As New Dictionary(Of Integer, Lazy(Of Dictionary(Of UInteger, (offset As Long, size As Integer))))()
+    Friend ReadOnly fileIndexes As New Dictionary(Of Integer, Lazy(Of Dictionary(Of UInteger, (offset As Long, size As Integer))))()
 
     ' 用于读取数据文件的流
     ReadOnly bucketReaders As New Dictionary(Of Integer, BinaryDataReader)()
     ' 用于写入数据文件的流
-    ReadOnly bucketWriters As New Dictionary(Of Integer, BinaryDataWriter)()
+    Friend ReadOnly bucketWriters As New Dictionary(Of Integer, BinaryDataWriter)()
 
     ''' <summary>
     ''' 细粒度锁：为每个桶提供一个独立的锁，取代全局锁，极大提升并发写入性能。
@@ -45,23 +45,12 @@ Public Class Buckets : Implements IDisposable
     ''' <summary>
     ''' 用于标记哪些桶的索引是“脏”的，需要被后台任务持久化。
     ''' </summary>
-    ReadOnly dirtyIndexes As New HashSet(Of Integer)()
-
-    ''' <summary>
-    ''' 后台任务用于同步的锁
-    ''' </summary>
-    ReadOnly backgroundSyncLock As New Object()
-
-    ''' <summary>
-    ''' 后台任务取消令牌，用于优雅关闭
-    ''' </summary>
-    ReadOnly cts As CancellationTokenSource
+    Friend ReadOnly dirtyIndexes As New HashSet(Of Integer)()
 
     ' --- 配置参数 ---
     Friend cacheLimitSize As Integer
     Friend cacheClearRatio As Single = 0.5F ' 清理50%的冷数据
 
-    Dim backgroundSyncIntervalMs As Integer = 5000 ' 后台同步间隔5秒
     Dim enableImmediateFlush As Boolean = False ' 是否在每次写入后立即Flush到磁盘
 
     Private disposedValue As Boolean
@@ -76,7 +65,6 @@ Public Class Buckets : Implements IDisposable
         Me.database_dir = database_dir
         Me.bucketLocks = New Object(partitions) {}
         Me.cacheLimitSize = cacheSize
-        Me.cts = New CancellationTokenSource()
         Me.worker = New BackgroundWorker(Me)
 
         For i As Integer = 0 To bucketLocks.Length - 1
@@ -113,9 +101,6 @@ Public Class Buckets : Implements IDisposable
                 LazyThreadSafetyMode.ExecutionAndPublication ' 确保线程安全
             )
         Next
-
-        ' 启动后台任务
-        Task.Run(AddressOf BackgroundSyncWorker, cts.Token)
     End Sub
 
     ''' <summary>
@@ -174,29 +159,6 @@ Public Class Buckets : Implements IDisposable
                 Next
             End Using
         End Using
-    End Sub
-
-    ''' <summary>
-    ''' 保存单个桶的索引到文件
-    ''' </summary>
-    Private Shared Sub SaveIndex(bucketId As Integer, index As Dictionary(Of UInteger, (offset As Long, size As Integer)), database_dir As String)
-        Dim indexFilePath = Path.Combine(database_dir, $"bucket{bucketId}.index")
-        Dim tempPath = indexFilePath & ".tmp"
-
-        Using indexStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
-            Using indexWriter As New BinaryDataWriter(indexStream)
-                indexWriter.Write(index.Count)
-                For Each entry In index
-                    indexWriter.Write(entry.Key) ' hashcode
-                    indexWriter.Write(entry.Value.offset)
-                    indexWriter.Write(entry.Value.size)
-                Next
-                indexWriter.Flush()
-            End Using
-        End Using
-
-        If File.Exists(indexFilePath) Then File.Delete(indexFilePath)
-        File.Move(tempPath, indexFilePath)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -310,7 +272,7 @@ Public Class Buckets : Implements IDisposable
             index(hashcode) = (offset, recordSize)
 
             ' 4. 标记索引为“脏”，通知后台任务需要持久化
-            SyncLock backgroundSyncLock
+            SyncLock worker.backgroundSyncLock
                 dirtyIndexes.Add(bucketIdInt)
             End SyncLock
         End SyncLock
@@ -326,46 +288,6 @@ Public Class Buckets : Implements IDisposable
         bucket = (hashcode Mod CUInt(partitions)) + 1 ' bucket id start from 1
     End Sub
 
-    ''' <summary>
-    ''' 后台同步工作线程：定期将脏的索引写入磁盘，并Flush数据文件。
-    ''' </summary>
-    Private Sub BackgroundSyncWorker()
-        Do While Not cts.Token.IsCancellationRequested
-            Try
-                ' 等待指定间隔或取消信号
-                Task.Delay(backgroundSyncIntervalMs, cts.Token).Wait()
-
-                Dim indexesToSave As Integer()
-
-                ' 获取需要保存的索引列表，并清空脏标记
-                SyncLock backgroundSyncLock
-                    indexesToSave = dirtyIndexes.ToArray()
-                    dirtyIndexes.Clear()
-                End SyncLock
-
-                If indexesToSave.Length > 0 Then
-                    ' 并行保存多个索引文件
-                    Parallel.ForEach(indexesToSave, Sub(bucketId)
-                                                        Dim index = fileIndexes(bucketId).Value
-                                                        SaveIndex(bucketId, index, database_dir)
-                                                    End Sub)
-
-                    ' 强制Flush所有数据文件，确保数据落盘
-                    For Each writer In bucketWriters.Values
-                        writer.Flush()
-                    Next
-                End If
-
-            Catch ex As OperationCanceledException
-                ' 正常退出，无需处理
-                Exit Do
-            Catch ex As Exception
-                ' 记录日志，但保持后台任务运行
-                ' Console.WriteLine($"Background sync error: {ex.Message}")
-            End Try
-        Loop
-    End Sub
-
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
@@ -374,7 +296,7 @@ Public Class Buckets : Implements IDisposable
                 ' 在释放前，最重要的一步是保存索引！
                 Console.WriteLine("Saving indexes before disposing...")
                 ' 1. 取消后台任务
-                cts.Cancel()
+                worker.Cancel()
                 ' 等待后台任务完成最后一次循环并退出
                 ' 这里可以加一个超时，例如 Task.Delay(1000).Wait()
                 ' 但为了简单，我们假设它会很快退出
@@ -382,13 +304,13 @@ Public Class Buckets : Implements IDisposable
                 ' 2. 强制执行最后一次完整的同步
                 ' 获取所有脏索引
                 Dim allDirtyIndexes As Integer()
-                SyncLock backgroundSyncLock
+                SyncLock worker.backgroundSyncLock
                     allDirtyIndexes = dirtyIndexes.ToArray()
                 End SyncLock
 
                 ' 保存所有索引（包括脏的和干净的，确保最终状态一致）
                 For i As Integer = 1 To partitions
-                    SaveIndex(i, fileIndexes(i).Value, database_dir)
+                    BackgroundWorker.SaveIndex(i, fileIndexes(i).Value, database_dir)
                 Next
 
                 ' 3. Flush并释放所有文件流
@@ -401,7 +323,6 @@ Public Class Buckets : Implements IDisposable
                 Next
 
                 ' 4. 释放锁
-                cts.Dispose()
                 hotCacheLock.Dispose()
 
                 ' 5. 清理集合
