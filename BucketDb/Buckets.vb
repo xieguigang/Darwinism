@@ -12,7 +12,7 @@ Imports Microsoft.VisualBasic.Data.Repository
 ''' <remarks>
 ''' 使用追加写入日志和内存索引实现持久化。
 ''' </remarks>
-Public Class Buckets
+Public Class Buckets : Implements IDisposable
 
     ReadOnly partitions As Integer
     ReadOnly database_dir As String
@@ -32,6 +32,8 @@ Public Class Buckets
 
     ' 用于同步写入和索引更新，保证线程安全
     ReadOnly _syncLock As New Object()
+
+    Private disposedValue As Boolean
 
     ''' <summary>
     ''' 初始化数据库
@@ -170,15 +172,34 @@ Public Class Buckets
 
     Public Sub Put(keybuf As Byte(), data As Byte())
         Dim hashcode As UInteger
-        Dim bucket As UInteger
+        Dim bucketId As UInteger
 
-        Call HashKey(keybuf, hashcode, bucket)
+        Call HashKey(keybuf, hashcode, bucketId)
+        Dim bucketIdInt = CInt(bucketId)
 
-        If hotCache.ContainsKey(hashcode) Then
-            hotCache(hashcode).data = data
-        End If
+        SyncLock _syncLock
+            Dim hotData As HotData = Nothing
 
-        Dim bucketfile As BinaryDataReader = Buckets(bucket)
+            ' 1. 更新热缓存
+            If hotCache.TryGetValue(hashcode, hotData) Then
+                hotData.data = data
+            End If
+
+            ' 2. 准备写入数据文件
+            Dim bucketWriter As BinaryDataWriter = bucketWriters(bucketIdInt)
+            Dim offset As Long = bucketWriter.BaseStream.Length
+
+            ' 将写入器指针移动到文件末尾
+            bucketWriter.Seek(0, SeekOrigin.End)
+
+            ' 3. 写入数据 (格式: [数据长度(4字节)][数据内容(N字节)])
+            bucketWriter.Write(data.Length)
+            bucketWriter.Write(data)
+            bucketWriter.Flush() ' 确保数据写入磁盘
+
+            ' 4. 更新内存索引
+            fileIndexes(bucketIdInt)(hashcode) = (offset, data.Length)
+        End SyncLock
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -200,4 +221,28 @@ Public Class Buckets
 
     End Class
 
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        If Not disposedValue Then
+            If disposing Then
+                ' TODO: dispose managed state (managed objects)
+            End If
+
+            ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+            ' TODO: set large fields to null
+            disposedValue = True
+        End If
+    End Sub
+
+    ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+    ' Protected Overrides Sub Finalize()
+    '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+    '     Dispose(disposing:=False)
+    '     MyBase.Finalize()
+    ' End Sub
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        Dispose(disposing:=True)
+        GC.SuppressFinalize(Me)
+    End Sub
 End Class
