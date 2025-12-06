@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' IDM批量下载管理类
@@ -134,15 +135,11 @@ Public Class IDMBatchDownloader
     ''' </summary>
     ''' <param name="downloadList">下载项列表</param>
     ''' <returns>成功添加的下载项数量</returns>
-    Public Function BatchDownload(downloadList As List(Of DownloadItem)) As Integer
-        If downloadList Is Nothing OrElse downloadList.Count = 0 Then
-            Return 0
-        End If
-
+    Public Function BatchDownload(downloadList As IEnumerable(Of DownloadItem)) As Integer
         Dim successCount As Integer = 0
         Dim errors As New List(Of String)
 
-        For Each item As DownloadItem In downloadList
+        For Each item As DownloadItem In downloadList.SafeQuery
             Try
                 If DownloadFile(item.Url, item.FileName, item.SavePath) Then
                     successCount += 1
