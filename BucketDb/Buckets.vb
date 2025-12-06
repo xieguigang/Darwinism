@@ -1,8 +1,7 @@
 Imports System.IO
-Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports System.Text
 Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.Repository
 
@@ -12,7 +11,8 @@ Imports Microsoft.VisualBasic.Data.Repository
 ''' <remarks>
 ''' 使用追加写入日志、内存索引和后台任务实现高性能持久化。
 ''' </remarks>
-Public Class Buckets : Implements IDisposable
+Public Class Buckets : Inherits InMemoryDb
+    Implements IDisposable
 
     ReadOnly partitions As Integer
     Friend ReadOnly database_dir As String
@@ -101,7 +101,7 @@ Public Class Buckets : Implements IDisposable
     ''' 此操作会遍历所有数据文件，可能比较耗时，建议在需要时调用。
     ''' </summary>
     ''' <returns>返回一个包含所有键的字符串集合。</returns>
-    Public Iterator Function EnumerateAllKeys() As IEnumerable(Of Byte())
+    Public Overrides Iterator Function EnumerateAllKeys() As IEnumerable(Of Byte())
         For i As Integer = 1 To partitions
             Dim bucketId = i
             Dim dataFilePath = Path.Combine(database_dir, $"bucket{bucketId}.db")
@@ -133,12 +133,7 @@ Public Class Buckets : Implements IDisposable
         Next
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function [Get](key As String) As Byte()
-        Return [Get](Encoding.UTF8.GetBytes(key))
-    End Function
-
-    Public Function [Get](keydata As Byte()) As Byte()
+    Public Overrides Function [Get](keydata As Byte()) As Byte()
         Dim hashcode As UInteger
         Dim bucketId As UInteger
 
@@ -201,7 +196,7 @@ Public Class Buckets : Implements IDisposable
         Return Nothing
     End Function
 
-    Public Sub Put(keybuf As Byte(), data As Byte())
+    Public Overrides Sub Put(keybuf As Byte(), data As Byte())
         Dim hashcode As UInteger
         Dim bucketId As UInteger
 
@@ -248,11 +243,6 @@ Public Class Buckets : Implements IDisposable
                 dirtyIndexes.Add(bucketIdInt)
             End SyncLock
         End SyncLock
-    End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Put(key As String, data As Byte())
-        Call Put(Encoding.UTF8.GetBytes(key), data)
     End Sub
 
     Private Sub HashKey(ByRef key As Byte(), <Out> ByRef hashcode As UInteger, <Out> ByRef bucket As UInteger)
