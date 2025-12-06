@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -122,7 +124,7 @@ Public Class IDMBatchDownloader
             }
 
             Using process As Process = Process.Start(processInfo)
-                process.WaitForExit()
+                Thread.Sleep(2000)
                 Return process.ExitCode = 0
             End Using
         Catch ex As Exception
@@ -139,7 +141,7 @@ Public Class IDMBatchDownloader
         Dim successCount As Integer = 0
         Dim errors As New List(Of String)
 
-        For Each item As DownloadItem In downloadList.SafeQuery
+        For Each item As DownloadItem In TqdmWrapper.Wrap(downloadList.ToArray)
             Try
                 If DownloadFile(item.Url, item.FileName, item.SavePath) Then
                     successCount += 1
