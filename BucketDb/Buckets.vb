@@ -20,9 +20,9 @@ Public Class Buckets : Implements IDisposable
     ''' <summary>
     ''' L1 Cache: 存储最近访问的数据
     ''' </summary>
-    ReadOnly hotCache As New Dictionary(Of UInteger, L1CacheHotData)
+    Friend ReadOnly hotCache As New Dictionary(Of UInteger, L1CacheHotData)
     ' 用于同步 hotCache 的访问
-    ReadOnly hotCacheLock As New ReaderWriterLockSlim()
+    Friend ReadOnly hotCacheLock As New ReaderWriterLockSlim()
 
     ' L2 Index: 内存中的文件索引，key: bucketId, value: 该桶的索引
     ' 索引项: key: hashcode, value: (offset, size)
@@ -37,6 +37,8 @@ Public Class Buckets : Implements IDisposable
     ''' 细粒度锁：为每个桶提供一个独立的锁，取代全局锁，极大提升并发写入性能。
     ''' </summary>
     ReadOnly bucketLocks As Object()
+
+    ReadOnly worker As BackgroundWorker
 
     ' --- 后台任务相关 ---
 
@@ -56,8 +58,9 @@ Public Class Buckets : Implements IDisposable
     ReadOnly cts As CancellationTokenSource
 
     ' --- 配置参数 ---
-    Dim cacheLimitSize As Integer
-    Dim cacheClearRatio As Single = 0.5F ' 清理50%的冷数据
+    Friend cacheLimitSize As Integer
+    Friend cacheClearRatio As Single = 0.5F ' 清理50%的冷数据
+
     Dim backgroundSyncIntervalMs As Integer = 5000 ' 后台同步间隔5秒
     Dim enableImmediateFlush As Boolean = False ' 是否在每次写入后立即Flush到磁盘
 
@@ -74,6 +77,7 @@ Public Class Buckets : Implements IDisposable
         Me.bucketLocks = New Object(partitions) {}
         Me.cacheLimitSize = cacheSize
         Me.cts = New CancellationTokenSource()
+        Me.worker = New BackgroundWorker(Me)
 
         For i As Integer = 0 To bucketLocks.Length - 1
             bucketLocks(i) = New Object
@@ -252,7 +256,7 @@ Public Class Buckets : Implements IDisposable
 
                 ' 5. 异步触发缓存清理，避免阻塞读取
                 If hotCache.Count > cacheLimitSize Then
-                    Task.Run(AddressOf ClearColdDataAsync)
+                    Task.Run(AddressOf worker.ClearColdDataAsync)
                 End If
 
                 Return dataBytes
@@ -262,25 +266,6 @@ Public Class Buckets : Implements IDisposable
         ' 如果缓存和索引都没有找到，说明key不存在
         Return Nothing
     End Function
-
-    Private Sub ClearColdDataAsync()
-        ' 防止多个清理任务同时运行
-        If Monitor.TryEnter(hotCacheLock) Then
-            Try
-                If hotCache.Count > cacheLimitSize Then
-                    Dim top = CInt(cacheLimitSize * cacheClearRatio)
-                    ' 注意：OrderBy会创建快照，所以在锁内操作是安全的
-                    Dim coldHashset = hotCache.Values.OrderBy(Function(a) a.hits).Take(top).Select(Function(a) a.hashcode).ToArray()
-
-                    For Each hashcode In coldHashset
-                        Call hotCache.Remove(hashcode)
-                    Next
-                End If
-            Finally
-                Monitor.Exit(hotCacheLock)
-            End Try
-        End If
-    End Sub
 
     Public Sub Put(keybuf As Byte(), data As Byte())
         Dim hashcode As UInteger
