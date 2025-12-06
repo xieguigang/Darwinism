@@ -1,3 +1,4 @@
+Imports System.Formats
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
@@ -131,41 +132,53 @@ Public Class Buckets
 
     Public Function [Get](keydata As Byte()) As Byte()
         Dim hashcode As UInteger
-        Dim bucket As UInteger
+        Dim bucketId As UInteger
 
-        Call HashKey(keydata, hashcode, bucket)
+        Call HashKey(keydata, hashcode, bucketId)
 
         If hotCache.ContainsKey(hashcode) Then
+            hotCache(hashcode).hits += 1
             Return hotCache(hashcode).data
         End If
 
-        Dim bucketfile As BinaryDataReader = buckets(bucket)
-        ' get binary file offset via hashcode
-        Dim bufSize As Integer
-        Dim offset As Long = GetOffset(bucketfile, hashcode, bufSize)
+        ' 2. 检查内存索引
+        Dim index = fileIndexes(CInt(bucketId))
+        Dim entry As (offset As Long, size As Integer)
 
-        bucketfile.Position = offset
+        If index.TryGetValue(hashcode, entry) Then
+            ' 从索引中找到偏移量和大小
+            Dim offset As Long = entry.offset
+            Dim bufSize As Integer = entry.size
 
-        Dim data As New HotData With {.bucket = bucket, .data = bucketfile.ReadBytes(bufSize), .hashcode = hashcode, .hits = 1}
-        Call hotCache.Add(hashcode, data)
-        Return data.data
-    End Function
+            ' 3. 从数据文件读取
+            Dim bucketReader As BinaryDataReader = bucketReaders(CInt(bucketId))
+            bucketReader.Position = offset
 
-    Private Shared Function GetOffset(bucket As BinaryDataReader, hashcode As UInteger, <Out> ByRef bufSize As Integer) As Long
+            Dim data As New HotData With {
+                .bucket = bucketId,
+                .data = bucketReader.ReadBytes(bufSize),
+                .hashcode = hashcode,
+                .hits = 1
+            }
+            Call hotCache.Add(hashcode, data)
+            Return data.data
+        End If
 
+        ' 如果缓存和索引都没有找到，说明key不存在
+        Return Nothing
     End Function
 
     Public Sub Put(keybuf As Byte(), data As Byte())
         Dim hashcode As UInteger
         Dim bucket As UInteger
 
-        Call HashKey(keyBuf, hashcode, bucket)
+        Call HashKey(keybuf, hashcode, bucket)
 
         If hotCache.ContainsKey(hashcode) Then
             hotCache(hashcode).data = data
         End If
 
-        Dim bucketfile As BinaryDataReader = buckets(bucket)
+        Dim bucketfile As BinaryDataReader = Buckets(bucket)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
