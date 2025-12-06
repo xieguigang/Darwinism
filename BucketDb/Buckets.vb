@@ -20,7 +20,7 @@ Public Class Buckets : Implements IDisposable
     ''' <summary>
     ''' L1 Cache: 存储最近访问的数据
     ''' </summary>
-    ReadOnly hotCache As New Dictionary(Of UInteger, HotData)
+    ReadOnly hotCache As New Dictionary(Of UInteger, L1CacheHotData)
     ' 用于同步 hotCache 的访问
     ReadOnly hotCacheLock As New ReaderWriterLockSlim()
 
@@ -209,7 +209,7 @@ Public Class Buckets : Implements IDisposable
         ' 1. 检查热缓存 (使用读写锁，允许多个读并发)
         hotCacheLock.EnterReadLock()
         Try
-            Dim data As HotData = Nothing
+            Dim data As L1CacheHotData = Nothing
             If hotCache.TryGetValue(hashcode, data) Then
                 data.hits += 1
                 Return data.data
@@ -239,7 +239,7 @@ Public Class Buckets : Implements IDisposable
                 Try
                     ' 再次检查，可能在等待锁的过程中已被其他线程添加
                     If Not hotCache.ContainsKey(hashcode) Then
-                        hotCache(hashcode) = New HotData With {
+                        hotCache(hashcode) = New L1CacheHotData With {
                             .bucket = bucketId,
                             .data = dataBytes,
                             .hashcode = hashcode,
@@ -294,7 +294,7 @@ Public Class Buckets : Implements IDisposable
             ' 1. 更新热缓存
             hotCacheLock.EnterWriteLock()
             Try
-                Dim L1data As HotData = Nothing
+                Dim L1data As L1CacheHotData = Nothing
                 If hotCache.TryGetValue(hashcode, L1data) Then
                     L1data.data = data
                 End If
@@ -380,15 +380,6 @@ Public Class Buckets : Implements IDisposable
             End Try
         Loop
     End Sub
-
-    Public Class HotData
-
-        Public hashcode As UInteger
-        Public bucket As UInteger
-        Public hits As Integer
-        Public data As Byte()
-
-    End Class
 
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
