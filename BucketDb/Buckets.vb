@@ -2,14 +2,15 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.Repository
 
 ''' <summary>
-''' A hashcode bucketed in-memory key-value database with persistence.
+''' A hashcode bucketed in-memory key-value database with persistence and optimized performance.
 ''' </summary>
 ''' <remarks>
-''' 使用追加写入日志和内存索引实现持久化。
+''' 使用追加写入日志、内存索引和后台任务实现高性能持久化。
 ''' </remarks>
 Public Class Buckets : Implements IDisposable
 
@@ -20,19 +21,45 @@ Public Class Buckets : Implements IDisposable
     ''' L1 Cache: 存储最近访问的数据
     ''' </summary>
     ReadOnly hotCache As New Dictionary(Of UInteger, HotData)
+    ' 用于同步 hotCache 的访问
+    ReadOnly hotCacheLock As New ReaderWriterLockSlim()
+
     ' L2 Index: 内存中的文件索引，key: bucketId, value: 该桶的索引
     ' 索引项: key: hashcode, value: (offset, size)
-    ReadOnly fileIndexes As New Dictionary(Of Integer, Dictionary(Of UInteger, (offset As Long, size As Integer)))()
+    ReadOnly fileIndexes As New Dictionary(Of Integer, Lazy(Of Dictionary(Of UInteger, (offset As Long, size As Integer))))()
 
     ' 用于读取数据文件的流
     ReadOnly bucketReaders As New Dictionary(Of Integer, BinaryDataReader)()
     ' 用于写入数据文件的流
     ReadOnly bucketWriters As New Dictionary(Of Integer, BinaryDataWriter)()
 
-    ' 用于同步写入和索引更新，保证线程安全
-    ReadOnly _syncLock As New Object()
+    ''' <summary>
+    ''' 细粒度锁：为每个桶提供一个独立的锁，取代全局锁，极大提升并发写入性能。
+    ''' </summary>
+    ReadOnly bucketLocks As Object()
 
+    ' --- 后台任务相关 ---
+
+    ''' <summary>
+    ''' 用于标记哪些桶的索引是“脏”的，需要被后台任务持久化。
+    ''' </summary>
+    ReadOnly dirtyIndexes As New HashSet(Of Integer)()
+
+    ''' <summary>
+    ''' 后台任务用于同步的锁
+    ''' </summary>
+    ReadOnly backgroundSyncLock As New Object()
+
+    ''' <summary>
+    ''' 后台任务取消令牌，用于优雅关闭
+    ''' </summary>
+    ReadOnly cts As CancellationTokenSource
+
+    ' --- 配置参数 ---
     Dim cacheLimitSize As Integer
+    Dim cacheClearRatio As Single = 0.5F ' 清理50%的冷数据
+    Dim backgroundSyncIntervalMs As Integer = 5000 ' 后台同步间隔5秒
+    Dim enableImmediateFlush As Boolean = False ' 是否在每次写入后立即Flush到磁盘
 
     Private disposedValue As Boolean
 
@@ -41,9 +68,16 @@ Public Class Buckets : Implements IDisposable
     ''' </summary>
     ''' <param name="database_dir">数据库文件存储目录</param>
     ''' <param name="partitions">桶的数量，默认为64</param>
-    Sub New(database_dir As String, Optional partitions As Integer = 64)
+    Sub New(database_dir As String, Optional partitions As Integer = 64, Optional cacheSize As Integer = 10000)
         Me.partitions = partitions
         Me.database_dir = database_dir
+        Me.bucketLocks = New Object(partitions) {}
+        Me.cacheLimitSize = cacheSize
+        Me.cts = New CancellationTokenSource()
+
+        For i As Integer = 0 To bucketLocks.Length - 1
+            bucketLocks(i) = New Object
+        Next
 
         Call database_dir.MakeDir
 
@@ -63,18 +97,29 @@ Public Class Buckets : Implements IDisposable
             Dim writerStream As New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read)
             bucketWriters(i) = New BinaryDataWriter(writerStream)
 
-            ' 2. 初始化内存索引并从文件加载
-            fileIndexes(i) = New Dictionary(Of UInteger, (offset As Long, size As Integer))()
-            LoadIndex(i, indexFilePath)
+            ' 3. 初始化延迟加载的内存索引
+            ' Lazy(Of T) 确保索引只被加载一次，且在首次访问时才加载
+            Dim bucketId = i
+            fileIndexes(i) = New Lazy(Of Dictionary(Of UInteger, (offset As Long, size As Integer)))(
+                Function()
+                    Dim index As New Dictionary(Of UInteger, (offset As Long, size As Integer))()
+                    LoadIndex(bucketId, indexFilePath, index)
+                    Return index
+                End Function,
+                LazyThreadSafetyMode.ExecutionAndPublication ' 确保线程安全
+            )
         Next
+
+        ' 启动后台任务
+        Task.Run(AddressOf BackgroundSyncWorker, cts.Token)
     End Sub
 
     ''' <summary>
     ''' 从索引文件加载索引到内存
     ''' </summary>
-    Private Sub LoadIndex(bucketId As Integer, indexFilePath As String)
+    Private Shared Sub LoadIndex(bucketId As Integer, indexFilePath As String, ByRef index As Dictionary(Of UInteger, (offset As Long, size As Integer)))
         If Not File.Exists(indexFilePath) OrElse New FileInfo(indexFilePath).Length = 0 Then
-            Return ' 索引文件不存在或为空，跳过
+            Return
         End If
 
         Using indexStream As New FileStream(indexFilePath, FileMode.Open, FileAccess.Read)
@@ -84,7 +129,7 @@ Public Class Buckets : Implements IDisposable
                     Dim hashcode As UInteger = indexReader.ReadUInt32()
                     Dim offset As Long = indexReader.ReadInt64()
                     Dim size As Integer = indexReader.ReadInt32()
-                    fileIndexes(bucketId)(hashcode) = (offset, size)
+                    index(hashcode) = (offset, size)
                 Next
             End Using
         End Using
@@ -102,11 +147,8 @@ Public Class Buckets : Implements IDisposable
     ''' <summary>
     ''' 保存单个桶的索引到文件
     ''' </summary>
-    Private Sub SaveIndex(bucketId As Integer)
+    Private Shared Sub SaveIndex(bucketId As Integer, index As Dictionary(Of UInteger, (offset As Long, size As Integer)), database_dir As String)
         Dim indexFilePath = Path.Combine(database_dir, $"bucket{bucketId}.index")
-        Dim index = fileIndexes(bucketId)
-
-        ' 使用临时文件写入，成功后再替换原文件，防止写入过程中出错导致索引文件损坏
         Dim tempPath = indexFilePath & ".tmp"
 
         Using indexStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
@@ -121,10 +163,7 @@ Public Class Buckets : Implements IDisposable
             End Using
         End Using
 
-        ' 原子性地替换旧索引文件
-        If File.Exists(indexFilePath) Then
-            File.Delete(indexFilePath)
-        End If
+        If File.Exists(indexFilePath) Then File.Delete(indexFilePath)
         File.Move(tempPath, indexFilePath)
     End Sub
 
@@ -139,10 +178,17 @@ Public Class Buckets : Implements IDisposable
 
         Call HashKey(keydata, hashcode, bucketId)
 
-        If hotCache.ContainsKey(hashcode) Then
-            hotCache(hashcode).hits += 1
-            Return hotCache(hashcode).data
-        End If
+        ' 1. 检查热缓存 (使用读写锁，允许多个读并发)
+        hotCacheLock.EnterReadLock()
+        Try
+            Dim data As HotData = Nothing
+            If hotCache.TryGetValue(hashcode, data) Then
+                data.hits += 1
+                Return data.data
+            End If
+        Finally
+            hotCacheLock.ExitReadLock()
+        End Try
 
         ' 2. 检查内存索引
         Dim index = fileIndexes(CInt(bucketId))
