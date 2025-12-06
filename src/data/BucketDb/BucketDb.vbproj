@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <RootNamespace>BucketDb</RootNamespace>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFrameworks>net8.0;net8.0-windows;net10.0;net10.0-windows</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
-    <ProjectReference Include="..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
 </Project>
