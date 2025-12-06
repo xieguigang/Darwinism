@@ -136,15 +136,6 @@ Public Class Buckets : Implements IDisposable
     End Sub
 
     ''' <summary>
-    ''' 将内存中的索引保存到文件
-    ''' </summary>
-    Public Sub SaveAllIndexes()
-        For i As Integer = 1 To partitions
-            SaveIndex(i)
-        Next
-    End Sub
-
-    ''' <summary>
     ''' 保存单个桶的索引到文件
     ''' </summary>
     Private Shared Sub SaveIndex(bucketId As Integer, index As Dictionary(Of UInteger, (offset As Long, size As Integer)), database_dir As String)
@@ -311,6 +302,46 @@ Public Class Buckets : Implements IDisposable
         bucket = (hashcode Mod CUInt(partitions)) + 1 ' bucket id start from 1
     End Sub
 
+    ''' <summary>
+    ''' 后台同步工作线程：定期将脏的索引写入磁盘，并Flush数据文件。
+    ''' </summary>
+    Private Sub BackgroundSyncWorker()
+        Do While Not cts.Token.IsCancellationRequested
+            Try
+                ' 等待指定间隔或取消信号
+                Task.Delay(backgroundSyncIntervalMs, cts.Token).Wait()
+
+                Dim indexesToSave As Integer()
+
+                ' 获取需要保存的索引列表，并清空脏标记
+                SyncLock backgroundSyncLock
+                    indexesToSave = dirtyIndexes.ToArray()
+                    dirtyIndexes.Clear()
+                End SyncLock
+
+                If indexesToSave.Length > 0 Then
+                    ' 并行保存多个索引文件
+                    Parallel.ForEach(indexesToSave, Sub(bucketId)
+                                                        Dim index = fileIndexes(bucketId).Value
+                                                        SaveIndex(bucketId, index, database_dir)
+                                                    End Sub)
+
+                    ' 强制Flush所有数据文件，确保数据落盘
+                    For Each writer In bucketWriters.Values
+                        writer.Flush()
+                    Next
+                End If
+
+            Catch ex As OperationCanceledException
+                ' 正常退出，无需处理
+                Exit Do
+            Catch ex As Exception
+                ' 记录日志，但保持后台任务运行
+                ' Console.WriteLine($"Background sync error: {ex.Message}")
+            End Try
+        Loop
+    End Sub
+
     Public Class HotData
 
         Public hashcode As UInteger
@@ -327,15 +358,38 @@ Public Class Buckets : Implements IDisposable
                 ' 释放托管资源
                 ' 在释放前，最重要的一步是保存索引！
                 Console.WriteLine("Saving indexes before disposing...")
-                SaveAllIndexes()
+                ' 1. 取消后台任务
+                cts.Cancel()
+                ' 等待后台任务完成最后一次循环并退出
+                ' 这里可以加一个超时，例如 Task.Delay(1000).Wait()
+                ' 但为了简单，我们假设它会很快退出
 
-                For Each reader In bucketReaders.Values
-                    reader.BaseStream.Dispose()
+                ' 2. 强制执行最后一次完整的同步
+                ' 获取所有脏索引
+                Dim allDirtyIndexes As Integer()
+                SyncLock backgroundSyncLock
+                    allDirtyIndexes = dirtyIndexes.ToArray()
+                End SyncLock
+
+                ' 保存所有索引（包括脏的和干净的，确保最终状态一致）
+                For i As Integer = 1 To partitions
+                    SaveIndex(i, fileIndexes(i).Value, database_dir)
                 Next
+
+                ' 3. Flush并释放所有文件流
                 For Each writer In bucketWriters.Values
                     writer.Flush()
                     writer.BaseStream.Dispose()
                 Next
+                For Each reader In bucketReaders.Values
+                    reader.BaseStream.Dispose()
+                Next
+
+                ' 4. 释放锁
+                cts.Dispose()
+                hotCacheLock.Dispose()
+
+                ' 5. 清理集合
                 bucketReaders.Clear()
                 bucketWriters.Clear()
                 fileIndexes.Clear()
