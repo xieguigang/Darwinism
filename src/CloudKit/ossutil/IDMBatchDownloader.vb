@@ -124,7 +124,7 @@ Public Class IDMBatchDownloader
             }
 
             Using process As Process = Process.Start(processInfo)
-                Thread.Sleep(2000)
+                Thread.Sleep(500)
                 Return process.ExitCode = 0
             End Using
         Catch ex As Exception
