@@ -33,6 +33,8 @@ Public Class Buckets : Implements IDisposable
     ' 用于同步写入和索引更新，保证线程安全
     ReadOnly _syncLock As New Object()
 
+    Dim cacheLimitSize As Integer
+
     Private disposedValue As Boolean
 
     ''' <summary>
@@ -163,12 +165,28 @@ Public Class Buckets : Implements IDisposable
                 .hits = 1
             }
             Call hotCache.Add(hashcode, data)
+
+            If hotCache.Count > cacheLimitSize Then
+                Call ClearColdData()
+            End If
+
             Return data.data
         End If
 
         ' 如果缓存和索引都没有找到，说明key不存在
         Return Nothing
     End Function
+
+    Private Sub ClearColdData()
+        Dim top As Integer = CInt(cacheLimitSize * 0.5)
+        Dim coldHashset = hotCache.Values.OrderBy(Function(a) a.hits).Take(top).ToArray
+
+        SyncLock _syncLock
+            For Each colddata As HotData In coldHashset
+                Call hotCache.Remove(colddata.hashcode)
+            Next
+        End SyncLock
+    End Sub
 
     Public Sub Put(keybuf As Byte(), data As Byte())
         Dim hashcode As UInteger
@@ -195,7 +213,7 @@ Public Class Buckets : Implements IDisposable
             ' 3. 写入数据 (格式: [数据长度(4字节)][数据内容(N字节)])
             bucketWriter.Write(data.Length)
             bucketWriter.Write(data)
-            bucketWriter.Flush() ' 确保数据写入磁盘
+            ' bucketWriter.Flush() ' 确保数据写入磁盘
 
             ' 4. 更新内存索引
             fileIndexes(bucketIdInt)(hashcode) = (offset, data.Length)
@@ -225,6 +243,22 @@ Public Class Buckets : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects)
+                ' 释放托管资源
+                ' 在释放前，最重要的一步是保存索引！
+                Console.WriteLine("Saving indexes before disposing...")
+                SaveAllIndexes()
+
+                For Each reader In bucketReaders.Values
+                    reader.BaseStream.Dispose()
+                Next
+                For Each writer In bucketWriters.Values
+                    writer.Flush()
+                    writer.BaseStream.Dispose()
+                Next
+                bucketReaders.Clear()
+                bucketWriters.Clear()
+                fileIndexes.Clear()
+                hotCache.Clear()
             End If
 
             ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
