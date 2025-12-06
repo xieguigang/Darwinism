@@ -6,22 +6,122 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.Repository
 
 ''' <summary>
-''' A hashcode bucketes in-memory key-value database
+''' A hashcode bucketed in-memory key-value database with persistence.
 ''' </summary>
+''' <remarks>
+''' 使用追加写入日志和内存索引实现持久化。
+''' </remarks>
 Public Class Buckets
 
     ReadOnly partitions As Integer
     ReadOnly database_dir As String
-    ReadOnly hotCache As New Dictionary(Of UInteger, HotData)
-    ReadOnly buckets As Dictionary(Of Integer, BinaryDataReader)
 
+    ''' <summary>
+    ''' L1 Cache: 存储最近访问的数据
+    ''' </summary>
+    ReadOnly hotCache As New Dictionary(Of UInteger, HotData)
+    ' L2 Index: 内存中的文件索引，key: bucketId, value: 该桶的索引
+    ' 索引项: key: hashcode, value: (offset, size)
+    ReadOnly fileIndexes As New Dictionary(Of Integer, Dictionary(Of UInteger, (offset As Long, size As Integer)))()
+
+    ' 用于读取数据文件的流
+    ReadOnly bucketReaders As New Dictionary(Of Integer, BinaryDataReader)()
+    ' 用于写入数据文件的流
+    ReadOnly bucketWriters As New Dictionary(Of Integer, BinaryDataWriter)()
+
+    ' 用于同步写入和索引更新，保证线程安全
+    ReadOnly _syncLock As New Object()
+
+    ''' <summary>
+    ''' 初始化数据库
+    ''' </summary>
+    ''' <param name="database_dir">数据库文件存储目录</param>
+    ''' <param name="partitions">桶的数量，默认为64</param>
     Sub New(database_dir As String, Optional partitions As Integer = 64)
         Me.partitions = partitions
         Me.database_dir = database_dir
 
+        Call database_dir.MakeDir
+
+        ' 初始化每个桶的读写器和索引
         For i As Integer = 1 To partitions
-            buckets(i) = New BinaryDataReader($"{database_dir}/bucket{i}.db".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=True))
+            Dim dataFilePath = Path.Combine(database_dir, $"bucket{i}.db")
+            Dim indexFilePath = Path.Combine(database_dir, $"bucket{i}.index")
+
+            ' 1. 初始化数据文件读写器
+            ' FileMode.OpenOrCreate: 文件存在则打开，不存在则创建
+            ' FileAccess.Read: 读取器只需要读权限
+            Dim readerStream As New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)
+            bucketReaders(i) = New BinaryDataReader(readerStream)
+
+            ' FileAccess.Write: 写入器只需要写权限
+            ' FileShare.Read: 允许其他流同时读取，这对我们的 reader 很重要
+            Dim writerStream As New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read)
+            bucketWriters(i) = New BinaryDataWriter(writerStream)
+
+            ' 2. 初始化内存索引并从文件加载
+            fileIndexes(i) = New Dictionary(Of UInteger, (offset As Long, size As Integer))()
+            LoadIndex(i, indexFilePath)
         Next
+    End Sub
+
+    ''' <summary>
+    ''' 从索引文件加载索引到内存
+    ''' </summary>
+    Private Sub LoadIndex(bucketId As Integer, indexFilePath As String)
+        If Not File.Exists(indexFilePath) OrElse New FileInfo(indexFilePath).Length = 0 Then
+            Return ' 索引文件不存在或为空，跳过
+        End If
+
+        Using indexStream As New FileStream(indexFilePath, FileMode.Open, FileAccess.Read)
+            Using indexReader As New BinaryDataReader(indexStream)
+                Dim count As Integer = indexReader.ReadInt32()
+                For j As Integer = 0 To count - 1
+                    Dim hashcode As UInteger = indexReader.ReadUInt32()
+                    Dim offset As Long = indexReader.ReadInt64()
+                    Dim size As Integer = indexReader.ReadInt32()
+                    fileIndexes(bucketId)(hashcode) = (offset, size)
+                Next
+            End Using
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' 将内存中的索引保存到文件
+    ''' </summary>
+    Public Sub SaveAllIndexes()
+        For i As Integer = 1 To partitions
+            SaveIndex(i)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 保存单个桶的索引到文件
+    ''' </summary>
+    Private Sub SaveIndex(bucketId As Integer)
+        Dim indexFilePath = Path.Combine(database_dir, $"bucket{bucketId}.index")
+        Dim index = fileIndexes(bucketId)
+
+        ' 使用临时文件写入，成功后再替换原文件，防止写入过程中出错导致索引文件损坏
+        Dim tempPath = indexFilePath & ".tmp"
+
+        Using indexStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
+            Using indexWriter As New BinaryDataWriter(indexStream)
+                indexWriter.Write(index.Count)
+                For Each entry In index
+                    indexWriter.Write(entry.Key) ' hashcode
+                    indexWriter.Write(entry.Value.offset)
+                    indexWriter.Write(entry.Value.size)
+                Next
+                indexWriter.Flush()
+            End Using
+        End Using
+
+        ' 原子性地替换旧索引文件
+        If File.Exists(indexFilePath) Then
+            File.Delete(indexFilePath)
+        End If
+        File.Move(tempPath, indexFilePath)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
