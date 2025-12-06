@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Diagnostics
 Imports System.Text
 
 ''' <summary>
@@ -49,19 +48,23 @@ Public Class IDMBatchDownloader
             "C:\Program Files (x86)\Internet Download Manager\IDMan.exe"
         }
 
+#If WINDOWS Then
         ' 检查注册表中的安装路径
         Try
-            Using regKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\IDMan.exe")
-                If regKey IsNot Nothing Then
-                    Dim regPath As String = regKey.GetValue("").ToString()
-                    If File.Exists(regPath) Then
-                        Return regPath
+            If Environment.OSVersion.Platform = PlatformID.Win32NT Then
+                Using regKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\IDMan.exe")
+                    If regKey IsNot Nothing Then
+                        Dim regPath As String = regKey.GetValue("").ToString()
+                        If File.Exists(regPath) Then
+                            Return regPath
+                        End If
                     End If
-                End If
-            End Using
+                End Using
+            End If
         Catch
             ' 忽略注册表访问错误
         End Try
+#End If
 
         ' 检查常见路径
         For Each path As String In commonPaths
@@ -118,7 +121,7 @@ Public Class IDMBatchDownloader
             }
 
             Using process As Process = Process.Start(processInfo)
-                process.WaitForExit(5000) ' 等待5秒
+                process.WaitForExit()
                 Return process.ExitCode = 0
             End Using
         Catch ex As Exception
