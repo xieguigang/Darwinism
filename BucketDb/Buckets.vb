@@ -191,7 +191,7 @@ Public Class Buckets : Implements IDisposable
         End Try
 
         ' 2. 检查内存索引
-        Dim index = fileIndexes(CInt(bucketId))
+        Dim index = fileIndexes(bucketId).Value
         Dim entry As (offset As Long, size As Integer)
 
         If index.TryGetValue(hashcode, entry) Then
@@ -201,36 +201,58 @@ Public Class Buckets : Implements IDisposable
 
             ' 3. 从数据文件读取
             Dim bucketReader As BinaryDataReader = bucketReaders(CInt(bucketId))
-            bucketReader.Position = offset
 
-            Dim data As New HotData With {
-                .bucket = bucketId,
-                .data = bucketReader.ReadBytes(bufSize),
-                .hashcode = hashcode,
-                .hits = 1
-            }
-            Call hotCache.Add(hashcode, data)
+            SyncLock bucketReader.BaseStream ' 对单个流进行同步，防止并发读取时Position混乱
+                bucketReader.Position = offset
 
-            If hotCache.Count > cacheLimitSize Then
-                Call ClearColdData()
-            End If
+                Dim dataBytes = bucketReader.ReadBytes(bufSize)
 
-            Return data.data
+                ' 4. 更新热缓存
+                hotCacheLock.EnterWriteLock()
+                Try
+                    ' 再次检查，可能在等待锁的过程中已被其他线程添加
+                    If Not hotCache.ContainsKey(hashcode) Then
+                        hotCache(hashcode) = New HotData With {
+                            .bucket = bucketId,
+                            .data = dataBytes,
+                            .hashcode = hashcode,
+                            .hits = 1
+                        }
+                    End If
+                Finally
+                    hotCacheLock.ExitWriteLock()
+                End Try
+
+                ' 5. 异步触发缓存清理，避免阻塞读取
+                If hotCache.Count > cacheLimitSize Then
+                    Task.Run(AddressOf ClearColdDataAsync)
+                End If
+
+                Return dataBytes
+            End SyncLock
         End If
 
         ' 如果缓存和索引都没有找到，说明key不存在
         Return Nothing
     End Function
 
-    Private Sub ClearColdData()
-        Dim top As Integer = CInt(cacheLimitSize * 0.5)
-        Dim coldHashset = hotCache.Values.OrderBy(Function(a) a.hits).Take(top).ToArray
+    Private Sub ClearColdDataAsync()
+        ' 防止多个清理任务同时运行
+        If Monitor.TryEnter(hotCacheLock) Then
+            Try
+                If hotCache.Count > cacheLimitSize Then
+                    Dim top = CInt(cacheLimitSize * cacheClearRatio)
+                    ' 注意：OrderBy会创建快照，所以在锁内操作是安全的
+                    Dim coldHashset = hotCache.Values.OrderBy(Function(a) a.hits).Take(top).Select(Function(a) a.hashcode).ToArray()
 
-        SyncLock _syncLock
-            For Each colddata As HotData In coldHashset
-                Call hotCache.Remove(colddata.hashcode)
-            Next
-        End SyncLock
+                    For Each hashcode In coldHashset
+                        Call hotCache.Remove(hashcode)
+                    Next
+                End If
+            Finally
+                Monitor.Exit(hotCacheLock)
+            End Try
+        End If
     End Sub
 
     Public Sub Put(keybuf As Byte(), data As Byte())
