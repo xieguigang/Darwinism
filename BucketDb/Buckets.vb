@@ -68,7 +68,7 @@ Public Class Buckets : Implements IDisposable
     ''' </summary>
     ''' <param name="database_dir">数据库文件存储目录</param>
     ''' <param name="partitions">桶的数量，默认为64</param>
-    Sub New(database_dir As String, Optional partitions As Integer = 64, Optional cacheSize As Integer = 10000)
+    Sub New(database_dir As String, Optional partitions As Integer = 64, Optional cacheSize As Integer = 100000)
         Me.partitions = partitions
         Me.database_dir = database_dir
         Me.bucketLocks = New Object(partitions) {}
@@ -113,6 +113,43 @@ Public Class Buckets : Implements IDisposable
         ' 启动后台任务
         Task.Run(AddressOf BackgroundSyncWorker, cts.Token)
     End Sub
+
+    ''' <summary>
+    ''' 枚举数据库中所有的键。
+    ''' 此操作会遍历所有数据文件，可能比较耗时，建议在需要时调用。
+    ''' </summary>
+    ''' <returns>返回一个包含所有键的字符串集合。</returns>
+    Public Iterator Function EnumerateAllKeys() As IEnumerable(Of Byte())
+        For i As Integer = 1 To partitions
+            Dim bucketId = i
+            Dim dataFilePath = Path.Combine(database_dir, $"bucket{bucketId}.db")
+
+            If Not File.Exists(dataFilePath) Then
+                Continue For
+            End If
+
+            Using readerStream As New FileStream(dataFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+                Using reader As New BinaryDataReader(readerStream)
+                    Dim index = fileIndexes(bucketId).Value
+
+                    For Each entry In index.Values
+                        reader.Position = entry.offset
+
+                        ' 数据块格式: [ValueLen][ValueData][KeyLen][KeyData]
+                        ' 1. 读取并跳过Value部分
+                        Dim valueLength As Integer = reader.ReadInt32()
+                        reader.BaseStream.Seek(valueLength, SeekOrigin.Current) ' 跳过ValueData
+
+                        ' 2. 读取Key部分
+                        Dim keyLength As Integer = reader.ReadInt32()
+                        Dim keyBytes = reader.ReadBytes(keyLength)
+
+                        Yield keyBytes
+                    Next
+                End Using
+            End Using
+        Next
+    End Function
 
     ''' <summary>
     ''' 从索引文件加载索引到内存
@@ -188,15 +225,14 @@ Public Class Buckets : Implements IDisposable
         If index.TryGetValue(hashcode, entry) Then
             ' 从索引中找到偏移量和大小
             Dim offset As Long = entry.offset
-            Dim bufSize As Integer = entry.size
-
             ' 3. 从数据文件读取
             Dim bucketReader As BinaryDataReader = bucketReaders(CInt(bucketId))
 
             SyncLock bucketReader.BaseStream ' 对单个流进行同步，防止并发读取时Position混乱
                 bucketReader.Position = offset
 
-                Dim dataBytes = bucketReader.ReadBytes(bufSize)
+                Dim valueLength As Integer = bucketReader.ReadInt32()
+                Dim dataBytes = bucketReader.ReadBytes(valueLength)
 
                 ' 4. 更新热缓存
                 hotCacheLock.EnterWriteLock()
@@ -276,14 +312,17 @@ Public Class Buckets : Implements IDisposable
             ' 3. 写入数据 (格式: [数据长度(4字节)][数据内容(N字节)])
             bucketWriter.Write(data.Length)
             bucketWriter.Write(data)
+            bucketWriter.Write(keybuf.Length)
+            bucketWriter.Write(keybuf)
 
             If enableImmediateFlush Then
                 bucketWriter.Flush() ' 性能影响大，但数据安全性最高
             End If
 
-            ' 3. 更新内存索引
+            ' 3. 更新内存索引，size是整个记录的大小
+            Dim recordSize = 4 + data.Length + 4 + keybuf.Length
             Dim index = fileIndexes(bucketIdInt).Value
-            index(hashcode) = (offset, data.Length)
+            index(hashcode) = (offset, recordSize)
 
             ' 4. 标记索引为“脏”，通知后台任务需要持久化
             SyncLock backgroundSyncLock
