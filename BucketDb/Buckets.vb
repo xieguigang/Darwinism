@@ -262,13 +262,18 @@ Public Class Buckets : Implements IDisposable
         Call HashKey(keybuf, hashcode, bucketId)
         Dim bucketIdInt = CInt(bucketId)
 
-        SyncLock _syncLock
-            Dim hotData As HotData = Nothing
-
+        ' 使用细粒度锁，只锁定当前操作的桶
+        SyncLock bucketLocks(bucketIdInt)
             ' 1. 更新热缓存
-            If hotCache.TryGetValue(hashcode, hotData) Then
-                hotData.data = data
-            End If
+            hotCacheLock.EnterWriteLock()
+            Try
+                Dim L1data As HotData = Nothing
+                If hotCache.TryGetValue(hashcode, L1data) Then
+                    L1data.data = data
+                End If
+            Finally
+                hotCacheLock.ExitWriteLock()
+            End Try
 
             ' 2. 准备写入数据文件
             Dim bucketWriter As BinaryDataWriter = bucketWriters(bucketIdInt)
@@ -280,10 +285,19 @@ Public Class Buckets : Implements IDisposable
             ' 3. 写入数据 (格式: [数据长度(4字节)][数据内容(N字节)])
             bucketWriter.Write(data.Length)
             bucketWriter.Write(data)
-            ' bucketWriter.Flush() ' 确保数据写入磁盘
 
-            ' 4. 更新内存索引
-            fileIndexes(bucketIdInt)(hashcode) = (offset, data.Length)
+            If enableImmediateFlush Then
+                bucketWriter.Flush() ' 性能影响大，但数据安全性最高
+            End If
+
+            ' 3. 更新内存索引
+            Dim index = fileIndexes(bucketIdInt).Value
+            index(hashcode) = (offset, data.Length)
+
+            ' 4. 标记索引为“脏”，通知后台任务需要持久化
+            SyncLock backgroundSyncLock
+                dirtyIndexes.Add(bucketIdInt)
+            End SyncLock
         End SyncLock
     End Sub
 
