@@ -37,7 +37,7 @@ Public Class Buckets : Inherits InMemoryDb
     ''' <summary>
     ''' 细粒度锁：为每个桶提供一个独立的锁，取代全局锁，极大提升并发写入性能。
     ''' </summary>
-    ReadOnly bucketLocks As Object()
+    Friend ReadOnly bucketLocks As Object()
 
     ReadOnly worker As BackgroundWorker
 
@@ -66,7 +66,7 @@ Public Class Buckets : Inherits InMemoryDb
         Me.database_dir = database_dir
         Me.bucketLocks = New Object(partitions) {}
         Me.cacheLimitSize = cacheSize
-        Me.worker = New BackgroundWorker(Me)
+        Me.worker = BackgroundWorker.Start(Me)
 
         For i As Integer = 0 To bucketLocks.Length - 1
             bucketLocks(i) = New Object
@@ -250,30 +250,32 @@ Public Class Buckets : Inherits InMemoryDb
         bucket = (hashcode Mod CUInt(partitions)) + 1 ' bucket id start from 1
     End Sub
 
+    Public Sub Flush()
+        ' 1. 取消后台任务
+        Call worker.Cancel()
+        ' 等待后台任务完成最后一次循环并退出
+        ' 这里可以加一个超时，例如 Task.Delay(1000).Wait()
+        ' 但为了简单，我们假设它会很快退出
+
+        ' 3. Flush并释放所有文件流
+        For Each writer In bucketWriters.Values
+            Call writer.Flush()
+        Next
+
+        ' 保存所有索引（包括脏的和干净的，确保最终状态一致）
+        For i As Integer = 1 To partitions
+            Call BackgroundWorker.SaveIndex(i, fileIndexes(i).IndexValue, database_dir)
+        Next
+    End Sub
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects)
                 ' 释放托管资源
                 ' 在释放前，最重要的一步是保存索引！
-                Console.WriteLine("Saving indexes before disposing...")
-                ' 1. 取消后台任务
-                worker.Cancel()
-                ' 等待后台任务完成最后一次循环并退出
-                ' 这里可以加一个超时，例如 Task.Delay(1000).Wait()
-                ' 但为了简单，我们假设它会很快退出
-
-                ' 2. 强制执行最后一次完整的同步
-                ' 获取所有脏索引
-                Dim allDirtyIndexes As Integer()
-                SyncLock worker.backgroundSyncLock
-                    allDirtyIndexes = dirtyIndexes.ToArray()
-                End SyncLock
-
-                ' 保存所有索引（包括脏的和干净的，确保最终状态一致）
-                For i As Integer = 1 To partitions
-                    BackgroundWorker.SaveIndex(i, fileIndexes(i).IndexValue, database_dir)
-                Next
+                Call Console.WriteLine("Saving indexes before disposing...")
+                Call Flush()
 
                 ' 3. Flush并释放所有文件流
                 For Each writer In bucketWriters.Values

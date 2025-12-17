@@ -17,10 +17,8 @@ Public Class BackgroundWorker
     ''' </summary>
     Friend ReadOnly backgroundSyncLock As New Object()
 
-    Sub New(engine As Buckets)
+    Private Sub New(engine As Buckets)
         buckets = engine
-        ' 启动后台任务
-        Task.Run(AddressOf BackgroundSyncWorker, cts.Token)
     End Sub
 
     Public Sub ClearColdDataAsync()
@@ -48,8 +46,22 @@ Public Class BackgroundWorker
         End If
     End Sub
 
+    Public Shared Function Start(engine As Buckets) As BackgroundWorker
+        Dim worker As New BackgroundWorker(engine)
+        worker.Start()
+        Return worker
+    End Function
+
+    ''' <summary>
+    ''' 启动后台任务
+    ''' </summary>
+    Public Sub Start()
+        Call cts.Cancel()
+        Call Task.Run(AddressOf BackgroundSyncWorker, cts.Token)
+    End Sub
+
     Public Sub Cancel()
-        Call cts.cancel
+        Call cts.Cancel()
     End Sub
 
     ''' <summary>
@@ -75,14 +87,19 @@ Public Class BackgroundWorker
                     Dim fileIndexes = buckets.fileIndexes
 
                     ' 并行保存多个索引文件
-                    Parallel.ForEach(indexesToSave, Sub(bucketId)
-                                                        Dim index = fileIndexes(bucketId).IndexValue
-                                                        SaveIndex(bucketId, index, database_dir)
-                                                    End Sub)
+                    Parallel.ForEach(indexesToSave,
+                         Sub(bucketId)
+                             Dim index As Index = fileIndexes(bucketId)
+                             Dim indexData = index.IndexValue
+
+                             SyncLock buckets.bucketLocks(bucketId)
+                                 Call SaveIndex(bucketId, indexData, database_dir)
+                             End SyncLock
+                         End Sub)
 
                     ' 强制Flush所有数据文件，确保数据落盘
                     For Each writer In bucketWriters.Values
-                        writer.Flush()
+                        Call writer.Flush()
                     Next
                 End If
 
@@ -99,23 +116,34 @@ Public Class BackgroundWorker
     ''' <summary>
     ''' 保存单个桶的索引到文件
     ''' </summary>
-    Public Shared Sub SaveIndex(bucketId As Integer, index As Dictionary(Of UInteger, BufferRegion), database_dir As String)
-        Dim indexFilePath = Path.Combine(database_dir, $"bucket{bucketId}.index")
-        Dim tempPath = indexFilePath & ".tmp"
+    Public Shared Sub SaveIndex(bucketId As Integer, ByRef index As Dictionary(Of UInteger, BufferRegion), database_dir As String)
+        Dim indexFilePath As String = Path.Combine(database_dir, $"bucket{bucketId}.index")
+        Dim tempPath As String = indexFilePath & ".tmp"
 
         Using indexStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
             Using indexWriter As New BinaryDataWriter(indexStream)
-                indexWriter.Write(index.Count)
-                For Each entry In index
+                Dim lockBuffer As List(Of KeyValuePair(Of UInteger, BufferRegion))
+
+                SyncLock index
+                    lockBuffer = index.ToList
+                End SyncLock
+
+                Call indexWriter.Write(lockBuffer.Count)
+
+                For Each entry As KeyValuePair(Of UInteger, BufferRegion) In lockBuffer
                     indexWriter.Write(entry.Key) ' hashcode
                     indexWriter.Write(entry.Value.position)
                     indexWriter.Write(entry.Value.size)
                 Next
-                indexWriter.Flush()
+
+                Call indexWriter.Flush()
             End Using
         End Using
 
-        If File.Exists(indexFilePath) Then File.Delete(indexFilePath)
+        If File.Exists(indexFilePath) Then
+            File.Delete(indexFilePath)
+        End If
+
         File.Move(tempPath, indexFilePath)
     End Sub
 End Class

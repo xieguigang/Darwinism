@@ -28,6 +28,9 @@ Public Class Index
     ''' 从索引文件加载索引到内存
     ''' </summary>
     Private Shared Sub LoadIndex(indexFilePath As String, ByRef index As Dictionary(Of UInteger, BufferRegion))
+        If index Is Nothing Then
+            index = New Dictionary(Of UInteger, BufferRegion)
+        End If
         If Not File.Exists(indexFilePath) OrElse New FileInfo(indexFilePath).Length = 0 Then
             Return
         End If
