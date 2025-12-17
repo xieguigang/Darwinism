@@ -60,11 +60,16 @@ Public Class Buckets : Inherits InMemoryDb
     ''' 初始化数据库
     ''' </summary>
     ''' <param name="database_dir">数据库文件存储目录</param>
-    ''' <param name="partitions">桶的数量，默认为64</param>
-    Sub New(database_dir As String, Optional partitions As Integer = 64, Optional cacheSize As Integer = 100000)
-        Me.partitions = partitions
+    ''' <param name="buckets">桶的数量，默认为64</param>
+    Sub New(database_dir As String,
+            Optional cacheSize As Integer = 100000,
+            Optional buckets As Integer? = Nothing)
+
+        Dim bucketFiles = database_dir.EnumerateFiles("*.db").Count
+
+        Me.partitions = If(buckets Is Nothing, bucketFiles, CInt(buckets))
         Me.database_dir = database_dir
-        Me.bucketLocks = New Object(partitions) {}
+        Me.bucketLocks = New Object(buckets) {}
         Me.cacheLimitSize = cacheSize
         Me.worker = BackgroundWorker.Start(Me)
 
@@ -73,7 +78,10 @@ Public Class Buckets : Inherits InMemoryDb
         Next
 
         Call database_dir.MakeDir
+        Call InitEngine()
+    End Sub
 
+    Private Sub InitEngine()
         ' 初始化每个桶的读写器和索引
         For i As Integer = 1 To partitions
             Dim dataFilePath = Path.Combine(database_dir, $"bucket{i}.db")
