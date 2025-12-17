@@ -1,7 +1,9 @@
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Runtime.InteropServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.Repository
 
@@ -173,7 +175,23 @@ Public Class Buckets : Inherits InMemoryDb
                 bucketReader.Position = offset
 
                 Dim valueLength As Integer = bucketReader.ReadInt32()
-                Dim dataBytes = bucketReader.ReadBytes(valueLength)
+                Dim dataBytes As Byte() = bucketReader.ReadBytes(valueLength)
+                Dim compress As Boolean = bucketReader.ReadByte <> 0
+
+                If compress Then
+#If NET48 Then
+                Throw New NotSupportedException("decompression of brotli stream is not supported in .net 4.8 runtime!")
+#Else
+                    Using compressedStream As New MemoryStream(dataBytes)
+                        Using brotliStream As New BrotliStream(compressedStream, CompressionMode.Decompress)
+                            Using resultStream As New MemoryStream()
+                                brotliStream.CopyTo(resultStream)
+                                dataBytes = resultStream.ToArray() ' 就是解压后的原始数据
+                            End Using
+                        End Using
+                    End Using
+#End If
+                End If
 
                 ' 4. 更新热缓存
                 hotCacheLock.EnterWriteLock()
@@ -227,6 +245,23 @@ Public Class Buckets : Inherits InMemoryDb
             ' 2. 准备写入数据文件
             Dim bucketWriter As BinaryDataWriter = bucketWriters(bucketIdInt)
             Dim offset As Long = bucketWriter.BaseStream.Length
+            Dim compress As Byte = 0
+
+#If NETCOREAPP Then
+            If data.Length > ByteSize.KB Then
+                compress = 1
+
+                Using originalStream As New MemoryStream(data)
+                    Using compressedStream As New MemoryStream()
+                        Using brotliStream As New BrotliStream(compressedStream, CompressionLevel.Optimal)
+                            originalStream.CopyTo(brotliStream)
+                        End Using
+
+                        data = compressedStream.ToArray()
+                    End Using
+                End Using
+            End If
+#End If
 
             ' 将写入器指针移动到文件末尾
             bucketWriter.Seek(0, SeekOrigin.End)
@@ -234,6 +269,7 @@ Public Class Buckets : Inherits InMemoryDb
             ' 3. 写入数据 (格式: [数据长度(4字节)][数据内容(N字节)])
             bucketWriter.Write(data.Length)
             bucketWriter.Write(data)
+            bucketWriter.Write(compress)
             bucketWriter.Write(keybuf.Length)
             bucketWriter.Write(keybuf)
 
@@ -242,7 +278,7 @@ Public Class Buckets : Inherits InMemoryDb
             End If
 
             ' 3. 更新内存索引，size是整个记录的大小
-            Dim recordSize = 4 + data.Length + 4 + keybuf.Length
+            Dim recordSize = 4 + data.Length + 4 + keybuf.Length + 1
             Dim index = fileIndexes(bucketIdInt).IndexValue
             index(hashcode) = New BufferRegion(offset, recordSize)
 
