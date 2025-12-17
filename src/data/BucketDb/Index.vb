@@ -57,7 +57,7 @@ Public Class Index
     End Sub
 
     Private Shared Sub ParseIndex(indexStream As Stream, ByRef index As Dictionary(Of UInteger, BufferRegion))
-        Using indexReader As New BinaryDataReader(indexStream)
+        Using indexReader As New BinaryDataReader(indexStream) With {.ByteOrder = ByteOrder.LittleEndian}
             Dim count As Integer = indexReader.ReadInt32()
             For j As Integer = 0 To count - 1
                 Dim hashcode As UInteger = indexReader.ReadUInt32()

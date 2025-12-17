@@ -137,7 +137,7 @@ Public Class BackgroundWorker
         Dim tempPath As String = indexFilePath & ".tmp"
 
         Using indexStream As New MemoryStream
-            Using indexWriter As New BinaryDataWriter(indexStream)
+            Using indexWriter As New BinaryDataWriter(indexStream) With {.ByteOrder = ByteOrder.LittleEndian}
                 Dim lockBuffer As List(Of KeyValuePair(Of UInteger, BufferRegion))
 
                 SyncLock index
