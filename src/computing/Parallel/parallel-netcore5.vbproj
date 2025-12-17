@@ -25,6 +25,12 @@
 
 
     <OutputPath>../../../../../R-sharp/App/</OutputPath>
+
+
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
+
+
+    <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -160,6 +166,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

@@ -21,6 +21,10 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <OutputPath>../../../assembly/</OutputPath>
+
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
+
+    <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
@@ -227,6 +231,10 @@
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
     <Compile Remove="PowerShell.vb" />
+    <None Include="..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
