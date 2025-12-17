@@ -10,6 +10,8 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+.nuget
+
 assembly/
 
 # Build results
