@@ -1,6 +1,10 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 
+#If NETCOREAPP Then
+Imports System.IO.Compression
+#End If
+
 ''' <summary>
 ''' data index
 ''' </summary>
@@ -35,16 +39,32 @@ Public Class Index
             Return
         End If
 
-        Using indexStream As New FileStream(indexFilePath, FileMode.Open, FileAccess.Read)
-            Using indexReader As New BinaryDataReader(indexStream)
-                Dim count As Integer = indexReader.ReadInt32()
-                For j As Integer = 0 To count - 1
-                    Dim hashcode As UInteger = indexReader.ReadUInt32()
-                    Dim offset As Long = indexReader.ReadInt64()
-                    Dim size As Integer = indexReader.ReadInt32()
-                    index(hashcode) = New BufferRegion(offset, size)
-                Next
+#If NETCOREAPP Then
+        Using file As New FileStream(indexFilePath, FileMode.Open, FileAccess.Read)
+            Using compressor As New BrotliStream(file, CompressionLevel.Optimal)
+                Using buffer As New MemoryStream
+                    Call compressor.CopyTo(buffer)
+                    Call buffer.Seek(Scan0, SeekOrigin.Begin)
+                    Call ParseIndex(buffer, index)
+                End Using
             End Using
+        End Using
+#Else
+        Using indexStream As New FileStream(indexFilePath, FileMode.Open, FileAccess.Read)
+            Call ParseIndex(indexStream, index)
+        End Using
+#End If
+    End Sub
+
+    Private Shared Sub ParseIndex(indexStream As Stream, ByRef index As Dictionary(Of UInteger, BufferRegion))
+        Using indexReader As New BinaryDataReader(indexStream)
+            Dim count As Integer = indexReader.ReadInt32()
+            For j As Integer = 0 To count - 1
+                Dim hashcode As UInteger = indexReader.ReadUInt32()
+                Dim offset As Long = indexReader.ReadInt64()
+                Dim size As Integer = indexReader.ReadInt32()
+                index(hashcode) = New BufferRegion(offset, size)
+            Next
         End Using
     End Sub
 End Class

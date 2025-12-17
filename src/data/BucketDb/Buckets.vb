@@ -297,6 +297,7 @@ Public Class Buckets : Inherits InMemoryDb
     Public Sub Flush()
         ' 1. 取消后台任务
         Call worker.Cancel()
+        Call worker.Wait()
         ' 等待后台任务完成最后一次循环并退出
         ' 这里可以加一个超时，例如 Task.Delay(1000).Wait()
         ' 但为了简单，我们假设它会很快退出
@@ -323,7 +324,6 @@ Public Class Buckets : Inherits InMemoryDb
 
                 ' 3. Flush并释放所有文件流
                 For Each writer In bucketWriters.Values
-                    writer.Flush()
                     writer.BaseStream.Dispose()
                 Next
                 For Each reader In bucketReaders.Values

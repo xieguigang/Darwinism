@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.IO.Compression
 Imports System.Threading
 Imports Microsoft.VisualBasic.Data.IO
 
@@ -67,6 +68,12 @@ Public Class BackgroundWorker
         Call cts.Cancel()
     End Sub
 
+    Public Sub Wait()
+        Do While running AndAlso App.Running
+            Call Thread.Sleep(100)
+        Loop
+    End Sub
+
     ''' <summary>
     ''' 后台同步工作线程：定期将脏的索引写入磁盘，并Flush数据文件。
     ''' </summary>
@@ -129,7 +136,7 @@ Public Class BackgroundWorker
         Dim indexFilePath As String = Path.Combine(database_dir, $"bucket{bucketId}.index")
         Dim tempPath As String = indexFilePath & ".tmp"
 
-        Using indexStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
+        Using indexStream As New MemoryStream
             Using indexWriter As New BinaryDataWriter(indexStream)
                 Dim lockBuffer As List(Of KeyValuePair(Of UInteger, BufferRegion))
 
@@ -147,6 +154,19 @@ Public Class BackgroundWorker
 
                 Call indexWriter.Flush()
             End Using
+
+#If NETCOREAPP Then
+            Using compressedStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
+                Using compressor As New BrotliStream(compressedStream, CompressionLevel.Optimal)
+                    indexStream.Position = 0
+                    indexStream.CopyTo(compressor) ' 压缩后写入文件
+                End Using
+            End Using
+#Else
+            Using compressedStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
+                indexStream.CopyTo(compressedStream)
+            End Using
+#End If
         End Using
 
         If File.Exists(indexFilePath) Then
