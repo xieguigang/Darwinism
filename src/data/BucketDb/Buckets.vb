@@ -313,49 +313,37 @@ Public Class Buckets : Inherits InMemoryDb
         Next
     End Sub
 
-    Protected Overridable Sub Dispose(disposing As Boolean)
-        If Not disposedValue Then
-            If disposing Then
-                ' TODO: dispose managed state (managed objects)
-                ' 释放托管资源
-                ' 在释放前，最重要的一步是保存索引！
-                Call Console.WriteLine("Saving indexes before disposing...")
-                Call Flush()
+    Public Overrides Function HasKey(keydata() As Byte) As Boolean
+        Dim hashcode As UInteger
+        Dim bucketId As UInteger
 
-                ' 3. Flush并释放所有文件流
-                For Each writer In bucketWriters.Values
-                    writer.BaseStream.Dispose()
-                Next
-                For Each reader In bucketReaders.Values
-                    reader.BaseStream.Dispose()
-                Next
+        Call HashKey(keydata, hashcode, bucketId)
 
-                ' 4. 释放锁
-                hotCacheLock.Dispose()
+        ' 2. 检查内存索引
+        Dim index = fileIndexes(bucketId).IndexValue
 
-                ' 5. 清理集合
-                bucketReaders.Clear()
-                bucketWriters.Clear()
-                fileIndexes.Clear()
-                hotCache.Clear()
-            End If
+        Return index.ContainsKey(hashcode)
+    End Function
 
-            ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
-            ' TODO: set large fields to null
-            disposedValue = True
-        End If
-    End Sub
+    Protected Overrides Sub Close()
+        Call Console.WriteLine("Saving indexes before disposing...")
+        Call Flush()
 
-    ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
-    ' Protected Overrides Sub Finalize()
-    '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
-    '     Dispose(disposing:=False)
-    '     MyBase.Finalize()
-    ' End Sub
+        ' 3. Flush并释放所有文件流
+        For Each writer In bucketWriters.Values
+            writer.BaseStream.Dispose()
+        Next
+        For Each reader In bucketReaders.Values
+            reader.BaseStream.Dispose()
+        Next
 
-    Public Sub Dispose() Implements IDisposable.Dispose
-        ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
-        Dispose(disposing:=True)
-        GC.SuppressFinalize(Me)
+        ' 4. 释放锁
+        hotCacheLock.Dispose()
+
+        ' 5. 清理集合
+        bucketReaders.Clear()
+        bucketWriters.Clear()
+        fileIndexes.Clear()
+        hotCache.Clear()
     End Sub
 End Class
