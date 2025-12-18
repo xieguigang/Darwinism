@@ -33,7 +33,7 @@ Public Class BackgroundWorker
                     SyncLock hotCache
                         Dim top As Integer = CInt(buckets.cacheLimitSize * buckets.cacheClearRatio)
                         ' 注意：OrderBy会创建快照，所以在锁内操作是安全的
-                        Dim coldHashset As L1CacheHotData() = hotCache.Values _
+                        Dim coldHashset As L1CacheHotData() = hotCache.Values.ToArray _
                             .OrderBy(Function(a) a.hits) _
                             .Take(top) _
                             .ToArray
