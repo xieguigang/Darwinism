@@ -5,4 +5,8 @@
     Public hits As Integer
     Public data As Byte()
 
+    Public Overrides Function ToString() As String
+        Return $"{hashcode}@bucket-{bucket}, {hits} hits - {StringFormats.Lanudry(data.TryCount)}"
+    End Function
+
 End Class

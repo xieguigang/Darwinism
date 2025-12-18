@@ -90,6 +90,10 @@ Public Class Buckets : Inherits InMemoryDb
             Dim indexFilePath = Path.Combine(database_dir, $"bucket{i}.index")
             Dim bucketId As UInteger = i
 
+            If Not dataFilePath.FileExists Then
+                Call New Byte() {}.FlushStream(dataFilePath)
+            End If
+
             ' 1. 初始化数据文件读写器
             ' FileMode.OpenOrCreate: 文件存在则打开，不存在则创建
             ' FileAccess.Read: 读取器只需要读权限

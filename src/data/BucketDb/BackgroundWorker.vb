@@ -30,17 +30,18 @@ Public Class BackgroundWorker
         If Monitor.TryEnter(buckets.hotCacheLock) Then
             Try
                 If hotCache.Count > buckets.cacheLimitSize Then
-                    Dim top = CInt(buckets.cacheLimitSize * buckets.cacheClearRatio)
-                    ' 注意：OrderBy会创建快照，所以在锁内操作是安全的
-                    Dim coldHashset = hotCache.Values _
-                        .OrderBy(Function(a) a.hits) _
-                        .Take(top) _
-                        .Select(Function(a) a.hashcode) _
-                        .ToArray()
+                    SyncLock hotCache
+                        Dim top As Integer = CInt(buckets.cacheLimitSize * buckets.cacheClearRatio)
+                        ' 注意：OrderBy会创建快照，所以在锁内操作是安全的
+                        Dim coldHashset As L1CacheHotData() = hotCache.Values _
+                            .OrderBy(Function(a) a.hits) _
+                            .Take(top) _
+                            .ToArray
 
-                    For Each hashcode As UInteger In coldHashset
-                        Call hotCache.Remove(hashcode)
-                    Next
+                        For Each hashcode As UInteger In coldHashset.Select(Function(a) a.hashcode)
+                            Call hotCache.Remove(hashcode)
+                        Next
+                    End SyncLock
                 End If
             Finally
                 Monitor.Exit(buckets.hotCacheLock)
