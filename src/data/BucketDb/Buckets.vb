@@ -196,15 +196,17 @@ Public Class Buckets : Inherits InMemoryDb
                 ' 4. 更新热缓存
                 hotCacheLock.EnterWriteLock()
                 Try
-                    ' 再次检查，可能在等待锁的过程中已被其他线程添加
-                    If Not hotCache.ContainsKey(hashcode) Then
-                        hotCache(hashcode) = New L1CacheHotData With {
-                            .bucket = bucketId,
-                            .data = dataBytes,
-                            .hashcode = hashcode,
-                            .hits = 1
-                        }
-                    End If
+                    SyncLock hotCache
+                        ' 再次检查，可能在等待锁的过程中已被其他线程添加
+                        If Not hotCache.ContainsKey(hashcode) Then
+                            hotCache(hashcode) = New L1CacheHotData With {
+                                .bucket = bucketId,
+                                .data = dataBytes,
+                                .hashcode = hashcode,
+                                .hits = 1
+                            }
+                        End If
+                    End SyncLock
                 Finally
                     hotCacheLock.ExitWriteLock()
                 End Try

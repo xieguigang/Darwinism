@@ -41,7 +41,7 @@ Public Class Index
 
 #If NETCOREAPP Then
         Using file As New FileStream(indexFilePath, FileMode.Open, FileAccess.Read)
-            Using compressor As New BrotliStream(file, CompressionLevel.Optimal)
+            Using compressor As New BrotliStream(file, mode:=CompressionMode.Decompress)
                 Using buffer As New MemoryStream
                     Call compressor.CopyTo(buffer)
                     Call buffer.Seek(Scan0, SeekOrigin.Begin)
