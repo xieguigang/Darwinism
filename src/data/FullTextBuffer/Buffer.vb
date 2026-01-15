@@ -3,7 +3,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports LINQ
-Imports LINQ.Language
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -42,7 +41,7 @@ Public Module Buffer
             Dim idx As Index = Index.Parse(buf)
 
             token = idx.name
-            ids.Add(token, New List(Of Integer)(idx.id))
+            ids(token) = New List(Of Integer)(idx.id)
         Next
 
         Return New InvertedIndex(ids, lastId:=lastId)
@@ -57,8 +56,10 @@ Public Module Buffer
         Public Function GetBytes() As Byte()
             Dim ms As New MemoryStream
             Dim w As New BinaryDataWriter(ms, Encoding.UTF8) With {.ByteOrder = ByteOrder.BigEndian}
+            Dim nameBuf As Byte() = Encoding.UTF8.GetBytes(name)
 
-            Call w.Write(name, BinaryStringFormat.ByteLengthPrefix)
+            Call w.Write(nameBuf.Length)
+            Call w.Write(nameBuf)
             Call w.Write(n)
             Call w.Write(id)
             Call w.Flush()
@@ -68,7 +69,9 @@ Public Module Buffer
 
         Public Shared Function Parse(buff As Byte()) As Index
             Dim rd As New BinaryDataReader(New MemoryStream(buff), Encoding.UTF8) With {.ByteOrder = ByteOrder.BigEndian}
-            Dim name As String = rd.ReadString(BinaryStringFormat.ByteLengthPrefix)
+            Dim nameSize As Integer = rd.ReadInt32
+            Dim nameBuf As Byte() = rd.ReadBytes(nameSize)
+            Dim name As String = Encoding.UTF8.GetString(nameBuf)
             Dim size As Integer = rd.ReadInt32
             Dim id As Integer() = rd.ReadInt32s(size)
 
@@ -94,7 +97,7 @@ Public Module Buffer
 
         For Each token As NamedCollection(Of Integer) In index.AsEnumerable
             Dim idx As New Index With {
-                .name = token.name,
+                .name = Strings.Trim(token.name),
                 .n = token.Length,
                 .id = token.value
             }

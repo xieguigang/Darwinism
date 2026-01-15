@@ -150,12 +150,20 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
     End Function
 
     Private Function split(doc As String) As String()
+        Static delis As Char() = New Char() {":"c, "\"c, "!"c, "?"c, "+"c, "-"c, "*"c, "/"c, "."c, ","c, " "c, ASCII.TAB, "'"c, """"c, "““"c, "””"c, "("c, ")"c, "["c, "]"c, "{"c, "}"c}
+
         doc = Strings.Trim(doc).ToLower
 
         If doc.StringEmpty Then
             Return Nothing
         Else
-            Return doc.Split({":"c, "\"c, "!"c, "?"c, "+"c, "-"c, "*"c, "/"c, "."c, ","c, " "c, ASCII.TAB, "'"c, """"c, "““"c, "””"c, "("c, ")"c, "["c, "]"c, "{"c, "}"c})
+            ' 20260115 there some possible special chars inside the given text
+            ' needs to be removed, or term will not be hitted
+            Return (From s As String
+                    In doc.Split(delis)
+                    Let trim_s As String = Strings.Trim(s)
+                    Where trim_s <> ""
+                    Select trim_s).ToArray
         End If
     End Function
 
