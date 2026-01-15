@@ -27,7 +27,7 @@ Public Module Buffer
     End Function
 
     Private Function ReadIndexInternal(file As Stream, <Out> ByRef offsets As Long()) As InvertedIndex
-        Dim reader As New BinaryDataReader(file, Encoding.UTF8)
+        Dim reader As New BinaryDataReader(file, Encoding.UTF8) With {.ByteOrder = ByteOrder.BigEndian}
         Dim nsize As Integer = reader.ReadInt32
         Dim lastId As Integer = reader.ReadInt32
         Dim ids As New Dictionary(Of String, List(Of Integer))
@@ -47,7 +47,7 @@ Public Module Buffer
 
     <Extension>
     Public Sub WriteIndex(index As InvertedIndex, offsets As Long(), file As Stream)
-        Dim bin As New BinaryDataWriter(file, Encoding.UTF8)
+        Dim bin As New BinaryDataWriter(file, Encoding.UTF8) With {.ByteOrder = ByteOrder.BigEndian}
 
         ' last id is not equals to the offset length
         ' due to the reason of empty doc may change the id un-expected?
