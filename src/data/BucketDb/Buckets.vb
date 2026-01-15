@@ -1,6 +1,7 @@
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
@@ -147,6 +148,10 @@ Public Class Buckets : Inherits InMemoryDb
         Next
     End Function
 
+    Public Function GetString(key As String) As String
+        Return Encoding.UTF8.GetString([Get](Encoding.UTF8.GetBytes(key)))
+    End Function
+
     Public Overrides Function [Get](keydata As Byte()) As Byte()
         Dim hashcode As UInteger
         Dim bucketId As UInteger
@@ -227,6 +232,10 @@ Public Class Buckets : Inherits InMemoryDb
         ' 如果缓存和索引都没有找到，说明key不存在
         Return Nothing
     End Function
+
+    Public Overloads Sub Put(key As String, data As String)
+        Call Put(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(data))
+    End Sub
 
     Public Overrides Sub Put(keybuf As Byte(), data As Byte())
         Dim hashcode As UInteger
