@@ -18,6 +18,8 @@ Public Class Buckets : Inherits InMemoryDb
     Implements IDisposable
 
     ReadOnly partitions As Integer
+    ReadOnly is_readonly As Boolean = False
+
     Friend ReadOnly database_dir As String
 
     ''' <summary>
@@ -66,7 +68,9 @@ Public Class Buckets : Inherits InMemoryDb
     ''' <param name="buckets">桶的数量，默认为64</param>
     Sub New(database_dir As String,
             Optional cacheSize As Integer = 100000,
-            Optional buckets As Integer? = Nothing)
+            Optional buckets As Integer? = Nothing,
+            Optional [readonly] As Boolean = False,
+            Optional in_memory As Boolean = False)
 
         Dim bucketFiles = database_dir.EnumerateFiles("*.db").Count
 
@@ -78,16 +82,17 @@ Public Class Buckets : Inherits InMemoryDb
         Me.bucketLocks = New Object(buckets) {}
         Me.cacheLimitSize = cacheSize
         Me.worker = BackgroundWorker.Start(Me)
+        Me.is_readonly = [readonly]
 
         For i As Integer = 0 To bucketLocks.Length - 1
             bucketLocks(i) = New Object
         Next
 
         Call database_dir.MakeDir
-        Call InitEngine()
+        Call InitEngine([readonly], in_memory)
     End Sub
 
-    Private Sub InitEngine()
+    Private Sub InitEngine([readonly] As Boolean, in_memory As Boolean)
         ' 初始化每个桶的读写器和索引
         For i As Integer = 1 To partitions
             Dim dataFilePath = Path.Combine(database_dir, $"bucket{i}.db")
@@ -95,19 +100,29 @@ Public Class Buckets : Inherits InMemoryDb
             Dim bucketId As UInteger = i
 
             If Not dataFilePath.FileExists Then
+                ' create an empty file is not existsed
                 Call New Byte() {}.FlushStream(dataFilePath)
             End If
 
-            ' 1. 初始化数据文件读写器
-            ' FileMode.OpenOrCreate: 文件存在则打开，不存在则创建
-            ' FileAccess.Read: 读取器只需要读权限
-            Dim readerStream As New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)
+            Dim readerStream As Stream
+
+            If [readonly] AndAlso in_memory Then
+                readerStream = dataFilePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True, aggressive:=True)
+            Else
+                ' 1. 初始化数据文件读写器
+                ' FileMode.OpenOrCreate: 文件存在则打开，不存在则创建
+                ' FileAccess.Read: 读取器只需要读权限
+                readerStream = New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)
+            End If
+
             bucketReaders(i) = New BinaryDataReader(readerStream)
 
-            ' FileAccess.Write: 写入器只需要写权限
-            ' FileShare.Read: 允许其他流同时读取，这对我们的 reader 很重要
-            Dim writerStream As New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read)
-            bucketWriters(i) = New BinaryDataWriter(writerStream)
+            If Not [readonly] Then
+                ' FileAccess.Write: 写入器只需要写权限
+                ' FileShare.Read: 允许其他流同时读取，这对我们的 reader 很重要
+                Dim writerStream As New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read)
+                bucketWriters(i) = New BinaryDataWriter(writerStream)
+            End If
 
             ' 3. 初始化延迟加载的内存索引
             fileIndexes(i) = New Index(indexFilePath)
@@ -260,6 +275,11 @@ Public Class Buckets : Inherits InMemoryDb
                 hotCacheLock.ExitWriteLock()
             End Try
 
+            ' skip of write data file in readonly mode
+            If is_readonly Then
+                Return
+            End If
+
             ' 2. 准备写入数据文件
             Dim bucketWriter As BinaryDataWriter = bucketWriters(bucketIdInt)
             Dim offset As Long = bucketWriter.BaseStream.Length
@@ -313,6 +333,10 @@ Public Class Buckets : Inherits InMemoryDb
     End Sub
 
     Public Sub Flush()
+        If is_readonly Then
+            Return
+        End If
+
         ' 1. 取消后台任务
         Call worker.Cancel()
         Call worker.Wait()
@@ -344,8 +368,10 @@ Public Class Buckets : Inherits InMemoryDb
     End Function
 
     Protected Overrides Sub Close()
-        Call Console.WriteLine("Saving indexes before disposing...")
-        Call Flush()
+        If Not is_readonly Then
+            Call Console.WriteLine("Saving indexes before disposing...")
+            Call Flush()
+        End If
 
         ' 3. Flush并释放所有文件流
         For Each writer In bucketWriters.Values
