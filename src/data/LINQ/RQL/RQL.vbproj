@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\FullTextBuffer\FullTextBuffer.vbproj" />
     <ProjectReference Include="..\LINQ\LINQ.vbproj" />
   </ItemGroup>
 

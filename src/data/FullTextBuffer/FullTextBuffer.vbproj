@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>FullTextBuffer</RootNamespace>
+    <TargetFrameworks>net8.0;net48</TargetFrameworks>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\LINQ\LINQ\LINQ.vbproj" />
+  </ItemGroup>
+
+</Project>
