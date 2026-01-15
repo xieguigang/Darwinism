@@ -163,7 +163,9 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
     ''' Boolean queries
     ''' </summary>
     ''' <param name="text"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will returns nothing if the given text is empty or query no hits
+    ''' </returns>
     Public Function Search(text As String) As IReadOnlyCollection(Of Integer)
         Dim tokens As String() = split(text)
 
