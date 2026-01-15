@@ -70,7 +70,10 @@ Public Class Buckets : Inherits InMemoryDb
 
         Dim bucketFiles = database_dir.EnumerateFiles("*.db").Count
 
-        Me.partitions = If(buckets Is Nothing, bucketFiles, CInt(buckets))
+        buckets = If(buckets Is Nothing, bucketFiles, CInt(buckets))
+        buckets = If(buckets, 64)
+
+        Me.partitions = CInt(buckets)
         Me.database_dir = database_dir
         Me.bucketLocks = New Object(buckets) {}
         Me.cacheLimitSize = cacheSize
