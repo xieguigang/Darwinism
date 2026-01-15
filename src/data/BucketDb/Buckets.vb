@@ -71,7 +71,7 @@ Public Class Buckets : Inherits InMemoryDb
         Dim bucketFiles = database_dir.EnumerateFiles("*.db").Count
 
         buckets = If(buckets Is Nothing, bucketFiles, CInt(buckets))
-        buckets = If(buckets, 64)
+        buckets = If(buckets Is Nothing OrElse CInt(buckets) = 0, 64, buckets)
 
         Me.partitions = CInt(buckets)
         Me.database_dir = database_dir
