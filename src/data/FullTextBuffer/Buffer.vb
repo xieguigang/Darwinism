@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports LINQ
+Imports LINQ.Language
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -32,18 +33,53 @@ Public Module Buffer
         Dim lastId As Integer = reader.ReadInt32
         Dim ids As New Dictionary(Of String, List(Of Integer))
         Dim token As String
-        Dim idsize As Integer
 
         offsets = reader.ReadInt64s(reader.ReadInt32)
 
         For i As Integer = 0 To nsize - 1
-            token = reader.ReadString(BinaryStringFormat.ByteLengthPrefix)
-            idsize = reader.ReadInt32
-            ids.Add(token, New List(Of Integer)(reader.ReadInt32s(idsize)))
+            Dim byteSize As Integer = reader.ReadInt32
+            Dim buf As Byte() = reader.ReadBytes(byteSize)
+            Dim idx As Index = Index.Parse(buf)
+
+            token = idx.name
+            ids.Add(token, New List(Of Integer)(idx.id))
         Next
 
         Return New InvertedIndex(ids, lastId:=lastId)
     End Function
+
+    Private Class Index
+
+        Public name As String
+        Public n As Integer
+        Public id As Integer()
+
+        Public Function GetBytes() As Byte()
+            Dim ms As New MemoryStream
+            Dim w As New BinaryDataWriter(ms, Encoding.UTF8) With {.ByteOrder = ByteOrder.BigEndian}
+
+            Call w.Write(name, BinaryStringFormat.ByteLengthPrefix)
+            Call w.Write(n)
+            Call w.Write(id)
+            Call w.Flush()
+
+            Return ms.ToArray
+        End Function
+
+        Public Shared Function Parse(buff As Byte()) As Index
+            Dim rd As New BinaryDataReader(New MemoryStream(buff), Encoding.UTF8) With {.ByteOrder = ByteOrder.BigEndian}
+            Dim name As String = rd.ReadString(BinaryStringFormat.ByteLengthPrefix)
+            Dim size As Integer = rd.ReadInt32
+            Dim id As Integer() = rd.ReadInt32s(size)
+
+            Return New Index With {
+                .name = name,
+                .n = size,
+                .id = id
+            }
+        End Function
+
+    End Class
 
     <Extension>
     Public Sub WriteIndex(index As InvertedIndex, offsets As Long(), file As Stream)
@@ -51,15 +87,21 @@ Public Module Buffer
 
         ' last id is not equals to the offset length
         ' due to the reason of empty doc may change the id un-expected?
-        bin.Write(index.size)
-        bin.Write(index.lastId)
-        bin.Write(offsets.Length)
-        bin.Write(offsets)
+        Call bin.Write(index.size)
+        Call bin.Write(index.lastId)
+        Call bin.Write(offsets.Length)
+        Call bin.Write(offsets)
 
         For Each token As NamedCollection(Of Integer) In index.AsEnumerable
-            Call bin.Write(token.name, BinaryStringFormat.ByteLengthPrefix)
-            Call bin.Write(token.Length)
-            Call bin.Write(token.value)
+            Dim idx As New Index With {
+                .name = token.name,
+                .n = token.Length,
+                .id = token.value
+            }
+            Dim bytes As Byte() = idx.GetBytes
+
+            Call bin.Write(bytes.Length)
+            Call bin.Write(bytes)
         Next
 
         Call bin.Flush()
