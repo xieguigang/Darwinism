@@ -1,7 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports batch
+Imports Darwinism.HPC.Parallel
+Imports Darwinism.HPC.Parallel.IpcStream
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports std = System.Math
 
 Public Module PearsonCor
 
@@ -27,8 +31,15 @@ Public Module PearsonCor
 
         Dim cols As String() = m1.featureNames
         Dim spans = m1.SplitSpans(size:=m1.nsamples \ n_threads).ToArray
+        Dim task As New Func(Of DataFrame, DataFrame, Double, Double, CorrelationNetwork())(AddressOf PearsonTask)
+        Dim env As Argument = DarwinismEnvironment.GetEnvironmentArguments
+        Dim m2mat As SocketRef = SocketRef.WriteBuffer(m2, StreamEmit.Custom(Of DataFrame)(New DataFrameFile))
 
-
+        For Each block As CorrelationNetwork() In Host.ParallelFor(Of DataFrame, CorrelationNetwork())(env, task, spans, m2mat, prefilter_cor, prefilter_pval)
+            For Each edge As CorrelationNetwork In block
+                Yield edge
+            Next
+        Next
     End Function
 
     <Extension>
@@ -36,18 +47,52 @@ Public Module PearsonCor
         Dim cols As String() = x.featureNames
 
         For Each span As NamedCollection(Of Object)() In x.foreachRow.Split(size)
-            Dim nums As NamedCollection(Of Double)() = span _
-                .Select(Function(r)
-                            Dim vec As IEnumerable(Of Double) = r.value.Select(Function(xi) CDbl(xi))
-                            Dim row As New NamedCollection(Of Double)(r.name, vec)
-
-                            Return row
-                        End Function) _
-                .ToArray
+            Dim nums As NamedCollection(Of Double)() = span.CastRowVectors.ToArray
             Dim block As DataFrame = DataFrame.FromRows(nums, cols)
 
             Yield block
         Next
     End Function
 
+    <Extension>
+    Private Iterator Function CastRowVectors(span As IEnumerable(Of NamedCollection(Of Object))) As IEnumerable(Of NamedCollection(Of Double))
+        For Each r As NamedCollection(Of Object) In span
+            Dim vec As IEnumerable(Of Double) = r.value.Select(Function(xi) CDbl(xi))
+            Dim row As New NamedCollection(Of Double)(r.name, vec)
+
+            Yield row
+        Next
+    End Function
+
+    <EmitStream(GetType(DataFrameFile), Target:=GetType(DataFrame))>
+    Private Function PearsonTask(m1 As DataFrame, m2 As DataFrame, prefilter_cor As Double, prefilter_pval As Double) As CorrelationNetwork()
+        Dim v1 As NamedCollection(Of Double)() = m1.foreachRow.CastRowVectors.ToArray
+        Dim v2 As NamedCollection(Of Double)() = m2.foreachRow.CastRowVectors.ToArray
+        Dim result As New List(Of CorrelationNetwork)
+
+        For Each u As NamedCollection(Of Double) In v1
+            For Each v As NamedCollection(Of Double) In v2
+                Dim pval As Double = 1
+                Dim z As Double = 1
+                Dim cor As Double = Correlations.GetPearson(u, v, pval, z:=z, throwMaxIterError:=False)
+
+                If std.Abs(cor) > prefilter_cor AndAlso pval < prefilter_pval Then
+                    Call result.Add(New CorrelationNetwork With {
+                        .cor = cor,
+                        .pvalue = pval,
+                        .u = u.name,
+                        .v = v.name,
+                        .z = z
+                    })
+                End If
+            Next
+        Next
+
+        Return result.ToArray
+    End Function
+
 End Module
+
+Public Class DataFrameFile
+
+End Class
