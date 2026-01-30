@@ -99,7 +99,6 @@ Public Class KNearNeighbors
     ''' 
     ''' </summary>
     ''' <param name="data"></param>
-    ''' <param name="score"></param>
     ''' <param name="cutoff"></param>
     ''' <param name="k"></param>
     ''' <returns>
