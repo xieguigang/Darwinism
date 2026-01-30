@@ -51,8 +51,10 @@
 
 #End Region
 
+Imports System.IO
 Imports Darwinism.DataScience.DataMining
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -185,6 +187,46 @@ Module Math
         Call batch.DarwinismEnvironment.SetThreads(n_threads)
 
         Return PearsonCor.Correlation(m1, m2, prefilter_cor, prefilter_pval, n_trheads).ToArray
+    End Function
+
+    ''' <summary>
+    ''' write the correlation network
+    ''' </summary>
+    ''' <param name="cor"></param>
+    ''' <param name="file"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("write_network")>
+    Public Function write_network(<RRawVectorArgument> cor As Object, file As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of CorrelationNetwork)(cor, env)
+        Dim is_file As Boolean = False
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env, is_filepath:=is_file)
+
+        If pull.isError Then
+            Return pull.getError
+        ElseIf s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+
+        Using csv As New StreamWriter(s.TryCast(Of Stream))
+            Call csv.WriteLine("u,v,z,cor,pvalue")
+
+            For Each edge As CorrelationNetwork In pull.populates(Of CorrelationNetwork)(env)
+                Call csv.WriteLine(New RowObject(edge.u, edge.v, edge.z, edge.cor, edge.pvalue).AsLine)
+            Next
+
+            Call csv.Flush()
+        End Using
+
+        Try
+            If is_file Then
+                Call s.TryCast(Of Stream).Dispose()
+            End If
+        Catch ex As Exception
+
+        End Try
+
+        Return True
     End Function
 
 End Module
