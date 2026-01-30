@@ -1,9 +1,11 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports batch
 Imports Darwinism.HPC.Parallel
 Imports Darwinism.HPC.Parallel.IpcStream
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports std = System.Math
 
@@ -93,6 +95,26 @@ Public Module PearsonCor
 
 End Module
 
-Public Class DataFrameFile
+''' <summary>
+''' file stream handler for the data file of <see cref="DataFrame"/>.
+''' </summary>
+Public Class DataFrameFile : Implements IEmitStream
 
+    Public Function BufferInMemory(obj As Object) As Boolean Implements IEmitStream.BufferInMemory
+        Return True
+    End Function
+
+    Public Function WriteBuffer(obj As Object, file As Stream) As Boolean Implements IEmitStream.WriteBuffer
+        Return FrameWriter.WriteFrame(DirectCast(obj, DataFrame), file)
+    End Function
+
+    Public Function WriteBuffer(obj As Object) As Stream Implements IEmitStream.WriteBuffer
+        Dim s As New MemoryStream
+        Call WriteBuffer(obj, s)
+        Return s
+    End Function
+
+    Public Function ReadBuffer(file As Stream) As Object Implements IEmitStream.ReadBuffer
+        Return FrameReader.ReadFrame(file)
+    End Function
 End Class

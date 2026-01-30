@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel.Serialization
 Imports Microsoft.VisualBasic.DataMining.KMeans
 
 ''' <summary>
-''' file stream handler for <see cref="ClusterEntity()"/>.
+''' file stream handler for the vector of <see cref="ClusterEntity"/>.
 ''' </summary>
 Public Class ClusterVectorFile : Implements IEmitStream
 
