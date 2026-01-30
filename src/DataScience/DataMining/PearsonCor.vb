@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Math.Correlations
 
@@ -24,11 +25,29 @@ Public Module PearsonCor
             Call m1.Swap(m2)
         End If
 
-        ' 保存小矩阵
-        Dim m2_file As String = TempFileSystem.GetAppSysTempFile(".dat", App.PID, prefix:="df_")
+        Dim cols As String() = m1.featureNames
+        Dim spans = m1.SplitSpans(size:=m1.nsamples \ n_threads).ToArray
 
-        Call m2.wr
 
+    End Function
+
+    <Extension>
+    Private Iterator Function SplitSpans(x As DataFrame, size As Integer) As IEnumerable(Of DataFrame)
+        Dim cols As String() = x.featureNames
+
+        For Each span As NamedCollection(Of Object)() In x.foreachRow.Split(size)
+            Dim nums As NamedCollection(Of Double)() = span _
+                .Select(Function(r)
+                            Dim vec As IEnumerable(Of Double) = r.value.Select(Function(xi) CDbl(xi))
+                            Dim row As New NamedCollection(Of Double)(r.name, vec)
+
+                            Return row
+                        End Function) _
+                .ToArray
+            Dim block As DataFrame = DataFrame.FromRows(nums, cols)
+
+            Yield block
+        Next
     End Function
 
 End Module
