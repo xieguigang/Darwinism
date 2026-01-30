@@ -33,13 +33,25 @@ Public Module PearsonCor
 
         Dim cols As String() = m1.featureNames
         Dim spans = m1.SplitSpans(size:=m1.nsamples \ n_threads).ToArray
-        Dim task As New Func(Of DataFrame, DataFrame, Double, Double, CorrelationNetwork())(AddressOf PearsonTask)
+        Dim task As New Func(Of DataFrame, DataFrame, Double, Double, DataFrame)(AddressOf PearsonTask)
         Dim env As Argument = DarwinismEnvironment.GetEnvironmentArguments
         Dim m2mat As SocketRef = SocketRef.WriteBuffer(m2, StreamEmit.Custom(Of DataFrame)(New DataFrameFile))
 
-        For Each block As CorrelationNetwork() In Host.ParallelFor(Of DataFrame, CorrelationNetwork())(env, task, spans, m2mat, prefilter_cor, prefilter_pval)
-            For Each edge As CorrelationNetwork In block
-                Yield edge
+        For Each block As DataFrame In Host.ParallelFor(Of DataFrame, DataFrame)(env, task, spans, m2mat, prefilter_cor, prefilter_pval)
+            Dim u As String() = block!u
+            Dim v As String() = block!v
+            Dim z As Double() = block!z
+            Dim cor As Double() = block!cor
+            Dim pvalue As Double() = block!pvalue
+
+            For i As Integer = 0 To u.Length - 1
+                Yield New CorrelationNetwork With {
+                    .u = u(i),
+                    .v = v(i),
+                    .z = z(i),
+                    .cor = cor(i),
+                    .pvalue = pvalue(i)
+                }
             Next
         Next
     End Function
@@ -67,7 +79,7 @@ Public Module PearsonCor
     End Function
 
     <EmitStream(GetType(DataFrameFile), Target:=GetType(DataFrame))>
-    Private Function PearsonTask(m1 As DataFrame, m2 As DataFrame, prefilter_cor As Double, prefilter_pval As Double) As CorrelationNetwork()
+    Private Function PearsonTask(m1 As DataFrame, m2 As DataFrame, prefilter_cor As Double, prefilter_pval As Double) As DataFrame
         Dim v1 As NamedCollection(Of Double)() = m1.foreachRow.CastRowVectors.ToArray
         Dim v2 As NamedCollection(Of Double)() = m2.foreachRow.CastRowVectors.ToArray
         Dim result As New List(Of CorrelationNetwork)
@@ -76,11 +88,11 @@ Public Module PearsonCor
             For Each v As NamedCollection(Of Double) In v2
                 Dim pval As Double = 1
                 Dim z As Double = 1
-                Dim cor As Double = Correlations.GetPearson(u, v, pval, z:=z, throwMaxIterError:=False)
+                Dim corVal As Double = Correlations.GetPearson(u, v, pval, z:=z, throwMaxIterError:=False)
 
-                If std.Abs(cor) > prefilter_cor AndAlso pval < prefilter_pval Then
+                If std.Abs(corVal) > prefilter_cor AndAlso pval < prefilter_pval Then
                     Call result.Add(New CorrelationNetwork With {
-                        .cor = cor,
+                        .cor = corVal,
                         .pvalue = pval,
                         .u = u.name,
                         .v = v.name,
@@ -90,7 +102,20 @@ Public Module PearsonCor
             Next
         Next
 
-        Return result.ToArray
+        Dim cor As New DataFrame With {
+            .features = New Dictionary(Of String, FeatureVector)
+        }
+
+        Call cor.add("u", From e As CorrelationNetwork In result Select e.u)
+        Call cor.add("v", From e As CorrelationNetwork In result Select e.v)
+        Call cor.add("z", From e As CorrelationNetwork In result Select e.z)
+        Call cor.add("cor", From e As CorrelationNetwork
+                            In result
+                            Let corVal As Double = e.cor
+                            Select corVal)
+        Call cor.add("pvalue", From e As CorrelationNetwork In result Select e.pvalue)
+
+        Return cor
     End Function
 
 End Module
