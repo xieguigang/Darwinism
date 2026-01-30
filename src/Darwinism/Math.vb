@@ -64,6 +64,7 @@ Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports SMRUCC.Rsharp.Runtime.Vectorization
+Imports FeatureFrame = Microsoft.VisualBasic.Data.Framework.DataFrame
 
 ''' <summary>
 ''' darwinism IPC parallel math
@@ -136,6 +137,24 @@ Module Math
         End If
 
         Return KNearNeighbors.FindNeighbors(m, cutoff, k).ToArray
+    End Function
+
+    <ExportAPI("pearson_cor")>
+    Public Function pearson_cor(x As Object, y As Object, Optional prefilter_cor As Double = 0.3, Optional prefilter_pval As Double = 0.05, Optional env As Environment = Nothing) As Object
+        If x Is Nothing OrElse y Is Nothing Then
+            Return Nothing
+        End If
+
+        If TypeOf x Is dataframe Then
+        ElseIf TypeOf x Is FeatureFrame Then
+        Else
+            Return Message.InCompatibleType(GetType(dataframe), x.GetType, env)
+        End If
+        If TypeOf y Is dataframe Then
+        ElseIf TypeOf y Is FeatureFrame Then
+        Else
+            Return Message.InCompatibleType(GetType(dataframe), y.GetType, env)
+        End If
     End Function
 
 End Module
