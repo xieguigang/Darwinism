@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.Rsharp.Runtime
@@ -140,21 +141,50 @@ Module Math
     End Function
 
     <ExportAPI("pearson_cor")>
-    Public Function pearson_cor(x As Object, y As Object, Optional prefilter_cor As Double = 0.3, Optional prefilter_pval As Double = 0.05, Optional env As Environment = Nothing) As Object
+    <RApiReturn(GetType(CorrelationNetwork))>
+    Public Function pearson_cor(x As Object, y As Object,
+                                Optional prefilter_cor As Double = 0.3,
+                                Optional prefilter_pval As Double = 0.05,
+                                Optional n_trheads As Integer = 8,
+                                Optional env As Environment = Nothing) As Object
+
         If x Is Nothing OrElse y Is Nothing Then
             Return Nothing
         End If
 
+        Dim m1 As FeatureFrame
+        Dim m2 As FeatureFrame
+
         If TypeOf x Is dataframe Then
+            Dim cast = MathDataSet.toFeatureSet(DirectCast(x, dataframe), env)
+
+            If TypeOf cast Is Message Then
+                Return cast
+            Else
+                m1 = DirectCast(cast, FeatureFrame)
+            End If
         ElseIf TypeOf x Is FeatureFrame Then
+            m1 = DirectCast(x, FeatureFrame)
         Else
             Return Message.InCompatibleType(GetType(dataframe), x.GetType, env)
         End If
         If TypeOf y Is dataframe Then
+            Dim cast = MathDataSet.toFeatureSet(DirectCast(y, dataframe), env)
+
+            If TypeOf cast Is Message Then
+                Return cast
+            Else
+                m2 = DirectCast(cast, FeatureFrame)
+            End If
         ElseIf TypeOf y Is FeatureFrame Then
+            m2 = DirectCast(y, FeatureFrame)
         Else
             Return Message.InCompatibleType(GetType(dataframe), y.GetType, env)
         End If
+
+        Call batch.DarwinismEnvironment.SetThreads(n_threads)
+
+        Return PearsonCor.Correlation(m1, m2, prefilter_cor, prefilter_pval, n_trheads).ToArray
     End Function
 
 End Module
