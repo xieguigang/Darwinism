@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree.ApproximateNearNeighbor
 Imports Microsoft.VisualBasic.Data.IO
 
 ''' <summary>
-''' read/write <see cref="TagVector()"/> vector data
+''' read/write <see cref="TagVector"/> vector data
 ''' </summary>
 Public Class VectorFile : Implements IEmitStream
 
