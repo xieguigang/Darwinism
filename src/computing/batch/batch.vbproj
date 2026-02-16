@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>batch</RootNamespace>
-    <TargetFramework>net10.0-windows;net10.0</TargetFramework>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <UseApplicationFramework>True</UseApplicationFramework>
     <Title>IPC Parallel Batch Runtime Host</Title>
     <Authors>xieguigang</Authors>
@@ -13,10 +13,10 @@
     <OutputPath>../../../assembly/</OutputPath>
     <Configurations>Debug;Release;Docker;Rsharp_app_release;PlantMAT</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
-    <PackAsTool>True</PackAsTool>
+    <PackAsTool>False</PackAsTool>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
