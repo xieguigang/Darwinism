@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Darwinism.Repository.BucketDb</RootNamespace>
-    <TargetFrameworks>net8.0;net8.0-windows;net10.0;net10.0-windows;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
     <AssemblyTitle>In-Memory Key-Value BucketDb</AssemblyTitle>

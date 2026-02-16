@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Darwinism.OSSUtil</RootNamespace>
-    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <AssemblyName>Darwinism.OSSUtil</AssemblyName>
     <Description>Cloud data storage helper</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
