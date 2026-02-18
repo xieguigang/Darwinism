@@ -35,4 +35,22 @@ declare namespace Math {
      * + default value Is ``null``.
    */
    function knn(x: any, k?: object, cutoff?: number, env?: object): object;
+   /**
+     * @param prefilter_cor default value Is ``0.3``.
+     * @param prefilter_pval default value Is ``0.05``.
+     * @param n_trheads default value Is ``8``.
+     * @param env default value Is ``null``.
+   */
+   function pearson_cor(x: any, y: any, prefilter_cor?: number, prefilter_pval?: number, n_trheads?: object, env?: object): object;
+   /**
+    * write the correlation network
+    * 
+    * 
+     * @param cor -
+     * @param file -
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function write_network(cor: any, file: any, env?: object): any;
 }
