@@ -11,7 +11,7 @@
     <Description>Run bash command in batch and parallel</Description>
     <Platforms>AnyCPU;x64</Platforms>
     <OutputPath>../../../assembly/</OutputPath>
-    <Configurations>Debug;Release;Docker;Rsharp_app_release;PlantMAT</Configurations>
+    <Configurations>Debug;Release;Docker;Rsharp_app_release;PlantMAT;CellaLAB-Desktop</Configurations>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageIcon>icons8-repository-96.png</PackageIcon>
@@ -20,6 +20,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <OutputPath>../../../../../R-sharp/App</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|x64'">
     <OutputPath>../../../../../R-sharp/App</OutputPath>
   </PropertyGroup>
 
