@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Darwinism.IPC.Driver</RootNamespace>
-    <TargetFrameworks>net8.0;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>Darwinism.IPC.Driver</AssemblyName>
     <Configurations>Debug;Release;MEMI-Desktop</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
