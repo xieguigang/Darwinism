@@ -8,7 +8,7 @@ Public Class Agent : Implements IDisposable
 
     Sub New(config As Config)
         Me.config = config
-        Me.MakeRegister()
+        Call Threading.Tasks.Task.Run(Sub() Call Me.MakeRegister())
     End Sub
 
     ''' <summary>
