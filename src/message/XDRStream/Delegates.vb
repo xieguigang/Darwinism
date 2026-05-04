@@ -54,8 +54,8 @@
 
 #End Region
 
-Imports System.IO.XDR.Reading
-Imports System.IO.XDR.Writing
+Imports Darwinism.IO.XDRStream.Reading
+Imports Darwinism.IO.XDRStream.Writing
 
 Public Delegate Function ReadOneDelegate(Of T)(reader As Reader) As T
 Public Delegate Function ReadManyDelegate(Of T)(reader As Reader, len As UInteger) As T

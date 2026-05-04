@@ -44,11 +44,13 @@
 
 #End Region
 
-Imports System.IO.XDR.Reading
-Imports System.IO.XDR.Writing
+Imports Darwinism.IO.XDRStream.Reading
+Imports Darwinism.IO.XDRStream.Writing
 
 Namespace Emit
+
     Friend NotInheritable Class ErrorStubType(Of T)
+
         Public ReadOnly [Error] As Exception
 
         Public Sub New(ex As Exception)

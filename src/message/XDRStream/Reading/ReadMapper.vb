@@ -49,14 +49,14 @@
 
 #End Region
 
-Imports System.IO.XDR.Emit
-Imports System.IO.XDR.Emit.EmitContexts
 Imports System.Text
+Imports Darwinism.IO.XDRStream.Emit
 Imports Microsoft.VisualBasic.Data.IO.Xdr
 
 Namespace Reading
 
     Public MustInherit Class ReadMapper
+
         Private _sync As Object = New Object()
         Private _dependencySync As Object = New Object()
         Private _dependency As Queue(Of BuildRequest) = New Queue(Of BuildRequest)()

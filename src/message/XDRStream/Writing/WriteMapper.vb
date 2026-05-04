@@ -49,9 +49,8 @@
 
 #End Region
 
-Imports System.IO.XDR.Emit
-Imports System.IO.XDR.Emit.EmitContexts
 Imports System.Text
+Imports Darwinism.IO.XDRStream.Emit
 Imports Microsoft.VisualBasic.Data.IO.Xdr
 
 Namespace Writing

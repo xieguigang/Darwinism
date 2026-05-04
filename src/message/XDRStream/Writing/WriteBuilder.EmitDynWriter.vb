@@ -42,9 +42,9 @@
 
 #End Region
 
-Imports System.IO.XDR.Emit
 Imports System.Reflection
 Imports System.Reflection.Emit
+Imports Darwinism.IO.XDRStream.Emit
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace Writing
@@ -72,7 +72,7 @@ Namespace Writing
             mb.SetReturnType(Nothing)
             mb.SetParameters(genTypeParam)
             typeBuilder.DefineMethodOverride(mb, miDeclaration)
-            Dim fi = TypeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
+            Dim fi = typeBuilder.GetField(_oneCacheDescription.Result.MakeGenericType(genTypeParam), _oneCacheDescription.Result.GetField("Instance"))
             Dim il As ILGenerator = mb.GetILGenerator()
             Dim noBuild As Label = il.DefineLabel()
             il.Emit(OpCodes.Ldsfld, fi)

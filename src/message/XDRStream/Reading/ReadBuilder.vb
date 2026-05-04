@@ -41,9 +41,9 @@
 
 #End Region
 
-Imports System.IO.XDR.Emit
 Imports System.Reflection
 Imports System.Reflection.Emit
+Imports Darwinism.IO.XDRStream.Emit
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace Reading

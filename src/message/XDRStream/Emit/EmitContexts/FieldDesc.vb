@@ -44,14 +44,16 @@
 
 #End Region
 
-Imports System.IO.XDR.Attributes
-Imports System.IO.XDR.Reading
-Imports System.IO.XDR.Writing
 Imports System.Linq.Expressions
 Imports System.Reflection
+Imports Darwinism.IO.XDRStream.Attributes
+Imports Darwinism.IO.XDRStream.Reading
+Imports Darwinism.IO.XDRStream.Writing
 
 Namespace Emit.EmitContexts
+
     Public Class FieldDesc
+
         Public ReadOnly FieldType As Type
         Public ReadOnly MInfo As MemberInfo
         Protected _isOption As Boolean = False
