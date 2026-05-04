@@ -16,11 +16,9 @@
 '   OpenApiCodeGenerator.exe petstore.yaml ./output PetStoreApi
 ' ============================================================================
 
-Imports System
 Imports System.IO
-Imports System.Collections.Generic
+Imports Darwinism.IPC.OpenApi3.OpenApi.CodeGenerator.Models
 Imports Microsoft.VisualBasic.MIME.text.yaml.Serialization
-Imports OpenApi.CodeGenerator.Models
 
 Namespace OpenApi.CodeGenerator
 
@@ -119,7 +117,7 @@ Namespace OpenApi.CodeGenerator
 
             If doc.paths IsNot Nothing Then
                 For Each pathKvp In doc.paths
-                    operationCount += pathKvp.Value?.Operations?.Count() ?? 0
+                    operationCount += If(pathKvp.Value?.Operations?.Count(), 0)
                 Next
             End If
 

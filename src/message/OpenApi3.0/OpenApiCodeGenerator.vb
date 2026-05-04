@@ -1,3 +1,7 @@
+Imports System.IO
+Imports System.Text
+Imports Darwinism.IPC.OpenApi3.OpenApi.CodeGenerator.Models
+
 ' ============================================================================
 ' OpenApiCodeGenerator.vb
 ' ============================================================================
@@ -13,12 +17,6 @@
 '   Dim generator As New OpenApiCodeGenerator(doc, outputDir, rootNamespace)
 '   generator.GenerateAll()
 ' ============================================================================
-
-Imports System.IO
-Imports System.Text
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.MIME.text.yaml.Serialization
-Imports OpenApi.CodeGenerator.Models
 
 Namespace OpenApi.CodeGenerator
 
@@ -208,7 +206,7 @@ Namespace OpenApi.CodeGenerator
         Private Sub GenerateProperties(sb As StringBuilder, schema As SchemaObject)
             If schema.properties Is Nothing Then Return
 
-            Dim requiredSet As New HashSet(Of String)(schema.required ?? New List(Of String)())
+            Dim requiredSet As New HashSet(Of String)(If(schema.required, New List(Of String)))
 
             For Each prop In schema.properties
                 Dim propName As String = prop.Key
@@ -829,8 +827,8 @@ Namespace OpenApi.CodeGenerator
         ''' </summary>
         Private Function IsValueType(vbType As String) As Boolean
             Select Case vbType
-                Case "Integer", "Long", "Short", "Byte", _
-                     "Single", "Double", "Decimal", _
+                Case "Integer", "Long", "Short", "Byte",
+                     "Single", "Double", "Decimal",
                      "Boolean", "DateTime", "Guid"
                     Return True
                 Case Else

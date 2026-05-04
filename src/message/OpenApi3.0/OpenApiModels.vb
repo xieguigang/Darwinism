@@ -8,8 +8,6 @@
 ' OpenAPI 3.0.1 规范参考: https://spec.openapis.org/oas/v3.0.3
 ' ============================================================================
 
-Imports System.Collections.Generic
-
 Namespace OpenApi.CodeGenerator.Models
 
     ' -----------------------------------------------------------------------
@@ -396,10 +394,10 @@ Namespace OpenApi.CodeGenerator.Models
         Public Property nullable As Boolean
 
         ''' <summary>是否只读</summary>
-        Public Property readOnly As Boolean
+        Public Property [readOnly] As Boolean
 
         ''' <summary>是否只写</summary>
-        Public Property writeOnly As Boolean
+        Public Property [writeOnly] As Boolean
 
         ''' <summary>是否已弃用</summary>
         Public Property deprecated As Boolean
@@ -483,7 +481,7 @@ Namespace OpenApi.CodeGenerator.Models
     ' -----------------------------------------------------------------------
     Public Class XmlObject
         Public Property name As String
-        Public Property namespace As String
+        Public Property [namespace] As String
         Public Property prefix As String
         Public Property attribute As Boolean
         Public Property wrapped As Boolean
