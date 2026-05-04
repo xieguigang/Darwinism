@@ -51,6 +51,7 @@
 
 Imports System.Text
 Imports Darwinism.IO.XDRStream.Emit
+Imports Darwinism.IO.XDRStream.Emit.EmitContexts
 Imports Microsoft.VisualBasic.Data.IO.Xdr
 
 Namespace Reading
@@ -77,7 +78,7 @@ Namespace Reading
             Call SetFix(New ReadManyDelegate(Of Byte())(AddressOf ReadFixOpaque))
             Call SetVar(New ReadManyDelegate(Of Byte())(AddressOf ReadVarOpaque))
             Call SetVar(New ReadManyDelegate(Of String)(AddressOf ReadString))
-            _builders.Add(OpaqueType.One, New Func(Of Type, [Delegate])() {AddressOf CreateEnumReader, AddressOf CreateNullableReader, AddressOf CreateLinkedListReader, AddressOf GetReader})
+            _builders.Add(OpaqueType.One, New Func(Of Type, [Delegate])() {AddressOf CreateEnumReader, AddressOf CreateNullableReader, AddressOf CreateLinkedListReader, AddressOf EmitContext.GetReader})
             _builders.Add(OpaqueType.Fix, New Func(Of Type, [Delegate])() {AddressOf CreateFixArrayReader, AddressOf CreateFixListReader})
             _builders.Add(OpaqueType.Var, New Func(Of Type, [Delegate])() {AddressOf CreateVarArrayReader, AddressOf CreateVarListReader})
         End Sub

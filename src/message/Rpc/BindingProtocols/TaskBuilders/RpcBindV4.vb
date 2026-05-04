@@ -43,12 +43,11 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.IO.XDR
 Imports System.Threading
-Imports System.Threading.Tasks
+Imports Darwinism.IO.XDRStream
 
 Namespace Rpc.BindingProtocols.TaskBuilders
+
     ''' <summary>
     ''' RPCBIND Version 4
     ''' 
@@ -56,8 +55,8 @@ Namespace Rpc.BindingProtocols.TaskBuilders
     ''' For TCP/IP and UDP/IP, for example, it is port number 111. Each transport has such an assigned, well-known address.
     ''' http://tools.ietf.org/html/rfc1833#section-2.2.1
     ''' </summary>
-    Public NotInheritable Class RpcBindV4
-        Inherits BaseRpcBind
+    Public NotInheritable Class RpcBindV4 : Inherits BaseRpcBind
+
         ''' <summary>
         ''' RPCBIND Version 4
         ''' 

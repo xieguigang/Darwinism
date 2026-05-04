@@ -59,8 +59,8 @@ Namespace Reading
         Public Sub New()
             Dim name = "DynamicXdrReadMapper"
             Dim asmName As AssemblyName = New AssemblyName(name)
-            Dim asmBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.RunAndSave)
-            _modBuilder = asmBuilder.DefineDynamicModule(name & ".dll", name & ".dll")
+            Dim asmBuilder = AssemblyBuilder.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.Run)
+            _modBuilder = asmBuilder.DefineDynamicModule(name)
             _buildBinderDescription = New BuildBinderDescription(_modBuilder)
             _oneCacheDescription = New StaticCacheDescription(_modBuilder, _buildBinderDescription, "OneCache", True, OpaqueType.One)
             _fixCacheDescription = New StaticCacheDescription(_modBuilder, _buildBinderDescription, "FixCache", True, OpaqueType.Fix)

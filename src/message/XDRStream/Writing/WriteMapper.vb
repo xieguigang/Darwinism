@@ -51,6 +51,7 @@
 
 Imports System.Text
 Imports Darwinism.IO.XDRStream.Emit
+Imports Darwinism.IO.XDRStream.Emit.EmitContexts
 Imports Microsoft.VisualBasic.Data.IO.Xdr
 
 Namespace Writing
@@ -77,7 +78,7 @@ Namespace Writing
             Call SetFix(New WriteManyDelegate(Of Byte())(AddressOf WriteFixOpaque))
             Call SetVar(New WriteManyDelegate(Of Byte())(AddressOf WriteVarOpaque))
             Call SetVar(New WriteManyDelegate(Of String)(AddressOf WriteString))
-            _builders.Add(OpaqueType.One, New Func(Of Type, [Delegate])() {AddressOf CreateEnumWriter, AddressOf CreateNullableWriter, AddressOf CreateLinkedListWriter, AddressOf GetWriter})
+            _builders.Add(OpaqueType.One, New Func(Of Type, [Delegate])() {AddressOf CreateEnumWriter, AddressOf CreateNullableWriter, AddressOf CreateLinkedListWriter, AddressOf EmitContext.GetWriter})
             _builders.Add(OpaqueType.Fix, New Func(Of Type, [Delegate])() {AddressOf CreateFixArrayWriter, AddressOf CreateFixListWriter})
             _builders.Add(OpaqueType.Var, New Func(Of Type, [Delegate])() {AddressOf CreateVarArrayWriter, AddressOf CreateVarListWriter})
         End Sub

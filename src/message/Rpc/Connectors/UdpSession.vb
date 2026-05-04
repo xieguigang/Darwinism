@@ -45,15 +45,12 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
-Imports System.IO.XDR.Reading
-Imports System.Linq
 Imports System.Net
 Imports System.Threading
+Imports Darwinism.IO.XDRStream.Reading
+Imports Darwinism.IPC.Rpc.Rpc.MessageProtocol
+Imports Darwinism.IPC.Rpc.Rpc.UdpDatagrams
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
-Imports Rpc.MessageProtocol
-Imports Rpc.UdpDatagrams
 
 Namespace Rpc.Connectors
     Friend Class UdpSession

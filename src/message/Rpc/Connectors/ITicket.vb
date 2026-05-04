@@ -42,10 +42,9 @@
 
 #End Region
 
-Imports System
-Imports System.IO.XDR.Reading
+Imports Darwinism.IO.XDRStream.Reading
+Imports Darwinism.IPC.Rpc.Rpc.MessageProtocol
 Imports Microsoft.VisualBasic.Data.IO
-Imports Rpc.MessageProtocol
 
 Namespace Rpc.Connectors
     Friend Interface ITicket

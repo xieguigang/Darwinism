@@ -60,17 +60,21 @@ Namespace Writing
         Public Sub New()
             Dim name = "DynamicXdrWriteMapper"
             Dim asmName As AssemblyName = New AssemblyName(name)
-            Dim asmBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.RunAndSave)
-            _modBuilder = asmBuilder.DefineDynamicModule(name & ".dll", name & ".dll")
+            Dim asmBuilder = AssemblyBuilder.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.Run)
+
+            _modBuilder = asmBuilder.DefineDynamicModule(name)
             _buildBinderDescription = New BuildBinderDescription(_modBuilder)
             _oneCacheDescription = New StaticCacheDescription(_modBuilder, _buildBinderDescription, "OneCache", False, OpaqueType.One)
             _fixCacheDescription = New StaticCacheDescription(_modBuilder, _buildBinderDescription, "FixCache", False, OpaqueType.Fix)
             _varCacheDescription = New StaticCacheDescription(_modBuilder, _buildBinderDescription, "VarCache", False, OpaqueType.Var)
+
             Dim dynWriteMapperType As Type = EmitDynWriteMapper()
             _wm = CType(Activator.CreateInstance(dynWriteMapperType), WriteMapper)
+
             Dim dynWriterType As Type = EmitDynWriter()
             Dim mapperInstance = dynWriterType.GetField("Mapper", BindingFlags.Public Or BindingFlags.Static)
             mapperInstance.SetValue(Nothing, _wm)
+
             _creater = EmitCreater(dynWriterType.GetConstructor(New Type() {GetType(IByteWriter)}))
         End Sub
 

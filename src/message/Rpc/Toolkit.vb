@@ -44,13 +44,12 @@
 
 #End Region
 
-Imports System
-Imports System.IO.XDR.Reading
-Imports System.IO.XDR.Writing
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Darwinism.IO.XDRStream.Reading
+Imports Darwinism.IO.XDRStream.Writing
+Imports Darwinism.IPC.Rpc.Rpc.MessageProtocol
 Imports Microsoft.VisualBasic.Data.IO
-Imports Rpc.MessageProtocol
 
 Namespace Rpc
     ''' <summary>

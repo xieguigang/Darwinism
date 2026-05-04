@@ -41,12 +41,11 @@
 
 #End Region
 
-Imports System
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Threading
+Imports Darwinism.IPC.Rpc.Rpc.UdpDatagrams
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
-Imports Rpc.UdpDatagrams
 
 Namespace Rpc.Connectors
     Friend Class UdpClientWrapper

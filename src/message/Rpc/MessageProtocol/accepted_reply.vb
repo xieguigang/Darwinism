@@ -45,7 +45,7 @@
 
 #End Region
 
-Imports System.IO.XDR.Attributes
+Imports Darwinism.IO.XDRStream.Attributes
 
 Namespace Rpc.MessageProtocol
     ''' <summary>
