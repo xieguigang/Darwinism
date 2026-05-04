@@ -4,9 +4,14 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
     <OutputType>Library</OutputType>
+    <RootNamespace>Darwinism.IPC.Rpc</RootNamespace>
+    <AssemblyName>Darwinism.IPC.Rpc</AssemblyName>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\XDRStream\XDRStream.vbproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,44 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="CFD_win32" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Docker" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="mzkit" />
+    <BuildType Name="mzkit_win32" />
+    <BuildType Name="NPSearch" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="PlantMAT" />
+    <BuildType Name="Release" />
+    <BuildType Name="Rsharp_app_release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Project Path="networking/networking.vbproj">
+    <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="Debug|x86" Project="x86" />
+  </Project>
+  <Project Path="networking/test/test.vbproj">
+    <BuildType Solution="CFD_win32|*" Project="Debug" />
+    <BuildType Solution="Docker|*" Project="Debug" />
+    <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+    <BuildType Solution="LipidSearch|*" Project="Debug" />
+    <BuildType Solution="mzkit_win32|*" Project="Debug" />
+    <BuildType Solution="mzkit|*" Project="Debug" />
+    <BuildType Solution="NPSearch|*" Project="Debug" />
+    <BuildType Solution="nuget_release|*" Project="Debug" />
+    <BuildType Solution="PlantMAT|*" Project="Debug" />
+    <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+    <Platform Solution="Debug|x64" Project="x64" />
+    <Platform Solution="Debug|x86" Project="x86" />
+  </Project>
+</Solution>
