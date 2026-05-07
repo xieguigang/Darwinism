@@ -129,7 +129,7 @@ Public Class OpenApiCodeGenerator
         ' 命名空间和导入
         sb.AppendLine("Imports System")
         sb.AppendLine("Imports System.Collections.Generic")
-        sb.AppendLine("Imports Newtonsoft.Json")
+        sb.AppendLine("Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps")
         sb.AppendLine()
         sb.AppendLine("Namespace " & _rootNamespace & ".Models")
         sb.AppendLine()
@@ -227,7 +227,7 @@ Public Class OpenApiCodeGenerator
             sb.AppendLine(INDENT2 & "''' </summary>")
 
             ' JsonProperty 特性
-            sb.AppendLine(INDENT2 & "<JsonProperty(""" & propName & """)>")
+            sb.AppendLine(INDENT2 & "<Field(""" & propName & """)>")
             sb.AppendLine(INDENT2 & "Public Property " & pascalName & " As " & declType)
             sb.AppendLine()
         Next
