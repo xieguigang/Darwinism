@@ -17,6 +17,7 @@
 ' ============================================================================
 
 Imports System.IO
+Imports Darwinism.IPC.OpenApi3
 Imports Darwinism.IPC.OpenApi3.Models
 Imports Microsoft.VisualBasic.MIME.text.yaml.Serialization
 

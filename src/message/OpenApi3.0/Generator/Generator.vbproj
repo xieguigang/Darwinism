@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>OpenApi3.Generator</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>OpenApi3</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\sciBASIC#\mime\text%yaml\text.yaml.vbproj" />
+    <ProjectReference Include="..\OpenApi3.0.vbproj" />
+  </ItemGroup>
+
+</Project>
