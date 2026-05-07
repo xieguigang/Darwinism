@@ -322,7 +322,7 @@ Public Class OpenApiCodeGenerator
         sb.AppendLine("Imports System.Net.Http")
         sb.AppendLine("Imports System.Text")
         sb.AppendLine("Imports System.Threading.Tasks")
-        sb.AppendLine("Imports Newtonsoft.Json")
+        sb.AppendLine("Imports Darwinism.IPC.OpenApi3.Infrastructure")
         sb.AppendLine("Imports " & _rootNamespace & ".Models")
         sb.AppendLine("Imports " & _rootNamespace & ".Infrastructure")
         sb.AppendLine()
