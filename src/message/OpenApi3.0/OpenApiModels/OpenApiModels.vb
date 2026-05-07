@@ -87,10 +87,17 @@ Namespace Models
         Public Property example As Object
 
         ''' <summary>示例映射</summary>
-        Public Property examples As Dictionary(Of String, Object)
+        Public Property examples As Dictionary(Of String, ExampleValue)
 
         ''' <summary>编码映射</summary>
         Public Property encoding As Dictionary(Of String, EncodingObject)
+    End Class
+
+    Public Class ExampleValue
+
+        Public Property value As Object
+        Public Property summary As String
+
     End Class
 
     ' -----------------------------------------------------------------------
