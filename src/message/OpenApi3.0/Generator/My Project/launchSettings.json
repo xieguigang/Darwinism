@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Generator": {
+      "commandName": "Project",
+      "commandLineArgs": "\"G:\\GCModeller\\src\\repository\\ncbi_datasets\\datasets.openapi.yaml\" G:\\GCModeller\\src\\repository\\ncbi_datasets   ncbi_datasets"
+    }
+  }
+}

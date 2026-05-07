@@ -117,8 +117,8 @@ Global
 		{B38FAF4A-D451-AF07-2572-CFDE71E487E2}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.Debug|x64.Build.0 = Debug|Any CPU
+		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.Debug|x64.ActiveCfg = Debug|x64
+		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.Debug|x64.Build.0 = Debug|x64
 		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.gcmodeller_desktop|Any CPU.ActiveCfg = Release|Any CPU
 		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.gcmodeller_desktop|Any CPU.Build.0 = Release|Any CPU
 		{86E68EAB-FD15-4761-B333-8FAC9D4AFD38}.gcmodeller_desktop|x64.ActiveCfg = Release|Any CPU
