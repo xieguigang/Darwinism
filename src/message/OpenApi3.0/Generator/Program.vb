@@ -71,10 +71,12 @@ Namespace OpenApi.CodeGenerator
             Console.WriteLine("[步骤1] 正在解析 OpenAPI YAML 文档...")
 
             Dim doc As OpenApiDocument = Nothing
+            Dim yamlDoc As String = yamlPath.ReadAllText
+
             Try
                 ' 使用指定的 LoadYAML API 进行反序列化
                 ' LoadYAML 会读取 YAML 文件并将其映射到 OpenApiDocument 类的属性
-                doc = LoadYAML(Of OpenApiDocument)(yamlPath)
+                doc = LoadYAMLDocument(Of OpenApiDocument)(yamlDoc)
                 Console.WriteLine("[步骤1] YAML 文档解析成功！")
             Catch ex As Exception
                 Console.WriteLine($"[错误] YAML 文档解析失败: {ex.Message}")
