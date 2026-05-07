@@ -1,6 +1,6 @@
 Imports System.IO
 Imports System.Text
-Imports Darwinism.IPC.OpenApi3.OpenApi.CodeGenerator.Models
+Imports Darwinism.IPC.OpenApi3.Models
 
 ' ============================================================================
 ' OpenApiCodeGenerator.vb

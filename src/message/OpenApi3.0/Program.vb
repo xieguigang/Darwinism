@@ -17,7 +17,7 @@
 ' ============================================================================
 
 Imports System.IO
-Imports Darwinism.IPC.OpenApi3.OpenApi.CodeGenerator.Models
+Imports Darwinism.IPC.OpenApi3.Models
 Imports Microsoft.VisualBasic.MIME.text.yaml.Serialization
 
 Namespace OpenApi.CodeGenerator

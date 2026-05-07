@@ -1,4 +1,4 @@
-﻿Imports Darwinism.IPC.OpenApi3.OpenApi.CodeGenerator.Models
+﻿Imports Darwinism.IPC.OpenApi3.Models
 
 ''' <summary>
 ''' 操作信息辅助类
