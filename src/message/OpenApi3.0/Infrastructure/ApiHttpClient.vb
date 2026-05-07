@@ -22,7 +22,11 @@ Namespace Infrastructure
         ''' </summary>
         ''' <param name="httpClient">底层 HttpClient 实例</param>
         Public Sub New(httpClient As HttpClient)
-            _httpClient = httpClient ?? Throw New ArgumentNullException(NameOf(httpClient))
+            _httpClient = httpClient
+
+            If httpClient Is Nothing Then
+                Throw New ArgumentNullException(NameOf(httpClient))
+            End If
         End Sub
 
         ''' <summary>
