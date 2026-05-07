@@ -1,8 +1,8 @@
-﻿' -----------------------------------------------------------------------
-' 操作信息辅助类
-' -----------------------------------------------------------------------
-Imports Darwinism.IPC.OpenApi3.OpenApi.CodeGenerator.Models
+﻿Imports Darwinism.IPC.OpenApi3.OpenApi.CodeGenerator.Models
 
+''' <summary>
+''' 操作信息辅助类
+''' </summary>
 Public Class OperationInfo
     Public Property PathTemplate As String
     Public Property HttpMethod As String
