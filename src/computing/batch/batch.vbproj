@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>batch</RootNamespace>
-    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <UseApplicationFramework>True</UseApplicationFramework>
     <Title>IPC Parallel Batch Runtime Host</Title>
     <Authors>xieguigang</Authors>
