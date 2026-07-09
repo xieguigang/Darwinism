@@ -119,12 +119,8 @@ Public Class IPCSocket : Implements ITaskDriver
     Public Shared Function GetFirstAvailablePort(Optional delay As Integer = 1000) As Integer
         Call Thread.Sleep(randf.NextInteger(delay))
 
-        If Environment.OSVersion.Platform = PlatformID.Unix Then
+        If Environment.OSVersion.Platform = PlatformID.Unix AndAlso "/bin/bash".FileExists Then
 #If NETCOREAPP Then
-            If Not "/bin/bash".FileExists Then
-                Return TCPExtensions.GetFirstAvailablePort(-1)
-            End If
-
             ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
             ' port range start from nearby 10000
             ' for avoid port number conflicts
