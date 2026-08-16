@@ -595,6 +595,8 @@
     })();
 
     initThemeToggle();
+    renderTaskChip();          // 初始化顶栏任务状态（恢复 localStorage 中的当前任务名）
+    setClusterOffline(false);  // 初始为在线状态
     tick();
     setInterval(tick, POLL_MS);
 })();

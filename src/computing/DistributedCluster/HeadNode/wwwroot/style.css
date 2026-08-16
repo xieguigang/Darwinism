@@ -417,3 +417,65 @@ body {
 .history-wrap { margin-top: 18px; }
 .history-title { font-size: 12.5px; font-weight: 600; color: var(--ui-foreground-muted); margin-bottom: 8px; }
 .history-chart { width: 100%; height: 320px; }
+
+/* ============ 问题修复：热图模式下隐藏完整视图（[hidden] 优先级高于 display:grid） ============ */
+#nodeList[hidden] { display: none !important; }
+
+/* 热图方格简化为紧凑方格（节点名 + 百分比，完整信息由 title 悬浮提示） */
+.heat-cell {
+    position: relative; border-radius: 10px; padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.45);
+    display: flex; flex-direction: column; justify-content: center; gap: 2px;
+    min-height: 52px; cursor: default;
+    transition: transform .15s ease, box-shadow .2s ease, filter .15s ease;
+}
+.heat-cell:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.3); filter: brightness(1.08); }
+.heat-cell .hc-name { font-size: 11.5px; font-weight: 600; line-height: 1.25; word-break: break-all; }
+.heat-cell .hc-val { font-size: 17px; font-weight: 700; font-family: var(--font-code), monospace; }
+
+/* ============ 顶栏任务状态 chip ============ */
+.task-chip { display: inline-flex; align-items: center; gap: 7px; }
+.task-status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ui-foreground-muted); }
+.task-status-dot.idle { background: #107c10; box-shadow: 0 0 0 3px rgba(16,124,16,.2); }
+.task-status-dot.running { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent); animation: pulse-dot 1.4s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+#onlineChip.offline { background: color-mix(in srgb, #d32f2f 22%, var(--ui-background-alt)); color: #d32f2f; border-color: #d32f2f; }
+
+/* 集群离线时整页轻微降饱和提示 */
+body.cluster-offline .topbar,
+body.cluster-offline .card { opacity: .72; }
+body.cluster-offline { filter: saturate(.85); }
+
+/* ============ 提交任务 模态框 ============ */
+.btn-accent { background: var(--accent); color: #fff; border-color: transparent;
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--accent) 40%, transparent); }
+.btn-accent:hover { background: var(--accent-strong); }
+body.modal-open { overflow: hidden; }
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(10,14,20,.55); backdrop-filter: blur(4px);
+    display: grid; place-items: center; padding: 20px;
+    animation: overlay-in .18s ease;
+}
+.modal-overlay[hidden] { display: none; }
+@keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+    width: min(520px, 100%); max-height: 90vh; overflow: auto;
+    background: var(--ui-background); border: 1px solid var(--ui-border);
+    border-radius: var(--radius); box-shadow: var(--shadow-md);
+    animation: modal-in .22s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes modal-in { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--ui-border); }
+.modal-head h3 { margin: 0; font-size: 16px; font-weight: 700; }
+.modal-close { flex: none; cursor: pointer; width: 30px; height: 30px; border-radius: 8px;
+    background: var(--ui-background-alt); border: 1px solid var(--ui-border); color: var(--ui-foreground-muted);
+    font-size: 18px; line-height: 1; transition: background .2s, color .2s; }
+.modal-close:hover { background: color-mix(in srgb, #d32f2f 18%, var(--ui-background-alt)); color: #d32f2f; }
+.modal-body { padding: 18px 20px; }
+.modal-form { display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: 12px; font-weight: 600; color: var(--ui-foreground-muted); }
+.modal-form input, .submit-form input { width: 100%; }
+.modal-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--ui-border); }
