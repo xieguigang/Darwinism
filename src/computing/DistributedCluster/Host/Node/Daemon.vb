@@ -1,7 +1,7 @@
 Imports System.Net.Http
 Imports System.Threading
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Shared
+Imports ClusterShared
 
 ''' <summary>
 ''' 计算节点守护进程：每秒向头结点轮询拉取任务，领取后启动 worker 子进程执行，

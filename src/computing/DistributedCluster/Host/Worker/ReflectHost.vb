@@ -1,7 +1,7 @@
 Imports System.IO
 Imports System.Reflection
 Imports Microsoft.VisualBasic.App
-Imports Shared
+Imports ClusterShared
 
 ''' <summary>
 ''' 反射计算子进程宿主。由节点守护进程通过 Process.Start 启动。
