@@ -53,28 +53,24 @@ Public Class WindowsMetricsReader
         End Try
 
         ' ---- 内存 ----
-        Try
-            Dim memStatus As New MEMORYSTATUSEX()
-            ' 初始化结构体大小，这一步必须做，否则调用会失败
-            memStatus.dwLength = CUInt(Marshal.SizeOf(GetType(MEMORYSTATUSEX)))
+
+        Dim memStatus As New MEMORYSTATUSEX()
+        ' 初始化结构体大小，这一步必须做，否则调用会失败
+        memStatus.dwLength = CUInt(Marshal.SizeOf(GetType(MEMORYSTATUSEX)))
 
 
-            Dim total As ULong = 0
-            Dim avail As ULong = 0
+        Dim total As ULong = 0
+        Dim avail As ULong = 0
 
-            If GlobalMemoryStatusEx(memStatus) Then
-                total = memStatus.ullTotalPhys
-                avail = memStatus.ullAvailPhys
-            End If
+        If GlobalMemoryStatusEx(memStatus) Then
+            total = memStatus.ullTotalPhys
+            avail = memStatus.ullAvailPhys
+        End If
 
-            m.totalMemoryMB = CLng(total \ (1024 * 1024))
-            If total > 0 Then
-                m.memoryUsage = Math.Round((1 - CDbl(avail) / CDbl(total)) * 100, 1)
-            End If
-        Catch
-            m.totalMemoryMB = 0
-            m.memoryUsage = 0
-        End Try
+        m.totalMemoryMB = CLng(total \ (1024 * 1024))
+        If total > 0 Then
+            m.memoryUsage = Math.Round((1 - CDbl(avail) / CDbl(total)) * 100, 1)
+        End If
 
         ' ---- 网络速率 ----
         Dim nowTicks = DateTime.UtcNow.Ticks
