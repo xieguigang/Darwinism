@@ -491,15 +491,19 @@
 
     /* ============ echarts 历史曲线初始化 + 窗口自适应 ============ */
     (() => {
-        if (typeof echarts === 'undefined') {
-            console.warn('echarts 未加载，历史曲线不可用');
-            return;
-        }
-        ensureHistoryChart();
-        if (historyChart) {
-            window.addEventListener('resize', () => historyChart.resize());
-            // 首次渲染空图，待数据到来后由 tick 填充
-            renderHistoryChart();
+        try {
+            if (typeof echarts === 'undefined') {
+                console.warn('echarts 未加载，历史曲线不可用');
+                return;
+            }
+            ensureHistoryChart();
+            if (historyChart) {
+                window.addEventListener('resize', () => historyChart.resize());
+                // 首次渲染空图，待数据到来后由 tick 填充
+                renderHistoryChart();
+            }
+        } catch (e) {
+            console.warn('echarts 初始化失败：', e.message);
         }
     })();
 
