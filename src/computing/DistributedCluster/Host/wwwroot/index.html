@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Darwinism Distributed Cluster</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/kb.css" />
     <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
@@ -22,6 +23,10 @@
         <div class="topbar-meta">
             <span class="meta-chip" id="onlineChip">在线节点 0</span>
             <span class="meta-chip" id="clock">--:--:--</span>
+            <button id="themeToggle" class="btn theme-toggle" type="button" title="切换主题" aria-label="切换主题">
+                <span class="theme-toggle-icon">☀</span>
+                <span class="theme-toggle-label">Light</span>
+            </button>
         </div>
     </header>
 
@@ -123,6 +128,9 @@
         <span>轮询间隔: <b id="poll">1000</b> ms</span>
         <span>任务总数: <b id="totalJobs">0</b></span>
     </footer>
+
+    <!-- 右下角 toast 消息容器 -->
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
 
     <script src="/app.js"></script>
 </body>
