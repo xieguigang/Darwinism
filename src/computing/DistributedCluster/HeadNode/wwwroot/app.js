@@ -479,13 +479,42 @@
         }
     }
 
-    // ============ 任务提交 ============
-    const btn = document.getElementById('btnSubmit');
-    if (btn) {
-        btn.addEventListener('click', async () => {
+    // ============ 任务提交（模态框） ============
+    const submitModal = document.getElementById('submitModal');
+    const btnOpen = document.getElementById('btnOpenSubmit');
+
+    function openSubmitModal() {
+        if (submitModal) submitModal.hidden = false;
+        document.body.classList.add('modal-open');
+    }
+    function closeSubmitModal() {
+        if (submitModal) submitModal.hidden = true;
+        document.body.classList.remove('modal-open');
+        const out = document.getElementById('submitResult');
+        if (out) out.textContent = '';
+    }
+
+    if (btnOpen) btnOpen.addEventListener('click', openSubmitModal);
+    const btnClose = document.getElementById('btnCloseSubmit');
+    const btnCancel = document.getElementById('btnCancelSubmit');
+    if (btnClose) btnClose.addEventListener('click', closeSubmitModal);
+    if (btnCancel) btnCancel.addEventListener('click', closeSubmitModal);
+    // 点击遮罩空白区域关闭
+    if (submitModal) {
+        submitModal.addEventListener('click', (e) => {
+            if (e.target === submitModal) closeSubmitModal();
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && submitModal && !submitModal.hidden) closeSubmitModal();
+    });
+
+    const submitBtn = document.getElementById('btnSubmit');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', async () => {
             const assembly = document.getElementById('inAssembly').value.trim();
             const method = document.getElementById('inMethod').value.trim();
-            const name = document.getElementById('inName').value.trim();
+            const nameInput = document.getElementById('inName').value.trim();
             const inputs = document.getElementById('inInputs').value.trim();
             const out = document.getElementById('submitResult');
 
@@ -493,12 +522,14 @@
                 out.textContent = '请填写 Assembly 路径与方法名。';
                 return;
             }
+            // 未设置任务名称时，按方法名自动生成（取 Class.Method）
+            const autoName = nameInput || method.split('.').slice(-2).join('.');
 
             const params = new URLSearchParams({
                 assemblypath: assembly,
-                methodname: method
+                methodname: method,
+                name: autoName
             });
-            if (name) params.set('name', name);
             if (inputs) params.set('inputs', inputs);
 
             out.textContent = '提交中…';
@@ -507,7 +538,12 @@
                 const data = await res.json();
                 if (data.ok) {
                     out.textContent = '任务已提交，jobId: ' + data.jobId;
-                    showToast('任务已提交：' + (data.jobId || ''), 'success', 3000);
+                    showToast('任务已提交：' + autoName, 'success', 3000);
+                    // 记录当前任务名（前端视角），并持久化以便刷新后保留
+                    currentTaskName = autoName;
+                    try { localStorage.setItem('current-task-name', autoName); } catch (e) { /* 忽略 */ }
+                    renderTaskChip();
+                    setTimeout(closeSubmitModal, 800);
                 } else {
                     out.textContent = '提交失败: ' + (data.message || '未知错误');
                     showToast('提交失败：' + (data.message || '未知错误'), 'error', 4000);
@@ -518,33 +554,6 @@
             }
         });
     }
-
-    /* ============ 提交任务面板：折叠 / 展开 ============ */
-    (() => {
-        const btn = document.getElementById('taskToggle');
-        const body = document.getElementById('submitBody');
-        if (!btn || !body) return;
-        // 读取记忆的折叠状态
-        let collapsed = false;
-        try { collapsed = localStorage.getItem('task-panel-collapsed') === '1'; } catch (e) { /* 忽略 */ }
-        const apply = () => {
-            body.classList.toggle('collapsed', collapsed);
-            btn.classList.toggle('collapsed', collapsed);
-            btn.setAttribute('aria-expanded', String(!collapsed));
-        };
-        // 初始 max-height 以支持过渡动画
-        body.style.maxHeight = collapsed ? '0px' : body.scrollHeight + 'px';
-        apply();
-        btn.addEventListener('click', () => {
-            collapsed = !collapsed;
-            body.style.maxHeight = collapsed ? '0px' : body.scrollHeight + 'px';
-            apply();
-            try { localStorage.setItem('task-panel-collapsed', collapsed ? '1' : '0'); } catch (e) { /* 忽略 */ }
-        });
-        window.addEventListener('resize', () => {
-            if (!collapsed) body.style.maxHeight = body.scrollHeight + 'px';
-        });
-    })();
 
     /* ============ 节点监控：视图模式切换 ============ */
     (() => {
