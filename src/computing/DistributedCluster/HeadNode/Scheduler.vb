@@ -239,7 +239,14 @@ Public Class Scheduler
                 .lastHeartbeat = hb.timestamp,
                 .currentBlock = hb.currentBlock,
                 .cores = hb.cores,
-                .lastLog = hb.log
+                .lastLog = hb.log,
+                .ipAddress = hb.ipAddress,
+                .machineName = hb.machineName,
+                .cpuUsage = hb.cpuUsage,
+                .totalMemoryMB = hb.totalMemoryMB,
+                .memoryUsage = hb.memoryUsage,
+                .netUploadRate = hb.netUploadRate,
+                .netDownloadRate = hb.netDownloadRate
             })
         Next
 

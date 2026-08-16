@@ -89,12 +89,34 @@ Public Class ClusterController
             cores = Environment.ProcessorCount
         End If
 
+        Dim cpuUsage As Double = 0
+        Double.TryParse(CType(req.Argument("cpuusage"), String), cpuUsage)
+
+        Dim totalMemoryMB As Long = 0
+        Long.TryParse(CType(req.Argument("totalmemorymb"), String), totalMemoryMB)
+
+        Dim memoryUsage As Double = 0
+        Double.TryParse(CType(req.Argument("memoryusage"), String), memoryUsage)
+
+        Dim netUploadRate As Double = 0
+        Double.TryParse(CType(req.Argument("netuploadrate"), String), netUploadRate)
+
+        Dim netDownloadRate As Double = 0
+        Double.TryParse(CType(req.Argument("netdownloadrate"), String), netDownloadRate)
+
         Dim hb As New NodeHeartbeat With {
             .nodeId = CType(req.Argument("nodeid"), String),
             .timestamp = DateTime.UtcNow.Ticks,
             .currentBlock = CType(req.Argument("currentblock"), String),
             .log = CType(req.Argument("log"), String),
-            .cores = cores
+            .cores = cores,
+            .ipAddress = CType(req.Argument("ipaddress"), String),
+            .machineName = CType(req.Argument("machinename"), String),
+            .cpuUsage = cpuUsage,
+            .totalMemoryMB = totalMemoryMB,
+            .memoryUsage = memoryUsage,
+            .netUploadRate = netUploadRate,
+            .netDownloadRate = netDownloadRate
         }
 
         Call scheduler.ReceiveHeartbeat(hb)
