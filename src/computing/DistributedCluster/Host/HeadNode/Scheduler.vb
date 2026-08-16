@@ -85,7 +85,7 @@ Public Class Scheduler
             Dim offset = 0
 
             While (read = fs.Read(buffer, offset, CInt(Math.Min(chunkSize, fs.Length - fs.Position)))) > 0
-                Dim guid As String = Guid.NewGuid().ToString("N")
+                Dim guid As String = System.Guid.NewGuid().ToString("N")
                 Dim blockFile = smb.BlockPath(jobId, guid)
                 Using out = System.IO.File.OpenWrite(blockFile)
                     Call out.Write(buffer, 0, read)
@@ -100,7 +100,7 @@ Public Class Scheduler
 
     Private Sub EnqueueBlock(jobId As String, submit As JobSubmit, blockGuid As String, chunkSize As Long)
         ' 当没有输入文件时，blockGuid 为 Nothing，表示纯计算方法块。
-        Dim guid As String = If(String.IsNullOrEmpty(blockGuid), Guid.NewGuid().ToString("N"), blockGuid)
+        Dim guid As String = If(String.IsNullOrEmpty(blockGuid), System.Guid.NewGuid().ToString("N"), blockGuid)
 
         Dim block As New TaskBlock With {
             .blockId = guid,
