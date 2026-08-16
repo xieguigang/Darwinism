@@ -80,38 +80,57 @@ Public Class ClusterController
 
     ' ============ 节点心跳 ============
 
+    ''' <summary>
+    ''' 大小写不敏感地读取请求参数。
+    ''' JSON Body（DataContract 序列化）使用 PascalCase 字段名（如 nodeId），
+    ''' 而历史 query 参数使用小写名（如 nodeid），此处两者均尝试以保持兼容。
+    ''' </summary>
+    Private Function Arg(req As HttpPOSTRequest, pascalName As String) As Object
+        Dim v = req.Argument(pascalName)
+        If v Is Nothing OrElse String.IsNullOrEmpty(CStr(v)) Then
+            v = req.Argument(pascalName.ToLower())
+        End If
+        Return v
+    End Function
+
     <HttpPost("/api/heartbeat")>
     Public Sub Heartbeat(req As HttpPOSTRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
 
         Dim cores As Integer = Environment.ProcessorCount
-        If Not Integer.TryParse(CType(req.Argument("cores"), String), cores) Then
+        If Not Integer.TryParse(CType(Arg(req, "cores"), String), cores) Then
             cores = Environment.ProcessorCount
         End If
 
         Dim cpuUsage As Double = 0
-        Double.TryParse(CType(req.Argument("cpuusage"), String), cpuUsage)
+        Double.TryParse(CType(Arg(req, "cpuUsage"), String), cpuUsage)
 
         Dim totalMemoryMB As Long = 0
-        Long.TryParse(CType(req.Argument("totalmemorymb"), String), totalMemoryMB)
+        Long.TryParse(CType(Arg(req, "totalMemoryMB"), String), totalMemoryMB)
 
         Dim memoryUsage As Double = 0
-        Double.TryParse(CType(req.Argument("memoryusage"), String), memoryUsage)
+        Double.TryParse(CType(Arg(req, "memoryUsage"), String), memoryUsage)
 
         Dim netUploadRate As Double = 0
-        Double.TryParse(CType(req.Argument("netuploadrate"), String), netUploadRate)
+        Double.TryParse(CType(Arg(req, "netUploadRate"), String), netUploadRate)
 
         Dim netDownloadRate As Double = 0
-        Double.TryParse(CType(req.Argument("netdownloadrate"), String), netDownloadRate)
+        Double.TryParse(CType(Arg(req, "netDownloadRate"), String), netDownloadRate)
+
+        Dim nodeId = CType(Arg(req, "nodeId"), String)
+        If String.IsNullOrEmpty(nodeId) Then
+            ' 防止空键导致后续字典写入异常。
+            nodeId = "unknown-node"
+        End If
 
         Dim hb As New NodeHeartbeat With {
-            .nodeId = CType(req.Argument("nodeid"), String),
+            .nodeId = nodeId,
             .timestamp = DateTime.UtcNow.Ticks,
-            .currentBlock = CType(req.Argument("currentblock"), String),
-            .log = CType(req.Argument("log"), String),
+            .currentBlock = CType(Arg(req, "currentBlock"), String),
+            .log = CType(Arg(req, "log"), String),
             .cores = cores,
-            .ipAddress = CType(req.Argument("ipaddress"), String),
-            .machineName = CType(req.Argument("machinename"), String),
+            .ipAddress = CType(Arg(req, "ipAddress"), String),
+            .machineName = CType(Arg(req, "machineName"), String),
             .cpuUsage = cpuUsage,
             .totalMemoryMB = totalMemoryMB,
             .memoryUsage = memoryUsage,

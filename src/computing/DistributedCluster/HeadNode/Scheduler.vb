@@ -134,6 +134,10 @@ Public Class Scheduler
     ' ============ 心跳 ============
 
     Public Sub ReceiveHeartbeat(hb As NodeHeartbeat)
+        If hb Is Nothing OrElse String.IsNullOrEmpty(hb.nodeId) Then
+            ' 拒绝空节点标识，避免 ConcurrentDictionary 写入空键异常。
+            Return
+        End If
         heartbeats(hb.nodeId) = hb
         If Not String.IsNullOrEmpty(hb.log) Then
             Call AppendLog($"[{hb.nodeId}] {hb.log}")
