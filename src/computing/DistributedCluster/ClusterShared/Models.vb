@@ -76,6 +76,41 @@ Namespace ClusterShared
         ''' </summary>
         Public Property cores As Integer
 
+        ''' <summary>
+        ''' 节点 IP 地址（IPv4），用于仪表盘展示节点网络位置。
+        ''' </summary>
+        Public Property ipAddress As String
+
+        ''' <summary>
+        ''' 节点计算机名称，用于仪表盘展示节点身份。
+        ''' </summary>
+        Public Property machineName As String
+
+        ''' <summary>
+        ''' 当前 CPU 使用率（0-100，百分比）。由节点端两次采样求差计算后上报。
+        ''' </summary>
+        Public Property cpuUsage As Double
+
+        ''' <summary>
+        ''' 物理内存总量（单位 MB）。
+        ''' </summary>
+        Public Property totalMemoryMB As Long
+
+        ''' <summary>
+        ''' 当前内存使用率（0-100，百分比）。由节点端计算后上报。
+        ''' </summary>
+        Public Property memoryUsage As Double
+
+        ''' <summary>
+        ''' 网络上传速率（字节/秒），由节点端两次采样求差计算后上报。
+        ''' </summary>
+        Public Property netUploadRate As Double
+
+        ''' <summary>
+        ''' 网络下载速率（字节/秒），由节点端两次采样求差计算后上报。
+        ''' </summary>
+        Public Property netDownloadRate As Double
+
         Public Sub New()
             cores = Environment.ProcessorCount
         End Sub
@@ -214,6 +249,41 @@ Namespace ClusterShared
         Public Property currentBlock As String
         Public Property cores As Integer
         Public Property lastLog As String
+
+        ''' <summary>
+        ''' 节点 IP 地址（IPv4）。
+        ''' </summary>
+        Public Property ipAddress As String
+
+        ''' <summary>
+        ''' 节点计算机名称。
+        ''' </summary>
+        Public Property machineName As String
+
+        ''' <summary>
+        ''' 当前 CPU 使用率（0-100，百分比）。
+        ''' </summary>
+        Public Property cpuUsage As Double
+
+        ''' <summary>
+        ''' 物理内存总量（单位 MB）。
+        ''' </summary>
+        Public Property totalMemoryMB As Long
+
+        ''' <summary>
+        ''' 当前内存使用率（0-100，百分比）。
+        ''' </summary>
+        Public Property memoryUsage As Double
+
+        ''' <summary>
+        ''' 网络上传速率（字节/秒）。
+        ''' </summary>
+        Public Property netUploadRate As Double
+
+        ''' <summary>
+        ''' 网络下载速率（字节/秒）。
+        ''' </summary>
+        Public Property netDownloadRate As Double
     End Class
 
     ''' <summary>
