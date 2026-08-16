@@ -5,6 +5,10 @@
 
     // 节点监控视图模式：'full' 完整视图 / 'heatmap' 热图模式。
     let monitorMode = 'full';
+    // 算力热图指标：'used' 已用算力 / 'free' 剩余算力。
+    let heatMetric = 'used';
+    // 当前热图选中的节点 id（点击方格后用于右侧详情卡片）。
+    let selectedNodeId = null;
     // 历史采样环形缓冲：Map<nodeId, {time:[], cpu:[], mem:[]}>，每节点最多保留 MAX_POINTS 个点。
     const history = new Map();
     const MAX_POINTS = 40;
@@ -101,10 +105,7 @@
                 showToast('已切换至 ' + (next === 'dark' ? '暗色' : '亮色') + '主题', 'info', 2000);
                 // 主题切换后重绘图表与热图（若当前可见）
                 if (historyInited) renderHistoryChart();
-                if (monitorMode === 'heatmap') {
-                    const el = document.getElementById('heatmapPanel');
-                    if (el && !el.hidden) renderHeatmap(lastStatus);
-                }
+                if (monitorMode === 'heatmap' && lastStatus) renderHeatmap(lastStatus);
             });
         }
     }
@@ -140,6 +141,12 @@
                 chip.textContent = '在线节点 ' + (lastStatus ? lastStatus.onlineNodes : 0);
                 chip.classList.remove('offline');
             }
+        }
+        // 管理节点离线时禁用【提交任务】按钮，防止触发弹窗；上线后恢复可点击。
+        const submitBtn = document.getElementById('btnOpenSubmit');
+        if (submitBtn) {
+            submitBtn.disabled = offline;
+            submitBtn.title = offline ? '管理节点离线，暂不可提交任务' : '提交计算任务';
         }
     }
 
@@ -295,47 +302,120 @@
         return `hsl(${hue.toFixed(0)}, 70%, ${light}%)`;
     }
 
-    // 渲染热图模式：CPU 利用率热图 + 内存利用率热图。
-    // 每个节点仅显示一个简单方格（含节点名与百分比），完整信息通过 title 悬浮提示展示。
+    // 按后端算力指数公式（@Scheduler.vb:273）计算单节点的算力指数：
+    //   node_total = Sqrt( (cores/REF_CORES) * ((totalMemoryMB/1024)/REF_MEM_GB) ) * 100
+    //   node_used  = Sqrt( (usedCores/REF_CORES) * ((usedMemMB/1024)/REF_MEM_GB) ) * 100
+    //   node_free  = node_total - node_used
+    const REF_CORES = 64;
+    const REF_MEM_GB = 256;
+    function computeNodePower(n) {
+        const cores = Math.max(0, Number(n.cores) || 0);
+        const totalMem = Math.max(0, Number(n.totalMemoryMB) || 0);
+        const cpuU = Math.max(0, Math.min(100, Number(n.cpuUsage) || 0)) / 100;
+        const memU = Math.max(0, Math.min(100, Number(n.memoryUsage) || 0)) / 100;
+        const usedCores = cores * cpuU;
+        const usedMem = totalMem * memU;
+        const total = Math.sqrt((cores / REF_CORES) * ((totalMem / 1024) / REF_MEM_GB)) * 100;
+        const used = Math.sqrt((usedCores / REF_CORES) * ((usedMem / 1024) / REF_MEM_GB)) * 100;
+        const free = Math.max(0, total - used);
+        return { total: Math.round(total), used: Math.round(used), free: Math.round(free) };
+    }
+
+    // 渲染热图模式：计算节点「算力指数」热图（已用 / 剩余 两种指标可切换）。
+    // 每个节点显示一个方格，鼠标点击后于右侧显示该节点完整信息卡片。
     function renderHeatmap(s) {
         const nodes = (s.nodes || []).filter((n) => n.online);
-        const cpuBox = $('heatCpu');
-        const memBox = $('heatMem');
+        const box = $('heatPower');
+        if (!box) return;
 
-        const cell = (n, val) => {
-            const name = escapeHtml(n.machineName || n.nodeId || '—');
-            const ip = escapeHtml(n.ipAddress || '—');
-            const cpu = Math.max(0, Math.min(100, Number(n.cpuUsage) || 0));
-            const mem = Math.max(0, Math.min(100, Number(n.memoryUsage) || 0));
-            const block = n.currentBlock
-                ? '计算中 · ' + escapeHtml(n.currentBlock)
-                : '空闲';
-            const state = n.online ? '在线' : '失联';
-            // 悬浮提示：完整节点信息
-            const tip = [
-                name + '  (' + ip + ')',
-                '状态：' + state,
-                'CPU 使用率：' + cpu.toFixed(1) + '%',
-                '内存使用率：' + mem.toFixed(1) + '% · ' + fmtMemMB(n.totalMemoryMB),
-                '逻辑核心：' + (n.cores || 0),
-                '网络：↑ ' + fmtRate(n.netUploadRate) + ' / ↓ ' + fmtRate(n.netDownloadRate),
-                '当前任务：' + block
-            ].join('\n');
-            return `<div class="heat-cell" style="background:${heatColor(val)}" title="${tip.replace(/"/g, '&quot;')}">
-                        <span class="hc-name">${name}</span>
-                        <span class="hc-val">${val.toFixed(0)}%</span>
-                    </div>`;
-        };
+        // 标题随指标切换
+        const title = $('heatTitle');
+        if (title) title.textContent = '节点算力指数热图（' + (heatMetric === 'used' ? '已用算力' : '剩余算力') + '）';
 
         if (nodes.length === 0) {
-            cpuBox.innerHTML = '<div class="empty">暂无在线节点</div>';
-            memBox.innerHTML = '<div class="empty">暂无在线节点</div>';
+            box.innerHTML = '<div class="empty">暂无在线节点</div>';
             return;
         }
-        cpuBox.innerHTML = nodes.map((n) =>
-            cell(n, Math.max(0, Math.min(100, Number(n.cpuUsage) || 0)))).join('');
-        memBox.innerHTML = nodes.map((n) =>
-            cell(n, Math.max(0, Math.min(100, Number(n.memoryUsage) || 0)))).join('');
+
+        box.innerHTML = nodes.map((n) => {
+            const p = computeNodePower(n);
+            const val = heatMetric === 'used' ? p.used : p.free;
+            // 颜色强度按相对其总算力的占比映射
+            const ratio = p.total > 0 ? val / p.total : 0;
+            const color = heatColor(Math.min(100, ratio * 100));
+            const id = n.nodeId || n.machineName;
+            const isSel = id === selectedNodeId ? ' is-selected' : '';
+            const name = escapeHtml(n.machineName || n.nodeId || '—');
+            const tip = [
+                name + '  (' + escapeHtml(n.ipAddress || '—') + ')',
+                '总算力指数：' + p.total,
+                '已用算力：' + p.used,
+                '剩余算力：' + p.free,
+                'CPU 使用率：' + (Number(n.cpuUsage) || 0).toFixed(1) + '%',
+                '内存使用率：' + (Number(n.memoryUsage) || 0).toFixed(1) + '% · ' + fmtMemMB(n.totalMemoryMB),
+                '逻辑核心：' + (n.cores || 0),
+                '网络：↑ ' + fmtRate(n.netUploadRate) + ' / ↓ ' + fmtRate(n.netDownloadRate),
+                '当前任务：' + (n.currentBlock ? '计算中 · ' + escapeHtml(n.currentBlock) : '空闲')
+            ].join('\n');
+            const sub = heatMetric === 'used' ? '已用 ' + p.used : '剩余 ' + p.free;
+            return `<div class="heat-cell${isSel}" data-nodeid="${id}" style="background:${color}" title="${tip.replace(/"/g, '&quot;')}">
+                        <span class="hc-name">${name}</span>
+                        <span class="hc-val">${val}</span>
+                        <span class="hc-sub">${sub} / 共${p.total}</span>
+                    </div>`;
+        }).join('');
+    }
+
+    // 右侧节点详情卡片：展示被选中的计算节点完整信息。
+    function renderNodeDetail(n) {
+        const panel = $('nodeDetail');
+        const body = $('nodeDetailBody');
+        if (!panel || !body) return;
+        if (!n) { panel.hidden = true; return; }
+        const p = computeNodePower(n);
+        const cpu = Math.max(0, Math.min(100, Number(n.cpuUsage) || 0));
+        const mem = Math.max(0, Math.min(100, Number(n.memoryUsage) || 0));
+        const usedPct = p.total > 0 ? (p.used / p.total * 100) : 0;
+        const fillColor = heatColor(Math.min(100, usedPct));
+        body.innerHTML = `
+            <div class="nd-row">
+                <span class="nd-k">节点名称</span>
+                <span class="nd-v">${escapeHtml(n.machineName || n.nodeId || '—')}</span>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">IP 地址</span>
+                <span class="nd-v">${escapeHtml(n.ipAddress || '—')}</span>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">运行状态</span>
+                <span class="nd-v accent">${n.online ? '在线' : '失联'}</span>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">算力指数（总 / 已用 / 剩余）</span>
+                <span class="nd-v accent">${p.total} · ${p.used} · ${p.free}</span>
+                <div class="nd-power-bar"><div class="nd-power-fill" style="width:${usedPct.toFixed(1)}%;background:${fillColor}"></div></div>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">CPU 使用率</span>
+                <span class="nd-v">${cpu.toFixed(1)}%</span>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">内存使用率</span>
+                <span class="nd-v">${mem.toFixed(1)}% · ${fmtMemMB(n.totalMemoryMB)}</span>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">逻辑核心数</span>
+                <span class="nd-v">${n.cores || 0}</span>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">网络流量</span>
+                <span class="nd-v">↑ ${fmtRate(n.netUploadRate)} / ↓ ${fmtRate(n.netDownloadRate)}</span>
+            </div>
+            <div class="nd-row">
+                <span class="nd-k">当前任务</span>
+                <span class="nd-v">${n.currentBlock ? '计算中 · ' + escapeHtml(n.currentBlock) : '空闲'}</span>
+            </div>`;
+        panel.hidden = false;
     }
 
     // 每轮轮询把各节点当前 CPU / 内存使用率追加进环形缓冲。
@@ -452,8 +532,17 @@
             // 视图模式切换显示
             const isHeat = monitorMode === 'heatmap';
             $('nodeList').hidden = isHeat;
-            $('heatmapPanel').hidden = !isHeat;
-            if (isHeat) renderHeatmap(s);
+            $('heatLayout').hidden = !isHeat;
+            if (isHeat) {
+                renderHeatmap(s);
+                // 若已选中某节点，刷新其详情（数据可能更新）
+                if (selectedNodeId) {
+                    const sel = (s.nodes || []).find((n) => (n.nodeId || n.machineName) === selectedNodeId);
+                    renderNodeDetail(sel || null);
+                }
+            } else {
+                $('nodeDetail').hidden = true;
+            }
 
             // 历史采样 + 曲线（仅当前已渲染图表时更新）
             sampleHistory(s);
@@ -570,9 +659,44 @@
             if (lastStatus) {
                 const isHeat = monitorMode === 'heatmap';
                 document.getElementById('nodeList').hidden = isHeat;
-                document.getElementById('heatmapPanel').hidden = !isHeat;
+                document.getElementById('heatLayout').hidden = !isHeat;
                 if (isHeat) renderHeatmap(lastStatus);
+                else document.getElementById('nodeDetail').hidden = true;
             }
+        });
+    })();
+
+    /* ============ 算力热图：指标切换（已用 / 剩余）+ 点击方格查看节点详情 ============ */
+    (() => {
+        const toggle = document.getElementById('heatMetricToggle');
+        if (toggle) {
+            toggle.addEventListener('click', (e) => {
+                const b = e.target.closest('.heat-metric-btn');
+                if (!b) return;
+                heatMetric = b.dataset.metric;
+                toggle.querySelectorAll('.heat-metric-btn').forEach((x) => x.classList.toggle('active', x === b));
+                if (monitorMode === 'heatmap' && lastStatus) renderHeatmap(lastStatus);
+            });
+        }
+
+        const grid = document.getElementById('heatPower');
+        if (grid) {
+            grid.addEventListener('click', (e) => {
+                const cell = e.target.closest('.heat-cell');
+                if (!cell || !cell.dataset.nodeid) return;
+                selectedNodeId = cell.dataset.nodeid;
+                const n = (lastStatus ? lastStatus.nodes : []).find((x) => (x.nodeId || x.machineName) === selectedNodeId);
+                renderNodeDetail(n || null);
+                if (monitorMode === 'heatmap' && lastStatus) renderHeatmap(lastStatus); // 重绘高亮选中项
+            });
+        }
+
+        const closeBtn = document.getElementById('nodeDetailClose');
+        if (closeBtn) closeBtn.addEventListener('click', () => {
+            selectedNodeId = null;
+            const panel = document.getElementById('nodeDetail');
+            if (panel) panel.hidden = true;
+            if (monitorMode === 'heatmap' && lastStatus) renderHeatmap(lastStatus);
         });
     })();
 
