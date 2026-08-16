@@ -62,6 +62,8 @@
 
     /* ============ 主题切换（light / dark） ============ */
     const THEME_KEY = 'cluster-theme';
+    let theme = localStorage.getItem(THEME_KEY) ||
+        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
     function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
