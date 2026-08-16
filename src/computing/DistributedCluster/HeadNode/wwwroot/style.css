@@ -141,15 +141,69 @@ body {
 .fail-rate { margin-top: 14px; font-size: 13px; color: var(--ui-foreground-muted); }
 .fail-rate span { color: var(--danger); font-weight: 700; }
 
-/* ============ 节点列表 ============ */
-.node-list { display: flex; flex-direction: column; gap: 10px; max-height: 280px; overflow-y: auto; }
-.node-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px; border-radius: 12px;
-    background: var(--ui-background-alt); border: 1px solid var(--ui-border);
+/* ============ 节点资源卡片 ============ */
+.node-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(262px, 1fr));
+    gap: 14px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 4px;
 }
-.node-item .name { font-weight: 600; color: var(--ui-foreground); }
-.node-item .block { font-size: 12px; color: var(--ui-foreground-muted); font-family: var(--font-code), monospace; }
+.node-card {
+    padding: 14px 16px; border-radius: 14px;
+    background: var(--ui-background-alt);
+    border: 1px solid var(--ui-border);
+    display: flex; flex-direction: column; gap: 11px;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.node-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 24px rgba(0,0,0,.28);
+}
+.node-card.node-offline { opacity: .62; }
+
+.node-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.node-name { font-weight: 600; font-size: 14px; color: var(--ui-foreground); line-height: 1.3; }
+.node-ip { font-size: 12px; color: var(--ui-foreground-muted); font-family: var(--font-code), monospace; margin-top: 2px; }
+.node-state { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.state-text { font-size: 12px; color: var(--ui-foreground-muted); }
+
+.node-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.node-tags .tag {
+    font-size: 11px; padding: 3px 8px; border-radius: 999px;
+    background: rgba(79,140,255,.14); color: var(--accent);
+    border: 1px solid rgba(79,140,255,.28);
+    font-family: var(--font-code), monospace;
+}
+
+/* 使用率进度条 */
+.meter { display: flex; flex-direction: column; gap: 5px; }
+.meter-label {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; color: var(--ui-foreground-muted);
+}
+.meter-label span:last-child { color: var(--ui-foreground); font-family: var(--font-code), monospace; }
+.meter-bar {
+    height: 8px; border-radius: 999px; overflow: hidden;
+    background: var(--ui-border);
+}
+.meter-fill {
+    height: 100%; border-radius: 999px;
+    background: var(--accent);
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width .4s ease;
+}
+.bar-ok { background: linear-gradient(90deg, var(--success), #2ee6b8); }
+.bar-warn { background: linear-gradient(90deg, var(--warn), #ffd76b); }
+.bar-danger { background: linear-gradient(90deg, var(--danger), #ff9d9d); }
+
+/* 网络速率 */
+.net { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; }
+.net-up { color: var(--accent-2); font-family: var(--font-code), monospace; }
+.net-down { color: var(--accent); font-family: var(--font-code), monospace; }
+
 .status-dot { width: 10px; height: 10px; border-radius: 50%; }
 .status-online { background: var(--success); box-shadow: 0 0 10px var(--success); }
 .status-offline { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
