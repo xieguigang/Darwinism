@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Darwinism Distributed Cluster</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/kb.css" />
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+    <div class="aurora"></div>
+
+    <header class="topbar">
+        <div class="brand">
+            <span class="logo-dot"></span>
+            <div>
+                <h1 id="clusterName">Darwinism Cluster</h1>
+                <span class="badge">DISTRIBUTED COMPUTING</span>
+            </div>
+        </div>
+        <div class="topbar-meta">
+            <span class="meta-chip" id="onlineChip">在线节点 0</span>
+            <span class="meta-chip" id="clock">--:--:--</span>
+            <button id="themeToggle" class="btn theme-toggle" type="button" title="切换主题" aria-label="切换主题">
+                <span class="theme-toggle-icon">☀</span>
+                <span class="theme-toggle-label">Light</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="grid">
+        <!-- 任务提交 -->
+        <section class="card span-3">
+            <h2 class="card-title">提交计算任务</h2>
+            <div class="submit-form">
+                <input id="inAssembly" placeholder="CLR Assembly 路径 (SMB)" />
+                <input id="inMethod" placeholder="方法名 Namespace.Class.Method" />
+                <input id="inName" placeholder="任务名称 (可选)" />
+                <input id="inInputs" placeholder="输入文件 (逗号分隔, 可选)" />
+                <button id="btnSubmit">提交任务</button>
+            </div>
+            <div id="submitResult" class="submit-result"></div>
+        </section>
+
+        <!-- 算力 / 负载概览 -->
+        <section class="card span-3">
+            <h2 class="card-title">集群算力与负载</h2>
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-value" id="mTotalNodes">0</div>
+                    <div class="metric-label">总节点</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value accent" id="mOnline">0</div>
+                    <div class="metric-label">在线节点</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="mCores">0</div>
+                    <div class="metric-label">逻辑核心</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value glow" id="mPower">0</div>
+                    <div class="metric-label">算力指数</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 任务进度 -->
+        <section class="card span-3">
+            <h2 class="card-title">任务进度</h2>
+            <div class="progress-row">
+                <div class="progress-bar">
+                    <div class="seg seg-done" id="segDone"></div>
+                    <div class="seg seg-run" id="segRun"></div>
+                    <div class="seg seg-pending" id="segPending"></div>
+                    <div class="seg seg-failed" id="segFailed"></div>
+                </div>
+            </div>
+            <div class="metrics small">
+                <div class="metric">
+                    <div class="metric-value success" id="mDone">0</div>
+                    <div class="metric-label">已完成</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value warn" id="mRun">0</div>
+                    <div class="metric-label">进行中</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="mPending">0</div>
+                    <div class="metric-label">待处理</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value danger" id="mFailed">0</div>
+                    <div class="metric-label">失败</div>
+                </div>
+            </div>
+            <div class="fail-rate">失败率 <span id="failRate">0%</span></div>
+        </section>
+
+        <!-- 节点心跳列表 -->
+        <section class="card span-2">
+            <h2 class="card-title">节点心跳</h2>
+            <div class="node-list" id="nodeList">
+                <div class="empty">暂无节点上报</div>
+            </div>
+        </section>
+
+        <!-- 失败调试面板 -->
+        <section class="card span-1">
+            <h2 class="card-title">失败调试</h2>
+            <div class="failure-list" id="failureList">
+                <div class="empty">无失败数据块</div>
+            </div>
+        </section>
+
+        <!-- 日志流 -->
+        <section class="card span-3">
+            <h2 class="card-title">实时日志流</h2>
+            <pre class="log-stream" id="logStream">等待数据…</pre>
+        </section>
+    </main>
+
+    <footer class="statusbar">
+        <span>SMB: <b id="smbRoot">/mnt/cluster</b></span>
+        <span>HTTP: <b id="httpPort">8080</b></span>
+        <span>轮询间隔: <b id="poll">1000</b> ms</span>
+        <span>任务总数: <b id="totalJobs">0</b></span>
+    </footer>
+
+    <!-- 右下角 toast 消息容器 -->
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
