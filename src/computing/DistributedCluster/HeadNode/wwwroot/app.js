@@ -127,6 +127,29 @@
         $('failRate').textContent = failRate + '%';
     }
 
+    // 将字节/秒格式化为可读速率（KB/s、MB/s）。
+    function fmtRate(bytesPerSec) {
+        const v = Number(bytesPerSec) || 0;
+        if (v <= 0) return '0 B/s';
+        if (v < 1024) return v.toFixed(0) + ' B/s';
+        if (v < 1024 * 1024) return (v / 1024).toFixed(1) + ' KB/s';
+        return (v / 1024 / 1024).toFixed(2) + ' MB/s';
+    }
+
+    // 将 MB 数值格式化为可读内存（GB 优先）。
+    function fmtMemMB(mb) {
+        const v = Number(mb) || 0;
+        if (v >= 1024) return (v / 1024).toFixed(1) + ' GB';
+        return v.toFixed(0) + ' MB';
+    }
+
+    // 按使用率返回进度条配色类（绿/黄/红）。
+    function usageClass(pct) {
+        if (pct >= 85) return 'bar-danger';
+        if (pct >= 60) return 'bar-warn';
+        return 'bar-ok';
+    }
+
     function renderNodes(s) {
         const list = $('nodeList');
         const nodes = s.nodes || [];
@@ -134,18 +157,51 @@
             list.innerHTML = '<div class="empty">暂无节点上报</div>';
             return;
         }
-        list.innerHTML = nodes.map((n) => `
-            <div class="node-item">
-                <div>
-                    <div class="name">${escapeHtml(n.nodeId)}</div>
-                    <div class="block">${n.currentBlock ? '块 ' + escapeHtml(n.currentBlock) : '空闲'}</div>
+        list.innerHTML = nodes.map((n) => {
+            const cpu = Math.max(0, Math.min(100, Number(n.cpuUsage) || 0));
+            const mem = Math.max(0, Math.min(100, Number(n.memoryUsage) || 0));
+            const name = escapeHtml(n.machineName || n.nodeId || '—');
+            const ip = escapeHtml(n.ipAddress || '—');
+            const block = n.currentBlock
+                ? '计算中 · ' + escapeHtml(n.currentBlock)
+                : '空闲';
+            const statusCls = n.online ? 'status-online' : 'status-offline';
+            const statusText = n.online ? '在线' : '失联';
+
+            return `
+            <div class="node-card ${n.online ? '' : 'node-offline'}">
+                <div class="node-head">
+                    <div class="node-id">
+                        <div class="node-name">${name}</div>
+                        <div class="node-ip">${ip}</div>
+                    </div>
+                    <div class="node-state">
+                        <span class="status-dot ${statusCls}"></span>
+                        <span class="state-text">${statusText}</span>
+                    </div>
                 </div>
-                <div style="text-align:right">
-                    <div class="block">${n.cores} 核 · ${fmtTime(n.lastHeartbeat)}</div>
-                    <span class="status-dot ${n.online ? 'status-online' : 'status-offline'}"></span>
-                    ${n.online ? '在线' : '失联'}
+
+                <div class="node-tags">
+                    <span class="tag">${n.cores || 0} 核</span>
+                    <span class="tag">${block}</span>
                 </div>
-            </div>`).join('');
+
+                <div class="meter">
+                    <div class="meter-label"><span>CPU 使用率</span><span>${cpu.toFixed(1)}%</span></div>
+                    <div class="meter-bar"><div class="meter-fill ${usageClass(cpu)}" style="width:${cpu}%"></div></div>
+                </div>
+
+                <div class="meter">
+                    <div class="meter-label"><span>内存使用率</span><span>${mem.toFixed(1)}% · ${fmtMemMB(n.totalMemoryMB)}</span></div>
+                    <div class="meter-bar"><div class="meter-fill ${usageClass(mem)}" style="width:${mem}%"></div></div>
+                </div>
+
+                <div class="net">
+                    <span class="net-up">↑ ${fmtRate(n.netUploadRate)}</span>
+                    <span class="net-down">↓ ${fmtRate(n.netDownloadRate)}</span>
+                </div>
+            </div>`;
+        }).join('');
     }
 
     function renderFailures(s) {
