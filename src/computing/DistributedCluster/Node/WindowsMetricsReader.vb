@@ -1,9 +1,7 @@
-Imports System
-Imports System.Diagnostics
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
-Imports Microsoft.VisualBasic.Devices
+Imports System.Runtime.InteropServices
 
 ''' <summary>
 ''' Windows 平台节点资源指标采集器。
@@ -56,9 +54,19 @@ Public Class WindowsMetricsReader
 
         ' ---- 内存 ----
         Try
-            Dim ci As New ComputerInfo()
-            Dim total = ci.TotalPhysicalMemory
-            Dim avail = ci.AvailablePhysicalMemory
+            Dim memStatus As New MEMORYSTATUSEX()
+            ' 初始化结构体大小，这一步必须做，否则调用会失败
+            memStatus.dwLength = CUInt(Marshal.SizeOf(GetType(MEMORYSTATUSEX)))
+
+
+            Dim total As ULong = 0
+            Dim avail As ULong = 0
+
+            If GlobalMemoryStatusEx(memStatus) Then
+                total = memStatus.ullTotalPhys
+                avail = memStatus.ullAvailPhys
+            End If
+
             m.totalMemoryMB = CLng(total \ (1024 * 1024))
             If total > 0 Then
                 m.memoryUsage = Math.Round((1 - CDbl(avail) / CDbl(total)) * 100, 1)
@@ -115,4 +123,24 @@ Public Class WindowsMetricsReader
         End Try
         Return "0.0.0.0"
     End Function
+
+    ' 定义内存状态结构体
+    <StructLayout(LayoutKind.Sequential)>
+    Public Structure MEMORYSTATUSEX
+        Public dwLength As UInteger
+        Public dwMemoryLoad As UInteger
+        Public ullTotalPhys As ULong     ' 总物理内存 (字节)
+        Public ullAvailPhys As ULong     ' 可用物理内存 (字节)
+        Public ullTotalPageFile As ULong
+        Public ullAvailPageFile As ULong
+        Public ullTotalVirtual As ULong
+        Public ullAvailVirtual As ULong
+        Public ullAvailExtendedVirtual As ULong
+    End Structure
+
+    <DllImport("kernel32.dll", SetLastError:=True)>
+    Public Shared Function GlobalMemoryStatusEx(ByRef lpBuffer As MEMORYSTATUSEX) As Boolean
+    End Function
+
+
 End Class
