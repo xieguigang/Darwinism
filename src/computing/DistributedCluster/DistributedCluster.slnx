@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/framework/">
+    <Project Path="../../../../httpd/src/Flute/Flute.NET5.vbproj" />
+    <Project Path="../../../../sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj" />
+  </Folder>
+  <Project Path="Host/Host.vbproj" />
+</Solution>
