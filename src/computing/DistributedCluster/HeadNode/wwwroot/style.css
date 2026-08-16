@@ -479,3 +479,65 @@ body.modal-open { overflow: hidden; }
 .field-label { font-size: 12px; font-weight: 600; color: var(--ui-foreground-muted); }
 .modal-form input, .submit-form input { width: 100%; }
 .modal-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--ui-border); }
+
+/* ============ 提交任务按钮：管理节点离线时禁用 ============ */
+.btn-accent:disabled,
+.btn-accent[disabled] {
+    cursor: not-allowed; opacity: .45; filter: grayscale(.5);
+    box-shadow: none; background: var(--ui-foreground-muted); border-color: transparent;
+}
+.btn-accent:disabled:hover,
+.btn-accent[disabled]:hover { background: var(--ui-foreground-muted); }
+
+/* ============ 热图布局（热图面板 + 右侧详情卡片并排） ============ */
+.heat-layout { display: flex; gap: 18px; align-items: stretch; }
+.heatmap-wrap { flex: 1 1 auto; min-width: 0; }
+#heatLayout[hidden] { display: none !important; }
+
+/* 热图指标切换（已用 / 剩余 算力） */
+.heat-subtoggle { display: inline-flex; gap: 4px; margin-bottom: 10px; padding: 3px;
+    background: var(--ui-background-alt); border: 1px solid var(--ui-border); border-radius: 999px; }
+.heat-metric-btn { border: none; background: transparent; cursor: pointer;
+    font-size: 12px; font-weight: 600; color: var(--ui-foreground-muted);
+    padding: 5px 14px; border-radius: 999px; transition: background .2s, color .2s; }
+.heat-metric-btn:hover { color: var(--ui-foreground); }
+.heat-metric-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 40%, transparent); }
+
+/* 算力指数热图方格：可点击 */
+.heat-cell { cursor: pointer; }
+.heat-cell.is-selected { outline: 3px solid var(--accent); outline-offset: 1px; box-shadow: 0 8px 22px rgba(0,0,0,.35); transform: translateY(-2px); }
+.heat-cell .hc-sub { font-size: 10px; opacity: .82; }
+
+/* ============ 右侧节点详情卡片 ============ */
+.node-detail {
+    flex: 0 0 320px; max-width: 340px; align-self: flex-start;
+    background: var(--ui-background); border: 1px solid var(--ui-border);
+    border-radius: var(--radius); box-shadow: var(--shadow-md);
+    display: flex; flex-direction: column; overflow: hidden;
+    animation: detail-in .2s ease;
+}
+@keyframes detail-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+.node-detail[hidden] { display: none !important; }
+.node-detail-head { display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; border-bottom: 1px solid var(--ui-border);
+    background: var(--ui-background-alt); }
+.node-detail-title { font-size: 13px; font-weight: 700; }
+.node-detail-close { flex: none; cursor: pointer; width: 26px; height: 26px; border-radius: 7px;
+    background: transparent; border: 1px solid var(--ui-border); color: var(--ui-foreground-muted);
+    font-size: 16px; line-height: 1; transition: background .2s, color .2s; }
+.node-detail-close:hover { background: color-mix(in srgb, #d32f2f 18%, var(--ui-background-alt)); color: #d32f2f; }
+.node-detail-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.nd-row { display: flex; flex-direction: column; gap: 3px; padding-bottom: 11px; border-bottom: 1px dashed var(--ui-border); }
+.nd-row:last-child { border-bottom: none; padding-bottom: 0; }
+.nd-k { font-size: 11px; font-weight: 600; color: var(--ui-foreground-muted); }
+.nd-v { font-size: 13px; font-family: var(--font-code), monospace; word-break: break-all; }
+.nd-v.accent { color: var(--accent); font-weight: 700; }
+.nd-power-bar { height: 8px; border-radius: 999px; background: var(--ui-background-alt);
+    overflow: hidden; margin-top: 4px; border: 1px solid var(--ui-border); }
+.nd-power-fill { height: 100%; border-radius: 999px; }
+
+/* 响应式：窄屏时详情卡片移到底部 */
+@media (max-width: 980px) {
+    .heat-layout { flex-direction: column; }
+    .node-detail { flex: 1 1 auto; max-width: none; width: 100%; }
+}
