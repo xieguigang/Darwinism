@@ -296,6 +296,7 @@
     }
 
     // 渲染热图模式：CPU 利用率热图 + 内存利用率热图。
+    // 每个节点仅显示一个简单方格（含节点名与百分比），完整信息通过 title 悬浮提示展示。
     function renderHeatmap(s) {
         const nodes = (s.nodes || []).filter((n) => n.online);
         const cpuBox = $('heatCpu');
@@ -303,10 +304,26 @@
 
         const cell = (n, val) => {
             const name = escapeHtml(n.machineName || n.nodeId || '—');
-            return `<div class="heat-cell" style="background:${heatColor(val)}">
+            const ip = escapeHtml(n.ipAddress || '—');
+            const cpu = Math.max(0, Math.min(100, Number(n.cpuUsage) || 0));
+            const mem = Math.max(0, Math.min(100, Number(n.memoryUsage) || 0));
+            const block = n.currentBlock
+                ? '计算中 · ' + escapeHtml(n.currentBlock)
+                : '空闲';
+            const state = n.online ? '在线' : '失联';
+            // 悬浮提示：完整节点信息
+            const tip = [
+                name + '  (' + ip + ')',
+                '状态：' + state,
+                'CPU 使用率：' + cpu.toFixed(1) + '%',
+                '内存使用率：' + mem.toFixed(1) + '% · ' + fmtMemMB(n.totalMemoryMB),
+                '逻辑核心：' + (n.cores || 0),
+                '网络：↑ ' + fmtRate(n.netUploadRate) + ' / ↓ ' + fmtRate(n.netDownloadRate),
+                '当前任务：' + block
+            ].join('\n');
+            return `<div class="heat-cell" style="background:${heatColor(val)}" title="${tip.replace(/"/g, '&quot;')}">
                         <span class="hc-name">${name}</span>
                         <span class="hc-val">${val.toFixed(0)}%</span>
-                        <span class="hc-state">${n.cores || 0} 核 · ${fmtMemMB(n.totalMemoryMB)}</span>
                     </div>`;
         };
 
@@ -415,11 +432,22 @@
         try {
             const s = await fetchStatus();
             lastStatus = s;
+
+            // 恢复上线：从离线状态恢复时提示，并重置失败计数
+            if (clusterOffline) {
+                clusterOffline = false;
+                fetchFailStreak = 0;
+                setClusterOffline(false);
+                showToast('集群已上线，状态已恢复同步', 'success', 3500);
+            }
+            fetchFailStreak = 0;
+
             renderOverview(s);
             renderNodes(s);
             renderFailures(s);
             renderLogs(s);
             renderMeta(s);
+            renderTaskChip();
 
             // 视图模式切换显示
             const isHeat = monitorMode === 'heatmap';
@@ -435,7 +463,18 @@
             }
         } catch (e) {
             console.warn('状态轮询失败：', e.message);
-            // 避免轮询异常刷屏：仅在当前无错误提示时轻提示一次
+            // 仅当为网络层 fetch 失败（管理节点离线可能性高）时累计；其余错误正常提示。
+            const isFetchFail = /Failed to fetch/i.test(e.message);
+            if (isFetchFail) {
+                fetchFailStreak++;
+                if (fetchFailStreak >= OFFLINE_THRESHOLD && !clusterOffline) {
+                    clusterOffline = true;
+                    setClusterOffline(true);
+                    showToast('管理节点已离线，停止状态刷新', 'error', 5000);
+                }
+                // 离线后不再重复弹出 "Failed to fetch"，避免刷屏
+                return;
+            }
             showToast('状态轮询失败：' + e.message, 'error', 3000);
         }
     }
