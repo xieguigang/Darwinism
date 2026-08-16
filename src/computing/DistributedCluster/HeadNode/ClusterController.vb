@@ -10,7 +10,7 @@ Imports Flute.Http.Core.Message.HttpHeader
 '''   POST /api/heartbeat       节点心跳（query: nodeId,currentBlock,log,cores）
 '''   POST /api/task/done       节点报告完成（query: blockId,jobId,nodeId）
 '''   POST /api/task/failed     节点报告失败（query: blockId,jobId,nodeId,errorMessage,stackTrace）
-'''   GET  /                     仪表盘静态页
+'''   GET  /                    仪表盘静态页
 '''   GET  /app.js /style.css   静态资源
 ''' </summary>
 Public Class ClusterController

@@ -1,4 +1,5 @@
 Imports System.IO
+Imports Microsoft.VisualBasic.Math
 
 Namespace ClusterShared
 
@@ -50,7 +51,7 @@ Namespace ClusterShared
         ''' <summary>
         ''' 当前节点 id（默认机器名）。
         ''' </summary>
-        Public Property nodeId As String = Environment.MachineName
+        Public Property nodeId As String = Environment.MachineName & "-" & RandomExtensions.GetBytes(8).Select(Function(b) b.ToString("x2")).JoinBy("")
 
         ''' <summary>
         ''' worker 子进程的可执行文件路径，由 --worker= 参数显式指定；
