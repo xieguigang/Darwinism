@@ -3,12 +3,12 @@ import SimpleHTTPServer, SocketServer, json, os
 from datetime import datetime
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-PORT = 8765
+PORT = 8799
+os.chdir(ROOT)
 
 
 class H(SimpleHTTPServer.SimpleHTTPRequestHandler):
-    def __init__(self, *a, **k):
-        SimpleHTTPServer.SimpleHTTPRequestHandler.__init__(self, *a, directory=ROOT, **k)
+    pass
 
     def do_GET(self):
         if self.path.startswith('/api/status'):
@@ -51,6 +51,7 @@ class H(SimpleHTTPServer.SimpleHTTPRequestHandler):
         SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
 
+SocketServer.TCPServer.allow_reuse_address = True
 httpd = SocketServer.TCPServer(('127.0.0.1', PORT), H)
 print('serving on http://127.0.0.1:%d' % PORT)
 httpd.serve_forever()
