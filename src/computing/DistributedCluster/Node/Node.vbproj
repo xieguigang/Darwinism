@@ -2,9 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>Darwinism.HPC.DistributedCluster.SlaveNode</RootNamespace>
     <ImportMicrosoftVisualBasic>false</ImportMicrosoftVisualBasic>
     <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Node</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

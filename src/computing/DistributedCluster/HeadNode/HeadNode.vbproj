@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>Darwinism.HPC.DistributedCluster.Host</RootNamespace>
     <ImportMicrosoftVisualBasic>false</ImportMicrosoftVisualBasic>
     <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Host</AssemblyName>
+    <AssemblyTitle>Host head node</AssemblyTitle>
   </PropertyGroup>
 
   <ItemGroup>

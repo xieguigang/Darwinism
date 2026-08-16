@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RootNamespace>ClusterShared</RootNamespace>
-    <AssemblyName>ClusterShared</AssemblyName>
+    <RootNamespace>Darwinism.HPC.DistributedCluster.Shared</RootNamespace>
+    <AssemblyName>Darwinism.HPC.DistributedCluster.Shared</AssemblyName>
     <ImportMicrosoftVisualBasic>false</ImportMicrosoftVisualBasic>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
