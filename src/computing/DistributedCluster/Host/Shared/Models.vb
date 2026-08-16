@@ -259,4 +259,27 @@ Namespace ClusterShared
         ''' </summary>
         Public Property chunkSize As Long
     End Class
+
+    ''' <summary>
+    ''' 通用 API 响应封装，用于成功/失败与任务提交回执。
+    ''' </summary>
+    Public Class ApiResult
+
+        Public Property ok As Boolean
+        Public Property jobId As String
+        Public Property message As String
+        Public Property available As Boolean
+
+        Public Shared Function Success(Optional jobId As String = "") As ApiResult
+            Return New ApiResult With {.ok = True, .jobId = jobId}
+        End Function
+
+        Public Shared Function Failure(msg As String) As ApiResult
+            Return New ApiResult With {.ok = False, .message = msg}
+        End Function
+
+        Public Shared Function NoTask() As ApiResult
+            Return New ApiResult With {.ok = True, .available = False}
+        End Function
+    End Class
 End Namespace

@@ -1,4 +1,5 @@
 Imports System.IO
+Imports System.Linq
 Imports Flute.Http.Core.Message
 Imports Flute.Http.Core.Message.HttpHeader
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -7,7 +8,7 @@ Imports ClusterShared
 ''' <summary>
 ''' 头结点 REST 控制器。基于 Flute 的 HttpRouter 反射路由，注册以下接口：
 '''   GET  /api/status          集群状态快照（仪表盘轮询）
-'''   POST /api/submit          提交作业（json 体：JobSubmit）
+'''   GET  /api/submit          提交作业（query: assemblyPath,methodName,name,chunkSize,inputs 逗号分隔）
 '''   GET  /api/task/pull       节点拉取任务（query: nodeId）
 '''   POST /api/heartbeat       节点心跳（query: nodeId,currentBlock,log,cores）
 '''   POST /api/task/done       节点报告完成（query: blockId,jobId,nodeId）
@@ -71,26 +72,26 @@ Public Class ClusterController
 
         Try
             Dim submit As New JobSubmit()
-            submit.name = CStr(req.Argument("name"))
-            submit.assemblyPath = CStr(req.Argument("assemblyPath"))
-            submit.methodName = CStr(req.Argument("methodName"))
-            Long.TryParse(CStr(req.Argument("chunkSize")), submit.chunkSize)
+            submit.name = CType(req.Argument("name"), String)
+            submit.assemblyPath = CType(req.Argument("assemblyPath"), String)
+            submit.methodName = CType(req.Argument("methodName"), String)
+            Long.TryParse(CType(req.Argument("chunkSize"), String), submit.chunkSize)
 
             ' inputFiles 通过逗号分隔的字符串传入（已 URL 编码）。
-            Dim inputs = CStr(req.Argument("inputs"))
+            Dim inputs = CType(req.Argument("inputs"), String)
             If Not String.IsNullOrEmpty(inputs) Then
                 submit.inputFiles = inputs.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) s.Length > 0).ToArray()
             End If
 
             If String.IsNullOrEmpty(submit.assemblyPath) Then
-                res.WriteJSON(Of Object)(New With {.ok = False, .error = "missing assemblyPath"}, indent:=False)
+                res.WriteJSON(Of ApiResult)(ApiResult.Failure("missing assemblyPath"), indent:=False)
                 Return
             End If
 
             Dim jobId = scheduler.SubmitJob(submit)
-            res.WriteJSON(Of Object)(New With {.ok = True, .jobId = jobId}, indent:=False)
+            res.WriteJSON(Of ApiResult)(ApiResult.Success(jobId), indent:=False)
         Catch ex As Exception
-            res.WriteJSON(Of Object)(New With {.ok = False, .error = ex.Message}, indent:=False)
+            res.WriteJSON(Of ApiResult)(ApiResult.Failure(ex.Message), indent:=False)
         End Try
     End Sub
 
@@ -99,14 +100,14 @@ Public Class ClusterController
     <HttpGet("/api/task/pull")>
     Public Sub Pull(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
-        Dim nodeId = CStr(req.Argument("nodeId"))
+        Dim nodeId = CType(req.Argument("nodeId"), String)
 
         Dim block = scheduler.PullBlock(nodeId)
 
         If block Is Nothing Then
-            res.WriteJSON(Of Object)(New With {.available = False}, indent:=False)
+            res.WriteJSON(Of ApiResult)(ApiResult.NoTask(), indent:=False)
         Else
-            res.WriteJSON(Of ClusterShared.TaskBlock)(block, indent:=False)
+            res.WriteJSON(Of TaskBlock)(block, indent:=False)
         End If
     End Sub
 
@@ -117,20 +118,20 @@ Public Class ClusterController
         res.AccessControlAllowOrigin = "*"
 
         Dim cores As Integer = Environment.ProcessorCount
-        If Not Integer.TryParse(CStr(req.Argument("cores")), cores) Then
+        If Not Integer.TryParse(CType(req.Argument("cores"), String), cores) Then
             cores = Environment.ProcessorCount
         End If
 
         Dim hb As New NodeHeartbeat With {
-            .nodeId = CStr(req.Argument("nodeId")),
+            .nodeId = CType(req.Argument("nodeId"), String),
             .timestamp = DateTime.UtcNow.Ticks,
-            .currentBlock = CStr(req.Argument("currentBlock")),
-            .log = CStr(req.Argument("log")),
+            .currentBlock = CType(req.Argument("currentBlock"), String),
+            .log = CType(req.Argument("log"), String),
             .cores = cores
         }
 
         Call scheduler.ReceiveHeartbeat(hb)
-        res.WriteJSON(Of Object)(New With {.ok = True}, indent:=False)
+        res.WriteJSON(Of ApiResult)(ApiResult.Success(), indent:=False)
     End Sub
 
     ' ============ 节点回执：完成 ============
@@ -140,14 +141,14 @@ Public Class ClusterController
         res.AccessControlAllowOrigin = "*"
 
         Dim result As New TaskResult With {
-            .blockId = CStr(req.Argument("blockId")),
-            .jobId = CStr(req.Argument("jobId")),
-            .nodeId = CStr(req.Argument("nodeId")),
+            .blockId = CType(req.Argument("blockId"), String),
+            .jobId = CType(req.Argument("jobId"), String),
+            .nodeId = CType(req.Argument("nodeId"), String),
             .success = True
         }
 
         Call scheduler.ReportDone(result)
-        res.WriteJSON(Of Object)(New With {.ok = True}, indent:=False)
+        res.WriteJSON(Of ApiResult)(ApiResult.Success(), indent:=False)
     End Sub
 
     ' ============ 节点回执：失败 ============
@@ -157,15 +158,15 @@ Public Class ClusterController
         res.AccessControlAllowOrigin = "*"
 
         Dim result As New TaskResult With {
-            .blockId = CStr(req.Argument("blockId")),
-            .jobId = CStr(req.Argument("jobId")),
-            .nodeId = CStr(req.Argument("nodeId")),
+            .blockId = CType(req.Argument("blockId"), String),
+            .jobId = CType(req.Argument("jobId"), String),
+            .nodeId = CType(req.Argument("nodeId"), String),
             .success = False,
-            .errorMessage = CStr(req.Argument("errorMessage")),
-            .stackTrace = CStr(req.Argument("stackTrace"))
+            .errorMessage = CType(req.Argument("errorMessage"), String),
+            .stackTrace = CType(req.Argument("stackTrace"), String)
         }
 
         Call scheduler.ReportFailed(result)
-        res.WriteJSON(Of Object)(New With {.ok = True}, indent:=False)
+        res.WriteJSON(Of ApiResult)(ApiResult.Success(), indent:=False)
     End Sub
 End Class
