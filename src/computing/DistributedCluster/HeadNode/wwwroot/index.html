@@ -23,6 +23,13 @@
         <div class="topbar-meta">
             <span class="meta-chip" id="onlineChip">在线节点 0</span>
             <span class="meta-chip" id="clock">--:--:--</span>
+            <span class="meta-chip task-chip" id="taskChip">
+                <span class="task-status-dot" id="taskDot"></span>
+                <span id="taskLabel">集群空闲</span>
+            </span>
+            <button id="btnOpenSubmit" class="btn btn-accent" type="button" title="提交计算任务">
+                <span>＋ 提交任务</span>
+            </button>
             <button id="themeToggle" class="btn theme-toggle" type="button" title="切换主题" aria-label="切换主题">
                 <span class="theme-toggle-icon">☀</span>
                 <span class="theme-toggle-label">Light</span>
@@ -31,26 +38,6 @@
     </header>
 
     <main class="grid">
-        <!-- 任务提交 -->
-        <section class="card span-3">
-            <div class="card-head">
-                <h2 class="card-title">提交计算任务</h2>
-                <button id="taskToggle" class="collapse-btn" type="button" aria-label="折叠/展开" aria-expanded="true" title="折叠/展开">
-                    <span class="chev">▾</span>
-                </button>
-            </div>
-            <div class="submit-body" id="submitBody">
-                <div class="submit-form">
-                    <input id="inAssembly" placeholder="CLR Assembly 路径 (SMB)" />
-                    <input id="inMethod" placeholder="方法名 Namespace.Class.Method" />
-                    <input id="inName" placeholder="任务名称 (可选)" />
-                    <input id="inInputs" placeholder="输入文件 (逗号分隔, 可选)" />
-                    <button id="btnSubmit">提交任务</button>
-                </div>
-                <div id="submitResult" class="submit-result"></div>
-            </div>
-        </section>
-
         <!-- 算力 / 负载概览 -->
         <section class="card span-3">
             <h2 class="card-title">集群算力与负载</h2>
@@ -173,6 +160,41 @@
 
     <!-- 右下角 toast 消息容器 -->
     <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+    <!-- 提交计算任务 模态框 -->
+    <div class="modal-overlay" id="submitModal" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="submitModalTitle">
+            <div class="modal-head">
+                <h3 id="submitModalTitle">提交计算任务</h3>
+                <button class="modal-close" id="btnCloseSubmit" type="button" aria-label="关闭">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="submit-form modal-form">
+                    <label class="field">
+                        <span class="field-label">CLR Assembly 路径 (SMB)</span>
+                        <input id="inAssembly" placeholder="例如 \\smb\share\MyLib.dll" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">方法名 Namespace.Class.Method</span>
+                        <input id="inMethod" placeholder="例如 MyNamespace.MyClass.Run" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">任务名称 (可选，留空则按方法名生成)</span>
+                        <input id="inName" placeholder="例如 基因序列比对" />
+                    </label>
+                    <label class="field">
+                        <span class="field-label">输入文件 (逗号分隔, 可选)</span>
+                        <input id="inInputs" placeholder="例如 a.txt,b.txt" />
+                    </label>
+                </div>
+                <div id="submitResult" class="submit-result"></div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn" id="btnCancelSubmit" type="button">取消</button>
+                <button class="btn btn-accent" id="btnSubmit" type="button">提交任务</button>
+            </div>
+        </div>
+    </div>
 
     <script src="/echarts.min.js"></script>
     <script src="/app.js"></script>

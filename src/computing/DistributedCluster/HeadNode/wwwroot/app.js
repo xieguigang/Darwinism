@@ -12,6 +12,14 @@
     let historyInited = false;    // 图表是否已初始化（用于 resize 优化）
     let lastStatus = null;        // 最近一次状态快照，供主题切换重绘热图使用
 
+    // 集群在线/离线状态机：连续 N 次 fetch 失败（多为管理节点离线）后切离线，恢复时提示上线。
+    const OFFLINE_THRESHOLD = 5;
+    let fetchFailStreak = 0;       // 连续 "Failed to fetch" 次数
+    let clusterOffline = false;    // 当前是否处于离线状态
+
+    // 当前计算任务名称（前端记录最近一次成功提交的任务；刷新后从 localStorage 恢复）。
+    let currentTaskName = (() => { try { return localStorage.getItem('current-task-name') || ''; } catch (e) { return ''; } })();
+
     /* ============ 右下角 Toast 提示 ============ */
     const TOAST_ICONS = { info: 'ℹ', success: '✓', warn: '⚠', error: '✕' };
 
@@ -118,6 +126,35 @@
         const res = await fetch('/api/status');
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return await res.json();
+    }
+
+    // 更新集群在线/离线状态（顶栏徽标 + body 类）。
+    function setClusterOffline(offline) {
+        document.body.classList.toggle('cluster-offline', offline);
+        const chip = document.getElementById('onlineChip');
+        if (chip) {
+            if (offline) {
+                chip.textContent = '管理节点离线';
+                chip.classList.add('offline');
+            } else {
+                chip.textContent = '在线节点 ' + (lastStatus ? lastStatus.onlineNodes : 0);
+                chip.classList.remove('offline');
+            }
+        }
+    }
+
+    // 更新顶栏当前任务状态（无任务显示空闲，有任务显示名称）。
+    function renderTaskChip() {
+        const dot = document.getElementById('taskDot');
+        const label = document.getElementById('taskLabel');
+        if (!label) return;
+        if (currentTaskName) {
+            label.textContent = '运行中：' + currentTaskName;
+            if (dot) dot.className = 'task-status-dot running';
+        } else {
+            label.textContent = '集群空闲';
+            if (dot) dot.className = 'task-status-dot idle';
+        }
     }
 
     function renderOverview(s) {
