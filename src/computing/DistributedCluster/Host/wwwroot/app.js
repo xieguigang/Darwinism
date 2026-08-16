@@ -3,6 +3,86 @@
     const POLL_MS = 1500;
     const $ = (id) => document.getElementById(id);
 
+    /* ============ 右下角 Toast 提示 ============ */
+    const TOAST_ICONS = { info: 'ℹ', success: '✓', warn: '⚠', error: '✕' };
+
+    function showToast(message, type = 'info', duration = 3500) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        const t = String(type).toLowerCase();
+        const el = document.createElement('div');
+        el.className = 'toast ' + t;
+        el.setAttribute('role', 'status');
+
+        const icon = document.createElement('span');
+        icon.className = 'toast-icon';
+        icon.textContent = TOAST_ICONS[t] || TOAST_ICONS.info;
+
+        const msg = document.createElement('span');
+        msg.className = 'toast-msg';
+        msg.textContent = message;
+
+        const close = document.createElement('button');
+        close.className = 'toast-close';
+        close.type = 'button';
+        close.setAttribute('aria-label', '关闭');
+        close.textContent = '×';
+
+        let timer = null;
+        const dismiss = () => {
+            if (el.classList.contains('leaving')) return;
+            el.classList.add('leaving');
+            el.addEventListener('animationend', () => el.remove(), { once: true });
+            // 兜底：动画未触发时也能移除
+            setTimeout(() => el.remove(), 400);
+        };
+        close.addEventListener('click', dismiss);
+
+        el.appendChild(icon);
+        el.appendChild(msg);
+        el.appendChild(close);
+        container.appendChild(el);
+
+        if (duration > 0) {
+            timer = setTimeout(dismiss, duration);
+            // 悬停暂停自动关闭
+            el.addEventListener('mouseenter', () => { clearTimeout(timer); });
+            el.addEventListener('mouseleave', () => { timer = setTimeout(dismiss, 1200); });
+        }
+    }
+
+    /* ============ 主题切换（light / dark） ============ */
+    const THEME_KEY = 'cluster-theme';
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) {
+            const isLight = theme === 'light';
+            btn.querySelector('.theme-toggle-icon').textContent = isLight ? '☀' : '☾';
+            btn.querySelector('.theme-toggle-label').textContent = isLight ? 'Light' : 'Dark';
+            btn.setAttribute('title', isLight ? '切换到暗色主题' : '切换到亮色主题');
+        }
+    }
+
+    function initThemeToggle() {
+        // 默认 light；若用户之前手动切换过，则沿用其选择
+        let saved = null;
+        try { saved = localStorage.getItem(THEME_KEY); } catch (e) { /* localStorage 不可用则忽略 */ }
+        const initial = saved === 'dark' || saved === 'light' ? saved : 'light';
+        applyTheme(initial);
+
+        const btn = document.getElementById('themeToggle');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                applyTheme(next);
+                try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* 忽略 */ }
+                showToast('已切换至 ' + (next === 'dark' ? '暗色' : '亮色') + '主题', 'info', 2000);
+            });
+        }
+    }
+
     function fmtTime(ticks) {
         if (!ticks) return '--';
         const d = new Date(ticks / 10000 - 62135596800000);
@@ -107,6 +187,8 @@
             renderMeta(s);
         } catch (e) {
             console.warn('状态轮询失败：', e.message);
+            // 避免轮询异常刷屏：仅在当前无错误提示时轻提示一次
+            showToast('状态轮询失败：' + e.message, 'error', 3000);
         }
     }
 
