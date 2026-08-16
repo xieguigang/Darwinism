@@ -72,15 +72,17 @@ Public Class ClusterController
 
         Try
             Dim submit As New JobSubmit()
-            submit.name = CType(req.Argument("name"), String)
-            submit.assemblyPath = CType(req.Argument("assemblyPath"), String)
-            submit.methodName = CType(req.Argument("methodName"), String)
-            Long.TryParse(CType(req.Argument("chunkSize"), String), submit.chunkSize)
+            If req.HasValue("name") Then submit.name = CType(req.Argument("name"), String)
+            If req.HasValue("assemblypath") Then submit.assemblyPath = CType(req.Argument("assemblypath"), String)
+            If req.HasValue("methodname") Then submit.methodName = CType(req.Argument("methodname"), String)
+            If req.HasValue("chunksize") Then Long.TryParse(CType(req.Argument("chunksize"), String), submit.chunkSize)
 
             ' inputFiles 通过逗号分隔的字符串传入（已 URL 编码）。
-            Dim inputs = CType(req.Argument("inputs"), String)
-            If Not String.IsNullOrEmpty(inputs) Then
-                submit.inputFiles = inputs.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) s.Length > 0).ToArray()
+            If req.HasValue("inputs") Then
+                Dim inputs = CType(req.Argument("inputs"), String)
+                If Not String.IsNullOrEmpty(inputs) Then
+                    submit.inputFiles = inputs.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) s.Length > 0).ToArray()
+                End If
             End If
 
             If String.IsNullOrEmpty(submit.assemblyPath) Then
@@ -100,7 +102,7 @@ Public Class ClusterController
     <HttpGet("/api/task/pull")>
     Public Sub Pull(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
-        Dim nodeId = CType(req.Argument("nodeId"), String)
+        Dim nodeId = CType(req.Argument("nodeid"), String)
 
         Dim block = scheduler.PullBlock(nodeId)
 
@@ -123,9 +125,9 @@ Public Class ClusterController
         End If
 
         Dim hb As New NodeHeartbeat With {
-            .nodeId = CType(req.Argument("nodeId"), String),
+            .nodeId = CType(req.Argument("nodeid"), String),
             .timestamp = DateTime.UtcNow.Ticks,
-            .currentBlock = CType(req.Argument("currentBlock"), String),
+            .currentBlock = CType(req.Argument("currentblock"), String),
             .log = CType(req.Argument("log"), String),
             .cores = cores
         }
@@ -141,9 +143,9 @@ Public Class ClusterController
         res.AccessControlAllowOrigin = "*"
 
         Dim result As New TaskResult With {
-            .blockId = CType(req.Argument("blockId"), String),
-            .jobId = CType(req.Argument("jobId"), String),
-            .nodeId = CType(req.Argument("nodeId"), String),
+            .blockId = CType(req.Argument("blockid"), String),
+            .jobId = CType(req.Argument("jobid"), String),
+            .nodeId = CType(req.Argument("nodeid"), String),
             .success = True
         }
 
@@ -158,12 +160,12 @@ Public Class ClusterController
         res.AccessControlAllowOrigin = "*"
 
         Dim result As New TaskResult With {
-            .blockId = CType(req.Argument("blockId"), String),
-            .jobId = CType(req.Argument("jobId"), String),
-            .nodeId = CType(req.Argument("nodeId"), String),
+            .blockId = CType(req.Argument("blockid"), String),
+            .jobId = CType(req.Argument("jobid"), String),
+            .nodeId = CType(req.Argument("nodeid"), String),
             .success = False,
-            .errorMessage = CType(req.Argument("errorMessage"), String),
-            .stackTrace = CType(req.Argument("stackTrace"), String)
+            .errorMessage = CType(req.Argument("errormessage"), String),
+            .stackTrace = CType(req.Argument("stacktrace"), String)
         }
 
         Call scheduler.ReportFailed(result)

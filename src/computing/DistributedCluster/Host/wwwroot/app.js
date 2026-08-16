@@ -110,6 +110,43 @@
         }
     }
 
+    // ============ 任务提交 ============
+    const btn = document.getElementById('btnSubmit');
+    if (btn) {
+        btn.addEventListener('click', async () => {
+            const assembly = document.getElementById('inAssembly').value.trim();
+            const method = document.getElementById('inMethod').value.trim();
+            const name = document.getElementById('inName').value.trim();
+            const inputs = document.getElementById('inInputs').value.trim();
+            const out = document.getElementById('submitResult');
+
+            if (!assembly || !method) {
+                out.textContent = '请填写 Assembly 路径与方法名。';
+                return;
+            }
+
+            const params = new URLSearchParams({
+                assemblypath: assembly,
+                methodname: method
+            });
+            if (name) params.set('name', name);
+            if (inputs) params.set('inputs', inputs);
+
+            out.textContent = '提交中…';
+            try {
+                const res = await fetch('/api/submit?' + params.toString());
+                const data = await res.json();
+                if (data.ok) {
+                    out.textContent = '任务已提交，jobId: ' + data.jobId;
+                } else {
+                    out.textContent = '提交失败: ' + (data.message || '未知错误');
+                }
+            } catch (e) {
+                out.textContent = '提交异常: ' + e.message;
+            }
+        });
+    }
+
     tick();
     setInterval(tick, POLL_MS);
 })();

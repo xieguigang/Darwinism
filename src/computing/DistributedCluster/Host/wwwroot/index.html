@@ -26,6 +26,19 @@
     </header>
 
     <main class="grid">
+        <!-- 任务提交 -->
+        <section class="card span-3">
+            <h2 class="card-title">提交计算任务</h2>
+            <div class="submit-form">
+                <input id="inAssembly" placeholder="CLR Assembly 路径 (SMB)" />
+                <input id="inMethod" placeholder="方法名 Namespace.Class.Method" />
+                <input id="inName" placeholder="任务名称 (可选)" />
+                <input id="inInputs" placeholder="输入文件 (逗号分隔, 可选)" />
+                <button id="btnSubmit">提交任务</button>
+            </div>
+            <div id="submitResult" class="submit-result"></div>
+        </section>
+
         <!-- 算力 / 负载概览 -->
         <section class="card span-3">
             <h2 class="card-title">集群算力与负载</h2>

@@ -50,7 +50,7 @@ Public Class Daemon
     ''' 向头结点拉取一个待处理数据块。
     ''' </summary>
     Private Function PullTask() As TaskBlock
-        Dim url = $"{cfg.headNodeUrl}/api/task/pull?nodeId={Uri.EscapeDataString(cfg.nodeId)}&cores={Environment.ProcessorCount}"
+        Dim url = $"{cfg.headNodeUrl}/api/task/pull?nodeid={Uri.EscapeDataString(cfg.nodeId)}&cores={Environment.ProcessorCount}"
         Dim json = http.GetStringAsync(New Uri(url)).Result
 
         If json.IndexOf("""available"":false", StringComparison.OrdinalIgnoreCase) >= 0 Then
@@ -62,7 +62,7 @@ Public Class Daemon
 
     Private Sub SendIdleHeartbeat()
         Try
-            Dim url = $"{cfg.headNodeUrl}/api/heartbeat?nodeId={Uri.EscapeDataString(cfg.nodeId)}&currentBlock=&cores={Environment.ProcessorCount}&log=idle"
+            Dim url = $"{cfg.headNodeUrl}/api/heartbeat?nodeid={Uri.EscapeDataString(cfg.nodeId)}&currentblock=&cores={Environment.ProcessorCount}&log=idle"
             Call http.PostAsync(New Uri(url), Nothing).Wait(cfg.pollInterval)
         Catch
         End Try

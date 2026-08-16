@@ -169,6 +169,29 @@ body {
     border: 1px solid var(--glass-border);
 }
 
+/* ============ 任务提交表单 ============ */
+.submit-form { display: flex; flex-wrap: wrap; gap: 10px; }
+.submit-form input {
+    flex: 1 1 200px; padding: 10px 14px; border-radius: 10px;
+    background: rgba(0,0,0,0.35); border: 1px solid var(--glass-border);
+    color: var(--text-0); font-size: 13px; outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+.submit-form input:focus {
+    border-color: var(--primary-0);
+    box-shadow: 0 0 0 3px rgba(34,211,238,0.15);
+}
+.submit-form button {
+    padding: 10px 24px; border-radius: 10px; cursor: pointer;
+    font-weight: 600; color: #04222b; border: none;
+    background: linear-gradient(135deg, var(--primary-0), var(--primary-1));
+    box-shadow: 0 4px 16px rgba(34,211,238,0.3);
+    transition: transform .15s, box-shadow .2s;
+}
+.submit-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(34,211,238,0.45); }
+.submit-form button:active { transform: translateY(0); }
+.submit-result { margin-top: 12px; font-size: 13px; color: var(--primary-0); min-height: 18px; }
+
 /* ============ 状态栏 ============ */
 .statusbar {
     display: flex; gap: 28px; flex-wrap: wrap;

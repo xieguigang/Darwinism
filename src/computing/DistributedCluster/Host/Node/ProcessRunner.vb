@@ -101,7 +101,7 @@ Public Class ProcessRunner
 
     Private Sub SendHeartbeat(block As TaskBlock, line As String)
         Try
-            Dim url = $"{cfg.headNodeUrl}/api/heartbeat?nodeId={Uri.EscapeDataString(cfg.nodeId)}&currentBlock={Uri.EscapeDataString(block.blockId)}&cores={Environment.ProcessorCount}&log={Uri.EscapeDataString(line)}"
+            Dim url = $"{cfg.headNodeUrl}/api/heartbeat?nodeid={Uri.EscapeDataString(cfg.nodeId)}&currentblock={Uri.EscapeDataString(block.blockId)}&cores={Environment.ProcessorCount}&log={Uri.EscapeDataString(line)}"
             Call http.PostAsync(New Uri(url), Nothing).Wait(2000)
         Catch
             ' 心跳失败不阻断主流程。
@@ -110,7 +110,7 @@ Public Class ProcessRunner
 
     Private Sub ReportDone(block As TaskBlock)
         Try
-            Dim url = $"{cfg.headNodeUrl}/api/task/done?blockId={Uri.EscapeDataString(block.blockId)}&jobId={Uri.EscapeDataString(block.jobId)}&nodeId={Uri.EscapeDataString(cfg.nodeId)}"
+            Dim url = $"{cfg.headNodeUrl}/api/task/done?blockid={Uri.EscapeDataString(block.blockId)}&jobid={Uri.EscapeDataString(block.jobId)}&nodeid={Uri.EscapeDataString(cfg.nodeId)}"
             Call http.PostAsync(New Uri(url), Nothing).Wait(2000)
         Catch ex As Exception
             ' 静默失败，头结点会判定块超时重发。
@@ -119,7 +119,7 @@ Public Class ProcessRunner
 
     Private Sub ReportFailed(block As TaskBlock, message As String, stack As String)
         Try
-            Dim url = $"{cfg.headNodeUrl}/api/task/failed?blockId={Uri.EscapeDataString(block.blockId)}&jobId={Uri.EscapeDataString(block.jobId)}&nodeId={Uri.EscapeDataString(cfg.nodeId)}&errorMessage={Uri.EscapeDataString(message)}&stackTrace={Uri.EscapeDataString(stack)}"
+            Dim url = $"{cfg.headNodeUrl}/api/task/failed?blockid={Uri.EscapeDataString(block.blockId)}&jobid={Uri.EscapeDataString(block.jobId)}&nodeid={Uri.EscapeDataString(cfg.nodeId)}&errormessage={Uri.EscapeDataString(message)}&stacktrace={Uri.EscapeDataString(stack)}"
             Call http.PostAsync(New Uri(url), Nothing).Wait(2000)
         Catch
         End Try
