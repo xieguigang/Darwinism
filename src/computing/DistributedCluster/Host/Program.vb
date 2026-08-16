@@ -1,6 +1,6 @@
 Imports System.Threading
-Imports Flute.Configurations
-Imports Flute.Core
+Imports Flute.Http.Configurations
+Imports Flute.Http.Core
 Imports ClusterShared
 
 Module Program
