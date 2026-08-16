@@ -1,6 +1,8 @@
+Imports System.IO
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Flute.Http.Configurations
 Imports Flute.Http.Core
+Imports Flute.Http.FileSystem
 
 Module Program
 
@@ -17,14 +19,14 @@ Module Program
     Private Sub RunHeadNode(cfg As Config)
         Dim scheduler = New Scheduler(cfg)
         Dim controller = New ClusterController(scheduler, cfg)
+        Dim wfs As New WebFileSystemListener(Path.Combine(App.HOME, "wwwroot"))
         Dim router As New HttpRouter(controller)
-
         Dim settings As New Configuration With {
             .shutdown_token = cfg.shutdownToken,
             .silent = False
         }
 
-        Dim socket As New HttpSocket(AddressOf router.AppHandler, cfg.httpPort, configs:=settings)
+        Dim socket As New HttpSocket(router.MountFs(wfs), cfg.httpPort, configs:=settings)
 
         Console.WriteLine($"[headnode] 监听端口 {cfg.httpPort}，SMB 根 {cfg.smbRoot}")
         Console.WriteLine($"[headnode] 仪表盘: http://localhost:{cfg.httpPort}/")

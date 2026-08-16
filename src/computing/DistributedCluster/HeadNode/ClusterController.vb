@@ -1,4 +1,3 @@
-Imports System.IO
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Flute.Http.Core.Message
 Imports Flute.Http.Core.Message.HttpHeader
@@ -16,42 +15,10 @@ Imports Flute.Http.Core.Message.HttpHeader
 ''' </summary>
 Public Class ClusterController
 
-    Private ReadOnly scheduler As Scheduler
-    Private ReadOnly cfg As Config
-    Private ReadOnly wwwroot As String
+    ReadOnly scheduler As Scheduler
 
     Sub New(scheduler As Scheduler, cfg As Config)
         Me.scheduler = scheduler
-        Me.cfg = cfg
-        Dim exeDir = Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location)
-        Me.wwwroot = Path.Combine(exeDir, "wwwroot")
-    End Sub
-
-    ' ============ 仪表盘静态托管 ============
-
-    <HttpGet("/")>
-    Public Sub Index(req As HttpRequest, res As HttpResponse)
-        res.AccessControlAllowOrigin = "*"
-        Dim f = Path.Combine(wwwroot, "index.html")
-        If System.IO.File.Exists(f) Then
-            res.SendFile(f)
-        Else
-            res.WriteHTML("<h1>Distributed Cluster</h1><p>wwwroot/index.html not found.</p>")
-        End If
-    End Sub
-
-    <HttpGet("/app.js")>
-    Public Sub AppJs(req As HttpRequest, res As HttpResponse)
-        res.AccessControlAllowOrigin = "*"
-        Dim f = Path.Combine(wwwroot, "app.js")
-        If System.IO.File.Exists(f) Then res.SendFile(f) Else res.WriteError(404, "app.js")
-    End Sub
-
-    <HttpGet("/style.css")>
-    Public Sub StyleCss(req As HttpRequest, res As HttpResponse)
-        res.AccessControlAllowOrigin = "*"
-        Dim f = Path.Combine(wwwroot, "style.css")
-        If System.IO.File.Exists(f) Then res.SendFile(f) Else res.WriteError(404, "style.css")
     End Sub
 
     ' ============ 状态快照 ============
