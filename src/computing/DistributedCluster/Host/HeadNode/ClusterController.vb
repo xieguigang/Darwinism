@@ -3,7 +3,7 @@ Imports Flute.Http
 Imports Flute.Http.Core
 Imports Flute.Http.Protocols
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Shared
+Imports ClusterShared
 
 ''' <summary>
 ''' 头结点 REST 控制器。基于 Flute 的 HttpRouter 反射路由，注册以下接口：
@@ -98,7 +98,7 @@ Public Class ClusterController
         If block Is Nothing Then
             res.WriteJSON(Of Object)(New With {.available = False}, indent:=False)
         Else
-            res.WriteJSON(Of TaskBlock)(block, indent:=False)
+            res.WriteJSON(Of ClusterShared.TaskBlock)(block, indent:=False)
         End If
     End Sub
 

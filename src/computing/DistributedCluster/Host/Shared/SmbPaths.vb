@@ -1,6 +1,6 @@
 Imports System.IO
 
-Namespace Shared
+Namespace ClusterShared
 
     ''' <summary>
     ''' SMB 共享文件系统的路径约定工具。

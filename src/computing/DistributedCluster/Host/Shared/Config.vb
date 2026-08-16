@@ -1,6 +1,6 @@
 Imports System.IO
 
-Namespace Shared
+Namespace ClusterShared
 
     ''' <summary>
     ''' 集群运行配置。命令行参数覆盖默认值。

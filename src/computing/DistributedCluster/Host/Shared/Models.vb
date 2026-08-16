@@ -1,6 +1,6 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Shared
+Namespace ClusterShared
 
     ''' <summary>
     ''' 计算数据块的运行时描述，由头结点拆分任务后写入队列并分发到计算节点。

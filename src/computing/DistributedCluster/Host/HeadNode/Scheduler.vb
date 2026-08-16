@@ -2,7 +2,7 @@ Imports System.Collections.Concurrent
 Imports System.IO
 Imports Microsoft.VisualBasic.App
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Shared
+Imports ClusterShared
 
 ''' <summary>
 ''' 头结点任务调度器：维护数据块队列、节点心跳、重试逻辑与失败日志提取。
@@ -35,7 +35,7 @@ Public Class Scheduler
     Private ReadOnly logBuffer As New ConcurrentQueue(Of String)()
 
     ''' <summary>线程安全锁，用于聚合计数。</summary>
-    Private ReadOnly syncLock As New Object()
+    Private ReadOnly lockObj As New Object()
 
     Sub New(cfg As Config)
         Me.cfg = cfg
@@ -67,7 +67,7 @@ Public Class Scheduler
             Next
         End If
 
-        SyncLock syncLock
+        SyncLock lockObj
             totalJobs += 1
         End SyncLock
 
@@ -121,7 +121,10 @@ Public Class Scheduler
         Dim block As TaskBlock = Nothing
 
         If queue.TryDequeue(block) Then
-            block.retryCount = If(running.GetOrAdd(block.blockId, block).retryCount, 0)
+            Dim existing As TaskBlock = Nothing
+            If running.TryGetValue(block.blockId, existing) Then
+                block.retryCount = existing.retryCount
+            End If
             running(block.blockId) = block
             Call AppendLog($"[pull] 节点 {nodeId} 领取块 {block.blockId} (job={block.jobId})。")
             Return block
@@ -145,10 +148,11 @@ Public Class Scheduler
     ''' 节点报告数据块计算完成。
     ''' </summary>
     Public Sub ReportDone(result As TaskResult)
-        Dim removed = running.TryRemove(result.blockId, Nothing)
+        Dim removedBlock As TaskBlock = Nothing
+        Dim removed = running.TryRemove(result.blockId, removedBlock)
 
         If removed Then
-            SyncLock syncLock
+            SyncLock lockObj
                 completed += 1
             End SyncLock
             Call AppendLog($"[done] 块 {result.blockId} 由节点 {result.nodeId} 完成。")
