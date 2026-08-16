@@ -4,6 +4,10 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* 覆盖 kb.css 的 html,body{height:100%} 与 body{overflow:hidden}，恢复整页垂直滚动 */
+html { height: auto; }
+body { height: auto; overflow-x: hidden; overflow-y: auto; }
+
 /* 状态色：kb.css 未定义，这里自行保留并随主题覆盖 */
 :root {
     --success: #107c10;
@@ -31,7 +35,9 @@ body {
     background: var(--ui-background);
     color: var(--ui-foreground);
     min-height: 100vh;
+    height: auto;
     overflow-x: hidden;
+    overflow-y: auto;
     transition: background-color .35s ease, color .35s ease;
 }
 
@@ -231,7 +237,7 @@ body {
 .log-stream {
     font-family: 'Roboto Mono', var(--font-code), monospace; font-size: 12px; line-height: 1.6;
     color: var(--ui-foreground-muted); background: var(--code-background);
-    border-radius: 12px; padding: 14px; max-height: 260px; overflow-y: auto;
+    border-radius: 12px; padding: 14px; max-height: 360px; overflow-y: auto;
     border: 1px solid var(--code-border);
 }
 
