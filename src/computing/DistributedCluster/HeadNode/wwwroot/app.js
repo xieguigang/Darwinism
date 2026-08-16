@@ -3,6 +3,14 @@
     const POLL_MS = 1500;
     const $ = (id) => document.getElementById(id);
 
+    // 节点监控视图模式：'full' 完整视图 / 'heatmap' 热图模式。
+    let monitorMode = 'full';
+    // 历史采样环形缓冲：Map<nodeId, {time:[], cpu:[], mem:[]}>，每节点最多保留 MAX_POINTS 个点。
+    const history = new Map();
+    const MAX_POINTS = 40;
+    let historyChart = null;       // echarts 实例
+    let historyInited = false;    // 图表是否已初始化（用于 resize 优化）
+
     /* ============ 右下角 Toast 提示 ============ */
     const TOAST_ICONS = { info: 'ℹ', success: '✓', warn: '⚠', error: '✕' };
 
@@ -232,6 +240,116 @@
             </div>`).join('');
     }
 
+    // 将 0-100 的使用率映射为「绿→黄→红」渐变（HSL 色相 120→0）。
+    function heatColor(pct) {
+        const p = Math.max(0, Math.min(100, Number(pct) || 0));
+        const hue = 120 - (p / 100) * 120;        // 120 绿 → 0 红
+        const light = theme === 'dark' ? 42 : 46;  // 暗色稍暗，保证文字可读
+        return `hsl(${hue.toFixed(0)}, 70%, ${light}%)`;
+    }
+
+    // 渲染热图模式：CPU 利用率热图 + 内存利用率热图。
+    function renderHeatmap(s) {
+        const nodes = (s.nodes || []).filter((n) => n.online);
+        const cpuBox = $('heatCpu');
+        const memBox = $('heatMem');
+
+        const cell = (n, val) => {
+            const name = escapeHtml(n.machineName || n.nodeId || '—');
+            return `<div class="heat-cell" style="background:${heatColor(val)}">
+                        <span class="hc-name">${name}</span>
+                        <span class="hc-val">${val.toFixed(0)}%</span>
+                        <span class="hc-state">${n.cores || 0} 核 · ${fmtMemMB(n.totalMemoryMB)}</span>
+                    </div>`;
+        };
+
+        if (nodes.length === 0) {
+            cpuBox.innerHTML = '<div class="empty">暂无在线节点</div>';
+            memBox.innerHTML = '<div class="empty">暂无在线节点</div>';
+            return;
+        }
+        cpuBox.innerHTML = nodes.map((n) =>
+            cell(n, Math.max(0, Math.min(100, Number(n.cpuUsage) || 0)))).join('');
+        memBox.innerHTML = nodes.map((n) =>
+            cell(n, Math.max(0, Math.min(100, Number(n.memoryUsage) || 0)))).join('');
+    }
+
+    // 每轮轮询把各节点当前 CPU / 内存使用率追加进环形缓冲。
+    function sampleHistory(s) {
+        const t = fmtTime(s.serverTime);
+        for (const n of (s.nodes || [])) {
+            if (!n.online) continue;
+            const id = n.nodeId || n.machineName;
+            if (!history.has(id)) history.set(id, { time: [], cpu: [], mem: [], name: n.machineName || id });
+            const buf = history.get(id);
+            buf.time.push(t);
+            buf.cpu.push(+(Number(n.cpuUsage) || 0).toFixed(1));
+            buf.mem.push(+(Number(n.memoryUsage) || 0).toFixed(1));
+            if (buf.time.length > MAX_POINTS) {
+                buf.time.shift(); buf.cpu.shift(); buf.mem.shift();
+            }
+        }
+    }
+
+    // 当前主题下的图表配色（坐标轴 / 文本 / 网格）。
+    function chartPalette() {
+        return {
+            text: theme === 'dark' ? '#e6e6e6' : '#1a1a1a',
+            subtle: theme === 'dark' ? '#9aa0a6' : '#666',
+            grid: theme === 'dark' ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.07)'
+        };
+    }
+
+    // 初始化 echarts 历史曲线实例（仅一次）。
+    function ensureHistoryChart() {
+        if (historyInited || typeof echarts === 'undefined') return;
+        const el = $('historyChart');
+        if (!el) return;
+        historyChart = echarts.init(el, theme === 'dark' ? 'dark' : null);
+        historyInited = true;
+    }
+
+    // 渲染历史曲线：每个节点两条 series（CPU 实线 / 内存虚线）。
+    function renderHistoryChart() {
+        if (!historyChart) return;
+        const pal = chartPalette();
+        const series = [];
+        const legend = [];
+        // 颜色调色板（按节点循环取色）
+        const colors = ['#0a84ff', '#ca5010', '#107c10', '#d32f2f', '#8e44ad', '#16a085', '#e67e22', '#2980b9'];
+        let ci = 0;
+        for (const [id, buf] of history) {
+            const color = colors[ci % colors.length]; ci++;
+            const label = buf.name || id;
+            legend.push(label + ' CPU', label + ' 内存');
+            series.push({
+                name: label + ' CPU', type: 'line', showSymbol: false, smooth: true,
+                lineStyle: { width: 1.8, color: color }, itemStyle: { color: color },
+                data: buf.cpu, emphasis: { focus: 'series' }
+            });
+            series.push({
+                name: label + ' 内存', type: 'line', showSymbol: false, smooth: true,
+                lineStyle: { width: 1.8, color: color, type: 'dashed' }, itemStyle: { color: color },
+                data: buf.mem, emphasis: { focus: 'series' }
+            });
+        }
+        const xData = Array.from(history.values())[0]?.time || [];
+        historyChart.setOption({
+            color: colors,
+            tooltip: { trigger: 'axis', backgroundColor: pal.text === '#e6e6e6' ? 'rgba(30,30,30,.95)' : 'rgba(255,255,255,.96)',
+                borderColor: pal.grid, textStyle: { color: pal.text } },
+            legend: { type: 'scroll', textStyle: { color: pal.subtle }, top: 0, data: legend },
+            grid: { left: 44, right: 18, top: 36, bottom: 30 },
+            xAxis: { type: 'category', data: xData, boundaryGap: false,
+                axisLine: { lineStyle: { color: pal.grid } },
+                axisLabel: { color: pal.subtle, fontSize: 10 } },
+            yAxis: { type: 'value', min: 0, max: 100, name: '使用率 %', nameTextStyle: { color: pal.subtle },
+                axisLabel: { color: pal.subtle, formatter: '{value}%' },
+                splitLine: { lineStyle: { color: pal.grid } } },
+            series: series
+        }, { notMerge: false });
+    }
+
     function renderLogs(s) {
         const logs = s.logs || [];
         $('logStream').textContent = logs.length ? logs.join('\n') : '等待数据…';
@@ -254,6 +372,19 @@
             renderFailures(s);
             renderLogs(s);
             renderMeta(s);
+
+            // 视图模式切换显示
+            const isHeat = monitorMode === 'heatmap';
+            $('nodeList').hidden = isHeat;
+            $('heatmapPanel').hidden = !isHeat;
+            if (isHeat) renderHeatmap(s);
+
+            // 历史采样 + 曲线（仅当前已渲染图表时更新）
+            sampleHistory(s);
+            if (historyInited) {
+                ensureHistoryChart();
+                renderHistoryChart();
+            }
         } catch (e) {
             console.warn('状态轮询失败：', e.message);
             // 避免轮询异常刷屏：仅在当前无错误提示时轻提示一次

@@ -350,3 +350,70 @@ body {
 @media (prefers-reduced-motion: reduce) {
     .toast, .toast.leaving { animation: none; }
 }
+
+/* ============ 卡片标题行（标题 + 右侧控件） ============ */
+.card-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-bottom: 16px;
+}
+.card-head .card-title { margin-bottom: 0; }
+
+/* 折叠按钮 */
+.collapse-btn {
+    flex: none; cursor: pointer; width: 28px; height: 28px;
+    display: grid; place-items: center; border-radius: 8px;
+    background: var(--ui-background-alt); border: 1px solid var(--ui-border);
+    color: var(--ui-foreground-muted); font-size: 14px; line-height: 1;
+    transition: background .2s, color .2s, border-color .2s;
+}
+.collapse-btn:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.collapse-btn .chev { transition: transform .28s ease; display: inline-block; }
+.collapse-btn.collapsed .chev { transform: rotate(-90deg); }
+.submit-body { overflow: hidden; transition: max-height .3s ease, opacity .25s ease; }
+.submit-body.collapsed { max-height: 0 !important; opacity: 0; }
+
+/* ============ 分段按钮组（视图切换） ============ */
+.seg-control {
+    display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px;
+    background: var(--ui-background-alt); border: 1px solid var(--ui-border);
+}
+.seg-btn {
+    border: none; cursor: pointer; font-size: 12.5px; font-weight: 600;
+    padding: 6px 14px; border-radius: 999px; color: var(--ui-foreground-muted);
+    background: transparent; transition: background .2s, color .2s;
+}
+.seg-btn:hover { color: var(--accent); }
+.seg-btn.active {
+    color: #fff; background: var(--accent);
+    box-shadow: 0 2px 10px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* ============ 热图 ============ */
+.heatmap-wrap[hidden] { display: none; }
+.heatmap-sub { margin-bottom: 14px; }
+.heatmap-title { font-size: 12.5px; font-weight: 600; color: var(--ui-foreground-muted); margin-bottom: 8px; }
+.heatmap-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px;
+}
+.heat-cell {
+    position: relative; border-radius: 10px; padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.45);
+    display: flex; flex-direction: column; gap: 2px; min-height: 56px;
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+.heat-cell:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.3); }
+.heat-cell .hc-name { font-size: 12px; font-weight: 600; line-height: 1.25; word-break: break-all; }
+.heat-cell .hc-val { font-size: 18px; font-weight: 700; font-family: var(--font-code), monospace; }
+.heat-cell .hc-state { font-size: 10.5px; opacity: .85; }
+/* 图例 */
+.heatmap-legend { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 11px; color: var(--ui-foreground-muted); }
+.legend-bar {
+    width: 160px; height: 8px; border-radius: 999px;
+    background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c);
+}
+
+/* ============ 历史曲线 ============ */
+.history-wrap { margin-top: 18px; }
+.history-title { font-size: 12.5px; font-weight: 600; color: var(--ui-foreground-muted); margin-bottom: 8px; }
+.history-chart { width: 100%; height: 320px; }
