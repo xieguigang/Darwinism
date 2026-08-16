@@ -33,15 +33,22 @@
     <main class="grid">
         <!-- 任务提交 -->
         <section class="card span-3">
-            <h2 class="card-title">提交计算任务</h2>
-            <div class="submit-form">
-                <input id="inAssembly" placeholder="CLR Assembly 路径 (SMB)" />
-                <input id="inMethod" placeholder="方法名 Namespace.Class.Method" />
-                <input id="inName" placeholder="任务名称 (可选)" />
-                <input id="inInputs" placeholder="输入文件 (逗号分隔, 可选)" />
-                <button id="btnSubmit">提交任务</button>
+            <div class="card-head">
+                <h2 class="card-title">提交计算任务</h2>
+                <button id="taskToggle" class="collapse-btn" type="button" aria-label="折叠/展开" aria-expanded="true" title="折叠/展开">
+                    <span class="chev">▾</span>
+                </button>
             </div>
-            <div id="submitResult" class="submit-result"></div>
+            <div class="submit-body" id="submitBody">
+                <div class="submit-form">
+                    <input id="inAssembly" placeholder="CLR Assembly 路径 (SMB)" />
+                    <input id="inMethod" placeholder="方法名 Namespace.Class.Method" />
+                    <input id="inName" placeholder="任务名称 (可选)" />
+                    <input id="inInputs" placeholder="输入文件 (逗号分隔, 可选)" />
+                    <button id="btnSubmit">提交任务</button>
+                </div>
+                <div id="submitResult" class="submit-result"></div>
+            </div>
         </section>
 
         <!-- 算力 / 负载概览 -->
@@ -61,8 +68,12 @@
                     <div class="metric-label">逻辑核心</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value glow" id="mPower">0</div>
+                    <div class="metric-value glow" id="mPower" title="算力指数 ≈ √(总核心数/64 × 总内存GB/256) × 100，综合 CPU 与内存规模">0</div>
                     <div class="metric-label">算力指数</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value accent" id="mMemory">0</div>
+                    <div class="metric-label">物理内存</div>
                 </div>
             </div>
         </section>
@@ -101,9 +112,40 @@
 
         <!-- 节点资源监控 -->
         <section class="card span-2">
-            <h2 class="card-title">节点资源监控</h2>
+            <div class="card-head">
+                <h2 class="card-title">节点资源监控</h2>
+                <div class="seg-control" id="monitorMode" role="tablist">
+                    <button class="seg-btn active" data-mode="full" type="button" role="tab">完整视图</button>
+                    <button class="seg-btn" data-mode="heatmap" type="button" role="tab">热图模式</button>
+                </div>
+            </div>
+
+            <!-- 完整视图：节点卡片网格 -->
             <div class="node-grid" id="nodeList">
                 <div class="empty">暂无节点上报</div>
+            </div>
+
+            <!-- 热图模式：CPU / 内存 两个格阵 -->
+            <div class="heatmap-wrap" id="heatmapPanel" hidden>
+                <div class="heatmap-sub">
+                    <div class="heatmap-title">节点 CPU 利用率热图</div>
+                    <div class="heatmap-grid" id="heatCpu"></div>
+                </div>
+                <div class="heatmap-sub">
+                    <div class="heatmap-title">节点内存利用率热图</div>
+                    <div class="heatmap-grid" id="heatMem"></div>
+                </div>
+                <div class="heatmap-legend">
+                    <span>低</span>
+                    <span class="legend-bar"></span>
+                    <span>高 (100%)</span>
+                </div>
+            </div>
+
+            <!-- 历史曲线：各节点 CPU / 内存 使用率 -->
+            <div class="history-wrap" id="historyWrap">
+                <div class="history-title">节点 CPU / 内存 历史使用率</div>
+                <div class="history-chart" id="historyChart"></div>
             </div>
         </section>
 
@@ -132,6 +174,7 @@
     <!-- 右下角 toast 消息容器 -->
     <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
 
+    <script src="/echarts.min.js"></script>
     <script src="/app.js"></script>
 </body>
 </html>

@@ -108,6 +108,11 @@
         $('mTotalNodes').textContent = (s.nodes || []).length;
         $('mOnline').textContent = s.onlineNodes;
         $('mCores').textContent = s.totalCores;
+        // 物理内存总和：优先使用后端已汇总值，缺失时降级为前端对节点求和。
+        const memMB = Number(s.totalMemoryMB) > 0
+            ? Number(s.totalMemoryMB)
+            : (s.nodes || []).reduce((acc, n) => acc + (Number(n.totalMemoryMB) || 0), 0);
+        $('mMemory').textContent = fmtMemTotal(memMB);
         $('mPower').textContent = s.powerIndex;
         $('clock').textContent = fmtTime(s.serverTime);
 
@@ -141,6 +146,14 @@
         const v = Number(mb) || 0;
         if (v >= 1024) return (v / 1024).toFixed(1) + ' GB';
         return v.toFixed(0) + ' MB';
+    }
+
+    // 将集群总内存(MB)格式化为 GB / TB，≥1024 GB 时自动切换为 TB（保留 2 位小数）。
+    function fmtMemTotal(mb) {
+        const v = Number(mb) || 0;
+        const gb = v / 1024;
+        if (gb >= 1024) return (gb / 1024).toFixed(2) + ' TB';
+        return gb.toFixed(1) + ' GB';
     }
 
     // 按使用率返回进度条配色类（绿/黄/红）。

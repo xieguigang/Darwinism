@@ -213,7 +213,17 @@ Namespace ClusterShared
         Public Property totalCores As Integer
 
         ''' <summary>
-        ''' 集群算力指数（在线节点 × 核心数）。
+        ''' 集群总物理内存（单位 MB，在线节点之和）。
+        ''' </summary>
+        Public Property totalMemoryMB As Long
+
+        ''' <summary>
+        ''' 集群算力指数。
+        ''' 综合集群总逻辑核心数与总物理内存量，采用基准归一化后的几何平均：
+        '''   cpuScore = totalCores / REF_CORES
+        '''   memScore = totalMemoryMB / 1024 / REF_MEM_GB
+        '''   powerIndex = Round(Sqrt(cpuScore * memScore) * 100)
+        ''' 几何平均保证 CPU 与内存任一维度瓶颈都会拉低指数；×100 使标准配置（64 核 / 256 GB）≈ 100。
         ''' </summary>
         Public Property powerIndex As Integer
 

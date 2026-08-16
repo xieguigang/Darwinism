@@ -229,12 +229,18 @@ Public Class Scheduler
         Dim onlineThreshold = DateTime.UtcNow.AddMilliseconds(-cfg.pollInterval * 5).Ticks
         Dim nodeList As New List(Of NodeStatus)()
         Dim totalCores = 0
+        Dim totalMemoryMB As Long = 0
+
+        ' 标准算力参考基线：1 个标准节点取 64 逻辑核心 / 256 GB 内存。
+        Const REF_CORES As Integer = 64
+        Const REF_MEM_GB As Integer = 256
 
         For Each kv In heartbeats
             Dim hb = kv.Value
             Dim online = hb.timestamp >= onlineThreshold
             If online Then
                 totalCores += Math.Max(1, hb.cores)
+                totalMemoryMB += Math.Max(0, hb.totalMemoryMB)
             End If
 
             nodeList.Add(New NodeStatus With {
@@ -260,6 +266,12 @@ Public Class Scheduler
         Dim failedList = failed.Values.ToArray()
         Dim logs = logBuffer.ToArray()
 
+        ' 算力指数：综合总核心数与总物理内存，基准归一化后取几何平均。
+        '   标准节点(64 核 / 256 GB) 指数 ≈ 100，便于横向比较集群规模。
+        Dim cpuScore = CDbl(totalCores) / REF_CORES
+        Dim memScore = (CDbl(totalMemoryMB) / 1024.0) / REF_MEM_GB
+        Dim powerIndex = CInt(Math.Round(Math.Sqrt(cpuScore * memScore) * 100))
+
         Return New ClusterStatus With {
             .clusterName = cfg.clusterName,
             .smbRoot = cfg.smbRoot,
@@ -272,7 +284,8 @@ Public Class Scheduler
             .runningBlocks = runningCount,
             .onlineNodes = onlineCount,
             .totalCores = totalCores,
-            .powerIndex = onlineCount * Math.Max(1, totalCores \ Math.Max(1, onlineCount)),
+            .totalMemoryMB = totalMemoryMB,
+            .powerIndex = powerIndex,
             .nodes = nodeList.ToArray(),
             .failures = failedList,
             .logs = logs,
