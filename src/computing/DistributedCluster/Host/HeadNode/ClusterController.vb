@@ -65,15 +65,24 @@ Public Class ClusterController
 
     ' ============ 作业提交 ============
 
-    <HttpPost("/api/submit")>
-    Public Sub Submit(req As HttpPOSTRequest, res As HttpResponse)
+    <HttpGet("/api/submit")>
+    Public Sub Submit(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
 
         Try
-            Dim json = File.ReadAllText(req.POSTData.InputStream)
-            Dim submit = json.LoadJSON(Of JobSubmit)()
+            Dim submit As New JobSubmit()
+            submit.name = CStr(req.Argument("name"))
+            submit.assemblyPath = CStr(req.Argument("assemblyPath"))
+            submit.methodName = CStr(req.Argument("methodName"))
+            Long.TryParse(CStr(req.Argument("chunkSize")), submit.chunkSize)
 
-            If submit Is Nothing OrElse String.IsNullOrEmpty(submit.assemblyPath) Then
+            ' inputFiles 通过逗号分隔的字符串传入（已 URL 编码）。
+            Dim inputs = CStr(req.Argument("inputs"))
+            If Not String.IsNullOrEmpty(inputs) Then
+                submit.inputFiles = inputs.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) s.Length > 0).ToArray()
+            End If
+
+            If String.IsNullOrEmpty(submit.assemblyPath) Then
                 res.WriteJSON(Of Object)(New With {.ok = False, .error = "missing assemblyPath"}, indent:=False)
                 Return
             End If
