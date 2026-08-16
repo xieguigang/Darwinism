@@ -3,5 +3,8 @@
     <Project Path="../../../../httpd/src/Flute/Flute.NET5.vbproj" />
     <Project Path="../../../../sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj" />
   </Folder>
-  <Project Path="Host/Host.vbproj" />
+  <Project Path="ClusterShared/ClusterShared.vbproj" />
+  <Project Path="HeadNode/HeadNode.vbproj" />
+  <Project Path="Node/Node.vbproj" />
+  <Project Path="Worker/Worker.vbproj" />
 </Solution>
