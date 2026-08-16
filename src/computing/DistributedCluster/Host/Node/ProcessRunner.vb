@@ -75,7 +75,7 @@ Public Class ProcessRunner
                                                End Sub
 
             ' 等待子进程退出（带超时保护，避免僵尸进程）。
-            If Not proc.WaitForExit(timeoutMilliseconds:=cfg.pollInterval * 600) Then
+            If Not proc.WaitForExit(milliseconds:=cfg.pollInterval * 600) Then
                 Try
                     proc.Kill()
                 Catch

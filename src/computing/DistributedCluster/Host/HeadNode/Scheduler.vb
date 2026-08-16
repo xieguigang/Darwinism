@@ -60,7 +60,7 @@ Public Class Scheduler
             Call EnqueueBlock(jobId, submit, Nothing, chunkSize)
         Else
             For Each file In inputs
-                If Not File.Exists(file) Then
+                If Not System.IO.File.Exists(file) Then
                     Call AppendLog($"[warn] 输入文件不存在，已跳过: {file}")
                     Continue For
                 End If
@@ -80,14 +80,14 @@ Public Class Scheduler
         Dim buffer(chunkSize - 1) As Byte
         Dim blockIndex = 0
 
-        Using fs = File.OpenRead(file)
+        Using fs = System.IO.File.OpenRead(file)
             Dim read As Integer
             Dim offset = 0
 
             While (read = fs.Read(buffer, offset, CInt(Math.Min(chunkSize, fs.Length - fs.Position)))) > 0
                 Dim guid = Guid.NewGuid().ToString("N")
                 Dim blockFile = smb.BlockPath(jobId, guid)
-                Using out = File.OpenWrite(blockFile)
+                Using out = System.IO.File.OpenWrite(blockFile)
                     Call out.Write(buffer, 0, read)
                 End Using
                 Call EnqueueBlock(jobId, submit, guid, chunkSize)
@@ -95,12 +95,12 @@ Public Class Scheduler
             End While
         End Using
 
-        Call AppendLog($"[split] 文件 {Path.GetFileName(file)} 拆分为 {blockIndex} 块。")
+        Call AppendLog($"[split] 文件 {System.IO.Path.GetFileName(file)} 拆分为 {blockIndex} 块。")
     End Sub
 
     Private Sub EnqueueBlock(jobId As String, submit As JobSubmit, blockGuid As String, chunkSize As Long)
         ' 当没有输入文件时，blockGuid 为 Nothing，表示纯计算方法块。
-        Dim guid = If(blockGuid, Guid.NewGuid().ToString("N"))
+        Dim guid = If(String.IsNullOrEmpty(blockGuid), Guid.NewGuid().ToString("N"), blockGuid)
 
         Dim block As New TaskBlock With {
             .blockId = guid,
@@ -189,9 +189,9 @@ Public Class Scheduler
         Dim logPath = smb.LogPath(block.jobId, block.blockId)
         Dim logText = ""
 
-        If File.Exists(logPath) Then
+        If System.IO.File.Exists(logPath) Then
             Try
-                logText = File.ReadAllText(logPath)
+                logText = System.IO.File.ReadAllText(logPath)
             Catch ex As Exception
                 logText = $"[无法读取日志] {ex.Message}"
             End Try

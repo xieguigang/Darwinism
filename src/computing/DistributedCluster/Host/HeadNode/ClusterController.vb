@@ -71,7 +71,7 @@ Public Class ClusterController
 
         Try
             Dim json = File.ReadAllText(req.POSTData.InputStream)
-            Dim submit = json.GetObject(Of JobSubmit)()
+            Dim submit = json.LoadJSON(Of JobSubmit)()
 
             If submit Is Nothing OrElse String.IsNullOrEmpty(submit.assemblyPath) Then
                 res.WriteJSON(Of Object)(New With {.ok = False, .error = "missing assemblyPath"}, indent:=False)

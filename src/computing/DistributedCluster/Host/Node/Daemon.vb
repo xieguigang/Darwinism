@@ -57,7 +57,7 @@ Public Class Daemon
             Return Nothing
         End If
 
-        Return json.GetObject(Of TaskBlock)()
+        Return json.LoadJSON(Of TaskBlock)()
     End Function
 
     Private Sub SendIdleHeartbeat()
