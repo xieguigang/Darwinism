@@ -220,15 +220,19 @@
                 const data = await res.json();
                 if (data.ok) {
                     out.textContent = '任务已提交，jobId: ' + data.jobId;
+                    showToast('任务已提交：' + (data.jobId || ''), 'success', 3000);
                 } else {
                     out.textContent = '提交失败: ' + (data.message || '未知错误');
+                    showToast('提交失败：' + (data.message || '未知错误'), 'error', 4000);
                 }
             } catch (e) {
                 out.textContent = '提交异常: ' + e.message;
+                showToast('提交异常：' + e.message, 'error', 4000);
             }
         });
     }
 
+    initThemeToggle();
     tick();
     setInterval(tick, POLL_MS);
 })();
