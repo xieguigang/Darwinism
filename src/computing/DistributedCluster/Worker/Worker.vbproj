@@ -6,6 +6,7 @@
     <ImportMicrosoftVisualBasic>false</ImportMicrosoftVisualBasic>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Worker</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,5 +1,3 @@
-Imports ClusterShared
-
 Module Program
 
     Sub Main(args As String())

@@ -1,7 +1,6 @@
-Imports System.Threading
+Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Flute.Http.Configurations
 Imports Flute.Http.Core
-Imports ClusterShared
 
 Module Program
 
@@ -32,9 +31,9 @@ Module Program
         Console.WriteLine($"[headnode] 远程关闭: OPTIONS /ctrl/kill (X-Shutdown-Token: {cfg.shutdownToken})")
 
         AddHandler Console.CancelKeyPress, Sub(s, e)
-                                                 e.Cancel = True
-                                                 Call socket.Shutdown()
-                                             End Sub
+                                               e.Cancel = True
+                                               Call socket.Shutdown()
+                                           End Sub
 
         ' Run() 会阻塞当前线程直到服务器关闭。
         Call socket.Run()

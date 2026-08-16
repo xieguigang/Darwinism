@@ -1,10 +1,26 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
   <Folder Name="/framework/">
-    <Project Path="../../../../httpd/src/Flute/Flute.NET5.vbproj" />
-    <Project Path="../../../../sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj" />
+    <Project Path="../../../../httpd/src/Flute/Flute.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
-  <Project Path="ClusterShared/ClusterShared.vbproj" />
-  <Project Path="HeadNode/HeadNode.vbproj" />
-  <Project Path="Node/Node.vbproj" />
-  <Project Path="Worker/Worker.vbproj" />
+  <Project Path="ClusterShared/ClusterShared.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="HeadNode/HeadNode.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Node/Node.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Worker/Worker.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>

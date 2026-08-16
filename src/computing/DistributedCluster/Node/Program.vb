@@ -1,6 +1,5 @@
 Imports System.IO
-Imports System.Threading
-Imports ClusterShared
+Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 
 Module Program
 
