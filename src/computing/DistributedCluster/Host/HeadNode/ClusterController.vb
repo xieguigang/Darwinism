@@ -1,7 +1,8 @@
 Imports System.IO
 Imports Flute.Http
 Imports Flute.Http.Core
-Imports Flute.Http.Protocols
+Imports Core.Message
+Imports Core.Message.HttpHeader
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports ClusterShared
 

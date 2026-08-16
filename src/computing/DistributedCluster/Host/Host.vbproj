@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Host</RootNamespace>
+    <RootNamespace></RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
