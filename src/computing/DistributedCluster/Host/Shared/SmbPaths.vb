@@ -70,9 +70,9 @@ Namespace ClusterShared
         ''' 确保任务相关的所有子目录都存在。
         ''' </summary>
         Public Sub EnsureJobDirs(jobId As String)
-            For Each dir In {BlocksDir(jobId), ResultsDir(jobId), LogsDir(jobId)}
-                If Not Directory.Exists(dir) Then
-                    Call Directory.CreateDirectory(dir)
+            For Each jobDir In {BlocksDir(jobId), ResultsDir(jobId), LogsDir(jobId)}
+                If Not System.IO.Directory.Exists(jobDir) Then
+                    Call System.IO.Directory.CreateDirectory(jobDir)
                 End If
             Next
         End Sub

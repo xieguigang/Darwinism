@@ -33,9 +33,9 @@ Public Class ClusterController
     <HttpGet("/")>
     Public Sub Index(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
-        Dim file = Path.Combine(wwwroot, "index.html")
-        If File.Exists(file) Then
-            res.SendFile(file)
+        Dim f = Path.Combine(wwwroot, "index.html")
+        If System.IO.File.Exists(f) Then
+            res.SendFile(f)
         Else
             res.WriteHTML("<h1>Distributed Cluster</h1><p>wwwroot/index.html not found.</p>")
         End If
@@ -44,15 +44,15 @@ Public Class ClusterController
     <HttpGet("/app.js")>
     Public Sub AppJs(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
-        Dim file = Path.Combine(wwwroot, "app.js")
-        If File.Exists(file) Then res.SendFile(file) Else res.WriteError(HTTP_RFC.NotFound, "app.js")
+        Dim f = Path.Combine(wwwroot, "app.js")
+        If System.IO.File.Exists(f) Then res.SendFile(f) Else res.WriteError(404, "app.js")
     End Sub
 
     <HttpGet("/style.css")>
     Public Sub StyleCss(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
-        Dim file = Path.Combine(wwwroot, "style.css")
-        If File.Exists(file) Then res.SendFile(file) Else res.WriteError(HTTP_RFC.NotFound, "style.css")
+        Dim f = Path.Combine(wwwroot, "style.css")
+        If System.IO.File.Exists(f) Then res.SendFile(f) Else res.WriteError(404, "style.css")
     End Sub
 
     ' ============ 状态快照 ============

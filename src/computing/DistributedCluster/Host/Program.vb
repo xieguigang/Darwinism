@@ -17,7 +17,7 @@ Module Program
             Case "worker"
                 ' worker 由节点守护进程通过 Process.Start 启动，参数为：
                 ' --mode=worker {blockId} {jobId} {assemblyPath} {methodName} {jobRoot}
-                Environment.ExitCode = Worker.ReflectHost.Run(args)
+                Environment.ExitCode = ReflectHost.Run(args)
             Case Else
                 Console.WriteLine("未知模式，请使用 --mode=headnode|node|worker")
                 Console.WriteLine("示例:")
@@ -59,7 +59,7 @@ Module Program
     ''' 启动计算节点守护进程：每秒轮询头结点拉取任务并执行。
     ''' </summary>
     Private Sub RunNode(cfg As Config)
-        Dim daemon = New Node.Daemon(cfg)
+        Dim daemon = New Daemon(cfg)
 
         AddHandler Console.CancelKeyPress, Sub(s, e)
                                                e.Cancel = True
