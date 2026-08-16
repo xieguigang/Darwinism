@@ -10,7 +10,12 @@ os.chdir(ROOT)
 class H(SimpleHTTPServer.SimpleHTTPRequestHandler):
     pass
 
+    def log_message(self, fmt, *args):
+        with open(os.path.join(ROOT, '_mock_access.log'), 'a') as f:
+            f.write(self.address_string() + ' - - [' + self.log_date_time_string() + '] ' + fmt % args + '\n')
+
     def do_GET(self):
+        self.log_message('"GET %s HTTP/1.1"', self.path)
         if self.path.startswith('/api/status'):
             now = datetime.utcnow()
             ticks = (now - datetime(1, 1, 1)).total_seconds() * 1e7 + 621355968000000000
