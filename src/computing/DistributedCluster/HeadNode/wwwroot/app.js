@@ -10,6 +10,7 @@
     const MAX_POINTS = 40;
     let historyChart = null;       // echarts 实例
     let historyInited = false;    // 图表是否已初始化（用于 resize 优化）
+    let lastStatus = null;        // 最近一次状态快照，供主题切换重绘热图使用
 
     /* ============ 右下角 Toast 提示 ============ */
     const TOAST_ICONS = { info: 'ℹ', success: '✓', warn: '⚠', error: '✕' };
@@ -85,8 +86,15 @@
             btn.addEventListener('click', () => {
                 const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 applyTheme(next);
+                theme = next;   // 同步模块级主题，供热图/图表配色使用
                 try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* 忽略 */ }
                 showToast('已切换至 ' + (next === 'dark' ? '暗色' : '亮色') + '主题', 'info', 2000);
+                // 主题切换后重绘图表与热图（若当前可见）
+                if (historyInited) renderHistoryChart();
+                if (monitorMode === 'heatmap') {
+                    const el = document.getElementById('heatmapPanel');
+                    if (el && !el.hidden) renderHeatmap(lastStatus);
+                }
             });
         }
     }
@@ -367,6 +375,7 @@
     async function tick() {
         try {
             const s = await fetchStatus();
+            lastStatus = s;
             renderOverview(s);
             renderNodes(s);
             renderFailures(s);
@@ -431,6 +440,68 @@
             }
         });
     }
+
+    /* ============ 提交任务面板：折叠 / 展开 ============ */
+    (() => {
+        const btn = document.getElementById('taskToggle');
+        const body = document.getElementById('submitBody');
+        if (!btn || !body) return;
+        // 读取记忆的折叠状态
+        let collapsed = false;
+        try { collapsed = localStorage.getItem('task-panel-collapsed') === '1'; } catch (e) { /* 忽略 */ }
+        const apply = () => {
+            body.classList.toggle('collapsed', collapsed);
+            btn.classList.toggle('collapsed', collapsed);
+            btn.setAttribute('aria-expanded', String(!collapsed));
+        };
+        // 初始 max-height 以支持过渡动画
+        body.style.maxHeight = collapsed ? '0px' : body.scrollHeight + 'px';
+        apply();
+        btn.addEventListener('click', () => {
+            collapsed = !collapsed;
+            body.style.maxHeight = collapsed ? '0px' : body.scrollHeight + 'px';
+            apply();
+            try { localStorage.setItem('task-panel-collapsed', collapsed ? '1' : '0'); } catch (e) { /* 忽略 */ }
+        });
+        window.addEventListener('resize', () => {
+            if (!collapsed) body.style.maxHeight = body.scrollHeight + 'px';
+        });
+    })();
+
+    /* ============ 节点监控：视图模式切换 ============ */
+    (() => {
+        const seg = document.getElementById('monitorMode');
+        if (!seg) return;
+        seg.addEventListener('click', (e) => {
+            const b = e.target.closest('.seg-btn');
+            if (!b) return;
+            const mode = b.dataset.mode;
+            if (mode === monitorMode) return;
+            monitorMode = mode;
+            seg.querySelectorAll('.seg-btn').forEach((x) => x.classList.toggle('active', x === b));
+            // 切换后立刻刷新显示
+            if (lastStatus) {
+                const isHeat = monitorMode === 'heatmap';
+                document.getElementById('nodeList').hidden = isHeat;
+                document.getElementById('heatmapPanel').hidden = !isHeat;
+                if (isHeat) renderHeatmap(lastStatus);
+            }
+        });
+    })();
+
+    /* ============ echarts 历史曲线初始化 + 窗口自适应 ============ */
+    (() => {
+        if (typeof echarts === 'undefined') {
+            console.warn('echarts 未加载，历史曲线不可用');
+            return;
+        }
+        ensureHistoryChart();
+        if (historyChart) {
+            window.addEventListener('resize', () => historyChart.resize());
+            // 首次渲染空图，待数据到来后由 tick 填充
+            renderHistoryChart();
+        }
+    })();
 
     initThemeToggle();
     tick();
