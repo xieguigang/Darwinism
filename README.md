@@ -15,6 +15,8 @@ By combining of the Darwinism Parallel library and the R# [snowFall](https://git
 sudo yum install net-tools
 ```
 
+![](docs/HPC-Cluster.PNG)
+
 ## [LINQ Script](LINQ/LINQ)
 
 ```vbnet
