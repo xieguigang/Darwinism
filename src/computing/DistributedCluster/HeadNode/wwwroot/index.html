@@ -112,21 +112,31 @@
                 <div class="empty">暂无节点上报</div>
             </div>
 
-            <!-- 热图模式：CPU / 内存 两个格阵 -->
-            <div class="heatmap-wrap" id="heatmapPanel" hidden>
-                <div class="heatmap-sub">
-                    <div class="heatmap-title">节点 CPU 利用率热图</div>
-                    <div class="heatmap-grid" id="heatCpu"></div>
+            <!-- 热图模式：计算节点算力指数热图（已使用 / 剩余 切换） + 详情卡片并排 -->
+            <div class="heat-layout" id="heatLayout" hidden>
+                <div class="heatmap-wrap" id="heatmapPanel">
+                    <div class="heat-subtoggle" id="heatMetricToggle" role="group" aria-label="算力热图指标">
+                        <button class="heat-metric-btn active" data-metric="used" type="button">已用算力</button>
+                        <button class="heat-metric-btn" data-metric="free" type="button">剩余算力</button>
+                    </div>
+                    <div class="heatmap-title" id="heatTitle">节点算力指数热图（已用算力）</div>
+                    <div class="heatmap-grid" id="heatPower"></div>
+                    <div class="heatmap-legend">
+                        <span>低</span>
+                        <span class="legend-bar"></span>
+                        <span>高</span>
+                        <span class="legend-hint">点击方格查看节点详情</span>
+                    </div>
                 </div>
-                <div class="heatmap-sub">
-                    <div class="heatmap-title">节点内存利用率热图</div>
-                    <div class="heatmap-grid" id="heatMem"></div>
-                </div>
-                <div class="heatmap-legend">
-                    <span>低</span>
-                    <span class="legend-bar"></span>
-                    <span>高 (100%)</span>
-                </div>
+
+                <!-- 右侧：被选中的计算节点完整信息卡片 -->
+                <aside class="node-detail" id="nodeDetail" hidden>
+                    <div class="node-detail-head">
+                        <span class="node-detail-title">节点详情</span>
+                        <button class="node-detail-close" id="nodeDetailClose" type="button" aria-label="关闭">×</button>
+                    </div>
+                    <div class="node-detail-body" id="nodeDetailBody"></div>
+                </aside>
             </div>
 
             <!-- 历史曲线：各节点 CPU / 内存 使用率 -->
