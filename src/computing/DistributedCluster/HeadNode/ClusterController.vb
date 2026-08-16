@@ -86,8 +86,8 @@ Public Class ClusterController
     ''' 而历史 query 参数使用小写名（如 nodeid），此处两者均尝试以保持兼容。
     ''' </summary>
     Private Function Arg(req As HttpPOSTRequest, pascalName As String) As Object
-        Dim v = req.Argument(pascalName)
-        If v Is Nothing OrElse String.IsNullOrEmpty(CStr(v)) Then
+        Dim v As String = req.Argument(pascalName)
+        If v Is Nothing OrElse String.IsNullOrEmpty(v) Then
             v = req.Argument(pascalName.ToLower())
         End If
         Return v
