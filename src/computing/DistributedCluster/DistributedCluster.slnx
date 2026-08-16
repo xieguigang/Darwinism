@@ -11,6 +11,7 @@
     </Project>
     <Project Path="../../../../sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
       <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="Debug|ARM64" Project="ARM64" />
     </Project>
   </Folder>
   <Project Path="ClusterShared/ClusterShared.vbproj">
