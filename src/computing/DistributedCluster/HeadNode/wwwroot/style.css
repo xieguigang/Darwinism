@@ -359,6 +359,11 @@ body {
 .card-head .card-title { margin-bottom: 0; }
 
 /* ============ 提交弹窗：三块面板 + 树 + 动画 ============ */
+/* 提交弹窗需要更宽，以容纳文件树 / 方法树 / 数据预览三块面板 */
+#submitModal .modal {
+    width: min(980px, 96vw);
+    max-height: 92vh;
+}
 .modal-body { max-height: 72vh; overflow-y: auto; }
 
 .submit-panels {
@@ -372,13 +377,14 @@ body {
     border: 1px solid var(--ui-border);
     border-radius: 14px;
     padding: 12px 14px;
-    min-height: 230px;
+    min-height: 260px;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-sm);
     transition: border-color .25s, box-shadow .25s;
+    min-width: 0;
 }
-.submit-panel.span-col { grid-column: 1 / -1; min-height: 200px; }
+.submit-panel.span-col { grid-column: 1 / -1; min-height: 220px; }
 .submit-panel:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
 
 .panel-head {
@@ -466,10 +472,15 @@ body {
 .loading-row { color: var(--ui-foreground-muted); }
 .tree-row.loading-row .tree-label { font-style: italic; }
 
-@media (max-width: 720px) {
+@media (max-width: 860px) {
+    #submitModal .modal { width: 96vw; }
     .submit-panels { grid-template-columns: 1fr; }
+    .submit-panel.span-col { grid-column: auto; }
+}
+@media (max-width: 760px) {
     .method-split, .data-split { grid-template-columns: 1fr; }
-    .modal-body { max-height: 80vh; }
+    .method-tree { border-right: none; border-bottom: 1px solid var(--ui-border); }
+    .modal-body { max-height: 82vh; }
 }
 
 /* 折叠按钮 */
