@@ -498,7 +498,7 @@ Namespace ClusterShared
         ''' <summary>
         ''' 预览读取失败时的错误信息（如文件损坏）。
         ''' </summary>
-        public Property error As String
+        Public Property [error] As String
     End Class
 
     ''' <summary>

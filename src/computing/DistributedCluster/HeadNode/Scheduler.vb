@@ -1,6 +1,7 @@
 Imports System.Collections.Concurrent
 Imports System.IO
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 头结点任务调度器：维护数据块队列、节点心跳、重试逻辑与失败日志提取。
@@ -253,7 +254,7 @@ Public Class Scheduler
         If System.IO.File.Exists(System.IO.Path.Combine(dir, "dataset.json")) Then
             preview.kind = "json"
             Try
-                preview.json = LoadJSON(Of DatasetJsonInfo)(System.IO.File.ReadAllText(System.IO.Path.Combine(dir, "dataset.json")))
+                preview.json = Path.Combine(dir, "dataset.json").ReadAllText.LoadJSON(Of DatasetJsonInfo)
             Catch ex As Exception
                 preview.error = ex.Message
             End Try

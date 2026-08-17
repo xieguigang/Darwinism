@@ -1,14 +1,14 @@
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.Loader
+Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ClusterShared
 
     ''' <summary>
     ''' 在独立 AssemblyLoadContext 中反射加载目标 dll，扫描符合 worker 计算进程
-    ''' （<see cref="Worker.ReflectHost"/>）调用约定的公共方法，并从同名 .NET XML
+    ''' （"Worker.ReflectHost"）调用约定的公共方法，并从同名 .NET XML
     ''' 注释文档解析 summary / remarks 文本，随后卸载程序集。
     ''' </summary>
     ''' <remarks>
@@ -173,7 +173,7 @@ Namespace ClusterShared
         ''' </summary>
         Private Shared Function LoadXmlDocs(dllPath As String) As ProjectSpace
             Dim xmlPath = Path.ChangeExtension(dllPath, ".xml")
-            Dim ps As New ProjectSpace()
+            Dim ps As New ProjectSpace(excludeVBSpecific:=True)
 
             If File.Exists(xmlPath) Then
                 Try

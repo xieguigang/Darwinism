@@ -1,3 +1,5 @@
+Imports System.IO
+Imports Darwinism.HPC.DistributedCluster.Host.ClusterShared
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Flute.Http.Core.Message
 Imports Flute.Http.Core.Message.HttpHeader
@@ -39,8 +41,9 @@ Public Class ClusterController
     ''' <summary>
     ''' 分层增量返回 webRoot 子树的直接子节点。前端点开目录节点才请求下一层，
     ''' 避免一次性递归整棵 smb 目录（共享繁忙时扫描极慢）。
+    ''' 
+    ''' - "dir": 相对 webRoot 的子目录（以 / 开头或为空=根）。
     ''' </summary>
-    ''' <param name="dir">相对 webRoot 的子目录（以 / 开头或为空=根）。</param>
     <HttpGet("/api/files/tree")>
     Public Sub FilesTree(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
@@ -113,8 +116,10 @@ Public Class ClusterController
 
     ''' <summary>
     ''' 反射加载目标 dll，扫描符合 worker 调用约定的方法并从同名 XML 注释取 summary/remarks，随后卸载。
+    ''' 
+    ''' - assemblyPath: 相对 webRoot 的路径或完整路径。
     ''' </summary>
-    ''' <param name="assemblyPath">相对 webRoot 的路径或完整路径。</param>
+    ''' 
     <HttpGet("/api/assembly/scan")>
     Public Sub AssemblyScan(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
@@ -168,8 +173,10 @@ Public Class ClusterController
 
     ''' <summary>
     ''' 预览所选目录下的计算数据输入源（dataset.ini / dataset.json）。
+    ''' 
+    ''' - dir: 相对 webRoot 的目录路径。
     ''' </summary>
-    ''' <param name="dir">相对 webRoot 的目录路径。</param>
+    ''' 
     <HttpGet("/api/dataset/preview")>
     Public Sub DatasetPreview(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
