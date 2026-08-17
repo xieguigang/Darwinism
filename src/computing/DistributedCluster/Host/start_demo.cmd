@@ -1,5 +1,5 @@
 @echo off
 
-set host="Host\net10.0\Host.exe"
+set host="net10.0\Host.exe"
 
-%host% --smb-web-root="./Host/Demo/"
+%host% --smb-web-root="./Demo/"
