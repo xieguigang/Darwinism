@@ -18,6 +18,9 @@
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="Demo/Demo.vbproj" Id="8be10824-6289-4f79-a867-d2daf32357d2">
+    <Platform Solution="Release|x64" Project="x64" />
+  </Project>
   <Project Path="HeadNode/HeadNode.vbproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
