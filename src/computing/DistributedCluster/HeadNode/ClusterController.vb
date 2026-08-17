@@ -1,5 +1,6 @@
 Imports System.IO
 Imports Darwinism.HPC.DistributedCluster.Host.ClusterShared
+Imports Darwinism.HPC.DistributedCluster.[Shared]
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Flute.Http.Core.Message
 Imports Flute.Http.Core.Message.HttpHeader
@@ -140,14 +141,14 @@ Public Class ClusterController
             End If
 
             Dim msg As String = ""
-            Dim methods = AssemblyScanner.Scan(full, msg)
+            Dim methods As AssemblyMethod() = AssemblyScanner.Scan(full, msg)
 
             If methods.Length = 0 AndAlso Not String.IsNullOrEmpty(msg) Then
                 res.WriteJSON(Of ApiResult)(ApiResult.Failure(msg), indent:=False)
                 Return
             End If
 
-            res.WriteJSON(Of Object)(New With {
+            res.WriteJSON(Of AssemblyScan)(New AssemblyScan With {
                 .methods = methods,
                 .message = msg
             }, indent:=False)
@@ -162,7 +163,7 @@ Public Class ClusterController
     Private Function ResolveWebRootPath(raw As String) As String
         Dim root = Path.GetFullPath(cfg.webRoot)
 
-        If Path.IsPathRooted(raw) Then
+        If Path.IsPathRooted(raw) AndAlso raw.StartsWith(root.Replace("\", "/").Trim("/"c)) Then
             Return Path.GetFullPath(raw)
         End If
 
