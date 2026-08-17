@@ -1,7 +1,9 @@
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ClusterShared
 
@@ -43,7 +45,10 @@ Namespace ClusterShared
         ''' <summary>
         ''' 远程关闭令牌（用于 OPTIONS /ctrl/kill）。
         ''' </summary>
-        <Opt("--shutdown-token", "-u")> Public Property shutdownToken As String = "darwinism-shutdown"
+        ''' <remarks>
+        ''' 默认会生成随机令牌，即不允许通过url远程关闭集群
+        ''' </remarks>
+        <Opt("--shutdown-token", "-u")> Public Property shutdownToken As String = "darwinism-shutdown" & "-" & RandomExtensions.GetBytes(width:=64).ToHexString
 
         ''' <summary>
         ''' 头结点地址（节点守护进程使用，形如 http://headnode:8080）。
@@ -92,9 +97,15 @@ Namespace ClusterShared
             End Get
         End Property
 
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
         ''' <summary>
         ''' 从命令行参数解析配置。支持 --key=value 形式。
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Parse(args As String()) As Config
             Return CommandLine.BuildFromArguments(args, NoSubCommand:=True).CreateOpts(Of Config)
         End Function
