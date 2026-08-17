@@ -4,6 +4,7 @@ Imports Darwinism.HPC.DistributedCluster.[Shared]
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Flute.Http.Core.Message
 Imports Flute.Http.Core.Message.HttpHeader
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 ''' <summary>
 ''' 头结点 REST 控制器。基于 Flute 的 HttpRouter 反射路由，注册以下接口：
@@ -49,6 +50,8 @@ Public Class ClusterController
     Public Sub FilesTree(req As HttpRequest, res As HttpResponse)
         res.AccessControlAllowOrigin = "*"
 
+        Static IgnoreNamePrefix As String() = {"System.", "Microsoft."}
+
         Try
             Dim rel = If(CType(req.Argument("dir"), String), "").Trim()
             Dim root = Path.GetFullPath(cfg.webRoot)
@@ -74,7 +77,7 @@ Public Class ClusterController
             For Each d In Directory.GetDirectories(target)
                 Dim info = New DirectoryInfo(d)
                 Dim children = info.GetFileSystemInfos()
-                Dim hasDll = children.Any(Function(c) (Not c.Attributes.HasFlag(FileAttributes.Directory)) AndAlso c.Extension.ToLower() = ".dll")
+                Dim hasDll = children.Any(Function(c) (Not c.Attributes.HasFlag(FileAttributes.Directory)) AndAlso c.Extension.ToLower() = ".dll" AndAlso Not IgnoreNamePrefix.Any(Function(prefix) c.Name.BaseName.StartsWith(prefix)))
                 Dim hasDataset = children.Any(Function(c) Not c.Attributes.HasFlag(FileAttributes.Directory) AndAlso (c.Name.ToLower() = "dataset.ini" OrElse c.Name.ToLower() = "dataset.json"))
 
                 nodes.Add(New FileNode With {

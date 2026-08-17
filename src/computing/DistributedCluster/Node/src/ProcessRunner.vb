@@ -2,6 +2,7 @@ Imports System.IO
 Imports System.Net.Http
 Imports System.Text
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
+Imports Microsoft.VisualBasic.ApplicationServices
 
 ''' <summary>
 ''' 封装反射 worker 子进程的启动、stdout 读取、心跳归档与回执逻辑。
@@ -33,7 +34,7 @@ Public Class ProcessRunner
                 "--mode=worker",
                 block.blockId,
                 block.jobId,
-                """" & block.assemblyPath & """",
+                (cfg.webRoot & "/" & block.assemblyPath).CLIPath,
                 """" & block.methodName & """",
                 """" & block.jobRoot & """"),
             .UseShellExecute = False,
@@ -73,7 +74,7 @@ Public Class ProcessRunner
                                                End Sub
 
             ' 等待子进程退出（带超时保护，避免僵尸进程）。
-            If Not proc.WaitForExit(milliseconds:=cfg.pollInterval * 600) Then
+            If Not proc.WaitForExit(milliseconds:=60 * 60 * 24 * 1000) Then
                 Try
                     proc.Kill()
                 Catch
