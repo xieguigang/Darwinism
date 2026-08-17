@@ -598,17 +598,377 @@
         if (e.key === 'Escape' && submitModal && !submitModal.hidden) closeSubmitModal();
     });
 
+    // ---------- 通用：文件树懒加载 ----------
+    // 根据 dir(相对 webRoot) 拉取一层子节点，返回 FileNode[]
+    async function fetchTree(dir) {
+        const res = await fetch('/api/files/tree?dir=' + encodeURIComponent(dir || ''));
+        if (!res.ok) return [];
+        try { return await res.json(); } catch (e) { return []; }
+    }
+
+    // 渲染一行文件树节点（目录可展开，dll 可点选）
+    function renderNode(container, node, kind) {
+        const row = document.createElement('div');
+        row.className = 'tree-row' + (node.isDir ? ' is-dir' : '') + (node.isDll ? ' is-dll' : '');
+
+        const icon = document.createElement('span');
+        icon.className = 'tree-icon';
+        icon.textContent = node.isDir ? '📁' : (node.isDll ? '🧩' : '📄');
+        row.appendChild(icon);
+
+        const label = document.createElement('span');
+        label.className = 'tree-label';
+        label.textContent = node.name;
+        row.appendChild(label);
+
+        if (node.isDir) {
+            if (node.hasDataset) {
+                const tag = document.createElement('span');
+                tag.className = 'tree-tag dataset-tag';
+                tag.textContent = 'dataset';
+                row.appendChild(tag);
+            } else if (node.hasDllChildren) {
+                const tag = document.createElement('span');
+                tag.className = 'tree-tag';
+                tag.textContent = 'dll';
+                row.appendChild(tag);
+            }
+            const caret = document.createElement('span');
+            caret.className = 'tree-caret';
+            caret.textContent = '▸';
+            row.prepend(caret);
+
+            let expanded = false;
+            let childBox = null;
+
+            row.addEventListener('click', async () => {
+                if (!expanded) {
+                    expanded = true;
+                    caret.textContent = '▾';
+                    childBox = document.createElement('div');
+                    childBox.className = 'tree-children';
+                    row.after(childBox);
+                    const spinner = document.createElement('div');
+                    spinner.className = 'tree-row loading-row';
+                    spinner.innerHTML = '<span class="spinner"></span><span class="tree-label">加载中…</span>';
+                    childBox.appendChild(spinner);
+                    try {
+                        const children = await fetchTree(node.fullPath);
+                        spinner.remove();
+                        if (children.length === 0) {
+                            const empty = document.createElement('div');
+                            empty.className = 'tree-empty';
+                            empty.textContent = '空目录';
+                            childBox.appendChild(empty);
+                        }
+                        children
+                            .slice()
+                            .sort((a, b) => (a.isDir === b.isDir) ? a.name.localeCompare(b.name) : (a.isDir ? -1 : 1))
+                            .forEach(c => renderNode(childBox, c, kind));
+                    } catch (e) {
+                        spinner.remove();
+                        const err = document.createElement('div');
+                        err.className = 'tree-empty';
+                        err.textContent = '加载失败';
+                        childBox.appendChild(err);
+                    }
+                } else {
+                    expanded = false;
+                    caret.textContent = '▸';
+                    if (childBox) { childBox.remove(); childBox = null; }
+                }
+            });
+        } else if (node.isDll && kind === 'dll') {
+            row.addEventListener('click', () => {
+                document.getElementById('inAssembly').value = node.fullPath;
+                document.querySelectorAll('#dllTree .tree-row.selected').forEach(r => r.classList.remove('selected'));
+                row.classList.add('selected');
+                loadAssemblyMethods(node.fullPath);
+            });
+        } else if (!node.isDir && kind === 'data') {
+            row.addEventListener('click', () => {
+                document.querySelectorAll('#dataTree .tree-row.selected').forEach(r => r.classList.remove('selected'));
+                row.classList.add('selected');
+            });
+        }
+
+        // 数据目录树：点击目录即选定数据源目录（用于 dataset 预览）
+        if (node.isDir && kind === 'data') {
+            const pick = document.createElement('button');
+            pick.className = 'tree-pick';
+            pick.textContent = '选择';
+            pick.title = '选定此目录作为数据输入源';
+            pick.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('inDatasetDir').value = node.fullPath;
+                document.querySelectorAll('#dataTree .tree-row.picked').forEach(r => r.classList.remove('picked'));
+                row.classList.add('picked');
+                previewDataset(node.fullPath);
+            });
+            row.appendChild(pick);
+        }
+
+        container.appendChild(row);
+    }
+
+    function initTree(treeId, kind) {
+        const box = document.getElementById(treeId);
+        if (!box) return;
+        box.innerHTML = '';
+        const root = document.createElement('div');
+        root.className = 'tree-row is-dir';
+        root.innerHTML = '<span class="tree-caret">▸</span><span class="tree-icon">📁</span><span class="tree-label">web 根目录</span>';
+        box.appendChild(root);
+        let expanded = false, childBox = null;
+        root.addEventListener('click', async () => {
+            if (!expanded) {
+                expanded = true;
+                root.querySelector('.tree-caret').textContent = '▾';
+                childBox = document.createElement('div');
+                childBox.className = 'tree-children';
+                root.after(childBox);
+                const spinner = document.createElement('div');
+                spinner.className = 'tree-row loading-row';
+                spinner.innerHTML = '<span class="spinner"></span><span class="tree-label">加载中…</span>';
+                childBox.appendChild(spinner);
+                try {
+                    const children = await fetchTree('');
+                    spinner.remove();
+                    if (children.length === 0) {
+                        const empty = document.createElement('div');
+                        empty.className = 'tree-empty';
+                        empty.textContent = '根目录为空';
+                        childBox.appendChild(empty);
+                    }
+                    children
+                        .slice()
+                        .sort((a, b) => (a.isDir === b.isDir) ? a.name.localeCompare(b.name) : (a.isDir ? -1 : 1))
+                        .forEach(c => renderNode(childBox, c, kind));
+                } catch (e) {
+                    spinner.remove();
+                    const err = document.createElement('div');
+                    err.className = 'tree-empty';
+                    err.textContent = '加载失败';
+                    childBox.appendChild(err);
+                }
+            } else {
+                expanded = false;
+                root.querySelector('.tree-caret').textContent = '▸';
+                if (childBox) { childBox.remove(); childBox = null; }
+            }
+        });
+    }
+
+    // ---------- Assembly 方法扫描 ----------
+    async function loadAssemblyMethods(path) {
+        const tree = document.getElementById('methodTree');
+        const hint = document.getElementById('methodHint');
+        const doc = document.getElementById('methodDoc');
+        if (!tree) return;
+        tree.innerHTML = '<div class="tree-row loading-row"><span class="spinner"></span><span class="tree-label">扫描程序集…</span></div>';
+        if (hint) hint.textContent = '扫描中：' + path;
+        if (doc) doc.innerHTML = '<div class="doc-empty">加载中…</div>';
+
+        try {
+            const res = await fetch('/api/assembly/scan?assemblypath=' + encodeURIComponent(path));
+            const data = await res.json();
+            if (data.methods === undefined) {
+                tree.innerHTML = '<div class="tree-empty">扫描失败：' + (data.message || '未知错误') + '</div>';
+                if (hint) hint.textContent = '扫描失败';
+                return;
+            }
+            const methods = data.methods || [];
+            if (methods.length === 0) {
+                tree.innerHTML = '<div class="tree-empty">未找到符合 worker 调用约定的方法</div>';
+                if (hint) hint.textContent = '无可用方法';
+                return;
+            }
+            // 按 namespace -> class -> method 构建对象树
+            const nsMap = {};
+            methods.forEach(m => {
+                nsMap[m.namespace] = nsMap[m.namespace] || {};
+                nsMap[m.namespace][m.class] = nsMap[m.namespace][m.class] || [];
+                nsMap[m.namespace][m.class].push(m);
+            });
+            tree.innerHTML = '';
+            Object.keys(nsMap).sort().forEach(ns => {
+                const nsRow = document.createElement('div');
+                nsRow.className = 'tree-row is-dir';
+                nsRow.innerHTML = '<span class="tree-caret">▾</span><span class="tree-icon">📦</span><span class="tree-label"></span>';
+                nsRow.querySelector('.tree-label').textContent = ns || '(无命名空间)';
+                tree.appendChild(nsRow);
+                const nsBox = document.createElement('div');
+                nsBox.className = 'tree-children';
+                nsRow.after(nsBox);
+                nsRow.addEventListener('click', () => {
+                    const open = nsBox.style.display !== 'none';
+                    nsBox.style.display = open ? 'none' : '';
+                    nsRow.querySelector('.tree-caret').textContent = open ? '▸' : '▾';
+                });
+                Object.keys(nsMap[ns]).sort().forEach(cls => {
+                    const clsRow = document.createElement('div');
+                    clsRow.className = 'tree-row is-dir';
+                    clsRow.innerHTML = '<span class="tree-caret">▾</span><span class="tree-icon">🧱</span><span class="tree-label"></span>';
+                    clsRow.querySelector('.tree-label').textContent = cls;
+                    nsBox.appendChild(clsRow);
+                    const clsBox = document.createElement('div');
+                    clsBox.className = 'tree-children';
+                    clsRow.after(clsBox);
+                    clsRow.addEventListener('click', () => {
+                        const open = clsBox.style.display !== 'none';
+                        clsBox.style.display = open ? 'none' : '';
+                        clsRow.querySelector('.tree-caret').textContent = open ? '▸' : '▾';
+                    });
+                    nsMap[ns][cls].forEach(m => {
+                        const mRow = document.createElement('div');
+                        mRow.className = 'tree-row is-method';
+                        mRow.innerHTML = '<span class="tree-icon">⚡</span><span class="tree-label"></span>';
+                        mRow.querySelector('.tree-label').textContent = m.method;
+                        clsBox.appendChild(mRow);
+                        mRow.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            document.querySelectorAll('#methodTree .tree-row.selected').forEach(r => r.classList.remove('selected'));
+                            mRow.classList.add('selected');
+                            document.getElementById('inMethod').value = m.signature.replace(/\(.*\)$/, '');
+                            showMethodDoc(m);
+                        });
+                    });
+                });
+            });
+            if (hint) hint.textContent = '共 ' + methods.length + ' 个可用方法';
+        } catch (e) {
+            tree.innerHTML = '<div class="tree-empty">扫描异常：' + e.message + '</div>';
+            if (hint) hint.textContent = '扫描异常';
+        }
+    }
+
+    function showMethodDoc(m) {
+        const doc = document.getElementById('methodDoc');
+        if (!doc) return;
+        const sig = document.createElement('div');
+        sig.className = 'doc-sig';
+        sig.textContent = m.signature;
+        const sum = document.createElement('div');
+        sum.className = 'doc-summary';
+        sum.innerHTML = '<span class="doc-key">summary</span>' + escapeHtml(m.summary || '(无注释)');
+        const rem = document.createElement('div');
+        rem.className = 'doc-remarks';
+        rem.innerHTML = '<span class="doc-key">remarks</span>' + escapeHtml(m.remarks || '(无注释)');
+        doc.innerHTML = '';
+        doc.appendChild(sig);
+        doc.appendChild(sum);
+        doc.appendChild(rem);
+    }
+
+    // ---------- dataset 预览 ----------
+    async function previewDataset(dir) {
+        const box = document.getElementById('datasetPreview');
+        if (!box) return;
+        box.innerHTML = '<div class="doc-empty"><span class="spinner"></span> 加载预览…</div>';
+        try {
+            const res = await fetch('/api/dataset/preview?dir=' + encodeURIComponent(dir));
+            const data = await res.json();
+            if (data.kind === 'none') {
+                box.innerHTML = '<div class="doc-empty">该目录不含 dataset.ini / dataset.json</div>';
+                return;
+            }
+            if (data.kind === 'ini') {
+                const ini = data.ini || {};
+                let html = '<div class="doc-sig">dataset.ini · ' + escapeHtml(ini.description || '无描述') + '</div>';
+                html += '<div class="doc-key">后缀 ' + escapeHtml(ini.ext || '') + ' 匹配 ' + (ini.files ? ini.files.length : 0) + ' 个输入文件</div>';
+                html += '<div class="dataset-files">';
+                const files = (ini.files || []);
+                // 惰性渲染：仅首屏展示前 50 个，滚动加载剩余
+                const step = 50;
+                let shown = 0;
+                const renderMore = () => {
+                    const frag = document.createDocumentFragment();
+                    for (let i = shown; i < Math.min(shown + step, files.length); i++) {
+                        const f = document.createElement('div');
+                        f.className = 'dataset-file';
+                        f.textContent = files[i];
+                        frag.appendChild(f);
+                    }
+                    shown = Math.min(shown + step, files.length);
+                    box.querySelector('.dataset-files').appendChild(frag);
+                    if (shown < files.length && !box.querySelector('.dataset-more')) {
+                        const more = document.createElement('button');
+                        more.className = 'dataset-more';
+                        more.textContent = '加载更多…';
+                        more.addEventListener('click', renderMore);
+                        box.querySelector('.dataset-files').after(more);
+                    } else if (shown >= files.length && box.querySelector('.dataset-more')) {
+                        box.querySelector('.dataset-more').remove();
+                    }
+                };
+                html += '</div>';
+                box.innerHTML = html;
+                renderMore();
+                return;
+            }
+            if (data.kind === 'json') {
+                const j = data.json || {};
+                let html = '<div class="doc-sig">dataset.json · ' + escapeHtml(j.description || '无描述') + '</div>';
+                html += '<div class="doc-key">数据文件 ' + escapeHtml(j.datafile || '') + '</div>';
+                html += '<div class="dataset-chunks"><table class="chunk-table"><thead><tr><th>#</th><th>offset</th><th>size</th></tr></thead><tbody>';
+                const chunks = (j.chunks || []);
+                const step = 50;
+                let shown = 0;
+                const tbody = () => box.querySelector('.chunk-table tbody');
+                const afterHtml = '</tbody></table></div>';
+                box.innerHTML = html;
+                const renderMore = () => {
+                    const frag = document.createDocumentFragment();
+                    for (let i = shown; i < Math.min(shown + step, chunks.length); i++) {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = '<td>' + (i + 1) + '</td><td>' + chunks[i].offset + '</td><td>' + chunks[i].size + '</td>';
+                        frag.appendChild(tr);
+                    }
+                    shown = Math.min(shown + step, chunks.length);
+                    tbody().appendChild(frag);
+                    if (shown < chunks.length && !box.querySelector('.dataset-more')) {
+                        const more = document.createElement('button');
+                        more.className = 'dataset-more';
+                        more.textContent = '加载更多…';
+                        more.addEventListener('click', renderMore);
+                        box.querySelector('.dataset-chunks').after(more);
+                    } else if (shown >= chunks.length && box.querySelector('.dataset-more')) {
+                        box.querySelector('.dataset-more').remove();
+                    }
+                };
+                box.insertAdjacentHTML('beforeend', afterHtml);
+                renderMore();
+                return;
+            }
+            box.innerHTML = '<div class="doc-empty">未知数据源类型</div>';
+        } catch (e) {
+            box.innerHTML = '<div class="doc-empty">预览异常：' + e.message + '</div>';
+        }
+    }
+
+    function escapeHtml(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    // 打开弹窗时初始化两棵树
+    if (btnOpen) btnOpen.addEventListener('click', () => {
+        initTree('dllTree', 'dll');
+        initTree('dataTree', 'data');
+    });
+
     const submitBtn = document.getElementById('btnSubmit');
     if (submitBtn) {
         submitBtn.addEventListener('click', async () => {
             const assembly = document.getElementById('inAssembly').value.trim();
             const method = document.getElementById('inMethod').value.trim();
             const nameInput = document.getElementById('inName').value.trim();
-            const inputs = document.getElementById('inInputs').value.trim();
+            const datasetDir = document.getElementById('inDatasetDir').value.trim();
             const out = document.getElementById('submitResult');
 
             if (!assembly || !method) {
-                out.textContent = '请填写 Assembly 路径与方法名。';
+                out.textContent = '请选择 CLR Assembly 与目标方法。';
                 return;
             }
             // 未设置任务名称时，按方法名自动生成（取 Class.Method）
@@ -617,9 +977,10 @@
             const params = new URLSearchParams({
                 assemblypath: assembly,
                 methodname: method,
-                name: autoName
+                name: autoName,
+                datasettype: datasetDir ? 'auto' : 'none'
             });
-            if (inputs) params.set('inputs', inputs);
+            if (datasetDir) params.set('datasetdir', datasetDir);
 
             out.textContent = '提交中…';
             try {
@@ -628,7 +989,6 @@
                 if (data.ok) {
                     out.textContent = '任务已提交，jobId: ' + data.jobId;
                     showToast('任务已提交：' + autoName, 'success', 3000);
-                    // 记录当前任务名（前端视角），并持久化以便刷新后保留
                     currentTaskName = autoName;
                     try { localStorage.setItem('current-task-name', autoName); } catch (e) { /* 忽略 */ }
                     renderTaskChip();
