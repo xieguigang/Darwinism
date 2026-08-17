@@ -361,8 +361,8 @@ body {
 /* ============ 提交弹窗：三块面板 + 树 + 动画 ============ */
 /* 提交弹窗需要更宽，以容纳文件树 / 方法树 / 数据预览三块面板 */
 #submitModal .modal {
-    width: min(980px, 96vw);
-    max-height: 92vh;
+    width: min(980px, 96vw) !important;
+    max-height: 92vh !important;
 }
 .modal-body { max-height: 72vh; overflow-y: auto; }
 
