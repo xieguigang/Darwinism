@@ -1,5 +1,6 @@
 Imports System.Collections.Concurrent
 Imports System.IO
+Imports Darwinism.HPC.DistributedCluster.[Shared]
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -380,7 +381,9 @@ Public Class Scheduler
         End If
         heartbeats(hb.nodeId) = hb
         If Not String.IsNullOrEmpty(hb.log) Then
-            Call AppendLog($"[{hb.nodeId}] {hb.log}")
+            If hb.log <> Flags.idle Then
+                Call AppendLog($"[{hb.nodeId}] {hb.log}")
+            End If
         End If
     End Sub
 

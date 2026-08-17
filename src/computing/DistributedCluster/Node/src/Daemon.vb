@@ -1,6 +1,7 @@
 Imports System.Net.Http
 Imports System.Runtime.InteropServices
 Imports System.Threading
+Imports Darwinism.HPC.DistributedCluster.[Shared]
 Imports Darwinism.HPC.DistributedCluster.Shared.ClusterShared
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -53,7 +54,7 @@ Public Class Daemon
 
                 If block Is Nothing Then
                     ' 空闲：发送一次携带资源指标的心跳保持存活。
-                    Call SendHeartbeat(m, "idle")
+                    Call SendHeartbeat(m, Flags.idle)
                 Else
                     Console.WriteLine($"[node] 领取数据块 {block.blockId} (job={block.jobId})，启动 worker。")
                     Call runner.RunBlock(block)
