@@ -23,9 +23,15 @@ Namespace ClusterShared
         <Opt("--port", "-p")> Public Property httpPort As Integer = 8080
 
         ''' <summary>
-        ''' SMB 挂载根目录。
+        ''' SMB 挂载根目录（集群数据中枢，jobs 数据块存放处）。
         ''' </summary>
         <Opt("--smb", "-s")> Public Property smbRoot As String = "/mnt/cluster"
+
+        ''' <summary>
+        ''' 暴露给 web 管理页面的集群文件系统根目录（一般为 /mnt/ 下的 smb 共享目录）。
+        ''' 任务提交时，dll 文件树与计算数据目录树仅能在该目录子树内浏览，避免暴露 jobs 内部目录。
+        ''' </summary>
+        <Opt("--smb-web-root", "-b")> Public Property webRoot As String = "/mnt/smb"
 
         ''' <summary>
         ''' 节点轮询间隔（毫秒）。

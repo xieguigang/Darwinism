@@ -29,6 +29,7 @@ Module Program
         Dim socket As New HttpSocket(router.MountFs(wfs), cfg.httpPort, configs:=settings)
 
         Console.WriteLine($"[headnode] 监听端口 {cfg.httpPort}，SMB 根 {cfg.smbRoot}")
+        Console.WriteLine($"[headnode] Web 文件系统根（可暴露给页面）: {cfg.webRoot}")
         Console.WriteLine($"[headnode] 仪表盘: http://localhost:{cfg.httpPort}/")
         Console.WriteLine($"[headnode] 远程关闭: OPTIONS /ctrl/kill (X-Shutdown-Token: {cfg.shutdownToken})")
 

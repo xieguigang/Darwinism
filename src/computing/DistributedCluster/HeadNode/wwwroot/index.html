@@ -182,21 +182,67 @@
                 <div class="submit-form modal-form">
                     <label class="field">
                         <span class="field-label">CLR Assembly 路径 (SMB)</span>
-                        <input id="inAssembly" placeholder="例如 \\smb\share\MyLib.dll" />
+                        <input id="inAssembly" placeholder="点击左侧文件树选择 *.dll" readonly />
                     </label>
                     <label class="field">
                         <span class="field-label">方法名 Namespace.Class.Method</span>
-                        <input id="inMethod" placeholder="例如 MyNamespace.MyClass.Run" />
+                        <input id="inMethod" placeholder="点击右侧方法树选择" readonly />
                     </label>
                     <label class="field">
                         <span class="field-label">任务名称 (可选，留空则按方法名生成)</span>
                         <input id="inName" placeholder="例如 基因序列比对" />
                     </label>
                     <label class="field">
-                        <span class="field-label">输入文件 (逗号分隔, 可选)</span>
-                        <input id="inInputs" placeholder="例如 a.txt,b.txt" />
+                        <span class="field-label">数据输入源目录 (可选，留空则纯计算)</span>
+                        <input id="inDatasetDir" placeholder="点击数据目录树选择含 dataset.ini / dataset.json 的文件夹" readonly />
                     </label>
                 </div>
+
+                <div class="submit-panels">
+                    <!-- 1. Assembly 选择区：dll 文件树 -->
+                    <div class="submit-panel">
+                        <div class="panel-head">
+                            <span class="panel-title">CLR Assembly</span>
+                            <span class="panel-hint">浏览 SMB 共享中的 *.dll</span>
+                        </div>
+                        <div class="tree" id="dllTree">
+                            <div class="tree-empty">点击展开根目录加载文件树…</div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 方法选择区：对象树 + 注释 -->
+                    <div class="submit-panel">
+                        <div class="panel-head">
+                            <span class="panel-title">目标方法</span>
+                            <span class="panel-hint" id="methodHint">选择 dll 后展示方法树</span>
+                        </div>
+                        <div class="method-split">
+                            <div class="tree method-tree" id="methodTree">
+                                <div class="tree-empty">尚未扫描</div>
+                            </div>
+                            <div class="method-doc glass" id="methodDoc">
+                                <div class="doc-empty">点击左侧方法查看 XML 注释</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 数据输入选择区：数据目录树 + 预览 -->
+                    <div class="submit-panel span-col">
+                        <div class="panel-head">
+                            <span class="panel-title">计算数据输入</span>
+                            <span class="panel-hint">选择含 dataset.ini / dataset.json 的文件夹</span>
+                        </div>
+                        <div class="data-split">
+                            <div class="tree data-tree" id="dataTree">
+                                <div class="tree-empty">点击展开根目录加载数据目录…</div>
+                            </div>
+                            <div class="dataset-preview glass" id="datasetPreview">
+                                <div class="doc-empty">选择文件夹后预览计算任务数据</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="submitResult" class="submit-result"></div>
             </div>
             <div class="modal-foot">

@@ -338,6 +338,167 @@ Namespace ClusterShared
         ''' 单个数据块的目标大小（字节），用于拆分。
         ''' </summary>
         Public Property chunkSize As Long
+
+        ''' <summary>
+        ''' 计算数据输入源目录（位于 webRoot 下的 SMB 子目录）。
+        ''' 当指定 datasetDir 时，头结点会解析该目录内的 dataset.ini / dataset.json，
+        ''' 将匹配的输入数据展开为多个数据块（沿用现有 chunk 拆分与 SMB 写入机制）。
+        ''' </summary>
+        Public Property datasetDir As String
+
+        ''' <summary>
+        ''' 数据输入源类型：auto（自动探测 ini/json）/ ini / json。默认 auto。
+        ''' </summary>
+        Public Property datasetType As String = "auto"
+    End Class
+
+    ''' <summary>
+    ''' 文件树节点：用于 web 页面惰性展示 webRoot 子树。
+    ''' 后端按目录层级增量返回（仅一层直接子项），前端点开目录才请求下一层。
+    ''' </summary>
+    Public Class FileNode
+
+        ''' <summary>
+        ''' 节点名称（文件名或目录名）。
+        ''' </summary>
+        Public Property name As String
+
+        ''' <summary>
+        ''' 是否为目录。
+        ''' </summary>
+        Public Property isDir As Boolean
+
+        ''' <summary>
+        ''' 相对 webRoot 的路径（以 / 开头），前端选点时回传该值拼接 webRoot 得到完整路径。
+        ''' </summary>
+        Public Property fullPath As String
+
+        ''' <summary>
+        ''' 是否为可被选中作为 CLR Assembly 的 *.dll 文件（仅当 isDir=False 时可能为 True）。
+        ''' </summary>
+        Public Property isDll As Boolean
+
+        ''' <summary>
+        ''' 该目录节点是否含有 dll 直接子文件（用于前端图标提示，仅目录节点有意义）。
+        ''' </summary>
+        Public Property hasDllChildren As Boolean
+
+        ''' <summary>
+        ''' 目录节点是否含有 dataset.ini / dataset.json（用于前端提示可作为数据输入源，仅目录节点有意义）。
+        ''' </summary>
+        Public Property hasDataset As Boolean
+    End Class
+
+    ''' <summary>
+    ''' 反射扫描得到的单个 CLR 方法（符合 worker 计算进程调用约定），及其 XML 注释。
+    ''' </summary>
+    Public Class AssemblyMethod
+
+        ''' <summary>
+        ''' 方法所在命名空间。
+        ''' </summary>
+        Public Property [namespace] As String
+
+        ''' <summary>
+        ''' 方法所在类型（class）短名称。
+        ''' </summary>
+        Public Property [class] As String
+
+        ''' <summary>
+        ''' 方法短名称。
+        ''' </summary>
+        Public Property method As String
+
+        ''' <summary>
+        ''' 方法完整签名，形如 "MyNs.MyClass.Run(Byte[], String, String)"。
+        ''' </summary>
+        Public Property signature As String
+
+        ''' <summary>
+        ''' 从目标 dll 的 .NET XML 注释文档中解析的 &lt;summary&gt; 文本（缺失则为空串）。
+        ''' </summary>
+        Public Property summary As String
+
+        ''' <summary>
+        ''' 从目标 dll 的 .NET XML 注释文档中解析的 &lt;remarks&gt; 文本（缺失则为空串）。
+        ''' </summary>
+        Public Property remarks As String
+    End Class
+
+    ''' <summary>
+    ''' dataset.ini 解析结果：匹配后缀的数据输入文件清单。
+    ''' </summary>
+    Public Class DatasetIniInfo
+
+        ''' <summary>
+        ''' 数据文件后缀（含通配符，如 *.dat），来自 [dataset] ext=。
+        ''' </summary>
+        Public Property ext As String
+
+        ''' <summary>
+        ''' 任务描述，来自 [dataset] description=。
+        ''' </summary>
+        Public Property description As String
+
+        ''' <summary>
+        ''' 匹配后缀的输入数据文件（相对 dataset 目录的路径列表）。
+        ''' </summary>
+        Public Property files As String()
+    End Class
+
+    ''' <summary>
+    ''' dataset.json 解析结果：大文件 + 数据块偏移列表。
+    ''' </summary>
+    Public Class DatasetJsonInfo
+
+        ''' <summary>
+        ''' 大型数据文件名（相对 dataset 目录）。
+        ''' </summary>
+        Public Property datafile As String
+
+        ''' <summary>
+        ''' 任务描述。
+        ''' </summary>
+        Public Property description As String
+
+        ''' <summary>
+        ''' 数据块偏移/大小列表，每项含 offset 与 size（字节）。
+        ''' </summary>
+        Public Property chunks As BlockDef()
+
+        ''' <summary>
+        ''' 数据块定义（偏移 + 大小，单位字节）。
+        ''' </summary>
+        Public Class BlockDef
+            Public Property offset As Long
+            Public Property size As Long
+        End Class
+    End Class
+
+    ''' <summary>
+    ''' 计算数据输入源预览：供 web 页面在选择 dataset 目录时惰性展示。
+    ''' </summary>
+    Public Class DatasetPreview
+
+        ''' <summary>
+        ''' 数据源类型：ini / json / none（所选目录不含 dataset 配置）。
+        ''' </summary>
+        Public Property kind As String
+
+        ''' <summary>
+        ''' ini 模式下的解析结果。
+        ''' </summary>
+        Public Property ini As DatasetIniInfo
+
+        ''' <summary>
+        ''' json 模式下的解析结果。
+        ''' </summary>
+        Public Property json As DatasetJsonInfo
+
+        ''' <summary>
+        ''' 预览读取失败时的错误信息（如文件损坏）。
+        ''' </summary>
+        public Property error As String
     End Class
 
     ''' <summary>

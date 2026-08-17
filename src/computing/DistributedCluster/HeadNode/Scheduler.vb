@@ -44,12 +44,36 @@ Public Class Scheduler
 
     ''' <summary>
     ''' 提交一个新作业，将输入文件按 chunkSize 拆分为独立数据块并写入 SMB。
+    ''' 当指定了 datasetDir 时，优先解析其目录内的 dataset.ini / dataset.json 输入源，
+    ''' 将其展开为多个数据块（沿用现有 chunk 拆分与 SMB 写入机制），Node/Worker 契约不变。
     ''' </summary>
     Public Function SubmitJob(submit As JobSubmit) As String
         Dim jobId = Guid.NewGuid().ToString("N")
         Call smb.EnsureJobDirs(jobId)
 
         Dim chunkSize = If(submit.chunkSize <= 0, 1024 * 1024L, submit.chunkSize)
+
+        ' 优先处理 dataset 输入源
+        If Not String.IsNullOrEmpty(submit.datasetDir) Then
+            Dim dir = ResolveDatasetDir(submit.datasetDir)
+
+            If String.IsNullOrEmpty(dir) Then
+                Call AppendLog($"[submit] 数据输入目录不存在: {submit.datasetDir}")
+            Else
+                Dim expanded = ExpandDataset(jobId, submit, dir, chunkSize)
+
+                If expanded > 0 Then
+                    SyncLock lockObj
+                        totalJobs += 1
+                    End SyncLock
+                    Call AppendLog($"[submit] 新任务 {jobId} 已提交，dataset 展开 {expanded} 个数据块。")
+                    Return jobId
+                Else
+                    Call AppendLog($"[warn] dataset 目录 {dir} 未解析出任何输入数据块。")
+                End If
+            End If
+        End If
+
         Dim inputs = If(submit.inputFiles, New String() {})
 
         If inputs.Length = 0 Then
@@ -71,6 +95,221 @@ Public Class Scheduler
 
         Call AppendLog($"[submit] 新任务 {jobId} 已提交，输入文件 {inputs.Length} 个。")
         Return jobId
+    End Function
+
+    ''' <summary>
+    ''' 将相对 webRoot 的 dataset 目录路径解析为完整路径，越界或不存在返回空串。
+    ''' </summary>
+    Private Function ResolveDatasetDir(relOrFull As String) As String
+        Dim root = System.IO.Path.GetFullPath(cfg.webRoot)
+        Dim dir As String
+
+        If System.IO.Path.IsPathRooted(relOrFull) Then
+            dir = System.IO.Path.GetFullPath(relOrFull)
+        Else
+            dir = System.IO.Path.GetFullPath(System.IO.Path.Combine(root, relOrFull.TrimStart("/"c)))
+        End If
+
+        If Not dir.StartsWith(root, StringComparison.OrdinalIgnoreCase) OrElse Not System.IO.Directory.Exists(dir) Then
+            Return ""
+        End If
+
+        Return dir
+    End Function
+
+    ''' <summary>
+    ''' 解析 dataset 目录，展开为数据块入队，返回展开的数据块数量。
+    ''' </summary>
+    Private Function ExpandDataset(jobId As String, submit As JobSubmit, dir As String, chunkSize As Long) As Integer
+        Dim type = If(submit.datasetType, "auto").ToLower()
+
+        If type = "auto" Then
+            If System.IO.File.Exists(System.IO.Path.Combine(dir, "dataset.json")) Then
+                type = "json"
+            ElseIf System.IO.File.Exists(System.IO.Path.Combine(dir, "dataset.ini")) Then
+                type = "ini"
+            Else
+                Return 0
+            End If
+        End If
+
+        If type = "json" Then
+            Return SplitDatasetJson(jobId, submit, dir, chunkSize)
+        ElseIf type = "ini" Then
+            Return SplitDatasetIni(jobId, submit, dir, chunkSize)
+        End If
+
+        Return 0
+    End Function
+
+    ''' <summary>
+    ''' 解析 dataset.ini：枚举匹配后缀的数据文件，每个文件按 chunkSize 拆分。
+    ''' dataset.ini 示例：
+    '''   [dataset]
+    '''   ext=*.dat
+    '''   description=任务描述
+    ''' </summary>
+    Private Function SplitDatasetIni(jobId As String, submit As JobSubmit, dir As String, chunkSize As Long) As Integer
+        Dim iniPath = System.IO.Path.Combine(dir, "dataset.ini")
+        Dim ext = "*.dat"
+        Dim description = ""
+
+        For Each line In System.IO.File.ReadAllLines(iniPath)
+            Dim l = line.Trim()
+            If l.Length = 0 OrElse l.StartsWith("["c) Then
+                Continue For
+            End If
+            Dim eq = l.IndexOf("="c)
+            If eq < 0 Then
+                Continue For
+            End If
+            Dim key = l.Substring(0, eq).Trim().ToLower()
+            Dim val = l.Substring(eq + 1).Trim()
+            If key = "ext" Then
+                ext = val
+            ElseIf key = "description" Then
+                description = val
+            End If
+        Next
+
+        If Not ext.Contains("*"c) Then
+            ext = "*." & ext.TrimStart("."c)
+        End If
+
+        Dim files = System.IO.Directory.GetFiles(dir, ext)
+        Dim count = 0
+
+        For Each f In files
+            Call SplitFile(jobId, submit, f, chunkSize)
+            count += 1
+        Next
+
+        Call AppendLog($"[dataset.ini] {description} 匹配到 {count} 个后缀 {ext} 数据文件。")
+        Return count
+    End Function
+
+    ''' <summary>
+    ''' 解析 dataset.json：将大文件按 chunks 的 offset/size 读取段写入 SMB 数据块，每个 chunk 一个 TaskBlock。
+    ''' </summary>
+    Private Function SplitDatasetJson(jobId As String, submit As JobSubmit, dir As String, chunkSize As Long) As Integer
+        Dim jsonPath = System.IO.Path.Combine(dir, "dataset.json")
+        Dim info = LoadJSON(Of DatasetJsonInfo)(System.IO.File.ReadAllText(jsonPath))
+
+        If info Is Nothing OrElse String.IsNullOrEmpty(info.datafile) OrElse info.chunks Is Nothing Then
+            Call AppendLog($"[dataset.json] 配置无效: {jsonPath}")
+            Return 0
+        End If
+
+        Dim bigFile = System.IO.Path.Combine(dir, info.datafile)
+        If Not System.IO.File.Exists(bigFile) Then
+            Call AppendLog($"[dataset.json] 大文件不存在: {bigFile}")
+            Return 0
+        End If
+
+        Dim count = 0
+
+        Using fs = System.IO.File.OpenRead(bigFile)
+            For Each c In info.chunks
+                If c.size <= 0 Then
+                    Continue For
+                End If
+                Dim buffer(CInt(Math.Min(c.size, 64 * 1024 * 1024L)) - 1) As Byte
+                Dim remaining = c.size
+                Dim copied = 0L
+
+                fs.Seek(c.offset, SeekOrigin.Begin)
+
+                While remaining > 0
+                    Dim toRead = CInt(Math.Min(buffer.Length, remaining))
+                    Dim read = fs.Read(buffer, 0, toRead)
+                    If read <= 0 Then
+                        Exit While
+                    End If
+
+                    Dim guid As String = System.Guid.NewGuid().ToString("N")
+                    Dim blockFile = smb.BlockPath(jobId, guid)
+                    Using out = System.IO.File.Create(blockFile)
+                        Call out.Write(buffer, 0, read)
+                    End Using
+                    Call EnqueueBlock(jobId, submit, guid, chunkSize)
+                    copied += read
+                    remaining -= read
+                End While
+
+                count += 1
+            Next
+        End Using
+
+        Call AppendLog($"[dataset.json] {info.description} 展开 {count} 个 chunk 数据块。")
+        Return count
+    End Function
+
+    ''' <summary>
+    ''' 预览指定 dataset 目录的数据输入源（供 web 页面惰性展示）。
+    ''' </summary>
+    Public Function PreviewDataset(dir As String) As DatasetPreview
+        Dim preview As New DatasetPreview()
+
+        If System.IO.File.Exists(System.IO.Path.Combine(dir, "dataset.json")) Then
+            preview.kind = "json"
+            Try
+                preview.json = LoadJSON(Of DatasetJsonInfo)(System.IO.File.ReadAllText(System.IO.Path.Combine(dir, "dataset.json")))
+            Catch ex As Exception
+                preview.error = ex.Message
+            End Try
+            Return preview
+        End If
+
+        If System.IO.File.Exists(System.IO.Path.Combine(dir, "dataset.ini")) Then
+            preview.kind = "ini"
+            preview.ini = ParseIniPreview(dir)
+            Return preview
+        End If
+
+        preview.kind = "none"
+        Return preview
+    End Function
+
+    ''' <summary>
+    ''' 解析 dataset.ini 供预览（提取后缀 + 描述 + 匹配文件清单）。
+    ''' </summary>
+    Private Function ParseIniPreview(dir As String) As DatasetIniInfo
+        Dim iniPath = System.IO.Path.Combine(dir, "dataset.ini")
+        Dim ext = "*.dat"
+        Dim description = ""
+        Dim lines = System.IO.File.ReadAllLines(iniPath)
+
+        For Each line In lines
+            Dim l = line.Trim()
+            If l.Length = 0 OrElse l.StartsWith("["c) Then
+                Continue For
+            End If
+            Dim eq = l.IndexOf("="c)
+            If eq < 0 Then
+                Continue For
+            End If
+            Dim key = l.Substring(0, eq).Trim().ToLower()
+            Dim val = l.Substring(eq + 1).Trim()
+            If key = "ext" Then
+                ext = val
+            ElseIf key = "description" Then
+                description = val
+            End If
+        Next
+
+        If Not ext.Contains("*"c) Then
+            ext = "*." & ext.TrimStart("."c)
+        End If
+
+        Dim files = System.IO.Directory.GetFiles(dir, ext) _
+                                .Select(Function(p) System.IO.Path.GetFileName(p)) _
+                                .ToArray()
+
+        Return New DatasetIniInfo With {
+            .ext = ext,
+            .description = description,
+            .files = files
+        }
     End Function
 
     Private Sub SplitFile(jobId As String, submit As JobSubmit, file As String, chunkSize As Long)
