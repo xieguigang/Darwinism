@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "HeadNode": {
+      "commandName": "Project",
+      "commandLineArgs": "--smb-web-root=\"./Demo/\"",
+      "workingDirectory": "G:\\GCModeller\\src\\runtime\\Darwinism\\src\\computing\\DistributedCluster\\Host"
+    }
+  }
+}
