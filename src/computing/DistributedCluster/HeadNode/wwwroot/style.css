@@ -364,7 +364,16 @@ body {
     width: min(980px, 96vw) !important;
     max-height: 92vh !important;
 }
-.modal-body { max-height: 72vh; overflow-y: auto; }
+.modal-body { max-height: none; }
+
+/* 提交表单输入框：压缩高度（原 flex-basis:200px 在 column 下导致每个 input 高约 80px） */
+#submitModal .submit-form {
+    display: flex; flex-direction: column; gap: 10px;
+}
+#submitModal .submit-form input {
+    height: auto; min-height: 0; flex: none;
+    padding: 8px 12px; font-size: 13px;
+}
 
 .submit-panels {
     display: grid;
@@ -376,15 +385,16 @@ body {
     background: var(--ui-surface, var(--card));
     border: 1px solid var(--ui-border);
     border-radius: 14px;
-    padding: 12px 14px;
-    min-height: 260px;
+    padding: 10px 14px;
+    min-height: 220px;
+    max-height: 300px;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-sm);
     transition: border-color .25s, box-shadow .25s;
     min-width: 0;
 }
-.submit-panel.span-col { grid-column: 1 / -1; min-height: 220px; }
+.submit-panel.span-col { grid-column: 1 / -1; min-height: 180px; max-height: 260px; }
 .submit-panel:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
 
 .panel-head {
@@ -586,7 +596,8 @@ body.modal-open { overflow: hidden; }
 .modal-overlay[hidden] { display: none; }
 @keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
 .modal {
-    width: min(520px, 100%); max-height: 90vh; overflow: auto;
+    width: min(520px, 100%); max-height: 92vh; overflow: hidden;
+    display: flex; flex-direction: column;
     background: var(--ui-background); border: 1px solid var(--ui-border);
     border-radius: var(--radius); box-shadow: var(--shadow-md);
     animation: modal-in .22s cubic-bezier(.2,.8,.2,1);
@@ -598,7 +609,7 @@ body.modal-open { overflow: hidden; }
     background: var(--ui-background-alt); border: 1px solid var(--ui-border); color: var(--ui-foreground-muted);
     font-size: 18px; line-height: 1; transition: background .2s, color .2s; }
 .modal-close:hover { background: color-mix(in srgb, #d32f2f 18%, var(--ui-background-alt)); color: #d32f2f; }
-.modal-body { padding: 18px 20px; }
+.modal-body { padding: 18px 20px; flex: 1; min-height: 0; overflow-y: auto; }
 .modal-form { display: flex; flex-direction: column; gap: 14px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field-label { font-size: 12px; font-weight: 600; color: var(--ui-foreground-muted); }
