@@ -16,69 +16,7 @@ Public Class ReflectHost
 
     Public Shared Function Run(args As String()) As Integer
         Try
-            ' args(0) = --mode=worker，后续为位置参数
-            Dim blockId = args(1)
-            Dim jobId = args(2)
-            Dim assemblyPath = args(3)
-            Dim methodName = args(4)
-            Dim jobRoot = args(5)
-
-            Dim smb As New SmbPaths(jobRoot) ' jobRoot 已是 jobs/{jobId}
-            ' 修正：jobRoot 已经是 job 目录，这里 SmbPaths.Root 应为 jobs 父目录。
-            ' 为兼容，直接将 paths 基于 jobRoot 构造。
-            Dim blockFile = Path.Combine(jobRoot, "blocks", blockId)
-            Dim resultFile = Path.Combine(jobRoot, "results", blockId)
-            Dim logFile = Path.Combine(jobRoot, "logs", blockId & ".log")
-
-            For Each d In {Path.GetDirectoryName(resultFile), Path.GetDirectoryName(logFile)}
-                If Not Directory.Exists(d) Then Directory.CreateDirectory(d)
-            Next
-
-            Console.WriteLine($"[worker] block={blockId} assembly={assemblyPath} method={methodName}")
-
-            ' 反射加载 assembly（使用 Assembly.LoadFrom 以支持任意外部 CLR dll）。
-            Dim asm As Assembly = Assembly.LoadFrom(assemblyPath)
-
-            ' methodName 形如 Namespace.Class.Method，定位类型与方法。
-            Dim parts = methodName.Split("."c)
-            If parts.Length < 3 Then
-                Throw New ArgumentException($"methodName 格式应为 Namespace.Class.Method，实际：{methodName}")
-            End If
-
-            Dim typeName = String.Join(".", parts.Take(parts.Length - 1))
-            Dim methodNameOnly = parts(parts.Length - 1)
-            Dim type = asm.GetType(typeName, throwOnError:=True)
-            Dim method = type.GetMethod(methodNameOnly, BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance)
-
-            If method Is Nothing Then
-                Throw New MissingMethodException(typeName, methodNameOnly)
-            End If
-
-            ' 读取输入数据块（字节）。
-            Dim inputData As Byte() = If(File.Exists(blockFile), File.ReadAllBytes(blockFile), New Byte() {})
-
-            ' 构造调用参数：约定 (byte[] input, string blockId, string jobRoot) 或单参数 byte[]。
-            Dim invokeArgs As Object() = BuildArgs(method, inputData, blockId, jobRoot)
-            Dim instance As Object = If(method.IsStatic, Nothing, Activator.CreateInstance(type))
-
-            Dim result = method.Invoke(instance, invokeArgs)
-
-            ' 序列化结果写回 SMB。支持 byte[] / String / 其他（GetJson）。
-            Dim output As Byte()
-            If TypeOf result Is Byte() Then
-                output = DirectCast(result, Byte())
-            ElseIf TypeOf result Is String Then
-                output = System.Text.Encoding.UTF8.GetBytes(DirectCast(result, String))
-            ElseIf result Is Nothing Then
-                output = System.Text.Encoding.UTF8.GetBytes("")
-            Else
-                output = System.Text.Encoding.UTF8.GetBytes(result.GetJson())
-            End If
-
-            File.WriteAllBytes(resultFile, output)
-            Console.WriteLine($"[worker] 完成，结果已写入 {resultFile}")
-            Return 0
-
+            Return RunInternal(args)
         Catch ex As Exception
             ' 捕获所有异常，记录描述与栈追踪到 stdout（由守护进程归档）。
             Console.Error.WriteLine($"[worker][error] {ex.GetType().Name}: {ex.Message}")
@@ -97,6 +35,73 @@ Public Class ReflectHost
 
             Return 1
         End Try
+    End Function
+
+    Private Shared Function RunInternal(args As String()) As Integer
+        ' args(0) = --mode=worker，后续为位置参数
+        Dim blockId = args(1)
+        Dim jobId = args(2)
+        Dim assemblyPath = args(3)
+        Dim methodName = args(4)
+        Dim jobRoot = args(5)
+
+        Dim smb As New SmbPaths(jobRoot) ' jobRoot 已是 jobs/{jobId}
+        ' 修正：jobRoot 已经是 job 目录，这里 SmbPaths.Root 应为 jobs 父目录。
+        ' 为兼容，直接将 paths 基于 jobRoot 构造。
+        Dim blockFile = Path.Combine(jobRoot, "blocks", blockId)
+        Dim resultFile = Path.Combine(jobRoot, "results", blockId)
+        Dim logFile = Path.Combine(jobRoot, "logs", blockId & ".log")
+
+        For Each d In {Path.GetDirectoryName(resultFile), Path.GetDirectoryName(logFile)}
+            If Not Directory.Exists(d) Then
+                Directory.CreateDirectory(d)
+            End If
+        Next
+
+        Console.WriteLine($"[worker] block={blockId} assembly={assemblyPath} method={methodName}")
+
+        ' 反射加载 assembly（使用 Assembly.LoadFrom 以支持任意外部 CLR dll）。
+        Dim asm As Assembly = Assembly.LoadFrom(assemblyPath)
+
+        ' methodName 形如 Namespace.Class.Method，定位类型与方法。
+        Dim parts = methodName.Split("."c)
+        If parts.Length < 3 Then
+            Throw New ArgumentException($"methodName 格式应为 Namespace.Class.Method，实际：{methodName}")
+        End If
+
+        Dim typeName = String.Join(".", parts.Take(parts.Length - 1))
+        Dim methodNameOnly = parts(parts.Length - 1)
+        Dim type = asm.GetType(typeName, throwOnError:=True)
+        Dim method = type.GetMethod(methodNameOnly, BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance)
+
+        If method Is Nothing Then
+            Throw New MissingMethodException(typeName, methodNameOnly)
+        End If
+
+        ' 读取输入数据块（字节）。
+        Dim inputData As Byte() = If(File.Exists(blockFile), File.ReadAllBytes(blockFile), New Byte() {})
+
+        ' 构造调用参数：约定 (byte[] input, string blockId, string jobRoot) 或单参数 byte[]。
+        Dim invokeArgs As Object() = BuildArgs(method, inputData, blockId, jobRoot)
+        Dim instance As Object = If(method.IsStatic, Nothing, Activator.CreateInstance(type))
+
+        Dim result = method.Invoke(instance, invokeArgs)
+
+        ' 序列化结果写回 SMB。支持 byte[] / String / 其他（GetJson）。
+        Dim output As Byte()
+        If TypeOf result Is Byte() Then
+            output = DirectCast(result, Byte())
+        ElseIf TypeOf result Is String Then
+            output = System.Text.Encoding.UTF8.GetBytes(DirectCast(result, String))
+        ElseIf result Is Nothing Then
+            output = System.Text.Encoding.UTF8.GetBytes("")
+        Else
+            output = System.Text.Encoding.UTF8.GetBytes(result.GetJson())
+        End If
+
+        File.WriteAllBytes(resultFile, output)
+        Console.WriteLine($"[worker] 完成，结果已写入 {resultFile}")
+        Return 0
     End Function
 
     ''' <summary>
