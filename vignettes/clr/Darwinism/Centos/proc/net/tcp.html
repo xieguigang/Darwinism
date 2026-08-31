@@ -22,12 +22,9 @@
 
         <h3>Description</h3>
 
-        <p>/proc/net/tcp</p>
+        <p>/proc/net/tcp
 
-<p>This file contains information about all TCP sockets that are currently open on 
- the system. Each line in the file represents a TCP socket, and the fields in 
- each line provide details about the socket’s state, the local and remote addresses 
- and ports, and other related information.</p>
+<p>This file contains information about all TCP sockets that are currently open on the system. Each line in the file represents a TCP socket, and the fields in each line provide details about the socket’s state, the local and remote addresses and ports, and other related information.
 
         <h3>Declare</h3>        
 
@@ -35,8 +32,7 @@
             <code id="clr_ts">
 # namespace Darwinism.Centos.proc.net
 export class tcp {
-   # The inode number of the socket. This can be used to find the process using 
-   #  the socket by looking at <code>/proc/[pid]/fdinfo/</code> for the inode.
+   # The inode number of the socket. This can be used to find the process using the socket by looking at <code>/proc/[pid]/fdinfo/</code> for the inode.
    inode: string;
    # The local IP address and port number (in hexadecimal).
    local_address: string;
