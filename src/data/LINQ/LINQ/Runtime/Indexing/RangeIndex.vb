@@ -112,14 +112,6 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
     End Function
 
     ''' <summary>
-    ''' search all indexed data that the value is less than the given value x.
-    ''' </summary>
-    ''' <param name="x"></param>
-    ''' <param name="strict">
-    ''' when true the boundary value is excluded(x &lt; value), otherwise the
-    ''' boundary value is included(x &lt;= value).
-    ''' </param>
-    ''' <summary>
     ''' estimate the block window size from the average gap of the sorted values.
     ''' </summary>
     ''' <param name="x">
