@@ -103,7 +103,15 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Return Me
     End Function
 
-    Public Iterator Function SearchLessThan(x As T) As IEnumerable(Of IAddressOf)
+    ''' <summary>
+    ''' search all indexed data that the value is less than the given value x.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="strict">
+    ''' when true the boundary value is excluded(x &lt; value), otherwise the
+    ''' boundary value is included(x &lt;= value).
+    ''' </param>
+    Public Iterator Function SearchLessThan(x As T, Optional strict As Boolean = False) As IEnumerable(Of IAddressOf)
         Dim right_d As Double = eval(x)
         Dim right = index.GetOffset(New SeqValue(Of T)(x))
 
@@ -116,7 +124,7 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
                 For Each item As SeqValue(Of T) In index.GetBlock(i)
                     Dim xi As Double = eval(item.value)
 
-                    If xi <= right_d Then
+                    If If(strict, xi < right_d, xi <= right_d) Then
                         Yield item
                     End If
                 Next
@@ -128,7 +136,15 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Next
     End Function
 
-    Public Iterator Function SearchGreaterThan(x As T) As IEnumerable(Of IAddressOf)
+    ''' <summary>
+    ''' search all indexed data that the value is greater than the given value x.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="strict">
+    ''' when true the boundary value is excluded(x &gt; value), otherwise the
+    ''' boundary value is included(x &gt;= value).
+    ''' </param>
+    Public Iterator Function SearchGreaterThan(x As T, Optional strict As Boolean = False) As IEnumerable(Of IAddressOf)
         Dim left_d As Double = eval(x)
         Dim left = index.GetOffset(New SeqValue(Of T)(x))
 
@@ -137,11 +153,11 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         End If
 
         For i As Integer = left To index.numBlocks - 1
-            If i = left Then
+            If i = left OrElse left = 0 Then
                 For Each item As SeqValue(Of T) In index.GetBlock(i)
                     Dim xi As Double = eval(item.value)
 
-                    If xi >= left_d Then
+                    If If(strict, xi > left_d, xi >= left_d) Then
                         Yield item
                     End If
                 Next

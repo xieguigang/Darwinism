@@ -80,11 +80,15 @@ Public Class FTSEngine : Inherits SearchIndex
     Public Overrides Sub Indexing(doc As String)
         If index.Add(doc) Then
             Call documents.Save(doc)
-        ElseIf doc Is Nothing Then
+        Else
             ' 20241018 for avoid the incorrect data offset
             ' when there are some missing content in the
             ' data source
-            Call documents.Save("")
+            '
+            ' the tokenless document still consumes one auto id inside the
+            ' inverted index, so the document pool must be advanced as well to
+            ' keep 'documents.GetDocument(id)' aligned with the row offsets.
+            Call documents.Save(If(doc, ""))
         End If
     End Sub
 

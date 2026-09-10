@@ -76,6 +76,12 @@ Public Class TermHashIndex : Inherits SearchIndex
     ''' </remarks>
     ReadOnly documentMaps As New Dictionary(Of Integer, Integer)
 
+    ''' <summary>
+    ''' the auto incremental document id. note that the unary plus operator of the
+    ''' i32 type behaves like a post-increment: it returns the current value 0 for
+    ''' the very first document and then advances by one, so that the generated id
+    ''' stays aligned with the zero based row offset of the data source.
+    ''' </summary>
     Dim queryId As i32 = 0
 
     Public Sub New(documents As DocumentPool)
@@ -119,7 +125,7 @@ Public Class TermHashIndex : Inherits SearchIndex
     ''' <param name="doc">the document content data for make hash index</param>
     ''' <param name="id">the document id that associated with the given document content data</param>
     Public Overrides Sub Indexing(doc As String, id As Integer)
-        Dim doc_key = doc.ToLower
+        Dim doc_key As String = Strings.LCase(If(doc, ""))
 
         If Not hashIndex.ContainsKey(doc_key) Then
             Call hashIndex.Add(doc_key, New List(Of Integer))
@@ -128,8 +134,9 @@ Public Class TermHashIndex : Inherits SearchIndex
         Dim documentId As Integer = documents.Save(doc)
 
         Call hashIndex(doc_key).Add(documentId)
-        Call documentMaps.Add(documentId, id)
-    End Sub
+        ' assignment instead of Add here: the (possibly restored) index may reuse
+        ' an already known document id, Add would throw on such duplicates
+        documentMaps(documentId) = id    End Sub
 
     ''' <summary>
     ''' helper function for make index for the non-scalar data field
@@ -144,6 +151,10 @@ Public Class TermHashIndex : Inherits SearchIndex
     End Sub
 
     Public Function Query(term As String) As IEnumerable(Of Integer)
+        If term Is Nothing Then
+            Return {}
+        End If
+
         Dim docsId = hashIndex.TryGetValue(Strings.LCase(term)).SafeQuery
         ' mapping to the query id
         Dim index = docsId.Select(Function(docId) documentMaps(docId))

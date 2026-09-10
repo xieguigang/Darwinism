@@ -92,7 +92,7 @@ Public MustInherit Class MemoryQuery
                     Throw New NotImplementedException(q.search.Description)
             End Select
 
-            If index.Length = 0 Then
+            If index IsNot Nothing AndAlso index.Length = 0 Then
                 Return Nothing
             End If
         Next
@@ -115,9 +115,9 @@ Public MustInherit Class MemoryQuery
                 Dim val As Double = CDbl(q.value)
 
                 If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
-                    query = DirectCast(search, RangeIndex(Of Double)).SearchGreaterThan(val)
+                    query = DirectCast(search, RangeIndex(Of Double)).SearchGreaterThan(val, strict:=True)
                 ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
-                    query = DirectCast(search, RangeIndex(Of Double)).SearchLessThan(val)
+                    query = DirectCast(search, RangeIndex(Of Double)).SearchLessThan(val, strict:=True)
                 Else
                     query = DirectCast(search, RangeIndex(Of Double)).Search(val)
                 End If
@@ -125,9 +125,9 @@ Public MustInherit Class MemoryQuery
                 Dim val As Integer = CInt(q.value)
 
                 If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
-                    query = DirectCast(search, RangeIndex(Of Integer)).SearchGreaterThan(val)
+                    query = DirectCast(search, RangeIndex(Of Integer)).SearchGreaterThan(val, strict:=True)
                 ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
-                    query = DirectCast(search, RangeIndex(Of Integer)).SearchLessThan(val)
+                    query = DirectCast(search, RangeIndex(Of Integer)).SearchLessThan(val, strict:=True)
                 Else
                     query = DirectCast(search, RangeIndex(Of Integer)).Search(val)
                 End If
@@ -135,9 +135,9 @@ Public MustInherit Class MemoryQuery
                 Dim val As Date = CDate(q.value)
 
                 If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
-                    query = DirectCast(search, RangeIndex(Of Date)).SearchGreaterThan(val)
+                    query = DirectCast(search, RangeIndex(Of Date)).SearchGreaterThan(val, strict:=True)
                 ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
-                    query = DirectCast(search, RangeIndex(Of Date)).SearchLessThan(val)
+                    query = DirectCast(search, RangeIndex(Of Date)).SearchLessThan(val, strict:=True)
                 Else
                     query = DirectCast(search, RangeIndex(Of Date)).Search(val)
                 End If
@@ -227,7 +227,7 @@ Public MustInherit Class MemoryQuery
     Protected Sub LevenshteinSearch(q As Query, ByRef index As Integer())
         Dim text As String = any.ToString(q.value)
 
-        If Not m_fulltext.ContainsKey(q.field) Then
+        If Not m_levenshtein.ContainsKey(q.field) Then
             Throw New MissingPrimaryKeyException($"missing levenshtein text search index on data field '{q.field}'!")
         End If
 
