@@ -152,11 +152,16 @@ Public Class TermHashIndex : Inherits SearchIndex
     End Sub
 
     Public Function Query(term As String) As IEnumerable(Of Integer)
-        If term Is Nothing Then
+        Dim key As String = LCase(If(term, ""))
+
+        ' test the key first: the dictionary lookup helper of the framework writes a
+        ' noisy warning log for every missing key, and a missing search term is a
+        ' completely normal query result here.
+        If Not hashIndex.ContainsKey(key) Then
             Return {}
         End If
 
-        Dim docsId = hashIndex.TryGetValue(Strings.LCase(term)).SafeQuery
+        Dim docsId = hashIndex(key).SafeQuery
         ' mapping to the query id
         Dim index = docsId.Select(Function(docId) documentMaps(docId))
 
