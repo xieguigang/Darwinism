@@ -82,17 +82,25 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
     End Sub
 
     Public Function IndexData(data As IEnumerable(Of T)) As RangeIndex(Of T)
-        Dim pool = data.Select(Function(xi, i) New SeqValue(Of T)(i, xi)).ToArray
-        Dim x As Double() = (From xi As SeqValue(Of T) In pool Select eval(xi.value)).ToArray
-        Dim diff As Double() = x.OrderBy(Function(a) a) _
-            .Split(x.Length / 1000) _
-            .AsParallel _
-            .Select(Function(a) a.Max - a.Min) _
+        ' the block search function requires its input pool in ascending order of the
+        ' evaluated key, otherwise the [min ~ max] boundary of each index block is
+        ' meaningless and the range search will miss data. the original row offset is
+        ' kept inside the SeqValue(i) slot, so sorting here does not change the
+        ' addresses that are returned to the caller.
+        Dim pool = data _
+            .Select(Function(xi, i) New SeqValue(Of T)(i, xi)) _
+            .OrderBy(Function(xi) eval(xi.value)) _
             .ToArray
-        Dim win_size As Double = diff.Average * 1.125
+        Dim x As Double() = (From xi As SeqValue(Of T) In pool Select eval(xi.value)).ToArray
+        Dim win_size As Double = EstimateTolerance(x)
 
         tolerance = win_size
-        doubles = x
+        ' keep the key values indexed by the original row offset
+        doubles = New Double(pool.Length - 1) {}
+
+        For Each xi As SeqValue(Of T) In pool
+            doubles(xi.i) = eval(xi.value)
+        Next
         index = New BlockSearchFunction(Of SeqValue(Of T))(
             data:=pool,
             eval:=Function(i) eval(i.value),
@@ -111,6 +119,36 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
     ''' when true the boundary value is excluded(x &lt; value), otherwise the
     ''' boundary value is included(x &lt;= value).
     ''' </param>
+    ''' <summary>
+    ''' estimate the block window size from the average gap of the sorted values.
+    ''' </summary>
+    ''' <param name="x">
+    ''' the sorted key values, an empty or single element input gets a zero window.
+    ''' </param>
+    Private Shared Function EstimateTolerance(x As Double()) As Double
+        If x Is Nothing OrElse x.Length <= 1 Then
+            Return 0
+        End If
+
+        Dim sorted As Double() = x.OrderBy(Function(a) a).ToArray()
+        Dim gaps As New List(Of Double)()
+
+        For i As Integer = 1 To sorted.Length - 1
+            Dim gap As Double = sorted(i) - sorted(i - 1)
+
+            If gap > 0 Then
+                gaps.Add(gap)
+            End If
+        Next
+
+        If gaps.Count = 0 Then
+            ' every element shares the same value
+            Return 0
+        End If
+
+        Return gaps.Average() * 1.125
+    End Function
+
     Public Iterator Function SearchLessThan(x As T, Optional strict As Boolean = False) As IEnumerable(Of IAddressOf)
         Dim right_d As Double = eval(x)
         Dim right = index.GetOffset(New SeqValue(Of T)(x))
