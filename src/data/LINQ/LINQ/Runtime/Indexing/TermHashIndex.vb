@@ -136,7 +136,8 @@ Public Class TermHashIndex : Inherits SearchIndex
         Call hashIndex(doc_key).Add(documentId)
         ' assignment instead of Add here: the (possibly restored) index may reuse
         ' an already known document id, Add would throw on such duplicates
-        documentMaps(documentId) = id    End Sub
+        documentMaps(documentId) = id
+    End Sub
 
     ''' <summary>
     ''' helper function for make index for the non-scalar data field
