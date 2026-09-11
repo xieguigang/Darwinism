@@ -60,7 +60,7 @@ Imports LINQ.Runtime
 Imports LINQ.Script
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.LineEdit
-Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.My.JavaScript
 

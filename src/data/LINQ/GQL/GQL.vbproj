@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>GQL</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Graph Query Language Interpreter</Title>
     <Platforms>AnyCPU;x64</Platforms>

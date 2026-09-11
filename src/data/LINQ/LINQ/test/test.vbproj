@@ -1,171 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{73242B0A-986B-4C6A-8B5D-23CC24D67D68}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>test</RootNamespace>
-    <AssemblyName>test</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>test.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>test.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>test.valueIndex2</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>test.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>test.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Platforms>AnyCPU;x64</Platforms>
+    <TargetFramework>net10.0</TargetFramework>
+    <StartupObject>test.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
+    <ProjectReference Include="..\..\..\..\..\..\httpd\src\Flute\Flute.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\GQL\GQL.vbproj" />
+    <ProjectReference Include="..\..\RQL\RQL.vbproj" />
+    <ProjectReference Include="..\LINQ.vbproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="valueIndex.vb" />
-    <Compile Include="fulltext_demo.vb" />
-    <Compile Include="resourceTest.vb" />
-    <Compile Include="Program.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj">
-      <Project>{9384ac10-5c0d-41f9-b031-a7895d9f3327}</Project>
-      <Name>binarydata-netcore5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj">
-      <Project>{37e0fee5-d09b-4ca0-a00f-6c7e6e5c87fd}</Project>
-      <Name>HDSPack</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj">
-      <Project>{35601f0b-698a-406b-80ff-37e52328fa58}</Project>
-      <Name>msgpack-netcore5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj">
-      <Project>{3e8730ed-27e7-4df1-9469-c85325ec9691}</Project>
-      <Name>netCDF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj">
-      <Project>{0447b72e-f90a-4160-9816-69aa44cb6535}</Project>
-      <Name>dataframework-netcore5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
-      <Project>{ff880c70-2b83-4ff7-95cc-cce84f0fb6ab}</Project>
-      <Name>Math.NET5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj">
-      <Project>{7fd30be4-86d5-47d1-a6f3-b50ba6da5f4c}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RQL\RQL.vbproj">
-      <Project>{5d750813-1d43-4e79-b461-55187cab11aa}</Project>
-      <Name>RQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LINQ.vbproj">
-      <Project>{7b43f652-7c1e-4c0b-97e6-5b11f30e7ec1}</Project>
-      <Name>LINQ</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
