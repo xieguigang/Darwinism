@@ -18,7 +18,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <OutputPath>../../../assembly/</OutputPath>
-    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <PackageTags>centos;linux;ssh;hpc;darwinism</PackageTags>
     <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism CentOS remote helper component.</PackageReleaseNotes>
