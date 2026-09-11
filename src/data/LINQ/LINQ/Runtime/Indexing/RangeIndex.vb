@@ -141,8 +141,49 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Return gaps.Average() * 1.125
     End Function
 
+    ''' <summary>the smallest indexed key value, NaN for an empty index</summary>
+    Private Function FirstKey() As Double
+        If index Is Nothing OrElse index.numBlocks <= 0 Then
+            Return Double.NaN
+        End If
+
+        For Each item As SeqValue(Of T) In index.GetBlock(0)
+            Return eval(item.value)
+        Next
+
+        Return Double.NaN
+    End Function
+
+    ''' <summary>the largest indexed key value, NaN for an empty index</summary>
+    Private Function LastKey() As Double
+        If index Is Nothing OrElse index.numBlocks <= 0 Then
+            Return Double.NaN
+        End If
+
+        Dim last As Double = Double.NaN
+
+        For Each item As SeqValue(Of T) In index.GetBlock(index.numBlocks - 1)
+            last = eval(item.value)
+        Next
+
+        Return last
+    End Function
+
     Public Iterator Function SearchLessThan(x As T, Optional strict As Boolean = False) As IEnumerable(Of IAddressOf)
         Dim right_d As Double = eval(x)
+        Dim maxKey As Double = LastKey()
+
+        ' the query value is beyond the largest indexed value: every element matches
+        If Not Double.IsNaN(maxKey) AndAlso If(strict, right_d > maxKey, right_d >= maxKey) Then
+            For i As Integer = 0 To index.numBlocks - 1
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Yield item
+                Next
+            Next
+
+            Return
+        End If
+
         Dim right = index.GetOffset(New SeqValue(Of T)(x))
 
         ' a negative offset means the query value is outside of the indexed value
@@ -186,6 +227,26 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
     ''' </param>
     Public Iterator Function SearchGreaterThan(x As T, Optional strict As Boolean = False) As IEnumerable(Of IAddressOf)
         Dim left_d As Double = eval(x)
+        Dim minKey As Double = FirstKey()
+
+        ' the query value is below the smallest indexed value: every element matches
+        If Not Double.IsNaN(minKey) AndAlso If(strict, left_d < minKey, left_d <= minKey) Then
+            For i As Integer = 0 To index.numBlocks - 1
+                For Each item As SeqValue(Of T) In index.GetBlock(i)
+                    Yield item
+                Next
+            Next
+
+            Return
+        End If
+
+        Dim maxKey As Double = LastKey()
+
+        ' the query value is beyond the largest indexed value: nothing matches
+        If Not Double.IsNaN(maxKey) AndAlso If(strict, left_d >= maxKey, left_d > maxKey) Then
+            Return
+        End If
+
         Dim left = index.GetOffset(New SeqValue(Of T)(x))
 
         ' see SearchLessThan: an out of range query value must not stop the scan,
