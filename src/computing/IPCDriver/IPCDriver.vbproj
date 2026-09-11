@@ -1,18 +1,52 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Darwinism.IPC.Driver</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>Darwinism.IPC.Driver</AssemblyName>
     <Configurations>Debug;Release;MEMI-Desktop</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
+    <Title>Darwinism IPC Driver Services</Title>
+    <PackageTags>ipc;driver;hpc;darwinism;cluster</PackageTags>
+    <Description>Drivers that host Darwinism IPC protocol handlers as network services, exposing a ProtocolHandler over an HTTP server and over a raw TCP server, plus NanoCluster client-agent and master scaffolding for distributed task submission and heartbeats.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism IPC driver component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
+    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|x64'">
+    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
+    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|x64'">
+    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0|AnyCPU'">
+    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0|x64'">
+    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\httpd\src\Flute\Flute.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\networking\networking.vbproj" />
     <ProjectReference Include="..\Parallel\parallel-netcore5.vbproj" />
+    <None Include="..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>

@@ -1,34 +1,44 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>FullTextBuffer</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>Full-Text Inverted Index Buffer</Title>
+    <PackageTags>full-text;inverted-index;search;hpc;darwinism</PackageTags>
+    <Description>A compact binary (de)serialization library for full-text inverted indexes, reading and writing an InvertedIndex (token to document-id postings) together with document offset tables to/from streams, building on the LINQ project's indexing types.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism full-text inverted index buffer component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|x64'">
     <Optimize>False</Optimize>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
     <Optimize>False</Optimize>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\LINQ\LINQ\LINQ.vbproj" />
+    <None Include="..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>

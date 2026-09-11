@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>Darwinism.HPC.DistributedCluster.Shared</RootNamespace>
@@ -8,34 +7,44 @@
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64;ARM64</Platforms>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>HPC Cluster Shared Models</Title>
+    <PackageTags>hpc;cluster;distributed;computing;darwinism</PackageTags>
+    <Description>Shared contracts and configuration for the Darwinism distributed cluster, defining head-node/node/worker run modes, HTTP port, SMB data-hub root, poll interval, retry limits, and the storage layout shared across cluster nodes.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism HPC distributed cluster shared component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <None Include="..\..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>

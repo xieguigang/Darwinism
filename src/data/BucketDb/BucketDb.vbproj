@@ -1,5 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Darwinism.Repository.BucketDb</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
@@ -8,158 +7,137 @@
     <AssemblyTitle>In-Memory Key-Value BucketDb</AssemblyTitle>
     <AssemblyName>Darwinism.Repository.BucketDb</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <PackageIcon>icons8-repository-96.png</PackageIcon>
+    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <Title>In-Memory Key-Value BucketDb</Title>
+    <PackageTags>key-value;storage;in-memory;hpc;darwinism</PackageTags>
+    <Description>A hashcode-bucketed in-memory key-value database with optional disk persistence, an L1 hot cache and an L2 in-memory file index, per-bucket fine-grained locking, and a background worker that flushes dirty indexes and evicts cold cache entries.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism in-memory key-value BucketDb component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
     <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\..\..\.pkg\icons8-repository-96.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
-
 </Project>

@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <RootNamespace>RQL</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
@@ -7,10 +6,21 @@
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;Docker</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>The Resource Query Language</Title>
+    <PackageTags>resource;query-language;rql;full-text;hpc;darwinism</PackageTags>
+    <Description>The Resource Query Language (RQL) engine for indexing and querying string/file resources stored in a StreamPack archive, with a trie-based tree index for access and pluggable indexers (CSV, MongoDB) for full-text and hash lookups, layering on top of the LINQ and FullTextBuffer components.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism Resource Query Language component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\HDSPack\HDSPack.vbproj" />
@@ -19,6 +29,9 @@
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
     <ProjectReference Include="..\..\FullTextBuffer\FullTextBuffer.vbproj" />
     <ProjectReference Include="..\LINQ\LINQ.vbproj" />
+    <None Include="..\..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>

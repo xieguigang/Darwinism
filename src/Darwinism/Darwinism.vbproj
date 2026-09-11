@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <RootNamespace>Darwinism</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
@@ -7,174 +6,157 @@
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
     <OutputPath>../../assembly/</OutputPath>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>Darwinism R# HPC Framework</Title>
+    <PackageTags>rsharp;ipc;hpc;darwinism;cloud</PackageTags>
+    <Description>The root R# extension package for the Darwinism high-performance computing framework, exposing IPC parallel environment configuration, parallel math (KNN, Pearson correlation, average distance), Linux/CentOS and Docker tooling, and OSS cloud-storage helpers through R-language bindings.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism HPC framework package.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>False</Optimize>
     <DebugType>full</DebugType>
     <DefineConstants>DATAMINING_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Optimize>False</Optimize>
     <DebugType>full</DebugType>
     <DefineConstants>DATAMINING_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DefineConstants>DATAMINING_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DebugType>full</DebugType>
     <DefineConstants>DATAMINING_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
     <DefineConstants>DATAMINING_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <DebugType>full</DebugType>
     <DefineTrace>True</DefineTrace>
     <DefineConstants>DATAMINING_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DebugType>portable</DebugType>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <DefineConstants>DATAMINING_DATASET=1,MATH_DATASET=1</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\R-sharp\R#\Rsharp-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
@@ -194,8 +176,10 @@
     <ProjectReference Include="..\data\CDF.PInvoke\CDF.PInvoke.vbproj" />
     <ProjectReference Include="..\data\HDF.PInvoke\HDF.PInvoke.Core.csproj" />
     <ProjectReference Include="..\data\LINQ\LINQ\LINQ.vbproj" />
+    <None Include="..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
   <Import Project="..\..\..\..\R-sharp\Library\shares\dataframeHelper\dataframeHelper.projitems" Label="Shared" />
-
 </Project>

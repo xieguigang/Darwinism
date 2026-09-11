@@ -1,24 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <RootNamespace>Darwinism.OSSUtil</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>Darwinism.OSSUtil</AssemblyName>
-    <Description>Cloud data storage helper</Description>
+    <Description>A cloud object-storage helper, primarily for Alibaba Cloud OSS via the ossutil CLI, providing a filesystem-style abstraction over buckets and objects, file copy/upload/download, Aspera (fasp) transfer support, and IDM batch-download integration.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>i@xieguigang.me</Copyright>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;NPSearch;mzkit_win32</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
-    <PackageProjectUrl>https://github.com/xieguigang/Darwinism</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/xieguigang/Darwinism</RepositoryUrl>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <PackageIcon>icons8-repository-96.png</PackageIcon>
+    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <Title>Darwinism OSS Cloud Storage Helper</Title>
+    <PackageTags>oss;aliyun;cloud;hpc;darwinism</PackageTags>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism OSS cloud-storage component.</PackageReleaseNotes>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +30,6 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
@@ -34,7 +37,6 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -44,9 +46,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
-    
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -56,9 +56,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
-    
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -68,9 +66,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
-    
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -80,9 +76,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
-    
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -93,35 +87,27 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>ThinkVB.FileSystem.OSS.xml</DocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
@@ -130,15 +116,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
-
 </Project>

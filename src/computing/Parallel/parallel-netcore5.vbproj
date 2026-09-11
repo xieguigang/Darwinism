@@ -1,38 +1,32 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Darwinism.HPC.Parallel</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <AssemblyName>Darwinism.HPC.Parallel</AssemblyName>
-    <Description>High Performance Parallel Compute Library on Unix .NET 6 runtime</Description>
+    <Description>The Darwinism high-performance parallel compute library for .NET, implementing IPC-based parallel task execution across slave nodes, shared-memory (memory-mapped file) pipes for fast inter-process data exchange, and thread-pool task scheduling.</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>i@xieguigang.me</Copyright>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;Docker;PlantMAT;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
-    <PackageProjectUrl>https://github.com/xieguigang/Darwinism</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/xieguigang/Darwinism</RepositoryUrl>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Title>Darwinism HPC parallel library for VisualBasic on unix platform</Title>
-    <Product>Darwinism</Product>
-    <PackageTags>parallel;ipc</PackageTags>
+    <Title>Darwinism HPC Parallel Library</Title>
+    <Product>Darwinism HPC</Product>
+    <PackageTags>parallel;ipc;hpc;darwinism;mmf</PackageTags>
     <Version>6.0.231.5699</Version>
-    <Authors>xie.guigang@gcmodeller.org</Authors>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
-
     <OutputPath>../../../../../R-sharp/App/</OutputPath>
-
-
-    <PackageIcon>icons8-repository-96.png</PackageIcon>
-
-
+    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism HPC parallel component.</PackageReleaseNotes>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Company>scibasic.net foundation</Company>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
@@ -40,7 +34,6 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
@@ -48,7 +41,6 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -58,9 +50,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
-  
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -70,9 +60,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
-   
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -82,9 +70,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
-   
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -95,7 +81,6 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -106,7 +91,6 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -117,65 +101,47 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MEMI-Desktop|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MEMI-Desktop|x64'">
     <DocumentationFile>Parallel.xml</DocumentationFile>
   </PropertyGroup>
-
-
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="..\..\..\.pkg\icons8-repository-96.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\msgpack\msgpack-netcore5.vbproj" />
@@ -184,5 +150,4 @@
     <ProjectReference Include="..\..\CloudKit\Centos\Centos.NET5.vbproj" />
     <ProjectReference Include="..\..\networking\networking.vbproj" />
   </ItemGroup>
-
 </Project>

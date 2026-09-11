@@ -1,18 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>GQL</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Graph Query Language Interpreter</Title>
     <Platforms>AnyCPU;x64</Platforms>
+    <PackageTags>graph;query-language;gql;hpc;darwinism</PackageTags>
+    <Description>The Graph Query Language (GQL) interpreter component, built on top of the Darwinism LINQ query engine and the scientific graph library, exposing a GQLInterpreter entry point for evaluating graph-structured queries against in-memory graph data.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism Graph Query Language interpreter component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\LINQ\LINQ.vbproj" />
+    <None Include="..\..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>

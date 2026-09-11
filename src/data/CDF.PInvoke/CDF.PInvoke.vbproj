@@ -1,17 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <RootNamespace>CDF.PInvoke</RootNamespace>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;MEMI-Desktop</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>netCDF Native P/Invoke Bindings</Title>
+    <PackageTags>netcdf;pinvoke;scientific-data;hpc;darwinism</PackageTags>
+    <Description>A managed P/Invoke wrapper around the native netCDF C library, exposing the full module of nc_* functions for dimensions, variables, groups, attributes, and user types, with OpenMode/CreateMode flags, Tensor helpers, and a DataReader convenience layer for scientific array I/O from VB.NET.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism netCDF P/Invoke bindings component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\netCDF\netCDF.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <None Include="..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>

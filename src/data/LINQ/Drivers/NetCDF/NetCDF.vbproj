@@ -12,6 +12,20 @@
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Deterministic>true</Deterministic>
+    <Title>NetCDF DataFrame Driver for Darwinism LINQ</Title>
+    <PackageTags>netcdf;dataframe;darwinism;hpc;data-driver</PackageTags>
+    <Description>A data-source driver for the Darwinism LINQ engine that reads NetCDF scientific data files, loading named data variables and yielding each record as a JavaScriptObject row to materialize a dataframe-like stream for HPC pipelines.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism NetCDF dataframe driver component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -90,6 +104,10 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <None Include="..\..\..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />

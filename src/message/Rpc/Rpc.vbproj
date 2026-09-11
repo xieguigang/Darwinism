@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
@@ -7,11 +7,28 @@
     <RootNamespace>Darwinism.IPC.Rpc</RootNamespace>
     <AssemblyName>Darwinism.IPC.Rpc</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>ONC RPC Client and Portmapper</Title>
+    <PackageTags>rpc;ipc;oncrpc;xdr;hpc;darwinism</PackageTags>
+    <Description>An ONC RPC (RFC 5531) style messaging library implementing the RPC call/reply message protocol over XDR, with TCP and UDP connectors and a RpcClient/IRpcClient abstraction, including port-mapper binding protocols and exception types.</Description>
+    <PackageReleaseNotes>Initial GPL-3.0-only release of the Darwinism ONC RPC messaging component.</PackageReleaseNotes>
+    <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <Copyright>Copyright © scibasic.net foundation, GuiLin China, 2026</Copyright>
+    <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
+    <Company>scibasic.net foundation</Company>
+    <Product>Darwinism HPC</Product>
+    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\XDRStream\XDRStream.vbproj" />
+    <None Include="..\..\..\.pkg\icons8-repository-96.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>
