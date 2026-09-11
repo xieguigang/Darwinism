@@ -145,12 +145,22 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Dim right_d As Double = eval(x)
         Dim right = index.GetOffset(New SeqValue(Of T)(x))
 
+        ' a negative offset means the query value is outside of the indexed value
+        ' range: below every element(nothing matches) or above every element(every
+        ' element matches). the whole block set is scanned then and each block is
+        ' filtered by the boundary condition.
+        Dim outside As Boolean = right < 0
+
+        If outside Then
+            right = index.numBlocks - 1
+        End If
+
         If right < 0 Then
             Return
         End If
 
         For i As Integer = 0 To right
-            If i = right Then
+            If i = right OrElse outside Then
                 For Each item As SeqValue(Of T) In index.GetBlock(i)
                     Dim xi As Double = eval(item.value)
 
@@ -178,12 +188,16 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
         Dim left_d As Double = eval(x)
         Dim left = index.GetOffset(New SeqValue(Of T)(x))
 
-        If left < 0 Then
+        ' see SearchLessThan: an out of range query value must not stop the scan,
+        ' every block gets filtered by the boundary condition instead.
+        Dim outside As Boolean = left < 0
+
+        If outside Then
             left = 0
         End If
 
         For i As Integer = left To index.numBlocks - 1
-            If i = left OrElse left = 0 Then
+            If (i = left AndAlso Not outside) OrElse outside Then
                 For Each item As SeqValue(Of T) In index.GetBlock(i)
                     Dim xi As Double = eval(item.value)
 
