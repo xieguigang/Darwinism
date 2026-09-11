@@ -8,7 +8,7 @@
     <OutputPath>../../../assembly/</OutputPath>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Title>Darwinism Data Mining Library</Title>
     <PackageTags>datamining;clustering;knn;hpc;darwinism</PackageTags>

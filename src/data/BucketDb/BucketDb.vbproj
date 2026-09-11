@@ -9,7 +9,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Title>In-Memory Key-Value BucketDb</Title>
     <PackageTags>key-value;storage;in-memory;hpc;darwinism</PackageTags>

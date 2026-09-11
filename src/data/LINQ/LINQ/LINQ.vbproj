@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Configurations>Debug;Release;MEMI-Desktop;Rsharp_app_release</Configurations>
-    <PackageIcon>..\..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\..\.nuget</PackageOutputPath>
     <Title>Darwinism LINQ Query Runtime</Title>
     <PackageTags>linq;query-language;full-text;search;hpc;darwinism</PackageTags>

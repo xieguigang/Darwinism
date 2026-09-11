@@ -14,7 +14,7 @@
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Title>Darwinism Docker CLI Wrapper</Title>
     <PackageTags>docker;container;hpc;darwinism;cloud</PackageTags>

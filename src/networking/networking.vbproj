@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageIcon>..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\.nuget</PackageOutputPath>
     <Title>Darwinism IPC Networking Library</Title>
     <PackageTags>networking;tcp;socket;ipc;hpc;darwinism</PackageTags>

@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <PackageOutputPath>..\..\..\.nuget</PackageOutputPath>
     <Title>Darwinism OSS Cloud Storage Helper</Title>
     <PackageTags>oss;aliyun;cloud;hpc;darwinism</PackageTags>
