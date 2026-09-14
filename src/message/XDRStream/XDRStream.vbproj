@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
     <OutputType>Library</OutputType>
@@ -19,7 +19,7 @@
     <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
     <Company>scibasic.net foundation</Company>
     <Product>Darwinism HPC</Product>
-    <PackageIcon>..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
