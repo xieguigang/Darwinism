@@ -6,7 +6,7 @@
     <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://scibasic.net/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/Darwinism.git</RepositoryUrl>
@@ -26,121 +26,121 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net10.0|AnyCPU'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net10.0|x64'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net10.0|x86'">
-    <OutputPath>../../nuget/</OutputPath>
+    <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Authenticator\**" />
