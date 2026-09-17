@@ -245,3 +245,4 @@ _Pvt_Extensions
 .pkg/Darwinism.zip
 /tools
 /.nuget
+/nuget/net10.0
