@@ -19,7 +19,8 @@
     <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
     <Company>scibasic.net foundation</Company>
     <Product>Darwinism HPC</Product>
-    <PackageIcon>..\..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+    <PackageIcon>icons8-repository-96.png</PackageIcon>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
