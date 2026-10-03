@@ -1,3 +1,6 @@
+Imports System.Buffers
+Imports System.Buffers.Binary
+Imports System.Collections.Concurrent
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.InteropServices
@@ -7,6 +10,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.Repository
+Imports Microsoft.Win32.SafeHandles
 
 ''' <summary>
 ''' A hashcode bucketed in-memory key-value database with persistence and optimized performance.
@@ -25,17 +29,25 @@ Public Class Buckets : Inherits InMemoryDb
     ''' <summary>
     ''' L1 Cache: 存储最近访问的数据
     ''' </summary>
-    Friend ReadOnly hotCache As New Dictionary(Of UInteger, L1CacheHotData)
-    ' 用于同步 hotCache 的访问
-    Friend ReadOnly hotCacheLock As New ReaderWriterLockSlim()
+    ''' <remarks>
+    ''' 使用 <see cref="ConcurrentDictionary"/> 实现读路径零锁：
+    ''' 读取时仅 TryGetValue + <see cref="Interlocked.Increment"/>，无需读写锁，
+    ''' 极大降低高并发读取下的锁争用开销。
+    ''' </remarks>
+    Friend ReadOnly hotCache As New ConcurrentDictionary(Of UInteger, L1CacheHotData)
 
     ''' <summary>
     ''' L2 Index: 内存中的文件索引，key: bucketId, value: 该桶的索引
     ''' </summary>
     Friend ReadOnly fileIndexes As New Dictionary(Of UInteger, Index)
 
-    ' 用于读取数据文件的流
-    ReadOnly bucketReaders As New Dictionary(Of Integer, BinaryDataReader)()
+    ''' <summary>
+    ''' 每个桶数据文件的只读句柄：配合 <see cref="RandomAccess"/> 按偏移量读取。
+    ''' 显式偏移量读取不共享 Stream.Position，因此同一个桶可以被多线程并发读取，
+    ''' 无需任何锁（取代旧版的 SyncLock BaseStream 串行化读）。
+    ''' </summary>
+    ReadOnly bucketHandles As New Dictionary(Of Integer, SafeFileHandle)()
+
     ' 用于写入数据文件的流
     Friend ReadOnly bucketWriters As New Dictionary(Of Integer, BinaryDataWriter)()
 
@@ -57,6 +69,15 @@ Public Class Buckets : Inherits InMemoryDb
     Friend cacheLimitSize As Integer
     Friend cacheClearRatio As Single = 0.5F ' 清理50%的冷数据
 
+    ''' <summary>
+    ''' 大于 1KB 的数据写入时的 Brotli 压缩级别。
+    ''' </summary>
+    ''' <remarks>
+    ''' 默认 <see cref="CompressionLevel.Fastest"/>：压缩写入吞吐比 Optimal 高数倍，
+    ''' 代价是文件体积略增（存储换速度的权衡），可通过构造函数参数回退到 Optimal。
+    ''' </remarks>
+    Friend compressionLevel As CompressionLevel = CompressionLevel.Fastest
+
     Dim enableImmediateFlush As Boolean = False ' 是否在每次写入后立即Flush到磁盘
 
     Private disposedValue As Boolean
@@ -70,7 +91,8 @@ Public Class Buckets : Inherits InMemoryDb
             Optional cacheSize As Integer = 100000,
             Optional buckets As Integer? = Nothing,
             Optional [readonly] As Boolean = False,
-            Optional in_memory As Boolean = False)
+            Optional in_memory As Boolean = False,
+            Optional compression As CompressionLevel = CompressionLevel.Fastest)
 
         Dim bucketFiles = database_dir.EnumerateFiles("*.db").Count
 
@@ -81,6 +103,7 @@ Public Class Buckets : Inherits InMemoryDb
         Me.database_dir = database_dir
         Me.bucketLocks = New Object(buckets) {}
         Me.cacheLimitSize = cacheSize
+        Me.compressionLevel = compression
         Me.worker = BackgroundWorker.Start(Me)
         Me.is_readonly = [readonly]
 
@@ -104,18 +127,12 @@ Public Class Buckets : Inherits InMemoryDb
                 Call New Byte() {}.FlushStream(dataFilePath)
             End If
 
-            Dim readerStream As Stream
-
-            If [readonly] AndAlso in_memory Then
-                readerStream = dataFilePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True, aggressive:=True)
-            Else
-                ' 1. 初始化数据文件读写器
-                ' FileMode.OpenOrCreate: 文件存在则打开，不存在则创建
-                ' FileAccess.Read: 读取器只需要读权限
-                readerStream = New FileStream(dataFilePath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite)
-            End If
-
-            bucketReaders(i) = New BinaryDataReader(readerStream)
+            ' 1. 为每个桶打开一个只读句柄：
+            '    配合 RandomAccess 按显式偏移量读取，不共享 Stream.Position，
+            '    因此同桶多线程并发读取无需加锁（取代旧版 Shared Reader + SyncLock）
+            bucketHandles(i) = File.OpenHandle(
+                dataFilePath, FileMode.Open, FileAccess.Read,
+                FileShare.ReadWrite, FileOptions.RandomAccess)
 
             If Not [readonly] Then
                 ' FileAccess.Write: 写入器只需要写权限
@@ -170,81 +187,97 @@ Public Class Buckets : Inherits InMemoryDb
         Return Encoding.UTF8.GetString([Get](Encoding.UTF8.GetBytes(key)))
     End Function
 
+    ''' <summary>
+    ''' 从 <paramref name="handle"/> 的 <paramref name="fileOffset"/> 处读取数据填满
+    ''' <paramref name="buffer"/>。常规文件一般一次读满，循环兜底处理短读。
+    ''' </summary>
+    Private Shared Sub ReadFully(handle As SafeFileHandle, buffer As Span(Of Byte), fileOffset As Long)
+        Dim total As Integer = 0
+
+        While total < buffer.Length
+            Dim n As Integer = RandomAccess.Read(handle, buffer.Slice(total), fileOffset + total)
+
+            If n <= 0 Then
+                Throw New EndOfStreamException($"unexpected end of data file at offset {fileOffset + total}")
+            End If
+
+            total += n
+        End While
+    End Sub
+
     Public Overrides Function [Get](keydata As Byte()) As Byte()
         Dim hashcode As UInteger
         Dim bucketId As UInteger
 
         Call HashKey(keydata, hashcode, bucketId)
 
-        ' 1. 检查热缓存 (使用读写锁，允许多个读并发)
-        hotCacheLock.EnterReadLock()
-        Try
-            Dim data As L1CacheHotData = Nothing
-            If hotCache.TryGetValue(hashcode, data) Then
-                data.hits += 1
-                Return data.data
-            End If
-        Finally
-            hotCacheLock.ExitReadLock()
-        End Try
+        ' 1. 检查热缓存（ConcurrentDictionary 无锁读，允许多线程并发）
+        Dim data As L1CacheHotData = Nothing
+
+        If hotCache.TryGetValue(hashcode, data) Then
+            Call Interlocked.Increment(data.hits) ' 无锁原子递增，修复旧版读锁内修改的竞态
+            Return data.data
+        End If
 
         ' 2. 检查内存索引
         Dim index = fileIndexes(bucketId).IndexValue
         Dim entry As BufferRegion = Nothing
 
         If index.TryGetValue(hashcode, entry) Then
-            ' 从索引中找到偏移量和大小
+            ' 3. 使用 RandomAccess 按偏移量读取数据文件：
+            '    显式偏移读取不共享 Stream.Position，无需加锁，
+            '    同一个桶可以被多个线程并发读取
             Dim offset As Long = entry.position
-            ' 3. 从数据文件读取
-            Dim bucketReader As BinaryDataReader = bucketReaders(CInt(bucketId))
+            Dim handle As SafeFileHandle = bucketHandles(CInt(bucketId))
+            Dim header(3) As Byte
 
-            SyncLock bucketReader.BaseStream ' 对单个流进行同步，防止并发读取时Position混乱
-                bucketReader.Position = offset
+            Call ReadFully(handle, header, offset)
 
-                Dim valueLength As Integer = bucketReader.ReadInt32()
-                Dim dataBytes As Byte() = bucketReader.ReadBytes(valueLength)
-                Dim compress As Boolean = bucketReader.ReadByte <> 0
+            Dim valueLength As Integer = BinaryPrimitives.ReadInt32LittleEndian(header)
+            Dim record As Byte() = ArrayPool(Of Byte).Shared.Rent(valueLength + 1)
+
+            Try
+                ' 记录格式: [valueLen(4)][valueData][compress(1)]
+                ' 一次读取数据体和压缩标志字节
+                Call ReadFully(handle, record.AsSpan(0, valueLength + 1), offset + 4)
+
+                Dim compress As Boolean = record(valueLength) <> 0
+                Dim dataBytes As Byte()
 
                 If compress Then
 #If NET48 Then
-                Throw New NotSupportedException("decompression of brotli stream is not supported in .net 4.8 runtime!")
+                    Throw New NotSupportedException("decompression of brotli stream is not supported in .net 4.8 runtime!")
 #Else
-                    Using compressedStream As New MemoryStream(dataBytes)
+                    Using compressedStream As New MemoryStream(record, 0, valueLength)
                         Using brotliStream As New BrotliStream(compressedStream, CompressionMode.Decompress)
                             Using resultStream As New MemoryStream()
-                                brotliStream.CopyTo(resultStream)
+                                Call brotliStream.CopyTo(resultStream)
                                 dataBytes = resultStream.ToArray() ' 就是解压后的原始数据
                             End Using
                         End Using
                     End Using
 #End If
+                Else
+                    dataBytes = record.AsSpan(0, valueLength).ToArray()
                 End If
 
-                ' 4. 更新热缓存
-                hotCacheLock.EnterWriteLock()
-                Try
-                    SyncLock hotCache
-                        ' 再次检查，可能在等待锁的过程中已被其他线程添加
-                        If Not hotCache.ContainsKey(hashcode) Then
-                            hotCache(hashcode) = New L1CacheHotData With {
-                                .bucket = bucketId,
-                                .data = dataBytes,
-                                .hashcode = hashcode,
-                                .hits = 1
-                            }
-                        End If
-                    End SyncLock
-                Finally
-                    hotCacheLock.ExitWriteLock()
-                End Try
+                ' 4. 更新热缓存（TryAdd: 可能在等待期间已被其他线程添加，幂等）
+                Call hotCache.TryAdd(hashcode, New L1CacheHotData With {
+                    .bucket = bucketId,
+                    .data = dataBytes,
+                    .hashcode = hashcode,
+                    .hits = 1
+                })
 
-                ' 5. 异步触发缓存清理，避免阻塞读取
+                ' 5. 异步触发缓存清理（去重排队，避免任务风暴），不阻塞读取
                 If hotCache.Count > cacheLimitSize Then
-                    Task.Run(AddressOf worker.ClearColdDataAsync)
+                    Call worker.RequestClearColdData()
                 End If
 
                 Return dataBytes
-            End SyncLock
+            Finally
+                Call ArrayPool(Of Byte).Shared.Return(record)
+            End Try
         End If
 
         ' 如果缓存和索引都没有找到，说明key不存在
@@ -265,15 +298,11 @@ Public Class Buckets : Inherits InMemoryDb
         ' 使用细粒度锁，只锁定当前操作的桶
         SyncLock bucketLocks(bucketIdInt)
             ' 1. 更新热缓存
-            hotCacheLock.EnterWriteLock()
-            Try
-                Dim L1data As L1CacheHotData = Nothing
-                If hotCache.TryGetValue(hashcode, L1data) Then
-                    L1data.data = data
-                End If
-            Finally
-                hotCacheLock.ExitWriteLock()
-            End Try
+            Dim L1data As L1CacheHotData = Nothing
+
+            If hotCache.TryGetValue(hashcode, L1data) Then
+                L1data.data = data
+            End If
 
             ' skip of write data file in readonly mode
             If is_readonly Then
@@ -291,8 +320,8 @@ Public Class Buckets : Inherits InMemoryDb
 
                 Using originalStream As New MemoryStream(data)
                     Using compressedStream As New MemoryStream()
-                        Using brotliStream As New BrotliStream(compressedStream, CompressionLevel.Optimal)
-                            originalStream.CopyTo(brotliStream)
+                        Using brotliStream As New BrotliStream(compressedStream, compressionLevel)
+                            Call originalStream.CopyTo(brotliStream)
                         End Using
 
                         data = compressedStream.ToArray()
@@ -301,26 +330,35 @@ Public Class Buckets : Inherits InMemoryDb
             End If
 #End If
 
-            ' 将写入器指针移动到文件末尾
-            bucketWriter.Seek(0, SeekOrigin.End)
+            ' 3. 在桶锁内组包后单次写入：
+            '    记录格式: [valueLen(4)][valueData][compress(1)][keyLen(4)][keyData]
+            '    单次 Write 取代 5 次小写入，减少 IO 系统调用次数并缩短桶锁持有时间
+            Dim recordSize As Integer = 4 + data.Length + 1 + 4 + keybuf.Length
+            Dim record As Byte() = ArrayPool(Of Byte).Shared.Rent(recordSize)
 
-            ' 3. 写入数据 (格式: [数据长度(4字节)][数据内容(N字节)])
-            bucketWriter.Write(data.Length)
-            bucketWriter.Write(data)
-            bucketWriter.Write(compress)
-            bucketWriter.Write(keybuf.Length)
-            bucketWriter.Write(keybuf)
+            Try
+                Call BinaryPrimitives.WriteInt32LittleEndian(record.AsSpan(0, 4), data.Length)
+                Call Buffer.BlockCopy(data, 0, record, 4, data.Length)
+                record(4 + data.Length) = compress
+                Call BinaryPrimitives.WriteInt32LittleEndian(record.AsSpan(5 + data.Length, 4), keybuf.Length)
+                Call Buffer.BlockCopy(keybuf, 0, record, 9 + data.Length, keybuf.Length)
 
-            If enableImmediateFlush Then
-                bucketWriter.Flush() ' 性能影响大，但数据安全性最高
-            End If
+                ' 将写入器指针移动到文件末尾
+                Call bucketWriter.Seek(0, SeekOrigin.End)
+                Call bucketWriter.Write(record, 0, recordSize)
 
-            ' 3. 更新内存索引，size是整个记录的大小
-            Dim recordSize = 4 + data.Length + 4 + keybuf.Length + 1
+                If enableImmediateFlush Then
+                    Call bucketWriter.Flush() ' 性能影响大，但数据安全性最高
+                End If
+            Finally
+                Call ArrayPool(Of Byte).Shared.Return(record)
+            End Try
+
+            ' 4. 更新内存索引，size是整个记录的大小
             Dim index = fileIndexes(bucketIdInt).IndexValue
             index(hashcode) = New BufferRegion(offset, recordSize)
 
-            ' 4. 标记索引为“脏”，通知后台任务需要持久化
+            ' 5. 标记索引为“脏”，通知后台任务需要持久化
             SyncLock worker.backgroundSyncLock
                 dirtyIndexes.Add(bucketIdInt)
             End SyncLock
@@ -373,19 +411,16 @@ Public Class Buckets : Inherits InMemoryDb
             Call Flush()
         End If
 
-        ' 3. Flush并释放所有文件流
+        ' 3. Flush并释放所有文件流与读取句柄
         For Each writer In bucketWriters.Values
             writer.BaseStream.Dispose()
         Next
-        For Each reader In bucketReaders.Values
-            reader.BaseStream.Dispose()
+        For Each handle In bucketHandles.Values
+            handle.Dispose()
         Next
 
-        ' 4. 释放锁
-        hotCacheLock.Dispose()
-
-        ' 5. 清理集合
-        bucketReaders.Clear()
+        ' 4. 清理集合
+        bucketHandles.Clear()
         bucketWriters.Clear()
         fileIndexes.Clear()
         hotCache.Clear()
