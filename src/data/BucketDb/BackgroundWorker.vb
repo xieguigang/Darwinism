@@ -19,32 +19,62 @@ Public Class BackgroundWorker
     ''' </summary>
     Friend ReadOnly backgroundSyncLock As New Object()
 
+    ''' <summary>
+    ''' 缓存清理任务防重入标志: 0 = 空闲, 1 = 清理中
+    ''' </summary>
+    Dim cacheClearing As Integer = 0
+
+    ''' <summary>
+    ''' 清理请求去重标志: 0 = 无请求, 1 = 已排队
+    ''' </summary>
+    Dim clearRequested As Integer = 0
+
     Private Sub New(engine As Buckets)
         buckets = engine
+    End Sub
+
+    ''' <summary>
+    ''' 请求执行一次冷数据清理：通过 <see cref="Interlocked.CompareExchange"/>
+    ''' 去重排队，避免缓存超限期间每次读取都触发 Task.Run 的任务风暴。
+    ''' </summary>
+    Public Sub RequestClearColdData()
+        If Interlocked.CompareExchange(clearRequested, 1, 0) = 0 Then
+            Call Task.Run(Sub()
+                              Try
+                                  Call ClearColdDataAsync()
+                              Finally
+                                  Call Interlocked.Exchange(clearRequested, 0)
+                              End Try
+                          End Sub)
+        End If
     End Sub
 
     Public Sub ClearColdDataAsync()
         Dim hotCache = buckets.hotCache
 
         ' 防止多个清理任务同时运行
-        If Monitor.TryEnter(buckets.hotCacheLock) Then
+        If Interlocked.CompareExchange(cacheClearing, 1, 0) = 0 Then
             Try
                 If hotCache.Count > buckets.cacheLimitSize Then
-                    SyncLock hotCache
-                        Dim top As Integer = CInt(buckets.cacheLimitSize * buckets.cacheClearRatio)
-                        ' 注意：OrderBy会创建快照，所以在锁内操作是安全的
-                        Dim coldHashset As L1CacheHotData() = hotCache.Values.ToArray _
-                            .OrderBy(Function(a) a.hits) _
-                            .Take(top) _
-                            .ToArray
+                    ' 快照后在副本上按 hits 就地排序：
+                    ' 相比 OrderBy+Take 的 LINQ 管线（多次中间集合分配），
+                    ' 就地排序无额外分配，且快照隔离了并发修改
+                    Dim snapshot As L1CacheHotData() = hotCache.Values.ToArray()
+                    Call Array.Sort(snapshot, Function(a, b) a.hits.CompareTo(b.hits))
 
-                        For Each hashcode As UInteger In coldHashset.Select(Function(a) a.hashcode)
-                            Call hotCache.Remove(hashcode)
-                        Next
-                    End SyncLock
+                    Dim top As Integer = CInt(buckets.cacheLimitSize * buckets.cacheClearRatio)
+
+                    If top > snapshot.Length Then
+                        top = snapshot.Length
+                    End If
+
+                    For i As Integer = 0 To top - 1
+                        Dim removed As L1CacheHotData = Nothing
+                        Call hotCache.TryRemove(snapshot(i).hashcode, removed)
+                    Next
                 End If
             Finally
-                Monitor.Exit(buckets.hotCacheLock)
+                Call Interlocked.Exchange(cacheClearing, 0)
             End Try
         End If
     End Sub
@@ -158,7 +188,8 @@ Public Class BackgroundWorker
 
 #If NETCOREAPP Then
             Using compressedStream As New FileStream(tempPath, FileMode.Create, FileAccess.Write)
-                Using compressor As New BrotliStream(compressedStream, CompressionLevel.Optimal)
+                ' Fastest 级别：索引保存频率高（后台定期同步），压缩吞吐优先于压缩率
+                Using compressor As New BrotliStream(compressedStream, CompressionLevel.Fastest)
                     indexStream.Position = 0
                     indexStream.CopyTo(compressor) ' 压缩后写入文件
                 End Using
@@ -170,10 +201,7 @@ Public Class BackgroundWorker
 #End If
         End Using
 
-        If File.Exists(indexFilePath) Then
-            File.Delete(indexFilePath)
-        End If
-
-        File.Move(tempPath, indexFilePath)
+        ' 原子替换：免去先删除旧文件的窗口期，崩溃时旧索引仍然完整可用
+        Call File.Move(tempPath, indexFilePath, overwrite:=True)
     End Sub
 End Class

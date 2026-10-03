@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Buffers.Binary
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 
 #If NETCOREAPP Then
@@ -56,15 +57,43 @@ Public Class Index
 #End If
     End Sub
 
+    ''' <summary>
+    ''' 批量解析索引: 将索引流一次性读入内存缓冲区后解析，
+    ''' 取代逐条 <c>ReadUInt32/ReadInt64/ReadInt32</c> 流式读取（百万级条目快一个数量级）。
+    ''' </summary>
     Private Shared Sub ParseIndex(indexStream As Stream, ByRef index As Dictionary(Of UInteger, BufferRegion))
-        Using indexReader As New BinaryDataReader(indexStream) With {.ByteOrder = ByteOrder.LittleEndian}
-            Dim count As Integer = indexReader.ReadInt32()
-            For j As Integer = 0 To count - 1
-                Dim hashcode As UInteger = indexReader.ReadUInt32()
-                Dim offset As Long = indexReader.ReadInt64()
-                Dim size As Integer = indexReader.ReadInt32()
-                index(hashcode) = New BufferRegion(offset, size)
-            Next
+        Using buffer As New MemoryStream
+            Call indexStream.CopyTo(buffer)
+            Call ParseIndexBuffer(buffer.GetBuffer(), CInt(buffer.Length), index)
         End Using
+    End Sub
+
+    ''' <summary>
+    ''' 解析索引缓冲区: 格式 <c>[count(4)] + count * [hashcode(4)][offset(8)][size(4)]</c>，
+    ''' 每条记录 16 字节，使用 <see cref="BinaryPrimitives"/> 批量小端读取。
+    ''' </summary>
+    Private Shared Sub ParseIndexBuffer(buffer As Byte(), length As Integer, ByRef index As Dictionary(Of UInteger, BufferRegion))
+        If length < 4 Then
+            Return
+        End If
+
+        Dim count As Integer = BinaryPrimitives.ReadInt32LittleEndian(buffer.AsSpan(0, 4))
+
+        If count <= 0 Then
+            Return
+        End If
+
+        ' 按 count 预设字典容量，避免加载过程中的 rehash 扩容
+        index = New Dictionary(Of UInteger, BufferRegion)(count)
+
+        Dim i As Integer = 4
+
+        For j As Integer = 0 To count - 1
+            Dim hashcode As UInteger = BinaryPrimitives.ReadUInt32LittleEndian(buffer.AsSpan(i, 4))
+            Dim offset As Long = BinaryPrimitives.ReadInt64LittleEndian(buffer.AsSpan(i + 4, 8))
+            Dim size As Integer = BinaryPrimitives.ReadInt32LittleEndian(buffer.AsSpan(i + 12, 4))
+            index(hashcode) = New BufferRegion(offset, size)
+            i += 16
+        Next
     End Sub
 End Class
