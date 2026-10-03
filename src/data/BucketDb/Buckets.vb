@@ -191,11 +191,12 @@ Public Class Buckets : Inherits InMemoryDb
     ''' 从 <paramref name="handle"/> 的 <paramref name="fileOffset"/> 处读取数据填满
     ''' <paramref name="buffer"/>。常规文件一般一次读满，循环兜底处理短读。
     ''' </summary>
-    Private Shared Sub ReadFully(handle As SafeFileHandle, buffer As Span(Of Byte), fileOffset As Long)
+    Private Shared Sub ReadFully(handle As SafeFileHandle, buffer() As Byte, bufferOffset As Integer, count As Integer, fileOffset As Long)
         Dim total As Integer = 0
 
-        While total < buffer.Length
-            Dim n As Integer = RandomAccess.Read(handle, buffer.Slice(total), fileOffset + total)
+        While total < count
+            ' RandomAccess byte() 重载参数顺序: (handle, buffer, fileOffset, bufferOffset, count)
+            Dim n As Integer = RandomAccess.Read(handle, buffer, fileOffset + total, bufferOffset + total, count - total)
 
             If n <= 0 Then
                 Throw New EndOfStreamException($"unexpected end of data file at offset {fileOffset + total}")
@@ -231,15 +232,15 @@ Public Class Buckets : Inherits InMemoryDb
             Dim handle As SafeFileHandle = bucketHandles(CInt(bucketId))
             Dim header(3) As Byte
 
-            Call ReadFully(handle, header, offset)
+            Call ReadFully(handle, header, 0, 4, offset)
 
-            Dim valueLength As Integer = BinaryPrimitives.ReadInt32LittleEndian(header)
+            Dim valueLength As Integer = BitConverter.ToInt32(header, 0)
             Dim record As Byte() = ArrayPool(Of Byte).Shared.Rent(valueLength + 1)
 
             Try
                 ' 记录格式: [valueLen(4)][valueData][compress(1)]
                 ' 一次读取数据体和压缩标志字节
-                Call ReadFully(handle, record.AsSpan(0, valueLength + 1), offset + 4)
+                Call ReadFully(handle, record, 0, valueLength + 1, offset + 4)
 
                 Dim compress As Boolean = record(valueLength) <> 0
                 Dim dataBytes As Byte()
@@ -258,7 +259,8 @@ Public Class Buckets : Inherits InMemoryDb
                     End Using
 #End If
                 Else
-                    dataBytes = record.AsSpan(0, valueLength).ToArray()
+                    dataBytes = New Byte(valueLength - 1) {}
+                    Buffer.BlockCopy(record, 0, dataBytes, 0, valueLength)
                 End If
 
                 ' 4. 更新热缓存（TryAdd: 可能在等待期间已被其他线程添加，幂等）
