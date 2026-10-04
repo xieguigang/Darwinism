@@ -195,8 +195,8 @@ Public Class Buckets : Inherits InMemoryDb
         Dim total As Integer = 0
 
         While total < count
-            ' RandomAccess byte() 重载参数顺序: (handle, buffer, fileOffset, bufferOffset, count)
-            Dim n As Integer = RandomAccess.Read(handle, buffer, fileOffset + total, bufferOffset + total, count - total)
+            ' RandomAccess.Read(handle, buffer, fileOffset)：从 fileOffset 处读取填满 buffer 切片
+            Dim n As Integer = RandomAccess.Read(handle, buffer.AsSpan(bufferOffset + total, count - total), fileOffset + total)
 
             If n <= 0 Then
                 Throw New EndOfStreamException($"unexpected end of data file at offset {fileOffset + total}")
