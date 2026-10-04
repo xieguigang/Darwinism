@@ -1,4 +1,6 @@
-﻿Friend Class L1CacheHotData
+﻿Imports System.Threading
+
+Friend Class L1CacheHotData
 
     Public hashcode As UInteger
     Public bucket As UInteger
