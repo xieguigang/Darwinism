@@ -142,6 +142,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net10.0|x86'">
     <OutputPath>../../.nuget</OutputPath>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Authenticator\**" />
     <Compile Remove="Tests\**" />
