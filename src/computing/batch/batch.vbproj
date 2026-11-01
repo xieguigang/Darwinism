@@ -24,6 +24,10 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
 
+<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>../../../../../R-sharp/App</OutputPath>   
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|x64'">
     <OutputPath>../../../../../R-sharp/App</OutputPath>
   </PropertyGroup>
