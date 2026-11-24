@@ -114,8 +114,10 @@ Namespace Script.Builders
                 End If
 
                 If shrinks(i) Like GetType(String) AndAlso listOp.IndexOf(shrinks(i).TryCast(Of String)) > -1 Then
+                    Dim op As String = shrinks(i).TryCast(Of String)
+
                     If Not (shrinks(i - 1) Like GetType(Expression)) OrElse Not (shrinks(i + 1) Like GetType(Expression)) Then
-                        Throw New SyntaxErrorException($"invalid operand for the operator '{shrinks(i).TryCast(Of String)}'!")
+                        Throw New SyntaxErrorException($"invalid operand for the operator '{op}': {shrinks(i - 1)} {op} {shrinks(i + 1)}")
                     End If
 
                     Dim bin As New BinaryExpression(shrinks(i - 1), shrinks(i + 1), shrinks(i))

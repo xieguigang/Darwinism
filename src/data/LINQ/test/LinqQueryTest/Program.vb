@@ -25,6 +25,12 @@ Public Module Program
         baseDir = If(args.Length > 0, args(0), AppContext.BaseDirectory)
         System.Environment.CurrentDirectory = baseDir
 
+        If args.Length > 1 AndAlso args(1) = "--dump" Then
+            Call Probe.DumpTokens(IO.File.ReadAllText($"{baseDir}/query_aggregate.linq"))
+
+            Return 0
+        End If
+
         Call DebugAudit.Snapshot(
             ("baseDir", baseDir),
             ("dataRows", GetDataFrame().Nrows),

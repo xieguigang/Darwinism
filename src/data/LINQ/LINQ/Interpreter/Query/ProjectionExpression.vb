@@ -121,9 +121,10 @@ Namespace Interpreter.Query
                 dataset.PopulatesData(addresses)
             )
             Dim skipVal As Boolean
+            Dim target As Symbol = closure.env.FindSymbol(symbol.symbolName)
 
             For Each item As Object In rows
-                closure.env.FindSymbol(symbol.symbolName).value = item
+                target.value = item
                 skipVal = False
 
                 For Each line As Expression In executeQueue

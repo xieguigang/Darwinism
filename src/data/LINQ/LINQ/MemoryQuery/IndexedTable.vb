@@ -112,19 +112,19 @@ Public Class IndexedTable : Inherits MemoryIndex
 
         Call BuildSchema()
 
-        For Each field As String In ranges.SafeQuery
+        For Each field As String In If(ranges, New String() {})
             Call BuildRangeIndex(field)
         Next
 
-        For Each field As String In terms.SafeQuery
+        For Each field As String In If(terms, New String() {})
             Call BuildTermIndex(field)
         Next
 
-        For Each field As String In fulltext.SafeQuery
+        For Each field As String In If(fulltext, New String() {})
             Call BuildFullTextIndex(field)
         Next
 
-        For Each field As String In levenshtein.SafeQuery
+        For Each field As String In If(levenshtein, New String() {})
             Call BuildLevenshteinIndex(field)
         Next
     End Sub

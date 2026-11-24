@@ -235,9 +235,47 @@ Namespace Script
         ''' </summary>
         ''' <param name="tokenList"></param>
         ''' <returns></returns>
+        ''' <summary>
+        ''' 按照最顶层的逗号将表达式分割为参数列表。括号以及中括号内部的逗号不会被当作参数的分隔符。
+        ''' </summary>
+        ''' <param name="tokenList"></param>
+        ''' <returns></returns>
+        Private Function SplitParameterList(tokenList As Token()) As Token()()
+            Dim blocks As New List(Of Token())
+            Dim block As New List(Of Token)
+            Dim stack As New Stack(Of String)
+
+            For Each item As Token In tokenList
+                If item.name = Tokens.Terminator OrElse item.name = Tokens.Comment Then
+                    Continue For
+                ElseIf item.name = Tokens.Open Then
+                    stack.Push(item.text)
+                    block.Add(item)
+                ElseIf item.name = Tokens.Close Then
+                    Call stack.Pop()
+                    block.Add(item)
+                ElseIf item.name = Tokens.Comma AndAlso stack.Count = 0 Then
+                    If block.Count > 0 Then
+                        blocks.Add(block.ToArray)
+                        block.Clear()
+                    End If
+                Else
+                    block.Add(item)
+                End If
+            Next
+
+            If block.Count > 0 Then
+                blocks.Add(block.ToArray)
+            End If
+
+            Return blocks.ToArray
+        End Function
+
         <Extension>
         Private Function GetProjectionFields(tokenList As IEnumerable(Of Token)) As NamedValue(Of Expression)()
-            Dim values As Expression() = tokenList.GetParameters.ToArray
+            Dim values As Expression() = SplitParameterList(tokenList.ToArray) _
+                .Select(AddressOf ParseExpression) _
+                .ToArray
             Dim fields As New List(Of NamedValue(Of Expression))
 
             For Each item As Expression In values
@@ -334,23 +372,40 @@ Namespace Script
             Return tokenList(Scan0).name = Tokens.Open AndAlso tokenList.Last.name = Tokens.Close
         End Function
 
+        ''' <summary>
+        ''' 表达式的解析嵌套深度。这个计数器用于检测语法解析过程之中的无限递归。
+        ''' </summary>
+        <ThreadStatic>
+        Dim parseDepth As Integer
+
+        Const MAX_PARSE_DEPTH As Integer = 128
+
+        ''' <summary>
+        ''' 解析表达式。这个函数带有递归深度检测，避免非法的脚本导致栈溢出。
+        ''' </summary>
+        ''' <param name="tokenList"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ParseExpression(tokenList As Token()) As Expression
+            parseDepth += 1
+
+            Try
+                If parseDepth > MAX_PARSE_DEPTH Then
+                    Throw New SyntaxErrorException($"invalid expression: '{tokenList.Select(Function(t) t.text).JoinBy(" ")}'")
+                End If
+
+                Return ParseExpressionInternal(tokenList)
+            Finally
+                parseDepth -= 1
+            End Try
+        End Function
+
+        <Extension>
+        Private Function ParseExpressionInternal(tokenList As Token()) As Expression
             If tokenList.Length = 1 Then
                 Return tokenList(Scan0).ParseToken
             ElseIf tokenList(Scan0).name = Tokens.keyword Then
                 Return tokenList.ParseKeywordExpression
-            End If
-
-            ' 一元逻辑取反运算符
-            If tokenList(0).name = Tokens.Operator AndAlso
-                String.Equals(tokenList(0).text, "not", StringComparison.OrdinalIgnoreCase) Then
-
-                If tokenList.Length = 1 Then
-                    Throw New SyntaxErrorException("missing operand for the 'not' operator!")
-                End If
-
-                Return New NotExpression(ParseExpression(tokenList.Skip(1).ToArray))
             End If
 
             ' 赋值表达式需要优先解析：赋值表达式的右侧可能会是一个函数调用
@@ -379,7 +434,9 @@ Namespace Script
                         .Take(tokenList.Length - 2) _
                         .ToArray
                 End If
-            ElseIf blocks.Length = 2 Then
+            ElseIf blocks.Length = 2 AndAlso Not (blocks(0).Length = 1 AndAlso blocks(0)(0).name = Tokens.Operator) Then
+                ' 第一个块是运算符(例如not)的时候，需要交给二元运算符的归约过程处理
+                ' 这样才可以保证not运算符的优先级低于比较运算符
                 Dim name As Expression = ParseExpression(blocks(Scan0))
 
                 If TypeOf name Is SymbolReference AndAlso blocks(1).IsClosure Then
@@ -440,10 +497,7 @@ Namespace Script
         ''' <returns></returns>
         <Extension>
         Private Function CreateIndexSource(arguments As Token()) As Expression
-            Dim blocks As Token()() = arguments _
-                .SplitParameters _
-                .Where(Function(b) Not b.IsNullOrEmpty) _
-                .Select(Function(b) If(b(Scan0).name = Tokens.Comma, b.Skip(1).ToArray, b)) _
+            Dim blocks As Token()() = SplitParameterList(arguments) _
                 .Where(Function(b) Not b.IsNullOrEmpty) _
                 .ToArray
             Dim path As Expression = Nothing
@@ -477,18 +531,7 @@ Namespace Script
 
         <Extension>
         Private Iterator Function GetParameters(tokenList As IEnumerable(Of Token)) As IEnumerable(Of Expression)
-            Dim blocks As Token()() = tokenList _
-                .SplitParameters _
-                .Select(Function(b)
-                            If b(Scan0).name = Tokens.Comma Then
-                                Return b.Skip(1).ToArray
-                            Else
-                                Return b
-                            End If
-                        End Function) _
-                .ToArray
-
-            For Each block As Token() In blocks
+            For Each block As Token() In SplitParameterList(tokenList.ToArray)
                 Yield ParseExpression(block)
             Next
         End Function

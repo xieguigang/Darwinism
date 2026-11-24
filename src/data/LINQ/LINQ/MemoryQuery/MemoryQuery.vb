@@ -122,6 +122,10 @@ Public MustInherit Class MemoryQuery
             Return Nothing
         End If
 
+        ' 索引检索出来的偏移顺序是索引键值的顺序
+        ' 这里重新按照数据行的原始顺序进行排列，与全表扫描路径保持一致的记录顺序
+        index = index.OrderBy(Function(i) i).ToArray
+
         Return New IndexQueryResult With {.Used = True, .Addresses = index}
     End Function
 

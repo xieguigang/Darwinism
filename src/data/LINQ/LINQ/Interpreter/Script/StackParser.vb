@@ -140,10 +140,13 @@ Namespace Script
                                                          popOnClearStack As Boolean) As IEnumerable(Of Token())
             Dim block As New List(Of Token)
             Dim stack As New Stack(Of String)
+            ' 栈的基准深度：pushStack模式下第一个栈元素为分块关键字本身，因此基准深度为1
+            ' 非pushStack模式下面，栈的基准深度为0，此时括号内的运算符以及逗号都不会被当作最顶层的分隔符
+            Dim depth As Integer = If(pushStack, 1, 0)
 
             For Each item As Token In tokenList.Where(Function(t) t.name <> Tokens.Terminator AndAlso t.name <> Tokens.Comment)
                 If delimiter(item) Then
-                    If stack.Count > 1 Then
+                    If stack.Count > depth Then
                         block.Add(item)
                     Else
                         If block > 0 Then
@@ -183,7 +186,13 @@ Namespace Script
                         Throw New SyntaxErrorException
                     End If
 
-                    If stack.Count > 1 OrElse (stack.Count = 1 AndAlso "([{".IndexOf(stack.Peek) > -1) Then
+                    Dim nested As Boolean = stack.Count > depth
+
+                    If Not nested AndAlso stack.Count > 0 AndAlso "([{".IndexOf(stack.Peek) > -1 Then
+                        nested = True
+                    End If
+
+                    If nested Then
                         block.Add(item)
                     Else
                         block.Add(item)
