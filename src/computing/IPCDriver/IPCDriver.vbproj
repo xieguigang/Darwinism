@@ -22,22 +22,22 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
-    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+    <OutputPath>..\..\..\.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|x64'">
-    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+    <OutputPath>..\..\..\.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
-    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+    <OutputPath>..\..\..\.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|x64'">
-    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+    <OutputPath>..\..\..\.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0|AnyCPU'">
-    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+    <OutputPath>..\..\..\.nuget</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0|x64'">
-    <OutputPath>G:\GCModeller\src\runtime\Darwinism\.nuget</OutputPath>
+    <OutputPath>..\..\..\.nuget</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\httpd\src\Flute\Flute.NET5.vbproj" />
