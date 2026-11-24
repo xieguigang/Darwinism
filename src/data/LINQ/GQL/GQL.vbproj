@@ -16,16 +16,13 @@
     <Authors>xieguigang&lt;xie.guigang@gmail.com&gt;</Authors>
     <Company>scibasic.net foundation</Company>
     <Product>Darwinism HPC</Product>
-    <PackageIcon>..\..\..\..\.pkg\icons8-repository-96.png</PackageIcon>
+  
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\LINQ\LINQ.vbproj" />
-    <None Include="..\..\..\..\.pkg\icons8-repository-96.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+
   </ItemGroup>
 </Project>
