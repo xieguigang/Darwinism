@@ -71,10 +71,10 @@ Namespace Interpreter
 
         Public Function Exec(query_str As String) As Object
             Dim tokens As Token() = LINQ.Language.GetTokens(query_str).ToArray
-            Dim query As ProjectionExpression = tokens.PopulateQueryExpression
+            Dim query As QueryExpression = tokens.PopulateQueryExpression
             Dim env As New GlobalEnvironment(New Registry)
             Dim context As New ExecutableContext With {.env = env, .throwError = True}
-            Dim result As JavaScriptObject() = query.Exec(context)
+            Dim result As JavaScriptObject() = DirectCast(query.Exec(context), JavaScriptObject())
 
             Return result
         End Function

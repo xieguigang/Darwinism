@@ -76,10 +76,10 @@ Module Program
     ''' <returns></returns>
     Private Function RunQuery(file As String, args As CommandLine) As Integer
         Dim tokens As Token() = LINQ.Language.GetTokens(file.ReadAllText).ToArray
-        Dim query As ProjectionExpression = tokens.PopulateQueryExpression
+        Dim query As QueryExpression = tokens.PopulateQueryExpression
         Dim env As New GlobalEnvironment(New Registry)
         Dim context As New ExecutableContext With {.env = env, .throwError = True}
-        Dim result As JavaScriptObject() = query.Exec(context)
+        Dim result As JavaScriptObject() = DirectCast(query.Exec(context), JavaScriptObject())
         Dim table As DataFrameResolver = result.CreateTableDataSet
         Dim output As String = args <= "/output"
 
