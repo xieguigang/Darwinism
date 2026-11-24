@@ -28,7 +28,7 @@ Friend Module QGramCacheFormat
     Friend Const Version As Integer = 1
     Friend Const ChecksumSize As Integer = 4
     Friend Const DefaultTokenizerId As String = "TextSplit.MakeWords"
-    Friend Const HeaderMinimumSize As Long = 4L + 4L + 4L + 4L + 4L + 4L + 4L + 4L
+    Friend Const HeaderMinimumSize As Long = 4L + 4L + 4L + 4L + (5L * 4L)
 
     Friend Sub WriteHeader(writer As BinaryDataWriter,
                            q As Integer,
@@ -127,7 +127,7 @@ Friend Module QGramCacheFormat
             Throw New QGramCacheException("negative string array length in QGram cache")
         End If
 
-        Dim values(count - 1) As String
+        Dim values As String() = If(count = 0, Array.Empty(Of String)(), New String(count - 1) {})
 
         For i As Integer = 0 To count - 1
             values(i) = ReadString(reader, limit)
