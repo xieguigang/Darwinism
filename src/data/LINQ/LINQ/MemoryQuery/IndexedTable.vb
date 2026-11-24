@@ -293,13 +293,17 @@ Public Class IndexedTable : Inherits MemoryIndex
         Dim offset As Integer = GetOrdinal(name)
         Dim groups As New Dictionary(Of String, Integer())
 
-        For Each term As KeyValuePair(Of String, Integer()) In hash.GetHashIndex
-            Dim addresses As Integer() = term.Value
+        For Each term As String In hash.GetHashIndex.Keys
+            ' 使用Query函数来获取映射到数据行偏移的检索结果
+            Dim addresses As Integer() = hash.Query(term).ToArray()
+
+            If addresses.IsNullOrEmpty Then
+                Continue For
+            End If
+
             ' 索引之中的键值已经进行了小写归一化处理
             ' 所以这里需要从第一行数据之中还原出原始的分组标签
-            Dim label As String = If(addresses.IsNullOrEmpty,
-                                     term.Key,
-                                     any.ToString(rows(addresses(Scan0))(offset)))
+            Dim label As String = any.ToString(rows(addresses(Scan0))(offset))
 
             groups(label) = addresses
         Next

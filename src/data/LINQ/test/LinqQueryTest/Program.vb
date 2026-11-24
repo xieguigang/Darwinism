@@ -37,6 +37,7 @@ Public Module Program
             ("columns", GetDataFrame().HeadTitles.Length)
         )
 
+        Call Invoke("script-parsing", AddressOf TestScriptParsing)
         Call Invoke("select-scan", AddressOf TestSelectScan)
         Call Invoke("select-index", AddressOf TestSelectIndex)
         Call Invoke("select-equivalence", AddressOf TestSelectEquivalence)
@@ -49,12 +50,39 @@ Public Module Program
 
         Dim report As String = $"{baseDir}/indexed_query_test_report.json"
 
+        Call PrintGroupAggregate()
         Call DebugAudit.SaveReport(report)
         Call Console.WriteLine(DebugAudit.Dump(includeRecords:=True))
         Call Console.WriteLine($"test report: {report}")
 
         Return If(DebugAudit.FailureCount = 0, 0, 1)
     End Function
+
+    ''' <summary>
+    ''' 将分组聚合查询的结果打印到控制台，方便人工检查聚合计算的数值
+    ''' </summary>
+    Private Sub PrintGroupAggregate()
+        Dim q As QueryExpression = Nothing
+        Dim rows As JavaScriptObject() = RunFile("query_aggregate_group.linq", q)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine("GROUP BY Class (WHERE PeakQuality >= 0.9)")
+        Call Console.WriteLine("Class	n	avgQuality	maxMz	sumArea")
+
+        For Each row As JavaScriptObject In rows
+            Call Console.WriteLine(
+                String.Join(vbTab, {
+                    Text(row("Class")),
+                    Text(row("n")),
+                    Text(row("avgQuality")),
+                    Text(row("maxMz")),
+                    Text(row("sumArea"))
+                })
+            )
+        Next
+
+        Call Console.WriteLine()
+    End Sub
 
     Private Sub Invoke(name As String, test As Action)
         Call DebugAudit.Mark($"{name} begin")
@@ -124,6 +152,38 @@ Public Module Program
         Dim ok As Boolean = Math.Abs(expected - actual) <= Math.Max(0.000001, Math.Abs(expected) * 0.000000001)
 
         Call DebugAudit.Check(ok, $"{name}: expected {expected} but actually is {actual}")
+    End Sub
+
+#End Region
+
+#Region "script parsing test"
+
+    ''' <summary>
+    ''' 现有的查询脚本都应当可以被正确地解析为查询表达式对象
+    ''' </summary>
+    Private Sub TestScriptParsing()
+        For Each name As String In {
+            "cdf.linq",
+            "sqlite.linq",
+            "sqlite_cli.linq",
+            "query.linq",
+            "query_index.linq",
+            "query_aggregate.linq",
+            "query_aggregate_index.linq",
+            "query_aggregate_group.linq"
+        }
+            Dim tokens As Token() = LINQ.Language.GetTokens(IO.File.ReadAllText($"{baseDir}/{name}")).ToArray
+            Dim query As QueryExpression = Nothing
+
+            Try
+                query = tokens.PopulateQueryExpression
+            Catch ex As Exception
+                Call DebugAudit.Check(False, $"failed to parse '{name}': {ex.Message}")
+                Continue For
+            End Try
+
+            Call DebugAudit.Check(query IsNot Nothing, $"the script '{name}' should be parsed")
+        Next
     End Sub
 
 #End Region

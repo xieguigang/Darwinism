@@ -16,6 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\data.csv" Link="data.csv" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\cdf.linq" Link="cdf.linq" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\sqlite.linq" Link="sqlite.linq" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\sqlite_cli.linq" Link="sqlite_cli.linq" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\query.linq" Link="query.linq" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\query_index.linq" Link="query_index.linq" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\query_aggregate.linq" Link="query_aggregate.linq" CopyToOutputDirectory="PreserveNewest" />
