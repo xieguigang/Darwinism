@@ -224,7 +224,7 @@ Namespace Interpreter.Query
             For Each term As KeyValuePair(Of String, Integer()) In indexGroups
                 Dim rows As New List(Of Object)
 
-                For Each i As Integer In term.Value.SafeQuery
+                For Each i As Integer In If(term.Value, New Integer() {})
                     If filter IsNot Nothing AndAlso Not filter.Contains(i) Then
                         Continue For
                     End If

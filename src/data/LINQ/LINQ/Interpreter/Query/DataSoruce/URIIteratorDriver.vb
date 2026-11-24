@@ -72,8 +72,7 @@ Namespace Interpreter.Query
 
         Public Overrides Iterator Function PopulatesData() As IEnumerable(Of Object)
             Dim env As New ExecutableContext() With {.env = Me.env, .throwError = True}
-            Dim argumentStr As String() = symbolDeclare.arguments _
-                .SafeQuery _
+            Dim argumentStr As String() = If(symbolDeclare.arguments, New Expression() {}) _
                 .Select(Function(a) any.ToString(a.Exec(env))) _
                 .ToArray
             Dim driver As DataSourceDriver = env.GlobalEnvir.GetDriverByCode(

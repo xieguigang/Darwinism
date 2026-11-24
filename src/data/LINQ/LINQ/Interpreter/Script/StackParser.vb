@@ -145,29 +145,7 @@ Namespace Script
             Dim depth As Integer = If(pushStack, 1, 0)
 
             For Each item As Token In tokenList.Where(Function(t) t.name <> Tokens.Terminator AndAlso t.name <> Tokens.Comment)
-                If delimiter(item) Then
-                    If stack.Count > depth Then
-                        block.Add(item)
-                    Else
-                        If block > 0 Then
-                            If popOnClearStack AndAlso stack.Count <> 0 Then
-                                ' do nothing
-                            Else
-                                Yield block.PopAll
-                            End If
-                        End If
-
-                        block.Add(item)
-                    End If
-
-                    If pushStack Then
-                        If stack.Count > 0 Then
-                            stack.Pop()
-                        End If
-
-                        stack.Push(item.text)
-                    End If
-                ElseIf item.name = Tokens.Open Then
+                If item.name = Tokens.Open Then
                     stack.Push(item.text)
 
                     If stack.Count > 1 Then
@@ -186,24 +164,33 @@ Namespace Script
                         Throw New SyntaxErrorException
                     End If
 
-                    Dim nested As Boolean = stack.Count > depth
+                    block.Add(item)
 
-                    If Not nested AndAlso stack.Count > 0 AndAlso "([{".IndexOf(stack.Peek) > -1 Then
-                        nested = True
+                    If isParentStack AndAlso Not pushStack AndAlso stack.Count = depth Then
+                        ' 括号组可以作为独立的片段返回
+                        ' 但是在按照关键词分块的时候，括号组是块内容的一部分，不可以在括号结束的位置分割
+                        Yield block.PopAll
                     End If
-
-                    If nested Then
-                        block.Add(item)
-                    Else
-                        block.Add(item)
-
-                        If isParentStack AndAlso block > 0 Then
+                ElseIf stack.Count > depth Then
+                    ' 括号内部的运算符以及逗号等符号都不做分割处理
+                    block.Add(item)
+                ElseIf delimiter(item) Then
+                    If block > 0 Then
+                        If popOnClearStack AndAlso stack.Count <> 0 Then
+                            ' do nothing
+                        Else
                             Yield block.PopAll
                         End If
                     End If
 
-                    If stack.Count = 1 AndAlso "([{".IndexOf(stack.Peek) = -1 Then
-                        stack.Pop()
+                    block.Add(item)
+
+                    If pushStack Then
+                        If stack.Count > 0 Then
+                            stack.Pop()
+                        End If
+
+                        stack.Push(item.text)
                     End If
                 Else
                     block.Add(item)

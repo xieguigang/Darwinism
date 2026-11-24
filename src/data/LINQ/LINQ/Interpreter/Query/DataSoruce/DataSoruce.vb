@@ -84,7 +84,7 @@ Namespace Interpreter.Query
             Dim all As Object() = PopulatesData().ToArray
             Dim output As New List(Of Object)
 
-            For Each i As Integer In addresses.SafeQuery
+            For Each i As Integer In If(addresses, New Integer() {})
                 If i >= 0 AndAlso i < all.Length Then
                     output.Add(all(i))
                 End If

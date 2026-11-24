@@ -70,7 +70,7 @@ Namespace Interpreter.Query
         ''' <param name="addresses"></param>
         ''' <returns></returns>
         Public Overrides Iterator Function PopulatesData(addresses As Integer()) As IEnumerable(Of Object)
-            For Each i As Integer In addresses.SafeQuery
+            For Each i As Integer In If(addresses, New Integer() {})
                 Yield GetRow(i)
             Next
         End Function

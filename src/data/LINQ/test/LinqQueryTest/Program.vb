@@ -41,6 +41,7 @@ Public Module Program
         Call Invoke("select-index", AddressOf TestSelectIndex)
         Call Invoke("select-equivalence", AddressOf TestSelectEquivalence)
         Call Invoke("where-logic", AddressOf TestWhereLogic)
+        Call Invoke("order-by-pushdown", AddressOf TestOrderByPushdown)
         Call Invoke("aggregate", AddressOf TestAggregate)
         Call Invoke("aggregate-index", AddressOf TestAggregateIndex)
         Call Invoke("aggregate-group", AddressOf TestAggregateGroup)
@@ -223,6 +224,63 @@ Public Module Program
 
 #End Region
 
+#Region "order by pushdown test"
+
+    ''' <summary>
+    ''' 排序字段建立了数值索引的时候，ORDER BY操作可以直接按照索引键的顺序取出数据行
+    ''' </summary>
+    Private Sub TestOrderByPushdown()
+        Dim indexScript As String = String.Join(vbLf, {
+            "from x as row",
+            "in index(""data.csv"", range = [""CalcMz""])",
+            "where x.CalcMz > 700",
+            "select x.LipidIon, x.CalcMz",
+            "order by CalcMz ascending",
+            "take 20"
+        })
+        Dim scanScript As String = indexScript.Replace("index(""data.csv"", range = [""CalcMz""])", """data.csv""")
+        Dim indexQuery As QueryExpression = Nothing
+        Dim scanQuery As QueryExpression = Nothing
+        Dim indexRows As JavaScriptObject() = RunQuery(indexScript, indexQuery)
+        Dim scanRows As JavaScriptObject() = RunQuery(scanScript, scanQuery)
+
+        Call DebugAudit.Check(indexQuery.LastIndex IsNot Nothing AndAlso indexQuery.LastIndex.Used, "the order by query should use the data source index")
+        Call DebugAudit.AreEqual(20, indexRows.Length, "the TAKE 20 clause of the order by query")
+        Call DebugAudit.AreEqual(scanRows.Length, indexRows.Length, "the order by query should returns the same row count")
+
+        For i As Integer = 1 To indexRows.Length - 1
+            Call DebugAudit.Check(ToDouble(indexRows(i - 1)("CalcMz")) <= ToDouble(indexRows(i)("CalcMz")), "the CalcMz column was not ordered ascending")
+        Next
+
+        For i As Integer = 0 To indexRows.Length - 1
+            Call DebugAudit.AreEqual(
+                Text(scanRows(i)("LipidIon")),
+                Text(indexRows(i)("LipidIon")),
+                $"row {i} of the order by query was mismatch between the scan query and the indexed query"
+            )
+        Next
+
+        ' 排序键为数据源字段的成员引用的时候，排序操作会直接下推为按照索引键的顺序来读取数据行
+        Dim descQuery As QueryExpression = Nothing
+        Dim descRows As JavaScriptObject() = RunQuery(
+            String.Join(vbLf, {
+                "from x as row",
+                "in index(""data.csv"", range = [""CalcMz""])",
+                "where x.CalcMz > 700",
+                "select x.LipidIon, x.CalcMz",
+                "order by x.CalcMz descending",
+                "take 10"
+            }), descQuery)
+
+        Call DebugAudit.AreEqual(10, descRows.Length, "the TAKE 10 clause of the descending order by query")
+
+        For i As Integer = 1 To descRows.Length - 1
+            Call DebugAudit.Check(ToDouble(descRows(i - 1)("CalcMz")) >= ToDouble(descRows(i)("CalcMz")), "the CalcMz column was not ordered descending")
+        Next
+    End Sub
+
+#End Region
+
 #Region "aggregate query test"
 
     Private Function ComputeAggregate() As (n As Integer, avgQuality As Double, minMz As Double, maxMz As Double, sumArea As Double, maxScore As Double)
@@ -329,6 +387,12 @@ Public Module Program
             Call DebugAudit.AreEqual(counts(key), CInt(row("n")), $"group '{key}' count(x)")
             Call DebugAudit.Check(CInt(row("n")) > 0, $"group '{key}' should contains at least one row")
         Next
+
+        ' 聚合查询的结果可以直接转换为表格数据输出(CLI的表格/CSV输出路径)
+        Dim table As DataFrameResolver = rows.CreateTableDataSet
+
+        Call DebugAudit.AreEqual(rows.Length, table.Nrows, "the aggregate result should be converted into a table")
+        Call DebugAudit.Check(table.HeadTitles.Contains("Class"), "the group key should be a column of the aggregate table")
     End Sub
 
     Private Sub TestAggregateEquivalence()
