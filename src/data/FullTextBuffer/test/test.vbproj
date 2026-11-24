@@ -6,6 +6,7 @@
     <StartupObject>FullTextBuffer.Test.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LINQ\LINQ\LINQ.vbproj" />
     <ProjectReference Include="..\FullTextBuffer.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\..\..\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
