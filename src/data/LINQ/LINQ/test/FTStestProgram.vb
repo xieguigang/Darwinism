@@ -53,6 +53,7 @@
 
 Imports LINQ
 Imports Microsoft.VisualBasic.Linq
+Imports RQL
 
 Module Program1
 
@@ -64,7 +65,7 @@ Module Program1
     End Sub
 
     Sub test_read()
-        Dim index As New FTSEngine(demo_repo)
+        Dim index As New FTSEngine(New FTSIndex(demo_repo))
 
         For Each hit As SeqValue(Of String) In index.Search("princess  walking")
             Call Console.WriteLine(hit.value)
@@ -75,7 +76,7 @@ Module Program1
         Dim doc_1 = "E:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Beauty_and_the_Beast.txt".ReadAllLines
         Dim doc_2 = "E:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Rapunzel.txt".ReadAllLines
 
-        Dim index As New FTSEngine(demo_repo)
+        Dim index As New FTSEngine(New FTSIndex(demo_repo))
 
         Call index.Indexing(doc_1)
         Call index.Indexing(doc_2)

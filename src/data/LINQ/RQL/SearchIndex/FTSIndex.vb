@@ -56,11 +56,9 @@
 #End Region
 
 Imports System.IO
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports FullTextBuffer
 Imports LINQ
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
