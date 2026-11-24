@@ -342,6 +342,17 @@ Namespace Script
                 Return tokenList.ParseKeywordExpression
             End If
 
+            ' 一元逻辑取反运算符
+            If tokenList(0).name = Tokens.Operator AndAlso
+                String.Equals(tokenList(0).text, "not", StringComparison.OrdinalIgnoreCase) Then
+
+                If tokenList.Length = 1 Then
+                    Throw New SyntaxErrorException("missing operand for the 'not' operator!")
+                End If
+
+                Return New NotExpression(ParseExpression(tokenList.Skip(1).ToArray))
+            End If
+
             ' 赋值表达式需要优先解析：赋值表达式的右侧可能会是一个函数调用
             ' 例如``n = count(x)``，如果按照二元运算符的规则进行解析会失败
             Dim assignLeft As Token() = Nothing

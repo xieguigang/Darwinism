@@ -138,6 +138,13 @@ Namespace Interpreter.Query
             For Each group As AggregateGroup In groups
                 Dim obj As New JavaScriptObject
 
+                ' 分组键也作为结果的输出字段
+                If groupBy IsNot Nothing AndAlso group.Key IsNot Nothing Then
+                    For i As Integer = 0 To groupBy.Keys.Length - 1
+                        obj(groupBy.Keys(i).Name) = group.Key(i)
+                    Next
+                End If
+
                 For Each field As NamedValue(Of Expression) In into.Fields
                     obj(field.Name) = AggregateField(field.Value, group, closure)
                 Next

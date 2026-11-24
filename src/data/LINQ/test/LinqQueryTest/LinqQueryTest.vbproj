@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>LinqQueryTest</RootNamespace>
+    <StartupObject>LinqQueryTest.Program</StartupObject>
+    <Platforms>AnyCPU;x64</Platforms>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LINQ\LINQ.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\data.csv" Link="data.csv" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\query.linq" Link="query.linq" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\query_index.linq" Link="query_index.linq" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\query_aggregate.linq" Link="query_aggregate.linq" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\query_aggregate_index.linq" Link="query_aggregate_index.linq" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\query_aggregate_group.linq" Link="query_aggregate_group.linq" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
