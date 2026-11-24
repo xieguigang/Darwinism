@@ -48,9 +48,9 @@ Friend Module QGramCacheFormat
     End Sub
 
     Friend Function ReadHeader(reader As BinaryDataReader, limit As Long) As (q As Integer, tokenizerId As String, docCount As Integer, wordCount As Integer, stringCount As Integer, gramCount As Integer)
-        Dim magic As Byte() = reader.ReadBytes(Magic.Length)
+        Dim headerMagic As Byte() = reader.ReadBytes(Magic.Length)
 
-        If magic Is Nothing OrElse magic.Length <> Magic.Length OrElse Not magic.SequenceEqual(Magic) Then
+        If headerMagic Is Nothing OrElse headerMagic.Length <> Magic.Length OrElse Not headerMagic.SequenceEqual(Magic) Then
             Throw New QGramCacheException("invalid QGram cache magic header")
         End If
 

@@ -19,27 +19,27 @@ Public Module QGramFullTextCache
             Throw New ArgumentException("cache file path cannot be empty", NameOf(file))
         End If
 
-        Dim path As String = Path.GetFullPath(file)
-        Dim directory As String = Path.GetDirectoryName(path)
+        Dim fullPath As String = System.IO.Path.GetFullPath(file)
+        Dim parentDirectory As String = System.IO.Path.GetDirectoryName(fullPath)
 
-        If Not String.IsNullOrEmpty(directory) Then
-            Call Directory.CreateDirectory(directory)
+        If Not String.IsNullOrEmpty(parentDirectory) Then
+            Call System.IO.Directory.CreateDirectory(parentDirectory)
         End If
 
-        Dim temporary As String = path & ".tmp"
+        Dim temporary As String = fullPath & ".tmp"
 
         Try
-            Using stream As New FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None)
+            Using stream As New FileStream(temporary, FileMode.Create, FileAccess.ReadWrite, FileShare.None)
                 Call Save(index, DirectCast(stream, Stream), tokenizerId)
             End Using
 
-            Call File.Move(temporary, path, overwrite:=True)
+            Call System.IO.File.Move(temporary, fullPath, overwrite:=True)
 
             Return True
         Catch
-            If File.Exists(temporary) Then
+            If System.IO.File.Exists(temporary) Then
                 Try
-                    Call File.Delete(temporary)
+                    Call System.IO.File.Delete(temporary)
                 Catch
                     ' keep the original exception from the write path
                 End Try
@@ -59,8 +59,8 @@ Public Module QGramFullTextCache
         If stream Is Nothing Then
             Throw New ArgumentNullException(NameOf(stream))
         End If
-        If Not stream.CanSeek Then
-            Throw New ArgumentException("cache stream must be seekable", NameOf(stream))
+        If Not stream.CanSeek OrElse Not stream.CanRead Then
+            Throw New ArgumentException("cache stream must be seekable and readable", NameOf(stream))
         End If
 
         Dim start As Long = stream.Position
