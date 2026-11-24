@@ -342,6 +342,19 @@ Namespace Script
                 Return tokenList.ParseKeywordExpression
             End If
 
+            ' 赋值表达式需要优先解析：赋值表达式的右侧可能会是一个函数调用
+            ' 例如``n = count(x)``，如果按照二元运算符的规则进行解析会失败
+            Dim assignLeft As Token() = Nothing
+            Dim assignRight As Token() = Nothing
+
+            If TrySplitAssign(tokenList, assignLeft, assignRight) Then
+                Dim target As Expression = ParseExpression(assignLeft)
+
+                If TypeOf target Is SymbolReference Then
+                    Return New BinaryExpression(target, ParseExpression(assignRight), "=")
+                End If
+            End If
+
             Dim blocks = tokenList.SplitByTopLevelStack.ToArray
 
             If blocks.Length = 1 Then
@@ -376,6 +389,37 @@ Namespace Script
             End If
 
             Return tokenList.ParseBinary
+        End Function
+
+        ''' <summary>
+        ''' 尝试在最顶层按照``=``运算符将表达式分割为左值和右值
+        ''' </summary>
+        ''' <param name="tokenList"></param>
+        ''' <param name="left"></param>
+        ''' <param name="right"></param>
+        ''' <returns></returns>
+        Private Function TrySplitAssign(tokenList As Token(), ByRef left As Token(), ByRef right As Token()) As Boolean
+            Dim stack As Integer = 0
+
+            For i As Integer = 0 To tokenList.Length - 1
+                Dim t As Token = tokenList(i)
+
+                If t.name = Tokens.Open Then
+                    stack += 1
+                ElseIf t.name = Tokens.Close Then
+                    stack -= 1
+                ElseIf stack = 0 AndAlso t.name = Tokens.Operator AndAlso t.text = "=" Then
+                    left = tokenList.Take(i).ToArray
+                    right = tokenList.Skip(i + 1).ToArray
+
+                    Return left.Length > 0 AndAlso right.Length > 0
+                End If
+            Next
+
+            left = Nothing
+            right = Nothing
+
+            Return False
         End Function
 
         ''' <summary>
