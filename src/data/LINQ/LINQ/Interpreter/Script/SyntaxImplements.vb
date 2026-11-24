@@ -189,8 +189,23 @@ Namespace Script
             Dim symbolExpr As SymbolDeclare = symbol.ParseExpression
             Dim i As Integer = 0
             Dim seq As Expression = blocks.GetSequence(offset:=i)
+            Dim exec As Expression() = blocks.Skip(i).PopulateExpressions.ToArray
+            Dim into As AggregateInto = exec.OfType(Of AggregateInto).FirstOrDefault
+            Dim groupBy As GroupBy = exec.OfType(Of GroupBy).FirstOrDefault
+            Dim opt As New Options(exec.Where(Function(t) TypeOf t Is PipelineKeyword))
+            Dim execProgram As Expression() = exec _
+                .Where(Function(t)
+                           Return (Not TypeOf t Is PipelineKeyword) AndAlso
+                               (Not TypeOf t Is AggregateInto) AndAlso
+                               (Not TypeOf t Is GroupBy)
+                       End Function) _
+                .ToArray
 
-            Throw New NotImplementedException
+            If into Is Nothing Then
+                Throw New SyntaxErrorException("missing 'INTO' statement for the aggregate query!")
+            End If
+
+            Return New AggregateExpression(symbolExpr, seq, execProgram, groupBy, into, opt)
         End Function
 
         <Extension>
@@ -212,6 +227,16 @@ Namespace Script
 
         <Extension>
         Private Function GetProjection(tokenList As IEnumerable(Of Token)) As Expression
+            Return New OutputProjection(tokenList.GetProjectionFields)
+        End Function
+
+        ''' <summary>
+        ''' 解析投影表达式之中的字段列表
+        ''' </summary>
+        ''' <param name="tokenList"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function GetProjectionFields(tokenList As IEnumerable(Of Token)) As NamedValue(Of Expression)()
             Dim values As Expression() = tokenList.GetParameters.ToArray
             Dim fields As New List(Of NamedValue(Of Expression))
 
@@ -233,7 +258,7 @@ Namespace Script
                 End If
             Next
 
-            Return New OutputProjection(fields)
+            Return fields.ToArray
         End Function
 
         <Extension>
@@ -279,6 +304,12 @@ Namespace Script
                 Return ParseExpression(tokenList.Skip(1).ToArray)
             ElseIf tokenList(Scan0).isKeyword("select") Then
                 Return tokenList.Skip(1).GetProjection
+            ElseIf tokenList(Scan0).isKeyword("group") Then
+                ' group by <key> [, <key> ...]
+                Return New GroupBy(tokenList.Skip(2).GetProjectionFields)
+            ElseIf tokenList(Scan0).isKeyword("into") Then
+                ' into <name> = <aggregate expression> [, ...]
+                Return New AggregateInto(tokenList.Skip(1).GetProjectionFields)
             ElseIf tokenList(Scan0).isKeyword("order") Then
                 Dim sortKey = tokenList.Skip(2).ToArray
                 Dim desc As Boolean
