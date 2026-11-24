@@ -74,38 +74,102 @@ Public MustInherit Class MemoryQuery
     ''' this function will returns nothing if query filter has no result
     ''' </returns>
     Public Function GetIndex(filter As IEnumerable(Of Query)) As Integer()
+        Dim result As IndexQueryResult = TryGetIndex(filter)
+
+        If result Is Nothing Then
+            Return Nothing
+        Else
+            Return result.Addresses
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 尝试使用当前对象之中已经建立好的索引来执行条件查询，返回满足条件的候选数据行偏移。
+    ''' </summary>
+    ''' <param name="filter"></param>
+    ''' <returns>
+    ''' 当任意一个查询条件在当前对象之中没有可用的索引的时候，函数返回<c>Nothing</c>，
+    ''' 调用方应当回退为全表扫描以保证查询结果的正确性。<see cref="IndexQueryResult.Used"/>
+    ''' 为<c>True</c>并且<see cref="IndexQueryResult.Addresses"/>为空数组的时候则表示索引判定为无命中。
+    ''' </returns>
+    Public Function TryGetIndex(filter As IEnumerable(Of Query)) As IndexQueryResult
         Dim index As Integer() = Nothing
+        Dim used As Boolean = False
 
         For Each q As Query In filter
-            Select Case q.search
-                Case Query.Type.FullText : Call FullTextSearch(q, index)
-                Case Query.Type.HashTerm : Call HashSearch(q, index)
-                Case Query.Type.Levenshtein : Call LevenshteinSearch(q, index)
-                Case Query.Type.ValueRange : Call ValueRangeSearch(q, index)
-                Case Query.Type.ValueMatch,
-                     Query.Type.ValueRangeGreaterThan,
-                     Query.Type.ValueRangeLessThan
+            Dim offsets As Integer() = SearchByIndex(q)
 
-                    Call ValueMatchSearch(q, index)
-
-                Case Else
-                    Throw New NotImplementedException(q.search.Description)
-            End Select
-
-            If index IsNot Nothing AndAlso index.Length = 0 Then
+            If offsets Is Nothing Then
+                ' 存在无法使用索引的查询条件
+                ' 整体回退为全表扫描
                 Return Nothing
+            End If
+
+            used = True
+
+            If index Is Nothing Then
+                index = offsets
+            Else
+                index = index.Intersect(offsets).ToArray
+            End If
+
+            If index.Length = 0 Then
+                Exit For
             End If
         Next
 
-        Return index
+        If Not used Then
+            Return Nothing
+        End If
+
+        Return New IndexQueryResult With {.Used = True, .Addresses = index}
     End Function
 
-    Protected Sub ValueMatchSearch(q As Query, ByRef index As Integer())
+    ''' <summary>
+    ''' 按照指定的查询条件搜索索引，返回候选数据行偏移。<c>Nothing</c>则表示当前查询条件无法使用索引。
+    ''' </summary>
+    ''' <param name="q"></param>
+    ''' <returns></returns>
+    Public Function SearchByIndex(q As Query) As Integer()
+        Select Case q.search
+            Case Query.Type.ValueMatch
+                ' 等值匹配：优先使用数值索引，其次使用词项哈希索引
+                ' 全文索引以及编辑距离索引也可以用于缩小候选集
+                If m_valueindex.ContainsKey(q.field) Then
+                    Return ValueMatchSearch(q)
+                ElseIf m_hashindex.ContainsKey(q.field) Then
+                    Return HashSearch(q)
+                ElseIf m_fulltext.ContainsKey(q.field) Then
+                    Return FullTextSearch(q)
+                ElseIf m_levenshtein.ContainsKey(q.field) Then
+                    Return LevenshteinSearch(q)
+                Else
+                    Return Nothing
+                End If
+            Case Query.Type.ValueRangeGreaterThan, Query.Type.ValueRangeLessThan
+                If m_valueindex.ContainsKey(q.field) Then
+                    Return ValueMatchSearch(q)
+                Else
+                    Return Nothing
+                End If
+            Case Query.Type.ValueRange
+                Return ValueRangeSearch(q)
+            Case Query.Type.HashTerm
+                Return HashSearch(q)
+            Case Query.Type.FullText
+                Return FullTextSearch(q)
+            Case Query.Type.Levenshtein
+                Return LevenshteinSearch(q)
+            Case Else
+                Return Nothing
+        End Select
+    End Function
+
+    Protected Function ValueMatchSearch(q As Query) As Integer()
         Dim search As ValueIndex = m_valueindex.TryGetValue(q.field)
-        Dim offsets As IEnumerable(Of Integer)
 
         If search Is Nothing Then
-            Throw New MissingPrimaryKeyException($"missing value range search index on data field '{q.field}'!")
+            Return Nothing
         End If
 
         Dim query As IEnumerable(Of IAddressOf)
@@ -115,9 +179,9 @@ Public MustInherit Class MemoryQuery
                 Dim val As Double = CDbl(q.value)
 
                 If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
-                    query = DirectCast(search, RangeIndex(Of Double)).SearchGreaterThan(val, strict:=True)
+                    query = DirectCast(search, RangeIndex(Of Double)).SearchGreaterThan(val, strict:=q.strict)
                 ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
-                    query = DirectCast(search, RangeIndex(Of Double)).SearchLessThan(val, strict:=True)
+                    query = DirectCast(search, RangeIndex(Of Double)).SearchLessThan(val, strict:=q.strict)
                 Else
                     query = DirectCast(search, RangeIndex(Of Double)).Search(val)
                 End If
@@ -125,9 +189,9 @@ Public MustInherit Class MemoryQuery
                 Dim val As Integer = CInt(q.value)
 
                 If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
-                    query = DirectCast(search, RangeIndex(Of Integer)).SearchGreaterThan(val, strict:=True)
+                    query = DirectCast(search, RangeIndex(Of Integer)).SearchGreaterThan(val, strict:=q.strict)
                 ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
-                    query = DirectCast(search, RangeIndex(Of Integer)).SearchLessThan(val, strict:=True)
+                    query = DirectCast(search, RangeIndex(Of Integer)).SearchLessThan(val, strict:=q.strict)
                 Else
                     query = DirectCast(search, RangeIndex(Of Integer)).Search(val)
                 End If
@@ -135,9 +199,9 @@ Public MustInherit Class MemoryQuery
                 Dim val As Date = CDate(q.value)
 
                 If q.search = LINQ.Query.Type.ValueRangeGreaterThan Then
-                    query = DirectCast(search, RangeIndex(Of Date)).SearchGreaterThan(val, strict:=True)
+                    query = DirectCast(search, RangeIndex(Of Date)).SearchGreaterThan(val, strict:=q.strict)
                 ElseIf q.search = LINQ.Query.Type.ValueRangeLessThan Then
-                    query = DirectCast(search, RangeIndex(Of Date)).SearchLessThan(val, strict:=True)
+                    query = DirectCast(search, RangeIndex(Of Date)).SearchLessThan(val, strict:=q.strict)
                 Else
                     query = DirectCast(search, RangeIndex(Of Date)).Search(val)
                 End If
@@ -145,26 +209,19 @@ Public MustInherit Class MemoryQuery
                 Throw New NotImplementedException(search.UnderlyingType.FullName)
         End Select
 
-        offsets = query.Select(Function(a) a.Address)
-
-        If index Is Nothing Then
-            index = offsets.ToArray
-        Else
-            index = index.Intersect(offsets).ToArray
-        End If
-    End Sub
+        Return query.Select(Function(a) a.Address).ToArray
+    End Function
 
     ''' <summary>
     ''' implements between ... and ... range search
     ''' </summary>
     ''' <param name="q"></param>
-    ''' <param name="index"></param>
-    Protected Sub ValueRangeSearch(q As Query, ByRef index As Integer())
+    ''' <returns></returns>
+    Protected Function ValueRangeSearch(q As Query) As Integer()
         Dim search As ValueIndex = m_valueindex.TryGetValue(q.field)
-        Dim offsets As IEnumerable(Of Integer)
 
         If search Is Nothing Then
-            Throw New MissingPrimaryKeyException($"missing value range search index on data field '{q.field}'!")
+            Return Nothing
         End If
 
         Dim query As IEnumerable(Of IAddressOf)
@@ -183,61 +240,31 @@ Public MustInherit Class MemoryQuery
                 Throw New NotImplementedException(search.UnderlyingType.FullName)
         End Select
 
-        offsets = query.Select(Function(a) a.Address)
+        Return query.Select(Function(a) a.Address).ToArray
+    End Function
 
-        If index Is Nothing Then
-            index = offsets.ToArray
-        Else
-            index = index.Intersect(offsets).ToArray
-        End If
-    End Sub
-
-    Protected Sub HashSearch(q As Query, ByRef index As Integer())
-        Dim text As String = any.ToString(q.value)
-
+    Protected Function HashSearch(q As Query) As Integer()
         If Not m_hashindex.ContainsKey(q.field) Then
-            Throw New MissingPrimaryKeyException($"missing hash term search index on data field '{q.field}'!")
+            Return Nothing
         End If
 
-        Dim offsets = m_hashindex(q.field).Query(text).ToArray
+        Return m_hashindex(q.field).Query(any.ToString(q.value)).ToArray
+    End Function
 
-        If index Is Nothing Then
-            index = offsets
-        Else
-            index = index.Intersect(offsets).ToArray
-        End If
-    End Sub
-
-    Protected Sub FullTextSearch(q As Query, ByRef index As Integer())
-        Dim text As String = any.ToString(q.value)
-
+    Protected Function FullTextSearch(q As Query) As Integer()
         If Not m_fulltext.ContainsKey(q.field) Then
-            Throw New MissingPrimaryKeyException($"missing full text search index on data field '{q.field}'!")
+            Return Nothing
         End If
 
-        Dim offsets = m_fulltext(q.field).Search(text).ToArray
+        Return m_fulltext(q.field).Search(any.ToString(q.value)).Select(Function(a) a.i).ToArray
+    End Function
 
-        If index Is Nothing Then
-            index = offsets.Select(Function(a) a.i).ToArray
-        Else
-            index = index.Intersect(offsets.Select(Function(a) a.i)).ToArray
-        End If
-    End Sub
-
-    Protected Sub LevenshteinSearch(q As Query, ByRef index As Integer())
-        Dim text As String = any.ToString(q.value)
-
+    Protected Function LevenshteinSearch(q As Query) As Integer()
         If Not m_levenshtein.ContainsKey(q.field) Then
-            Throw New MissingPrimaryKeyException($"missing levenshtein text search index on data field '{q.field}'!")
+            Return Nothing
         End If
 
-        Dim offsets = m_levenshtein(q.field).Search(text).ToArray
-
-        If index Is Nothing Then
-            index = offsets
-        Else
-            index = index.Intersect(offsets).ToArray
-        End If
-    End Sub
+        Return m_levenshtein(q.field).Search(any.ToString(q.value)).ToArray
+    End Function
 
 End Class

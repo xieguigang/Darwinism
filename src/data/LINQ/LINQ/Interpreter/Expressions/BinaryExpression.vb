@@ -64,6 +64,20 @@ Namespace Interpreter.Expressions
         Friend left, right As Expression
         Dim op As String
 
+        ''' <summary>
+        ''' the operator token of the binary expression, example as: ``+``, ``&gt;=``, ``and``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property [Operator] As String
+            Get
+                Return op
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 左值是否为一个变量引用，即当前表达式是否为一个赋值表达式
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property LikeValueAssign As Boolean
             Get
                 If op <> "=" Then
@@ -77,12 +91,34 @@ Namespace Interpreter.Expressions
         Sub New(left As Expression, right As Expression, op As String)
             Me.left = left
             Me.right = right
-            Me.op = op
+            Me.op = If(op, "").ToLower
         End Sub
 
         Public Overrides Function Exec(context As ExecutableContext) As Object
-            Dim x As Object = left.Exec(context)
-            Dim y As Object = right.Exec(context)
+            Dim x As Object
+            Dim y As Object
+
+            Select Case op
+                Case "and"
+                    x = left.Exec(context)
+
+                    If Not CBoolValue(x) Then
+                        Return False
+                    Else
+                        Return CBoolValue(right.Exec(context))
+                    End If
+                Case "or"
+                    x = left.Exec(context)
+
+                    If CBoolValue(x) Then
+                        Return True
+                    Else
+                        Return CBoolValue(right.Exec(context))
+                    End If
+                Case Else
+                    x = left.Exec(context)
+                    y = right.Exec(context)
+            End Select
 
             Select Case op
                 Case "+" : Return x + y
@@ -103,6 +139,21 @@ Namespace Interpreter.Expressions
                 Case Else
                     Throw New NotImplementedException
             End Select
+        End Function
+
+        ''' <summary>
+        ''' 将逻辑运算的中间值转换为布尔值，<c>Nothing</c>值在逻辑运算之中被视为<c>False</c>
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Friend Shared Function CBoolValue(value As Object) As Boolean
+            If value Is Nothing Then
+                Return False
+            ElseIf TypeOf value Is Boolean Then
+                Return DirectCast(value, Boolean)
+            Else
+                Return CBool(value)
+            End If
         End Function
 
         Public Overrides Function ToString() As String

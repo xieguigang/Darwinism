@@ -70,6 +70,10 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
     Dim eval As Func(Of T, Double)
     Dim tolerance As Double
     Dim doubles As Double()
+    ''' <summary>
+    ''' 按照索引键升序排列之后的数据池，用于按照索引顺序枚举原始数据行偏移
+    ''' </summary>
+    Dim ordered As SeqValue(Of T)()
 
     Public Overrides ReadOnly Property UnderlyingType As Type
         Get
@@ -107,8 +111,36 @@ Public Class RangeIndex(Of T) : Inherits ValueIndex
             tolerance:=win_size,
             fuzzy:=True
         )
+        ' 保留按照索引键升序排列之后的数据池
+        ' 用于order by查询直接按照索引顺序取出数据行的原始偏移
+        ordered = pool
 
         Return Me
+    End Function
+
+    ''' <summary>
+    ''' 按照索引键的升序(或者降序)顺序枚举原始数据行的偏移
+    ''' </summary>
+    ''' <param name="descending"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 索引在建立的时候就已经按照键值完成了排序，所以这里可以直接顺序枚举，
+    ''' 不需要再次进行排序运算。
+    ''' </remarks>
+    Public Iterator Function OrderedAddresses(Optional descending As Boolean = False) As IEnumerable(Of Integer)
+        If ordered Is Nothing Then
+            Return
+        End If
+
+        If descending Then
+            For i As Integer = ordered.Length - 1 To 0 Step -1
+                Yield ordered(i).i
+            Next
+        Else
+            For Each item As SeqValue(Of T) In ordered
+                Yield item.i
+            Next
+        End If
     End Function
 
     ''' <summary>

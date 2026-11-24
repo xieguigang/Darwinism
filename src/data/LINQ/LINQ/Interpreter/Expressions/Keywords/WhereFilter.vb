@@ -55,6 +55,8 @@
 
 #End Region
 
+Imports LINQ.Interpreter.Query
+
 Namespace Interpreter.Expressions
 
     ''' <summary>
@@ -70,6 +72,10 @@ Namespace Interpreter.Expressions
         ''' the index query
         ''' </summary>
         Dim query As LINQ.Query()
+        ''' <summary>
+        ''' 索引查询条件所对应的数据源符号名称，用于对索引条件的翻译结果进行缓存
+        ''' </summary>
+        Dim querySymbol As String
 
         Public Overrides ReadOnly Property keyword As String
             Get
@@ -80,6 +86,22 @@ Namespace Interpreter.Expressions
         Sub New(filter As Expression)
             Me.filter = filter
         End Sub
+
+        ''' <summary>
+        ''' 将当前的条件表达式翻译为索引查询条件
+        ''' </summary>
+        ''' <param name="symbolName">查询的数据源符号名称</param>
+        ''' <returns>
+        ''' 当条件表达式无法使用索引进行收窄的时候，函数返回<c>Nothing</c>
+        ''' </returns>
+        Public Function GetIndexQuery(symbolName As String) As LINQ.Query()
+            If Not String.Equals(querySymbol, symbolName, StringComparison.OrdinalIgnoreCase) Then
+                query = WhereIndexTranslator.Translate(filter, symbolName)
+                querySymbol = symbolName
+            End If
+
+            Return query
+        End Function
 
         ''' <summary>
         ''' This function should returns a logical value for indicates 

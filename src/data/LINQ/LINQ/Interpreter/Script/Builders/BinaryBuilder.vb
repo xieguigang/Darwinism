@@ -49,7 +49,6 @@
     ' 
     '         Sub: JoinBinary
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -66,12 +65,17 @@ Namespace Script.Builders
 
     Module BinaryBuilder
 
+        ''' <summary>
+        ''' 运算符的优先级分组：从最高优先级到最低优先级依次进行归约
+        ''' </summary>
         ReadOnly orders As String()() = {
             New String() {"^"},
             New String() {"/", "*", "%"},
             New String() {"+", "-"},
             New String() {"&"},
-            New String() {"and", "or"}
+            New String() {"=", "<>", ">", "<", ">=", "<="},
+            New String() {"and"},
+            New String() {"or"}
         }
 
         <Extension>
@@ -82,8 +86,15 @@ Namespace Script.Builders
                 Return New BinaryExpression(shrinks(0), shrinks(2), shrinks(1))
             End If
 
-            For Each level As String() In orders
-                Call shrinks.JoinBinary(listOp:=level)
+            For i As Integer = 0 To orders.Length - 1
+                Call shrinks.JoinBinary(listOp:=orders(i))
+
+                If orders(i)(Scan0) = "=" Then
+                    ' not一元运算符的优先级比比较运算符以及逻辑运算符都低
+                    ' 但是比and/or运算符的优先级高，所以在这里进行比较运算的归约之后
+                    ' 再对not运算符进行归约
+                    Call shrinks.JoinNot()
+                End If
             Next
 
             If shrinks = 3 Then
@@ -103,12 +114,41 @@ Namespace Script.Builders
                 End If
 
                 If shrinks(i) Like GetType(String) AndAlso listOp.IndexOf(shrinks(i).TryCast(Of String)) > -1 Then
+                    If Not (shrinks(i - 1) Like GetType(Expression)) OrElse Not (shrinks(i + 1) Like GetType(Expression)) Then
+                        Throw New SyntaxErrorException($"invalid operand for the operator '{shrinks(i).TryCast(Of String)}'!")
+                    End If
+
                     Dim bin As New BinaryExpression(shrinks(i - 1), shrinks(i + 1), shrinks(i))
 
                     shrinks.RemoveRange(i - 1, 3)
                     shrinks.Insert(i - 1, bin)
                 End If
             Next
+        End Sub
+
+        ''' <summary>
+        ''' 将``not &lt;expression>``组合为一元逻辑取反表达式
+        ''' </summary>
+        <Extension>
+        Private Sub JoinNot(ByRef shrinks As List(Of [Variant](Of String, Expression)))
+            Dim i As Integer = 0
+
+            Do While i < shrinks.Count - 1
+                If shrinks(i) Like GetType(String) AndAlso
+                    String.Equals(shrinks(i).TryCast(Of String), "not", StringComparison.OrdinalIgnoreCase) Then
+
+                    Dim operand As Expression = shrinks(i + 1).TryCast(Of Expression)
+
+                    If operand Is Nothing Then
+                        Throw New SyntaxErrorException("missing operand for the 'not' operator!")
+                    End If
+
+                    shrinks.RemoveRange(i, 2)
+                    shrinks.Insert(i, New NotExpression(operand))
+                Else
+                    i += 1
+                End If
+            Loop
         End Sub
 
         <Extension>

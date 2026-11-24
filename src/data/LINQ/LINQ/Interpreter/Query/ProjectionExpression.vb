@@ -92,18 +92,44 @@ Namespace Interpreter.Query
             Call LoadDrivers(context)
             Call project.CheckProjection(Me)
 
-            Dim skipVal As Boolean
             Dim dataset As DataSet = GetDataSet(context)
+            Dim addresses As Integer() = GetCandidates(dataset)
+            Dim ordered As Integer() = GetOrderedAddresses(dataset)
+            Dim skipOrderBy As Boolean = False
+
+            If ordered IsNot Nothing Then
+                ' 排序字段已经建立并且使用了数值索引：数据行已经按照索引键的顺序排列
+                ' 所以在这里可以跳过管线之中的order by操作
+                If addresses Is Nothing Then
+                    addresses = ordered
+                Else
+                    Dim candidates As New HashSet(Of Integer)(addresses)
+
+                    addresses = ordered _
+                        .Where(Function(i) candidates.Contains(i)) _
+                        .ToArray
+                End If
+
+                skipOrderBy = True
+            End If
 
             Call closure.env.AddSymbol(symbol.symbolName, symbol.type)
 
-            For Each item As Object In dataset.PopulatesData()
+            Dim rows As IEnumerable(Of Object) = If(
+                addresses Is Nothing,
+                dataset.PopulatesData(),
+                dataset.PopulatesData(addresses)
+            )
+            Dim skipVal As Boolean
+
+            For Each item As Object In rows
                 closure.env.FindSymbol(symbol.symbolName).value = item
+                skipVal = False
 
                 For Each line As Expression In executeQueue
                     ' full table scanning
                     If TypeOf line Is WhereFilter Then
-                        skipVal = Not DirectCast(line.Exec(closure), Boolean)
+                        skipVal = Not BinaryExpression.CBoolValue(line.Exec(closure))
 
                         If skipVal Then
                             Exit For
@@ -122,7 +148,63 @@ Namespace Interpreter.Query
                 End If
             Next
 
-            Return opt.RunOptionPipeline(projections, context).ToArray
+            Return opt.RunOptionPipeline(projections, context, skipFirst:=skipOrderBy).ToArray
+        End Function
+
+        ''' <summary>
+        ''' 使用数据源的索引来筛选出候选的数据行
+        ''' </summary>
+        ''' <param name="dataset"></param>
+        ''' <returns>
+        ''' 当数据源不支持索引筛选的时候，函数返回<c>Nothing</c>，此时将会回退为全表扫描。
+        ''' </returns>
+        Private Function GetCandidates(dataset As DataSet) As Integer()
+            Dim queries As LINQ.Query() = GetIndexQueries()
+            Dim result As IndexQueryResult = Nothing
+
+            If queries IsNot Nothing Then
+                result = dataset.TryQuery(queries)
+            End If
+
+            LastIndex = result
+
+            If result IsNot Nothing AndAlso result.Used Then
+                Return result.Addresses
+            Else
+                Return Nothing
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 尝试通过数据源的数值索引来获取排序之后的数据行偏移
+        ''' </summary>
+        ''' <param name="dataset"></param>
+        ''' <returns>
+        ''' 当无法使用索引排序的时候，函数返回<c>Nothing</c>
+        ''' </returns>
+        ''' <remarks>
+        ''' 只有在管线之中的第一段操作是``ORDER BY``，排序键为数据源之中的字段，
+        ''' 并且投影的输出之中也包含这个字段的时候才会使用索引排序。
+        ''' </remarks>
+        Private Function GetOrderedAddresses(dataset As DataSet) As Integer()
+            If opt.Pipeline.Length = 0 Then
+                Return Nothing
+            End If
+            If Not TypeOf opt.Pipeline(Scan0) Is OrderBy Then
+                Return Nothing
+            End If
+
+            Dim sortKey As OrderBy = DirectCast(opt.Pipeline(Scan0), OrderBy)
+            Dim field As String = sortKey.GetSortField(symbol.symbolName)
+
+            If String.IsNullOrEmpty(field) Then
+                Return Nothing
+            End If
+            If Not (project Is Nothing OrElse project.HasField(field)) Then
+                Return Nothing
+            End If
+
+            Return dataset.TryGetOrdered(field, sortKey.Descending)
         End Function
 
         Public Overrides Function ToString() As String

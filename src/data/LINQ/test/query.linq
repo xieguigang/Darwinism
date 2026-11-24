@@ -1,5 +1,5 @@
 FROM x as row 
-IN "E:\GCModeller\src\runtime\Darwinism\LINQ\test\data.csv"
+IN "data.csv"
 WHERE x.PeakQuality >= 0.999
 SELECT x.LipidIon,  
        lipidName = x.Class & x.FattyAcid,   

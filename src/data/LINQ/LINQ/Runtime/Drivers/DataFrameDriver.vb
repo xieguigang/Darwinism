@@ -31,7 +31,6 @@
 
 ' Summaries:
 
-
 ' Code Statistics:
 
 '   Total Lines: 28
@@ -64,8 +63,17 @@ Namespace Runtime.Drivers
             MyBase.New(Nothing)
         End Sub
 
+        ''' <summary>
+        ''' 从文件之中加载表格数据，并且完成列的数据类型测量。
+        ''' </summary>
+        ''' <param name="uri"></param>
+        ''' <returns></returns>
+        Public Shared Function LoadTable(uri As String) As DataFrameResolver
+            Return DataFrameResolver.Load(uri).MeasureTypeSchema
+        End Function
+
         Public Overrides Iterator Function ReadFromUri(uri As String) As IEnumerable(Of Object)
-            Dim dataframe As DataFrameResolver = DataFrameResolver.Load(uri).MeasureTypeSchema
+            Dim dataframe As DataFrameResolver = LoadTable(uri)
             Dim obj As JavaScriptObject
             Dim headers As String() = dataframe.HeadTitles
 

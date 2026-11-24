@@ -80,4 +80,18 @@ Public Class Query
     Public Property field As String
     Public Property value As Object
 
+    ''' <summary>
+    ''' 范围比较查询是否使用严格比较(不包含边界值)。
+    ''' </summary>
+    ''' <remarks>
+    ''' 对于``&gt;``以及``&lt;``运算符，这个属性值为<c>True</c>；
+    ''' 而对于``&gt;=``以及``&lt;=``运算符，这个属性值为<c>False</c>。
+    ''' 默认值为<c>True</c>，即保持旧版本的严格比较行为。
+    ''' </remarks>
+    Public Property strict As Boolean = True
+
+    Public Overrides Function ToString() As String
+        Return $"{search.Description} [{field}] {If(strict, "strict ", "")}{value}"
+    End Function
+
 End Class

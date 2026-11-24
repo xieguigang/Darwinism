@@ -76,6 +76,39 @@ Namespace Interpreter.Expressions
             Me.desc = desc
         End Sub
 
+        ''' <summary>
+        ''' 是否为降序排列
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Descending As Boolean
+            Get
+                Return desc
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 尝试获取当前排序操作所对应的数据源字段名称
+        ''' </summary>
+        ''' <param name="symbolName">查询的数据源符号名称</param>
+        ''' <returns>
+        ''' 当排序键不是数据源之中的字段的时候，函数返回<c>Nothing</c>
+        ''' </returns>
+        Friend Function GetSortField(symbolName As String) As String
+            If TypeOf key Is MemberReference Then
+                Dim member As MemberReference = DirectCast(key, MemberReference)
+
+                If TypeOf member.symbol Is SymbolReference AndAlso
+                    String.Equals(DirectCast(member.symbol, SymbolReference).symbolName, symbolName, StringComparison.OrdinalIgnoreCase) Then
+
+                    Return member.memberName
+                End If
+            ElseIf TypeOf key Is SymbolReference Then
+                Return DirectCast(key, SymbolReference).symbolName
+            End If
+
+            Return Nothing
+        End Function
+
         Public Overrides Function Exec(context As ExecutableContext) As Object
             Return key.Exec(context)
         End Function

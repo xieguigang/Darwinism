@@ -89,6 +89,31 @@ Namespace Interpreter.Expressions
             End If
         End Sub
 
+        ''' <summary>
+        ''' 检查投影的输出结果之中是否包含指定的数据源字段
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Function HasField(name As String) As Boolean
+            If no_projection Then
+                Return True
+            End If
+
+            For Each field As NamedValue(Of Expression) In fields
+                If String.Equals(field.Name, name, StringComparison.OrdinalIgnoreCase) Then
+                    Return True
+                End If
+
+                If TypeOf field.Value Is MemberReference AndAlso
+                    String.Equals(DirectCast(field.Value, MemberReference).memberName, name, StringComparison.OrdinalIgnoreCase) Then
+
+                    Return True
+                End If
+            Next
+
+            Return False
+        End Function
+
         Public Overrides Function Exec(context As ExecutableContext) As Object
             Dim obj As New JavaScriptObject
 

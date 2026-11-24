@@ -104,5 +104,39 @@ Namespace Interpreter.Query
         Protected Function GetDataSet(context As ExecutableContext) As DataSet
             Return DataSet.CreateDataSet(Me, context)
         End Function
+
+        ''' <summary>
+        ''' 最近一次执行查询的时候，索引的使用情况（用于测试以及性能诊断）
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property LastIndex As IndexQueryResult
+
+        ''' <summary>
+        ''' 将当前查询之中的全部``WHERE``条件翻译为索引查询条件
+        ''' </summary>
+        ''' <returns>
+        ''' 当存在无法使用索引的查询条件的时候，函数返回<c>Nothing</c>，此时应当回退为全表扫描。
+        ''' </returns>
+        Protected Function GetIndexQueries() As LINQ.Query()
+            Dim queries As New List(Of LINQ.Query)
+
+            For Each line As Expression In executeQueue
+                If TypeOf line Is WhereFilter Then
+                    Dim q As LINQ.Query() = DirectCast(line, WhereFilter).GetIndexQuery(symbol.symbolName)
+
+                    If q Is Nothing Then
+                        Return Nothing
+                    Else
+                        queries.AddRange(q)
+                    End If
+                End If
+            Next
+
+            If queries.Count = 0 Then
+                Return Nothing
+            Else
+                Return queries.ToArray
+            End If
+        End Function
     End Class
 End Namespace

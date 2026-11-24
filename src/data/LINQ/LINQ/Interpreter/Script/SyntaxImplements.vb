@@ -328,11 +328,65 @@ Namespace Script
                 Dim name As Expression = ParseExpression(blocks(Scan0))
 
                 If TypeOf name Is SymbolReference AndAlso blocks(1).IsClosure Then
-                    Return New FuncEval(name, blocks(1).Skip(1).Take(blocks(1).Length - 2).GetParameters)
+                    Dim arguments As Token() = blocks(1) _
+                        .Skip(1) _
+                        .Take(blocks(1).Length - 2) _
+                        .ToArray
+                    Dim func As String = DirectCast(name, SymbolReference).symbolName
+
+                    If String.Equals(func, "index", StringComparison.OrdinalIgnoreCase) Then
+                        ' index函数带有命名参数，无法通过FuncEval来实现
+                        ' 在这里创建专用的数据源表达式对象
+                        Return CreateIndexSource(arguments)
+                    Else
+                        Return New FuncEval(name, arguments.GetParameters)
+                    End If
                 End If
             End If
 
             Return tokenList.ParseBinary
+        End Function
+
+        ''' <summary>
+        ''' 解析``index(&lt;uri>, terms = [...], range = [...], fulltext = [...])``数据源表达式
+        ''' </summary>
+        ''' <param name="arguments"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function CreateIndexSource(arguments As Token()) As Expression
+            Dim blocks As Token()() = arguments _
+                .SplitParameters _
+                .Where(Function(b) Not b.IsNullOrEmpty) _
+                .Select(Function(b) If(b(Scan0).name = Tokens.Comma, b.Skip(1).ToArray, b)) _
+                .Where(Function(b) Not b.IsNullOrEmpty) _
+                .ToArray
+            Dim path As Expression = Nothing
+            Dim specs As New List(Of NamedValue(Of Expression))
+
+            For i As Integer = 0 To blocks.Length - 1
+                If i = 0 Then
+                    path = ParseExpression(blocks(i))
+                Else
+                    Dim assign As Expression = ParseExpression(blocks(i))
+
+                    If TypeOf assign Is BinaryExpression AndAlso DirectCast(assign, BinaryExpression).LikeValueAssign Then
+                        With DirectCast(assign, BinaryExpression)
+                            specs.Add(New NamedValue(Of Expression)(
+                                DirectCast(.left, SymbolReference).symbolName,
+                                .right
+                            ))
+                        End With
+                    Else
+                        Throw New SyntaxErrorException($"invalid index field specification: '{blocks(i).Select(Function(t) t.text).JoinBy(" ")}'!")
+                    End If
+                End If
+            Next
+
+            If path Is Nothing Then
+                Throw New SyntaxErrorException("missing data source file for the index function!")
+            End If
+
+            Return New IndexSource(path, specs)
         End Function
 
         <Extension>

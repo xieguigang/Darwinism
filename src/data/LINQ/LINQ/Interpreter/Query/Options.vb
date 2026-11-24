@@ -61,28 +61,62 @@ Namespace Interpreter.Query
 
     Public Class Options
 
-        Dim pipeline As PipelineKeyword()
+        Dim m_pipeline As PipelineKeyword()
 
         Sub New(pipeline As IEnumerable(Of Expression))
-            Me.pipeline = pipeline _
+            Me.m_pipeline = pipeline _
                 .Select(Function(l) DirectCast(l, PipelineKeyword)) _
                 .ToArray
         End Sub
 
-        Public Function RunOptionPipeline(output As IEnumerable(Of JavaScriptObject), context As ExecutableContext) As IEnumerable(Of JavaScriptObject)
+        ''' <summary>
+        ''' 查询结果的数据处理管线：``ORDER BY`` / ``SKIP`` / ``TAKE``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Pipeline As PipelineKeyword()
+            Get
+                Return m_pipeline
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="output"></param>
+        ''' <param name="context"></param>
+        ''' <param name="skipFirst">
+        ''' 是否跳过管线之中的第一段操作。当排序操作已经通过数据源的索引完成的时候，
+        ''' 排序之后的数据行顺序已经符合要求，此时可以跳过``ORDER BY``操作。
+        ''' </param>
+        ''' <returns></returns>
+        Public Function RunOptionPipeline(output As IEnumerable(Of JavaScriptObject),
+                                          context As ExecutableContext,
+                                          Optional skipFirst As Boolean = False) As IEnumerable(Of JavaScriptObject)
+
             Dim raw As JavaScriptObject() = output.ToArray
-            Dim allNames As String() = raw(Scan0).GetNames
-            Dim env As Environment = context.env
 
-            For Each name As String In allNames
-                If Not env.HasSymbol(name) Then
-                    Call env.AddSymbol(name, "any")
-                End If
-            Next
+            If raw.Length = 0 Then
+                ' 数据源经过索引筛选之后没有结果
+                ' 没有任何数据行可以用于后续的管线处理
+                Return raw
+            End If
 
-            For Each line As PipelineKeyword In pipeline
-                raw = line.Exec(raw, context).ToArray
-            Next
+            Dim start As Integer = If(skipFirst, 1, 0)
+
+            If start < pipeline.Length Then
+                Dim allNames As String() = raw(Scan0).GetNames
+                Dim env As Environment = context.env
+
+                For Each name As String In allNames
+                    If Not env.HasSymbol(name) Then
+                        Call env.AddSymbol(name, "any")
+                    End If
+                Next
+
+                For i As Integer = start To pipeline.Length - 1
+                    raw = pipeline(i).Exec(raw, context).ToArray
+                Next
+            End If
 
             Return raw
         End Function
